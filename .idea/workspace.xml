@@ -1,36 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="9efada4a-ff42-4698-acb1-701bcd182766" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/test/resources/config-prod/environment.config" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/libraries/Maven__commons_lang_commons_lang_2_5.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_beanshell_bsh_2_0b4.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/lib/ApacheJMeter_core.jar" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/lib/ApacheJMeter_java.jar" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/target/classes/com/mingyizhudao/qa/util/HttpRequest.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/target/classes/com/mingyizhudao/qa/util/MysqlConnector.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/target/classes/log4j.properties" afterPath="" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/java/com/mingyizhudao/qa/util/HttpRequest.java" afterPath="$PROJECT_DIR$/src/test/java/com/mingyizhudao/qa/util/HttpRequest.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/java/com/mingyizhudao/qa/util/MysqlConnector.java" afterPath="$PROJECT_DIR$/src/test/java/com/mingyizhudao/qa/util/MysqlConnector.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/test-classes/com/mingyizhudao/qa/common/BaseTest.class" afterPath="$PROJECT_DIR$/target/test-classes/com/mingyizhudao/qa/common/BaseTest.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/test-classes/com/mingyizhudao/qa/tc/DoctorProfile.class" afterPath="$PROJECT_DIR$/target/test-classes/com/mingyizhudao/qa/tc/DoctorProfile.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/test-classes/com/mingyizhudao/qa/tc/GetDoctorProfile.class" afterPath="$PROJECT_DIR$/target/test-classes/com/mingyizhudao/qa/tc/GetDoctorProfile.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/test-classes/com/mingyizhudao/qa/tc/GetEmployeeProfile.class" afterPath="$PROJECT_DIR$/target/test-classes/com/mingyizhudao/qa/tc/GetEmployeeProfile.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/test-classes/com/mingyizhudao/qa/tc/HospitalSearch.class" afterPath="$PROJECT_DIR$/target/test-classes/com/mingyizhudao/qa/tc/HospitalSearch.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/test-classes/com/mingyizhudao/qa/tc/ProfessionList.class" afterPath="$PROJECT_DIR$/target/test-classes/com/mingyizhudao/qa/tc/ProfessionList.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/test-classes/com/mingyizhudao/qa/tc/UpdateDoctorProfile.class" afterPath="$PROJECT_DIR$/target/test-classes/com/mingyizhudao/qa/tc/UpdateDoctorProfile.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/test-classes/com/mingyizhudao/qa/tc/login/MobileProfile.class" afterPath="$PROJECT_DIR$/target/test-classes/com/mingyizhudao/qa/tc/login/MobileProfile.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/test-classes/com/mingyizhudao/qa/tc/login/SendVerifyCode.class" afterPath="$PROJECT_DIR$/target/test-classes/com/mingyizhudao/qa/tc/login/SendVerifyCode.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/pom.xml" afterPath="$PROJECT_DIR$/pom.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/serviceapi.iml" afterPath="$PROJECT_DIR$/serviceapi.iml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/test/java/com/mingyizhudao/qa/common/BaseTest.java" afterPath="$PROJECT_DIR$/src/test/java/com/mingyizhudao/qa/common/BaseTest.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/test/java/com/mingyizhudao/qa/tc/GetDoctorProfile.java" afterPath="$PROJECT_DIR$/src/test/java/com/mingyizhudao/qa/tc/GetDoctorProfile.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/test/java/com/mingyizhudao/qa/tc/ProfessionList.java" afterPath="$PROJECT_DIR$/src/test/java/com/mingyizhudao/qa/tc/ProfessionList.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/test/java/com/mingyizhudao/qa/tc/UpdateDoctorProfile.java" afterPath="$PROJECT_DIR$/src/test/java/com/mingyizhudao/qa/tc/UpdateDoctorProfile.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/test/java/com/mingyizhudao/qa/tc/login/SendVerifyCode.java" afterPath="$PROJECT_DIR$/src/test/java/com/mingyizhudao/qa/tc/login/SendVerifyCode.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/test/resources/config-test/environment.config" afterPath="$PROJECT_DIR$/src/test/resources/config-test/environment.config" />
-    </list>
+    <list default="true" id="9efada4a-ff42-4698-acb1-701bcd182766" name="Default" comment="" />
     <ignored path="$PROJECT_DIR$/out/" />
     <ignored path="$PROJECT_DIR$/target/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -1121,7 +1092,7 @@
       <workItem from="1490087729756" duration="374000" />
       <workItem from="1490088131252" duration="5528000" />
       <workItem from="1490106452765" duration="91077000" />
-      <workItem from="1490445132608" duration="14670000" />
+      <workItem from="1490445132608" duration="14792000" />
     </task>
     <servers />
   </component>
@@ -1158,7 +1129,7 @@
     </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="140451000" />
+    <option name="totallyTimeSpent" value="140573000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
