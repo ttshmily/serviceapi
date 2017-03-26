@@ -2,8 +2,6 @@ package com.mingyizhudao.qa.tc;
 
 import com.mingyizhudao.qa.common.BaseTest;
 import com.mingyizhudao.qa.util.HttpRequest;
-import net.sf.json.JSONArray;
-import net.sf.json.JSONObject;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 

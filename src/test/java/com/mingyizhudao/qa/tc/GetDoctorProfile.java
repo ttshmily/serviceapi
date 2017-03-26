@@ -2,11 +2,8 @@ package com.mingyizhudao.qa.tc;
 
 import com.mingyizhudao.qa.common.BaseTest;
 import com.mingyizhudao.qa.util.HttpRequest;
-import net.sf.json.JSONObject;
-import net.sf.json.JSONString;
 import org.testng.Assert;
 import org.testng.annotations.Test;
-import org.testng.Assert.*;
 
 import java.io.IOException;
 /**
@@ -16,13 +13,13 @@ public class GetDoctorProfile extends BaseTest {
 
     public static String uri = "/api/getdoctorprofile";
     public static String mock = false ? "/mockjs/1" : "";
-    public static String token= "eyJzcmMiOiIiLCJhbGciOiJIUzI1NiIsInNpZCI6IjQ0NTNmMjA3In0.eyJ1aWQiOiIyOSIsIm1vYmlsZSI6IjEzODE3NjM0MjAzIiwiZXhwIjoxNDkwMjczNjE0LCJpYXQiOjE0OTAyNjY0MTR9._d_obkwAjd9o_kkM6FLeVyUwvuhjwlc7BegcoPDdBn4";
+    public static String token= "";
 
 
     public static String getDoctorProfile() {
         String res = "";
         try {
-            res = HttpRequest.sendGet(host+mock+uri, "\"a\":1", token);
+            res = HttpRequest.sendGet(host+mock+uri, "\"a\":1", mainToken);
         } catch (IOException e) {
             logger.error(e);
         }
@@ -33,7 +30,7 @@ public class GetDoctorProfile extends BaseTest {
     public void 有token信息的请求可以获得有效信息() {
         String res = "";
         try {
-            res = HttpRequest.sendGet(host+mock+uri,"", token);
+            res = HttpRequest.sendGet(host+mock+uri,"", mainToken);
         } catch (IOException e) {
             logger.error(e);
         }
@@ -83,7 +80,7 @@ public class GetDoctorProfile extends BaseTest {
     public void 测试data字段返回了足够的医生信息() {
         String res = "";
         try {
-            res = HttpRequest.sendGet(host+uri,"", token);
+            res = HttpRequest.sendGet(host+uri,"", mainToken);
         } catch (IOException e) {
             logger.error(e);
         }

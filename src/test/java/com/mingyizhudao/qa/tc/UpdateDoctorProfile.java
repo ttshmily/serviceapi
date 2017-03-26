@@ -2,13 +2,11 @@ package com.mingyizhudao.qa.tc;
 
 import com.mingyizhudao.qa.common.BaseTest;
 import com.mingyizhudao.qa.util.HttpRequest;
-import com.sun.tools.javac.comp.Todo;
 import net.sf.json.JSONObject;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
 import java.io.IOException;
-import java.util.Map;
 
 /**
  * Created by ttshmily on 21/3/2017.

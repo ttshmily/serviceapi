@@ -13,10 +13,15 @@ import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
 
+import java.io.BufferedInputStream;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Properties;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -26,7 +31,8 @@ import java.util.regex.Pattern;
 public class BaseTest {
 
     public static final Logger logger= Logger.getLogger(BaseTest.class);
-    public static final String host = "http://192.168.33.2";
+    public static String host = "";
+    public static String protocol = "";
     public static String mainMobile = "";
     public static String mainToken = "";
 
@@ -39,15 +45,42 @@ public class BaseTest {
     }
 
     static  {
-        PropertyConfigurator.configure("src/test/resources/log4j.properties");
-        SendVerifyCode.host = "http://login.dev.mingyizhudao.com";
-        SendVerifyCode.uri = "/api/login/sendVerifyCode";
-        CheckVerifyCode.host = "http://login.dev.mingyizhudao.com";
-        CheckVerifyCode.uri = "/api/login/checkVerifyCode";
-        Refresh.host = "http://login.dev.mingyizhudao.com";
-        Refresh.uri = "/api/login/refresh";
+        PropertyConfigurator.configure(BaseTest.class.getClassLoader().getResource("log4j.properties"));
+
+        // 读取配置文件
+        Properties prop = new Properties();
+        try {
+            InputStream in = BaseTest.class.getClassLoader().getResourceAsStream("environment.config");
+//                    new BufferedInputStream(new FileInputStream("src/test/resources/config-test/environment.config"));
+            prop.load(in);
+            in.close();
+        } catch (IOException e) {
+            logger.error(e);
+            System.exit(1);
+        }
+
+        {
+            // 初始化配置文件中的变量
+            protocol = prop.getProperty("protocol");
+            host = prop.getProperty("host");
+            SendVerifyCode.host = prop.getProperty("SendVerifyCode.host");
+            SendVerifyCode.uri = prop.getProperty("SendVerifyCode.uri");
+            CheckVerifyCode.host = prop.getProperty("CheckVerifyCode.host");
+            CheckVerifyCode.uri = prop.getProperty("CheckVerifyCode.uri");
+            Refresh.host = prop.getProperty("Refresh.host");
+            Refresh.uri = prop.getProperty("Refresh.uri");
+            host = protocol.concat(host);
+            SendVerifyCode.host = protocol.concat(SendVerifyCode.host);
+            CheckVerifyCode.host = protocol.concat(CheckVerifyCode.host);
+            Refresh.host = protocol.concat(Refresh.host);
+            logger.debug(host);
+            logger.debug(SendVerifyCode.host);
+            logger.debug(CheckVerifyCode.host);
+            logger.debug(Refresh.host);
+        }
         mainMobile = SendVerifyCode.send();
         mainToken = CheckVerifyCode.check();
+        System.exit(0);
     }
 
     @BeforeClass

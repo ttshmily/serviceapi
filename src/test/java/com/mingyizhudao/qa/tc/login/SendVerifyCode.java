@@ -10,9 +10,6 @@ import org.testng.annotations.Test;
 import java.io.IOException;
 import java.util.Random;
 
-import static com.mingyizhudao.qa.common.BaseTest.host;
-import static com.mingyizhudao.qa.common.BaseTest.logger;
-
 /**
  * Created by ttshmily on 22/3/2017.
  */
@@ -35,7 +32,7 @@ public class SendVerifyCode extends BaseTest{
             logger.error(e);
         }
         logger.info("返回数据: " + unicodeString(res));
-        logger.info("发送成功，请发送验证码到服务器进行验证");
+        logger.info("mobile是: " + mobile + "...请发送验证码到服务器进行验证");
         return mobile;
     }
 
@@ -47,7 +44,7 @@ public class SendVerifyCode extends BaseTest{
         try {
             res = HttpRequest.sendPost(host+mock+uri,body.body.toString(), "");
             checkResponse(res);
-            Assert.fail("res should fail");
+            Assert.fail("res should fail"); // 如果没有exception，就是fail
         } catch (IOException e) {
             logger.info("res returns error because of malformed input");
         } catch (JSONException e) {
@@ -75,10 +72,11 @@ public class SendVerifyCode extends BaseTest{
         try {
             res = HttpRequest.sendPost(host+mock+uri,body.body.toString(), "");
             checkResponse(res);
-            Assert.fail("res should fail");
+            Assert.fail("res should fail"); // 如果没有exception，就是fail
         } catch (IOException e) {
-            logger.info("res returns error because of malformed input");
+            logger.info("res returns error because of malformed input: mobile number less than 11");
         } catch (JSONException e) {
+
         }
     }
 
