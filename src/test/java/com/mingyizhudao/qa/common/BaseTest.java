@@ -50,8 +50,8 @@ public class BaseTest {
         // 读取配置文件
         Properties prop = new Properties();
         try {
-            InputStream in = BaseTest.class.getClassLoader().getResourceAsStream("environment.config");
-//                    new BufferedInputStream(new FileInputStream("src/test/resources/config-test/environment.config"));
+            InputStream in = BaseTest.class.getClassLoader().getResourceAsStream("environment.properties");
+//                    new BufferedInputStream(new FileInputStream("src/test/resources/config-test/environment.properties"));
             prop.load(in);
             in.close();
         } catch (IOException e) {
