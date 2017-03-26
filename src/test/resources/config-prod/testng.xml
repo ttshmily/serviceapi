@@ -1,0 +1,18 @@
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
+
+<suite name="All" verbose="1" >
+    <test name="profile" >
+        <classes>
+            <class name="com.mingyizhudao.qa.tc.GetDoctorProfile"  />
+            <class name="com.mingyizhudao.qa.tc.GetEmployeeProfile" />
+            <class name="com.mingyizhudao.qa.tc.HospitalSearch" />
+            <class name="com.mingyizhudao.qa.tc.ProfessionList" />
+            <class name="com.mingyizhudao.qa.tc.UpdateDoctorProfile" />
+        </classes>
+    </test>
+    <test name="login" >
+        <packages>
+            <package name="com.mingyizhudao.qa.tc.login" />
+        </packages>
+    </test>
+</suite> 
