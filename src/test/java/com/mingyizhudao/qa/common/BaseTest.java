@@ -80,7 +80,7 @@ public class BaseTest {
         }
         mainMobile = SendVerifyCode.send();
         mainToken = CheckVerifyCode.check();
-        System.exit(0);
+//        System.exit(0);
     }
 
     @BeforeClass
