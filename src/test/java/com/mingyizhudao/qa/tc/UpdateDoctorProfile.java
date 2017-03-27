@@ -121,7 +121,7 @@ public class UpdateDoctorProfile extends BaseTest {
             logger.error(e);
         }
         checkResponse(res);
-        Assert.assertEquals(code, "1211012");
+        Assert.assertEquals(code, "2210211");
     }
 
     @Test
@@ -135,7 +135,8 @@ public class UpdateDoctorProfile extends BaseTest {
             logger.error(e);
         }
         checkResponse(res);
-        Assert.assertEquals(code, "1211012");
+        // TODO: need to check DB to verify
+        Assert.assertEquals(code, "1000000");
     }
 
     @Test
@@ -149,7 +150,7 @@ public class UpdateDoctorProfile extends BaseTest {
             logger.error(e);
         }
         checkResponse(res);
-        Assert.assertEquals(code, "1211012");
+        Assert.assertEquals(code, "2210211");
     }
 
     @Test
@@ -163,7 +164,7 @@ public class UpdateDoctorProfile extends BaseTest {
             logger.error(e);
         }
         checkResponse(res);
-        Assert.assertEquals(code, "1211012");
+        Assert.assertEquals(code, "2210211");
     }
 
 
@@ -178,7 +179,7 @@ public class UpdateDoctorProfile extends BaseTest {
             logger.error(e);
         }
         checkResponse(res);
-        Assert.assertEquals(code, "1211012");
+        Assert.assertEquals(code, "2210317");
     }
 }
 

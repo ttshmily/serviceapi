@@ -152,7 +152,11 @@ public class BaseTest {
                 } else
                     return null;
             } else {
-                return node.getString(path);
+                if (node.containsKey(path)) {
+                    return node.getString(path);
+                } else {
+                    return null;
+                }
             }
         }
 
@@ -172,7 +176,11 @@ public class BaseTest {
             else
                 return null;
         } else {
-            return parseJson(node.getJSONObject(head), nextPath);
+            if (node.containsKey(head)) {
+                return parseJson(node.getJSONObject(head), nextPath);
+            } else {
+                return null;
+            }
         }
     }
 

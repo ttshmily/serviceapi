@@ -16,10 +16,10 @@ public class GetDoctorProfile extends BaseTest {
     public static String token= "";
 
 
-    public static String getDoctorProfile() {
+    public static String getDoctorProfile(String token) {
         String res = "";
         try {
-            res = HttpRequest.sendGet(host+mock+uri, "\"a\":1", mainToken);
+            res = HttpRequest.sendGet(host+mock+uri, "", token);
         } catch (IOException e) {
             logger.error(e);
         }
@@ -91,7 +91,7 @@ public class GetDoctorProfile extends BaseTest {
         Assert.assertNotNull(parseJson(data,"doctor:is_verified"),"is_verified字段缺失");
         Assert.assertNotNull(parseJson(data,"doctor:mobile"), "mobile字段缺失");
         Assert.assertNotNull(parseJson(data,"doctor:hospital_name"), "hospital_name字段缺失");
-        Assert.assertNotNull(parseJson(data,"doctor:info_provided"), "info_provided字段缺失");
+        Assert.assertNotNull(parseJson(data,"doctor:is_required"), "is_required字段缺失");
     }
 
 }

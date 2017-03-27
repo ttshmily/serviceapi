@@ -32,10 +32,12 @@ public class CheckVerifyCode extends BaseTest{
             logger.error(e);
         }
         logger.info("返回数据: " + JSONObject.fromObject(res).toString());
-        String token = parseJson(JSONObject.fromObject(res), "data:token");
-        if (!token.isEmpty() && null != token) {
-            logger.info("token是: " + token);
-            return token;
+        String tmpToken = parseJson(JSONObject.fromObject(res), "data:token");
+        if (!tmpToken.isEmpty() && null != tmpToken) {
+            logger.info("token是: " + tmpToken);
+            token = tmpToken;
+            Refresh.token = tmpToken;
+            return tmpToken;
         } else {
             logger.error("获取token失败");
             return "";

@@ -46,7 +46,7 @@ public class HospitalSearch extends BaseTest {
     public void 查询字符串为空时的返回结果() {
         String res = "";
         try {
-            res = HttpRequest.sendGet(host+mock+uri,"searchName=", "");
+            res = HttpRequest.sendGet(host+mock+uri,"searchname=", "");
         } catch (IOException e) {
             logger.error(e);
         }
@@ -58,7 +58,7 @@ public class HospitalSearch extends BaseTest {
     public void 查询字符串为中文时的返回结果() {
         String res = "";
         try {
-            res = HttpRequest.sendGet(host+mock+uri,"searchName=人民医院", "");
+            res = HttpRequest.sendGet(host+mock+uri,"searchname=人民医院", "");
         } catch (IOException e) {
             logger.error(e);
         }
@@ -70,7 +70,7 @@ public class HospitalSearch extends BaseTest {
     public void 查询字符串为一串拼音时的返回结果() {
         String res = "";
         try {
-            res = HttpRequest.sendGet(host+mock+uri,"searchName=changzhou", "");
+            res = HttpRequest.sendGet(host+mock+uri,"searchname=changzhou", "");
         } catch (IOException e) {
             logger.error(e);
         }
@@ -82,7 +82,7 @@ public class HospitalSearch extends BaseTest {
     public void 查询字符串为中英混合时的返回结果() {
         String res = "";
         try {
-            res = HttpRequest.sendGet(host+mock+uri,"searchName=中国changzhou", "");
+            res = HttpRequest.sendGet(host+mock+uri,"searchname=中国changzhou", "");
         } catch (IOException e) {
             logger.error(e);
         }
@@ -94,7 +94,7 @@ public class HospitalSearch extends BaseTest {
     public void 返回的结果中详细字段不缺少() {
         String res = "";
         try {
-            res = HttpRequest.sendGet(host+mock+uri,"searchName=人民医院", "");
+            res = HttpRequest.sendGet(host+mock+uri,"searchname=人民医院", "");
         } catch (IOException e) {
             logger.error(e);
         }

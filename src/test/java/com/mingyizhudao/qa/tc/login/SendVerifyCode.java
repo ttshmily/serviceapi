@@ -25,6 +25,7 @@ public class SendVerifyCode extends BaseTest{
         String res = "";
         MobileProfile body = new MobileProfile(true);
         CheckVerifyCode.mobile = mobile;
+        Refresh.mobile = mobile;
         logger.info("请求验证码到手机号" + mobile + " ...") ;
         try {
             res = HttpRequest.sendPost(SendVerifyCode.host+uri, body.body.toString(), "");

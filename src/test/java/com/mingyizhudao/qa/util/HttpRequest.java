@@ -42,8 +42,9 @@ public class HttpRequest {
 		BufferedReader in = null;
 		try {
 			String urlNameString = url;
-			if (!param.isEmpty()) urlNameString = urlNameString.concat("?").concat(URLEncoder.encode(param, "utf-8"));
-			URL realUrl = new URL(urlNameString);
+//			if (!param.isEmpty()) urlNameString = urlNameString.concat("?").concat(URLEncoder.encode(param, "utf-8"));
+            if (!param.isEmpty()) urlNameString = urlNameString.concat("?").concat(param);
+            URL realUrl = new URL(urlNameString);
 			// 打开和URL之间的连接
 			URLConnection connection = realUrl.openConnection();
 			HttpURLConnection httpURLConnection = (HttpURLConnection)connection;
@@ -101,6 +102,7 @@ public class HttpRequest {
             httpURLConnection.setRequestMethod("POST");
             httpURLConnection.setRequestProperty("Content-Type", "application/json");
             httpURLConnection.setRequestProperty("connection", "close");
+            httpURLConnection.setRequestProperty("Referer", "http://www.mingyizhudao.com");
             if (!authCode.isEmpty())
                 httpURLConnection.setRequestProperty("authorization", authCode);
             // 发送POST请求必须设置如下两行

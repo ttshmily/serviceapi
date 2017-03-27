@@ -29,9 +29,10 @@ public class GetEmployeeProfile extends BaseTest {
             Assert.fail();
         }
         checkResponse(res);
-        Assert.assertNotNull(parseJson(data, "employee:id"));
-        Assert.assertNotNull(parseJson(data, "employee:name"));
-        Assert.assertNotNull(parseJson(data, "employee:number"));
+        Assert.assertEquals(code, "1000000", "错误码应该是1000000");
+        Assert.assertNotNull(parseJson(data, "employee:id"), "id must not be null");
+        Assert.assertNotNull(parseJson(data, "employee:name"), "name must not be null");
+        Assert.assertNotNull(parseJson(data, "employee:number"), "number must not be null");
     }
 
     @Test
@@ -44,9 +45,10 @@ public class GetEmployeeProfile extends BaseTest {
             Assert.fail();
         }
         checkResponse(res);
-        Assert.assertNotNull(parseJson(data, "employee:id"));
-        Assert.assertNotNull(parseJson(data, "employee:name"));
-        Assert.assertNotNull(parseJson(data, "employee:number"));
+        Assert.assertEquals(code, "1000000");
+        Assert.assertNotNull(parseJson(data, "employee:id"), "id must not be null");
+        Assert.assertNotNull(parseJson(data, "employee:name"), "name must not be null");
+        Assert.assertNotNull(parseJson(data, "employee:number"), "number must not be null");
     }
 
     @Test
@@ -58,9 +60,7 @@ public class GetEmployeeProfile extends BaseTest {
             logger.error(e);
         }
         checkResponse(res);
-        Assert.assertNotNull(parseJson(data, "employee"));
-        Assert.assertEquals(parseJson(data, "employee:id"), "");
-        Assert.assertEquals(parseJson(data, "employee:name"), "");
-        Assert.assertEquals(parseJson(data, "employee:number"), "");
+        Assert.assertEquals(code, "1000000");
+        Assert.assertNull(parseJson(data, "employee:id"));
     }
 }
