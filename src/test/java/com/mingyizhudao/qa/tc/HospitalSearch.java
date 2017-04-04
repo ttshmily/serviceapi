@@ -104,7 +104,7 @@ public class HospitalSearch extends BaseTest {
         Assert.assertNotNull(parseJson(data, "hospital():id"), "hospital的id字段缺失");
         Assert.assertNotNull(parseJson(data, "hospital():city"), "hospital的city字段缺失");
         Assert.assertNotNull(parseJson(data, "hospital():ext"), "hospital的ext字段缺失");
-        Assert.assertNotNull(parseJson(data, "hospital():ext:surgery_list()"), "hospital的surgery字段为空");
+//        Assert.assertNotNull(parseJson(data, "hospital():ext:surgery_list()"), "hospital的surgery字段为空");
     }
 
 }

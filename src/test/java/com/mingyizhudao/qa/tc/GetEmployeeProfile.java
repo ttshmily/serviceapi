@@ -23,7 +23,7 @@ public class GetEmployeeProfile extends BaseTest {
     public void 有token的用户请求可以获得有效信息() {
         String res = "";
         try {
-            res = HttpRequest.sendGet(host+mock+uri,"number=SH001", mainToken);
+            res = HttpRequest.sendGet(host+mock+uri,"number=SH0001", mainToken);
         } catch (IOException e) {
             logger.error(e);
             Assert.fail();
@@ -39,7 +39,7 @@ public class GetEmployeeProfile extends BaseTest {
     public void 没有token的用户请求可以获得有效信息() {
         String res = "";
         try {
-            res = HttpRequest.sendGet(host+mock+uri,"number=SH001", "");
+            res = HttpRequest.sendGet(host+mock+uri,"number=SH0001", "");
         } catch (IOException e) {
             logger.error(e);
             Assert.fail();
@@ -55,7 +55,7 @@ public class GetEmployeeProfile extends BaseTest {
     public void 员工ID无效时返回空的Employee() {
         String res = "";
         try {
-            res = HttpRequest.sendGet(host+mock+uri,"number=444", "");
+            res = HttpRequest.sendGet(host+mock+uri,"number=SH0444", "");
         } catch (IOException e) {
             logger.error(e);
         }
