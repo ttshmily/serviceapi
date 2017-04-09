@@ -1,9 +1,7 @@
 package com.mingyizhudao.qa.common;
 
 
-import com.mingyizhudao.qa.tc.login.CheckVerifyCode;
-import com.mingyizhudao.qa.tc.login.SendVerifyCode;
-import com.mingyizhudao.qa.tc.login.Refresh;
+import com.mingyizhudao.qa.tc.*;
 import net.sf.json.JSONException;
 import net.sf.json.JSONObject;
 import org.apache.log4j.Logger;
@@ -13,8 +11,6 @@ import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
 
-import java.io.BufferedInputStream;
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.lang.reflect.Method;
@@ -69,6 +65,7 @@ public class BaseTest {
             CheckVerifyCode.uri = prop.getProperty("CheckVerifyCode.uri");
             Refresh.host = prop.getProperty("Refresh.host");
             Refresh.uri = prop.getProperty("Refresh.uri");
+            CrmCertifiedDoctor.uri = prop.getProperty("CrmCertifiedDoctor.uri");
             host = protocol.concat(host);
             SendVerifyCode.host = protocol.concat(SendVerifyCode.host);
             CheckVerifyCode.host = protocol.concat(CheckVerifyCode.host);
@@ -80,6 +77,8 @@ public class BaseTest {
         }
         mainMobile = SendVerifyCode.send();
         mainToken = CheckVerifyCode.check();
+        String res = GetDoctorProfile.getDoctorProfile(mainToken);
+        CrmCertifiedDoctor.certify(JSONObject.fromObject(res).getJSONObject("data").getJSONObject("doctor").getString("user_id"));
 //        System.exit(0);
     }
 
@@ -142,15 +141,17 @@ public class BaseTest {
                 if (node.getJSONArray(path.substring(0,path.length()-2)).size() > 0) { //jsonArray不为空
                     logger.info(path.substring(0, path.indexOf("(")) + "的长度为: " + node.getJSONArray(path.substring(0, path.length() - 2)).size());
                     return node.getJSONArray(path.substring(0, path.length() - 2)).getString(0);
-                } else
+                } else {
                     return null;
+                }
             } else if ( path.indexOf("(")+1 < path.indexOf(")") ) {
-                //TODO 3是有问题的，需要根据实际的index长度相应变化，暂留bug
+                //DONE 3是有问题的，需要根据实际的index长度相应变化，暂留bug
                 if (node.getJSONArray(path.substring(0,path.indexOf("("))).size() > 0) {
                     logger.info(path.substring(0, path.indexOf("(")) + "的长度为: " + node.getJSONArray(path.substring(0, path.indexOf("("))));
                     return node.getJSONArray(path.substring(0, path.indexOf("("))).getString(Integer.parseInt(path.substring(path.indexOf("(") + 1, path.indexOf(")"))));
-                } else
+                } else {
                     return null;
+                }
             } else {
                 if (node.containsKey(path)) {
                     return node.getString(path);
@@ -170,7 +171,7 @@ public class BaseTest {
             else
                 return null;
         } else if ( head.indexOf("(")+1 < head.indexOf(")") ) {
-            //TODO 3是有问题的，需要根据实际的index长度相应变化，暂留bug
+            //DONE 3是有问题的，需要根据实际的index长度相应变化，暂留bug
             if ( node.getJSONArray(head.substring(0,head.indexOf("("))).size() > 0 )
                 return parseJson(node.getJSONArray(head.substring(0,path.indexOf("("))).getJSONObject(Integer.parseInt(head.substring(head.indexOf("(")+1,head.indexOf(")")))),nextPath);
             else
@@ -192,10 +193,6 @@ public class BaseTest {
         logger.info("<<<<<< [ code ]:\t" + code);
         logger.info("<<<<<< [ message ]:\t" + message);
         logger.info("<<<<<< [ data ]:\t" + data);
-    }
-
-    public String queryBuilder(Map<String,String> map) {
-        return "";
     }
 
 }

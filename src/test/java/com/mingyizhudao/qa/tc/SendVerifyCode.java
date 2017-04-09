@@ -1,14 +1,13 @@
-package com.mingyizhudao.qa.tc.login;
+package com.mingyizhudao.qa.tc;
 
 import com.mingyizhudao.qa.common.BaseTest;
+import com.mingyizhudao.qa.dataprofile.MobileProfile;
 import com.mingyizhudao.qa.util.HttpRequest;
 import net.sf.json.JSONException;
-import net.sf.json.JSONObject;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
 import java.io.IOException;
-import java.util.Random;
 
 /**
  * Created by ttshmily on 22/3/2017.
@@ -83,23 +82,3 @@ public class SendVerifyCode extends BaseTest{
 
 }
 
-class MobileProfile {
-
-    public JSONObject body = new JSONObject();
-
-    public MobileProfile(boolean init) {
-        if (init) {
-            body.accumulate("mobile", "13" + phone() + "9999");
-        } else {
-            body.accumulate("mobile", "");
-        }
-    }
-
-    public String phone() {
-        Random random = new Random();
-        Integer m = random.nextInt(99999);
-        SendVerifyCode.mobile = "13" + String.format("%05d",m) + "9999";
-        return String.format("%05d",m);
-
-    }
-}

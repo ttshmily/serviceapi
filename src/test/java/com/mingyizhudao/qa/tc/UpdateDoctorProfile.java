@@ -1,12 +1,13 @@
 package com.mingyizhudao.qa.tc;
 
 import com.mingyizhudao.qa.common.BaseTest;
+import com.mingyizhudao.qa.dataprofile.DoctorProfile;
 import com.mingyizhudao.qa.util.HttpRequest;
-import net.sf.json.JSONObject;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
 import java.io.IOException;
+import java.util.HashMap;
 
 /**
  * Created by ttshmily on 21/3/2017.
@@ -17,11 +18,21 @@ public class UpdateDoctorProfile extends BaseTest {
     public static String mock = false ? "/mockjs/1" : "";
 
 
-    public static String updateDoctorProfile() {
+    public static String updateDoctorProfile(String token, HashMap<String, String> map) {
         String res = "";
-        DoctorProfile body = new DoctorProfile(true);
+        DoctorProfile dp = new DoctorProfile(true);
+
+        for (String key:map.keySet()
+                ) {
+            if (dp.body.getJSONObject("doctor").containsKey(key)) {
+                dp.body.getJSONObject("doctor").replace(key, map.get(key));
+            } else {
+                dp.body.getJSONObject("doctor").accumulate(key, map.get(key));
+            }
+        }
+
         try {
-            res = HttpRequest.sendPost(host+mock+uri, body.body.toString(), mainToken);
+            res = HttpRequest.sendPost(host+mock+uri, dp.body.toString(), token);
         } catch (IOException e) {
             logger.error(e);
         }
@@ -254,37 +265,3 @@ public class UpdateDoctorProfile extends BaseTest {
     }
 }
 
-class DoctorProfile {
-
-    public JSONObject body = new JSONObject();
-    public DoctorProfile(boolean init) {
-        JSONObject doctor = new JSONObject();
-        if (init) {
-            doctor.accumulate("name", "test");
-            doctor.accumulate("city_name", "上海");
-            doctor.accumulate("department", "骨科");
-            doctor.accumulate("major_id", "33");
-            doctor.accumulate("major_name", "烧伤");
-            doctor.accumulate("academic_title", "学习");
-            doctor.accumulate("medical_title", "工程师");
-            doctor.accumulate("hospital_id", "3");
-            doctor.accumulate("hospital_name", "上海医院");
-            doctor.accumulate("inviter_no", "GD0001");
-            doctor.accumulate("inviter_name", "黄燕");
-        } else {
-            doctor.accumulate("name", "");
-            doctor.accumulate("city_name", "");
-            doctor.accumulate("department", "");
-            doctor.accumulate("major_id", "");
-            doctor.accumulate("major_name", "");
-            doctor.accumulate("academic_title", "");
-            doctor.accumulate("medical_title", "");
-            doctor.accumulate("hospital_id", "");
-            doctor.accumulate("hospital_name", "");
-            doctor.accumulate("inviter_no", "");
-            doctor.accumulate("inviter_name", "");
-        }
-        this.body.accumulate("doctor",doctor);
-    }
-
-}

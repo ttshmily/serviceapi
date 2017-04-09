@@ -1,17 +1,13 @@
-package com.mingyizhudao.qa.tc.login;
+package com.mingyizhudao.qa.tc;
 
 import com.mingyizhudao.qa.common.BaseTest;
-import com.mingyizhudao.qa.tc.GetDoctorProfile;
+import com.mingyizhudao.qa.dataprofile.RefreshProfile;
 import com.mingyizhudao.qa.util.HttpRequest;
 import net.sf.json.JSONException;
-import net.sf.json.JSONObject;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
 import java.io.IOException;
-import java.util.Random;
-
-import static com.mingyizhudao.qa.tc.login.Refresh.token;
 
 /**
  * Created by ttshmily on 22/3/2017.
@@ -100,22 +96,3 @@ public class Refresh extends BaseTest{
     }
 }
 
-class RefreshProfile {
-
-    public JSONObject body = new JSONObject();
-
-    public RefreshProfile(boolean init) {
-        if (init) {
-            body.accumulate("token", token);
-        } else {
-            body.accumulate("token", "");
-        }
-    }
-
-    public String phone() {
-        Random random = new Random();
-        Integer m = random.nextInt(99999);
-        SendVerifyCode.mobile = "13" + String.format("%05d",m) + "9999";
-        return String.format("%05d",m);
-    }
-}
