@@ -1,14 +1,13 @@
 package com.mingyizhudao.qa.tc;
 
 import com.mingyizhudao.qa.common.BaseTest;
-import com.mingyizhudao.qa.dataprofile.OrderProfile;
+import com.mingyizhudao.qa.dataprofile.OrderDetail;
 import com.mingyizhudao.qa.util.HttpRequest;
 import net.sf.json.JSONObject;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
 import java.io.IOException;
-import java.util.HashMap;
 
 /**
  * Created by ttshmily on 7/4/2017.
@@ -21,7 +20,7 @@ public class CreateOrder extends BaseTest {
 
     public static String CreateOrder(String token) {
         String res = "";
-        OrderProfile body = new OrderProfile(true);
+        OrderDetail body = new OrderDetail(true);
         try {
             res = HttpRequest.sendPost(host+mock+uri, body.body.toString(), token);
         } catch (IOException e) {
@@ -42,7 +41,7 @@ public class CreateOrder extends BaseTest {
     public void 创建订单_信息齐备_已认证用户() {
 
         String res = "";
-        OrderProfile body = new OrderProfile(true);
+        OrderDetail body = new OrderDetail(true);
 
         try {
             res = HttpRequest.sendPost(host+mock+uri, body.body.toString(), mainToken);
@@ -86,7 +85,7 @@ public class CreateOrder extends BaseTest {
     public void 创建订单_信息齐备_未登录用户() {
 
         String res = "";
-        OrderProfile body = new OrderProfile(true);
+        OrderDetail body = new OrderDetail(true);
         try {
             res = HttpRequest.sendPost(host+mock+uri, body.body.toString(), "");
         } catch (IOException e) {
@@ -101,7 +100,7 @@ public class CreateOrder extends BaseTest {
     public void 创建订单_缺少患者姓名不可以创建() {
 
         String res = "";
-        OrderProfile body = new OrderProfile(true);
+        OrderDetail body = new OrderDetail(true);
 
         body.body.getJSONObject("order").replace("patient_name", "");
         try {
@@ -136,7 +135,7 @@ public class CreateOrder extends BaseTest {
     public void 创建订单_缺少患者性别或性别不正确不可以创建() {
 
         String res = "";
-        OrderProfile body = new OrderProfile(true);
+        OrderDetail body = new OrderDetail(true);
 
         body.body.getJSONObject("order").replace("patient_gender", "");
         try {
@@ -171,7 +170,7 @@ public class CreateOrder extends BaseTest {
     public void 创建订单_缺少患者年龄不可以创建() {
 
         String res = "";
-        OrderProfile body = new OrderProfile(true);
+        OrderDetail body = new OrderDetail(true);
 
         body.body.getJSONObject("order").replace("patient_age", "");
         try {
@@ -197,7 +196,7 @@ public class CreateOrder extends BaseTest {
     public void 创建订单_缺少患者手机不可以创建() {
 
         String res = "";
-        OrderProfile body = new OrderProfile(true);
+        OrderDetail body = new OrderDetail(true);
 
         body.body.getJSONObject("order").replace("patient_phone", "");
         try {
@@ -223,7 +222,7 @@ public class CreateOrder extends BaseTest {
     public void 创建订单_缺少主诉疾病不可以创建() {
 
         String res = "";
-        OrderProfile order = new OrderProfile(true);
+        OrderDetail order = new OrderDetail(true);
 
         order.body.getJSONObject("order").replace("major_disease_id", "");
         try {
@@ -249,7 +248,7 @@ public class CreateOrder extends BaseTest {
     public void 创建订单_缺少次诉疾病可以创建() {
 
         String res = "";
-        OrderProfile order = new OrderProfile(true);
+        OrderDetail order = new OrderDetail(true);
 
         order.body.getJSONObject("order").replace("minor_disease_id", "");
         try {
@@ -281,7 +280,7 @@ public class CreateOrder extends BaseTest {
         logger.info("tmpDoctorId为"+JSONObject.fromObject(res).getJSONObject("data").getJSONObject("doctor").getString("user_id"));
         UpdateDoctorProfile.updateDoctorProfile(tmpToken, null);
         logger.info("创建未认证医生成功");
-        OrderProfile order = new OrderProfile(true);
+        OrderDetail order = new OrderDetail(true);
         try {
             res = HttpRequest.sendPost(host+mock+uri, order.body.toString(), tmpToken);
         } catch (IOException e) {

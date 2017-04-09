@@ -6,12 +6,12 @@ import net.sf.json.JSONObject;
 /**
  * Created by ttshmily on 8/4/2017.
  */
-public class OrderProfile {
+public class OrderDetail {
 
     public JSONObject body = new JSONObject();
     public JSONArray pics = new JSONArray();
 
-    public OrderProfile(boolean init) {
+    public OrderDetail(boolean init) {
         JSONObject order = new JSONObject();
         if (init) {
             order.accumulate("patient_name", "方超");
