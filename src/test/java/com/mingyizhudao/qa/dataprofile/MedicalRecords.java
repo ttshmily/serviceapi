@@ -1,5 +1,6 @@
 package com.mingyizhudao.qa.dataprofile;
 
+import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 
 /**
@@ -8,9 +9,9 @@ import net.sf.json.JSONObject;
 public class MedicalRecords {
 
     public JSONObject body = new JSONObject();
+    public JSONArray pics = new JSONArray();
     public MedicalRecords(boolean init) {
         JSONObject order = new JSONObject();
-        // TODO
         if (init) {
             order.accumulate("patient_name", "方超");
             order.accumulate("patient_gender", "1");
@@ -22,7 +23,8 @@ public class MedicalRecords {
             order.accumulate("expected_surgery_start_date", "2017-04-09");
             order.accumulate("expected_surgery_due_date", "2017-05-09");
             order.accumulate("expected_surgery_hospital_id", "43");
-            order.accumulate("pics", "{}");
+            order.accumulate("medical_record_pictures", JSONObject.fromObject("{'key':'123';'type':'1'}"));
+            order.accumulate("medical_record_pictures", JSONObject.fromObject("{'key':'789';'type':'1'}"));
         } else {
             order.accumulate("patient_name", "");
             order.accumulate("patient_gender", "");
@@ -34,7 +36,7 @@ public class MedicalRecords {
             order.accumulate("expected_surgery_start_date", "");
             order.accumulate("expected_surgery_due_date", "");
             order.accumulate("expected_surgery_hospital_id", "");
-            order.accumulate("pics", "");
+            order.accumulate("medical_record_pictures", pics);
         }
         this.body.accumulate("order", order);
     }

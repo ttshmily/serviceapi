@@ -2,6 +2,7 @@ package com.mingyizhudao.qa.tc;
 
 import com.mingyizhudao.qa.common.BaseTest;
 import com.mingyizhudao.qa.util.HttpRequest;
+import net.sf.json.JSONObject;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
@@ -75,7 +76,7 @@ public class GetOrderDetail extends BaseTest{
             logger.error(e);
         }
         checkResponse(res);
-        Assert.assertNotEquals(code, "1000000");
+        Assert.assertNull(data, "order:id");
 
     }
 
@@ -98,9 +99,20 @@ public class GetOrderDetail extends BaseTest{
     public void 获取订单详情_提供不属于自己的订单ID() {
         String res = "";
         HashMap<String, String> pathValue = new HashMap<String, String>();
-        pathValue.put("orderId", CreateOrder.CreateOrder(mainToken));
+        logger.info("创建订单with mainToken");
+        String orderId = CreateOrder.CreateOrder(mainToken);
+        if (orderId.isEmpty()) {
+            logger.error("创建订单with mainToken失败");
+        }
+        pathValue.put("orderId", orderId);
         SendVerifyCode.send();
         String tmpToken = CheckVerifyCode.check();
+        HashMap<String, String> profile = new HashMap<String, String>();
+        profile.put("hospital_id","4");
+        profile.put("name", "temp-test");
+        UpdateDoctorProfile.updateDoctorProfile(tmpToken, profile);
+        res = GetDoctorProfile.getDoctorProfile(tmpToken);
+        CrmCertifiedDoctor.certify(parseJson(JSONObject.fromObject(res), "data:doctor:user_id"));
         try {
             res = HttpRequest.sendGet(host+mock+uri,"", tmpToken, pathValue);
         } catch (IOException e) {

@@ -22,15 +22,16 @@ public class UpdateDoctorProfile extends BaseTest {
         String res = "";
         DoctorProfile dp = new DoctorProfile(true);
 
-        for (String key:map.keySet()
-                ) {
-            if (dp.body.getJSONObject("doctor").containsKey(key)) {
-                dp.body.getJSONObject("doctor").replace(key, map.get(key));
-            } else {
-                dp.body.getJSONObject("doctor").accumulate(key, map.get(key));
+        if (map != null) {
+            for (String key : map.keySet()
+                    ) {
+                if (dp.body.getJSONObject("doctor").containsKey(key)) {
+                    dp.body.getJSONObject("doctor").replace(key, map.get(key));
+                } else {
+                    dp.body.getJSONObject("doctor").accumulate(key, map.get(key));
+                }
             }
         }
-
         try {
             res = HttpRequest.sendPost(host+mock+uri, dp.body.toString(), token);
         } catch (IOException e) {
@@ -158,43 +159,51 @@ public class UpdateDoctorProfile extends BaseTest {
     public void 禁止更新city_name字段() {
         String res = "";
         DoctorProfile body = new DoctorProfile(false);
-        body.body.getJSONObject("doctor").replace("city_name", "上海");
+        body.body.getJSONObject("doctor").replace("city_name", "城市");
         try {
             res = HttpRequest.sendPost(host+mock+uri, body.body.toString(), mainToken);
         } catch (IOException e) {
             logger.error(e);
         }
         checkResponse(res);
-        Assert.assertEquals(code, "2210211");
+        Assert.assertEquals(code, "1000000");
+        res = GetDoctorProfile.getDoctorProfile(mainToken);
+        checkResponse(res);
+        Assert.assertNotEquals(parseJson(data, "doctor:city_name"), "城市", "城市名称不应该改变");
     }
 
     @Test
     public void 禁止更新hospital_name字段() {
         String res = "";
         DoctorProfile body = new DoctorProfile(false);
-        body.body.getJSONObject("doctor").replace("hospital_name", "上海医院");
+        body.body.getJSONObject("doctor").replace("hospital_name", "测试医院");
         try {
             res = HttpRequest.sendPost(host+mock+uri, body.body.toString(), mainToken);
         } catch (IOException e) {
             logger.error(e);
         }
         checkResponse(res);
-        // TODO: need to check DB to verify
-        Assert.assertEquals(code, "2210211");
+        Assert.assertEquals(code, "1000000");
+        res = GetDoctorProfile.getDoctorProfile(mainToken);
+        checkResponse(res);
+        Assert.assertNotEquals(parseJson(data, "doctor:hospital_name"), "测试医院", "医院名称不应该改变");
     }
 
     @Test
     public void 禁止更新major_name字段() {
         String res = "";
         DoctorProfile body = new DoctorProfile(false);
-        body.body.getJSONObject("doctor").replace("major_name", "烫伤");
+        body.body.getJSONObject("doctor").replace("major_name", "测试专业");
         try {
             res = HttpRequest.sendPost(host+mock+uri, body.body.toString(), mainToken);
         } catch (IOException e) {
             logger.error(e);
         }
         checkResponse(res);
-        Assert.assertEquals(code, "2210211");
+        Assert.assertEquals(code, "1000000");
+        res = GetDoctorProfile.getDoctorProfile(mainToken);
+        checkResponse(res);
+        Assert.assertNotEquals(parseJson(data, "doctor:hospital_name"), "测试专业", "专业名称不应该改变");
     }
 
     @Test
@@ -208,8 +217,10 @@ public class UpdateDoctorProfile extends BaseTest {
             logger.error(e);
         }
         checkResponse(res);
-        Assert.assertEquals(code, "2210211");
-        //TODO need to check DB to verify inviter_name not changed
+        Assert.assertEquals(code, "1000000");
+        res = GetDoctorProfile.getDoctorProfile(mainToken);
+        checkResponse(res);
+        Assert.assertNotEquals(parseJson(data, "doctor:inviter_name"), "大一", "地推名称不应该改变");
     }
 
 

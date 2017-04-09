@@ -20,7 +20,7 @@ public class DoctorProfile {
             doctor.accumulate("medical_title", "工程师");
             doctor.accumulate("hospital_id", "3");
             doctor.accumulate("hospital_name", "上海医院");
-            doctor.accumulate("inviter_no", "GD0001");
+            doctor.accumulate("inviter_no", "SH0001");
             doctor.accumulate("inviter_name", "黄燕");
         } else {
             doctor.accumulate("name", "");

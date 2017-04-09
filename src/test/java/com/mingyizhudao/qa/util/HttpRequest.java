@@ -91,7 +91,12 @@ public class HttpRequest {
         String result = "";
         BufferedReader in = null;
         try {
-            String urlNameString = restUrl(url, pathValue);
+            String urlNameString;
+            if (pathValue != null ) {
+                urlNameString = restUrl(url, pathValue);
+            } else {
+                urlNameString = url;
+            }
 //			if (!param.isEmpty()) urlNameString = urlNameString.concat("?").concat(URLEncoder.encode(param, "utf-8"));
             if (!param.isEmpty()) urlNameString = urlNameString.concat("?").concat(param);
             URL realUrl = new URL(urlNameString);
@@ -109,6 +114,56 @@ public class HttpRequest {
             long start,end;
             logger.info("发送请求: >>>>>  " + httpURLConnection.getRequestMethod() + " " + httpURLConnection.getURL());
             logger.info("请求数据: >>>>>  " + param);
+            start = System.currentTimeMillis();
+            httpURLConnection.connect();
+            in = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+            end = System.currentTimeMillis();
+            logger.info("等待回应: <<<<<  " + httpURLConnection.getResponseCode() + " " + httpURLConnection.getResponseMessage());
+            logger.info("响应时间: <<<<<  " + Long.toString(end-start) + " ms");
+
+            String line;
+            while ((line = in.readLine()) != null) {
+                result += line;
+            }
+
+//			logger.debug(httpURLConnection.getRequestProperties().keySet());
+            in.close();
+        } catch (IOException e) {
+            logger.error("发送请求异常");
+            throw e;
+        }
+        return result;
+    }
+
+    public static String sendGet(String url, HashMap<String,String> query, String authCode, HashMap<String,String> pathValue) throws IOException {
+        String result = "";
+        BufferedReader in = null;
+        try {
+            String urlNameString;
+            if (pathValue != null ) {
+                urlNameString = restUrl(url, pathValue);
+            } else {
+                urlNameString = url;
+            }
+//			if (!param.isEmpty()) urlNameString = urlNameString.concat("?").concat(URLEncoder.encode(param, "utf-8"));
+            if (query != null) {
+                urlNameString = urlNameString.concat("?").concat(queryBuilder(query));
+            }
+            URL realUrl = new URL(urlNameString);
+            // 打开和URL之间的连接
+            URLConnection connection = realUrl.openConnection();
+            HttpURLConnection httpURLConnection = (HttpURLConnection)connection;
+            // 设置通用的请求属性
+            httpURLConnection.setRequestProperty("accept", "*/*");
+            httpURLConnection.setRequestProperty("connection", "close");
+            httpURLConnection.setRequestProperty("user-agent",
+                    "Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1;SV1)");
+            if (!authCode.isEmpty())
+                httpURLConnection.setRequestProperty("authorization", authCode);
+            // 建立实际的连接
+            long start,end;
+            logger.info("发送请求: >>>>>  " + httpURLConnection.getRequestMethod() + " " + httpURLConnection.getURL());
+            logger.info("请求数据: >>>>>  " + queryBuilder(query));
             start = System.currentTimeMillis();
             httpURLConnection.connect();
             in = new BufferedReader(new InputStreamReader(connection.getInputStream()));

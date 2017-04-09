@@ -9,7 +9,7 @@
             <class name="com.mingyizhudao.qa.tc.GetDiseasesInCategory" />
         </classes>
     </test>
-    <test name="doctor" preserve-order="true" >
+    <test name="doctoruser" preserve-order="true" >
         <classes>
             <class name="com.mingyizhudao.qa.tc.GetDoctorProfile"  />
             <class name="com.mingyizhudao.qa.tc.UpdateDoctorProfile" />
@@ -26,6 +26,7 @@
         <classes>
             <class name="com.mingyizhudao.qa.tc.CreateOrder" />
             <class name="com.mingyizhudao.qa.tc.GetOrderList" />
+            <class name="com.mingyizhudao.qa.tc.GetUploadToken" />
             <class name="com.mingyizhudao.qa.tc.GetOrderDetail" />
             <class name="com.mingyizhudao.qa.tc.UpdateMedicalRecords" />
         </classes>

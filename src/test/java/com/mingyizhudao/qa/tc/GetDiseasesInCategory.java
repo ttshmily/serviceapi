@@ -37,9 +37,9 @@ public class GetDiseasesInCategory extends BaseTest {
         String res = "";
 
         HashMap<String, String> pathValue = new HashMap<String, String>();
-        pathValue.put("diseaseCategoryId", "600000");
+        pathValue.put("id", "600000");
         try {
-            res = HttpRequest.sendGet(host+mock+uri,"", mainToken, pathValue);
+            res = HttpRequest.sendGet(host+mock+uri,"id=600000", mainToken);
         } catch (IOException e) {
             logger.error(e);
         }

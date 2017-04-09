@@ -14,10 +14,7 @@ import org.testng.annotations.BeforeMethod;
 import java.io.IOException;
 import java.io.InputStream;
 import java.lang.reflect.Method;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.Properties;
+import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -78,6 +75,9 @@ public class BaseTest {
         mainMobile = SendVerifyCode.send();
         mainToken = CheckVerifyCode.check();
         String res = GetDoctorProfile.getDoctorProfile(mainToken);
+        logger.info("mainDoctorId为"+JSONObject.fromObject(res).getJSONObject("data").getJSONObject("doctor").getString("user_id"));
+        HashMap<String, String> profile = new HashMap<String, String>();
+        UpdateDoctorProfile.updateDoctorProfile(mainToken, profile);
         CrmCertifiedDoctor.certify(JSONObject.fromObject(res).getJSONObject("data").getJSONObject("doctor").getString("user_id"));
 //        System.exit(0);
     }

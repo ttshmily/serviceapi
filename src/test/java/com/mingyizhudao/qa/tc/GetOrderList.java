@@ -7,6 +7,9 @@ import org.testng.Assert;
 import org.testng.annotations.Test;
 
 import java.io.IOException;
+import java.util.HashMap;
+
+import static org.testng.Assert.fail;
 
 /**
  * Created by ttshmily on 7/4/2017.
@@ -20,7 +23,12 @@ public class GetOrderList extends BaseTest{
     @Test
     public void 获取订单列表_登录用户() {
         String res = "";
-        CreateOrder.CreateOrder(mainToken);
+        logger.info("创建订单with mainToken");
+        String orderId = CreateOrder.CreateOrder(mainToken);
+        if (orderId.isEmpty()) {
+            logger.error("创建订单with mainToken失败");
+            fail();
+        }
         try {
             res = HttpRequest.sendGet(host+mock+uri,"", mainToken);
         } catch (IOException e) {
@@ -38,7 +46,7 @@ public class GetOrderList extends BaseTest{
         Assert.assertNotNull(parseJson(data,"order():OrderStatusText"), "订单状态描述字段缺失");
         Assert.assertNotNull(parseJson(data,"order():surgeon_id"), "手术医生ID字段不能缺失");
         Assert.assertNotNull(parseJson(data,"order():surgeon_name"), "手术医生姓名字段不能缺失");
-        Assert.assertNotEquals(parseJson(data,"order():surgeon_hospital"), "", "手术医生所在医院字段不能缺失");
+        Assert.assertNotNull(parseJson(data,"order():surgeon_hospital"), "手术医生所在医院字段不能缺失");
 
     }
 
@@ -48,9 +56,18 @@ public class GetOrderList extends BaseTest{
         SendVerifyCode.send();
         String tmpToken = CheckVerifyCode.check();
         res = GetDoctorProfile.getDoctorProfile(tmpToken);
+        HashMap<String, String> profile = new HashMap<String, String>();
+        profile.put("hospital_id","4");
+        profile.put("name", "temp-test");
+        UpdateDoctorProfile.updateDoctorProfile(tmpToken, profile);
         CrmCertifiedDoctor.certify(parseJson(JSONObject.fromObject(res), "data:doctor:user_id"));
 
+        logger.info("创建订单with tmpToken");
         String orderId1 = CreateOrder.CreateOrder(tmpToken);
+        if (orderId1.isEmpty()) {
+            logger.error("创建订单with tmpToken失败");
+            fail();
+        }
         try {
             res = HttpRequest.sendGet(host+mock+uri,"", tmpToken);
         } catch (IOException e) {
@@ -59,7 +76,12 @@ public class GetOrderList extends BaseTest{
         checkResponse(res);
         Assert.assertEquals(parseJson(data, "order(0):id"), orderId1);
 
+        logger.info("创建订单with tmpToken");
         String orderId2 = CreateOrder.CreateOrder(tmpToken);
+        if (orderId2.isEmpty()) {
+            logger.error("创建订单with tmpToken失败");
+            fail();
+        }
         try {
             res = HttpRequest.sendGet(host+mock+uri,"", tmpToken);
         } catch (IOException e) {
@@ -69,7 +91,12 @@ public class GetOrderList extends BaseTest{
         Assert.assertEquals(parseJson(data, "order(0):id"), orderId2);
         Assert.assertEquals(parseJson(data, "order(1):id"), orderId1);
 
+        logger.info("创建订单with tmpToken");
         String orderId3 = CreateOrder.CreateOrder(tmpToken);
+        if (orderId3.isEmpty()) {
+            logger.error("创建订单with tmpToken失败");
+            fail();
+        }
         try {
             res = HttpRequest.sendGet(host+mock+uri,"", tmpToken);
         } catch (IOException e) {
@@ -91,7 +118,7 @@ public class GetOrderList extends BaseTest{
         }
         checkResponse(res);
         // TODO
-        Assert.assertEquals(code, "2210304");
+        Assert.assertEquals(code, "2210304", "应当提示未登录");
     }
 
 
