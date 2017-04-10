@@ -2,6 +2,7 @@ package com.mingyizhudao.qa.tc;
 
 import com.mingyizhudao.qa.common.BaseTest;
 import com.mingyizhudao.qa.util.HttpRequest;
+import org.apache.log4j.Logger;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
@@ -11,6 +12,7 @@ import java.io.IOException;
  */
 public class GetDoctorProfile extends BaseTest {
 
+    public static final Logger logger= Logger.getLogger(GetDoctorProfile.class);
     public static String uri = "/api/getdoctorprofile";
     public static String mock = false ? "/mockjs/1" : "";
     public static String token= "";

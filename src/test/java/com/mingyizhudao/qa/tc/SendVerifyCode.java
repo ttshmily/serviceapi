@@ -4,6 +4,7 @@ import com.mingyizhudao.qa.common.BaseTest;
 import com.mingyizhudao.qa.dataprofile.MobileProfile;
 import com.mingyizhudao.qa.util.HttpRequest;
 import net.sf.json.JSONException;
+import org.apache.log4j.Logger;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
@@ -14,6 +15,7 @@ import java.io.IOException;
  */
 public class SendVerifyCode extends BaseTest{
 
+    public static final Logger logger= Logger.getLogger(SendVerifyCode.class);
     public static String uri = "/api/login/sendVerifyCode";
     public static String mock = false ? "/mockjs/1" : "";
     public static String host = "http://login.dev.mingyizhudao.com";
@@ -31,7 +33,7 @@ public class SendVerifyCode extends BaseTest{
         } catch (IOException e) {
             logger.error(e);
         }
-        logger.info("返回数据: " + unicodeString(res));
+//        logger.info("返回数据: " + unicodeString(res));
         logger.info("mobile是: " + mobile + "...请发送验证码到服务器进行验证");
         return mobile;
     }

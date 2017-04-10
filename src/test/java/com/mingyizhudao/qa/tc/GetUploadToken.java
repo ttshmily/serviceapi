@@ -2,6 +2,7 @@ package com.mingyizhudao.qa.tc;
 
 import com.mingyizhudao.qa.common.BaseTest;
 import com.mingyizhudao.qa.util.HttpRequest;
+import org.apache.log4j.Logger;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
@@ -12,6 +13,8 @@ import java.util.HashMap;
  * Created by ttshmily on 9/4/2017.
  */
 public class GetUploadToken extends BaseTest {
+
+    public static final Logger logger= Logger.getLogger(GetUploadToken.class);
     public static String uri = "/api/getuploadtoken";
     public static String mock = false ? "/mockjs/1" : "";
 

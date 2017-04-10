@@ -3,6 +3,7 @@ package com.mingyizhudao.qa.tc;
 import com.mingyizhudao.qa.common.BaseTest;
 import com.mingyizhudao.qa.util.HttpRequest;
 import net.sf.json.JSONObject;
+import org.apache.log4j.Logger;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
@@ -15,8 +16,8 @@ import static org.testng.Assert.fail;
  * Created by ttshmily on 7/4/2017.
  */
 public class GetOrderList extends BaseTest{
-    // TODO
 
+    public static final Logger logger= Logger.getLogger(GetOrderList.class);
     public static String uri = "/api/getorderlist";
     public static String mock = false ? "/mockjs/1" : "";
 
@@ -43,7 +44,7 @@ public class GetOrderList extends BaseTest{
         Assert.assertNotNull(parseJson(data,"order():patient_gender_text"), "次诉疾病ID字段缺失");
         Assert.assertNotEquals(parseJson(data,"order():order_number"), "", "订单ID字段缺失");
         Assert.assertNotEquals(parseJson(data,"order():status"), "", "订单状态字段缺失");
-        Assert.assertNotNull(parseJson(data,"order():OrderStatusText"), "订单状态描述字段缺失");
+        Assert.assertNotEquals(parseJson(data,"order():OrderStatusText"), "", "订单状态描述字段缺失");
         Assert.assertNotNull(parseJson(data,"order():surgeon_id"), "手术医生ID字段不能缺失");
         Assert.assertNotNull(parseJson(data,"order():surgeon_name"), "手术医生姓名字段不能缺失");
         Assert.assertNotNull(parseJson(data,"order():surgeon_hospital"), "手术医生所在医院字段不能缺失");
@@ -106,6 +107,23 @@ public class GetOrderList extends BaseTest{
         Assert.assertEquals(parseJson(data, "order(0):id"), orderId3);
         Assert.assertEquals(parseJson(data, "order(1):id"), orderId2);
         Assert.assertEquals(parseJson(data, "order(2):id"), orderId1);
+
+        logger.info("创建订单with tmpToken");
+        String orderId4 = CreateOrder.CreateOrder(tmpToken);
+        if (orderId4.isEmpty()) {
+            logger.error("创建订单with tmpToken失败");
+            fail();
+        }
+        try {
+            res = HttpRequest.sendGet(host+mock+uri,"", tmpToken);
+        } catch (IOException e) {
+            logger.error(e);
+        }
+        checkResponse(res);
+        Assert.assertEquals(parseJson(data, "order(0):id"), orderId4);
+        Assert.assertEquals(parseJson(data, "order(1):id"), orderId3);
+        Assert.assertEquals(parseJson(data, "order(2):id"), orderId2);
+        Assert.assertEquals(parseJson(data, "order(3):id"), orderId1);
     }
 
     @Test

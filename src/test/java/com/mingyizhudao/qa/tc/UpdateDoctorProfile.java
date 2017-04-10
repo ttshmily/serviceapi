@@ -3,6 +3,7 @@ package com.mingyizhudao.qa.tc;
 import com.mingyizhudao.qa.common.BaseTest;
 import com.mingyizhudao.qa.dataprofile.DoctorProfile;
 import com.mingyizhudao.qa.util.HttpRequest;
+import org.apache.log4j.Logger;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
@@ -14,6 +15,7 @@ import java.util.HashMap;
  */
 public class UpdateDoctorProfile extends BaseTest {
 
+    public static final Logger logger= Logger.getLogger(UpdateDoctorProfile.class);
     public static String uri = "/api/updatedoctorprofile";
     public static String mock = false ? "/mockjs/1" : "";
 

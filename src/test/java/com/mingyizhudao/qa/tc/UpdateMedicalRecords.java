@@ -4,6 +4,7 @@ import com.mingyizhudao.qa.common.BaseTest;
 import com.mingyizhudao.qa.dataprofile.MedicalRecords;
 import com.mingyizhudao.qa.util.HttpRequest;
 import net.sf.json.JSONObject;
+import org.apache.log4j.Logger;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
@@ -17,6 +18,7 @@ import static org.testng.Assert.fail;
  */
 public class UpdateMedicalRecords extends BaseTest {
 
+    public static final Logger logger= Logger.getLogger(UpdateMedicalRecords.class);
     public static String uri = "/api/updatemedicalrecords/{orderId}";
     public static String mock = false ? "/mockjs/1" : "";
 

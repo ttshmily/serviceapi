@@ -2,6 +2,7 @@ package com.mingyizhudao.qa.tc;
 
 import com.mingyizhudao.qa.common.BaseTest;
 import com.mingyizhudao.qa.util.HttpRequest;
+import org.apache.log4j.Logger;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
@@ -11,6 +12,8 @@ import java.io.IOException;
  * Created by ttshmily on 21/3/2017.
  */
 public class ProfessionList extends BaseTest {
+
+    public static final Logger logger= Logger.getLogger(ProfessionList.class);
     public static String uri = "/api/professionlist";
     public static String mock = false ? "/mockjs/1" : "";
 

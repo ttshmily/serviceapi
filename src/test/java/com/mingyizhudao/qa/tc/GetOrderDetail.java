@@ -3,6 +3,7 @@ package com.mingyizhudao.qa.tc;
 import com.mingyizhudao.qa.common.BaseTest;
 import com.mingyizhudao.qa.util.HttpRequest;
 import net.sf.json.JSONObject;
+import org.apache.log4j.Logger;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
@@ -13,9 +14,9 @@ import java.util.Map;
 /**
  * Created by ttshmily on 7/4/2017.
  */
-public class GetOrderDetail extends BaseTest{
-    // TODO
+public class GetOrderDetail extends BaseTest {
 
+    public static final Logger logger= Logger.getLogger(GetOrderDetail.class);
     public static String uri = "/api/getorderdetail/{orderId}";
     public static String mock = false ? "/mockjs/1" : "";
 
@@ -37,14 +38,15 @@ public class GetOrderDetail extends BaseTest{
         String res = "";
 
         HashMap<String, String> pathValue = new HashMap<String, String>();
-        pathValue.put("orderId", CreateOrder.CreateOrder(mainToken));
+        String orderId = CreateOrder.CreateOrder(mainToken);
+        pathValue.put("orderId", orderId);
         try {
             res = HttpRequest.sendGet(host+mock+uri,"", mainToken, pathValue);
         } catch (IOException e) {
             logger.error(e);
         }
         checkResponse(res);
-        Assert.assertNotEquals(parseJson(data,"order:id"), "", "订单ID字段缺失");
+        Assert.assertEquals(parseJson(data,"order:id"), orderId, "订单ID字段不正确");
         Assert.assertNotEquals(parseJson(data,"order:patient_name"), "", "患者姓名字段缺失");
         Assert.assertNotEquals(parseJson(data,"order:patient_gender"), "", "患者性别字段缺失");
         Assert.assertNotEquals(parseJson(data,"order:patient_phone"), "", "患者手机号字段缺失");
@@ -58,10 +60,13 @@ public class GetOrderDetail extends BaseTest{
         Assert.assertNotNull(parseJson(data,"order:expected_surgery_hospital_id"), "期望医院ID字段缺失");
         Assert.assertNotNull(parseJson(data,"order:expected_surgery_hospital_name"), "期望医院名称字段缺失");
         Assert.assertNotEquals(parseJson(data,"order:status"), "", "订单状态字段缺失");
-        Assert.assertNotNull(parseJson(data,"order:OrderStatusText"), "订单状态描述字段缺失");
+        Assert.assertNotEquals(parseJson(data,"order:OrderStatusText"), "", "订单状态描述字段缺失");
         Assert.assertNotEquals(parseJson(data,"order:created_at"), "", "订单创建时间字段缺失");
-        Assert.assertNotEquals(parseJson(data,"order:order_number"), "", "订单号时间字段缺失");
-        Assert.assertNotEquals(parseJson(data,"order:pics"), "", "订单号时间字段缺失");
+        Assert.assertEquals(parseJson(data,"order:order_number"), orderId, "订单号字段缺失");
+        Assert.assertNotEquals(parseJson(data,"order:medical_record_pictures():type"), "", "订单号时间字段缺失");
+        Assert.assertNotEquals(parseJson(data,"order:medical_record_pictures():key"), "", "订单号时间字段缺失");
+        Assert.assertNotEquals(parseJson(data,"order:medical_record_pictures():url"), "", "订单号时间字段缺失");
+
 
     }
 

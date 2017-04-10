@@ -28,6 +28,7 @@ public class BaseTest {
     public static String protocol = "";
     public static String mainMobile = "";
     public static String mainToken = "";
+    public static String mainDoctorId = "";
 
     public String code = "";
     public String message = "";
@@ -75,10 +76,14 @@ public class BaseTest {
         mainMobile = SendVerifyCode.send();
         mainToken = CheckVerifyCode.check();
         String res = GetDoctorProfile.getDoctorProfile(mainToken);
-        logger.info("mainDoctorId为"+JSONObject.fromObject(res).getJSONObject("data").getJSONObject("doctor").getString("user_id"));
-        HashMap<String, String> profile = new HashMap<String, String>();
-        UpdateDoctorProfile.updateDoctorProfile(mainToken, profile);
+        mainDoctorId = JSONObject.fromObject(res).getJSONObject("data").getJSONObject("doctor").getString("user_id");
+        logger.info("mainDoctorId为"+mainDoctorId);
+        logger.info("更新医生信息：");
+        UpdateDoctorProfile.updateDoctorProfile(mainToken, null);
+//        System.exit(0);
+        logger.info("认证医生：");
         CrmCertifiedDoctor.certify(JSONObject.fromObject(res).getJSONObject("data").getJSONObject("doctor").getString("user_id"));
+        res = GetDoctorProfile.getDoctorProfile(mainToken);
 //        System.exit(0);
     }
 
@@ -94,6 +99,10 @@ public class BaseTest {
     @AfterClass
     public void tearDownClass() throws Exception {
 
+        logger.info("Test Cleaning...");
+        logger.info("mainDoctorId为"+mainDoctorId);
+        logger.info("恢复医生信息：");
+        UpdateDoctorProfile.updateDoctorProfile(mainToken, null);
         logger.info("============================================================================================================= ");
         logger.info("||    TestAPI END:\t" + getClass().getSimpleName());
         logger.info("============================================================================================================= \n");
@@ -111,28 +120,6 @@ public class BaseTest {
     public void tearDownTC(Method method) {
         logger.info("TestCase END:\t" + method.getName());
         logger.info("<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< \n");
-    }
-
-    public static String unicodeString( String strArr )
-    {
-        List<String> list	= new ArrayList<String>();
-        String		zz	= "\\\\u[0-9,a-z,A-Z]{4}";
-		/* 正则表达式用法参考API */
-        Pattern pattern = Pattern.compile( zz );
-        Matcher m	= pattern.matcher( strArr );
-        while ( m.find() )
-        {
-            list.add( m.group() );
-        }
-        for ( int i = 0, j = 2; i < list.size(); i++ )
-        {
-            String st = list.get( i ).substring( j, j + 4 );
-			/* 将得到的数�?�按�?16进制解析为十进制整数，再強转为字�? */
-            char ch = (char) Integer.parseInt( st, 16 );
-			/* 用得到的字符替换编码表达�? */
-            strArr = strArr.replace( list.get( i ), String.valueOf( ch ) );
-        }
-        return(strArr);
     }
 
     public static String parseJson(JSONObject node, String path) {

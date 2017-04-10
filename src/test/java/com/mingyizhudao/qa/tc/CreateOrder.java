@@ -4,6 +4,7 @@ import com.mingyizhudao.qa.common.BaseTest;
 import com.mingyizhudao.qa.dataprofile.OrderDetail;
 import com.mingyizhudao.qa.util.HttpRequest;
 import net.sf.json.JSONObject;
+import org.apache.log4j.Logger;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
@@ -13,8 +14,8 @@ import java.io.IOException;
  * Created by ttshmily on 7/4/2017.
  */
 public class CreateOrder extends BaseTest {
-    // TODO
 
+    public static final Logger logger= Logger.getLogger(CreateOrder.class);
     public static String uri = "/api/createorder";
     public static String mock = false ? "/mockjs/1" : "";
 
@@ -26,7 +27,7 @@ public class CreateOrder extends BaseTest {
         } catch (IOException e) {
             logger.error(e);
         }
-        logger.debug(unicodeString(res));
+//        logger.debug(unicodeString(res));
         String tmpOrderId = parseJson(JSONObject.fromObject(res), "data:order_id");
         if (null != tmpOrderId && !tmpOrderId.isEmpty()) {
             logger.info("orderId是: " + tmpOrderId);
@@ -74,7 +75,7 @@ public class CreateOrder extends BaseTest {
         // TODO
         Assert.assertEquals(parseJson(data,"order:expected_surgery_hospital_name"), "首都医科大学附属北京口腔医院","期望医院名称字段不正确");
         Assert.assertEquals(parseJson(data,"order:status"), "1000", "新建订单状态应当为1000");
-        Assert.assertEquals(parseJson(data,"order:OrderStatusText"), "处理中", "新建订单状态描述应当为'处理中'");
+        Assert.assertEquals(parseJson(data,"order:OrderStatusText"), "待处理", "新建订单状态描述应当为'处理中'");
         Assert.assertNotEquals(parseJson(data,"order:created_at"), "", "订单创建时间字段缺失");
         Assert.assertNotEquals(parseJson(data,"order:order_number"), "", "订单号时间字段不正确");
         Assert.assertEquals(parseJson(data,"order:pics"), "", "订单号时间字段缺失");

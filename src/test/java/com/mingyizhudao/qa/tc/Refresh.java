@@ -4,6 +4,7 @@ import com.mingyizhudao.qa.common.BaseTest;
 import com.mingyizhudao.qa.dataprofile.RefreshProfile;
 import com.mingyizhudao.qa.util.HttpRequest;
 import net.sf.json.JSONException;
+import org.apache.log4j.Logger;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
@@ -14,6 +15,7 @@ import java.io.IOException;
  */
 public class Refresh extends BaseTest{
 
+    public static final Logger logger= Logger.getLogger(Refresh.class);
     public static String uri = "/api/login/refresh";
     public static String mock = false ? "/mockjs/1" : "";
     public static String host = "http://login.dev.mingyizhudao.com";

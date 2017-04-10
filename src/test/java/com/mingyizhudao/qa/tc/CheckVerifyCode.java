@@ -4,6 +4,7 @@ import com.mingyizhudao.qa.common.BaseTest;
 import com.mingyizhudao.qa.dataprofile.CheckMobileProfile;
 import com.mingyizhudao.qa.util.HttpRequest;
 import net.sf.json.JSONObject;
+import org.apache.log4j.Logger;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
@@ -14,6 +15,7 @@ import java.io.IOException;
  */
 public class CheckVerifyCode extends BaseTest{
 
+    public static final Logger logger= Logger.getLogger(CheckVerifyCode.class);
     public static String uri = "/api/login/checkVerifyCode";
     public static String mock = false ? "/mockjs/1" : "";
     public static String host = "http://login.dev.mingyizhudao.com";

@@ -2,6 +2,7 @@ package com.mingyizhudao.qa.tc;
 
 import com.mingyizhudao.qa.common.BaseTest;
 import com.mingyizhudao.qa.util.HttpRequest;
+import org.apache.log4j.Logger;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
@@ -12,7 +13,8 @@ import java.util.HashMap;
  * Created by ttshmily on 7/4/2017.
  */
 public class GetDiseasesInCategory extends BaseTest {
-    // TODO
+
+    public static final Logger logger= Logger.getLogger(GetDiseasesInCategory.class);
     public static String uri = "/api/getdiseasesincategory";
     public static String mock = false ? "/mockjs/1" : "";
 
