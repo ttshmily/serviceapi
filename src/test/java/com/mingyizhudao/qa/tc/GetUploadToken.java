@@ -3,6 +3,7 @@ package com.mingyizhudao.qa.tc;
 import com.mingyizhudao.qa.common.BaseTest;
 import com.mingyizhudao.qa.util.HttpRequest;
 import org.apache.log4j.Logger;
+import org.junit.Ignore;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
@@ -127,7 +128,7 @@ public class GetUploadToken extends BaseTest {
         Assert.assertEquals(code, "1000000");
     }
 
-    @Test
+    @Ignore
     public void 获取文件名无后缀名图片token_失败() {
 
         String res = "";

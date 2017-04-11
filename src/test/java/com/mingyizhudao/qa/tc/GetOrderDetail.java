@@ -81,8 +81,7 @@ public class GetOrderDetail extends BaseTest {
             logger.error(e);
         }
         checkResponse(res);
-        Assert.assertNull(data, "order:id");
-
+        Assert.assertEquals(code, "2210420");
     }
 
     @Test

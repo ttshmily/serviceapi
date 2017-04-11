@@ -70,7 +70,7 @@ public class UpdateMedicalRecords extends BaseTest {
         pathValue.put("orderId", orderId);
 
         logger.info("姓名为中文");
-        mr.body.getJSONObject("order").replace("patient_name", "updatedName");
+        mr.body.getJSONObject("order").replace("patient_name", "大头猪");
         try {
             res = HttpRequest.sendPut(host+mock+uri, mr.body.toString(), mainToken, pathValue);
         } catch (IOException e) {
@@ -78,12 +78,11 @@ public class UpdateMedicalRecords extends BaseTest {
         }
         checkResponse(res);
         Assert.assertEquals(code, "1000000", "更新订单失败");
-        Assert.assertEquals(parseJson(data, "order:order_number"), orderId, "返回的订单ID有误");
         logger.info("查看刚刚更新的订单详情");
         res = GetOrderDetail.getOrderDetail(mainToken, orderId);
         checkResponse(res);
         Assert.assertEquals(code, "1000000", "查看订单失败");
-        Assert.assertEquals(parseJson(data, "order:patient_name"), "updatedName", "patient_name未更新");
+        Assert.assertEquals(parseJson(data, "order:patient_name"), "大头猪", "patient_name未更新");
 
         logger.info("姓名为中文字母组合");
         mr.body.getJSONObject("order").replace("patient_name", "方超xyz");
@@ -94,7 +93,6 @@ public class UpdateMedicalRecords extends BaseTest {
         }
         checkResponse(res);
         Assert.assertEquals(code, "1000000", "更新订单失败");
-        Assert.assertEquals(parseJson(data, "order:order_number"), orderId, "返回的订单ID有误");
         logger.info("查看刚刚更新的订单详情");
         res = GetOrderDetail.getOrderDetail(mainToken, orderId);
         checkResponse(res);
@@ -110,12 +108,11 @@ public class UpdateMedicalRecords extends BaseTest {
         }
         checkResponse(res);
         Assert.assertEquals(code, "1000000", "更新订单失败");
-        Assert.assertEquals(parseJson(data, "order:order_number"), orderId, "返回的订单ID有误");
         logger.info("查看刚刚更新的订单详情");
         res = GetOrderDetail.getOrderDetail(mainToken, orderId);
         checkResponse(res);
         Assert.assertEquals(code, "1000000", "查看订单失败");
-        Assert.assertEquals(parseJson(data, "order:patient_name"), "方超xyz", "patient_name未更新");
+        Assert.assertEquals(parseJson(data, "order:patient_name"), "方超xyz惺惺惜惺惺想寻寻寻寻寻寻寻寻寻寻寻寻寻寻寻寻寻寻寻寻寻寻寻寻寻寻寻寻寻寻寻寻寻寻", "patient_name未更新");
 
     }
 
@@ -151,6 +148,7 @@ public class UpdateMedicalRecords extends BaseTest {
         checkResponse(res);
         Assert.assertEquals(code, "1000000", "查看订单失败");
         Assert.assertEquals(parseJson(data, "order:patient_age"), age, "年龄为-1，不应该更新成功");
+        logger.info("禁止更新年龄为-1");
 
         logger.info("更新年龄为0");
         mr.body.getJSONObject("order").replace("patient_age", "0");
@@ -166,6 +164,7 @@ public class UpdateMedicalRecords extends BaseTest {
         checkResponse(res);
         Assert.assertEquals(code, "1000000", "查看订单失败");
         Assert.assertEquals(parseJson(data, "order:patient_age"), age, "年龄为0，不应该更新成功");
+        logger.info("禁止更新年龄为0");
 
         logger.info("更新年龄为:1000000009999999999900000000000000000000000000000000000000");
         mr.body.getJSONObject("order").replace("patient_age", "1000000009999999999900000000000000000000000000000000000000");
@@ -181,9 +180,9 @@ public class UpdateMedicalRecords extends BaseTest {
         checkResponse(res);
         Assert.assertEquals(code, "1000000", "查看订单失败");
         Assert.assertEquals(parseJson(data, "order:patient_age"), age, "年龄为1000000009999999999900000000000000000000000000000000000000，不应该更新成功");
+        logger.info("禁止更新年龄为:1000000009999999999900000000000000000000000000000000000000");
 
-
-        logger.info("更新年龄为103");
+        logger.info("更新年龄为103。。。");
         mr.body.getJSONObject("order").replace("patient_age", "103");
         try {
             res = HttpRequest.sendPut(host + mock + uri, mr.body.toString(), mainToken, pathValue);
@@ -197,6 +196,7 @@ public class UpdateMedicalRecords extends BaseTest {
         checkResponse(res);
         Assert.assertEquals(code, "1000000", "查看订单失败");
         Assert.assertEquals(parseJson(data, "order:patient_age"), "103", "年龄不为103，更新未成功");
+        logger.info("更新年龄为103成功");
     }
 
     @Test
@@ -225,11 +225,13 @@ public class UpdateMedicalRecords extends BaseTest {
         }
         checkResponse(res);
         Assert.assertNotEquals(code, "1000000", "更新异常数据成功");
+        Assert.assertEquals(code, "2210416", "更新异常数据成功");
         logger.info("查看刚刚更新的订单详情");
         res = GetOrderDetail.getOrderDetail(mainToken, orderId);
         checkResponse(res);
         Assert.assertEquals(code, "1000000", "查看订单失败");
         Assert.assertEquals(parseJson(data, "order:major_disease_id"), mdid, "主诉疾病为-1，不应该更新成功");
+        logger.info("禁止更新主诉疾病为-1");
 
         logger.info("更新主诉疾病为0");
         mr.body.replace("major_disease_id", "0");
@@ -240,11 +242,13 @@ public class UpdateMedicalRecords extends BaseTest {
         }
         checkResponse(res);
         Assert.assertNotEquals(code, "1000000", "更新异常数据成功");
+        Assert.assertEquals(code, "2210416", "更新异常数据成功");
         logger.info("查看刚刚更新的订单详情");
         res = GetOrderDetail.getOrderDetail(mainToken, orderId);
         checkResponse(res);
         Assert.assertEquals(code, "1000000", "查看订单失败");
         Assert.assertEquals(parseJson(data, "order:major_disease_id"), mdid, "主诉疾病为0，不应该更新成功");
+        logger.info("禁止更新主诉疾病为0");
 
         logger.info("更新主诉疾病为30000000000");
         mr.body.getJSONObject("order").replace("major_disease_id", "30000000000");
@@ -260,6 +264,7 @@ public class UpdateMedicalRecords extends BaseTest {
         checkResponse(res);
         Assert.assertEquals(code, "1000000", "查看订单失败");
         Assert.assertEquals(parseJson(data, "order:major_disease_id"), mdid, "主诉疾病为30000000000，不应该更新成功");
+        logger.info("禁止更新主诉疾病为30000000000");
 
         logger.info("更新主诉疾病为100");
         mr.body.getJSONObject("order").replace("major_disease_id", "100");
@@ -275,6 +280,7 @@ public class UpdateMedicalRecords extends BaseTest {
         checkResponse(res);
         Assert.assertEquals(code, "1000000", "查看订单失败");
         Assert.assertEquals(parseJson(data, "order:major_disease_id"), "100", "主诉疾病100，未更新成功");
+        logger.info("更新主诉疾病为100成功");
 
         logger.info("更新主诉疾病为40");
         mr.body.getJSONObject("order").replace("major_disease_id", "40");
@@ -290,6 +296,8 @@ public class UpdateMedicalRecords extends BaseTest {
         checkResponse(res);
         Assert.assertEquals(code, "1000000", "查看订单失败");
         Assert.assertEquals(parseJson(data, "order:major_disease_id"), "40", "主诉疾病40，未更新成功");
+        logger.info("更新主诉疾病为40成功");
+
     }
 
     @Test
@@ -323,7 +331,7 @@ public class UpdateMedicalRecords extends BaseTest {
         checkResponse(res);
         Assert.assertEquals(code, "1000000", "查看订单失败");
         Assert.assertEquals(parseJson(data, "order:minor_disease_id"), mdId, "次诉疾病为-1，不应该更新成功");
-
+        logger.info("禁止更新次诉疾病为-1");
 
         logger.info("更新次诉疾病为0");
         mr.body.getJSONObject("order").replace("minor_disease_id", "0");
@@ -339,7 +347,7 @@ public class UpdateMedicalRecords extends BaseTest {
         checkResponse(res);
         Assert.assertEquals(code, "1000000", "查看订单失败");
         Assert.assertEquals(parseJson(data, "order:minor_disease_id"), mdId, "次诉疾病为0，不应该更新成功");
-
+        logger.info("禁止更新次诉疾病为0");
 
         logger.info("更新次诉疾病为30000000000");
         mr.body.getJSONObject("order").replace("minor_disease_id", "30000000000");
@@ -355,6 +363,7 @@ public class UpdateMedicalRecords extends BaseTest {
         checkResponse(res);
         Assert.assertEquals(code, "1000000", "查看订单失败");
         Assert.assertEquals(parseJson(data, "order:minor_disease_id"), mdId, "次诉疾病为30000000000，不应该更新成功");
+        logger.info("禁止更新次诉疾病为30000000000");
 
         logger.info("更新次诉疾病为100");
         mr.body.getJSONObject("order").replace("minor_disease_id", "100");
@@ -370,6 +379,7 @@ public class UpdateMedicalRecords extends BaseTest {
         checkResponse(res);
         Assert.assertEquals(code, "1000000", "查看订单失败");
         Assert.assertEquals(parseJson(data, "order:minor_disease_id"), "100", "次诉疾病100，未更新成功");
+        logger.info("更新次诉疾病为100成功");
 
         logger.info("更新次诉疾病为40");
         mr.body.getJSONObject("order").replace("minor_disease_id", "40");
@@ -385,6 +395,7 @@ public class UpdateMedicalRecords extends BaseTest {
         checkResponse(res);
         Assert.assertEquals(code, "1000000", "查看订单失败");
         Assert.assertEquals(parseJson(data, "order:minor_disease_id"), "40", "次诉疾病40，未更新成功");
+        logger.info("更新次诉疾病为40成功");
 
     }
 
@@ -565,14 +576,13 @@ public class UpdateMedicalRecords extends BaseTest {
         }
         res = GetOrderDetail.getOrderDetail(mainToken, orderId);
         checkResponse(res);
-        String diag = parseJson(data, "order:medical_record_pictures()");
+//        String diag = parseJson(data, "order:medical_record_pictures()");
         HashMap<String, String> pathValue = new HashMap<String, String>();
         pathValue.put("orderId", orderId);
-        MedicalRecords mr = new MedicalRecords(true);
 
-        logger.info("删除一张图片，新增一张图片。。。");
-//        mr.body.getJSONObject("order").getJSONArray("medical_record_pictures").remove(1);
-        mr.body.getJSONObject("order").getJSONArray("medical_record_pictures").add(0, JSONObject.fromObject("{'key':'789';'type':'1'}"));
+
+        logger.info("新增一张图片。。。");
+        MedicalRecords mr = new MedicalRecords(true); //默认的record中已经新增了一张
         try {
             res = HttpRequest.sendPut(host + mock + uri, mr.body.toString(), mainToken, pathValue);
         } catch (IOException e) {
@@ -584,8 +594,14 @@ public class UpdateMedicalRecords extends BaseTest {
         res = GetOrderDetail.getOrderDetail(mainToken, orderId);
         checkResponse(res);
         Assert.assertEquals(code, "1000000", "查看订单失败");
+        Assert.assertEquals(parseJson(data, "order:medical_record_pictures(0):key"), "123");
+        Assert.assertNotNull(parseJson(data, "order:medical_record_pictures(0):url"), "没有图片URL");
+        Assert.assertEquals(parseJson(data, "order:medical_record_pictures(1):key"), "456");
+        Assert.assertNotNull(parseJson(data, "order:medical_record_pictures(1):url"), "没有图片URL");
+        Assert.assertEquals(parseJson(data, "order:medical_record_pictures(2):key"), "789");
+        Assert.assertNotNull(parseJson(data, "order:medical_record_pictures(2):url"), "没有图片URL");
 
-        logger.info("新增一张图片。。。");
+        logger.info("再新增一张图片。。。");
         mr.body.getJSONObject("order").getJSONArray("medical_record_pictures").add(0, JSONObject.fromObject("{'key':'abc';'type':'1'}"));
         try {
             res = HttpRequest.sendPut(host + mock + uri, mr.body.toString(), mainToken, pathValue);
@@ -598,6 +614,33 @@ public class UpdateMedicalRecords extends BaseTest {
         res = GetOrderDetail.getOrderDetail(mainToken, orderId);
         checkResponse(res);
         Assert.assertEquals(code, "1000000", "查看订单失败");
+        Assert.assertEquals(parseJson(data, "order:medical_record_pictures(0):key"), "abc");
+        Assert.assertNotNull(parseJson(data, "order:medical_record_pictures(0):url"), "没有图片URL");
+        Assert.assertEquals(parseJson(data, "order:medical_record_pictures(1):key"), "123");
+        Assert.assertNotNull(parseJson(data, "order:medical_record_pictures(1):url"), "没有图片URL");
+        Assert.assertEquals(parseJson(data, "order:medical_record_pictures(2):key"), "456");
+        Assert.assertNotNull(parseJson(data, "order:medical_record_pictures(2):url"), "没有图片URL");
+        Assert.assertEquals(parseJson(data, "order:medical_record_pictures(3):key"), "789");
+        Assert.assertNotNull(parseJson(data, "order:medical_record_pictures(3):url"), "没有图片URL");
+
+        logger.info("删除二张图片。。。");
+        mr.body.getJSONObject("order").getJSONArray("medical_record_pictures").remove(3);
+        mr.body.getJSONObject("order").getJSONArray("medical_record_pictures").remove(0);
+        try {
+            res = HttpRequest.sendPut(host + mock + uri, mr.body.toString(), mainToken, pathValue);
+        } catch (IOException e) {
+            logger.error(e);
+        }
+        checkResponse(res);
+        Assert.assertEquals(code, "1000000", "更新正常数据未成功");
+        logger.info("查看刚刚更新的订单详情");
+        res = GetOrderDetail.getOrderDetail(mainToken, orderId);
+        checkResponse(res);
+        Assert.assertEquals(code, "1000000", "查看订单失败");
+        Assert.assertEquals(parseJson(data, "order:medical_record_pictures(0):key"), "123");
+        Assert.assertNotNull(parseJson(data, "order:medical_record_pictures(0):url"), "没有图片URL");
+        Assert.assertEquals(parseJson(data, "order:medical_record_pictures(1):key"), "456");
+        Assert.assertNotNull(parseJson(data, "order:medical_record_pictures(1):url"), "没有图片URL");
     }
 
 }

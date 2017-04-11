@@ -24,6 +24,7 @@ public class MedicalRecords {
             order.accumulate("expected_surgery_due_date", "2017-05-09");
             order.accumulate("expected_surgery_hospital_id", "43");
             order.accumulate("medical_record_pictures", JSONObject.fromObject("{'key':'123';'type':'1'}"));
+            order.accumulate("medical_record_pictures", JSONObject.fromObject("{'key':'456';'type':'1'}"));
             order.accumulate("medical_record_pictures", JSONObject.fromObject("{'key':'789';'type':'1'}"));
         } else {
             order.accumulate("patient_name", "");
@@ -40,5 +41,4 @@ public class MedicalRecords {
         }
         this.body.accumulate("order", order);
     }
-
 }

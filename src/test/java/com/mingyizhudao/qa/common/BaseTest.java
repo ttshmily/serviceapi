@@ -24,8 +24,8 @@ import java.util.regex.Pattern;
 public class BaseTest {
 
     public static final Logger logger= Logger.getLogger(BaseTest.class);
-    public static String host = "";
     public static String protocol = "";
+    public static String host = "";
     public static String mainMobile = "";
     public static String mainToken = "";
     public static String mainDoctorId = "";
@@ -55,6 +55,10 @@ public class BaseTest {
 
         {
             // 初始化配置文件中的变量
+            for (String key:prop.stringPropertyNames()
+                 ) {
+                key = prop.getProperty(key);
+            }
             protocol = prop.getProperty("protocol");
             host = prop.getProperty("host");
             SendVerifyCode.host = prop.getProperty("SendVerifyCode.host");
@@ -64,6 +68,8 @@ public class BaseTest {
             Refresh.host = prop.getProperty("Refresh.host");
             Refresh.uri = prop.getProperty("Refresh.uri");
             CrmCertifiedDoctor.uri = prop.getProperty("CrmCertifiedDoctor.uri");
+            GetDoctorProfile.uri = prop.getProperty("GetDoctorProfile.uri");
+            UpdateDoctorProfile.uri = prop.getProperty("UpdateDoctorProfile.uri");
             host = protocol.concat(host);
             SendVerifyCode.host = protocol.concat(SendVerifyCode.host);
             CheckVerifyCode.host = protocol.concat(CheckVerifyCode.host);
@@ -80,7 +86,6 @@ public class BaseTest {
         logger.info("mainDoctorId为"+mainDoctorId);
         logger.info("更新医生信息：");
         UpdateDoctorProfile.updateDoctorProfile(mainToken, null);
-//        System.exit(0);
         logger.info("认证医生：");
         CrmCertifiedDoctor.certify(JSONObject.fromObject(res).getJSONObject("data").getJSONObject("doctor").getString("user_id"));
         res = GetDoctorProfile.getDoctorProfile(mainToken);
@@ -123,11 +128,14 @@ public class BaseTest {
     }
 
     public static String parseJson(JSONObject node, String path) {
+
+        if (node == null) return null;
+
         if (!path.contains(":")) {
             if ( path.indexOf("(")+1 == path.indexOf(")") ) {
-                if (node.getJSONArray(path.substring(0,path.length()-2)).size() > 0) { //jsonArray不为空
+                if (node.getJSONArray(path.substring(0,path.length()-2)).size() >= 0) { //jsonArray不为空
                     logger.info(path.substring(0, path.indexOf("(")) + "的长度为: " + node.getJSONArray(path.substring(0, path.length() - 2)).size());
-                    return node.getJSONArray(path.substring(0, path.length() - 2)).getString(0);
+                    return String.valueOf(node.getJSONArray(path.substring(0,path.length()-2)).size());
                 } else {
                     return null;
                 }
@@ -150,8 +158,6 @@ public class BaseTest {
 
         String nextPath = path.substring(path.indexOf(":")+1);
         String head = path.substring(0,path.indexOf(":"));
-//        logger.debug(nextPath);
-//        logger.debug(head);
         if ( head.indexOf("(")+1 == head.indexOf(")") ) {
             if (node.getJSONArray(head.substring(0,head.indexOf("("))).size() > 0)
                 return parseJson(node.getJSONArray(head.substring(0,head.length()-2)).getJSONObject(0),nextPath);
@@ -174,7 +180,7 @@ public class BaseTest {
 
     public void checkResponse(String res) throws JSONException {
         JSONObject json = JSONObject.fromObject(res);
-        this.data = json.getJSONObject("data");
+        this.data = json.getJSONObject("data").equals("null") ? null : json.getJSONObject("data");
         this.code = json.getString("code");
         this.message = json.getString("message");
         logger.info("<<<<<< [ code ]:\t" + code);

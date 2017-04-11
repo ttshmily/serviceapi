@@ -63,22 +63,23 @@ public class CreateOrder extends BaseTest {
         Assert.assertEquals(parseJson(data,"order:patient_age"), "31", "患者年龄字段存储不正确");
         Assert.assertEquals(parseJson(data,"order:patient_phone"), "13817634203", "患者手机号字段存储不正确");
         Assert.assertEquals(parseJson(data,"order:major_disease_id"), "33", "主诉疾病ID字段存储不正确");
-        // TODO
+
         Assert.assertEquals(parseJson(data,"order:major_disease_name"), "非典型纤维黄色瘤", "主诉疾病名称不正确");
         Assert.assertEquals(parseJson(data,"order:minor_disease_id"), "32", "次诉疾病ID字段存储不正确");
-        // TODO
+
         Assert.assertEquals(parseJson(data,"order:minor_disease_name"), "肺癌皮肤转移", "次诉疾病名称不正确");
         Assert.assertEquals(parseJson(data,"order:diagnosis"), "工程师", "病例描述字段存储不正确");
         Assert.assertEquals(parseJson(data,"order:expected_surgery_start_date"), "2017-04-09", "期望手术最早开始时间字段存储不正确");
         Assert.assertEquals(parseJson(data,"order:expected_surgery_due_date"), "2017-05-09", "期望手术最晚开始时间字段存储不正确");
         Assert.assertEquals(parseJson(data,"order:expected_surgery_hospital_id"), "43", "期望医院ID存储不正确");
-        // TODO
+
         Assert.assertEquals(parseJson(data,"order:expected_surgery_hospital_name"), "首都医科大学附属北京口腔医院","期望医院名称字段不正确");
         Assert.assertEquals(parseJson(data,"order:status"), "1000", "新建订单状态应当为1000");
         Assert.assertEquals(parseJson(data,"order:OrderStatusText"), "待处理", "新建订单状态描述应当为'处理中'");
         Assert.assertNotEquals(parseJson(data,"order:created_at"), "", "订单创建时间字段缺失");
-        Assert.assertNotEquals(parseJson(data,"order:order_number"), "", "订单号时间字段不正确");
-        Assert.assertEquals(parseJson(data,"order:pics"), "", "订单号时间字段缺失");
+        Assert.assertEquals(parseJson(data,"order:order_number"), orderId, "订单号字段不正确");
+        Assert.assertNotNull(parseJson(data,"order:medical_record_pictures()"), "病例图片字段缺失");
+        Assert.assertNotNull(parseJson(data,"order:medical_record_pictures():url"), "病例图片url字段缺失");
 
     }
 
@@ -289,6 +290,7 @@ public class CreateOrder extends BaseTest {
         }
         checkResponse(res);
         Assert.assertEquals(code, "2210409");
+        Assert.assertEquals(message, "医生未认证");
     }
 
 }

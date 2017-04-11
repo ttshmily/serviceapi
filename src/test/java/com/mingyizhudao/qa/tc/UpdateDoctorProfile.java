@@ -18,6 +18,8 @@ public class UpdateDoctorProfile extends BaseTest {
     public static final Logger logger= Logger.getLogger(UpdateDoctorProfile.class);
     public static String uri = "/api/updatedoctorprofile";
     public static String mock = false ? "/mockjs/1" : "";
+    public static String token= "";
+
 
 
     public static String updateDoctorProfile(String token, HashMap<String, String> map) {
@@ -177,10 +179,10 @@ public class UpdateDoctorProfile extends BaseTest {
     @Test
     public void 禁止更新hospital_name字段() {
         String res = "";
-        DoctorProfile body = new DoctorProfile(false);
-        body.body.getJSONObject("doctor").replace("hospital_name", "测试医院");
+        DoctorProfile dp = new DoctorProfile(true);
+        dp.body.getJSONObject("doctor").replace("hospital_name", "测试医院");
         try {
-            res = HttpRequest.sendPost(host+mock+uri, body.body.toString(), mainToken);
+            res = HttpRequest.sendPost(host+mock+uri, dp.body.toString(), mainToken);
         } catch (IOException e) {
             logger.error(e);
         }
@@ -189,15 +191,12 @@ public class UpdateDoctorProfile extends BaseTest {
         res = GetDoctorProfile.getDoctorProfile(mainToken);
         checkResponse(res);
         Assert.assertNotEquals(parseJson(data, "doctor:hospital_name"), "测试医院", "医院名称不应该改变");
-    }
 
-    @Test
-    public void 禁止更新major_name字段() {
-        String res = "";
-        DoctorProfile body = new DoctorProfile(false);
-        body.body.getJSONObject("doctor").replace("major_name", "测试专业");
+        logger.info("同时传入major_id和hospital_name");
+        dp.body.getJSONObject("doctor").replace("hospital_name", "测试医院");
+        dp.body.getJSONObject("doctor").replace("major_id", "8");
         try {
-            res = HttpRequest.sendPost(host+mock+uri, body.body.toString(), mainToken);
+            res = HttpRequest.sendPost(host+mock+uri, dp.body.toString(), mainToken);
         } catch (IOException e) {
             logger.error(e);
         }
@@ -205,7 +204,109 @@ public class UpdateDoctorProfile extends BaseTest {
         Assert.assertEquals(code, "1000000");
         res = GetDoctorProfile.getDoctorProfile(mainToken);
         checkResponse(res);
-        Assert.assertNotEquals(parseJson(data, "doctor:hospital_name"), "测试专业", "专业名称不应该改变");
+        Assert.assertEquals(parseJson(data, "doctor:major_id"), "8");
+        Assert.assertNotEquals(parseJson(data, "doctor:hospital_name"), "测试医院", "医院名称不应该改变");
+
+        logger.info("同时传入inviter_id和hospital_name");
+        dp.body.getJSONObject("doctor").replace("hospital_name", "测试医院");
+        dp.body.getJSONObject("doctor").replace("inviter_id", "SH0003");
+        try {
+            res = HttpRequest.sendPost(host+mock+uri, dp.body.toString(), mainToken);
+        } catch (IOException e) {
+            logger.error(e);
+        }
+        checkResponse(res);
+        Assert.assertEquals(code, "1000000");
+        res = GetDoctorProfile.getDoctorProfile(mainToken);
+        checkResponse(res);
+        Assert.assertEquals(parseJson(data, "doctor:inviter_id"), "SH0003");
+        Assert.assertNotEquals(parseJson(data, "doctor:hospital_name"), "测试医院", "医院名称不应该改变");
+
+        logger.info("同时传入name和hospital_name");
+        dp.body.getJSONObject("doctor").replace("name","大一测试名称");
+        dp.body.getJSONObject("doctor").replace("hospital_name","测试医院");
+        try {
+            res = HttpRequest.sendPost(host+mock+uri, dp.body.toString(), mainToken);
+
+        } catch (IOException e) {
+            logger.error(e);
+        }
+        checkResponse(res);
+        Assert.assertEquals(code, "1000000");
+        res = GetDoctorProfile.getDoctorProfile(mainToken);
+        checkResponse(res);
+        Assert.assertEquals(code, "1000000");
+        Assert.assertEquals(parseJson(data, "doctor:name"), "大一测试名称");
+        Assert.assertNotEquals(parseJson(data, "doctor:hospital_name"), "测试医院", "专业名称不应该改变");
+    }
+
+    @Test
+    public void 禁止更新major_name字段() {
+        String res = "";
+        DoctorProfile dp = new DoctorProfile(true);
+        dp.body.getJSONObject("doctor").replace("major_name", "测试专业");
+        try {
+            res = HttpRequest.sendPost(host+mock+uri, dp.body.toString(), mainToken);
+        } catch (IOException e) {
+            logger.error(e);
+        }
+        checkResponse(res);
+        Assert.assertEquals(code, "1000000");
+        res = GetDoctorProfile.getDoctorProfile(mainToken);
+        checkResponse(res);
+        Assert.assertNotEquals(parseJson(data, "doctor:major_name"), "测试专业", "专业名称不应该改变");
+
+        logger.info("同时传入hospital_id和major_name");
+        dp.body.getJSONObject("doctor").replace("hospital_id","2");
+        dp.body.getJSONObject("doctor").replace("major_name","test_major");
+        try {
+            res = HttpRequest.sendPost(host+mock+uri, dp.body.toString(), mainToken);
+
+        } catch (IOException e) {
+            logger.error(e);
+        }
+        checkResponse(res);
+        Assert.assertEquals(code, "1000000");
+        res = GetDoctorProfile.getDoctorProfile(mainToken);
+        checkResponse(res);
+        Assert.assertEquals(code, "1000000");
+        Assert.assertEquals(parseJson(data, "doctor:hospital_id"), "2");
+        Assert.assertNotEquals(parseJson(data, "doctor:major_name"), "测试专业", "专业名称不应该改变");
+
+        logger.info("同时传入inviter_id和major_name");
+        dp.body.getJSONObject("doctor").replace("inviter_id","SH0002");
+        dp.body.getJSONObject("doctor").replace("major_name","test_major");
+        try {
+            res = HttpRequest.sendPost(host+mock+uri, dp.body.toString(), mainToken);
+
+        } catch (IOException e) {
+            logger.error(e);
+        }
+        checkResponse(res);
+        Assert.assertEquals(code, "1000000");
+        res = GetDoctorProfile.getDoctorProfile(mainToken);
+        checkResponse(res);
+        Assert.assertEquals(code, "1000000");
+        Assert.assertEquals(parseJson(data, "doctor:inviter_id"), "SH0002");
+        Assert.assertNotEquals(parseJson(data, "doctor:major_name"), "测试专业", "专业名称不应该改变");
+
+        logger.info("同时传入name和major_name");
+        dp.body.getJSONObject("doctor").replace("name","大一测试名称");
+        dp.body.getJSONObject("doctor").replace("major_name","test_major");
+        try {
+            res = HttpRequest.sendPost(host+mock+uri, dp.body.toString(), mainToken);
+
+        } catch (IOException e) {
+            logger.error(e);
+        }
+        checkResponse(res);
+        Assert.assertEquals(code, "1000000");
+        res = GetDoctorProfile.getDoctorProfile(mainToken);
+        checkResponse(res);
+        Assert.assertEquals(code, "1000000");
+        Assert.assertEquals(parseJson(data, "doctor:name"), "大一测试名称");
+        Assert.assertNotEquals(parseJson(data, "doctor:major_name"), "测试专业", "专业名称不应该改变");
+
     }
 
     @Test
@@ -240,41 +341,5 @@ public class UpdateDoctorProfile extends BaseTest {
         Assert.assertEquals(code, "2210317");
     }
 
-    @Test
-    public void 已登录有token的用户同时更新hospital_id和major_name() {
-        String res = "";
-        DoctorProfile body = new DoctorProfile(false);
-        body.body.getJSONObject("doctor").replace("hospital_id","2");
-        body.body.getJSONObject("doctor").replace("major_name","22222");
-        try {
-            res = HttpRequest.sendPost(host+mock+uri, body.body.toString(), mainToken);
-            checkResponse(res);
-            Assert.assertEquals(code, "1000000");
-            res = GetDoctorProfile.getDoctorProfile(mainToken);
-            checkResponse(res);
-            Assert.assertEquals(code, "1000000");
-            Assert.assertEquals(parseJson(data, "doctor:hospital_id"), "2");
-        } catch (IOException e) {
-            logger.error(e);
-        }
-        checkResponse(res);
-        Assert.assertEquals(code, "1000000");
-
-        body.body.getJSONObject("doctor").replace("hospital_id","1");
-        body.body.getJSONObject("doctor").replace("major_name","");
-        try {
-            res = HttpRequest.sendPost(host+mock+uri, body.body.toString(), mainToken);
-            checkResponse(res);
-            Assert.assertEquals(code, "1000000");
-            res = GetDoctorProfile.getDoctorProfile(mainToken);
-            checkResponse(res);
-            Assert.assertEquals(code, "1000000");
-            Assert.assertEquals(parseJson(data, "doctor:hospital_id"), "1");
-        } catch (IOException e) {
-            logger.error(e);
-        }
-
-
-    }
 }
 

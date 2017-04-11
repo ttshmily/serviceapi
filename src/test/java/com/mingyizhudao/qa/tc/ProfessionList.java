@@ -31,9 +31,11 @@ public class ProfessionList extends BaseTest {
         }
         checkResponse(res);
         Assert.assertNotNull(parseJson(data, "diseasecategory()"));
+        Assert.assertNotNull(parseJson(data, "diseasecategory():root_id"));
         Assert.assertNotNull(parseJson(data, "diseasecategory():root"));
         Assert.assertNotNull(parseJson(data, "diseasecategory():branch()"));
         Assert.assertNotNull(parseJson(data, "diseasecategory():branch():id"));
+        Assert.assertNotNull(parseJson(data, "diseasecategory():branch():parent_category_id"));
         Assert.assertNotNull(parseJson(data, "diseasecategory():branch():name"));
     }
 
@@ -47,9 +49,11 @@ public class ProfessionList extends BaseTest {
         }
         checkResponse(res);
         Assert.assertNotNull(parseJson(data, "diseasecategory()"));
+        Assert.assertNotNull(parseJson(data, "diseasecategory():root_id"));
         Assert.assertNotNull(parseJson(data, "diseasecategory():root"));
         Assert.assertNotNull(parseJson(data, "diseasecategory():branch()"));
         Assert.assertNotNull(parseJson(data, "diseasecategory():branch():id"));
+        Assert.assertNotNull(parseJson(data, "diseasecategory():branch():parent_category_id"));
         Assert.assertNotNull(parseJson(data, "diseasecategory():branch():name"));
     }
 

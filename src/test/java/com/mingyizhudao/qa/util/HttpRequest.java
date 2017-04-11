@@ -2,10 +2,7 @@ package com.mingyizhudao.qa.util;
 
 import org.apache.log4j.Logger;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.PrintWriter;
+import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLConnection;
@@ -51,8 +48,7 @@ public class HttpRequest {
 		BufferedReader in = null;
 		try {
 			String urlNameString = url;
-//			if (!param.isEmpty()) urlNameString = urlNameString.concat("?").concat(URLEncoder.encode(param, "utf-8"));
-            if (!param.isEmpty()) urlNameString = urlNameString.concat("?").concat(param);
+            if (param != null && !param.isEmpty()) urlNameString = urlNameString.concat("?").concat(param);
             URL realUrl = new URL(urlNameString);
 			// 打开和URL之间的连接
 			URLConnection connection = realUrl.openConnection();
@@ -540,7 +536,11 @@ public class HttpRequest {
         StringBuffer sb=new StringBuffer();
         for (String key:query.keySet()
              ) {
-            sb.append(key).append("=").append(query.get(key)).append("&");
+            try {
+                sb.append(key).append("=").append(URLEncoder.encode(query.get(key), "utf-8")).append("&");
+            } catch (UnsupportedEncodingException e) {
+                e.printStackTrace();
+            }
         }
         sb.deleteCharAt(sb.length()-1);
         return new String(sb);

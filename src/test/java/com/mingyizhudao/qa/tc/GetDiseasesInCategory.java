@@ -46,8 +46,8 @@ public class GetDiseasesInCategory extends BaseTest {
             logger.error(e);
         }
         checkResponse(res);
-        Assert.assertNotEquals(code, "1000000");
-        Assert.assertNull(parseJson(data, "diseases()"));
+        Assert.assertEquals(code, "1000000");
+        Assert.assertNotNull(parseJson(data, "diseases()"));
     }
 
     @Test
@@ -63,28 +63,25 @@ public class GetDiseasesInCategory extends BaseTest {
             logger.error(e);
         }
         checkResponse(res);
-        Assert.assertNotEquals(code, "1000000");
-        Assert.assertNotNull(parseJson(data, "diseases()"));
+        Assert.assertEquals(code, "2210423");
 
-        logger.info("case1: categoryId = abc12");
+        logger.info("case2: categoryId = abc12");
         try {
             res = HttpRequest.sendGet(host+mock+uri,"id=abc12", mainToken);
         } catch (IOException e) {
             logger.error(e);
         }
         checkResponse(res);
-        Assert.assertNotEquals(code, "1000000");
-        Assert.assertNotNull(parseJson(data, "diseases()"));
+        Assert.assertEquals(code, "2210423");
 
-        logger.info("case1: categoryId = -1");
+        logger.info("case3: categoryId = -1");
         try {
             res = HttpRequest.sendGet(host+mock+uri,"id=-1", mainToken);
         } catch (IOException e) {
             logger.error(e);
         }
         checkResponse(res);
-        Assert.assertNotEquals(code, "1000000");
-        Assert.assertNotNull(parseJson(data, "diseases()"));
+        Assert.assertEquals(code, "2210423");
     }
 
 
