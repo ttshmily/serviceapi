@@ -21,10 +21,11 @@ public class RefreshProfile {
         }
     }
 
-    public String phone() {
-        Random random = new Random();
-        Integer m = random.nextInt(99999);
-        SendVerifyCode.mobile = "13" + String.format("%05d",m) + "9999";
-        return String.format("%05d",m);
-    }
+//    public String phone() {
+//        Random random = new Random();
+//        Integer m = random.nextInt(999999);
+//        SendVerifyCode.mobile = "1" + String.format("%06d",m) + "9999";
+//        return String.format("%06d",m);
+//    }
+
 }

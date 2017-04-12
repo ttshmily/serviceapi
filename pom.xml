@@ -70,7 +70,7 @@
                 <version>2.19.1</version>
                 <configuration>
                     <suiteXmlFiles>
-                        <suiteXmlFile>src/test/resources/config-${profiles.active}/${service}-${suiteFilename}</suiteXmlFile>
+                        <suiteXmlFile>src/test/resources/config-${profiles.active}/${suiteFilename}</suiteXmlFile>
                     </suiteXmlFiles>
                 </configuration>
             </plugin>
@@ -91,7 +91,6 @@
         <testResources>
             <testResource>
                 <directory>src/test/resources</directory>
-                <!-- 资源根目录排除各环境的配置，使用单独的资源目录来指定 -->
                 <excludes>
                     <exclude>config-test/*</exclude>
                     <exclude>config-prod/*</exclude>
@@ -99,7 +98,6 @@
                 </excludes>
             </testResource>
             <testResource>
-                <!-- 根据参数指定资源目录 -->
                 <directory>src/test/resources/config-${profiles.active}</directory>
             </testResource>
         </testResources>

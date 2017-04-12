@@ -24,12 +24,12 @@ public class CheckVerifyCode extends BaseTest{
 
     public static String check() {
         String res = "";
-        CheckMobileProfile body = new CheckMobileProfile(false);
-        body.body.replace("mobile", mobile);
-        body.body.replace("code", "123456");
+        CheckMobileProfile cmp = new CheckMobileProfile(false);
+        cmp.body.replace("mobile", mobile);
+        cmp.body.replace("code", "123456");
         logger.info("发送短信验证码到服务器进行验证...");
         try {
-            res = HttpRequest.sendPost(host+uri,body.body.toString(), "");
+            res = HttpRequest.sendPost(host+uri,cmp.body.toString(), "");
         } catch (IOException e) {
             logger.error(e);
         }
