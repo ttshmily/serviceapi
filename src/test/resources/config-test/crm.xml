@@ -4,8 +4,8 @@
 
     <test name="doctoruser" preserve-order="true" >
         <classes>
-            <class name="com.mingyizhudao.qa.tc.doctor.GetDoctorProfile"  />
-            <class name="com.mingyizhudao.qa.tc.doctor.UpdateDoctorProfile" />
+            <class name="com.mingyizhudao.qa.testcase.doctor.GetDoctorProfile"  />
+            <class name="com.mingyizhudao.qa.testcase.doctor.UpdateDoctorProfile" />
         </classes>
     </test>
 

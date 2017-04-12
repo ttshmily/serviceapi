@@ -3,16 +3,16 @@
 <suite name="All" verbose="1" >
     <!--<test name="profile" >-->
         <!--<classes>-->
-            <!--<class name="com.mingyizhudao.qa.tc.doctor.GetDoctorProfile"  />-->
-            <!--<class name="com.mingyizhudao.qa.tc.doctor.GetEmployeeProfile" />-->
-            <!--<class name="com.mingyizhudao.qa.tc.doctor.HospitalSearch" />-->
-            <!--<class name="com.mingyizhudao.qa.tc.doctor.ProfessionList" />-->
-            <!--<class name="com.mingyizhudao.qa.tc.doctor.UpdateDoctorProfile" />-->
+            <!--<class name="com.mingyizhudao.qa.testcasestcase.doctor.GetDoctorProfile"  />-->
+            <!--<class name="com.mingyizhudao.qa.testcasestcase.doctor.GetEmployeeProfile" />-->
+            <!--<class name="com.mingyizhudao.qa.testcasestcase.doctor.HospitalSearch" />-->
+            <!--<class name="com.mingyizhudao.qa.testcasestcase.doctor.ProfessionList" />-->
+            <!--<class name="com.mingyizhudao.qa.testcasestcase.doctor.UpdateDoctorProfile" />-->
         <!--</classes>-->
     <!--</test>-->
     <!--<test name="login" >-->
         <!--<packages>-->
-            <!--<package name="com.mingyizhudao.qa.tc.login" />-->
+            <!--<package name="com.mingyizhudao.qa.testcasestcase.login" />-->
         <!--</packages>-->
     <!--</test>-->
 </suite> 

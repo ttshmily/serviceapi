@@ -1,4 +1,4 @@
-package com.mingyizhudao.qa.tc.login;
+package com.mingyizhudao.qa.testcase.login;
 
 import com.mingyizhudao.qa.common.BaseTest;
 import com.mingyizhudao.qa.dataprofile.login.MobileProfile;

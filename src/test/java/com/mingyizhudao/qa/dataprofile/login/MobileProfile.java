@@ -1,6 +1,6 @@
 package com.mingyizhudao.qa.dataprofile.login;
 
-import com.mingyizhudao.qa.tc.login.SendVerifyCode;
+import com.mingyizhudao.qa.testcase.login.SendVerifyCode;
 import net.sf.json.JSONObject;
 
 import java.util.Random;

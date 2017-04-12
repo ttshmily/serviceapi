@@ -1,4 +1,4 @@
-package com.mingyizhudao.qa.tc.doctor;
+package com.mingyizhudao.qa.testcase.doctor;
 
 import com.mingyizhudao.qa.common.BaseTest;
 import com.mingyizhudao.qa.util.HttpRequest;

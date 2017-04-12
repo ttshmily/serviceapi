@@ -1,8 +1,8 @@
-package com.mingyizhudao.qa.tc.login;
+package com.mingyizhudao.qa.testcase.login;
 
 import com.mingyizhudao.qa.common.BaseTest;
 import com.mingyizhudao.qa.dataprofile.login.RefreshProfile;
-import com.mingyizhudao.qa.tc.doctor.GetDoctorProfile;
+import com.mingyizhudao.qa.testcase.doctor.GetDoctorProfile;
 import com.mingyizhudao.qa.util.HttpRequest;
 import net.sf.json.JSONException;
 import org.apache.log4j.Logger;

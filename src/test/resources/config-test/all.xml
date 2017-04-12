@@ -3,32 +3,32 @@
 <suite name="All" verbose="1" >
     <test name="common" preserve-order="true">
         <classes>
-            <class name="com.mingyizhudao.qa.tc.doctor.GetEmployeeProfile" />
-            <class name="com.mingyizhudao.qa.tc.doctor.HospitalSearch" />
-            <class name="com.mingyizhudao.qa.tc.doctor.ProfessionList" />
-            <class name="com.mingyizhudao.qa.tc.doctor.GetDiseasesInCategory" />
+            <class name="com.mingyizhudao.qa.testcase.doctor.GetEmployeeProfile" />
+            <class name="com.mingyizhudao.qa.testcase.doctor.HospitalSearch" />
+            <class name="com.mingyizhudao.qa.testcase.doctor.ProfessionList" />
+            <class name="com.mingyizhudao.qa.testcase.doctor.GetDiseasesInCategory" />
         </classes>
     </test>
     <test name="doctoruser" preserve-order="true" >
         <classes>
-            <class name="com.mingyizhudao.qa.tc.doctor.GetDoctorProfile"  />
-            <class name="com.mingyizhudao.qa.tc.doctor.UpdateDoctorProfile" />
+            <class name="com.mingyizhudao.qa.testcase.doctor.GetDoctorProfile"  />
+            <class name="com.mingyizhudao.qa.testcase.doctor.UpdateDoctorProfile" />
         </classes>
     </test>
     <test name="login" preserve-order="true">
         <classes>
-            <class name="com.mingyizhudao.qa.tc.login.SendVerifyCode" />
-            <class name="com.mingyizhudao.qa.tc.login.CheckVerifyCode" />
-            <class name="com.mingyizhudao.qa.tc.login.Refresh" />
+            <class name="com.mingyizhudao.qa.testcase.login.SendVerifyCode" />
+            <class name="com.mingyizhudao.qa.testcase.login.CheckVerifyCode" />
+            <class name="com.mingyizhudao.qa.testcase.login.Refresh" />
         </classes>
     </test>
     <test name="trade" preserve-order="true">
         <classes>
-            <class name="com.mingyizhudao.qa.tc.doctor.CreateOrder" />
-            <class name="com.mingyizhudao.qa.tc.doctor.GetOrderList" />
-            <class name="com.mingyizhudao.qa.tc.doctor.GetUploadToken" />
-            <class name="com.mingyizhudao.qa.tc.doctor.GetOrderDetail" />
-            <class name="com.mingyizhudao.qa.tc.doctor.UpdateMedicalRecords" />
+            <class name="com.mingyizhudao.qa.testcase.doctor.CreateOrder" />
+            <class name="com.mingyizhudao.qa.testcase.doctor.GetOrderList" />
+            <class name="com.mingyizhudao.qa.testcase.doctor.GetUploadToken" />
+            <class name="com.mingyizhudao.qa.testcase.doctor.GetOrderDetail" />
+            <class name="com.mingyizhudao.qa.testcase.doctor.UpdateMedicalRecords" />
         </classes>
     </test>
 </suite> 
