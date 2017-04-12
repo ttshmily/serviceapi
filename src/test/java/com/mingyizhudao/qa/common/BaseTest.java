@@ -85,6 +85,9 @@ public class BaseTest {
 //            logger.debug(CheckVerifyCode.host);
 //            logger.debug(Refresh.host);
         }
+
+        HospitalSearch.hospitalSearch();
+        System.exit(1);
         mainMobile = SendVerifyCode.send();
         mainToken = CheckVerifyCode.check();
 

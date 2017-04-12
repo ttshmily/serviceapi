@@ -19,7 +19,14 @@ public class HospitalSearch extends BaseTest {
     public static String mock = false ? "/mockjs/1" : "";
 
     public static String hospitalSearch() {
-        return "";
+
+        String res="";
+        try {
+            res = HttpRequest.sendGet(host+mock+uri,"", "");
+        } catch (IOException e) {
+            logger.error(e);
+        }
+        return res;
     }
 
     @Test
