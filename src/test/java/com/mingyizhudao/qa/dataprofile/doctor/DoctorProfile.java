@@ -1,4 +1,4 @@
-package com.mingyizhudao.qa.dataprofile;
+package com.mingyizhudao.qa.dataprofile.doctor;
 
 import net.sf.json.JSONObject;
 

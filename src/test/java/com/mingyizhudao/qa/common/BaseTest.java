@@ -2,6 +2,7 @@ package com.mingyizhudao.qa.common;
 
 
 import com.mingyizhudao.qa.tc.*;
+import com.mingyizhudao.qa.tc.doctor.*;
 import net.sf.json.JSONException;
 import net.sf.json.JSONObject;
 import org.apache.log4j.Logger;
@@ -15,8 +16,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.lang.reflect.Method;
 import java.util.*;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 /**
  * Created by ttshmily on 20/3/2017.

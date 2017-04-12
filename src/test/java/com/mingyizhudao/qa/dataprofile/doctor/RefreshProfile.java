@@ -1,7 +1,7 @@
-package com.mingyizhudao.qa.dataprofile;
+package com.mingyizhudao.qa.dataprofile.doctor;
 
-import com.mingyizhudao.qa.tc.Refresh;
-import com.mingyizhudao.qa.tc.SendVerifyCode;
+import com.mingyizhudao.qa.tc.doctor.Refresh;
+import com.mingyizhudao.qa.tc.doctor.SendVerifyCode;
 import net.sf.json.JSONObject;
 
 import java.util.Random;

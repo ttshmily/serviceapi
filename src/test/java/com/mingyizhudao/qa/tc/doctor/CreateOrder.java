@@ -1,7 +1,7 @@
-package com.mingyizhudao.qa.tc;
+package com.mingyizhudao.qa.tc.doctor;
 
 import com.mingyizhudao.qa.common.BaseTest;
-import com.mingyizhudao.qa.dataprofile.OrderDetail;
+import com.mingyizhudao.qa.dataprofile.doctor.OrderDetail;
 import com.mingyizhudao.qa.util.HttpRequest;
 import net.sf.json.JSONObject;
 import org.apache.log4j.Logger;
@@ -79,7 +79,10 @@ public class CreateOrder extends BaseTest {
         Assert.assertNotEquals(parseJson(data,"order:created_at"), "", "订单创建时间字段缺失");
         Assert.assertEquals(parseJson(data,"order:order_number"), orderId, "订单号字段不正确");
         Assert.assertNotNull(parseJson(data,"order:medical_record_pictures()"), "病例图片字段缺失");
-        Assert.assertNotNull(parseJson(data,"order:medical_record_pictures():url"), "病例图片url字段缺失");
+        Assert.assertNotNull(parseJson(data,"order:medical_record_pictures(0):url"), "病例图片url字段缺失");
+        Assert.assertNotNull(parseJson(data,"order:medical_record_pictures(1):url"), "病例图片url字段缺失");
+        Assert.assertEquals(parseJson(data,"order:medical_record_pictures(0):key"), "123");
+        Assert.assertEquals(parseJson(data,"order:medical_record_pictures(1):key"), "456");
 
     }
 

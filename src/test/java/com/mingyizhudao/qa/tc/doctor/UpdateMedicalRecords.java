@@ -1,7 +1,7 @@
-package com.mingyizhudao.qa.tc;
+package com.mingyizhudao.qa.tc.doctor;
 
 import com.mingyizhudao.qa.common.BaseTest;
-import com.mingyizhudao.qa.dataprofile.MedicalRecords;
+import com.mingyizhudao.qa.dataprofile.doctor.MedicalRecords;
 import com.mingyizhudao.qa.util.HttpRequest;
 import net.sf.json.JSONObject;
 import org.apache.log4j.Logger;

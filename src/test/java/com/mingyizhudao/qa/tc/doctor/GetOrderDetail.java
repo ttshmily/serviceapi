@@ -1,6 +1,7 @@
-package com.mingyizhudao.qa.tc;
+package com.mingyizhudao.qa.tc.doctor;
 
 import com.mingyizhudao.qa.common.BaseTest;
+import com.mingyizhudao.qa.tc.CrmCertifiedDoctor;
 import com.mingyizhudao.qa.util.HttpRequest;
 import net.sf.json.JSONObject;
 import org.apache.log4j.Logger;
@@ -9,7 +10,6 @@ import org.testng.annotations.Test;
 
 import java.io.IOException;
 import java.util.HashMap;
-import java.util.Map;
 
 /**
  * Created by ttshmily on 7/4/2017.
