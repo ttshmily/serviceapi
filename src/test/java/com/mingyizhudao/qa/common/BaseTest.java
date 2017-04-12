@@ -3,6 +3,9 @@ package com.mingyizhudao.qa.common;
 
 import com.mingyizhudao.qa.tc.*;
 import com.mingyizhudao.qa.tc.doctor.*;
+import com.mingyizhudao.qa.tc.login.CheckVerifyCode;
+import com.mingyizhudao.qa.tc.login.Refresh;
+import com.mingyizhudao.qa.tc.login.SendVerifyCode;
 import net.sf.json.JSONException;
 import net.sf.json.JSONObject;
 import org.apache.log4j.Logger;

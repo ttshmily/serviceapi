@@ -2,6 +2,8 @@ package com.mingyizhudao.qa.tc.doctor;
 
 import com.mingyizhudao.qa.common.BaseTest;
 import com.mingyizhudao.qa.dataprofile.doctor.OrderDetail;
+import com.mingyizhudao.qa.tc.login.CheckVerifyCode;
+import com.mingyizhudao.qa.tc.login.SendVerifyCode;
 import com.mingyizhudao.qa.util.HttpRequest;
 import net.sf.json.JSONObject;
 import org.apache.log4j.Logger;

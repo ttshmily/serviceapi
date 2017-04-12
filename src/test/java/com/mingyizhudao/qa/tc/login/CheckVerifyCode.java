@@ -1,7 +1,7 @@
-package com.mingyizhudao.qa.tc.doctor;
+package com.mingyizhudao.qa.tc.login;
 
 import com.mingyizhudao.qa.common.BaseTest;
-import com.mingyizhudao.qa.dataprofile.doctor.CheckMobileProfile;
+import com.mingyizhudao.qa.dataprofile.login.CheckMobileProfile;
 import com.mingyizhudao.qa.util.HttpRequest;
 import net.sf.json.JSONObject;
 import org.apache.log4j.Logger;
