@@ -643,4 +643,71 @@ public class UpdateMedicalRecords extends BaseTest {
         Assert.assertNotNull(parseJson(data, "order:medical_record_pictures(1):url"), "没有图片URL");
     }
 
+    @Test
+    public void 更新病例_期望手术医院() {
+
+        String res = "";
+        logger.info("创建一个新订单");
+        String orderId = CreateOrder.CreateOrder(mainToken);
+        if (orderId.isEmpty()) {
+            logger.error("创建订单失败");
+            fail();
+        }
+        res = GetOrderDetail.getOrderDetail(mainToken, orderId);
+        checkResponse(res);
+        String expectedSurgeryHospitalId = parseJson(data, "order:expected_surgery_hospital_id");
+        String expectedSurgeryHospitalName = parseJson(data, "order:expected_surgery_hospital_name");
+        HashMap<String, String> pathValue = new HashMap<String, String>();
+        pathValue.put("orderId", orderId);
+        MedicalRecords mr = new MedicalRecords(true);
+
+        logger.info("更新期望手术医院ID为空");
+        mr.body.getJSONObject("order").replace("expected_surgery_hospital_id", "");
+        try {
+            res = HttpRequest.sendPut(host + mock + uri, mr.body.toString(), mainToken, pathValue);
+        } catch (IOException e) {
+            logger.error(e);
+        }
+        checkResponse(res);
+        Assert.assertEquals(code, "1000000", "更新正常数据未成功");
+        logger.info("查看刚刚更新的订单详情");
+        res = GetOrderDetail.getOrderDetail(mainToken, orderId);
+        checkResponse(res);
+        Assert.assertEquals(code, "1000000", "查看订单失败");
+        Assert.assertEquals(parseJson(data, "order:expected_surgery_hospital_id"), expectedSurgeryHospitalId, "期望手术医院未更新成功");
+        Assert.assertEquals(parseJson(data, "order:expected_surgery_hospital_name"), expectedSurgeryHospitalName, "期望手术医院未更新成功");
+
+        logger.info("更新期望手术医院ID=0");
+        mr.body.getJSONObject("order").replace("expected_surgery_hospital_id", "");
+        try {
+            res = HttpRequest.sendPut(host + mock + uri, mr.body.toString(), mainToken, pathValue);
+        } catch (IOException e) {
+            logger.error(e);
+        }
+        checkResponse(res);
+        Assert.assertEquals(code, "1000000", "更新正常数据未成功");
+        logger.info("查看刚刚更新的订单详情");
+        res = GetOrderDetail.getOrderDetail(mainToken, orderId);
+        checkResponse(res);
+        Assert.assertEquals(code, "1000000", "查看订单失败");
+        Assert.assertEquals(parseJson(data, "order:expected_surgery_hospital_id"), expectedSurgeryHospitalId, "期望手术医院未更新成功");
+        Assert.assertEquals(parseJson(data, "order:expected_surgery_hospital_name"), expectedSurgeryHospitalName, "期望手术医院未更新成功");
+
+        logger.info("更新期望手术医院ID=100");
+        mr.body.getJSONObject("order").replace("expected_surgery_hospital_id", "100");
+        try {
+            res = HttpRequest.sendPut(host + mock + uri, mr.body.toString(), mainToken, pathValue);
+        } catch (IOException e) {
+            logger.error(e);
+        }
+        checkResponse(res);
+        Assert.assertEquals(code, "1000000", "更新正常数据未成功");
+        logger.info("查看刚刚更新的订单详情");
+        res = GetOrderDetail.getOrderDetail(mainToken, orderId);
+        checkResponse(res);
+        Assert.assertEquals(code, "1000000", "查看订单失败");
+        Assert.assertEquals(parseJson(data, "order:expected_surgery_hospital_id"), "100", "期望手术医院未更新成功");
+        Assert.assertEquals(parseJson(data, "order:expected_surgery_hospital_name"), "淮安市第一人民医院", "期望手术医院未更新成功");
+    }
+
 }

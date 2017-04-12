@@ -29,6 +29,8 @@ public class BaseTest {
     public static String mainMobile = "";
     public static String mainToken = "";
     public static String mainDoctorId = "";
+    public static String mainDoctorHospitalId = "";
+    public static String mainDoctorHospitalName = "";
 
     public String code = "";
     public String message = "";
@@ -81,11 +83,19 @@ public class BaseTest {
         }
         mainMobile = SendVerifyCode.send();
         mainToken = CheckVerifyCode.check();
+
         String res = GetDoctorProfile.getDoctorProfile(mainToken);
         mainDoctorId = JSONObject.fromObject(res).getJSONObject("data").getJSONObject("doctor").getString("user_id");
-        logger.info("mainDoctorId为"+mainDoctorId);
-        logger.info("更新医生信息：");
+
         UpdateDoctorProfile.updateDoctorProfile(mainToken, null);
+        res = GetDoctorProfile.getDoctorProfile(mainToken);
+        mainDoctorHospitalId = JSONObject.fromObject(res).getJSONObject("data").getJSONObject("doctor").getString("hospital_id");
+        mainDoctorHospitalName = JSONObject.fromObject(res).getJSONObject("data").getJSONObject("doctor").getString("hospital_name");
+        logger.info("mainDoctorId为"+mainDoctorId);
+        logger.info("mainDoctorId为"+mainDoctorHospitalId);
+        logger.info("mainDoctorId为"+mainDoctorHospitalName);
+        logger.info("更新医生信息：");
+
         logger.info("认证医生：");
         CrmCertifiedDoctor.certify(JSONObject.fromObject(res).getJSONObject("data").getJSONObject("doctor").getString("user_id"));
         res = GetDoctorProfile.getDoctorProfile(mainToken);

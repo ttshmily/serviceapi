@@ -71,8 +71,8 @@ public class CreateOrder extends BaseTest {
         Assert.assertEquals(parseJson(data,"order:diagnosis"), "工程师", "病例描述字段存储不正确");
         Assert.assertEquals(parseJson(data,"order:expected_surgery_start_date"), "2017-04-09", "期望手术最早开始时间字段存储不正确");
         Assert.assertEquals(parseJson(data,"order:expected_surgery_due_date"), "2017-05-09", "期望手术最晚开始时间字段存储不正确");
-        Assert.assertEquals(parseJson(data,"order:expected_surgery_hospital_id"), "43", "期望医院ID存储不正确");
 
+        Assert.assertEquals(parseJson(data,"order:expected_surgery_hospital_id"), "43", "期望医院ID存储不正确");
         Assert.assertEquals(parseJson(data,"order:expected_surgery_hospital_name"), "首都医科大学附属北京口腔医院","期望医院名称字段不正确");
         Assert.assertEquals(parseJson(data,"order:status"), "1000", "新建订单状态应当为1000");
         Assert.assertEquals(parseJson(data,"order:OrderStatusText"), "待处理", "新建订单状态描述应当为'处理中'");
@@ -291,6 +291,70 @@ public class CreateOrder extends BaseTest {
         checkResponse(res);
         Assert.assertEquals(code, "2210409");
         Assert.assertEquals(message, "医生未认证");
+    }
+
+    @Test
+    public void 创建订单_信息齐备_期望手术医院不传() {
+
+        String res = "";
+
+        OrderDetail order = new OrderDetail(true);
+        logger.info("不传入期望手术医院的ID。。。");
+        order.body.getJSONObject("order").replace("expected_surgery_hospital_id","");
+        try {
+            res = HttpRequest.sendPost(host+mock+uri, order.body.toString(), mainToken);
+        } catch (IOException e) {
+            logger.error(e);
+        }
+        checkResponse(res);
+        Assert.assertEquals(code, "1000000", "创建订单失败");
+        String orderId = parseJson(data, "order_id");
+        Assert.assertNotEquals(orderId, "", "返回的订单ID格式有误");
+
+        logger.info("查看刚刚创建的订单详情");
+        res = GetOrderDetail.getOrderDetail(mainToken, orderId);
+        checkResponse(res);
+        Assert.assertEquals(code, "1000000");
+        Assert.assertEquals(parseJson(data,"order:expected_surgery_hospital_id"), mainDoctorHospitalId);
+        Assert.assertEquals(parseJson(data,"order:expected_surgery_hospital_name"), mainDoctorHospitalName);
+
+        logger.info("传入期望手术医院的ID=0。。。");
+        order.body.getJSONObject("order").replace("expected_surgery_hospital_id","0");
+        try {
+            res = HttpRequest.sendPost(host+mock+uri, order.body.toString(), mainToken);
+        } catch (IOException e) {
+            logger.error(e);
+        }
+        checkResponse(res);
+        Assert.assertEquals(code, "1000000", "创建订单失败");
+        orderId = parseJson(data, "order_id");
+        Assert.assertNotEquals(orderId, "", "返回的订单ID格式有误");
+
+        logger.info("查看刚刚创建的订单详情");
+        res = GetOrderDetail.getOrderDetail(mainToken, orderId);
+        checkResponse(res);
+        Assert.assertEquals(code, "1000000");
+        Assert.assertEquals(parseJson(data,"order:expected_surgery_hospital_id"), mainDoctorHospitalId);
+        Assert.assertEquals(parseJson(data,"order:expected_surgery_hospital_name"), mainDoctorHospitalName);
+
+        logger.info("不传入期望手术医院的key。。。");
+        order.body.getJSONObject("order").remove("expected_surgery_hospital_id");
+        try {
+            res = HttpRequest.sendPost(host+mock+uri, order.body.toString(), mainToken);
+        } catch (IOException e) {
+            logger.error(e);
+        }
+        checkResponse(res);
+        Assert.assertEquals(code, "1000000", "创建订单失败");
+        orderId = parseJson(data, "order_id");
+        Assert.assertNotEquals(orderId, "", "返回的订单ID格式有误");
+
+        logger.info("查看刚刚创建的订单详情");
+        res = GetOrderDetail.getOrderDetail(mainToken, orderId);
+        checkResponse(res);
+        Assert.assertEquals(code, "1000000");
+        Assert.assertEquals(parseJson(data,"order:expected_surgery_hospital_id"), mainDoctorHospitalId);
+        Assert.assertEquals(parseJson(data,"order:expected_surgery_hospital_name"), mainDoctorHospitalName);
     }
 
 }

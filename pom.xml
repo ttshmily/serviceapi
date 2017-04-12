@@ -70,7 +70,7 @@
                 <version>2.19.1</version>
                 <configuration>
                     <suiteXmlFiles>
-                        <suiteXmlFile>src/test/resources/config-${profiles.active}/testng.xml</suiteXmlFile>
+                        <suiteXmlFile>src/test/resources/config-${profiles.active}/${suiteFilename}</suiteXmlFile>
                     </suiteXmlFiles>
                 </configuration>
             </plugin>

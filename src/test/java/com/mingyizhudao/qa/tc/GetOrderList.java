@@ -135,7 +135,6 @@ public class GetOrderList extends BaseTest{
             logger.error(e);
         }
         checkResponse(res);
-        // TODO
         Assert.assertEquals(code, "2210304", "应当提示未登录");
     }
 
