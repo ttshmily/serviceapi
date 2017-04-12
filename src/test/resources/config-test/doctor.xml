@@ -1,0 +1,12 @@
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
+
+<suite name="All" verbose="1" >
+
+    <test name="doctoruser" preserve-order="true" >
+        <classes>
+            <class name="com.mingyizhudao.qa.tc.GetDoctorProfile"  />
+            <class name="com.mingyizhudao.qa.tc.UpdateDoctorProfile" />
+        </classes>
+    </test>
+
+</suite> 

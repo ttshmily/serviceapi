@@ -61,25 +61,27 @@ public class BaseTest {
                  ) {
                 key = prop.getProperty(key);
             }
-            protocol = prop.getProperty("protocol");
-            host = prop.getProperty("host");
+            BaseTest.protocol = prop.getProperty("protocol");
+            BaseTest.host = prop.getProperty("host");
             SendVerifyCode.host = prop.getProperty("SendVerifyCode.host");
             SendVerifyCode.uri = prop.getProperty("SendVerifyCode.uri");
             CheckVerifyCode.host = prop.getProperty("CheckVerifyCode.host");
             CheckVerifyCode.uri = prop.getProperty("CheckVerifyCode.uri");
             Refresh.host = prop.getProperty("Refresh.host");
             Refresh.uri = prop.getProperty("Refresh.uri");
+
             CrmCertifiedDoctor.uri = prop.getProperty("CrmCertifiedDoctor.uri");
             GetDoctorProfile.uri = prop.getProperty("GetDoctorProfile.uri");
             UpdateDoctorProfile.uri = prop.getProperty("UpdateDoctorProfile.uri");
-            host = protocol.concat(host);
+
+            BaseTest.host = protocol.concat(host);
             SendVerifyCode.host = protocol.concat(SendVerifyCode.host);
             CheckVerifyCode.host = protocol.concat(CheckVerifyCode.host);
             Refresh.host = protocol.concat(Refresh.host);
-            logger.debug(host);
-            logger.debug(SendVerifyCode.host);
-            logger.debug(CheckVerifyCode.host);
-            logger.debug(Refresh.host);
+//            logger.debug(host);
+//            logger.debug(SendVerifyCode.host);
+//            logger.debug(CheckVerifyCode.host);
+//            logger.debug(Refresh.host);
         }
         mainMobile = SendVerifyCode.send();
         mainToken = CheckVerifyCode.check();
@@ -87,18 +89,20 @@ public class BaseTest {
         String res = GetDoctorProfile.getDoctorProfile(mainToken);
         mainDoctorId = JSONObject.fromObject(res).getJSONObject("data").getJSONObject("doctor").getString("user_id");
 
+        logger.info("更新医生信息...");
         UpdateDoctorProfile.updateDoctorProfile(mainToken, null);
         res = GetDoctorProfile.getDoctorProfile(mainToken);
         mainDoctorHospitalId = JSONObject.fromObject(res).getJSONObject("data").getJSONObject("doctor").getString("hospital_id");
         mainDoctorHospitalName = JSONObject.fromObject(res).getJSONObject("data").getJSONObject("doctor").getString("hospital_name");
-        logger.info("mainDoctorId为"+mainDoctorId);
-        logger.info("mainDoctorId为"+mainDoctorHospitalId);
-        logger.info("mainDoctorId为"+mainDoctorHospitalName);
-        logger.info("更新医生信息：");
+        logger.info("mainDoctorId为:\t"+mainDoctorId);
+        logger.info("mainDoctorHospitalId为:\t"+mainDoctorHospitalId);
+        logger.info("mainDoctorHospitalName为:\t"+mainDoctorHospitalName);
 
-        logger.info("认证医生：");
-        CrmCertifiedDoctor.certify(JSONObject.fromObject(res).getJSONObject("data").getJSONObject("doctor").getString("user_id"));
-        res = GetDoctorProfile.getDoctorProfile(mainToken);
+        logger.info("认证医生...");
+        if (CrmCertifiedDoctor.certify(JSONObject.fromObject(res).getJSONObject("data").getJSONObject("doctor").getString("user_id")))
+            logger.info("认证成功");
+        else
+            System.exit(1);
 //        System.exit(0);
     }
 
