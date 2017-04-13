@@ -75,6 +75,7 @@ public class BaseTest {
             CrmCertifiedDoctor.uri = prop.getProperty("CrmCertifiedDoctor.uri");
             GetDoctorProfile.uri = prop.getProperty("GetDoctorProfile.uri");
             UpdateDoctorProfile.uri = prop.getProperty("UpdateDoctorProfile.uri");
+//            HospitalSearch.uri = prop.getProperty("HospitalSearch.uri");
 
             BaseTest.host = protocol.concat(host);
             SendVerifyCode.host = protocol.concat(SendVerifyCode.host);
@@ -86,8 +87,8 @@ public class BaseTest {
 //            logger.debug(Refresh.host);
         }
 
-        HospitalSearch.hospitalSearch();
-        System.exit(1);
+//        HospitalSearch.hospitalSearch();
+//        System.exit(1);
         mainMobile = SendVerifyCode.send();
         mainToken = CheckVerifyCode.check();
 

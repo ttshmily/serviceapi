@@ -41,7 +41,7 @@ public class UpdateMedicalRecords extends BaseTest {
         } catch (IOException e) {
             logger.error(e);
         }
-        String tmpOrderId = parseJson(JSONObject.fromObject(res), "data:order_id");
+        String tmpOrderId = parseJson(JSONObject.fromObject(res), "data:order_number");
         if (!tmpOrderId.isEmpty() && null != tmpOrderId) {
             logger.info("orderId是: " + tmpOrderId);
             return tmpOrderId;

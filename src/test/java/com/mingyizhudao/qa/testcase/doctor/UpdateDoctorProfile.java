@@ -207,9 +207,9 @@ public class UpdateDoctorProfile extends BaseTest {
         Assert.assertEquals(parseJson(data, "doctor:major_id"), "8");
         Assert.assertNotEquals(parseJson(data, "doctor:hospital_name"), "测试医院", "医院名称不应该改变");
 
-        logger.info("同时传入inviter_id和hospital_name");
+        logger.info("同时传入inviter_no和hospital_name");
         dp.body.getJSONObject("doctor").replace("hospital_name", "测试医院");
-        dp.body.getJSONObject("doctor").replace("inviter_id", "SH0003");
+        dp.body.getJSONObject("doctor").replace("inviter_no", "SH0003");
         try {
             res = HttpRequest.sendPost(host+mock+uri, dp.body.toString(), mainToken);
         } catch (IOException e) {
@@ -219,7 +219,7 @@ public class UpdateDoctorProfile extends BaseTest {
         Assert.assertEquals(code, "1000000");
         res = GetDoctorProfile.getDoctorProfile(mainToken);
         checkResponse(res);
-        Assert.assertEquals(parseJson(data, "doctor:inviter_id"), "SH0003");
+        Assert.assertEquals(parseJson(data, "doctor:inviter_no"), "SH0003");
         Assert.assertNotEquals(parseJson(data, "doctor:hospital_name"), "测试医院", "医院名称不应该改变");
 
         logger.info("同时传入name和hospital_name");
@@ -273,8 +273,8 @@ public class UpdateDoctorProfile extends BaseTest {
         Assert.assertEquals(parseJson(data, "doctor:hospital_id"), "2");
         Assert.assertNotEquals(parseJson(data, "doctor:major_name"), "测试专业", "专业名称不应该改变");
 
-        logger.info("同时传入inviter_id和major_name");
-        dp.body.getJSONObject("doctor").replace("inviter_id","SH0002");
+        logger.info("同时传入inviter_no和major_name");
+        dp.body.getJSONObject("doctor").replace("inviter_no","SH0002");
         dp.body.getJSONObject("doctor").replace("major_name","test_major");
         try {
             res = HttpRequest.sendPost(host+mock+uri, dp.body.toString(), mainToken);
@@ -287,7 +287,7 @@ public class UpdateDoctorProfile extends BaseTest {
         res = GetDoctorProfile.getDoctorProfile(mainToken);
         checkResponse(res);
         Assert.assertEquals(code, "1000000");
-        Assert.assertEquals(parseJson(data, "doctor:inviter_id"), "SH0002");
+        Assert.assertEquals(parseJson(data, "doctor:inviter_no"), "SH0002");
         Assert.assertNotEquals(parseJson(data, "doctor:major_name"), "测试专业", "专业名称不应该改变");
 
         logger.info("同时传入name和major_name");

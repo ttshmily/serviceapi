@@ -78,7 +78,7 @@ public class GetOrderList extends BaseTest{
             logger.error(e);
         }
         checkResponse(res);
-        Assert.assertEquals(parseJson(data, "order(0):id"), orderId1);
+        Assert.assertEquals(parseJson(data, "order(0):order_number"), orderId1);
 
         logger.info("创建订单with tmpToken");
         String orderId2 = CreateOrder.CreateOrder(tmpToken);
@@ -92,8 +92,8 @@ public class GetOrderList extends BaseTest{
             logger.error(e);
         }
         checkResponse(res);
-        Assert.assertEquals(parseJson(data, "order(0):id"), orderId2);
-        Assert.assertEquals(parseJson(data, "order(1):id"), orderId1);
+        Assert.assertEquals(parseJson(data, "order(0):order_number"), orderId2);
+        Assert.assertEquals(parseJson(data, "order(1):order_number"), orderId1);
 
         logger.info("创建订单with tmpToken");
         String orderId3 = CreateOrder.CreateOrder(tmpToken);
@@ -107,9 +107,9 @@ public class GetOrderList extends BaseTest{
             logger.error(e);
         }
         checkResponse(res);
-        Assert.assertEquals(parseJson(data, "order(0):id"), orderId3);
-        Assert.assertEquals(parseJson(data, "order(1):id"), orderId2);
-        Assert.assertEquals(parseJson(data, "order(2):id"), orderId1);
+        Assert.assertEquals(parseJson(data, "order(0):order_number"), orderId3);
+        Assert.assertEquals(parseJson(data, "order(1):order_number"), orderId2);
+        Assert.assertEquals(parseJson(data, "order(2):order_number"), orderId1);
 
         logger.info("创建订单with tmpToken");
         String orderId4 = CreateOrder.CreateOrder(tmpToken);
@@ -123,10 +123,10 @@ public class GetOrderList extends BaseTest{
             logger.error(e);
         }
         checkResponse(res);
-        Assert.assertEquals(parseJson(data, "order(0):id"), orderId4);
-        Assert.assertEquals(parseJson(data, "order(1):id"), orderId3);
-        Assert.assertEquals(parseJson(data, "order(2):id"), orderId2);
-        Assert.assertEquals(parseJson(data, "order(3):id"), orderId1);
+        Assert.assertEquals(parseJson(data, "order(0):order_number"), orderId4);
+        Assert.assertEquals(parseJson(data, "order(1):order_number"), orderId3);
+        Assert.assertEquals(parseJson(data, "order(2):order_number"), orderId2);
+        Assert.assertEquals(parseJson(data, "order(3):order_number"), orderId1);
     }
 
     @Test
