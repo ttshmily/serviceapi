@@ -641,6 +641,16 @@ public class UpdateMedicalRecords extends BaseTest {
         Assert.assertNotNull(parseJson(data, "order:medical_record_pictures(0):url"), "没有图片URL");
         Assert.assertEquals(parseJson(data, "order:medical_record_pictures(1):key"), "456");
         Assert.assertNotNull(parseJson(data, "order:medical_record_pictures(1):url"), "没有图片URL");
+
+        logger.info("删除所有图片。。。");
+        mr.body.getJSONObject("order").remove("medical_record_pictures");
+        try {
+            res = HttpRequest.sendPut(host + mock + uri, mr.body.toString(), mainToken, pathValue);
+        } catch (IOException e) {
+            logger.error(e);
+        }
+        checkResponse(res);
+        Assert.assertEquals(code, "2210431", "图片为空不应该更新成功");
     }
 
     @Test
