@@ -27,7 +27,7 @@ public class GetUploadToken extends BaseTest {
         query.put("type", "1");
         query.put("filename", "当朝.jpg");
         try {
-            res = HttpRequest.sendGet(host+mock+uri, query, mainToken, null);
+            res = HttpRequest.sendGet(host_doc +mock+uri, query, mainToken, null);
         } catch (IOException e) {
             logger.error(e);
         }
@@ -44,7 +44,7 @@ public class GetUploadToken extends BaseTest {
         query.put("type", "2");
         query.put("filename", "abcd!@#$%^&*().jpg");
         try {
-            res = HttpRequest.sendGet(host+mock+uri, query, mainToken, null);
+            res = HttpRequest.sendGet(host_doc +mock+uri, query, mainToken, null);
         } catch (IOException e) {
             logger.error(e);
         }
@@ -61,7 +61,7 @@ public class GetUploadToken extends BaseTest {
         query.put("type", "1");
         query.put("filename", "abcd.png");
         try {
-            res = HttpRequest.sendGet(host+mock+uri, query, mainToken, null);
+            res = HttpRequest.sendGet(host_doc +mock+uri, query, mainToken, null);
         } catch (IOException e) {
             logger.error(e);
         }
@@ -70,7 +70,7 @@ public class GetUploadToken extends BaseTest {
 
         query.replace("filename", "abcdefg.PNG");
         try {
-            res = HttpRequest.sendGet(host+mock+uri, query, mainToken, null);
+            res = HttpRequest.sendGet(host_doc +mock+uri, query, mainToken, null);
         } catch (IOException e) {
             logger.error(e);
         }
@@ -86,7 +86,7 @@ public class GetUploadToken extends BaseTest {
         query.put("type", "1");
         query.put("filename", "abcd.gif");
         try {
-            res = HttpRequest.sendGet(host+mock+uri, query, mainToken, null);
+            res = HttpRequest.sendGet(host_doc +mock+uri, query, mainToken, null);
         } catch (IOException e) {
             logger.error(e);
         }
@@ -95,7 +95,7 @@ public class GetUploadToken extends BaseTest {
 
         query.replace("filename", "abcd.GIF");
         try {
-            res = HttpRequest.sendGet(host+mock+uri, query, mainToken, null);
+            res = HttpRequest.sendGet(host_doc +mock+uri, query, mainToken, null);
         } catch (IOException e) {
             logger.error(e);
         }
@@ -111,7 +111,7 @@ public class GetUploadToken extends BaseTest {
         query.put("type", "1");
         query.put("filename", "abcd!@#$%^&*(~.png");
         try {
-            res = HttpRequest.sendGet(host+mock+uri, query, mainToken, null);
+            res = HttpRequest.sendGet(host_doc +mock+uri, query, mainToken, null);
         } catch (IOException e) {
             logger.error(e);
         }
@@ -120,7 +120,7 @@ public class GetUploadToken extends BaseTest {
 
         query.replace("filename", "+_)(*&^%$#@!.PNG");
         try {
-            res = HttpRequest.sendGet(host+mock+uri, query, mainToken, null);
+            res = HttpRequest.sendGet(host_doc +mock+uri, query, mainToken, null);
         } catch (IOException e) {
             logger.error(e);
         }
@@ -137,7 +137,7 @@ public class GetUploadToken extends BaseTest {
         query.put("type", "1");
         query.put("filename", "abcd!@#$%^&*(~aa");
         try {
-            res = HttpRequest.sendGet(host+mock+uri, query, mainToken, null);
+            res = HttpRequest.sendGet(host_doc +mock+uri, query, mainToken, null);
         } catch (IOException e) {
             logger.error(e);
         }

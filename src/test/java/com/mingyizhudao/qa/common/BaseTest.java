@@ -10,10 +10,7 @@ import net.sf.json.JSONException;
 import net.sf.json.JSONObject;
 import org.apache.log4j.Logger;
 import org.apache.log4j.PropertyConfigurator;
-import org.testng.annotations.AfterClass;
-import org.testng.annotations.AfterMethod;
-import org.testng.annotations.BeforeClass;
-import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.*;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -27,7 +24,9 @@ public class BaseTest {
 
     public static final Logger logger= Logger.getLogger(BaseTest.class);
     public static String protocol = "";
-    public static String host = "";
+    public static String host_doc = "";
+    public static String host_crm = "";
+    public static String host_login = "";
     public static String mainMobile = "";
     public static String mainToken = "";
     public static String mainDoctorId = "";
@@ -64,31 +63,59 @@ public class BaseTest {
                 key = prop.getProperty(key);
             }
             BaseTest.protocol = prop.getProperty("protocol");
-            BaseTest.host = prop.getProperty("host");
-            SendVerifyCode.host = prop.getProperty("SendVerifyCode.host");
-            SendVerifyCode.uri = prop.getProperty("SendVerifyCode.uri");
-            CheckVerifyCode.host = prop.getProperty("CheckVerifyCode.host");
-            CheckVerifyCode.uri = prop.getProperty("CheckVerifyCode.uri");
-            Refresh.host = prop.getProperty("Refresh.host");
-            Refresh.uri = prop.getProperty("Refresh.uri");
 
-            CrmCertifiedDoctor.uri = prop.getProperty("CrmCertifiedDoctor.uri");
-            GetDoctorProfile.uri = prop.getProperty("GetDoctorProfile.uri");
-            UpdateDoctorProfile.uri = prop.getProperty("UpdateDoctorProfile.uri");
+            BaseTest.host_doc = prop.getProperty("host_doc");
+            BaseTest.host_crm = prop.getProperty("host_crm");
+            BaseTest.host_login = prop.getProperty("host_login");
+//            SendVerifyCode.host_login = prop.getProperty("SendVerifyCode.host");
+//            SendVerifyCode.uri = prop.getProperty("SendVerifyCode.uri");
+//            CheckVerifyCode.host_login = prop.getProperty("CheckVerifyCode.host");
+//            CheckVerifyCode.uri = prop.getProperty("CheckVerifyCode.uri");
+//            Refresh.host_login = prop.getProperty("Refresh.host");
+//            Refresh.uri = prop.getProperty("Refresh.uri");
+
+//            CrmCertifiedDoctor.uri = prop.getProperty("CrmCertifiedDoctor.uri");
+//            GetDoctorProfile.uri = prop.getProperty("GetDoctorProfile.uri");
+//            UpdateDoctorProfile.uri = prop.getProperty("UpdateDoctorProfile.uri");
 //            HospitalSearch.uri = prop.getProperty("HospitalSearch.uri");
 
-            BaseTest.host = protocol.concat(host);
-            SendVerifyCode.host = protocol.concat(SendVerifyCode.host);
-            CheckVerifyCode.host = protocol.concat(CheckVerifyCode.host);
-            Refresh.host = protocol.concat(Refresh.host);
-//            logger.debug(host);
-//            logger.debug(SendVerifyCode.host);
-//            logger.debug(CheckVerifyCode.host);
-//            logger.debug(Refresh.host);
+            BaseTest.host_doc = protocol.concat("://").concat(host_doc);
+            BaseTest.host_crm = protocol.concat("://").concat(host_crm);
+            BaseTest.host_login = protocol.concat("://").concat(host_login);
+//            SendVerifyCode.host_login = protocol.concat(SendVerifyCode.host_login);
+//            CheckVerifyCode.host_login = protocol.concat(CheckVerifyCode.host_login);
+//            Refresh.host_login = protocol.concat(Refresh.host_login);
+//            logger.debug(host_doc);
+//            logger.debug(SendVerifyCode.host_doc);
+//            logger.debug(CheckVerifyCode.host_doc);
+//            logger.debug(Refresh.host_doc);
         }
 
-//        HospitalSearch.hospitalSearch();
-//        System.exit(1);
+//
+//        mainMobile = SendVerifyCode.send();
+//        mainToken = CheckVerifyCode.check();
+//
+//        String res = GetDoctorProfile.getDoctorProfile(mainToken);
+//        mainDoctorId = JSONObject.fromObject(res).getJSONObject("data").getJSONObject("doctor").getString("user_id");
+//
+//        logger.info("更新医生信息...");
+//        UpdateDoctorProfile.updateDoctorProfile(mainToken, null);
+//        res = GetDoctorProfile.getDoctorProfile(mainToken);
+//        mainDoctorHospitalId = JSONObject.fromObject(res).getJSONObject("data").getJSONObject("doctor").getString("hospital_id");
+//        mainDoctorHospitalName = JSONObject.fromObject(res).getJSONObject("data").getJSONObject("doctor").getString("hospital_name");
+//        logger.info("mainDoctorId为:\t"+mainDoctorId);
+//        logger.info("mainDoctorHospitalId为:\t"+mainDoctorHospitalId);
+//        logger.info("mainDoctorHospitalName为:\t"+mainDoctorHospitalName);
+//
+//        logger.info("认证医生...");
+//        if (CrmCertifiedDoctor.certify(JSONObject.fromObject(res).getJSONObject("data").getJSONObject("doctor").getString("user_id")))
+//            logger.info("认证成功");
+//        else
+//            System.exit(1);
+    }
+
+    @BeforeSuite
+    public void setUpSuite() throws Exception {
         mainMobile = SendVerifyCode.send();
         mainToken = CheckVerifyCode.check();
 
@@ -100,16 +127,18 @@ public class BaseTest {
         res = GetDoctorProfile.getDoctorProfile(mainToken);
         mainDoctorHospitalId = JSONObject.fromObject(res).getJSONObject("data").getJSONObject("doctor").getString("hospital_id");
         mainDoctorHospitalName = JSONObject.fromObject(res).getJSONObject("data").getJSONObject("doctor").getString("hospital_name");
+
         logger.info("mainDoctorId为:\t"+mainDoctorId);
         logger.info("mainDoctorHospitalId为:\t"+mainDoctorHospitalId);
         logger.info("mainDoctorHospitalName为:\t"+mainDoctorHospitalName);
 
         logger.info("认证医生...");
-        if (CrmCertifiedDoctor.certify(JSONObject.fromObject(res).getJSONObject("data").getJSONObject("doctor").getString("user_id")))
+        if (CrmCertifiedDoctor.certify(JSONObject.fromObject(res).getJSONObject("data").getJSONObject("doctor").getString("user_id"))) {
             logger.info("认证成功");
-        else
             System.exit(1);
-//        System.exit(0);
+        } else
+            System.exit(1);
+
     }
 
     @BeforeClass
@@ -153,24 +182,23 @@ public class BaseTest {
         if (node == null) return null;
 
         if (!path.contains(":")) {
-            if ( path.indexOf("(")+1 == path.indexOf(")") ) {
+            if ( path.indexOf("(")+1 == path.indexOf(")") ) { // 不指定数组坐标
                 if (node.getJSONArray(path.substring(0,path.length()-2)).size() >= 0) { //jsonArray不为空
                     logger.info(path.substring(0, path.indexOf("(")) + "的长度为: " + node.getJSONArray(path.substring(0, path.length() - 2)).size());
-                    return String.valueOf(node.getJSONArray(path.substring(0,path.length()-2)).size());
+                    return String.valueOf(node.getJSONArray(path.substring(0,path.length()-2)).size()); //返回数组长度
                 } else {
-                    return null;
+                    return null; //指定的数组不存在
                 }
-            } else if ( path.indexOf("(")+1 < path.indexOf(")") ) {
-                //DONE 3是有问题的，需要根据实际的index长度相应变化，暂留bug
+            } else if ( path.indexOf("(")+1 < path.indexOf(")") ) { // 指定数组坐标
                 if (node.getJSONArray(path.substring(0,path.indexOf("("))).size() > 0) {
                     logger.info(path.substring(0, path.indexOf("(")) + "的长度为: " + node.getJSONArray(path.substring(0, path.indexOf("("))));
-                    return node.getJSONArray(path.substring(0, path.indexOf("("))).getString(Integer.parseInt(path.substring(path.indexOf("(") + 1, path.indexOf(")"))));
+                    return node.getJSONArray(path.substring(0, path.indexOf("("))).getString(Integer.parseInt(path.substring(path.indexOf("(") + 1, path.indexOf(")")))); //返回指定坐标的内容
                 } else {
                     return null;
                 }
-            } else {
+            } else { // 不是数组
                 if (node.containsKey(path)) {
-                    return node.getString(path);
+                    return node.getString(path); // 返回值
                 } else {
                     return null;
                 }
@@ -185,7 +213,6 @@ public class BaseTest {
             else
                 return null;
         } else if ( head.indexOf("(")+1 < head.indexOf(")") ) {
-            //DONE 3是有问题的，需要根据实际的index长度相应变化，暂留bug
             if ( node.getJSONArray(head.substring(0,head.indexOf("("))).size() > 0 )
                 return parseJson(node.getJSONArray(head.substring(0,path.indexOf("("))).getJSONObject(Integer.parseInt(head.substring(head.indexOf("(")+1,head.indexOf(")")))),nextPath);
             else

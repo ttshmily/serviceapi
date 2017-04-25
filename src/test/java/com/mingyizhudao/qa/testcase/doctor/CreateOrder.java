@@ -25,7 +25,7 @@ public class CreateOrder extends BaseTest {
         String res = "";
         OrderDetail body = new OrderDetail(true);
         try {
-            res = HttpRequest.sendPost(host+mock+uri, body.body.toString(), token);
+            res = HttpRequest.sendPost(host_doc +mock+uri, body.body.toString(), token);
         } catch (IOException e) {
             logger.error(e);
         }
@@ -47,7 +47,7 @@ public class CreateOrder extends BaseTest {
         OrderDetail body = new OrderDetail(true);
 
         try {
-            res = HttpRequest.sendPost(host+mock+uri, body.body.toString(), mainToken);
+            res = HttpRequest.sendPost(host_doc +mock+uri, body.body.toString(), mainToken);
         } catch (IOException e) {
             logger.error(e);
         }
@@ -94,7 +94,7 @@ public class CreateOrder extends BaseTest {
         String res = "";
         OrderDetail body = new OrderDetail(true);
         try {
-            res = HttpRequest.sendPost(host+mock+uri, body.body.toString(), "");
+            res = HttpRequest.sendPost(host_doc +mock+uri, body.body.toString(), "");
         } catch (IOException e) {
             logger.error(e);
         }
@@ -111,7 +111,7 @@ public class CreateOrder extends BaseTest {
 
         body.body.getJSONObject("order").replace("patient_name", "");
         try {
-            res = HttpRequest.sendPost(host+mock+uri, body.body.toString(), mainToken);
+            res = HttpRequest.sendPost(host_doc +mock+uri, body.body.toString(), mainToken);
         } catch (IOException e) {
             logger.error(e);
         }
@@ -120,7 +120,7 @@ public class CreateOrder extends BaseTest {
 
         body.body.getJSONObject("order").replace("patient_name", "abcdefghijklmnopqrstuvwxyz一二三四五六七八九十甲乙丙地子卯寅丑");
         try {
-            res = HttpRequest.sendPost(host+mock+uri, body.body.toString(), mainToken);
+            res = HttpRequest.sendPost(host_doc +mock+uri, body.body.toString(), mainToken);
         } catch (IOException e) {
             logger.error(e);
         }
@@ -129,7 +129,7 @@ public class CreateOrder extends BaseTest {
 
         body.body.getJSONObject("order").remove("patient_name");
         try {
-            res = HttpRequest.sendPost(host+mock+uri, body.body.toString(), mainToken);
+            res = HttpRequest.sendPost(host_doc +mock+uri, body.body.toString(), mainToken);
         } catch (IOException e) {
             logger.error(e);
         }
@@ -146,7 +146,7 @@ public class CreateOrder extends BaseTest {
 
         body.body.getJSONObject("order").replace("patient_gender", "");
         try {
-            res = HttpRequest.sendPost(host+mock+uri, body.body.toString(), mainToken);
+            res = HttpRequest.sendPost(host_doc +mock+uri, body.body.toString(), mainToken);
         } catch (IOException e) {
             logger.error(e);
         }
@@ -155,7 +155,7 @@ public class CreateOrder extends BaseTest {
 
         body.body.getJSONObject("order").replace("patient_gender", "3");
         try {
-            res = HttpRequest.sendPost(host+mock+uri, body.body.toString(), mainToken);
+            res = HttpRequest.sendPost(host_doc +mock+uri, body.body.toString(), mainToken);
         } catch (IOException e) {
             logger.error(e);
         }
@@ -164,7 +164,7 @@ public class CreateOrder extends BaseTest {
 
         body.body.getJSONObject("order").remove("patient_gender");
         try {
-            res = HttpRequest.sendPost(host+mock+uri, body.body.toString(), mainToken);
+            res = HttpRequest.sendPost(host_doc +mock+uri, body.body.toString(), mainToken);
         } catch (IOException e) {
             logger.error(e);
         }
@@ -181,7 +181,7 @@ public class CreateOrder extends BaseTest {
 
         body.body.getJSONObject("order").replace("patient_age", "");
         try {
-            res = HttpRequest.sendPost(host+mock+uri, body.body.toString(), mainToken);
+            res = HttpRequest.sendPost(host_doc +mock+uri, body.body.toString(), mainToken);
         } catch (IOException e) {
             logger.error(e);
         }
@@ -190,7 +190,7 @@ public class CreateOrder extends BaseTest {
 
         body.body.getJSONObject("order").remove("patient_age");
         try {
-            res = HttpRequest.sendPost(host+mock+uri, body.body.toString(), mainToken);
+            res = HttpRequest.sendPost(host_doc +mock+uri, body.body.toString(), mainToken);
         } catch (IOException e) {
             logger.error(e);
         }
@@ -207,7 +207,7 @@ public class CreateOrder extends BaseTest {
 
         body.body.getJSONObject("order").replace("patient_phone", "");
         try {
-            res = HttpRequest.sendPost(host+mock+uri, body.body.toString(), mainToken);
+            res = HttpRequest.sendPost(host_doc +mock+uri, body.body.toString(), mainToken);
         } catch (IOException e) {
             logger.error(e);
         }
@@ -216,7 +216,7 @@ public class CreateOrder extends BaseTest {
 
         body.body.getJSONObject("order").remove("patient_phone");
         try {
-            res = HttpRequest.sendPost(host+mock+uri, body.body.toString(), mainToken);
+            res = HttpRequest.sendPost(host_doc +mock+uri, body.body.toString(), mainToken);
         } catch (IOException e) {
             logger.error(e);
         }
@@ -233,7 +233,7 @@ public class CreateOrder extends BaseTest {
 
         order.body.getJSONObject("order").replace("major_disease_id", "");
         try {
-            res = HttpRequest.sendPost(host+mock+uri, order.body.toString(), mainToken);
+            res = HttpRequest.sendPost(host_doc +mock+uri, order.body.toString(), mainToken);
         } catch (IOException e) {
             logger.error(e);
         }
@@ -242,7 +242,7 @@ public class CreateOrder extends BaseTest {
 
         order.body.getJSONObject("order").remove("major_disease_id");
         try {
-            res = HttpRequest.sendPost(host+mock+uri, order.body.toString(), mainToken);
+            res = HttpRequest.sendPost(host_doc +mock+uri, order.body.toString(), mainToken);
         } catch (IOException e) {
             logger.error(e);
         }
@@ -259,7 +259,7 @@ public class CreateOrder extends BaseTest {
 
         order.body.getJSONObject("order").replace("minor_disease_id", "");
         try {
-            res = HttpRequest.sendPost(host+mock+uri, order.body.toString(), mainToken);
+            res = HttpRequest.sendPost(host_doc +mock+uri, order.body.toString(), mainToken);
         } catch (IOException e) {
             logger.error(e);
         }
@@ -268,7 +268,7 @@ public class CreateOrder extends BaseTest {
 
         order.body.getJSONObject("order").remove("minor_disease_id");
         try {
-            res = HttpRequest.sendPost(host+mock+uri, order.body.toString(), mainToken);
+            res = HttpRequest.sendPost(host_doc +mock+uri, order.body.toString(), mainToken);
         } catch (IOException e) {
             logger.error(e);
         }
@@ -289,7 +289,7 @@ public class CreateOrder extends BaseTest {
         logger.info("创建未认证医生成功");
         OrderDetail order = new OrderDetail(true);
         try {
-            res = HttpRequest.sendPost(host+mock+uri, order.body.toString(), tmpToken);
+            res = HttpRequest.sendPost(host_doc +mock+uri, order.body.toString(), tmpToken);
         } catch (IOException e) {
             logger.error(e);
         }
@@ -307,7 +307,7 @@ public class CreateOrder extends BaseTest {
         logger.info("不传入期望手术医院的ID。。。");
         order.body.getJSONObject("order").replace("expected_surgery_hospital_id","");
         try {
-            res = HttpRequest.sendPost(host+mock+uri, order.body.toString(), mainToken);
+            res = HttpRequest.sendPost(host_doc +mock+uri, order.body.toString(), mainToken);
         } catch (IOException e) {
             logger.error(e);
         }
@@ -326,7 +326,7 @@ public class CreateOrder extends BaseTest {
         logger.info("传入期望手术医院的ID=0。。。");
         order.body.getJSONObject("order").replace("expected_surgery_hospital_id","0");
         try {
-            res = HttpRequest.sendPost(host+mock+uri, order.body.toString(), mainToken);
+            res = HttpRequest.sendPost(host_doc +mock+uri, order.body.toString(), mainToken);
         } catch (IOException e) {
             logger.error(e);
         }
@@ -345,7 +345,7 @@ public class CreateOrder extends BaseTest {
         logger.info("不传入期望手术医院的key。。。");
         order.body.getJSONObject("order").remove("expected_surgery_hospital_id");
         try {
-            res = HttpRequest.sendPost(host+mock+uri, order.body.toString(), mainToken);
+            res = HttpRequest.sendPost(host_doc +mock+uri, order.body.toString(), mainToken);
         } catch (IOException e) {
             logger.error(e);
         }

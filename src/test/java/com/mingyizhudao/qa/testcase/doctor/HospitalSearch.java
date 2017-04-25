@@ -22,7 +22,7 @@ public class HospitalSearch extends BaseTest {
 
         String res="";
         try {
-            res = HttpRequest.sendGet(host+mock+uri,"", "");
+            res = HttpRequest.sendGet(host_doc +mock+uri,"", "");
         } catch (IOException e) {
             logger.error(e);
         }
@@ -33,7 +33,7 @@ public class HospitalSearch extends BaseTest {
     public void 有token信息的请求可以获得有效信息() {
         String res = "";
         try {
-            res = HttpRequest.sendGet(host+mock+uri,"", mainToken);
+            res = HttpRequest.sendGet(host_doc +mock+uri,"", mainToken);
         } catch (IOException e) {
             logger.error(e);
         }
@@ -45,7 +45,7 @@ public class HospitalSearch extends BaseTest {
     public void 没有searchName字段的请求可以获得有效信息() {
         String res = "";
         try {
-            res = HttpRequest.sendGet(host+mock+uri, null, "");
+            res = HttpRequest.sendGet(host_doc +mock+uri, null, "");
         } catch (IOException e) {
             logger.error(e);
         }
@@ -59,7 +59,7 @@ public class HospitalSearch extends BaseTest {
         HashMap<String, String> map = new HashMap<>();
         map.put("searchname","");
         try {
-            res = HttpRequest.sendGet(host+mock+uri, map, "", null);
+            res = HttpRequest.sendGet(host_doc +mock+uri, map, "", null);
         } catch (IOException e) {
             logger.error(e);
         }
@@ -73,7 +73,7 @@ public class HospitalSearch extends BaseTest {
         HashMap<String, String> map = new HashMap<>();
         map.put("searchname","人民医院");
         try {
-            res = HttpRequest.sendGet(host+mock+uri, map, "", null);
+            res = HttpRequest.sendGet(host_doc +mock+uri, map, "", null);
         } catch (IOException e) {
             logger.error(e);
         }
@@ -87,7 +87,7 @@ public class HospitalSearch extends BaseTest {
         HashMap<String, String> map = new HashMap<>();
         map.put("searchname","changzhou");
         try {
-            res = HttpRequest.sendGet(host+mock+uri, map, "", null);
+            res = HttpRequest.sendGet(host_doc +mock+uri, map, "", null);
         } catch (IOException e) {
             logger.error(e);
         }
@@ -101,7 +101,7 @@ public class HospitalSearch extends BaseTest {
         HashMap<String, String> map = new HashMap<>();
         map.put("searchname","中国changzhou");
         try {
-            res = HttpRequest.sendGet(host+mock+uri, map, "", null);
+            res = HttpRequest.sendGet(host_doc +mock+uri, map, "", null);
         } catch (IOException e) {
             logger.error(e);
         }
@@ -115,7 +115,7 @@ public class HospitalSearch extends BaseTest {
         HashMap<String, String> map = new HashMap<>();
         map.put("searchname","安阳医院");
         try {
-            res = HttpRequest.sendGet(host+mock+uri, map, "", null);
+            res = HttpRequest.sendGet(host_doc +mock+uri, map, "", null);
         } catch (IOException e) {
             logger.error(e);
         }

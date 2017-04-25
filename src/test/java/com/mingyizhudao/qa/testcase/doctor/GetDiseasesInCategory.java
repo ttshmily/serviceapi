@@ -23,7 +23,7 @@ public class GetDiseasesInCategory extends BaseTest {
         String res = "";
 
         try {
-            res = HttpRequest.sendGet(host+mock+uri,"id=6", mainToken);
+            res = HttpRequest.sendGet(host_doc +mock+uri,"id=6", mainToken);
         } catch (IOException e) {
             logger.error(e);
         }
@@ -41,7 +41,7 @@ public class GetDiseasesInCategory extends BaseTest {
         HashMap<String, String> pathValue = new HashMap<String, String>();
         pathValue.put("id", "600000");
         try {
-            res = HttpRequest.sendGet(host+mock+uri,"id=600000", mainToken);
+            res = HttpRequest.sendGet(host_doc +mock+uri,"id=600000", mainToken);
         } catch (IOException e) {
             logger.error(e);
         }
@@ -58,7 +58,7 @@ public class GetDiseasesInCategory extends BaseTest {
 //        HashMap<String, String> pathValue = new HashMap<String, String>();
 //        pathValue.put("diseaseCategoryId", "abc");
         try {
-            res = HttpRequest.sendGet(host+mock+uri,"id=abc", mainToken);
+            res = HttpRequest.sendGet(host_doc +mock+uri,"id=abc", mainToken);
         } catch (IOException e) {
             logger.error(e);
         }
@@ -67,7 +67,7 @@ public class GetDiseasesInCategory extends BaseTest {
 
         logger.info("case2: categoryId = abc12");
         try {
-            res = HttpRequest.sendGet(host+mock+uri,"id=abc12", mainToken);
+            res = HttpRequest.sendGet(host_doc +mock+uri,"id=abc12", mainToken);
         } catch (IOException e) {
             logger.error(e);
         }
@@ -76,7 +76,7 @@ public class GetDiseasesInCategory extends BaseTest {
 
         logger.info("case3: categoryId = -1");
         try {
-            res = HttpRequest.sendGet(host+mock+uri,"id=-1", mainToken);
+            res = HttpRequest.sendGet(host_doc +mock+uri,"id=-1", mainToken);
         } catch (IOException e) {
             logger.error(e);
         }

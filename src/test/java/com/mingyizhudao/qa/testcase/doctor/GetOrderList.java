@@ -34,7 +34,7 @@ public class GetOrderList extends BaseTest{
             fail();
         }
         try {
-            res = HttpRequest.sendGet(host+mock+uri,"", mainToken);
+            res = HttpRequest.sendGet(host_doc +mock+uri,"", mainToken);
         } catch (IOException e) {
             logger.error(e);
         }
@@ -73,7 +73,7 @@ public class GetOrderList extends BaseTest{
             fail();
         }
         try {
-            res = HttpRequest.sendGet(host+mock+uri,"", tmpToken);
+            res = HttpRequest.sendGet(host_doc +mock+uri,"", tmpToken);
         } catch (IOException e) {
             logger.error(e);
         }
@@ -87,7 +87,7 @@ public class GetOrderList extends BaseTest{
             fail();
         }
         try {
-            res = HttpRequest.sendGet(host+mock+uri,"", tmpToken);
+            res = HttpRequest.sendGet(host_doc +mock+uri,"", tmpToken);
         } catch (IOException e) {
             logger.error(e);
         }
@@ -102,7 +102,7 @@ public class GetOrderList extends BaseTest{
             fail();
         }
         try {
-            res = HttpRequest.sendGet(host+mock+uri,"", tmpToken);
+            res = HttpRequest.sendGet(host_doc +mock+uri,"", tmpToken);
         } catch (IOException e) {
             logger.error(e);
         }
@@ -118,7 +118,7 @@ public class GetOrderList extends BaseTest{
             fail();
         }
         try {
-            res = HttpRequest.sendGet(host+mock+uri,"", tmpToken);
+            res = HttpRequest.sendGet(host_doc +mock+uri,"", tmpToken);
         } catch (IOException e) {
             logger.error(e);
         }
@@ -133,7 +133,7 @@ public class GetOrderList extends BaseTest{
     public void 获取订单列表_未登录用户() {
         String res = "";
         try {
-            res = HttpRequest.sendGet(host+mock+uri,"", "");
+            res = HttpRequest.sendGet(host_doc +mock+uri,"", "");
         } catch (IOException e) {
             logger.error(e);
         }

@@ -18,7 +18,6 @@ public class SendVerifyCode extends BaseTest{
     public static final Logger logger= Logger.getLogger(SendVerifyCode.class);
     public static String uri = "/api/login/sendVerifyCode";
     public static String mock = false ? "/mockjs/1" : "";
-    public static String host = "http://login.dev.mingyizhudao.com";
     public static String mobile;
     public static String token;
 
@@ -29,11 +28,10 @@ public class SendVerifyCode extends BaseTest{
         Refresh.mobile = mobile;
         logger.info("请求验证码到手机号" + mobile + " ...") ;
         try {
-            res = HttpRequest.sendPost(SendVerifyCode.host+uri, body.body.toString(), "");
+            res = HttpRequest.sendPost(host_login +uri, body.body.toString(), "");
         } catch (IOException e) {
             logger.error(e);
         }
-//        logger.info("返回数据: " + unicodeString(res));
         logger.info("mobile是: " + mobile + "...请发送验证码到服务器进行验证");
         return mobile;
     }
@@ -44,7 +42,7 @@ public class SendVerifyCode extends BaseTest{
         MobileProfile body = new MobileProfile(false);
         body.body.replace("mobile", "");
         try {
-            res = HttpRequest.sendPost(host+mock+uri,body.body.toString(), "");
+            res = HttpRequest.sendPost(host_login +mock+uri,body.body.toString(), "");
             checkResponse(res);
             Assert.fail("res should fail"); // 如果没有exception，就是fail
         } catch (IOException e) {
@@ -58,7 +56,7 @@ public class SendVerifyCode extends BaseTest{
         String res = "";
         MobileProfile body = new MobileProfile(true);
         try {
-            res = HttpRequest.sendPost(host+mock+uri,body.body.toString(), "");
+            res = HttpRequest.sendPost(host_login +mock+uri,body.body.toString(), "");
         } catch (IOException e) {
             logger.error(e);
         }
@@ -72,7 +70,7 @@ public class SendVerifyCode extends BaseTest{
         MobileProfile body = new MobileProfile(false);
         body.body.replace("mobile", "1330000000");
         try {
-            res = HttpRequest.sendPost(host+mock+uri,body.body.toString(), "");
+            res = HttpRequest.sendPost(host_login +mock+uri,body.body.toString(), "");
             checkResponse(res);
             Assert.fail("res should fail"); // 如果没有exception，就是fail
         } catch (IOException e) {

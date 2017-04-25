@@ -37,7 +37,7 @@ public class UpdateDoctorProfile extends BaseTest {
             }
         }
         try {
-            res = HttpRequest.sendPost(host+mock+uri, dp.body.toString(), token);
+            res = HttpRequest.sendPost(host_doc +mock+uri, dp.body.toString(), token);
         } catch (IOException e) {
             logger.error(e);
         }
@@ -50,7 +50,7 @@ public class UpdateDoctorProfile extends BaseTest {
         DoctorProfile body = new DoctorProfile(false);
         body.body.getJSONObject("doctor").replace("city_id","22");
         try {
-            res = HttpRequest.sendPost(host+mock+uri, body.body.toString(), mainToken);
+            res = HttpRequest.sendPost(host_doc +mock+uri, body.body.toString(), mainToken);
         } catch (IOException e) {
             logger.error(e);
         }
@@ -64,7 +64,7 @@ public class UpdateDoctorProfile extends BaseTest {
         DoctorProfile body = new DoctorProfile(false);
         body.body.getJSONObject("doctor").replace("department","尿不出来科");
         try {
-            res = HttpRequest.sendPost(host+mock+uri, body.body.toString(), mainToken);
+            res = HttpRequest.sendPost(host_doc +mock+uri, body.body.toString(), mainToken);
             checkResponse(res);
             Assert.assertEquals(code, "1000000", "我想1000000");
             res = GetDoctorProfile.getDoctorProfile(mainToken);
@@ -84,7 +84,7 @@ public class UpdateDoctorProfile extends BaseTest {
         DoctorProfile body = new DoctorProfile(false);
         body.body.getJSONObject("doctor").replace("hospital_id","8");
         try {
-            res = HttpRequest.sendPost(host+mock+uri, body.body.toString(), mainToken);
+            res = HttpRequest.sendPost(host_doc +mock+uri, body.body.toString(), mainToken);
             checkResponse(res);
             Assert.assertEquals(code, "1000000");
             res = GetDoctorProfile.getDoctorProfile(mainToken);
@@ -102,7 +102,7 @@ public class UpdateDoctorProfile extends BaseTest {
         DoctorProfile body = new DoctorProfile(false);
         body.body.getJSONObject("doctor").replace("inviter_no","SH0006");
         try {
-            res = HttpRequest.sendPost(host+mock+uri, body.body.toString(), mainToken);
+            res = HttpRequest.sendPost(host_doc +mock+uri, body.body.toString(), mainToken);
             checkResponse(res);
             Assert.assertEquals(code, "1000000");
             res = GetDoctorProfile.getDoctorProfile(mainToken);
@@ -121,7 +121,7 @@ public class UpdateDoctorProfile extends BaseTest {
         DoctorProfile body = new DoctorProfile(false);
         body.body.getJSONObject("doctor").replace("major_id","5");
         try {
-            res = HttpRequest.sendPost(host+mock+uri, body.body.toString(), mainToken);
+            res = HttpRequest.sendPost(host_doc +mock+uri, body.body.toString(), mainToken);
             checkResponse(res);
             Assert.assertEquals(code, "1000000");
             res = GetDoctorProfile.getDoctorProfile(mainToken);
@@ -138,7 +138,7 @@ public class UpdateDoctorProfile extends BaseTest {
         String res = "";
         DoctorProfile body = new DoctorProfile(true);
         try {
-            res = HttpRequest.sendPost(host+mock+uri, body.body.toString(), "");
+            res = HttpRequest.sendPost(host_doc +mock+uri, body.body.toString(), "");
         } catch (IOException e) {
             logger.error(e);
         }
@@ -151,7 +151,7 @@ public class UpdateDoctorProfile extends BaseTest {
         String res = "";
         DoctorProfile body = new DoctorProfile(true);
         try {
-            res = HttpRequest.sendPost(host+mock+uri, body.body.toString(), "niyaowoa");
+            res = HttpRequest.sendPost(host_doc +mock+uri, body.body.toString(), "niyaowoa");
         } catch (IOException e) {
             logger.error(e);
         }
@@ -165,7 +165,7 @@ public class UpdateDoctorProfile extends BaseTest {
         DoctorProfile body = new DoctorProfile(false);
         body.body.getJSONObject("doctor").replace("city_name", "城市");
         try {
-            res = HttpRequest.sendPost(host+mock+uri, body.body.toString(), mainToken);
+            res = HttpRequest.sendPost(host_doc +mock+uri, body.body.toString(), mainToken);
         } catch (IOException e) {
             logger.error(e);
         }
@@ -182,7 +182,7 @@ public class UpdateDoctorProfile extends BaseTest {
         DoctorProfile dp = new DoctorProfile(true);
         dp.body.getJSONObject("doctor").replace("hospital_name", "测试医院");
         try {
-            res = HttpRequest.sendPost(host+mock+uri, dp.body.toString(), mainToken);
+            res = HttpRequest.sendPost(host_doc +mock+uri, dp.body.toString(), mainToken);
         } catch (IOException e) {
             logger.error(e);
         }
@@ -196,7 +196,7 @@ public class UpdateDoctorProfile extends BaseTest {
         dp.body.getJSONObject("doctor").replace("hospital_name", "测试医院");
         dp.body.getJSONObject("doctor").replace("major_id", "8");
         try {
-            res = HttpRequest.sendPost(host+mock+uri, dp.body.toString(), mainToken);
+            res = HttpRequest.sendPost(host_doc +mock+uri, dp.body.toString(), mainToken);
         } catch (IOException e) {
             logger.error(e);
         }
@@ -211,7 +211,7 @@ public class UpdateDoctorProfile extends BaseTest {
         dp.body.getJSONObject("doctor").replace("hospital_name", "测试医院");
         dp.body.getJSONObject("doctor").replace("inviter_no", "SH0003");
         try {
-            res = HttpRequest.sendPost(host+mock+uri, dp.body.toString(), mainToken);
+            res = HttpRequest.sendPost(host_doc +mock+uri, dp.body.toString(), mainToken);
         } catch (IOException e) {
             logger.error(e);
         }
@@ -226,7 +226,7 @@ public class UpdateDoctorProfile extends BaseTest {
         dp.body.getJSONObject("doctor").replace("name","大一测试名称");
         dp.body.getJSONObject("doctor").replace("hospital_name","测试医院");
         try {
-            res = HttpRequest.sendPost(host+mock+uri, dp.body.toString(), mainToken);
+            res = HttpRequest.sendPost(host_doc +mock+uri, dp.body.toString(), mainToken);
 
         } catch (IOException e) {
             logger.error(e);
@@ -246,7 +246,7 @@ public class UpdateDoctorProfile extends BaseTest {
         DoctorProfile dp = new DoctorProfile(true);
         dp.body.getJSONObject("doctor").replace("major_name", "测试专业");
         try {
-            res = HttpRequest.sendPost(host+mock+uri, dp.body.toString(), mainToken);
+            res = HttpRequest.sendPost(host_doc +mock+uri, dp.body.toString(), mainToken);
         } catch (IOException e) {
             logger.error(e);
         }
@@ -260,7 +260,7 @@ public class UpdateDoctorProfile extends BaseTest {
         dp.body.getJSONObject("doctor").replace("hospital_id","2");
         dp.body.getJSONObject("doctor").replace("major_name","test_major");
         try {
-            res = HttpRequest.sendPost(host+mock+uri, dp.body.toString(), mainToken);
+            res = HttpRequest.sendPost(host_doc +mock+uri, dp.body.toString(), mainToken);
 
         } catch (IOException e) {
             logger.error(e);
@@ -277,7 +277,7 @@ public class UpdateDoctorProfile extends BaseTest {
         dp.body.getJSONObject("doctor").replace("inviter_no","SH0002");
         dp.body.getJSONObject("doctor").replace("major_name","test_major");
         try {
-            res = HttpRequest.sendPost(host+mock+uri, dp.body.toString(), mainToken);
+            res = HttpRequest.sendPost(host_doc +mock+uri, dp.body.toString(), mainToken);
 
         } catch (IOException e) {
             logger.error(e);
@@ -294,7 +294,7 @@ public class UpdateDoctorProfile extends BaseTest {
         dp.body.getJSONObject("doctor").replace("name","大一测试名称");
         dp.body.getJSONObject("doctor").replace("major_name","test_major");
         try {
-            res = HttpRequest.sendPost(host+mock+uri, dp.body.toString(), mainToken);
+            res = HttpRequest.sendPost(host_doc +mock+uri, dp.body.toString(), mainToken);
 
         } catch (IOException e) {
             logger.error(e);
@@ -315,7 +315,7 @@ public class UpdateDoctorProfile extends BaseTest {
         DoctorProfile body = new DoctorProfile(false);
         body.body.getJSONObject("doctor").replace("inviter_name", "大一");
         try {
-            res = HttpRequest.sendPost(host+mock+uri, body.body.toString(), mainToken);
+            res = HttpRequest.sendPost(host_doc +mock+uri, body.body.toString(), mainToken);
         } catch (IOException e) {
             logger.error(e);
         }
@@ -333,7 +333,7 @@ public class UpdateDoctorProfile extends BaseTest {
         DoctorProfile body = new DoctorProfile(false);
         body.body.getJSONObject("doctor").replace("inviter_no", "GF001");
         try {
-            res = HttpRequest.sendPost(host+mock+uri, body.body.toString(), mainToken);
+            res = HttpRequest.sendPost(host_doc +mock+uri, body.body.toString(), mainToken);
         } catch (IOException e) {
             logger.error(e);
         }

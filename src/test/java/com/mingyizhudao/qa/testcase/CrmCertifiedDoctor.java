@@ -27,7 +27,7 @@ public class CrmCertifiedDoctor extends BaseTest {
         JSONObject body = new JSONObject();
         body.accumulate("doctor", certifyBody);
         try {
-            res = HttpRequest.sendPost(host+mock+uri, body.toString(), "");
+            res = HttpRequest.sendPost(host_doc +mock+uri, body.toString(), "");
         } catch (IOException e) {
             logger.error(e);
         }

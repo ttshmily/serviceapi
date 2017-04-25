@@ -19,7 +19,6 @@ public class Refresh extends BaseTest{
     public static final Logger logger= Logger.getLogger(Refresh.class);
     public static String uri = "/api/login/refresh";
     public static String mock = false ? "/mockjs/1" : "";
-    public static String host = "http://login.dev.mingyizhudao.com";
     public static String mobile;
     public static String token;
 
@@ -38,7 +37,7 @@ public class Refresh extends BaseTest{
 
         RefreshProfile body = new RefreshProfile(true);
         try {
-            res = HttpRequest.sendPost(host+mock+uri,body.body.toString(), oldToken);
+            res = HttpRequest.sendPost(host_login +mock+uri,body.body.toString(), oldToken);
             checkResponse(res);
         } catch (IOException e) {
 
@@ -81,7 +80,7 @@ public class Refresh extends BaseTest{
         RefreshProfile body = new RefreshProfile(false);
         body.body.replace("token", mainToken);
         try {
-            res = HttpRequest.sendPost(host+mock+uri,body.body.toString(), oldToken);
+            res = HttpRequest.sendPost(host_login +mock+uri,body.body.toString(), oldToken);
             checkResponse(res);
         } catch (IOException e) {
             Assert.fail();

@@ -25,7 +25,7 @@ public class ProfessionList extends BaseTest {
     public void 有token信息的请求可以获得有效信息() {
         String res = "";
         try {
-            res = HttpRequest.sendGet(host+mock+uri,"", mainToken);
+            res = HttpRequest.sendGet(host_doc +mock+uri,"", mainToken);
         } catch (IOException e) {
             logger.error(e);
         }
@@ -43,7 +43,7 @@ public class ProfessionList extends BaseTest {
     public void 没有token信息的请求可以获得有效信息() {
         String res = "";
         try {
-            res = HttpRequest.sendGet(host+mock+uri,"", "");
+            res = HttpRequest.sendGet(host_doc +mock+uri,"", "");
         } catch (IOException e) {
             logger.error(e);
         }

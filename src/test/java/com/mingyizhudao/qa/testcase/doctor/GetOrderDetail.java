@@ -28,7 +28,7 @@ public class GetOrderDetail extends BaseTest {
         HashMap<String, String> pathValue = new HashMap<String, String>();
         pathValue.put("orderId", orderId);
         try {
-            res = HttpRequest.sendGet(host+mock+uri, "", token, pathValue);
+            res = HttpRequest.sendGet(host_doc +mock+uri, "", token, pathValue);
         } catch (IOException e) {
             logger.error(e);
         }
@@ -43,7 +43,7 @@ public class GetOrderDetail extends BaseTest {
         String orderId = CreateOrder.CreateOrder(mainToken);
         pathValue.put("orderId", orderId);
         try {
-            res = HttpRequest.sendGet(host+mock+uri,"", mainToken, pathValue);
+            res = HttpRequest.sendGet(host_doc +mock+uri,"", mainToken, pathValue);
         } catch (IOException e) {
             logger.error(e);
         }
@@ -78,7 +78,7 @@ public class GetOrderDetail extends BaseTest {
         HashMap<String, String> pathValue = new HashMap<String, String>();
         pathValue.put("orderId", "20000000000");
         try {
-            res = HttpRequest.sendGet(host+mock+uri,"", mainToken, pathValue);
+            res = HttpRequest.sendGet(host_doc +mock+uri,"", mainToken, pathValue);
         } catch (IOException e) {
             logger.error(e);
         }
@@ -92,7 +92,7 @@ public class GetOrderDetail extends BaseTest {
         HashMap<String, String> pathValue = new HashMap<String, String>();
         pathValue.put("orderId", "20000asdfa000");
         try {
-            res = HttpRequest.sendGet(host+mock+uri,"", mainToken, pathValue);
+            res = HttpRequest.sendGet(host_doc +mock+uri,"", mainToken, pathValue);
         } catch (IOException e) {
             logger.error(e);
         }
@@ -120,7 +120,7 @@ public class GetOrderDetail extends BaseTest {
         res = GetDoctorProfile.getDoctorProfile(tmpToken);
         CrmCertifiedDoctor.certify(parseJson(JSONObject.fromObject(res), "data:doctor:user_id"));
         try {
-            res = HttpRequest.sendGet(host+mock+uri,"", tmpToken, pathValue);
+            res = HttpRequest.sendGet(host_doc +mock+uri,"", tmpToken, pathValue);
         } catch (IOException e) {
             logger.error(e);
         }

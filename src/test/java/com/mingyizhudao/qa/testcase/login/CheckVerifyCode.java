@@ -18,7 +18,6 @@ public class CheckVerifyCode extends BaseTest{
     public static final Logger logger= Logger.getLogger(CheckVerifyCode.class);
     public static String uri = "/api/login/checkVerifyCode";
     public static String mock = false ? "/mockjs/1" : "";
-    public static String host = "http://login.dev.mingyizhudao.com";
     public static String mobile;
     public static String token;
 
@@ -29,7 +28,7 @@ public class CheckVerifyCode extends BaseTest{
         cmp.body.replace("code", "123456");
         logger.info("发送短信验证码到服务器进行验证...");
         try {
-            res = HttpRequest.sendPost(host+uri,cmp.body.toString(), "");
+            res = HttpRequest.sendPost(host_login +uri,cmp.body.toString(), "");
         } catch (IOException e) {
             logger.error(e);
         }
@@ -55,7 +54,7 @@ public class CheckVerifyCode extends BaseTest{
         body.body.replace("code", "123456");
         body.body.replace("mobile", mobile);
         try {
-            res = HttpRequest.sendPost(host+mock+uri, body.body.toString(), "");
+            res = HttpRequest.sendPost(host_login +mock+uri, body.body.toString(), "");
             checkResponse(res);
         } catch (IOException e) {
             logger.error(e);
@@ -71,12 +70,12 @@ public class CheckVerifyCode extends BaseTest{
         String res = "";
         CheckMobileProfile body = new CheckMobileProfile(true);
         try {
-            res = HttpRequest.sendPost(host+mock+uri, body.body.toString(), "");
-            checkResponse(res);
+            res = HttpRequest.sendPost(host_login +uri, body.body.toString(), "");
         } catch (IOException e) {
             logger.error(e);
             Assert.fail("http request returns an error");
         }
+        checkResponse(res);
         Assert.assertNotEquals(code, "1000000", "code不应该为1000000");
     }
 
@@ -87,12 +86,12 @@ public class CheckVerifyCode extends BaseTest{
         body.body.replace("code", "123456");
         body.body.replace("mobile", "13800000001");
         try {
-            res = HttpRequest.sendPost(host+mock+uri, body.body.toString(), "");
-            checkResponse(res);
+            res = HttpRequest.sendPost(host_login + uri, body.body.toString(), "");
         } catch (IOException e) {
             logger.error(e);
             Assert.fail("http request returns an error");
         }
+        checkResponse(res);
         Assert.assertNotEquals(code, "1000000", "code不应该为1000000");
     }
 
@@ -102,7 +101,7 @@ public class CheckVerifyCode extends BaseTest{
         CheckMobileProfile body = new CheckMobileProfile(false);
         body.body.replace("mobile", "1380000"+"9999");
         try {
-            res = HttpRequest.sendPost(host+mock+uri, body.body.toString(), "");
+            res = HttpRequest.sendPost(host_login +mock+uri, body.body.toString(), "");
             checkResponse(res);
             Assert.fail();
         } catch (IOException e) {
@@ -116,7 +115,7 @@ public class CheckVerifyCode extends BaseTest{
         CheckMobileProfile body = new CheckMobileProfile(false);
         body.body.replace("code", "123456");
         try {
-            res = HttpRequest.sendPost(host+mock+uri, body.body.toString(), "");
+            res = HttpRequest.sendPost(host_login +mock+uri, body.body.toString(), "");
             checkResponse(res);
             Assert.fail();
         } catch (IOException e) {

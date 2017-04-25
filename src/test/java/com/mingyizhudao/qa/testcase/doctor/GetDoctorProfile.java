@@ -21,7 +21,7 @@ public class GetDoctorProfile extends BaseTest {
     public static String getDoctorProfile(String token) {
         String res = "";
         try {
-            res = HttpRequest.sendGet(host+mock+uri, "", token);
+            res = HttpRequest.sendGet(host_doc +mock+uri, "", token);
         } catch (IOException e) {
             logger.error(e);
         }
@@ -32,7 +32,7 @@ public class GetDoctorProfile extends BaseTest {
     public void 有token信息的请求可以获得有效信息() {
         String res = "";
         try {
-            res = HttpRequest.sendGet(host+mock+uri,"", mainToken);
+            res = HttpRequest.sendGet(host_doc +mock+uri,"", mainToken);
         } catch (IOException e) {
             logger.error(e);
         }
@@ -50,7 +50,7 @@ public class GetDoctorProfile extends BaseTest {
     public void 没有token信息的请求不能获得个人信息并返回正确的错误提示() {
         String res = "";
         try {
-            res = HttpRequest.sendGet(host+mock+uri,"", "");
+            res = HttpRequest.sendGet(host_doc +mock+uri,"", "");
         } catch (IOException e) {
             logger.error(e);
         }
@@ -66,7 +66,7 @@ public class GetDoctorProfile extends BaseTest {
     public void 错误token的请求不能获得个人信息并返回正确的错误提示() {
         String res = "";
         try {
-            res = HttpRequest.sendGet(host+mock+uri,"", "nidawoya");
+            res = HttpRequest.sendGet(host_doc +mock+uri,"", "nidawoya");
         } catch (IOException e) {
             logger.error(e);
         }
@@ -82,7 +82,7 @@ public class GetDoctorProfile extends BaseTest {
     public void 测试data字段返回了足够的医生信息() {
         String res = "";
         try {
-            res = HttpRequest.sendGet(host+mock+uri,"", mainToken);
+            res = HttpRequest.sendGet(host_doc +mock+uri,"", mainToken);
         } catch (IOException e) {
             logger.error(e);
         }
