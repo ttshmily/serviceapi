@@ -19,11 +19,13 @@ public class GetDiseasesInCategory extends BaseTest {
     public static String mock = false ? "/mockjs/1" : "";
 
     @Test
-    public void 获取疾病_提供有效的categoryId() {
+    public void test_01_获取疾病_提供有效的categoryId() {
         String res = "";
 
+        HashMap<String, String> query = new HashMap<>();
+        query.put("id", "6");
         try {
-            res = HttpRequest.sendGet(host_doc +mock+uri,"id=6", mainToken);
+            res = HttpRequest.sendGet(host_doc +mock+uri, query, mainToken, null);
         } catch (IOException e) {
             logger.error(e);
         }
@@ -35,13 +37,13 @@ public class GetDiseasesInCategory extends BaseTest {
     }
 
     @Test
-    public void 获取疾病_提供无效的categoryId_ID不存在() {
+    public void test_02_获取疾病_提供无效的categoryId_ID不存在() {
         String res = "";
 
-        HashMap<String, String> pathValue = new HashMap<String, String>();
-        pathValue.put("id", "600000");
+        HashMap<String, String> query = new HashMap<String, String>();
+        query.put("id", "600000");
         try {
-            res = HttpRequest.sendGet(host_doc +mock+uri,"id=600000", mainToken);
+            res = HttpRequest.sendGet(host_doc +mock+uri, query, mainToken, null);
         } catch (IOException e) {
             logger.error(e);
         }
@@ -51,14 +53,14 @@ public class GetDiseasesInCategory extends BaseTest {
     }
 
     @Test
-    public void 获取疾病_提供无效的categoryId_ID为其他字符() {
+    public void test_03_获取疾病_提供无效的categoryId_ID为其他字符() {
         String res = "";
 
         logger.info("case1: categoryId = abc");
-//        HashMap<String, String> pathValue = new HashMap<String, String>();
-//        pathValue.put("diseaseCategoryId", "abc");
+        HashMap<String, String> query = new HashMap<String, String>();
+        query.put("id", "abc");
         try {
-            res = HttpRequest.sendGet(host_doc +mock+uri,"id=abc", mainToken);
+            res = HttpRequest.sendGet(host_doc +mock+uri, query, mainToken, null);
         } catch (IOException e) {
             logger.error(e);
         }
@@ -66,8 +68,9 @@ public class GetDiseasesInCategory extends BaseTest {
         Assert.assertEquals(code, "2210423");
 
         logger.info("case2: categoryId = abc12");
+        query.replace("id", "abc12");
         try {
-            res = HttpRequest.sendGet(host_doc +mock+uri,"id=abc12", mainToken);
+            res = HttpRequest.sendGet(host_doc +mock+uri, query, mainToken, null);
         } catch (IOException e) {
             logger.error(e);
         }
@@ -75,14 +78,14 @@ public class GetDiseasesInCategory extends BaseTest {
         Assert.assertEquals(code, "2210423");
 
         logger.info("case3: categoryId = -1");
+        query.replace("id", "-1");
         try {
-            res = HttpRequest.sendGet(host_doc +mock+uri,"id=-1", mainToken);
+            res = HttpRequest.sendGet(host_doc +mock+uri, query, mainToken, null);
         } catch (IOException e) {
             logger.error(e);
         }
         checkResponse(res);
         Assert.assertEquals(code, "2210423");
     }
-
 
 }

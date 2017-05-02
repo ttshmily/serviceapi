@@ -36,6 +36,7 @@ public class CrmCertifiedDoctor extends BaseTest {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
+        logger.info(HttpRequest.unicodeString(res));
         return parseJson(JSONObject.fromObject(res), "code").endsWith("1000000");
     }
 }

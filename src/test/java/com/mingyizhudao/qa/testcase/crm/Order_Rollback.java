@@ -1,7 +1,15 @@
 package com.mingyizhudao.qa.testcase.crm;
 
 import com.mingyizhudao.qa.common.BaseTest;
+import com.mingyizhudao.qa.testcase.doctor.CreateOrder;
+import com.mingyizhudao.qa.util.HttpRequest;
+import net.sf.json.JSONObject;
 import org.apache.log4j.Logger;
+import org.testng.Assert;
+import org.testng.annotations.Test;
+
+import java.io.IOException;
+import java.util.HashMap;
 
 /**
  * Created by ttshmily on 25/4/2017.
@@ -12,4 +20,120 @@ public class Order_Rollback extends BaseTest {
     public static final String version = "/api/v1";
     public static String uri = version+"/orders/{orderNumber}/orderRollback";
     public static String mock = false ? "/mockjs/1" : "";
+
+
+    @Test
+    public void test_01_回退订单_三方通话确认成功之后() {
+        String res = "";
+        HashMap<String, String> pathValue = new HashMap<>();
+        String order_number = CreateOrder.CreateOrder(mainToken); // create an order
+        logger.debug(Order_ReceiveTask.receiveTask(order_number));
+        logger.debug(Order_RecommendDoctor.recommendDoctor(order_number, "666"));
+        String status = Order_ThreewayCall.threewayCall(order_number, "success");
+        if (!status.equals("3000")) {
+            logger.debug(status);
+            Assert.fail("未进行到支付状态，无法继续执行该用例");
+        }
+        pathValue.put("orderNumber", order_number);
+
+        JSONObject body = new JSONObject();
+        body.put("content", "自动化测试的回退原因");
+        try {
+            res = HttpRequest.sendPut(host_crm+uri, body.toString(), crm_token, pathValue);
+        } catch (IOException e) {
+            logger.error(e);
+        }
+        checkResponse(res);
+        Assert.assertEquals(code, "1000000");
+        Order_Detail.Detail(order_number);
+        checkResponse(res);
+        Assert.assertEquals(parseJson(data, "status"), "2000");
+        Assert.assertNull(parseJson(data, "surgeon_id"));
+        Assert.assertNull(parseJson(data, "surgeon_name"));
+    }
+
+    @Test
+    public void test_02_回退订单_支付以后不可回退() {
+        Assert.fail("not implemented");
+    }
+
+    @Test
+    public void test_03_回退订单_三方通话确认以前不可回退() {
+        // 刚创建的订单
+        String res = "";
+        HashMap<String, String> pathValue = new HashMap<>();
+        String order_number = CreateOrder.CreateOrder(mainToken); // create an order
+
+        pathValue.put("orderNumber", order_number);
+        JSONObject body = new JSONObject();
+        body.put("content", "自动化测试的回退原因");
+        try {
+            res = HttpRequest.sendPut(host_crm+uri, body.toString(), crm_token, pathValue);
+        } catch (IOException e) {
+            logger.error(e);
+        }
+        checkResponse(res);
+        Assert.assertNotEquals(code, "1000000");
+        Order_Detail.Detail(order_number);
+        checkResponse(res);
+        Assert.assertEquals(parseJson(data, "status"), "1000");
+
+        // 刚领取的订单
+        Order_ReceiveTask.receiveTask(order_number);
+        try {
+            res = HttpRequest.sendPut(host_crm+uri, body.toString(), crm_token, pathValue);
+        } catch (IOException e) {
+            logger.error(e);
+        }
+        checkResponse(res);
+        Assert.assertNotEquals(code, "1000000");
+        Order_Detail.Detail(order_number);
+        checkResponse(res);
+        Assert.assertEquals(parseJson(data, "status"), "2000");
+
+        // 刚推荐的订单
+        Order_RecommendDoctor.recommendDoctor(order_number, "666");
+        try {
+            res = HttpRequest.sendPut(host_crm+uri, body.toString(), crm_token, pathValue);
+        } catch (IOException e) {
+            logger.error(e);
+        }
+        checkResponse(res);
+        Assert.assertNotEquals(code, "1000000");
+        Order_Detail.Detail(order_number);
+        checkResponse(res);
+        Assert.assertEquals(parseJson(data, "status"), "2020");
+
+        // 三方通话中的订单
+        Order_ThreewayCall.threewayCall(order_number, "undetermined");
+        try {
+            res = HttpRequest.sendPut(host_crm+uri, body.toString(), crm_token, pathValue);
+        } catch (IOException e) {
+            logger.error(e);
+        }
+        checkResponse(res);
+        Assert.assertNotEquals(code, "1000000");
+        Order_Detail.Detail(order_number);
+        checkResponse(res);
+        Assert.assertEquals(parseJson(data, "status"), "2020");
+
+        // 已拒绝的订单
+        Order_Reject.rejectOrder(order_number);
+        try {
+            res = HttpRequest.sendPut(host_crm+uri, body.toString(), crm_token, pathValue);
+        } catch (IOException e) {
+            logger.error(e);
+        }
+        checkResponse(res);
+        Assert.assertNotEquals(code, "1000000");
+        Order_Detail.Detail(order_number);
+        checkResponse(res);
+        Assert.assertEquals(parseJson(data, "status"), "9000");
+
+    }
+
+    @Test
+    public void test_04_回退订单_以前不可回退() {
+        Assert.fail("not implemented");
+    }
 }

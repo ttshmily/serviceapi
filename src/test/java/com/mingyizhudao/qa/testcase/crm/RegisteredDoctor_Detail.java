@@ -12,19 +12,19 @@ import java.util.HashMap;
 /**
  * Created by ttshmily on 25/4/2017.
  */
-public class RegisteredDoctor_GetDetail extends BaseTest {
+public class RegisteredDoctor_Detail extends BaseTest {
 
-    public static final Logger logger= Logger.getLogger(RegisteredDoctor_GetDetail.class);
+    public static final Logger logger= Logger.getLogger(RegisteredDoctor_Detail.class);
     public static final String version = "/api/v1";
     public static String uri = version+"/doctors/{id}/profiles";
     public static String mock = false ? "/mockjs/1" : "";
 
-    public static String GetRegisteredDoctorDetail(String regId) {
+    public static String Detail(String regId) {
         String res = "";
         HashMap<String, String> pathValue = new HashMap<>();
         pathValue.put("id",regId);
         try {
-            res = HttpRequest.sendGet(host_crm+mock+uri, "", crm_token, pathValue);
+            res = HttpRequest.sendGet(host_crm+uri, "", crm_token, pathValue);
         } catch (IOException e) {
             logger.error(e);
         }
@@ -44,6 +44,10 @@ public class RegisteredDoctor_GetDetail extends BaseTest {
         }
         checkResponse(res);
         Assert.assertEquals(code, "1000000");
+        Assert.assertNotNull(parseJson(data, "medical_title_list"));
+        Assert.assertNotNull(parseJson(data, "academic_title_list"));
+        Assert.assertNotNull(parseJson(data, "inviter_name"));
+        Assert.assertNotNull(parseJson(data, "hospital_name"));
     }
 
     @Test

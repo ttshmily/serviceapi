@@ -11,9 +11,9 @@ import java.io.IOException;
 /**
  * Created by ttshmily on 25/4/2017.
  */
-public class Order_OrderCounts extends BaseTest {
+public class Order_Counts extends BaseTest {
 
-    public static final Logger logger= Logger.getLogger(Order_OrderCounts.class);
+    public static final Logger logger= Logger.getLogger(Order_Counts.class);
     public static final String version = "/api/v1";
     public static String uri = version+"/orders/orderCounts";
     public static String mock = false ? "/mockjs/1" : "";
@@ -30,11 +30,11 @@ public class Order_OrderCounts extends BaseTest {
         }
         checkResponse(res);
         Assert.assertEquals(code, "1000000");
-        Assert.assertNotNull(parseJson(data, "wait_assign"));
-        Assert.assertNotNull(parseJson(data, "on_progress"));
+        Assert.assertNotNull(parseJson(data, "load_take"));
+        Assert.assertNotNull(parseJson(data, "handling"));
         Assert.assertNotNull(parseJson(data, "wait_pay"));
         Assert.assertNotNull(parseJson(data, "wait_upload_summary"));
-        Assert.assertNotNull(parseJson(data, "review_summary"));
+        Assert.assertNotNull(parseJson(data, "wait_verify_summary"));
     }
 
     @Test
@@ -50,11 +50,14 @@ public class Order_OrderCounts extends BaseTest {
         checkResponse(res);
         Assert.assertEquals(code, "1000000");
 
-        Assert.assertEquals(Integer.parseInt(parseJson(data, "wait_assign")) +
-                Integer.parseInt(parseJson(data, "on_progress")) +
+        Assert.assertEquals(Integer.parseInt(parseJson(data, "load_take")) +
+                Integer.parseInt(parseJson(data, "handling")) +
                 Integer.parseInt(parseJson(data, "wait_pay")) +
                 Integer.parseInt(parseJson(data, "wait_upload_summary")) +
-                Integer.parseInt(parseJson(data, "review_summary")) , Order_List.orderList());
+                Integer.parseInt(parseJson(data, "wait_verify_summary")) +
+                Integer.parseInt(parseJson(data, "finish")) +
+                Integer.parseInt(parseJson(data, "cancel")) +
+                Integer.parseInt(parseJson(data, "other")), Order_List.orderList());
     }
 
 }

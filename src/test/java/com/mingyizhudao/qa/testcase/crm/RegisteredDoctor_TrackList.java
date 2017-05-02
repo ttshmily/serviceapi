@@ -13,5 +13,4 @@ public class RegisteredDoctor_TrackList extends BaseTest {
     public static String uri = version+"/doctors/{id}/history";
     public static String mock = false ? "/mockjs/1" : "";
 
-
 }

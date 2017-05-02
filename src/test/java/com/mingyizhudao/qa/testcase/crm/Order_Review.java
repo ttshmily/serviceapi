@@ -6,9 +6,9 @@ import org.apache.log4j.Logger;
 /**
  * Created by ttshmily on 25/4/2017.
  */
-public class Order_ReviewResult extends BaseTest {
+public class Order_Review extends BaseTest {
 
-    public static final Logger logger = Logger.getLogger(Order_ReviewResult.class);
+    public static final Logger logger = Logger.getLogger(Order_Review.class);
     public static final String version = "/api/v1";
     public static String uri = version+"/orders/{orderNumber}/reviewResult";
     public static String mock = false ? "/mockjs/1" : "";

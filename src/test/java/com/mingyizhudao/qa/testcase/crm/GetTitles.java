@@ -24,11 +24,14 @@ public class GetTitles extends BaseTest {
         String res = "";
 
         try {
-            res = HttpRequest.sendGet(host_crm+mock+uri, "", mainToken, null);
+            res = HttpRequest.sendGet(host_crm+mock+uri, "", crm_token, null);
         } catch (IOException e) {
             logger.error(e);
         }
         checkResponse(res);
         Assert.assertEquals(code, "1000000");
+        Assert.assertEquals(parseJson(data, "list:academic()"), "4");
+        Assert.assertEquals(parseJson(data, "list:medical()"), "12");
+
     }
 }

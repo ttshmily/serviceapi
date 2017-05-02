@@ -128,5 +128,4 @@ public class GetOrderDetail extends BaseTest {
         Assert.assertNotEquals(code, "1000000");
     }
 
-
 }

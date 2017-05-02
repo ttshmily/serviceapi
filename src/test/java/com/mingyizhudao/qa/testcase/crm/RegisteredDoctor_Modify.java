@@ -1,9 +1,11 @@
 package com.mingyizhudao.qa.testcase.crm;
 
 import com.mingyizhudao.qa.common.BaseTest;
+import com.mingyizhudao.qa.common.Enum;
 import com.mingyizhudao.qa.util.HttpRequest;
 import net.sf.json.JSONObject;
 import org.apache.log4j.Logger;
+import org.junit.Ignore;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
@@ -13,9 +15,9 @@ import java.util.HashMap;
 /**
  * Created by ttshmily on 25/4/2017.
  */
-public class RegisteredDoctor_ModifyDetail extends BaseTest {
+public class RegisteredDoctor_Modify extends BaseTest {
 
-    public static final Logger logger= Logger.getLogger(RegisteredDoctor_ModifyDetail.class);
+    public static final Logger logger= Logger.getLogger(RegisteredDoctor_Modify.class);
     public static final String version = "/api/v1";
     public static String uri = version+"/doctors/{id}/profiles";
     public static String mock = false ? "/mockjs/1" : "";
@@ -28,13 +30,12 @@ public class RegisteredDoctor_ModifyDetail extends BaseTest {
         pathValue.put("id",mainDoctorId);
 
         JSONObject body = new JSONObject();
-        body.put("name","大综合");
-        body.put("mobile","13387654321");
+//        body.put("mobile","13817634203");
         body.put("department","科室综合");
         body.put("city_id","12");
         body.put("hospital_id","12");
         body.put("major_id", "12");
-        body.put("academic_title", "LECTURER");
+        body.put("academic_title", "NONE");
         body.put("medical_title", "ARCHIATER");
         try {
             res = HttpRequest.sendPut(host_crm+uri, body.toString(), crm_token, pathValue);
@@ -43,11 +44,9 @@ public class RegisteredDoctor_ModifyDetail extends BaseTest {
         }
         logger.info(HttpRequest.unicodeString(res));
         checkResponse(res);
-        Assert.assertEquals(code, "1000000");
-        res = RegisteredDoctor_GetDetail.GetRegisteredDoctorDetail(mainDoctorId);
+//        Assert.assertEquals(code, "1000000");
+        res = RegisteredDoctor_Detail.Detail(mainDoctorId);
         checkResponse(res);
-        Assert.assertEquals(parseJson(data, "name"), "大综合");
-        Assert.assertEquals(parseJson(data, "mobile"), "13387654321");
         Assert.assertEquals(parseJson(data, "department"), "科室综合");
         Assert.assertEquals(parseJson(data, "hospital_id"), "12");
 
@@ -63,7 +62,7 @@ public class RegisteredDoctor_ModifyDetail extends BaseTest {
 
     }
 
-    @Test
+    @Ignore
     public void test_02_CRM更新医生详情_更新姓名() {
 
         String res = "";
@@ -82,7 +81,7 @@ public class RegisteredDoctor_ModifyDetail extends BaseTest {
         checkResponse(res);
         Assert.assertEquals(code, "1000000");
         //TODO
-        res = RegisteredDoctor_GetDetail.GetRegisteredDoctorDetail(mainDoctorId);
+        res = RegisteredDoctor_Detail.Detail(mainDoctorId);
         checkResponse(res);
         Assert.assertEquals(parseJson(data, "name"), "大测");
     }
@@ -98,46 +97,32 @@ public class RegisteredDoctor_ModifyDetail extends BaseTest {
         // 更新hospital_id，应当成功
         body.put("hospital_id", "4");
         try {
-            res = HttpRequest.sendPut(host_crm+mock+uri, "", crm_token, pathValue);
+            res = HttpRequest.sendPut(host_crm+mock+uri, body.toString(), crm_token, pathValue);
         } catch (IOException e) {
             logger.error(e);
         }
         checkResponse(res);
         Assert.assertEquals(code, "1000000");
         //TODO
-        res = RegisteredDoctor_GetDetail.GetRegisteredDoctorDetail(mainDoctorId);
+        res = RegisteredDoctor_Detail.Detail(mainDoctorId);
         checkResponse(res);
         Assert.assertEquals(parseJson(data, "hospital_id"), "4");
-
-        // 更新hospital_name，不应当成功
-        body.remove("hospital_id");
-        body.put("hospital_name", "安庆市第一人民医院");
-        try {
-            res = HttpRequest.sendPut(host_crm+mock+uri, "", crm_token, pathValue);
-        } catch (IOException e) {
-            logger.error(e);
-        }
-        checkResponse(res);
-        Assert.assertNotEquals(code, "1000000");
-        //TODO
-        res = RegisteredDoctor_GetDetail.GetRegisteredDoctorDetail(mainDoctorId);
-        checkResponse(res);
-        Assert.assertEquals(parseJson(data, "hospital_id"), "4");
+        Assert.assertEquals(parseJson(data, "hospital_name"), Enum.kb_hospital.get("5"));
 
         // 更新hospital_id和hospital_name，应当以hospital_id为准。
-        body.replace("hospital_name", "安庆市第一人民医院");
         body.replace("hospital_id", "5");
         try {
-            res = HttpRequest.sendPut(host_crm+uri, "", crm_token, pathValue);
+            res = HttpRequest.sendPut(host_crm+uri, body.toString(), crm_token, pathValue);
         } catch (IOException e) {
             logger.error(e);
         }
         checkResponse(res);
-        Assert.assertNotEquals(code, "1000000");
+        Assert.assertEquals(code, "1000000");
         //TODO
-        res = RegisteredDoctor_GetDetail.GetRegisteredDoctorDetail(mainDoctorId);
+        res = RegisteredDoctor_Detail.Detail(mainDoctorId);
         checkResponse(res);
         Assert.assertEquals(parseJson(data, "hospital_id"), "5");
+        Assert.assertEquals(parseJson(data, "hospital_id"), Enum.kb_hospital.get("5"));
     }
 
     @Test
@@ -158,9 +143,12 @@ public class RegisteredDoctor_ModifyDetail extends BaseTest {
         checkResponse(res);
         Assert.assertEquals(code, "1000000");
         //TODO
-        res = RegisteredDoctor_GetDetail.GetRegisteredDoctorDetail(mainDoctorId);
+        res = RegisteredDoctor_Detail.Detail(mainDoctorId);
         checkResponse(res);
-        Assert.assertEquals(parseJson(data, "academic_title"), "ASSOCIATE_PROFESSOR");
+        Assert.assertEquals(parseJson(data, "academic_title_list"), "ASSOCIATE_PROFESSOR");
+        Assert.assertEquals(parseJson(data, "academic_title"), Enum.kb_academic_title.get("ASSOCIATE_PROFESSOR"));
+
+//        Assert.assertEquals(parseJson(data, "academic_title"), "副教授");
 
         // 更新错误的academic_title，应当不成功
         body.replace("academic_title", "ASSOCIATE_PROFESSOR_WRONG");
@@ -172,9 +160,9 @@ public class RegisteredDoctor_ModifyDetail extends BaseTest {
         checkResponse(res);
         Assert.assertNotEquals(code, "1000000");
         //TODO
-        res = RegisteredDoctor_GetDetail.GetRegisteredDoctorDetail(mainDoctorId);
+        res = RegisteredDoctor_Detail.Detail(mainDoctorId);
         checkResponse(res);
-        Assert.assertEquals(parseJson(data, "academic_title"), "ASSOCIATE_PROFESSOR");
+        Assert.assertEquals(parseJson(data, "academic_title_list"), "ASSOCIATE_PROFESSOR");
 
     }
 
@@ -196,9 +184,11 @@ public class RegisteredDoctor_ModifyDetail extends BaseTest {
         checkResponse(res);
         Assert.assertEquals(code, "1000000");
         //TODO
-        res = RegisteredDoctor_GetDetail.GetRegisteredDoctorDetail(mainDoctorId);
+        res = RegisteredDoctor_Detail.Detail(mainDoctorId);
         checkResponse(res);
-        Assert.assertEquals(parseJson(data, "medical_title"), "ARCHIATER");
+        Assert.assertEquals(parseJson(data, "medical_title_list"), "ARCHIATER");
+        Assert.assertEquals(parseJson(data, "medical_title"), Enum.kb_medical_title.get("ARCHIATER"));
+//        Assert.assertEquals(parseJson(data, "medical_title"), "主任医师");
 
         // 更新错误的medical_title，应当不成功
         body.replace("medical_title", "ARCHIATER_WRONG");
@@ -210,9 +200,9 @@ public class RegisteredDoctor_ModifyDetail extends BaseTest {
         checkResponse(res);
         Assert.assertNotEquals(code, "1000000");
         //TODO
-        res = RegisteredDoctor_GetDetail.GetRegisteredDoctorDetail(mainDoctorId);
+        res = RegisteredDoctor_Detail.Detail(mainDoctorId);
         checkResponse(res);
-        Assert.assertEquals(parseJson(data, "medical_title"), "ARCHIATER");
+        Assert.assertEquals(parseJson(data, "medical_title_list"), "ARCHIATER");
     }
 
     @Test
@@ -233,55 +223,57 @@ public class RegisteredDoctor_ModifyDetail extends BaseTest {
         checkResponse(res);
         Assert.assertEquals(code, "1000000");
         //TODO
-        res = RegisteredDoctor_GetDetail.GetRegisteredDoctorDetail(mainDoctorId);
+        res = RegisteredDoctor_Detail.Detail(mainDoctorId);
         checkResponse(res);
         Assert.assertEquals(parseJson(data, "major_id"), "4");
+        Assert.assertEquals(parseJson(data, "major_name"), Enum.kb_major.get("4"));
 
         // 更新错误的major_id，应当不成功
-        body.replace("major_id", "1000");
+        body.replace("major_id", "1000000");
         try {
-            res = HttpRequest.sendPut(host_crm+mock+uri, body.toString(), crm_token, pathValue);
+            res = HttpRequest.sendPut(host_crm+uri, body.toString(), crm_token, pathValue);
         } catch (IOException e) {
             logger.error(e);
         }
         checkResponse(res);
         Assert.assertNotEquals(code, "1000000");
         //TODO
-        res = RegisteredDoctor_GetDetail.GetRegisteredDoctorDetail(mainDoctorId);
+        res = RegisteredDoctor_Detail.Detail(mainDoctorId);
         checkResponse(res);
         Assert.assertEquals(parseJson(data, "major_id"), "4");
+        Assert.assertEquals(parseJson(data, "major_name"), Enum.kb_major.get("4"));
 
-        // 更新major_name，应当不成功
-        body.remove("major_id");
-        body.put("major_name", "肿瘤科");
-        try {
-            res = HttpRequest.sendPut(host_crm+mock+uri, body.toString(), crm_token, pathValue);
-        } catch (IOException e) {
-            logger.error(e);
-        }
-        checkResponse(res);
-        Assert.assertNotEquals(code, "1000000");
-        //TODO
-        res = RegisteredDoctor_GetDetail.GetRegisteredDoctorDetail(mainDoctorId);
-        checkResponse(res);
-        Assert.assertEquals(parseJson(data, "major_id"), "4");
-
-        // 更新major_id和major_name，应当以major_id为准
-        body.put("major_id", "5");
-        try {
-            res = HttpRequest.sendPut(host_crm+mock+uri, body.toString(), crm_token, pathValue);
-        } catch (IOException e) {
-            logger.error(e);
-        }
-        checkResponse(res);
-        Assert.assertNotEquals(code, "1000000");
-        //TODO
-        res = RegisteredDoctor_GetDetail.GetRegisteredDoctorDetail(mainDoctorId);
-        checkResponse(res);
-        Assert.assertEquals(parseJson(data, "major_id"), "4");
+//        // 更新major_name，应当不成功
+//        body.remove("major_id");
+//        body.put("major_name", "肿瘤科");
+//        try {
+//            res = HttpRequest.sendPut(host_crm+mock+uri, body.toString(), crm_token, pathValue);
+//        } catch (IOException e) {
+//            logger.error(e);
+//        }
+//        checkResponse(res);
+//        Assert.assertNotEquals(code, "1000000");
+//        //TODO
+//        res = RegisteredDoctor_Detail.Detail(mainDoctorId);
+//        checkResponse(res);
+//        Assert.assertEquals(parseJson(data, "major_id"), "4");
+//
+//        // 更新major_id和major_name，应当以major_id为准
+//        body.put("major_id", "5");
+//        try {
+//            res = HttpRequest.sendPut(host_crm+mock+uri, body.toString(), crm_token, pathValue);
+//        } catch (IOException e) {
+//            logger.error(e);
+//        }
+//        checkResponse(res);
+//        Assert.assertNotEquals(code, "1000000");
+//        //TODO
+//        res = RegisteredDoctor_Detail.Detail(mainDoctorId);
+//        checkResponse(res);
+//        Assert.assertEquals(parseJson(data, "major_id"), "4");
     }
 
-    @Test
+    @Ignore
     public void test_07_CRM更新医生详情_更新手机() {
 
         String res = "";
@@ -299,7 +291,7 @@ public class RegisteredDoctor_ModifyDetail extends BaseTest {
         checkResponse(res);
         Assert.assertEquals(code, "1000000");
         //TODO
-        res = RegisteredDoctor_GetDetail.GetRegisteredDoctorDetail(mainDoctorId);
+        res = RegisteredDoctor_Detail.Detail(mainDoctorId);
         checkResponse(res);
         Assert.assertEquals(parseJson(data, "mobile"), "13312345678");
 
@@ -313,7 +305,7 @@ public class RegisteredDoctor_ModifyDetail extends BaseTest {
         checkResponse(res);
         Assert.assertNotEquals(code, "1000000");
         //TODO
-        res = RegisteredDoctor_GetDetail.GetRegisteredDoctorDetail(mainDoctorId);
+        res = RegisteredDoctor_Detail.Detail(mainDoctorId);
         checkResponse(res);
         Assert.assertEquals(parseJson(data, "mobile"), "13312345678");
     }

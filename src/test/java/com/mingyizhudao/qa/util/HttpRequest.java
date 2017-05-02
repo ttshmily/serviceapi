@@ -59,7 +59,7 @@ public class HttpRequest {
 			httpURLConnection.setRequestProperty("user-agent",
 					"Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1;SV1)");
             if (!authCode.isEmpty())
-                httpURLConnection.setRequestProperty("authorization", authCode);
+                httpURLConnection.setRequestProperty("Authorization", "Bearer " + authCode);
 			// 建立实际的连接
             long start,end;
             logger.info("发送请求: >>>>>  " + httpURLConnection.getRequestMethod() + " " + httpURLConnection.getURL());
@@ -107,7 +107,7 @@ public class HttpRequest {
             httpURLConnection.setRequestProperty("user-agent",
                     "Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1;SV1)");
             if (!authCode.isEmpty())
-                httpURLConnection.setRequestProperty("authorization", authCode);
+                httpURLConnection.setRequestProperty("Authorization", "Bearer " + authCode);
             // 建立实际的连接
             long start,end;
             logger.info("发送请求: >>>>>  " + httpURLConnection.getRequestMethod() + " " + httpURLConnection.getURL());
@@ -157,7 +157,7 @@ public class HttpRequest {
             httpURLConnection.setRequestProperty("user-agent",
                     "Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1;SV1)");
             if (!authCode.isEmpty())
-                httpURLConnection.setRequestProperty("authorization", authCode);
+                httpURLConnection.setRequestProperty("Authorization", "Bearer " + authCode);
             // 建立实际的连接
             long start,end;
             logger.info("发送请求: >>>>>  " + httpURLConnection.getRequestMethod() + " " + httpURLConnection.getURL());
@@ -208,7 +208,7 @@ public class HttpRequest {
             httpURLConnection.setRequestProperty("connection", "close");
             httpURLConnection.setRequestProperty("Referer", "http://www.mingyizhudao.com");
             if (!authCode.isEmpty())
-                httpURLConnection.setRequestProperty("authorization", authCode);
+                httpURLConnection.setRequestProperty("Authorization", "Bearer " +authCode);
             // 发送POST请求必须设置如下两行
             long start,end;
             httpURLConnection.setDoOutput(true);
@@ -255,7 +255,7 @@ public class HttpRequest {
             httpURLConnection.setRequestProperty("connection", "close");
             httpURLConnection.setRequestProperty("Referer", "http://www.mingyizhudao.com");
             if (!authCode.isEmpty())
-                httpURLConnection.setRequestProperty("authorization", authCode);
+                httpURLConnection.setRequestProperty("Authorization", "Bearer "+authCode);
             // 发送POST请求必须设置如下两行
             long start,end;
             httpURLConnection.setDoOutput(true);
@@ -402,7 +402,7 @@ public class HttpRequest {
             httpURLConnection.setRequestProperty("Content-Type", "application/json");
             httpURLConnection.setRequestProperty("connection", "Keep-Alive");
             if (!authCode.isEmpty())
-                httpURLConnection.setRequestProperty("authorization", authCode);
+                httpURLConnection.setRequestProperty("Authorization", "Bearer "+authCode);
             // 发送POST请求必须设置如下两行
             long start,end;
             httpURLConnection.setDoOutput(true);
@@ -456,7 +456,7 @@ public class HttpRequest {
             httpURLConnection.setRequestProperty("Content-Type", "application/json");
             httpURLConnection.setRequestProperty("connection", "Keep-Alive");
             if (!authCode.isEmpty())
-                httpURLConnection.setRequestProperty("authorization", authCode);
+                httpURLConnection.setRequestProperty("Authorization", "Bearer "+authCode);
             // 发送POST请求必须设置如下两行
             long start,end;
             httpURLConnection.setDoOutput(true);

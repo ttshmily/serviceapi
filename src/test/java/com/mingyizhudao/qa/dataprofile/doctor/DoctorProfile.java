@@ -16,8 +16,8 @@ public class DoctorProfile {
             doctor.accumulate("department", "骨科");
             doctor.accumulate("major_id", "33");
             doctor.accumulate("major_name", "烧伤");
-            doctor.accumulate("academic_title", "学习");
-            doctor.accumulate("medical_title", "工程师");
+            doctor.accumulate("academic_title_list", "PROFESSOR");
+            doctor.accumulate("medical_title_list", "ARCHIATER");
             doctor.accumulate("hospital_id", "3");
             doctor.accumulate("hospital_name", "上海医院");
             doctor.accumulate("inviter_no", "SH0001");
@@ -28,8 +28,8 @@ public class DoctorProfile {
             doctor.accumulate("department", "");
             doctor.accumulate("major_id", "");
             doctor.accumulate("major_name", "");
-            doctor.accumulate("academic_title", "");
-            doctor.accumulate("medical_title", "");
+            doctor.accumulate("academic_title_list", "");
+            doctor.accumulate("medical_title_list", "");
             doctor.accumulate("hospital_id", "");
             doctor.accumulate("hospital_name", "");
             doctor.accumulate("inviter_no", "");

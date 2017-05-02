@@ -1,7 +1,16 @@
 package com.mingyizhudao.qa.testcase.crm;
 
 import com.mingyizhudao.qa.common.BaseTest;
+import com.mingyizhudao.qa.common.Enum;
+import com.mingyizhudao.qa.testcase.doctor.CreateOrder;
+import com.mingyizhudao.qa.util.HttpRequest;
+import net.sf.json.JSONObject;
 import org.apache.log4j.Logger;
+import org.testng.Assert;
+import org.testng.annotations.Test;
+
+import java.io.IOException;
+import java.util.HashMap;
 
 /**
  * Created by ttshmily on 25/4/2017.
@@ -14,4 +23,262 @@ public class Order_RecommendDoctor extends BaseTest {
     public static String mock = false ? "/mockjs/1" : "";
 
 
+    public static String recommendDoctor(String orderId, String doctorId) {
+
+        //TODO
+        String res = "";
+        HashMap<String, String> pathValue = new HashMap<>();
+        pathValue.put("orderNumber", orderId);
+        res = Order_Detail.Detail(orderId);
+
+        if (!parseJson(JSONObject.fromObject(res), "data:status").equals("2000")) {
+            logger.error("订单处于不可推荐状态");
+            return parseJson(JSONObject.fromObject(res), "data:status");
+        }
+        JSONObject body = new JSONObject();
+        body.put("surgeon_id",doctorId);
+        body.put("content","自动化推荐的医生");
+        try {
+            res = HttpRequest.sendPut(host_crm + uri, body.toString(), crm_token, pathValue);
+        } catch (IOException e) {
+            logger.error(e);
+        }
+        res = Order_Detail.Detail(orderId);
+        return parseJson(JSONObject.fromObject(res), "data:status"); // 期望2020
+    }
+
+    @Test
+    public void test_01_正常推荐() {
+
+        String res = "";
+        String order_number = CreateOrder.CreateOrder(mainToken); // create an order
+        logger.debug(Order_ReceiveTask.receiveTask(order_number));
+
+        HashMap<String, String> pathValue = new HashMap<>();
+        pathValue.put("orderNumber", order_number);
+        JSONObject body = new JSONObject();
+        String recommendedId = "444";
+        body.put("surgeon_id",recommendedId);
+        body.put("content","自动化推荐的医生");
+        try {
+            res = HttpRequest.sendPut(host_crm+uri, body.toString(), crm_token, pathValue);
+        } catch (IOException e) {
+            logger.error(e);
+        }
+        checkResponse(res);
+        Assert.assertEquals(code, "1000000");
+        res = Order_Detail.Detail(order_number);
+        checkResponse(res);
+        Assert.assertEquals(parseJson(data, "status"), "2020");
+        Assert.assertEquals(parseJson(data, "surgeon_id"), recommendedId);
+        Assert.assertEquals(parseJson(data, "surgeon_name"), Enum.kb_doctor.get(recommendedId));
+
+    }
+
+    @Test
+    public void test_02_在三方通话成功前重新推荐() {
+
+        String res = "";
+        String order_number = CreateOrder.CreateOrder(mainToken); // create an order
+        Order_ReceiveTask.receiveTask(order_number);
+        HashMap<String, String> pathValue = new HashMap<>();
+        pathValue.put("orderNumber", order_number);
+        JSONObject body = new JSONObject();
+        String recommendedId = "555";
+        body.put("surgeon_id",recommendedId);
+        body.put("content","自动化推荐的医生");
+        try {
+            res = HttpRequest.sendPut(host_crm+uri, body.toString(), crm_token, pathValue);
+        } catch (IOException e) {
+            logger.error(e);
+        }
+        checkResponse(res);
+        Assert.assertEquals(code, "1000000");
+        res = Order_Detail.Detail(order_number);
+        checkResponse(res);
+        Assert.assertEquals(parseJson(data, "status"), "2020");
+        Assert.assertEquals(parseJson(data, "surgeon_id"), recommendedId);
+        Assert.assertEquals(parseJson(data, "surgeon_name"), Enum.kb_doctor.get(recommendedId));
+
+        // 重新推荐
+        recommendedId = "666";
+        body.replace("surgeon_id",recommendedId);
+        body.replace("content","自动化重新推荐的医生");
+        try {
+            res = HttpRequest.sendPut(host_crm+uri, body.toString(), crm_token, pathValue);
+        } catch (IOException e) {
+            logger.error(e);
+        }
+        checkResponse(res);
+        Assert.assertEquals(code, "1000000");
+        res = Order_Detail.Detail(order_number);
+        checkResponse(res);
+        Assert.assertEquals(parseJson(data, "status"), "2020");
+        Assert.assertEquals(parseJson(data, "surgeon_id"), recommendedId);
+        Assert.assertEquals(parseJson(data, "surgeon_name"), Enum.kb_doctor.get(recommendedId));
+
+        // 重新推荐失败后，保留原先的上级医生信息
+        String new_recommendedId = "666new_66666";
+        body.replace("surgeon_id",recommendedId);
+        body.replace("content","自动化重新推荐的不存在的医生");
+        try {
+            res = HttpRequest.sendPut(host_crm+uri, body.toString(), crm_token, pathValue);
+        } catch (IOException e) {
+            logger.error(e);
+        }
+        checkResponse(res);
+        Assert.assertNotEquals(code, "1000000");
+        res = Order_Detail.Detail(order_number);
+        checkResponse(res);
+        Assert.assertEquals(parseJson(data, "status"), "2020");
+        Assert.assertEquals(parseJson(data, "surgeon_id"), recommendedId);
+        Assert.assertEquals(parseJson(data, "surgeon_name"), Enum.kb_doctor.get(recommendedId));
+    }
+
+    @Test
+    public void test_03_推荐和下级医生相同的用户() {
+
+        String res = "";
+        String order_number = CreateOrder.CreateOrder(mainToken); // create an order
+        Order_ReceiveTask.receiveTask(order_number);
+        HashMap<String, String> pathValue = new HashMap<>();
+        pathValue.put("orderNumber", order_number);
+        JSONObject body = new JSONObject();
+        body.put("surgeon_id",mainDoctorId);
+        body.put("content","和下级医生相同的上级医生");
+        try {
+            res = HttpRequest.sendPut(host_crm+uri, body.toString(), crm_token, pathValue);
+        } catch (IOException e) {
+            logger.error(e);
+        }
+        checkResponse(res);
+        Assert.assertNotEquals(code, "1000000");
+        res = Order_Detail.Detail(order_number);
+        checkResponse(res);
+        Assert.assertEquals(parseJson(data, "status"), "2000");
+        Assert.assertNull(parseJson(data, "surgeon_id"));
+        Assert.assertNull(parseJson(data, "surgeon_name"));
+
+    }
+
+    @Test
+    public void test_04_推荐不存在于用户表或医库中的医生() {
+
+        String res = "";
+        String order_number = CreateOrder.CreateOrder(mainToken); // create an order
+        Order_ReceiveTask.receiveTask(order_number);
+        HashMap<String, String> pathValue = new HashMap<>();
+        pathValue.put("orderNumber", order_number);
+        JSONObject body = new JSONObject();
+        String recommendedId = "444444444";
+        body.put("surgeon_id",recommendedId);
+        body.put("content","自动化推荐的不存在的医生");
+        try {
+            res = HttpRequest.sendPut(host_crm+uri, body.toString(), crm_token, pathValue);
+        } catch (IOException e) {
+            logger.error(e);
+        }
+        checkResponse(res);
+        Assert.assertNotEquals(code, "1000000");
+        res = Order_Detail.Detail(order_number);
+        checkResponse(res);
+        Assert.assertEquals(parseJson(data, "status"), "2000");
+        Assert.assertNull(parseJson(data, "surgeon_id"));
+        Assert.assertNull(parseJson(data, "surgeon_name"));
+
+
+    }
+
+    @Test
+    public void test_06_推荐医生_无证操作() {
+
+        String res = "";
+        String order_number = CreateOrder.CreateOrder(mainToken); // create an order
+        Order_ReceiveTask.receiveTask(order_number);
+        HashMap<String, String> pathValue = new HashMap<>();
+        pathValue.put("orderNumber", order_number);
+        JSONObject body = new JSONObject();
+        String recommendedId = "444";
+        body.put("surgeon_id",recommendedId);
+        body.put("content","无证操作");
+        try {
+            res = HttpRequest.sendPut(host_crm+uri, body.toString(), "", pathValue);
+        } catch (IOException e) {
+            logger.error(e);
+        }
+        checkResponse(res);
+        Assert.assertNotEquals(code, "1000000");
+        res = Order_Detail.Detail(order_number);
+        checkResponse(res);
+        Assert.assertEquals(parseJson(data, "status"), "2000");
+        Assert.assertNull(parseJson(data, "surgeon_id"));
+        Assert.assertNull(parseJson(data, "surgeon_name"));
+
+
+    }
+
+    @Test
+    public void test_05_在三方通话成功后不可以重新推荐() {
+
+        String res = "";
+        String order_number = CreateOrder.CreateOrder(mainToken); // create an order
+        Order_ReceiveTask.receiveTask(order_number);
+        HashMap<String, String> pathValue = new HashMap<>();
+        pathValue.put("orderNumber", order_number);
+        JSONObject body = new JSONObject();
+        String recommendedId = "555";
+        body.put("surgeon_id",recommendedId);
+        body.put("content","自动化推荐的医生");
+        try {
+            res = HttpRequest.sendPut(host_crm+uri, body.toString(), crm_token, pathValue);
+        } catch (IOException e) {
+            logger.error(e);
+        }
+        checkResponse(res);
+        Assert.assertEquals(code, "1000000");
+        res = Order_Detail.Detail(order_number);
+        checkResponse(res);
+        Assert.assertEquals(parseJson(data, "status"), "2020");
+        Assert.assertEquals(parseJson(data, "surgeon_id"), recommendedId);
+        Assert.assertEquals(parseJson(data, "surgeon_name"), Enum.kb_doctor.get(recommendedId));
+
+        if (!Order_ThreewayCall.threewayCall(order_number,"success").equals("3000")) {
+            Assert.fail("三方确认失败，无法继续执行");
+        }
+
+        // 重新推荐
+        recommendedId = "666";
+        body.replace("surgeon_id",recommendedId);
+        body.replace("content","自动化重新推荐的医生");
+        try {
+            res = HttpRequest.sendPut(host_crm+uri, body.toString(), crm_token, pathValue);
+        } catch (IOException e) {
+            logger.error(e);
+        }
+        checkResponse(res);
+        Assert.assertEquals(code, "1000000");
+        res = Order_Detail.Detail(order_number);
+        checkResponse(res);
+        Assert.assertEquals(parseJson(data, "status"), "2020");
+        Assert.assertEquals(parseJson(data, "surgeon_id"), recommendedId);
+        Assert.assertEquals(parseJson(data, "surgeon_name"), Enum.kb_doctor.get(recommendedId));
+
+        // 重新推荐失败后，保留原先的上级医生信息
+        String new_recommendedId = "666new_66666";
+        body.replace("surgeon_id",recommendedId);
+        body.replace("content","自动化重新推荐的不存在的医生");
+        try {
+            res = HttpRequest.sendPut(host_crm+uri, body.toString(), crm_token, pathValue);
+        } catch (IOException e) {
+            logger.error(e);
+        }
+        checkResponse(res);
+        Assert.assertNotEquals(code, "1000000");
+        res = Order_Detail.Detail(order_number);
+        checkResponse(res);
+        Assert.assertEquals(parseJson(data, "status"), "2020");
+        Assert.assertEquals(parseJson(data, "surgeon_id"), recommendedId);
+        Assert.assertEquals(parseJson(data, "surgeon_name"), Enum.kb_doctor.get(recommendedId));
+
+    }
 }

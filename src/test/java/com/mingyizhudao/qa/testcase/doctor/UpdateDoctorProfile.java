@@ -165,7 +165,7 @@ public class UpdateDoctorProfile extends BaseTest {
         DoctorProfile body = new DoctorProfile(false);
         body.body.getJSONObject("doctor").replace("city_name", "城市");
         try {
-            res = HttpRequest.sendPost(host_doc +mock+uri, body.body.toString(), mainToken);
+            res = HttpRequest.sendPost(host_doc+uri, body.body.toString(), mainToken);
         } catch (IOException e) {
             logger.error(e);
         }
