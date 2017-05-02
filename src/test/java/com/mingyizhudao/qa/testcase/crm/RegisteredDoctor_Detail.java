@@ -19,14 +19,26 @@ public class RegisteredDoctor_GetDetail extends BaseTest {
     public static String uri = version+"/doctors/{id}/profiles";
     public static String mock = false ? "/mockjs/1" : "";
 
+    public static String GetRegisteredDoctorDetail(String regId) {
+        String res = "";
+        HashMap<String, String> pathValue = new HashMap<>();
+        pathValue.put("id",regId);
+        try {
+            res = HttpRequest.sendGet(host_crm+mock+uri, "", crm_token, pathValue);
+        } catch (IOException e) {
+            logger.error(e);
+        }
+        return res;
+    }
+
     @Test
     public void test_01_获取医生详情_有效ID() {
 
         String res = "";
         HashMap<String, String> pathValue = new HashMap<>();
-        pathValue.put("id","12");
+        pathValue.put("id",mainDoctorId);
         try {
-            res = HttpRequest.sendGet(host_crm+mock+uri, "", mainToken, pathValue);
+            res = HttpRequest.sendGet(host_crm+mock+uri, "", crm_token, pathValue);
         } catch (IOException e) {
             logger.error(e);
         }
@@ -39,9 +51,9 @@ public class RegisteredDoctor_GetDetail extends BaseTest {
 
         String res = "";
         HashMap<String, String> pathValue = new HashMap<>();
-        pathValue.put("id","122222");
+        pathValue.put("id","1"+mainDoctorId);
         try {
-            res = HttpRequest.sendGet(host_crm+mock+uri, "", mainToken, pathValue);
+            res = HttpRequest.sendGet(host_crm+mock+uri, "", crm_token, pathValue);
         } catch (IOException e) {
             logger.error(e);
         }
