@@ -1,7 +1,6 @@
 package com.mingyizhudao.qa.testcase.doctor;
 
 import com.mingyizhudao.qa.common.BaseTest;
-import com.mingyizhudao.qa.dataprofile.doctor.OrderDetail;
 import com.mingyizhudao.qa.testcase.crm.Order_ReceiveTask;
 import com.mingyizhudao.qa.testcase.crm.Order_RecommendDoctor;
 import com.mingyizhudao.qa.testcase.crm.Order_ThreewayCall;
@@ -50,7 +49,7 @@ public class CreatePayment extends BaseTest {
         String orderId = CreateOrder.CreateOrder(mainToken);
         Order_ReceiveTask.receiveTask(orderId);
         Order_RecommendDoctor.recommendDoctor(orderId, mainDoctorId);
-        Order_ThreewayCall.threewayCall(orderId, "success");
+        Order_ThreewayCall.ThreewayCall(orderId, "success");
 
         payment.put("orderNumber", orderId);
         payment.put("returnUrl", "http://www.mingyizhudao.com");

@@ -119,14 +119,14 @@ public class Order_RecommendDoctor extends BaseTest {
 
         // 重新推荐失败后，保留原先的上级医生信息
         String new_recommendedId = "666new_66666";
-        body.replace("surgeon_id",recommendedId);
+        body.replace("surgeon_id",new_recommendedId);
         body.replace("content","自动化重新推荐的不存在的医生");
         try {
             res = HttpRequest.sendPut(host_crm+uri, body.toString(), crm_token, pathValue);
+            checkResponse(res);
         } catch (IOException e) {
             logger.error(e);
         }
-        checkResponse(res);
         Assert.assertNotEquals(code, "1000000");
         res = Order_Detail.Detail(order_number);
         checkResponse(res);
@@ -218,7 +218,7 @@ public class Order_RecommendDoctor extends BaseTest {
     }
 
     @Test
-    public void test_05_在三方通话成功后不可以重新推荐() {
+    public void test_07_在三方通话成功后不可以重新推荐() {
 
         String res = "";
         String order_number = CreateOrder.CreateOrder(mainToken); // create an order
@@ -242,43 +242,43 @@ public class Order_RecommendDoctor extends BaseTest {
         Assert.assertEquals(parseJson(data, "surgeon_id"), recommendedId);
         Assert.assertEquals(parseJson(data, "surgeon_name"), Enum.kb_doctor.get(recommendedId));
 
-        if (!Order_ThreewayCall.threewayCall(order_number,"success").equals("3000")) {
+        if (!Order_ThreewayCall.ThreewayCall(order_number,"success").equals("3000")) {
             Assert.fail("三方确认失败，无法继续执行");
         }
 
-        // 重新推荐
-        recommendedId = "666";
-        body.replace("surgeon_id",recommendedId);
+        // 成功后重新推荐
+        String new_recommendedId = "666";
+        body.replace("surgeon_id",new_recommendedId);
         body.replace("content","自动化重新推荐的医生");
         try {
             res = HttpRequest.sendPut(host_crm+uri, body.toString(), crm_token, pathValue);
+            checkResponse(res);
         } catch (IOException e) {
             logger.error(e);
         }
-        checkResponse(res);
-        Assert.assertEquals(code, "1000000");
-        res = Order_Detail.Detail(order_number);
-        checkResponse(res);
-        Assert.assertEquals(parseJson(data, "status"), "2020");
-        Assert.assertEquals(parseJson(data, "surgeon_id"), recommendedId);
-        Assert.assertEquals(parseJson(data, "surgeon_name"), Enum.kb_doctor.get(recommendedId));
-
-        // 重新推荐失败后，保留原先的上级医生信息
-        String new_recommendedId = "666new_66666";
-        body.replace("surgeon_id",recommendedId);
-        body.replace("content","自动化重新推荐的不存在的医生");
-        try {
-            res = HttpRequest.sendPut(host_crm+uri, body.toString(), crm_token, pathValue);
-        } catch (IOException e) {
-            logger.error(e);
-        }
-        checkResponse(res);
         Assert.assertNotEquals(code, "1000000");
         res = Order_Detail.Detail(order_number);
         checkResponse(res);
-        Assert.assertEquals(parseJson(data, "status"), "2020");
+        Assert.assertEquals(parseJson(data, "status"), "3000");
         Assert.assertEquals(parseJson(data, "surgeon_id"), recommendedId);
         Assert.assertEquals(parseJson(data, "surgeon_name"), Enum.kb_doctor.get(recommendedId));
+
+//        // 重新推荐失败后，保留原先的上级医生信息
+//        new_recommendedId = "666new_66666";
+//        body.replace("surgeon_id",recommendedId);
+//        body.replace("content","自动化重新推荐的不存在的医生");
+//        try {
+//            res = HttpRequest.sendPut(host_crm+uri, body.toString(), crm_token, pathValue);
+//        } catch (IOException e) {
+//            logger.error(e);
+//        }
+//        checkResponse(res);
+//        Assert.assertNotEquals(code, "1000000");
+//        res = Order_Detail.Detail(order_number);
+//        checkResponse(res);
+//        Assert.assertEquals(parseJson(data, "status"), "2020");
+//        Assert.assertEquals(parseJson(data, "surgeon_id"), recommendedId);
+//        Assert.assertEquals(parseJson(data, "surgeon_name"), Enum.kb_doctor.get(recommendedId));
 
     }
 }

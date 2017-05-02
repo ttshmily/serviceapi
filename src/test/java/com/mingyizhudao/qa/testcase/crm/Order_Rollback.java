@@ -29,7 +29,7 @@ public class Order_Rollback extends BaseTest {
         String order_number = CreateOrder.CreateOrder(mainToken); // create an order
         logger.debug(Order_ReceiveTask.receiveTask(order_number));
         logger.debug(Order_RecommendDoctor.recommendDoctor(order_number, "666"));
-        String status = Order_ThreewayCall.threewayCall(order_number, "success");
+        String status = Order_ThreewayCall.ThreewayCall(order_number, "success");
         if (!status.equals("3000")) {
             logger.debug(status);
             Assert.fail("未进行到支付状态，无法继续执行该用例");
@@ -39,13 +39,13 @@ public class Order_Rollback extends BaseTest {
         JSONObject body = new JSONObject();
         body.put("content", "自动化测试的回退原因");
         try {
-            res = HttpRequest.sendPut(host_crm+uri, body.toString(), crm_token, pathValue);
+            res = HttpRequest.sendPost(host_crm+uri, body.toString(), crm_token, pathValue);
         } catch (IOException e) {
             logger.error(e);
         }
         checkResponse(res);
         Assert.assertEquals(code, "1000000");
-        Order_Detail.Detail(order_number);
+        res = Order_Detail.Detail(order_number);
         checkResponse(res);
         Assert.assertEquals(parseJson(data, "status"), "2000");
         Assert.assertNull(parseJson(data, "surgeon_id"));
@@ -68,65 +68,66 @@ public class Order_Rollback extends BaseTest {
         JSONObject body = new JSONObject();
         body.put("content", "自动化测试的回退原因");
         try {
-            res = HttpRequest.sendPut(host_crm+uri, body.toString(), crm_token, pathValue);
+            res = HttpRequest.sendPost(host_crm+uri, body.toString(), crm_token, pathValue);
         } catch (IOException e) {
             logger.error(e);
         }
         checkResponse(res);
         Assert.assertNotEquals(code, "1000000");
-        Order_Detail.Detail(order_number);
+        res = Order_Detail.Detail(order_number);
         checkResponse(res);
         Assert.assertEquals(parseJson(data, "status"), "1000");
 
         // 刚领取的订单
         Order_ReceiveTask.receiveTask(order_number);
         try {
-            res = HttpRequest.sendPut(host_crm+uri, body.toString(), crm_token, pathValue);
+            res = HttpRequest.sendPost(host_crm+uri, body.toString(), crm_token, pathValue);
         } catch (IOException e) {
             logger.error(e);
         }
         checkResponse(res);
         Assert.assertNotEquals(code, "1000000");
-        Order_Detail.Detail(order_number);
+        res = Order_Detail.Detail(order_number);
         checkResponse(res);
         Assert.assertEquals(parseJson(data, "status"), "2000");
 
         // 刚推荐的订单
         Order_RecommendDoctor.recommendDoctor(order_number, "666");
         try {
-            res = HttpRequest.sendPut(host_crm+uri, body.toString(), crm_token, pathValue);
+            res = HttpRequest.sendPost(host_crm+uri, body.toString(), crm_token, pathValue);
         } catch (IOException e) {
             logger.error(e);
         }
         checkResponse(res);
         Assert.assertNotEquals(code, "1000000");
-        Order_Detail.Detail(order_number);
+        res = Order_Detail.Detail(order_number);
         checkResponse(res);
         Assert.assertEquals(parseJson(data, "status"), "2020");
 
         // 三方通话中的订单
-        Order_ThreewayCall.threewayCall(order_number, "undetermined");
+        Order_ThreewayCall.ThreewayCall(order_number, "undetermined");
         try {
-            res = HttpRequest.sendPut(host_crm+uri, body.toString(), crm_token, pathValue);
+            res = HttpRequest.sendPost(host_crm+uri, body.toString(), crm_token, pathValue);
         } catch (IOException e) {
             logger.error(e);
         }
         checkResponse(res);
         Assert.assertNotEquals(code, "1000000");
-        Order_Detail.Detail(order_number);
+        res = Order_Detail.Detail(order_number);
         checkResponse(res);
         Assert.assertEquals(parseJson(data, "status"), "2020");
 
         // 已拒绝的订单
+        Order_ThreewayCall.ThreewayCall(order_number, "failed");
         Order_Reject.rejectOrder(order_number);
         try {
-            res = HttpRequest.sendPut(host_crm+uri, body.toString(), crm_token, pathValue);
+            res = HttpRequest.sendPost(host_crm+uri, body.toString(), crm_token, pathValue);
         } catch (IOException e) {
             logger.error(e);
         }
         checkResponse(res);
         Assert.assertNotEquals(code, "1000000");
-        Order_Detail.Detail(order_number);
+        res = Order_Detail.Detail(order_number);
         checkResponse(res);
         Assert.assertEquals(parseJson(data, "status"), "9000");
 

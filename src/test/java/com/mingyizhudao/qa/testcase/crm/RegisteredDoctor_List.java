@@ -25,7 +25,7 @@ public class RegisteredDoctor_List extends BaseTest{
     public static int registeredDoctorList() {
         String res = "";
         try {
-            res = HttpRequest.sendGet(host_crm+mock+uri, "", crm_token, null);
+            res = HttpRequest.sendGet(host_crm+uri, "", crm_token, null);
         } catch (IOException e) {
             logger.error(e);
         }
@@ -457,16 +457,18 @@ public class RegisteredDoctor_List extends BaseTest{
 
         String res = "";
         HashMap<String, String> query = new HashMap<>();
-
         query.put("medical_title","ARCHIATER,ATTENDING_PHYSICIAN,CHIEF_NURSE");
         try {
             res = HttpRequest.sendGet(host_crm+uri, query, crm_token, null);
         } catch (IOException e) {
             logger.error(e);
+            Assert.fail("");
         }
         checkResponse(res);
         Assert.assertEquals(code, "1000000");
+        Assert.assertNotEquals(parseJson(data, "list"), "0");
         //TODO
+
 
         query.remove("medical_title");
         query.put("academic_title","PROFESSOR,ASSOCIATE_PROFESSOR");
@@ -474,18 +476,22 @@ public class RegisteredDoctor_List extends BaseTest{
             res = HttpRequest.sendGet(host_crm+uri, query, crm_token, null);
         } catch (IOException e) {
             logger.error(e);
+            Assert.fail("");
         }
         checkResponse(res);
         logger.info(HttpRequest.unicodeString(res));
         Assert.assertEquals(code, "1000000");
+        Assert.assertNotEquals(parseJson(data, "list"), "0");
+
         //TODO
 
         query.remove("academic_title");
         query.put("certified_status","-1,2");
         try {
-            res = HttpRequest.sendGet(host_crm+mock+uri, query, crm_token, null);
+            res = HttpRequest.sendGet(host_crm+uri, query, crm_token, null);
         } catch (IOException e) {
             logger.error(e);
+            Assert.fail("");
         }
         checkResponse(res);
         Assert.assertEquals(code, "1000000");
@@ -496,6 +502,7 @@ public class RegisteredDoctor_List extends BaseTest{
             res = HttpRequest.sendGet(host_crm+uri, query, crm_token, null);
         } catch (IOException e) {
             logger.error(e);
+            Assert.fail("");
         }
         checkResponse(res);
         Assert.assertEquals(code, "1000000");
@@ -503,9 +510,10 @@ public class RegisteredDoctor_List extends BaseTest{
 
         query.put("medical_title","ARCHIATER,ATTENDING_PHYSICIAN,CHIEF_NURSE");
         try {
-            res = HttpRequest.sendGet(host_crm+mock+uri, query, crm_token, null);
+            res = HttpRequest.sendGet(host_crm+uri, query, crm_token, null);
         } catch (IOException e) {
             logger.error(e);
+            Assert.fail("");
         }
         checkResponse(res);
         Assert.assertEquals(code, "1000000");

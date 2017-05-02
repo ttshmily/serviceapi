@@ -109,18 +109,20 @@ public class Order_ReceiveTask extends BaseTest {
         Assert.assertEquals(code, "1000000", "领取订单失败");
         res = Order_Detail.Detail(order_number);
         checkResponse(res);
+        String status = parseJson(data, "status");
+        logger.debug(status);
         Assert.assertEquals(parseJson(data, "major_reps_id"), "chao.fang@mingyizhudao.com");
-        Assert.assertEquals(parseJson(data, "status"), "2000");
+        Assert.assertEquals(status, "2000");
         Assert.assertEquals(parseJson(data, "order_number"), order_number);
 
         // do it again
         try {
             res = HttpRequest.sendPost(host_crm + uri, "", crm_token, pathValue);
+            checkResponse(res);
         } catch (IOException e) {
             logger.error(e);
         }
-        checkResponse(res);
-        Assert.assertNotEquals(code, "1000000", "领取已经领取过的订单失败");
+        Assert.assertNotEquals(code, "1000000", "领取了已经领取过的订单");
         res = Order_Detail.Detail(order_number);
         checkResponse(res);
         Assert.assertEquals(parseJson(data, "major_reps_id"), "chao.fang@mingyizhudao.com", "");

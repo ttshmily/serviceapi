@@ -269,4 +269,33 @@ public class BaseTest {
         return doctorId.isEmpty() ? null : doctorId;
     }
 
+    public String CreateDoctor() {
+        logger.info("创建医生...");
+        String mobile = SendVerifyCode.send();
+        String token = CheckVerifyCode.check();
+
+        String res = GetDoctorProfile.getDoctorProfile(token);
+        String doctorId = JSONObject.fromObject(res).getJSONObject("data").getJSONObject("doctor").getString("user_id");
+        if (doctorId.isEmpty()) return null;
+
+        logger.info("更新医生信息...");
+        UpdateDoctorProfile.updateDoctorProfile(token, null);
+        res = GetDoctorProfile.getDoctorProfile(token);
+        String doctorHospitalId = JSONObject.fromObject(res).getJSONObject("data").getJSONObject("doctor").getString("hospital_id");
+        String doctorHospitalName = JSONObject.fromObject(res).getJSONObject("data").getJSONObject("doctor").getString("hospital_name");
+
+        logger.info("mobile为:\t"+mobile);
+        logger.info("doctorId为:\t"+doctorId);
+        logger.info("doctorHospitalId为:\t"+doctorHospitalId);
+        logger.info("doctorHospitalName为:\t"+doctorHospitalName);
+
+        logger.info("认证医生信息...");
+        RegisteredDoctor_Certify.certify(doctorId);
+        res = GetDoctorProfile.getDoctorProfile(token);
+        String is_verified = JSONObject.fromObject(res).getJSONObject("data").getJSONObject("doctor").getString("is_verified");
+
+        if (!is_verified.equals("1")) logger.error("认证失败");
+        return doctorId;
+    }
+
 }

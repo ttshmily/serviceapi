@@ -41,7 +41,7 @@ public class CreateOrder extends BaseTest {
     }
 
     @Test
-    public void 创建订单_信息齐备_已认证用户() {
+    public void test_01_创建订单_信息齐备_已认证用户() {
 
         String res = "";
         OrderDetail body = new OrderDetail(true);
@@ -89,7 +89,7 @@ public class CreateOrder extends BaseTest {
     }
 
     @Test
-    public void 创建订单_信息齐备_未登录用户() {
+    public void test_02_创建订单_信息齐备_未登录用户() {
 
         String res = "";
         OrderDetail body = new OrderDetail(true);
@@ -104,7 +104,7 @@ public class CreateOrder extends BaseTest {
     }
 
     @Test
-    public void 创建订单_缺少患者姓名不可以创建() {
+    public void test_03_创建订单_缺少患者姓名不可以创建() {
 
         String res = "";
         OrderDetail body = new OrderDetail(true);
@@ -139,7 +139,7 @@ public class CreateOrder extends BaseTest {
     }
 
     @Test
-    public void 创建订单_缺少患者性别或性别不正确不可以创建() {
+    public void test_04_创建订单_缺少患者性别或性别不正确不可以创建() {
 
         String res = "";
         OrderDetail body = new OrderDetail(true);
@@ -174,7 +174,7 @@ public class CreateOrder extends BaseTest {
     }
 
     @Test
-    public void 创建订单_缺少患者年龄不可以创建() {
+    public void test_05_创建订单_缺少患者年龄不可以创建() {
 
         String res = "";
         OrderDetail body = new OrderDetail(true);
@@ -200,7 +200,7 @@ public class CreateOrder extends BaseTest {
     }
 
     @Test
-    public void 创建订单_缺少患者手机不可以创建() {
+    public void test_06_创建订单_缺少患者手机不可以创建() {
 
         String res = "";
         OrderDetail body = new OrderDetail(true);
@@ -226,7 +226,7 @@ public class CreateOrder extends BaseTest {
     }
 
     @Test
-    public void 创建订单_缺少主诉疾病不可以创建() {
+    public void test_07_创建订单_缺少主诉疾病不可以创建() {
 
         String res = "";
         OrderDetail order = new OrderDetail(true);
@@ -252,7 +252,7 @@ public class CreateOrder extends BaseTest {
     }
 
     @Test
-    public void 创建订单_缺少次诉疾病可以创建() {
+    public void test_08_创建订单_缺少次诉疾病可以创建() {
 
         String res = "";
         OrderDetail order = new OrderDetail(true);
@@ -277,7 +277,7 @@ public class CreateOrder extends BaseTest {
     }
 
     @Test
-    public void 创建订单_信息齐备_未认证医生不可以创建() {
+    public void test_09_创建订单_信息齐备_未认证医生不可以创建() {
 
         String res = "";
         logger.info("创建一个新的未认证医生");
@@ -299,7 +299,7 @@ public class CreateOrder extends BaseTest {
     }
 
     @Test
-    public void 创建订单_信息齐备_期望手术医院不传() {
+    public void test_10_创建订单_信息齐备_期望手术医院不传() {
 
         String res = "";
 

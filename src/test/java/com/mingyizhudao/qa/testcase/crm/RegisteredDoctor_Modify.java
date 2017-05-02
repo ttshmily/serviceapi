@@ -107,7 +107,7 @@ public class RegisteredDoctor_Modify extends BaseTest {
         res = RegisteredDoctor_Detail.Detail(mainDoctorId);
         checkResponse(res);
         Assert.assertEquals(parseJson(data, "hospital_id"), "4");
-        Assert.assertEquals(parseJson(data, "hospital_name"), Enum.kb_hospital.get("5"));
+        Assert.assertEquals(parseJson(data, "hospital_name"), Enum.kb_hospital.get("4"));
 
         // 更新hospital_id和hospital_name，应当以hospital_id为准。
         body.replace("hospital_id", "5");

@@ -1,6 +1,7 @@
 package com.mingyizhudao.qa.testcase.crm;
 
 import com.mingyizhudao.qa.common.BaseTest;
+import com.mingyizhudao.qa.common.Enum;
 import com.mingyizhudao.qa.testcase.doctor.CreateOrder;
 import com.mingyizhudao.qa.util.HttpRequest;
 import net.sf.json.JSONObject;
@@ -25,7 +26,7 @@ public class Order_ThreewayCall extends BaseTest {
 
     public static SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
 
-    public static String threewayCall(String orderId, String result) {
+    public static String ThreewayCall(String orderId, String result) {
         String res = "";
         HashMap<String, String> pathValue = new HashMap<>();
         res = Order_Detail.Detail(orderId);
@@ -115,6 +116,8 @@ public class Order_ThreewayCall extends BaseTest {
         Order_Detail.Detail(orderId);
         checkResponse(res);
         Assert.assertEquals(parseJson(data, "status"), "2020");
+        Assert.assertEquals(parseJson(data, "surgeon_id"), "555");
+        Assert.assertEquals(parseJson(data, "surgeon_name"), Enum.kb_doctor.get("555"));
     }
 
     @Test
@@ -145,7 +148,10 @@ public class Order_ThreewayCall extends BaseTest {
         Assert.assertEquals(code, "1000000");
         Order_Detail.Detail(orderId);
         checkResponse(res);
-        Assert.assertEquals(parseJson(data, "status"), "2020");
+        Assert.assertEquals(parseJson(data, "status"), "2000");
+        Assert.assertEquals(parseJson(data, "surgeon_id"), "555");
+        Assert.assertEquals(parseJson(data, "surgeon_name"), Enum.kb_doctor.get("555"));
+
     }
 
     @Test
@@ -173,7 +179,7 @@ public class Order_ThreewayCall extends BaseTest {
         }
         checkResponse(res);
         Assert.assertNotEquals(code, "1000000");
-        Order_Detail.Detail(orderId);
+        res = Order_Detail.Detail(orderId);
         checkResponse(res);
         Assert.assertEquals(parseJson(data, "status"), "2020");
 
@@ -186,7 +192,7 @@ public class Order_ThreewayCall extends BaseTest {
         checkResponse(res);
         Assert.assertNotEquals(code, "1000000");
 
-        Order_Detail.Detail(orderId);
+        res = Order_Detail.Detail(orderId);
         checkResponse(res);
         Assert.assertEquals(parseJson(data, "status"), "2020");
     }
@@ -217,7 +223,7 @@ public class Order_ThreewayCall extends BaseTest {
         }
         checkResponse(res);
         Assert.assertEquals(code, "1000000");
-        Order_Detail.Detail(orderId);
+        res = Order_Detail.Detail(orderId);
         checkResponse(res);
         Assert.assertEquals(parseJson(data, "status"), "3000");
 
@@ -251,7 +257,7 @@ public class Order_ThreewayCall extends BaseTest {
         }
         checkResponse(res);
         Assert.assertNotEquals(code, "1000000");
-        Order_Detail.Detail(orderId);
+        res = Order_Detail.Detail(orderId);
         checkResponse(res);
         Assert.assertNotEquals(parseJson(data, "status"), "3000");
 
@@ -263,7 +269,7 @@ public class Order_ThreewayCall extends BaseTest {
         }
         checkResponse(res);
         Assert.assertNotEquals(code, "1000000");
-        Order_Detail.Detail(orderId);
+        res = Order_Detail.Detail(orderId);
         checkResponse(res);
         Assert.assertNotEquals(parseJson(data, "status"), "3000");
 
@@ -275,7 +281,7 @@ public class Order_ThreewayCall extends BaseTest {
         }
         checkResponse(res);
         Assert.assertNotEquals(code, "1000000");
-        Order_Detail.Detail(orderId);
+        res = Order_Detail.Detail(orderId);
         checkResponse(res);
         Assert.assertNotEquals(parseJson(data, "status"), "3000");
 
@@ -287,7 +293,7 @@ public class Order_ThreewayCall extends BaseTest {
         }
         checkResponse(res);
         Assert.assertNotEquals(code, "1000000");
-        Order_Detail.Detail(orderId);
+        res = Order_Detail.Detail(orderId);
         checkResponse(res);
         Assert.assertNotEquals(parseJson(data, "status"), "3000");
 
@@ -299,7 +305,7 @@ public class Order_ThreewayCall extends BaseTest {
         }
         checkResponse(res);
         Assert.assertNotEquals(code, "1000000");
-        Order_Detail.Detail(orderId);
+        res = Order_Detail.Detail(orderId);
         checkResponse(res);
         Assert.assertNotEquals(parseJson(data, "status"), "3000");
 
@@ -311,7 +317,7 @@ public class Order_ThreewayCall extends BaseTest {
         }
         checkResponse(res);
         Assert.assertNotEquals(code, "1000000");
-        Order_Detail.Detail(orderId);
+        res = Order_Detail.Detail(orderId);
         checkResponse(res);
         Assert.assertNotEquals(parseJson(data, "status"), "3000");
 
@@ -323,7 +329,7 @@ public class Order_ThreewayCall extends BaseTest {
         }
         checkResponse(res);
         Assert.assertEquals(code, "1000000");
-        Order_Detail.Detail(orderId);
+        res = Order_Detail.Detail(orderId);
         checkResponse(res);
         Assert.assertEquals(parseJson(data, "status"), "3000");
 

@@ -59,7 +59,7 @@ public class CreateSurgeryBriefs extends BaseTest {
         String orderId = CreateOrder.CreateOrder(mainToken);
         Order_ReceiveTask.receiveTask(orderId);
         Order_RecommendDoctor.recommendDoctor(orderId, "666");
-        Order_ThreewayCall.threewayCall(orderId, "success");
+        Order_ThreewayCall.ThreewayCall(orderId, "success");
         CreatePayment.pay(orderId, mainToken); // 期望 3000 -> 4000
         // TODO: Can't proceed since payment incompleted.
         if (!PaymentResult.result(orderId, mainToken).equals("4000")) {

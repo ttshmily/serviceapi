@@ -169,7 +169,7 @@ public class Order_Modify extends BaseTest {
         String order_number = CreateOrder.CreateOrder(mainToken); // create an order
         logger.debug(Order_ReceiveTask.receiveTask(order_number));
         logger.debug(Order_RecommendDoctor.recommendDoctor(order_number, "666"));
-        if (!Order_ThreewayCall.threewayCall(order_number, "success").equals("3000")) {
+        if (!Order_ThreewayCall.ThreewayCall(order_number, "success").equals("3000")) {
             Assert.fail("未进行到支付状态，无法继续执行该用例");
         }
 
