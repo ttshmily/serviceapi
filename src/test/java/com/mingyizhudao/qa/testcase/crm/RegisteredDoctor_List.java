@@ -384,7 +384,7 @@ public class RegisteredDoctor_List extends BaseTest{
             Assert.assertEquals(doc.getString("academic_title_list"), "ASSOCIATE_PROFESSOR");
         }
 
-        query.replace("academic_title_list","PROFESSOR");
+        query.replace("academic_title","PROFESSOR");
         try {
             res = HttpRequest.sendGet(host_crm+mock+uri, query, crm_token, null);
         } catch (IOException e) {
@@ -397,10 +397,10 @@ public class RegisteredDoctor_List extends BaseTest{
         for (int i=0; i<doc_list.size(); i++) {
             JSONObject doc = doc_list.getJSONObject(i);
             Assert.assertEquals(doc.getString("inviter_name"), "苏舒");
-            Assert.assertEquals(doc.getString("academic_title_list"), "ASSOCIATE_PROFESSOR");
+            Assert.assertEquals(doc.getString("academic_title_list"), "PROFESSOR");
         }
 
-        query.replace("academic_title_list","-1");
+        query.replace("academic_title","-1");
         try {
             res = HttpRequest.sendGet(host_crm+mock+uri, query, crm_token, null);
         } catch (IOException e) {
@@ -420,7 +420,7 @@ public class RegisteredDoctor_List extends BaseTest{
         HashMap<String, String> query = new HashMap<>();
         query.put("consultant_name","苏舒");
 
-        query.put("medical_title_list","ARCHIATER");
+        query.put("medical_title","ARCHIATER");
         try {
             res = HttpRequest.sendGet(host_crm+uri, query, crm_token, null);
         } catch (IOException e) {
@@ -429,8 +429,14 @@ public class RegisteredDoctor_List extends BaseTest{
         checkResponse(res);
         Assert.assertEquals(code, "1000000");
         //TODO
+        JSONArray doc_list = data.getJSONArray("list");
+        for (int i=0; i<doc_list.size(); i++) {
+            JSONObject doc = doc_list.getJSONObject(i);
+            Assert.assertEquals(doc.getString("inviter_name"), "苏舒");
+            Assert.assertEquals(doc.getString("medical_title_list"), "ARCHIATER");
+        }
 
-        query.replace("medical_title_list","ASSOCIATE_ARCHIATER");
+        query.replace("medical_title","ASSOCIATE_ARCHIATER");
         try {
             res = HttpRequest.sendGet(host_crm+uri, query, crm_token, null);
         } catch (IOException e) {
@@ -439,8 +445,14 @@ public class RegisteredDoctor_List extends BaseTest{
         checkResponse(res);
         Assert.assertEquals(code, "1000000");
         //TODO
+        doc_list = data.getJSONArray("list");
+        for (int i=0; i<doc_list.size(); i++) {
+            JSONObject doc = doc_list.getJSONObject(i);
+            Assert.assertEquals(doc.getString("inviter_name"), "苏舒");
+            Assert.assertEquals(doc.getString("medical_title_list"), "ASSOCIATE_ARCHIATER");
+        }
 
-        query.replace("medical_title_list","-1");
+        query.replace("medical_title","-1");
         try {
             res = HttpRequest.sendGet(host_crm+uri, query, crm_token, null);
         } catch (IOException e) {
@@ -449,7 +461,6 @@ public class RegisteredDoctor_List extends BaseTest{
         checkResponse(res);
         Assert.assertNotEquals(code, "1000000");
         //TODO
-
     }
 
     @Test
@@ -466,7 +477,7 @@ public class RegisteredDoctor_List extends BaseTest{
         }
         checkResponse(res);
         Assert.assertEquals(code, "1000000");
-        Assert.assertNotEquals(parseJson(data, "list"), "0");
+        Assert.assertNotEquals(parseJson(data, "list()"), "0");
         //TODO
 
 
@@ -481,7 +492,7 @@ public class RegisteredDoctor_List extends BaseTest{
         checkResponse(res);
         logger.info(HttpRequest.unicodeString(res));
         Assert.assertEquals(code, "1000000");
-        Assert.assertNotEquals(parseJson(data, "list"), "0");
+        Assert.assertNotEquals(parseJson(data, "list()"), "0");
 
         //TODO
 

@@ -25,7 +25,7 @@ public class CreateOrder extends BaseTest {
         String res = "";
         OrderDetail body = new OrderDetail(true);
         try {
-            res = HttpRequest.sendPost(host_doc +mock+uri, body.body.toString(), token);
+            res = HttpRequest.sendPost(host_doc+uri, body.body.toString(), token);
         } catch (IOException e) {
             logger.error(e);
         }
@@ -47,7 +47,7 @@ public class CreateOrder extends BaseTest {
         OrderDetail body = new OrderDetail(true);
 
         try {
-            res = HttpRequest.sendPost(host_doc +mock+uri, body.body.toString(), mainToken);
+            res = HttpRequest.sendPost(host_doc+uri, body.body.toString(), mainToken);
         } catch (IOException e) {
             logger.error(e);
         }

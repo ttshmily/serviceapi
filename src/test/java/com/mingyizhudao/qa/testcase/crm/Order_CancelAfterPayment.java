@@ -12,4 +12,5 @@ public class Order_CancelAfterPayment extends BaseTest {
     public static final String version = "/api/v1";
     public static String uri = version+"/orders/{orderNumber}/cancelOrder";
     public static String mock = false ? "/mockjs/1" : "";
+
 }

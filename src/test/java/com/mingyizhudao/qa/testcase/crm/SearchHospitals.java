@@ -55,7 +55,7 @@ public class SearchHospitals extends BaseTest {
         // 查询字符串为拼音
         query.replace("hospital_name", "anyang");
         try {
-            res = HttpRequest.sendGet(host_crm+mock+uri, query, crm_token, null);
+            res = HttpRequest.sendGet(host_crm+uri, query, crm_token, null);
         } catch (IOException e) {
             logger.error(e);
         }

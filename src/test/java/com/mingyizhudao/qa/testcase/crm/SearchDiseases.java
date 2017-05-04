@@ -15,7 +15,7 @@ import java.util.HashMap;
 public class SearchDiseases extends BaseTest {
     public static final Logger logger= Logger.getLogger(SearchDiseases.class);
     public static final String version = "/api/v1";
-    public static String uri = version+"/diseases";
+    public static String uri = version+"/diseases/search";
     public static String mock = false ? "/mockjs/1" : "";
 
     @Test
@@ -28,10 +28,10 @@ public class SearchDiseases extends BaseTest {
         // sub_cat_id in cat_id
         query.put("cat_id", "1");
         query.put("sub_cat_id", "5");
-        query.put("disease_name", "肿瘤");
+        query.put("name", "肿瘤");
 
         try {
-            res = HttpRequest.sendGet(host_crm+mock+uri, "", crm_token, null);
+            res = HttpRequest.sendGet(host_crm+uri, query, crm_token, null);
         } catch (IOException e) {
             logger.error(e);
         }
@@ -48,10 +48,10 @@ public class SearchDiseases extends BaseTest {
         HashMap<String, String> query = new HashMap<>();
         // sub_cat_id in cat_id
         query.put("cat_id", "1");
-        query.put("sub_cat_id", "5");
-
+        query.put("sub_cat_id", "6");
+        query.put("name", "肿瘤");
         try {
-            res = HttpRequest.sendGet(host_crm+mock+uri, "", crm_token, null);
+            res = HttpRequest.sendGet(host_crm+uri, query, crm_token, null);
         } catch (IOException e) {
             logger.error(e);
         }

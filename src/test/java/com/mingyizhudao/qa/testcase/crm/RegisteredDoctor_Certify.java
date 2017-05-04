@@ -20,7 +20,7 @@ public class RegisteredDoctor_Certify extends BaseTest {
     public static String uri = version+"/doctors/{id}/verifications";
     public static String mock = false ? "/mockjs/1" : "";
 
-    public static String certify(String regId) {
+    public static String certify(String regId, String status) {
         String res = "";
         if ( regId == null || regId.isEmpty()) {
             logger.error("医生ID不存在");
@@ -40,19 +40,14 @@ public class RegisteredDoctor_Certify extends BaseTest {
         HashMap<String, String> pathValue = new HashMap<>();
         JSONObject body = new JSONObject();
         pathValue.put("id", regId);
-        body.put("status", "1");  // 认证
-        body.put("reason", "成功原因");
+        body.put("status", status);  // 认证
+        body.put("reason", "原因");
         try {
             res = HttpRequest.sendPut(host_crm+uri, body.toString(), crm_token, pathValue);
         } catch (IOException e) {
             logger.error(e);
         }
         res = RegisteredDoctor_Detail.Detail(regId);
-        if (!parseJson(JSONObject.fromObject(res), "code").equals("1000000")) {
-            logger.debug(res);
-            logger.error("不明原因导致失败");
-            return "2";// 返回原状态"2"
-        }
         return parseJson(JSONObject.fromObject(res), "data:is_verified");
     }
 

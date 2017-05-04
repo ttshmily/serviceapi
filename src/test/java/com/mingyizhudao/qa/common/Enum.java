@@ -256,11 +256,7 @@ public class Enum {
     }
 
     public Enum() {
-        for (String key:
-             kb_disease.keySet()
-                ) {
-            System.out.println(key + "\t:\t" + kb_disease.get(key));
-        }
+
     }
 
 

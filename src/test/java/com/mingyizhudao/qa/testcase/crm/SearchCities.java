@@ -32,7 +32,7 @@ public class SearchCities extends BaseTest {
         checkResponse(res);
         Assert.assertEquals(code, "1000000");
         //TODO
-        Assert.assertEquals(parseJson(data, ""), "北京");
+        Assert.assertNotNull(parseJson(data, "list()"));
     }
 
     @Test

@@ -80,7 +80,6 @@ public class BaseTest {
             BaseTest.host_kb = protocol.concat("://").concat(host_kb);
         }
         new Enum();
-//        System.exit(1000);
     }
 
     @BeforeSuite
@@ -89,7 +88,6 @@ public class BaseTest {
         mainToken = CheckVerifyCode.check();
 
         String res = GetDoctorProfile.getDoctorProfile(mainToken);
-//        logger.info(HttpRequest.unicodeString(res));
         mainDoctorId = JSONObject.fromObject(res).getJSONObject("data").getJSONObject("doctor").getString("user_id");
 
         logger.info("更新医生信息...");
@@ -105,23 +103,15 @@ public class BaseTest {
         logger.info("mainDoctorHospitalId为:\t"+mainDoctorHospitalId);
         logger.info("mainDoctorHospitalName为:\t"+mainDoctorHospitalName);
 
-//        System.exit(1);
-//        logger.info("认证医生...");
-//        if (CrmCertifiedDoctor.certify(JSONObject.fromObject(res).getJSONObject("data").getJSONObject("doctor").getString("user_id"))) {
-//            logger.info("认证成功");
-//        } else {
-//            System.exit(1);
-//        }
-
-        if (RegisteredDoctor_Certify.certify(mainDoctorId).equals("1")) {
+        if (RegisteredDoctor_Certify.certify(mainDoctorId, "1").equals("1")) {
             logger.info("认证成功");
         } else {
             logger.error("医生认证没通过，无法进行后续用例，退出...");
             System.exit(1);
         }
 
-        mainOperatorId = "";
-        mainOperatorName = "";
+        mainOperatorId = "chao.fang@mingyizhudao.com";
+        mainOperatorName = "方超（男）";
         mainOperatorRole = "";
 
     }
@@ -192,7 +182,6 @@ public class BaseTest {
 
         String nextPath = path.substring(path.indexOf(":")+1);
         String head = path.substring(0,path.indexOf(":"));
-//        if (head.equals(last_head) && nextPath.equals(last_next)) ;
         if ( head.indexOf("(")+1 == head.indexOf(")") ) {
             if (node.getJSONArray(head.substring(0,head.indexOf("("))).size() > 0)
                 return parseJson(node.getJSONArray(head.substring(0,head.length()-2)).getJSONObject(0),nextPath);
@@ -290,7 +279,7 @@ public class BaseTest {
         logger.info("doctorHospitalName为:\t"+doctorHospitalName);
 
         logger.info("认证医生信息...");
-        RegisteredDoctor_Certify.certify(doctorId);
+        RegisteredDoctor_Certify.certify(doctorId, "1");
         res = GetDoctorProfile.getDoctorProfile(token);
         String is_verified = JSONObject.fromObject(res).getJSONObject("data").getJSONObject("doctor").getString("is_verified");
 

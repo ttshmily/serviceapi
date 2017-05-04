@@ -49,7 +49,12 @@ public class CreatePayment extends BaseTest {
         String orderId = CreateOrder.CreateOrder(mainToken);
         Order_ReceiveTask.receiveTask(orderId);
         Order_RecommendDoctor.recommendDoctor(orderId, mainDoctorId);
-        Order_ThreewayCall.ThreewayCall(orderId, "success");
+        if (!Order_ThreewayCall.ThreewayCall(orderId, "success").equals("3000")) {
+            Assert.fail("未到支付状态，不能进行支付");
+        }
+        res = GetOrderDetail.getOrderDetail(mainToken, orderId);
+        checkResponse(res);
+        Assert.assertNotNull(parseJson(data, "order:pre_order_fee"));
 
         payment.put("orderNumber", orderId);
         payment.put("returnUrl", "http://www.mingyizhudao.com");

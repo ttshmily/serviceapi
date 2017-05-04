@@ -122,7 +122,7 @@ public class RegisteredDoctor_Modify extends BaseTest {
         res = RegisteredDoctor_Detail.Detail(mainDoctorId);
         checkResponse(res);
         Assert.assertEquals(parseJson(data, "hospital_id"), "5");
-        Assert.assertEquals(parseJson(data, "hospital_id"), Enum.kb_hospital.get("5"));
+        Assert.assertEquals(parseJson(data, "hospital_name"), Enum.kb_hospital.get("5"));
     }
 
     @Test

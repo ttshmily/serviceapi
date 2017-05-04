@@ -80,10 +80,12 @@ public class Order_ThreewayCall extends BaseTest {
         }
         checkResponse(res);
         Assert.assertEquals(code, "1000000");
-        Order_Detail.Detail(orderId);
+        res = Order_Detail.Detail(orderId);
         checkResponse(res);
         Assert.assertEquals(parseJson(data, "status"), "3000");
-
+        Assert.assertEquals(parseJson(data, "surgeon_id"), "555");
+        Assert.assertEquals(parseJson(data, "surgeon_name"), Enum.kb_doctor.get("555"));
+        Assert.assertEquals(parseJson(data, "surgeon_fee"), "10000");
     }
 
     @Test
@@ -113,11 +115,12 @@ public class Order_ThreewayCall extends BaseTest {
         logger.debug(res);
         checkResponse(res);
         Assert.assertEquals(code, "1000000");
-        Order_Detail.Detail(orderId);
+        res = Order_Detail.Detail(orderId);
         checkResponse(res);
         Assert.assertEquals(parseJson(data, "status"), "2020");
         Assert.assertEquals(parseJson(data, "surgeon_id"), "555");
         Assert.assertEquals(parseJson(data, "surgeon_name"), Enum.kb_doctor.get("555"));
+        Assert.assertEquals(parseJson(data, "surgeon_fee"), "10000");
     }
 
     @Test
@@ -146,11 +149,12 @@ public class Order_ThreewayCall extends BaseTest {
         }
         checkResponse(res);
         Assert.assertEquals(code, "1000000");
-        Order_Detail.Detail(orderId);
+        res = Order_Detail.Detail(orderId);
         checkResponse(res);
         Assert.assertEquals(parseJson(data, "status"), "2000");
         Assert.assertEquals(parseJson(data, "surgeon_id"), "555");
         Assert.assertEquals(parseJson(data, "surgeon_name"), Enum.kb_doctor.get("555"));
+        Assert.assertEquals(parseJson(data, "surgeon_fee"), "10000");
 
     }
 
@@ -333,5 +337,39 @@ public class Order_ThreewayCall extends BaseTest {
         checkResponse(res);
         Assert.assertEquals(parseJson(data, "status"), "3000");
 
+    }
+
+    @Test
+    public void test_07_创建三方通话_结果为不合作无其他信息() {
+        String res = "";
+        HashMap<String, String> pathValue = new HashMap<>();
+        String orderId = CreateOrder.CreateOrder(mainToken);
+        Order_ReceiveTask.receiveTask(orderId);
+        if (!Order_RecommendDoctor.recommendDoctor(orderId, "555").equals("2020")) {
+            Assert.fail("订单没有到达已推荐状态，无法进行三方通话");
+        }
+        pathValue.put("orderNumber", orderId);
+        JSONObject body = new JSONObject();
+        body.put("surgeryFee", "");
+        body.put("calling_time", df.format(new Date()));
+        body.put("major_disease_id", "");
+        body.put("minor_disease_id","");
+        body.put("content", "");
+        body.put("audio_file", "");
+        body.put("record_type", "failed");
+        body.put("reject_reason", "http://www.automation.com");
+        try {
+            res = HttpRequest.sendPost(host_crm+uri, body.toString(), crm_token, pathValue);
+        } catch (IOException e) {
+            logger.error(e);
+        }
+        checkResponse(res);
+        Assert.assertEquals(code, "1000000");
+        res = Order_Detail.Detail(orderId);
+        checkResponse(res);
+        Assert.assertEquals(parseJson(data, "status"), "2000");
+//        Assert.assertEquals(parseJson(data, "surgeon_id"), "555");
+//        Assert.assertEquals(parseJson(data, "surgeon_name"), Enum.kb_doctor.get("555"));
+//        Assert.assertEquals(parseJson(data, "surgeon_fee"), "10000");
     }
 }

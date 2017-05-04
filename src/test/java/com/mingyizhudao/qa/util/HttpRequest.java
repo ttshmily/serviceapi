@@ -534,6 +534,7 @@ public class HttpRequest {
      */
     public static String queryBuilder(HashMap<String,String> query) {
         StringBuffer sb=new StringBuffer();
+        if (query == null) return "";
         for (String key:query.keySet()
              ) {
             try {

@@ -35,6 +35,8 @@ public class Order_List extends BaseTest {
 
         String res = "";
         HashMap<String, String> query = new HashMap<>();
+        query.put("page", "1");
+        query.put("pageSize", "10");
         try {
             res = HttpRequest.sendGet(host_crm+uri, "", crm_token, null);
         } catch (IOException e) {
@@ -42,6 +44,68 @@ public class Order_List extends BaseTest {
         }
         checkResponse(res);
         Assert.assertEquals(code, "1000000");
-        Assert.assertNotNull(data, "list");
+        Assert.assertEquals(parseJson(data, "list()"), "10");
+        Assert.assertEquals(parseJson(data, "page"), "1");
+    }
+
+    @Test
+    public void test_02_获取订单列表_分页() {
+
+        String res = "";
+        HashMap<String, String> query = new HashMap<>();
+        query.put("page", "1");
+        query.put("pageSize", "100");
+        try {
+            res = HttpRequest.sendGet(host_crm+uri, query, crm_token, null);
+        } catch (IOException e) {
+            logger.error(e);
+        }
+        checkResponse(res);
+        Assert.assertEquals(code, "1000000");
+        Assert.assertEquals(parseJson(data, "list()"), "100");
+        Assert.assertEquals(parseJson(data, "page"), "1");
+        int size = Integer.parseInt(parseJson(data, "size"));
+        int total = size/100;
+        for (int i=1; i<=total; i++) {
+            query.replace("page", String.valueOf(i));
+            try {
+                res = HttpRequest.sendGet(host_crm+uri, query, crm_token, null);
+            } catch (IOException e) {
+                logger.error(e);
+            }
+            checkResponse(res);
+            Assert.assertEquals(code, "1000000");
+            Assert.assertEquals(parseJson(data, "list()"), "100");
+        }
+        query.replace("page", String.valueOf(total+1));
+        try {
+            res = HttpRequest.sendGet(host_crm+uri, query, crm_token, null);
+        } catch (IOException e) {
+            logger.error(e);
+        }
+        checkResponse(res);
+        Assert.assertEquals(code, "1000000");
+        Assert.assertEquals(parseJson(data, "list()"), String.valueOf(size-100*total));
+    }
+
+    @Test
+    public void test_03_获取订单列表_已推荐() {
+
+        String res = "";
+        HashMap<String, String> query = new HashMap<>();
+        query.put("page", "1");
+        query.put("pageSize", "10");
+        query.put("status", "2000,2020");
+        query.put("isRecommended", "true");
+        try {
+            res = HttpRequest.sendGet(host_crm+uri, query, crm_token, null);
+        } catch (IOException e) {
+            logger.error(e);
+        }
+        checkResponse(res);
+        Assert.assertEquals(code, "1000000");
+        Assert.assertEquals(parseJson(data, "list()"), "10");
+        Assert.assertEquals(parseJson(data, "page"), "1");
+        Assert.assertEquals(parseJson(data, "list(1):status"), "2020");
     }
 }

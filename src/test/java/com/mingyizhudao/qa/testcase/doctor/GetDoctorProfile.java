@@ -50,15 +50,13 @@ public class GetDoctorProfile extends BaseTest {
     public void 没有token信息的请求不能获得个人信息并返回正确的错误提示() {
         String res = "";
         try {
-            res = HttpRequest.sendGet(host_doc +mock+uri,"", "");
+            res = HttpRequest.sendGet(host_doc+uri,"", "");
         } catch (IOException e) {
             logger.error(e);
         }
     //    logger.info(unicodeString(res));
         checkResponse(res);
-        if (!data.isNullObject() || !data.isEmpty()) {
-            Assert.fail("没有登录信息，不应该返回data");
-        }
+        Assert.assertNotEquals(code, "1000000","没有登录信息，不应该返回data");
 
     }
 
@@ -72,9 +70,7 @@ public class GetDoctorProfile extends BaseTest {
         }
         //    logger.info(unicodeString(res));
         checkResponse(res);
-        if (!data.isNullObject() || !data.isEmpty()) {
-            Assert.fail("没有登录信息，不应该返回data");
-        }
+        Assert.assertNotEquals(code, "1000000","错误token信息，不应该返回data");
 
     }
 

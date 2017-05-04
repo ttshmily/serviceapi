@@ -48,9 +48,9 @@ public class GetOrderList extends BaseTest{
         Assert.assertNotEquals(parseJson(data,"order():order_number"), "", "订单ID字段缺失");
         Assert.assertNotEquals(parseJson(data,"order():status"), "", "订单状态字段缺失");
         Assert.assertNotEquals(parseJson(data,"order():OrderStatusText"), "", "订单状态描述字段缺失");
-        Assert.assertNotNull(parseJson(data,"order():surgeon_id"), "手术医生ID字段不能缺失");
-        Assert.assertNotNull(parseJson(data,"order():surgeon_name"), "手术医生姓名字段不能缺失");
-        Assert.assertNotNull(parseJson(data,"order():surgeon_hospital"), "手术医生所在医院字段不能缺失");
+//        Assert.assertNotNull(parseJson(data,"order():surgeon_id"), "手术医生ID字段不能缺失");
+//        Assert.assertNotNull(parseJson(data,"order():surgeon_name"), "手术医生姓名字段不能缺失");
+//        Assert.assertNotNull(parseJson(data,"order():surgeon_hospital"), "手术医生所在医院字段不能缺失");
 
     }
 
