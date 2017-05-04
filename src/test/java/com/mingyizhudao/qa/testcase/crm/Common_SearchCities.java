@@ -12,9 +12,9 @@ import java.util.HashMap;
 /**
  * Created by ttshmily on 25/4/2017.
  */
-public class SearchCities extends BaseTest {
+public class Common_SearchCities extends BaseTest {
 
-    public static final Logger logger= Logger.getLogger(SearchCities.class);
+    public static final Logger logger= Logger.getLogger(Common_SearchCities.class);
     public static final String version = "/api/v1";
     public static String uri = version+"/cities";
     public static String mock = false ? "/mockjs/1" : "";

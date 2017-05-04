@@ -1,8 +1,10 @@
 package com.mingyizhudao.qa.testcase.doctor;
 
 import com.mingyizhudao.qa.common.BaseTest;
+import com.mingyizhudao.qa.common.KB;
 import com.mingyizhudao.qa.dataprofile.doctor.MedicalRecords;
 import com.mingyizhudao.qa.util.HttpRequest;
+import com.mingyizhudao.qa.util.UT;
 import net.sf.json.JSONObject;
 import org.apache.log4j.Logger;
 import org.testng.Assert;
@@ -33,11 +35,11 @@ public class UpdateMedicalRecords extends BaseTest {
                 mr.body.getJSONObject("order").accumulate(key, map.get(key));
             }
         }
-        HashMap<String, String> pathValue = new HashMap<String, String>();
+        HashMap<String, String> pathValue = new HashMap<>();
         pathValue.put("orderId", orderId);
 
         try {
-            res = HttpRequest.sendPut(host_doc +mock+uri, mr.body.toString(), token, pathValue);
+            res = HttpRequest.sendPut(host_doc + uri, mr.body.toString(), token, pathValue);
         } catch (IOException e) {
             logger.error(e);
         }
@@ -130,7 +132,7 @@ public class UpdateMedicalRecords extends BaseTest {
         checkResponse(res);
         String age = parseJson(data, "order:patient_age");
 
-        HashMap<String, String> pathValue = new HashMap<String, String>();
+        HashMap<String, String> pathValue = new HashMap<>();
         pathValue.put("orderId", orderId);
         MedicalRecords mr = new MedicalRecords(true);
 
@@ -266,10 +268,11 @@ public class UpdateMedicalRecords extends BaseTest {
         Assert.assertEquals(parseJson(data, "order:major_disease_id"), mdid, "主诉疾病为30000000000，不应该更新成功");
         logger.info("禁止更新主诉疾病为30000000000");
 
-        logger.info("更新主诉疾病为100");
-        mr.body.getJSONObject("order").replace("major_disease_id", "100");
+        String key  = UT.randomKey(KB.kb_disease);
+        logger.info("更新主诉疾病为"+key);
+        mr.body.getJSONObject("order").replace("major_disease_id", key);
         try {
-            res = HttpRequest.sendPut(host_doc + mock + uri, mr.body.toString(), mainToken, pathValue);
+            res = HttpRequest.sendPut(host_doc + uri, mr.body.toString(), mainToken, pathValue);
         } catch (IOException e) {
             logger.error(e);
         }
@@ -279,11 +282,12 @@ public class UpdateMedicalRecords extends BaseTest {
         res = GetOrderDetail.getOrderDetail(mainToken, orderId);
         checkResponse(res);
         Assert.assertEquals(code, "1000000", "查看订单失败");
-        Assert.assertEquals(parseJson(data, "order:major_disease_id"), "100", "主诉疾病100，未更新成功");
-        logger.info("更新主诉疾病为100成功");
+        Assert.assertEquals(parseJson(data, "order:major_disease_id"), key, "主诉疾病"+key+"，未更新成功");
+        logger.info("更新主诉疾病为"+key+"成功");
 
-        logger.info("更新主诉疾病为40");
-        mr.body.getJSONObject("order").replace("major_disease_id", "40");
+        key  = UT.randomKey(KB.kb_disease);
+        logger.info("更新主诉疾病为"+key);
+        mr.body.getJSONObject("order").replace("major_disease_id", key);
         try {
             res = HttpRequest.sendPut(host_doc + mock + uri, mr.body.toString(), mainToken, pathValue);
         } catch (IOException e) {
@@ -295,7 +299,7 @@ public class UpdateMedicalRecords extends BaseTest {
         res = GetOrderDetail.getOrderDetail(mainToken, orderId);
         checkResponse(res);
         Assert.assertEquals(code, "1000000", "查看订单失败");
-        Assert.assertEquals(parseJson(data, "order:major_disease_id"), "40", "主诉疾病40，未更新成功");
+        Assert.assertEquals(parseJson(data, "order:major_disease_id"), key, "主诉疾病"+key+"，未更新成功");
         logger.info("更新主诉疾病为40成功");
 
     }
@@ -365,10 +369,11 @@ public class UpdateMedicalRecords extends BaseTest {
         Assert.assertEquals(parseJson(data, "order:minor_disease_id"), mdId, "次诉疾病为30000000000，不应该更新成功");
         logger.info("禁止更新次诉疾病为30000000000");
 
-        logger.info("更新次诉疾病为100");
-        mr.body.getJSONObject("order").replace("minor_disease_id", "100");
+        String key = UT.randomKey(KB.kb_disease);
+        logger.info("更新次诉疾病为"+key);
+        mr.body.getJSONObject("order").replace("minor_disease_id", key);
         try {
-            res = HttpRequest.sendPut(host_doc + mock + uri, mr.body.toString(), mainToken, pathValue);
+            res = HttpRequest.sendPut(host_doc + uri, mr.body.toString(), mainToken, pathValue);
         } catch (IOException e) {
             logger.error(e);
         }
@@ -378,13 +383,14 @@ public class UpdateMedicalRecords extends BaseTest {
         res = GetOrderDetail.getOrderDetail(mainToken, orderId);
         checkResponse(res);
         Assert.assertEquals(code, "1000000", "查看订单失败");
-        Assert.assertEquals(parseJson(data, "order:minor_disease_id"), "100", "次诉疾病100，未更新成功");
-        logger.info("更新次诉疾病为100成功");
+        Assert.assertEquals(parseJson(data, "order:minor_disease_id"), key, "次诉疾病"+key+"，未更新成功");
+        logger.info("更新次诉疾病为"+key+"成功");
 
-        logger.info("更新次诉疾病为40");
-        mr.body.getJSONObject("order").replace("minor_disease_id", "40");
+        key = UT.randomKey(KB.kb_disease);
+        logger.info("更新次诉疾病为"+key);
+        mr.body.getJSONObject("order").replace("minor_disease_id", key);
         try {
-            res = HttpRequest.sendPut(host_doc + mock + uri, mr.body.toString(), mainToken, pathValue);
+            res = HttpRequest.sendPut(host_doc + uri, mr.body.toString(), mainToken, pathValue);
         } catch (IOException e) {
             logger.error(e);
         }
@@ -394,7 +400,7 @@ public class UpdateMedicalRecords extends BaseTest {
         res = GetOrderDetail.getOrderDetail(mainToken, orderId);
         checkResponse(res);
         Assert.assertEquals(code, "1000000", "查看订单失败");
-        Assert.assertEquals(parseJson(data, "order:minor_disease_id"), "40", "次诉疾病40，未更新成功");
+        Assert.assertEquals(parseJson(data, "order:minor_disease_id"), key, "次诉疾病"+key+"，未更新成功");
         logger.info("更新次诉疾病为40成功");
 
     }
@@ -703,10 +709,11 @@ public class UpdateMedicalRecords extends BaseTest {
         Assert.assertEquals(parseJson(data, "order:expected_surgery_hospital_id"), expectedSurgeryHospitalId, "期望手术医院未更新成功");
         Assert.assertEquals(parseJson(data, "order:expected_surgery_hospital_name"), expectedSurgeryHospitalName, "期望手术医院未更新成功");
 
-        logger.info("更新期望手术医院ID=100");
-        mr.body.getJSONObject("order").replace("expected_surgery_hospital_id", "100");
+        String key = UT.randomKey(KB.kb_hospital);
+        logger.info("更新期望手术医院ID="+key);
+        mr.body.getJSONObject("order").replace("expected_surgery_hospital_id", key);
         try {
-            res = HttpRequest.sendPut(host_doc + mock + uri, mr.body.toString(), mainToken, pathValue);
+            res = HttpRequest.sendPut(host_doc + uri, mr.body.toString(), mainToken, pathValue);
         } catch (IOException e) {
             logger.error(e);
         }
@@ -716,8 +723,8 @@ public class UpdateMedicalRecords extends BaseTest {
         res = GetOrderDetail.getOrderDetail(mainToken, orderId);
         checkResponse(res);
         Assert.assertEquals(code, "1000000", "查看订单失败");
-        Assert.assertEquals(parseJson(data, "order:expected_surgery_hospital_id"), "100", "期望手术医院未更新成功");
-        Assert.assertEquals(parseJson(data, "order:expected_surgery_hospital_name"), "淮安市第一人民医院", "期望手术医院未更新成功");
+        Assert.assertEquals(parseJson(data, "order:expected_surgery_hospital_id"), key, "期望手术医院未更新成功");
+        Assert.assertEquals(parseJson(data, "order:expected_surgery_hospital_name"), KB.kb_hospital.get(key), "期望手术医院未更新成功");
     }
 
 }

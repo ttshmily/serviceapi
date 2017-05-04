@@ -14,9 +14,9 @@ public class MobileProfile {
 
     public MobileProfile(boolean init) {
         if (init) {
-            body.accumulate("mobile", "13" + phone() + "9999");
+            body.put("mobile", "13" + phone() + "9999");
         } else {
-            body.accumulate("mobile", "");
+            body.put("mobile", "");
         }
     }
 

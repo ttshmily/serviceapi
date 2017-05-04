@@ -1,12 +1,11 @@
 package com.mingyizhudao.qa.testcase.crm;
 
 import com.mingyizhudao.qa.common.BaseTest;
-import com.mingyizhudao.qa.common.Enum;
+import com.mingyizhudao.qa.common.KB;
 import com.mingyizhudao.qa.testcase.doctor.CreateOrder;
 import com.mingyizhudao.qa.util.HttpRequest;
 import net.sf.json.JSONObject;
 import org.apache.log4j.Logger;
-import org.bouncycastle.jce.provider.symmetric.Grainv1;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
@@ -84,7 +83,7 @@ public class Order_ThreewayCall extends BaseTest {
         checkResponse(res);
         Assert.assertEquals(parseJson(data, "status"), "3000");
         Assert.assertEquals(parseJson(data, "surgeon_id"), "555");
-        Assert.assertEquals(parseJson(data, "surgeon_name"), Enum.kb_doctor.get("555"));
+        Assert.assertEquals(parseJson(data, "surgeon_name"), KB.kb_doctor.get("555"));
         Assert.assertEquals(parseJson(data, "surgeon_fee"), "10000");
     }
 
@@ -119,7 +118,7 @@ public class Order_ThreewayCall extends BaseTest {
         checkResponse(res);
         Assert.assertEquals(parseJson(data, "status"), "2020");
         Assert.assertEquals(parseJson(data, "surgeon_id"), "555");
-        Assert.assertEquals(parseJson(data, "surgeon_name"), Enum.kb_doctor.get("555"));
+        Assert.assertEquals(parseJson(data, "surgeon_name"), KB.kb_doctor.get("555"));
         Assert.assertEquals(parseJson(data, "surgeon_fee"), "10000");
     }
 
@@ -153,7 +152,7 @@ public class Order_ThreewayCall extends BaseTest {
         checkResponse(res);
         Assert.assertEquals(parseJson(data, "status"), "2000");
         Assert.assertEquals(parseJson(data, "surgeon_id"), "555");
-        Assert.assertEquals(parseJson(data, "surgeon_name"), Enum.kb_doctor.get("555"));
+        Assert.assertEquals(parseJson(data, "surgeon_name"), KB.kb_doctor.get("555"));
         Assert.assertEquals(parseJson(data, "surgeon_fee"), "10000");
 
     }
@@ -369,7 +368,7 @@ public class Order_ThreewayCall extends BaseTest {
         checkResponse(res);
         Assert.assertEquals(parseJson(data, "status"), "2000");
 //        Assert.assertEquals(parseJson(data, "surgeon_id"), "555");
-//        Assert.assertEquals(parseJson(data, "surgeon_name"), Enum.kb_doctor.get("555"));
+//        Assert.assertEquals(parseJson(data, "surgeon_name"), KB.kb_doctor.get("555"));
 //        Assert.assertEquals(parseJson(data, "surgeon_fee"), "10000");
     }
 }

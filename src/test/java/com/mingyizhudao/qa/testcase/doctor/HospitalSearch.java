@@ -106,7 +106,7 @@ public class HospitalSearch extends BaseTest {
             logger.error(e);
         }
         checkResponse(res);
-        Assert.assertNotNull(parseJson(data, "hospital()"));
+        Assert.assertNotEquals(parseJson(data, "hospital()"), "0");
     }
 
     @Test

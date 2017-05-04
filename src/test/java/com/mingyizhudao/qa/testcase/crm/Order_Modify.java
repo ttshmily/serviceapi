@@ -1,7 +1,7 @@
 package com.mingyizhudao.qa.testcase.crm;
 
 import com.mingyizhudao.qa.common.BaseTest;
-import com.mingyizhudao.qa.common.Enum;
+import com.mingyizhudao.qa.common.KB;
 import com.mingyizhudao.qa.testcase.doctor.CreateOrder;
 import com.mingyizhudao.qa.util.HttpRequest;
 import net.sf.json.JSONObject;
@@ -89,7 +89,7 @@ public class Order_Modify extends BaseTest {
         res = Order_Detail.Detail(order_number);
         checkResponse(res);
         Assert.assertEquals(parseJson(data, "major_disease_id"), "44");
-        Assert.assertEquals(parseJson(data, "major_disease_name"), Enum.kb_disease.get("44"));
+        Assert.assertEquals(parseJson(data, "major_disease_name"), KB.kb_disease.get("44"));
     }
 
     @Test
@@ -113,7 +113,7 @@ public class Order_Modify extends BaseTest {
         res = Order_Detail.Detail(order_number);
         checkResponse(res);
         Assert.assertEquals(parseJson(data, "minor_disease_id"), "44");
-        Assert.assertEquals(parseJson(data, "minor_disease_name"), Enum.kb_disease.get("44"));
+        Assert.assertEquals(parseJson(data, "minor_disease_name"), KB.kb_disease.get("44"));
     }
 
     @Test

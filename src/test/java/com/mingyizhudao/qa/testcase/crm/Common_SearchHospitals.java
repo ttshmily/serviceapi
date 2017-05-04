@@ -12,9 +12,9 @@ import java.util.HashMap;
 /**
  * Created by ttshmily on 25/4/2017.
  */
-public class SearchHospitals extends BaseTest {
+public class Common_SearchHospitals extends BaseTest {
 
-    public static final Logger logger= Logger.getLogger(SearchHospitals.class);
+    public static final Logger logger= Logger.getLogger(Common_SearchHospitals.class);
     public static final String version = "/api/v1";
     public static String uri = version+"/hospitals/search";
     public static String mock = false ? "/mockjs/1" : "";
@@ -42,15 +42,16 @@ public class SearchHospitals extends BaseTest {
         String res = "";
         HashMap<String, String> query = new HashMap<>();
 
-        // 查询字符串为空
-        query.put("hospital_name", "");
+        // 查询字符串中文
+        query.put("hospital_name", "安阳");
         try {
             res = HttpRequest.sendGet(host_crm+mock+uri, query, crm_token, null);
         } catch (IOException e) {
             logger.error(e);
         }
         checkResponse(res);
-        Assert.assertEquals(code, "3100001"); // 必须要有输入
+        Assert.assertEquals(code, "1000000"); // 必须要有输入
+        Assert.assertNotEquals(parseJson(data,"list()"), "0");
 
         // 查询字符串为拼音
         query.replace("hospital_name", "anyang");
@@ -72,6 +73,7 @@ public class SearchHospitals extends BaseTest {
         }
         checkResponse(res);
         Assert.assertEquals(code, "1000000");
+        Assert.assertNotEquals(parseJson(data, "list()"), "0");
 
         // 查询key不存在
         query.remove("hospital_name");

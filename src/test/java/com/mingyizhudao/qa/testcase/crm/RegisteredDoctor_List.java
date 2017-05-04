@@ -11,6 +11,8 @@ import org.testng.annotations.Test;
 
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * Created by ttshmily on 25/4/2017.
@@ -266,10 +268,13 @@ public class RegisteredDoctor_List extends BaseTest{
         Assert.assertEquals(code, "1000000");
         //TODO
         JSONArray doc_list = data.getJSONArray("list");
+        Pattern p = Pattern.compile("大一");
+
         for (int i=0; i<doc_list.size(); i++) {
             JSONObject doc = doc_list.getJSONObject(i);
-            Assert.assertEquals(doc.getString("name"), "大一");
+            Matcher m = p.matcher(doc.getString("name"));
             Assert.assertEquals(doc.getString("is_verified"), "2");
+            Assert.assertTrue(m.find(), "姓名搜索结果不准确");
         }
 
         query.replace("certified_status","1");

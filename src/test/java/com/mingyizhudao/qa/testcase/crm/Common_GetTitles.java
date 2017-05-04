@@ -11,9 +11,9 @@ import java.io.IOException;
 /**
  * Created by ttshmily on 25/4/2017.
  */
-public class GetTitles extends BaseTest {
+public class Common_GetTitles extends BaseTest {
 
-    public static final Logger logger= Logger.getLogger(GetTitles.class);
+    public static final Logger logger= Logger.getLogger(Common_GetTitles.class);
     public static final String version = "/api/v1";
     public static String uri = version+"/doctors/titles";
     public static String mock = false ? "/mockjs/1" : "";

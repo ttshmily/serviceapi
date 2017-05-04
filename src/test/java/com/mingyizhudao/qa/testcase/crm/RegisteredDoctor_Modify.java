@@ -1,7 +1,7 @@
 package com.mingyizhudao.qa.testcase.crm;
 
 import com.mingyizhudao.qa.common.BaseTest;
-import com.mingyizhudao.qa.common.Enum;
+import com.mingyizhudao.qa.common.KB;
 import com.mingyizhudao.qa.util.HttpRequest;
 import net.sf.json.JSONObject;
 import org.apache.log4j.Logger;
@@ -107,7 +107,7 @@ public class RegisteredDoctor_Modify extends BaseTest {
         res = RegisteredDoctor_Detail.Detail(mainDoctorId);
         checkResponse(res);
         Assert.assertEquals(parseJson(data, "hospital_id"), "4");
-        Assert.assertEquals(parseJson(data, "hospital_name"), Enum.kb_hospital.get("4"));
+        Assert.assertEquals(parseJson(data, "hospital_name"), KB.kb_hospital.get("4"));
 
         // 更新hospital_id和hospital_name，应当以hospital_id为准。
         body.replace("hospital_id", "5");
@@ -122,7 +122,7 @@ public class RegisteredDoctor_Modify extends BaseTest {
         res = RegisteredDoctor_Detail.Detail(mainDoctorId);
         checkResponse(res);
         Assert.assertEquals(parseJson(data, "hospital_id"), "5");
-        Assert.assertEquals(parseJson(data, "hospital_name"), Enum.kb_hospital.get("5"));
+        Assert.assertEquals(parseJson(data, "hospital_name"), KB.kb_hospital.get("5"));
     }
 
     @Test
@@ -146,7 +146,7 @@ public class RegisteredDoctor_Modify extends BaseTest {
         res = RegisteredDoctor_Detail.Detail(mainDoctorId);
         checkResponse(res);
         Assert.assertEquals(parseJson(data, "academic_title_list"), "ASSOCIATE_PROFESSOR");
-        Assert.assertEquals(parseJson(data, "academic_title"), Enum.kb_academic_title.get("ASSOCIATE_PROFESSOR"));
+        Assert.assertEquals(parseJson(data, "academic_title"), KB.kb_academic_title.get("ASSOCIATE_PROFESSOR"));
 
 //        Assert.assertEquals(parseJson(data, "academic_title"), "副教授");
 
@@ -187,7 +187,7 @@ public class RegisteredDoctor_Modify extends BaseTest {
         res = RegisteredDoctor_Detail.Detail(mainDoctorId);
         checkResponse(res);
         Assert.assertEquals(parseJson(data, "medical_title_list"), "ARCHIATER");
-        Assert.assertEquals(parseJson(data, "medical_title"), Enum.kb_medical_title.get("ARCHIATER"));
+        Assert.assertEquals(parseJson(data, "medical_title"), KB.kb_medical_title.get("ARCHIATER"));
 //        Assert.assertEquals(parseJson(data, "medical_title"), "主任医师");
 
         // 更新错误的medical_title，应当不成功
@@ -226,7 +226,7 @@ public class RegisteredDoctor_Modify extends BaseTest {
         res = RegisteredDoctor_Detail.Detail(mainDoctorId);
         checkResponse(res);
         Assert.assertEquals(parseJson(data, "major_id"), "4");
-        Assert.assertEquals(parseJson(data, "major_name"), Enum.kb_major.get("4"));
+        Assert.assertEquals(parseJson(data, "major_name"), KB.kb_major.get("4"));
 
         // 更新错误的major_id，应当不成功
         body.replace("major_id", "1000000");
@@ -241,7 +241,7 @@ public class RegisteredDoctor_Modify extends BaseTest {
         res = RegisteredDoctor_Detail.Detail(mainDoctorId);
         checkResponse(res);
         Assert.assertEquals(parseJson(data, "major_id"), "4");
-        Assert.assertEquals(parseJson(data, "major_name"), Enum.kb_major.get("4"));
+        Assert.assertEquals(parseJson(data, "major_name"), KB.kb_major.get("4"));
 
 //        // 更新major_name，应当不成功
 //        body.remove("major_id");

@@ -1,5 +1,7 @@
 package com.mingyizhudao.qa.dataprofile.doctor;
 
+import com.mingyizhudao.qa.common.KB;
+import com.mingyizhudao.qa.util.UT;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 
@@ -14,32 +16,34 @@ public class OrderDetail {
     public OrderDetail(boolean init) {
         JSONObject order = new JSONObject();
         if (init) {
-            order.accumulate("patient_name", "方超");
-            order.accumulate("patient_gender", "1");
-            order.accumulate("patient_age", "31");
-            order.accumulate("patient_phone", "13817634203");
-            order.accumulate("major_disease_id", "33");
-            order.accumulate("minor_disease_id", "32");
-            order.accumulate("diagnosis", "工程师");
-            order.accumulate("expected_surgery_start_date", "2017-04-09");
-            order.accumulate("expected_surgery_due_date", "2017-05-09");
-            order.accumulate("expected_surgery_hospital_id", "43");
+            order.put("patient_name", "大一病人" + UT.randomString(4));
+            order.put("patient_gender", "1");
+            order.put("patient_age",  String.valueOf(UT.randomInt(100)));
+            order.put("patient_phone", UT.randomPhone());
+            order.put("major_disease_id", UT.randomKey(KB.kb_disease));
+            order.put("minor_disease_id", UT.randomKey(KB.kb_disease));
+            order.put("diagnosis", "病情描述"+UT.randomString(100));
+            String date1 = UT.randomDateFromNow(2, 5);
+            String date2 = UT.randomDateFromNow(6,30);
+            order.put("expected_surgery_start_date", date1);
+            order.put("expected_surgery_due_date", date2);
+            order.put("expected_surgery_hospital_id", UT.randomKey(KB.kb_hospital));
             order.accumulate("medical_record_pictures", JSONObject.fromObject("{'key':'123';'type':'1'}"));
             order.accumulate("medical_record_pictures", JSONObject.fromObject("{'key':'456';'type':'1'}"));
         } else {
-            order.accumulate("patient_name", "");
-            order.accumulate("patient_gender", "");
-            order.accumulate("patient_age", "");
-            order.accumulate("patient_phone", "");
-            order.accumulate("major_disease_id", "");
-            order.accumulate("minor_disease_id", "");
-            order.accumulate("diagnosis", "");
-            order.accumulate("expected_surgery_start_date", "");
-            order.accumulate("expected_surgery_due_date", "");
-            order.accumulate("expected_surgery_hospital_id", "");
-            order.accumulate("medical_record_pictures", pics.toString());
+            order.put("patient_name", "");
+            order.put("patient_gender", "");
+            order.put("patient_age", "");
+            order.put("patient_phone", "");
+            order.put("major_disease_id", "");
+            order.put("minor_disease_id", "");
+            order.put("diagnosis", "");
+            order.put("expected_surgery_start_date", "");
+            order.put("expected_surgery_due_date", "");
+            order.put("expected_surgery_hospital_id", "");
+            order.put("medical_record_pictures", pics.toString());
         }
-        body.accumulate("order",order);
+        body.put("order",order);
     }
 
 }

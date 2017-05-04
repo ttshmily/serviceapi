@@ -12,8 +12,8 @@ import java.util.HashMap;
 /**
  * Created by ttshmily on 25/4/2017.
  */
-public class SearchDiseases extends BaseTest {
-    public static final Logger logger= Logger.getLogger(SearchDiseases.class);
+public class Common_SearchDiseases extends BaseTest {
+    public static final Logger logger= Logger.getLogger(Common_SearchDiseases.class);
     public static final String version = "/api/v1";
     public static String uri = version+"/diseases/search";
     public static String mock = false ? "/mockjs/1" : "";

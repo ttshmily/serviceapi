@@ -1,7 +1,7 @@
 package com.mingyizhudao.qa.testcase.crm;
 
 import com.mingyizhudao.qa.common.BaseTest;
-import com.mingyizhudao.qa.common.Enum;
+import com.mingyizhudao.qa.common.KB;
 import com.mingyizhudao.qa.testcase.doctor.CreateOrder;
 import com.mingyizhudao.qa.util.HttpRequest;
 import net.sf.json.JSONObject;
@@ -71,7 +71,7 @@ public class Order_RecommendDoctor extends BaseTest {
         checkResponse(res);
         Assert.assertEquals(parseJson(data, "status"), "2020");
         Assert.assertEquals(parseJson(data, "surgeon_id"), recommendedId);
-        Assert.assertEquals(parseJson(data, "surgeon_name"), Enum.kb_doctor.get(recommendedId));
+        Assert.assertEquals(parseJson(data, "surgeon_name"), KB.kb_doctor.get(recommendedId));
 
     }
 
@@ -98,7 +98,7 @@ public class Order_RecommendDoctor extends BaseTest {
         checkResponse(res);
         Assert.assertEquals(parseJson(data, "status"), "2020");
         Assert.assertEquals(parseJson(data, "surgeon_id"), recommendedId);
-        Assert.assertEquals(parseJson(data, "surgeon_name"), Enum.kb_doctor.get(recommendedId));
+        Assert.assertEquals(parseJson(data, "surgeon_name"), KB.kb_doctor.get(recommendedId));
 
         // 重新推荐
         recommendedId = "666";
@@ -115,7 +115,7 @@ public class Order_RecommendDoctor extends BaseTest {
         checkResponse(res);
         Assert.assertEquals(parseJson(data, "status"), "2020");
         Assert.assertEquals(parseJson(data, "surgeon_id"), recommendedId);
-        Assert.assertEquals(parseJson(data, "surgeon_name"), Enum.kb_doctor.get(recommendedId));
+        Assert.assertEquals(parseJson(data, "surgeon_name"), KB.kb_doctor.get(recommendedId));
 
         // 重新推荐失败后，保留原先的上级医生信息
         String new_recommendedId = "666new_66666";
@@ -132,7 +132,7 @@ public class Order_RecommendDoctor extends BaseTest {
         checkResponse(res);
         Assert.assertEquals(parseJson(data, "status"), "2020");
         Assert.assertEquals(parseJson(data, "surgeon_id"), recommendedId);
-        Assert.assertEquals(parseJson(data, "surgeon_name"), Enum.kb_doctor.get(recommendedId));
+        Assert.assertEquals(parseJson(data, "surgeon_name"), KB.kb_doctor.get(recommendedId));
     }
 
     @Test
@@ -183,8 +183,8 @@ public class Order_RecommendDoctor extends BaseTest {
         res = Order_Detail.Detail(order_number);
         checkResponse(res);
         Assert.assertEquals(parseJson(data, "status"), "2000");
-        Assert.assertNull(parseJson(data, "surgeon_id"));
-        Assert.assertNull(parseJson(data, "surgeon_name"));
+        Assert.assertNull(parseJson(data, "surgeon_id"), "不应该出现上级医生ID");
+        Assert.assertNull(parseJson(data, "surgeon_name"), "不应该出现上级医生姓名");
 
 
     }
@@ -240,7 +240,7 @@ public class Order_RecommendDoctor extends BaseTest {
         checkResponse(res);
         Assert.assertEquals(parseJson(data, "status"), "2020");
         Assert.assertEquals(parseJson(data, "surgeon_id"), recommendedId);
-        Assert.assertEquals(parseJson(data, "surgeon_name"), Enum.kb_doctor.get(recommendedId));
+        Assert.assertEquals(parseJson(data, "surgeon_name"), KB.kb_doctor.get(recommendedId));
 
         if (!Order_ThreewayCall.ThreewayCall(order_number,"success").equals("3000")) {
             Assert.fail("三方确认失败，无法继续执行");
@@ -261,7 +261,7 @@ public class Order_RecommendDoctor extends BaseTest {
         checkResponse(res);
         Assert.assertEquals(parseJson(data, "status"), "3000");
         Assert.assertEquals(parseJson(data, "surgeon_id"), recommendedId);
-        Assert.assertEquals(parseJson(data, "surgeon_name"), Enum.kb_doctor.get(recommendedId));
+        Assert.assertEquals(parseJson(data, "surgeon_name"), KB.kb_doctor.get(recommendedId));
 
 //        // 重新推荐失败后，保留原先的上级医生信息
 //        new_recommendedId = "666new_66666";
@@ -278,7 +278,7 @@ public class Order_RecommendDoctor extends BaseTest {
 //        checkResponse(res);
 //        Assert.assertEquals(parseJson(data, "status"), "2020");
 //        Assert.assertEquals(parseJson(data, "surgeon_id"), recommendedId);
-//        Assert.assertEquals(parseJson(data, "surgeon_name"), Enum.kb_doctor.get(recommendedId));
+//        Assert.assertEquals(parseJson(data, "surgeon_name"), KB.kb_doctor.get(recommendedId));
 
     }
 }

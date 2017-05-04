@@ -5,7 +5,6 @@ import com.mingyizhudao.qa.testcase.crm.RegisteredDoctor_Certify;
 import com.mingyizhudao.qa.testcase.doctor.*;
 import com.mingyizhudao.qa.testcase.login.CheckVerifyCode;
 import com.mingyizhudao.qa.testcase.login.SendVerifyCode;
-import com.mingyizhudao.qa.util.HttpRequest;
 import net.sf.json.JSONException;
 import net.sf.json.JSONObject;
 import org.apache.log4j.Logger;
@@ -79,7 +78,7 @@ public class BaseTest {
             BaseTest.host_login = protocol.concat("://").concat(host_login);
             BaseTest.host_kb = protocol.concat("://").concat(host_kb);
         }
-        new Enum();
+        new KB();
     }
 
     @BeforeSuite

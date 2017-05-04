@@ -1,8 +1,10 @@
 package com.mingyizhudao.qa.testcase.doctor;
 
 import com.mingyizhudao.qa.common.BaseTest;
+import com.mingyizhudao.qa.common.KB;
 import com.mingyizhudao.qa.dataprofile.doctor.DoctorProfile;
 import com.mingyizhudao.qa.util.HttpRequest;
+import com.mingyizhudao.qa.util.UT;
 import org.apache.log4j.Logger;
 import org.testng.Assert;
 import org.testng.annotations.Test;
@@ -37,7 +39,7 @@ public class UpdateDoctorProfile extends BaseTest {
             }
         }
         try {
-            res = HttpRequest.sendPost(host_doc +mock+uri, dp.body.toString(), token);
+            res = HttpRequest.sendPost(host_doc+uri, dp.body.toString(), token);
         } catch (IOException e) {
             logger.error(e);
         }
@@ -48,7 +50,7 @@ public class UpdateDoctorProfile extends BaseTest {
     public void 已登录有token的用户可以更新个人信息city_id() {
         String res = "";
         DoctorProfile body = new DoctorProfile(false);
-        body.body.getJSONObject("doctor").replace("city_id","22");
+        body.body.getJSONObject("doctor").replace("city_id", UT.randomKey(KB.kb_city));
         try {
             res = HttpRequest.sendPost(host_doc +mock+uri, body.body.toString(), mainToken);
         } catch (IOException e) {
@@ -82,15 +84,16 @@ public class UpdateDoctorProfile extends BaseTest {
     public void 已登录有token的用户可以更新个人信息hospital_id() {
         String res = "";
         DoctorProfile body = new DoctorProfile(false);
-        body.body.getJSONObject("doctor").replace("hospital_id","8");
+        String key = UT.randomKey(KB.kb_hospital);
+        body.body.getJSONObject("doctor").replace("hospital_id", key);
         try {
-            res = HttpRequest.sendPost(host_doc +mock+uri, body.body.toString(), mainToken);
+            res = HttpRequest.sendPost(host_doc+uri, body.body.toString(), mainToken);
             checkResponse(res);
             Assert.assertEquals(code, "1000000");
             res = GetDoctorProfile.getDoctorProfile(mainToken);
             checkResponse(res);
             Assert.assertEquals(code, "1000000");
-            Assert.assertEquals(parseJson(data, "doctor:hospital_id"), "8");
+            Assert.assertEquals(parseJson(data, "doctor:hospital_id"), key);
         } catch (IOException e) {
             logger.error(e);
         }
@@ -100,7 +103,8 @@ public class UpdateDoctorProfile extends BaseTest {
     public void 已登录有token的用户可以更新个人信息inviter_id() {
         String res = "";
         DoctorProfile body = new DoctorProfile(false);
-        body.body.getJSONObject("doctor").replace("inviter_no","SH0006");
+        String key = "SH000"+String.valueOf(UT.randomInt(5)+1);
+        body.body.getJSONObject("doctor").replace("inviter_no", key);
         try {
             res = HttpRequest.sendPost(host_doc +mock+uri, body.body.toString(), mainToken);
             checkResponse(res);
@@ -108,7 +112,7 @@ public class UpdateDoctorProfile extends BaseTest {
             res = GetDoctorProfile.getDoctorProfile(mainToken);
             checkResponse(res);
             Assert.assertEquals(code, "1000000");
-            Assert.assertEquals(parseJson(data, "doctor:inviter_no"), "SH0006");
+            Assert.assertEquals(parseJson(data, "doctor:inviter_no"), key);
         } catch (IOException e) {
             logger.error(e);
         }
@@ -119,15 +123,16 @@ public class UpdateDoctorProfile extends BaseTest {
     public void 已登录有token的用户可以更新个人信息major_id() {
         String res = "";
         DoctorProfile body = new DoctorProfile(false);
-        body.body.getJSONObject("doctor").replace("major_id","5");
+        String key = UT.randomKey(KB.kb_major);
+        body.body.getJSONObject("doctor").replace("major_id",key);
         try {
-            res = HttpRequest.sendPost(host_doc +mock+uri, body.body.toString(), mainToken);
+            res = HttpRequest.sendPost(host_doc+uri, body.body.toString(), mainToken);
             checkResponse(res);
             Assert.assertEquals(code, "1000000");
             res = GetDoctorProfile.getDoctorProfile(mainToken);
             checkResponse(res);
             Assert.assertEquals(code, "1000000");
-            Assert.assertEquals(parseJson(data, "doctor:major_id"), "5");
+            Assert.assertEquals(parseJson(data, "doctor:major_id"), key);
         } catch (IOException e) {
             logger.error(e);
         }
@@ -138,7 +143,7 @@ public class UpdateDoctorProfile extends BaseTest {
         String res = "";
         DoctorProfile body = new DoctorProfile(true);
         try {
-            res = HttpRequest.sendPost(host_doc +mock+uri, body.body.toString(), "");
+            res = HttpRequest.sendPost(host_doc +uri, body.body.toString(), "");
         } catch (IOException e) {
             logger.error(e);
         }

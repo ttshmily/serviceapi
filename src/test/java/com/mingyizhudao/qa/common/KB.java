@@ -11,7 +11,7 @@ import java.util.Set;
 /**
  * Created by ttshmily on 28/4/2017.
  */
-public class Enum {
+public class KB {
 
     public static final Logger logger= Logger.getLogger(BaseTest.class);
 
@@ -255,7 +255,7 @@ public class Enum {
 
     }
 
-    public Enum() {
+    public KB() {
 
     }
 
