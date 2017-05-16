@@ -62,11 +62,11 @@ public class CreatePayment extends BaseTest {
 
         try {
             res = HttpRequest.sendPost(host_doc + uri, body.toString(), mainToken);
+            checkResponse(res);
+            Assert.assertEquals(code, "1000000", "支付调用失败");
+            Assert.assertNotNull(parseJson(data, "payment:url"), "返回的订单ID格式有误");
         } catch (IOException e) {
             logger.error(e);
         }
-        checkResponse(res);
-        Assert.assertEquals(code, "1000000", "支付调用失败");
-        Assert.assertNotNull(parseJson(data, "payment:url"), "返回的订单ID格式有误");
     }
 }

@@ -4,8 +4,10 @@ import com.mingyizhudao.qa.common.BaseTest;
 import com.mingyizhudao.qa.common.KB;
 import com.mingyizhudao.qa.testcase.doctor.CreateOrder;
 import com.mingyizhudao.qa.util.HttpRequest;
+import com.mingyizhudao.qa.util.UT;
 import net.sf.json.JSONObject;
 import org.apache.log4j.Logger;
+import org.junit.Ignore;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
@@ -31,7 +33,8 @@ public class Order_Modify extends BaseTest {
         HashMap<String, String> pathValue = new HashMap<>();
         pathValue.put("orderNumber", order_number);
         JSONObject body = new JSONObject();
-        body.put("patient_name","自动生成的姓名");
+        String name = UT.randomString(4);
+        body.put("patient_name","修改的姓名"+name);
         try {
             res = HttpRequest.sendPut(host_crm+uri, body.toString(), crm_token, pathValue);
         } catch (IOException e) {
@@ -42,7 +45,7 @@ public class Order_Modify extends BaseTest {
         Assert.assertNotNull(data, "list");
         res = Order_Detail.Detail(order_number);
         checkResponse(res);
-        Assert.assertEquals(parseJson(data, "patient_name"), "自动生成的姓名");
+        Assert.assertEquals(parseJson(data, "patient_name"), "修改的姓名"+name);
     }
 
     @Test
@@ -189,7 +192,7 @@ public class Order_Modify extends BaseTest {
         Assert.assertNotEquals(parseJson(data, "patient_mobile"), "13799990123");
     }
 
-    @Test
+    @Test(enabled = false)
     public void test_08_修改订单_未领之前不可修改() {
         String res = "";
         String order_number = CreateOrder.CreateOrder(mainToken); // create an order

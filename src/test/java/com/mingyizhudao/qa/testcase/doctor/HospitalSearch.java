@@ -30,10 +30,10 @@ public class HospitalSearch extends BaseTest {
     }
 
     @Test
-    public void 有token信息的请求可以获得有效信息() {
+    public void test_01_有token信息的请求可以获得有效信息() {
         String res = "";
         try {
-            res = HttpRequest.sendGet(host_doc +mock+uri,"", mainToken);
+            res = HttpRequest.sendGet(host_doc+uri,"", mainToken);
         } catch (IOException e) {
             logger.error(e);
         }
@@ -42,7 +42,7 @@ public class HospitalSearch extends BaseTest {
     }
 
     @Test
-    public void 没有searchName字段的请求可以获得有效信息() {
+    public void test_02_没有searchName字段的请求可以获得有效信息() {
         String res = "";
         try {
             res = HttpRequest.sendGet(host_doc +mock+uri, null, "");
@@ -54,7 +54,7 @@ public class HospitalSearch extends BaseTest {
     }
 
     @Test
-    public void 查询字符串为空时的返回结果() {
+    public void test_03_查询字符串为空时的返回结果() {
         String res = "";
         HashMap<String, String> map = new HashMap<>();
         map.put("searchname","");
@@ -68,12 +68,12 @@ public class HospitalSearch extends BaseTest {
     }
 
     @Test
-    public void 查询字符串为中文时的返回结果() {
+    public void test_04_查询字符串为中文时的返回结果() {
         String res = "";
         HashMap<String, String> map = new HashMap<>();
         map.put("searchname","人民医院");
         try {
-            res = HttpRequest.sendGet(host_doc +mock+uri, map, "", null);
+            res = HttpRequest.sendGet(host_doc+uri, map, "", null);
         } catch (IOException e) {
             logger.error(e);
         }
@@ -82,7 +82,7 @@ public class HospitalSearch extends BaseTest {
     }
 
     @Test
-    public void 查询字符串为一串拼音时的返回结果() {
+    public void test_05_查询字符串为一串拼音时的返回结果() {
         String res = "";
         HashMap<String, String> map = new HashMap<>();
         map.put("searchname","changzhou");
@@ -96,7 +96,7 @@ public class HospitalSearch extends BaseTest {
     }
 
     @Test
-    public void 查询字符串为中英混合时的返回结果() {
+    public void test_06_查询字符串为中英混合时的返回结果() {
         String res = "";
         HashMap<String, String> map = new HashMap<>();
         map.put("searchname","中国changzhou");
@@ -110,7 +110,7 @@ public class HospitalSearch extends BaseTest {
     }
 
     @Test
-    public void 返回的结果中详细字段不缺少() {
+    public void test_07_返回的结果中详细字段不缺少() {
         String res = "";
         HashMap<String, String> map = new HashMap<>();
         map.put("searchname","安阳医院");

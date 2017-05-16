@@ -5,12 +5,12 @@ import com.mingyizhudao.qa.common.KB;
 import com.mingyizhudao.qa.dataprofile.doctor.DoctorProfile;
 import com.mingyizhudao.qa.util.HttpRequest;
 import com.mingyizhudao.qa.util.UT;
+import net.sf.json.JSONObject;
 import org.apache.log4j.Logger;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
 import java.io.IOException;
-import java.util.HashMap;
 
 /**
  * Created by ttshmily on 21/3/2017.
@@ -24,30 +24,36 @@ public class UpdateDoctorProfile extends BaseTest {
 
 
 
-    public static String updateDoctorProfile(String token, HashMap<String, String> map) {
+    public static String updateDoctorProfile(String token, DoctorProfile dp) {
         String res = "";
-        DoctorProfile dp = new DoctorProfile(true);
-
-        if (map != null) {
-            for (String key : map.keySet()
-                    ) {
-                if (dp.body.getJSONObject("doctor").containsKey(key)) {
-                    dp.body.getJSONObject("doctor").replace(key, map.get(key));
-                } else {
-                    dp.body.getJSONObject("doctor").accumulate(key, map.get(key));
-                }
-            }
-        }
+//        DoctorProfile dp = new DoctorProfile(true);
+//
+//        if (map != null) {
+//            for (String key : map.keySet()
+//                    ) {
+//                if (dp.body.getJSONObject("doctor").containsKey(key)) {
+//                    dp.body.getJSONObject("doctor").replace(key, map.get(key));
+//                } else {
+//                    dp.body.getJSONObject("doctor").accumulate(key, map.get(key));
+//                }
+//            }
+//        }
         try {
             res = HttpRequest.sendPost(host_doc+uri, dp.body.toString(), token);
         } catch (IOException e) {
             logger.error(e);
         }
+        String code = parseJson(JSONObject.fromObject(res), "code");
+        if (code.equals("1000000")) {
+            logger.info("更新医生信息成功");
+        } else {
+            logger.error("更新医生信息失败");
+        }
         return res;
     }
 
     @Test
-    public void 已登录有token的用户可以更新个人信息city_id() {
+    public void test_01_已登录有token的用户可以更新个人信息city_id() {
         String res = "";
         DoctorProfile body = new DoctorProfile(false);
         body.body.getJSONObject("doctor").replace("city_id", UT.randomKey(KB.kb_city));
@@ -61,7 +67,7 @@ public class UpdateDoctorProfile extends BaseTest {
     }
 
     @Test
-    public void 已登录有token的用户可以更新个人信息department() {
+    public void test_02_已登录有token的用户可以更新个人信息department() {
         String res = "";
         DoctorProfile body = new DoctorProfile(false);
         body.body.getJSONObject("doctor").replace("department","尿不出来科");
@@ -81,7 +87,7 @@ public class UpdateDoctorProfile extends BaseTest {
     }
 
     @Test
-    public void 已登录有token的用户可以更新个人信息hospital_id() {
+    public void test_03_已登录有token的用户可以更新个人信息hospital_id() {
         String res = "";
         DoctorProfile body = new DoctorProfile(false);
         String key = UT.randomKey(KB.kb_hospital);
@@ -100,13 +106,15 @@ public class UpdateDoctorProfile extends BaseTest {
     }
 
     @Test
-    public void 已登录有token的用户可以更新个人信息inviter_id() {
+    public void test_04_已登录有token的用户可以更新个人信息inviter_id() {
         String res = "";
-        DoctorProfile body = new DoctorProfile(false);
         String key = "SH000"+String.valueOf(UT.randomInt(5)+1);
-        body.body.getJSONObject("doctor").replace("inviter_no", key);
+        JSONObject doctor = new JSONObject();
+        doctor.put("inviter_no", key);
+        JSONObject dp = new JSONObject();
+        dp.put("doctor", doctor);
         try {
-            res = HttpRequest.sendPost(host_doc +mock+uri, body.body.toString(), mainToken);
+            res = HttpRequest.sendPost(host_doc+uri, dp.toString(), mainToken);
             checkResponse(res);
             Assert.assertEquals(code, "1000000");
             res = GetDoctorProfile.getDoctorProfile(mainToken);
@@ -120,7 +128,7 @@ public class UpdateDoctorProfile extends BaseTest {
     }
 
     @Test
-    public void 已登录有token的用户可以更新个人信息major_id() {
+    public void test_05_已登录有token的用户可以更新个人信息major_id() {
         String res = "";
         DoctorProfile body = new DoctorProfile(false);
         String key = UT.randomKey(KB.kb_major);
@@ -139,7 +147,7 @@ public class UpdateDoctorProfile extends BaseTest {
     }
 
     @Test
-    public void 未登录没有token的用户不可以更新信息() {
+    public void test_06_未登录没有token的用户不可以更新信息() {
         String res = "";
         DoctorProfile body = new DoctorProfile(true);
         try {
@@ -152,7 +160,7 @@ public class UpdateDoctorProfile extends BaseTest {
     }
 
     @Test
-    public void 错误token的不可以更新信息并返回正确错误码() {
+    public void test_07_错误token的不可以更新信息并返回正确错误码() {
         String res = "";
         DoctorProfile body = new DoctorProfile(true);
         try {
@@ -165,7 +173,7 @@ public class UpdateDoctorProfile extends BaseTest {
     }
 
     @Test
-    public void 禁止更新city_name字段() {
+    public void test_08_禁止更新city_name字段() {
         String res = "";
         DoctorProfile body = new DoctorProfile(false);
         body.body.getJSONObject("doctor").replace("city_name", "城市");
@@ -182,7 +190,7 @@ public class UpdateDoctorProfile extends BaseTest {
     }
 
     @Test
-    public void 禁止更新hospital_name字段() {
+    public void test_09_禁止更新hospital_name字段() {
         String res = "";
         DoctorProfile dp = new DoctorProfile(true);
         dp.body.getJSONObject("doctor").replace("hospital_name", "测试医院");
@@ -246,7 +254,7 @@ public class UpdateDoctorProfile extends BaseTest {
     }
 
     @Test
-    public void 禁止更新major_name字段() {
+    public void test_10_禁止更新major_name字段() {
         String res = "";
         DoctorProfile dp = new DoctorProfile(true);
         dp.body.getJSONObject("doctor").replace("major_name", "测试专业");
@@ -315,7 +323,7 @@ public class UpdateDoctorProfile extends BaseTest {
     }
 
     @Test
-    public void 禁止更新inviter_name字段() {
+    public void test_11_禁止更新inviter_name字段() {
         String res = "";
         DoctorProfile body = new DoctorProfile(false);
         body.body.getJSONObject("doctor").replace("inviter_name", "大一");
@@ -333,7 +341,7 @@ public class UpdateDoctorProfile extends BaseTest {
 
 
     @Test
-    public void 单独更新非法的inviter_no字段() {
+    public void test_12_单独更新非法的inviter_no字段() {
         String res = "";
         DoctorProfile body = new DoctorProfile(false);
         body.body.getJSONObject("doctor").replace("inviter_no", "GF001");

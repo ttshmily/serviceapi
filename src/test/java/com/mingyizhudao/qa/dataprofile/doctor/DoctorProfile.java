@@ -1,5 +1,6 @@
 package com.mingyizhudao.qa.dataprofile.doctor;
 
+import com.mingyizhudao.qa.common.BaseTest;
 import com.mingyizhudao.qa.common.KB;
 import com.mingyizhudao.qa.util.UT;
 import net.sf.json.JSONObject;
@@ -13,8 +14,8 @@ public class DoctorProfile {
     public DoctorProfile(boolean init) {
         JSONObject doctor = new JSONObject();
         if (init) {
-            doctor.put("name", "大一医生" + UT.randomString(2));
-            doctor.put("department", "骨科");
+            doctor.put("name", "庄恕" + UT.randomString(2));
+            doctor.put("department", "胸外科");
             doctor.put("major_id", UT.randomKey(KB.kb_major));
             doctor.put("academic_title_list", UT.randomKey(KB.kb_academic_title));
             doctor.put("medical_title_list", UT.randomKey(KB.kb_medical_title));

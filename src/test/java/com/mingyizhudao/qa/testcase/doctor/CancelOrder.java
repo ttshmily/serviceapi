@@ -167,7 +167,7 @@ public class CancelOrder extends BaseTest {
         Assert.assertEquals(code, "1000000");
         res = GetOrderDetail.getOrderDetail(mainToken, orderId);
         checkResponse(res);
-        Assert.assertEquals(parseJson(data, "order:status"), "3000");
+        Assert.assertEquals(parseJson(data, "order:status"), "9000");
     }
 
 }

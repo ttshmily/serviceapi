@@ -26,7 +26,7 @@ public class UT {
     }
 
     public static long randomInt(long count) {
-        return Math.round(Math.random() * (count));
+        return (long) Math.floor(Math.random() * count);
     }
 
     public static String randomDateFromNow(int i, int j) {
@@ -92,9 +92,9 @@ public class UT {
         return "13" + String.format("%05d", m) + "9999";
     }
 
-    public static void main(String[] args) {
-        for (int i = 0; i < 100; i++) {
-            System.out.println(randomKey(KB.kb_major));
-        }
-    }
+//    public static void main(String[] args) {
+//        for (int i = 0; i < 100; i++) {
+//            System.out.println(randomKey(KB.kb_major));
+//        }
+//    }
 }

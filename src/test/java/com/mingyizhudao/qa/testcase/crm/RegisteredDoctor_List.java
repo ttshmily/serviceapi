@@ -2,6 +2,7 @@ package com.mingyizhudao.qa.testcase.crm;
 
 import com.mingyizhudao.qa.common.BaseTest;
 import com.mingyizhudao.qa.util.HttpRequest;
+import com.mingyizhudao.qa.util.UT;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 import org.apache.log4j.Logger;
@@ -40,7 +41,7 @@ public class RegisteredDoctor_List extends BaseTest{
         String res = "";
         HashMap<String, String> query = new HashMap<>();
         try {
-            res = HttpRequest.sendGet(host_crm+mock+uri, "", crm_token, null);
+            res = HttpRequest.sendGet(host_crm+uri, "", crm_token, null);
         } catch (IOException e) {
             logger.error(e);
         }
@@ -62,6 +63,7 @@ public class RegisteredDoctor_List extends BaseTest{
         Assert.assertNotNull(parseJson(data, "size"), "列表总量字段不存在");
         Assert.assertEquals(parseJson(data, "pagesize"), "10", "默认分页大小不为10");
         Assert.assertNotNull(parseJson(data, "page"), "默认没有传回第1页");
+        Assert.assertEquals(parseJson(data, "list()"), "10", "分页的默认值不为10");
         Integer id1 = Integer.parseInt(parseJson(data, "list(0):user_id"));
         Integer id2 = Integer.parseInt(parseJson(data, "list(4):user_id"));
         Integer id3 = Integer.parseInt(parseJson(data, "list(9):user_id"));
@@ -85,39 +87,51 @@ public class RegisteredDoctor_List extends BaseTest{
 
         String res = "";
         HashMap<String, String> query = new HashMap<>();
-
+        query.put("page", "");
+        query.put("page_size", "10");
+        int total = registeredDoctorList();
+        int pageSize = 10;
+        int pageNum = total / pageSize + 1;
         // 默认分页大小10
-        query.put("page","1");
-        try {
-            res = HttpRequest.sendGet(host_crm+mock+uri, query, crm_token, null);
-        } catch (IOException e) {
-            logger.error(e);
+        for (int i = 1; i < pageNum; i++) {
+            query.replace("page",String.valueOf(i));
+            try {
+                res = HttpRequest.sendGet(host_crm+uri, query, crm_token, null);
+            } catch (IOException e) {
+                logger.error(e);
+            }
+            checkResponse(res);
+            Assert.assertEquals(code, "1000000");
+            Assert.assertEquals(parseJson(data, "list()"), "10", "分页的默认值不为10");
+            Assert.assertEquals(parseJson(data, "size"), String.valueOf(total), "列表总数量错误");
+            Assert.assertEquals(parseJson(data, "page"), String.valueOf(i), "页码错误");
         }
-        checkResponse(res);
-        Assert.assertEquals(code, "1000000");
-        Assert.assertEquals(parseJson(data, "list()"), "10", "分页的默认值不为10");
 
         // 设置分页大小为50
-        query.put("page_size", "50");
-        try {
-            res = HttpRequest.sendGet(host_crm+mock+uri, query, crm_token, null);
-        } catch (IOException e) {
-            logger.error(e);
+        for (int i = 0; i < 10; i++) {
+            query.replace("page", "1");
+            int page_size = (int) UT.randomInt(total)+1;
+            query.replace("page_size", String.valueOf(page_size));
+            try {
+                res = HttpRequest.sendGet(host_crm+uri, query, crm_token, null);
+            } catch (IOException e) {
+                logger.error(e);
+            }
+            checkResponse(res);
+            Assert.assertEquals(code, "1000000");
+            Assert.assertEquals(parseJson(data, "list()"), String.valueOf(page_size), "分页值不正确");
+            // 设置页数超出总量时，返回列表为空
+            int page = total/page_size + 1;
+            query.replace("page", String.valueOf(page+1));
+            try {
+                res = HttpRequest.sendGet(host_crm+uri, query, crm_token, null);
+            } catch (IOException e) {
+                logger.error(e);
+            }
+            checkResponse(res);
+            Assert.assertEquals(code, "1000000");
+            Assert.assertEquals(parseJson(data, "list()"), "0", "页码超出总数时，应当返回空列表");
         }
-        checkResponse(res);
-        Assert.assertEquals(code, "1000000");
-        Assert.assertEquals(parseJson(data, "list()"), "50", "分页值不为50");
-
-        // 设置页数超出总量时，返回列表为空
-        query.replace("page", "500");
-        try {
-            res = HttpRequest.sendGet(host_crm+mock+uri, query, crm_token, null);
-        } catch (IOException e) {
-            logger.error(e);
-        }
-        checkResponse(res);
-        Assert.assertEquals(code, "1000000");
-        Assert.assertEquals(parseJson(data, "list()"), "0", "页码超出总数时，应当返回空列表");
 
     }
 
@@ -168,7 +182,7 @@ public class RegisteredDoctor_List extends BaseTest{
         HashMap<String, String> query = new HashMap<>();
         query.put("mobile",mainMobile);
         try {
-            res = HttpRequest.sendGet(host_crm+mock+uri, query, crm_token, null);
+            res = HttpRequest.sendGet(host_crm+uri, query, crm_token, null);
         } catch (IOException e) {
             logger.error(e);
         }
@@ -205,7 +219,7 @@ public class RegisteredDoctor_List extends BaseTest{
         HashMap<String, String> query = new HashMap<>();
         query.put("agent","苏舒");
         try {
-            res = HttpRequest.sendGet(host_crm+mock+uri, query, crm_token, null);
+            res = HttpRequest.sendGet(host_crm+uri, query, crm_token, null);
         } catch (IOException e) {
             logger.error(e);
         }
@@ -289,8 +303,9 @@ public class RegisteredDoctor_List extends BaseTest{
         doc_list = data.getJSONArray("list");
         for (int i=0; i<doc_list.size(); i++) {
             JSONObject doc = doc_list.getJSONObject(i);
-            Assert.assertEquals(doc.getString("name"), "大一");
+            Matcher m = p.matcher(doc.getString("name"));
             Assert.assertEquals(doc.getString("is_verified"), "1");
+            Assert.assertTrue(m.find(), "姓名搜索结果不准确");
         }
 
         query.replace("certified_status","-1");
@@ -305,8 +320,9 @@ public class RegisteredDoctor_List extends BaseTest{
         doc_list = data.getJSONArray("list");
         for (int i=0; i<doc_list.size(); i++) {
             JSONObject doc = doc_list.getJSONObject(i);
-            Assert.assertEquals(doc.getString("name"), "大一");
+            Matcher m = p.matcher(doc.getString("name"));
             Assert.assertEquals(doc.getString("is_verified"), "-1");
+            Assert.assertTrue(m.find(), "姓名搜索结果不准确");
         }
 
     }

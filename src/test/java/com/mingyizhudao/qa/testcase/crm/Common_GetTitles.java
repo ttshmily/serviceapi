@@ -25,13 +25,17 @@ public class Common_GetTitles extends BaseTest {
 
         try {
             res = HttpRequest.sendGet(host_crm+uri, "", crm_token, null);
+            checkResponse(res);
+            Assert.assertEquals(code, "1000000");
+            int academicLen = Integer.parseInt(parseJson(data, "list:academic()"));
+            int medicalLen = Integer.parseInt(parseJson(data, "list:medical()"));
+            Assert.assertEquals(academicLen, 4);
+            Assert.assertEquals(medicalLen, 12);
+
         } catch (IOException e) {
             logger.error(e);
         }
-        checkResponse(res);
-        Assert.assertEquals(code, "1000000");
-        Assert.assertEquals(parseJson(data, "list:academic()"), "4");
-        Assert.assertEquals(parseJson(data, "list:medical()"), "12");
+
 
     }
 }

@@ -13,10 +13,11 @@ import java.util.Set;
  */
 public class KB {
 
-    public static final Logger logger= Logger.getLogger(BaseTest.class);
+    public static final Logger logger= Logger.getLogger(KB.class);
 
     public static String hospital_uri = "/hospitals";
     public static HashMap<String, String> kb_hospital = new HashMap<>();
+    public static String hospital_file = "";
 
     public static String doctor_uri = "/api/v1/doctors";
     public static HashMap<String, String> kb_doctor = new HashMap<>();
@@ -45,20 +46,22 @@ public class KB {
     public static String disease_uri = "/diseases";
     public static HashMap<String, String> kb_disease = new HashMap<>();
 
-    static {
+    public static void init() {
         try {
             int pageSize = 1000;
             HashMap<String, String> query = new HashMap<>();
-            query.put("pageSize", String.valueOf(pageSize));
+            query.put("pageSize", "1");
             query.put("page", "1");
-            String res = HttpRequest.sendGet(BaseTest.host_kb +hospital_uri, query, "", null);
+            logger.debug(BaseTest.host_kb);
+            String res = HttpRequest.sendGet(BaseTest.host_kb+hospital_uri, query, "", null);
             int total = Integer.parseInt(BaseTest.parseJson(JSONObject.fromObject(res), "data:size"));
             int num = total / pageSize + 1;
             int last_page_num = total - pageSize*(num-1);
 
+            query.replace("pageSize", String.valueOf(pageSize));
             for (int i = 1; i < num; i++) {
                 query.replace("page", String.valueOf(i));
-                res = HttpRequest.sendGet(BaseTest.host_kb +hospital_uri, query, "", null);
+                res = HttpRequest.sendGet(BaseTest.host_kb + hospital_uri, query, "", null);
                 JSONArray hospital_list = JSONObject.fromObject(res).getJSONObject("data").getJSONArray("list");
                 for (int j = 0; j < pageSize; j++) {
                     JSONObject hospital = hospital_list.getJSONObject(j);
@@ -79,19 +82,21 @@ public class KB {
         }
 
         try {
+            int pageSize = 1000;
             HashMap<String, String> query = new HashMap<>();
-            query.put("pageSize", "100");
+            query.put("pageSize", "1");
             query.put("page", "1");
             String res = HttpRequest.sendGet(BaseTest.host_kb +doctor_uri, query, "", null);
             int total = Integer.parseInt(BaseTest.parseJson(JSONObject.fromObject(res), "data:size"));
-            int num = total / 100 + 1;
-            int last_page_num = total - 100*(num-1);
+            int num = total / pageSize + 1;
+            int last_page_num = total - pageSize*(num-1);
 
+            query.replace("pageSize", String.valueOf(pageSize));
             for (int i = 1; i < num; i++) {
                 query.replace("page", String.valueOf(i));
                 res = HttpRequest.sendGet(BaseTest.host_kb +doctor_uri, query, "", null);
                 JSONArray doctor_list = JSONObject.fromObject(res).getJSONObject("data").getJSONArray("list");
-                for (int j = 0; j < 100; j++) {
+                for (int j = 0; j < pageSize; j++) {
                     JSONObject doctor = doctor_list.getJSONObject(j);
                     kb_doctor.put(doctor.getString("id"), doctor.getString("name"));
                 }
@@ -252,11 +257,6 @@ public class KB {
             logger.error("ENUM初始化失败，准备退出");
             System.exit(10);
         }
-
-    }
-
-    public KB() {
-
     }
 
 

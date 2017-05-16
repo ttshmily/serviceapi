@@ -27,22 +27,23 @@ public class CheckVerifyCode extends BaseTest{
         cmp.body.replace("mobile", mobile);
         cmp.body.replace("code", "123456");
         logger.info("发送短信验证码到服务器进行验证...");
+        String tmpToken = "";
         try {
             res = HttpRequest.sendPost(host_login +uri,cmp.body.toString(), "");
+            tmpToken = parseJson(JSONObject.fromObject(res), "data:token");
         } catch (IOException e) {
             logger.error(e);
         }
-        logger.info("返回数据: " + JSONObject.fromObject(res).toString());
-        String tmpToken = parseJson(JSONObject.fromObject(res), "data:token");
+//        logger.info("返回数据: " + JSONObject.fromObject(res).toString());
+
         if (!tmpToken.isEmpty() && null != tmpToken) {
             logger.info("token是: " + tmpToken);
             token = tmpToken;
             Refresh.token = tmpToken;
-            return tmpToken;
         } else {
             logger.error("获取token失败");
-            return "";
         }
+        return tmpToken;
     }
 
 

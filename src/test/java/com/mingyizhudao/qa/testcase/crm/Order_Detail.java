@@ -67,14 +67,15 @@ public class Order_Detail extends BaseTest {
         Assert.assertNotEquals(parseJson(data,"OrderStatusText"), "", "订单状态描述字段缺失");
         Assert.assertNotEquals(parseJson(data,"created_at"), "", "订单创建时间字段缺失");
         Assert.assertEquals(parseJson(data,"order_number"), orderId, "订单号字段缺失");
-        Assert.assertNotEquals(parseJson(data,"medical_record_pictures():type"), "", "图片类型");
-        Assert.assertNotEquals(parseJson(data,"medical_record_pictures():key"), "", "图片key");
-        Assert.assertNotNull(parseJson(data, "medical_record_pictures():largePicture"), "大图地址");
-        Assert.assertNotNull(parseJson(data,"medical_record_pictures():thumbnailPicture"), "小图地址");
+
+        Assert.assertEquals(parseJson(data, "medical_record_pictures(0):key"), "2017/05/04/1265834e-97d8-44a0-95e7-047c7facaee8/IMG_20170429_102737.jpg");
+        Assert.assertNotNull(parseJson(data, "medical_record_pictures(0):largePicture"), "没有大图URL");
+        Assert.assertEquals(parseJson(data, "medical_record_pictures(1):key"), "2017/05/04/1315bbe0-2836-4776-8216-ec55044f32dd/IMG_20161013_172442.jpg");
+        Assert.assertNotNull(parseJson(data, "medical_record_pictures(1):thumbnailPicture"), "没有缩略图URL");
+
         Assert.assertNotEquals(parseJson(data,"agent_id"), "", "下级医生id字段缺失");
         Assert.assertNotEquals(parseJson(data,"agent_name"), "", "下级医生姓名字段缺失");
-        Assert.assertNotEquals(parseJson(data,"agent_medical_title"), "", "下级医生姓名字段缺失");
-
+        Assert.assertNotEquals(parseJson(data,"agent_medical_title"), "", "下级医生学术职称字段缺失");
 
     }
 

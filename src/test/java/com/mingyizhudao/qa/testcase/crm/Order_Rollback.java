@@ -5,6 +5,7 @@ import com.mingyizhudao.qa.testcase.doctor.CreateOrder;
 import com.mingyizhudao.qa.util.HttpRequest;
 import net.sf.json.JSONObject;
 import org.apache.log4j.Logger;
+import org.junit.Ignore;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
@@ -52,7 +53,7 @@ public class Order_Rollback extends BaseTest {
         Assert.assertNull(parseJson(data, "surgeon_name"));
     }
 
-    @Test
+    @Test(enabled = false)
     public void test_02_回退订单_支付以后不可回退() {
         Assert.fail("not implemented");
     }
@@ -117,7 +118,7 @@ public class Order_Rollback extends BaseTest {
         checkResponse(res);
         Assert.assertEquals(parseJson(data, "status"), "2020");
 
-        // 已拒绝的订单
+        // 已拒绝合作的订单
         Order_ThreewayCall.ThreewayCall(order_number, "failed");
         Order_Reject.rejectOrder(order_number);
         try {
@@ -129,11 +130,11 @@ public class Order_Rollback extends BaseTest {
         Assert.assertNotEquals(code, "1000000");
         res = Order_Detail.Detail(order_number);
         checkResponse(res);
-        Assert.assertEquals(parseJson(data, "status"), "9000");
+        Assert.assertEquals(parseJson(data, "status"), "2000");
 
     }
 
-    @Test
+    @Test(enabled = false)
     public void test_04_回退订单_以前不可回退() {
         Assert.fail("not implemented");
     }

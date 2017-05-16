@@ -27,7 +27,7 @@ public class RegisteredDoctor_Certify extends BaseTest {
             return null;
         }
         res = RegisteredDoctor_Detail.Detail(regId);
-//        logger.info(HttpRequest.unicodeString(res));
+        logger.info(HttpRequest.unicodeString(res));
         if (parseJson(JSONObject.fromObject(res), "data:is_verified").equals("1")) return "1";
         if (parseJson(JSONObject.fromObject(res), "data:is_verified").equals("-1")) {
             logger.error("认证失败状态不能直接进行验证");

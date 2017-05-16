@@ -1,7 +1,9 @@
 package com.mingyizhudao.qa.testcase.doctor;
 
 import com.mingyizhudao.qa.common.BaseTest;
+import com.mingyizhudao.qa.dataprofile.doctor.DoctorProfile;
 import com.mingyizhudao.qa.testcase.CrmCertifiedDoctor;
+import com.mingyizhudao.qa.testcase.crm.RegisteredDoctor_Certify;
 import com.mingyizhudao.qa.testcase.login.CheckVerifyCode;
 import com.mingyizhudao.qa.testcase.login.SendVerifyCode;
 import com.mingyizhudao.qa.util.HttpRequest;
@@ -36,7 +38,7 @@ public class GetOrderDetail extends BaseTest {
     }
 
     @Test
-    public void 获取订单详情_提供正确的属于自己的订单ID() {
+    public void test_01_获取订单详情_提供正确的属于自己的订单ID() {
         String res = "";
 
         HashMap<String, String> pathValue = new HashMap<String, String>();
@@ -73,7 +75,7 @@ public class GetOrderDetail extends BaseTest {
     }
 
     @Test
-    public void 获取订单详情_提供正确的错误的ID_ID为非法整数() {
+    public void test_02_获取订单详情_提供正确的错误的ID_ID为非法整数() {
         String res = "";
         HashMap<String, String> pathValue = new HashMap<String, String>();
         pathValue.put("orderId", "20000000000");
@@ -87,7 +89,7 @@ public class GetOrderDetail extends BaseTest {
     }
 
     @Test
-    public void 获取订单详情_提供正确的错误的ID_ID为英文() {
+    public void test_03_获取订单详情_提供正确的错误的ID_ID为英文() {
         String res = "";
         HashMap<String, String> pathValue = new HashMap<String, String>();
         pathValue.put("orderId", "20000asdfa000");
@@ -102,7 +104,7 @@ public class GetOrderDetail extends BaseTest {
     }
 
     @Test
-    public void 获取订单详情_提供不属于自己的订单ID() {
+    public void test_04_获取订单详情_提供不属于自己的订单ID() {
         String res = "";
         HashMap<String, String> pathValue = new HashMap<String, String>();
         logger.info("创建订单with mainToken");
@@ -113,12 +115,11 @@ public class GetOrderDetail extends BaseTest {
         pathValue.put("orderId", orderId);
         SendVerifyCode.send();
         String tmpToken = CheckVerifyCode.check();
-        HashMap<String, String> profile = new HashMap<String, String>();
-        profile.put("hospital_id","4");
-        profile.put("name", "temp-test");
-        UpdateDoctorProfile.updateDoctorProfile(tmpToken, profile);
+        DoctorProfile dp = new DoctorProfile(true);
+        UpdateDoctorProfile.updateDoctorProfile(tmpToken, dp);
         res = GetDoctorProfile.getDoctorProfile(tmpToken);
-        CrmCertifiedDoctor.certify(parseJson(JSONObject.fromObject(res), "data:doctor:user_id"));
+        String docId = JSONObject.fromObject(res).getJSONObject("data").getJSONObject("doctor").getString("user_id");
+        RegisteredDoctor_Certify.certify(docId, "1");
         try {
             res = HttpRequest.sendGet(host_doc +mock+uri,"", tmpToken, pathValue);
         } catch (IOException e) {

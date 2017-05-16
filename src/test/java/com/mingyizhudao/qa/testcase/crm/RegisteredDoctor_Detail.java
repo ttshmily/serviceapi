@@ -24,7 +24,7 @@ public class RegisteredDoctor_Detail extends BaseTest {
         HashMap<String, String> pathValue = new HashMap<>();
         pathValue.put("id",regId);
         try {
-            res = HttpRequest.sendGet(host_crm+uri, "", crm_token, pathValue);
+            res = HttpRequest.sendGet(host_crm+uri,"", crm_token, pathValue);
         } catch (IOException e) {
             logger.error(e);
         }

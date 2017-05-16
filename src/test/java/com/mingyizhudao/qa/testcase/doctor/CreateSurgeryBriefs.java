@@ -69,7 +69,7 @@ public class CreateSurgeryBriefs extends BaseTest {
         SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
         JSONObject body = new JSONObject();
         JSONObject order = new JSONObject();
-        order.put("surgery_brief_surgeon_name", "自动化直刀医生");
+        order.put("surgery_brief_surgeon_name", "自动化执刀医生");
         order.put("surgery_brief_date", df.format(new Date()));
         order.put("surgery_brief_description", "自动化手术小结描述");
         order.put("surgery_brief_final_diagnosed_disease_id", "90");

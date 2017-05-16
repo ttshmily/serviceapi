@@ -1,6 +1,7 @@
 package com.mingyizhudao.qa.testcase.doctor;
 
 import com.mingyizhudao.qa.common.BaseTest;
+import com.mingyizhudao.qa.dataprofile.doctor.DoctorProfile;
 import com.mingyizhudao.qa.dataprofile.doctor.OrderDetail;
 import com.mingyizhudao.qa.testcase.login.CheckVerifyCode;
 import com.mingyizhudao.qa.testcase.login.SendVerifyCode;
@@ -285,11 +286,12 @@ public class CreateOrder extends BaseTest {
         String tmpToken = CheckVerifyCode.check();
         res = GetDoctorProfile.getDoctorProfile(tmpToken);
         logger.info("tmpDoctorId为"+JSONObject.fromObject(res).getJSONObject("data").getJSONObject("doctor").getString("user_id"));
-        UpdateDoctorProfile.updateDoctorProfile(tmpToken, null);
+        DoctorProfile dp = new DoctorProfile(true);
+        UpdateDoctorProfile.updateDoctorProfile(tmpToken, dp);
         logger.info("创建未认证医生成功");
         OrderDetail order = new OrderDetail(true);
         try {
-            res = HttpRequest.sendPost(host_doc +mock+uri, order.body.toString(), tmpToken);
+            res = HttpRequest.sendPost(host_doc + uri, order.body.toString(), tmpToken);
         } catch (IOException e) {
             logger.error(e);
         }
@@ -307,7 +309,7 @@ public class CreateOrder extends BaseTest {
         logger.info("不传入期望手术医院的ID。。。");
         order.body.getJSONObject("order").replace("expected_surgery_hospital_id","");
         try {
-            res = HttpRequest.sendPost(host_doc +mock+uri, order.body.toString(), mainToken);
+            res = HttpRequest.sendPost(host_doc+uri, order.body.toString(), mainToken);
         } catch (IOException e) {
             logger.error(e);
         }
@@ -326,7 +328,7 @@ public class CreateOrder extends BaseTest {
         logger.info("传入期望手术医院的ID=0。。。");
         order.body.getJSONObject("order").replace("expected_surgery_hospital_id","0");
         try {
-            res = HttpRequest.sendPost(host_doc +mock+uri, order.body.toString(), mainToken);
+            res = HttpRequest.sendPost(host_doc+uri, order.body.toString(), mainToken);
         } catch (IOException e) {
             logger.error(e);
         }

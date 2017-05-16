@@ -1,7 +1,12 @@
 package com.mingyizhudao.qa.testcase.doctor;
 
 import com.mingyizhudao.qa.common.BaseTest;
+import com.mingyizhudao.qa.dataprofile.doctor.DoctorProfile;
 import com.mingyizhudao.qa.testcase.CrmCertifiedDoctor;
+import com.mingyizhudao.qa.testcase.crm.Order_ReceiveTask;
+import com.mingyizhudao.qa.testcase.crm.Order_RecommendDoctor;
+import com.mingyizhudao.qa.testcase.crm.Order_ThreewayCall;
+import com.mingyizhudao.qa.testcase.crm.RegisteredDoctor_Certify;
 import com.mingyizhudao.qa.testcase.login.CheckVerifyCode;
 import com.mingyizhudao.qa.testcase.login.SendVerifyCode;
 import com.mingyizhudao.qa.util.HttpRequest;
@@ -25,7 +30,7 @@ public class GetOrderList extends BaseTest{
     public static String mock = false ? "/mockjs/1" : "";
 
     @Test
-    public void 获取订单列表_登录用户() {
+    public void test_01_获取订单列表_登录用户() {
         String res = "";
         logger.info("创建订单with mainToken");
         String orderId = CreateOrder.CreateOrder(mainToken);
@@ -34,7 +39,7 @@ public class GetOrderList extends BaseTest{
             fail();
         }
         try {
-            res = HttpRequest.sendGet(host_doc +mock+uri,"", mainToken);
+            res = HttpRequest.sendGet(host_doc+uri,"", mainToken);
         } catch (IOException e) {
             logger.error(e);
         }
@@ -48,29 +53,32 @@ public class GetOrderList extends BaseTest{
         Assert.assertNotEquals(parseJson(data,"order():order_number"), "", "订单ID字段缺失");
         Assert.assertNotEquals(parseJson(data,"order():status"), "", "订单状态字段缺失");
         Assert.assertNotEquals(parseJson(data,"order():OrderStatusText"), "", "订单状态描述字段缺失");
-//        Assert.assertNotNull(parseJson(data,"order():surgeon_id"), "手术医生ID字段不能缺失");
-//        Assert.assertNotNull(parseJson(data,"order():surgeon_name"), "手术医生姓名字段不能缺失");
-//        Assert.assertNotNull(parseJson(data,"order():surgeon_hospital"), "手术医生所在医院字段不能缺失");
 
     }
 
     @Test
-    public void 获取订单列表_登录用户_订单列表会更新且按时间倒序() {
+    public void test_02_获取订单列表_登录用户_订单列表会更新且按时间倒序() {
         String res = "";
+
         SendVerifyCode.send();
         String tmpToken = CheckVerifyCode.check();
+
+        logger.info(tmpToken);
+        DoctorProfile dp = new DoctorProfile(true);
         res = GetDoctorProfile.getDoctorProfile(tmpToken);
-        HashMap<String, String> profile = new HashMap<String, String>();
-        profile.put("hospital_id","4");
-        profile.put("name", "temp-test");
-        UpdateDoctorProfile.updateDoctorProfile(tmpToken, profile);
-        CrmCertifiedDoctor.certify(parseJson(JSONObject.fromObject(res), "data:doctor:user_id"));
+        String docId = JSONObject.fromObject(res).getJSONObject("data").getJSONObject("doctor").getString("user_id");
+        UpdateDoctorProfile.updateDoctorProfile(tmpToken, dp);
+
+        if (!RegisteredDoctor_Certify.certify(docId, "1").equals("1")) {
+            logger.error("认证医生失败，退出用例执行");
+            Assert.fail("认证医生失败，退出用例执行");
+        }
 
         logger.info("创建订单with tmpToken");
         String orderId1 = CreateOrder.CreateOrder(tmpToken);
         if (orderId1.isEmpty()) {
             logger.error("创建订单with tmpToken失败");
-            fail();
+            Assert.fail("创建订单with tmpToken失败");
         }
         try {
             res = HttpRequest.sendGet(host_doc +mock+uri,"", tmpToken);
@@ -84,7 +92,7 @@ public class GetOrderList extends BaseTest{
         String orderId2 = CreateOrder.CreateOrder(tmpToken);
         if (orderId2.isEmpty()) {
             logger.error("创建订单with tmpToken失败");
-            fail();
+            Assert.fail("创建订单with tmpToken失败");
         }
         try {
             res = HttpRequest.sendGet(host_doc +mock+uri,"", tmpToken);
@@ -99,7 +107,7 @@ public class GetOrderList extends BaseTest{
         String orderId3 = CreateOrder.CreateOrder(tmpToken);
         if (orderId3.isEmpty()) {
             logger.error("创建订单with tmpToken失败");
-            fail();
+            Assert.fail("创建订单with tmpToken失败");
         }
         try {
             res = HttpRequest.sendGet(host_doc +mock+uri,"", tmpToken);
@@ -115,7 +123,7 @@ public class GetOrderList extends BaseTest{
         String orderId4 = CreateOrder.CreateOrder(tmpToken);
         if (orderId4.isEmpty()) {
             logger.error("创建订单with tmpToken失败");
-            fail();
+            Assert.fail("创建订单with tmpToken失败");
         }
         try {
             res = HttpRequest.sendGet(host_doc +mock+uri,"", tmpToken);
@@ -130,7 +138,7 @@ public class GetOrderList extends BaseTest{
     }
 
     @Test
-    public void 获取订单列表_未登录用户() {
+    public void test_03_获取订单列表_未登录用户() {
         String res = "";
         try {
             res = HttpRequest.sendGet(host_doc +mock+uri,"", "");
@@ -141,5 +149,80 @@ public class GetOrderList extends BaseTest{
         Assert.assertEquals(code, "2210304", "应当提示未登录");
     }
 
+    @Test
+    public void test_04_获取订单列表_推荐医生的病历不展示上级医生信息() {
+        String res = "";
+        logger.info("创建订单with mainToken");
+        String orderId = CreateOrder.CreateOrder(mainToken);
+        if (orderId.isEmpty()) {
+            logger.error("创建订单with mainToken失败");
+            Assert.fail("创建订单with mainToken失败，退出执行");
+        }
+        if (!Order_ReceiveTask.receiveTask(orderId).equals("2000")) {
+            logger.error("领取任务失败");
+            Assert.fail("领取任务失败，退出执行");
+        }
+        if (!Order_RecommendDoctor.recommendDoctor(orderId, "23").equals("2020")) {
+            logger.error("推荐医生失败");
+            Assert.fail("推荐医生失败，退出执行");
+        }
+        try {
+            res = HttpRequest.sendGet(host_doc+uri,"", mainToken);
+        } catch (IOException e) {
+            logger.error(e);
+        }
+        checkResponse(res);
+        Assert.assertNotEquals(parseJson(data,"order():patient_name"), "", "患者姓名字段缺失");
+        Assert.assertNotEquals(parseJson(data,"order():patient_gender"), "", "患者性别字段缺失");
+        Assert.assertNotEquals(parseJson(data,"order():patient_phone"), "", "患者手机号字段缺失");
+        Assert.assertNotNull(parseJson(data,"order():major_disease_id"), "主诉疾病ID字段缺失");
+        Assert.assertNotEquals(parseJson(data,"order():major_disease_name"), "", "主诉疾病名称字段缺失");
+        Assert.assertNotNull(parseJson(data,"order():patient_gender_text"), "次诉疾病ID字段缺失");
+        Assert.assertNotEquals(parseJson(data,"order():order_number"), "", "订单ID字段缺失");
+        Assert.assertNotEquals(parseJson(data,"order():status"), "", "订单状态字段缺失");
+        Assert.assertNotEquals(parseJson(data,"order():OrderStatusText"), "", "订单状态描述字段缺失");
+    }
+
+    @Test
+    public void test_05_获取订单列表_推荐医生的病历不展示上级医生信息() {
+        String res = "";
+        logger.info("创建订单with mainToken");
+        String orderId = CreateOrder.CreateOrder(mainToken);
+        if (orderId.isEmpty()) {
+            logger.error("创建订单with mainToken失败");
+            Assert.fail("创建订单with mainToken失败，退出执行");
+        }
+        if (!Order_ReceiveTask.receiveTask(orderId).equals("2000")) {
+            logger.error("领取任务失败");
+            Assert.fail("领取任务失败，退出执行");
+        }
+        if (!Order_RecommendDoctor.recommendDoctor(orderId, "23").equals("2020")) {
+            logger.error("推荐医生失败");
+            Assert.fail("推荐医生失败，退出执行");
+        }
+        if (!Order_ThreewayCall.ThreewayCall(orderId, "success").equals("3000")) {
+            logger.error("确定三方通话失败");
+            Assert.fail("确定三方通话失败，退出执行");
+        }
+        try {
+            res = HttpRequest.sendGet(host_doc+uri,"", mainToken);
+        } catch (IOException e) {
+            logger.error(e);
+        }
+        checkResponse(res);
+        Assert.assertNotEquals(parseJson(data,"order():patient_name"), "", "患者姓名字段缺失");
+        Assert.assertNotEquals(parseJson(data,"order():patient_gender"), "", "患者性别字段缺失");
+        Assert.assertNotEquals(parseJson(data,"order():patient_phone"), "", "患者手机号字段缺失");
+        Assert.assertNotNull(parseJson(data,"order():major_disease_id"), "主诉疾病ID字段缺失");
+        Assert.assertNotEquals(parseJson(data,"order():major_disease_name"), "", "主诉疾病名称字段缺失");
+        Assert.assertNotNull(parseJson(data,"order():patient_gender_text"), "次诉疾病ID字段缺失");
+        Assert.assertNotEquals(parseJson(data,"order():order_number"), "", "订单ID字段缺失");
+        Assert.assertNotEquals(parseJson(data,"order():status"), "", "订单状态字段缺失");
+        Assert.assertNotEquals(parseJson(data,"order():OrderStatusText"), "", "订单状态描述字段缺失");
+        Assert.assertNotNull(parseJson(data,"order():surgeon_id"), "手术医生ID字段不能缺失");
+        Assert.assertNotNull(parseJson(data,"order():surgeon_name"), "手术医生姓名字段不能缺失");
+        Assert.assertNotNull(parseJson(data,"order():surgeon_hospital"), "手术医生所在医院字段不能缺失");
+        Assert.assertNotNull(parseJson(data,"order():surgeon_medical_title"), "手术医生学术职称字段不能缺失");
+    }
 
 }

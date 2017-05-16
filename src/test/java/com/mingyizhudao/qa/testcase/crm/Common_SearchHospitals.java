@@ -25,10 +25,10 @@ public class Common_SearchHospitals extends BaseTest {
         String res = "";
 
         HashMap<String, String> query = new HashMap<>();
-        query.put("hospital_name", "安阳");
+        query.put("hospital_name", "安庆");
 
         try {
-            res = HttpRequest.sendGet(host_crm + mock + uri, query, crm_token, null);
+            res = HttpRequest.sendGet(host_crm + uri, query, crm_token, null);
         } catch (IOException e) {
             logger.error(e);
         }
@@ -52,9 +52,16 @@ public class Common_SearchHospitals extends BaseTest {
         checkResponse(res);
         Assert.assertEquals(code, "1000000"); // 必须要有输入
         Assert.assertNotEquals(parseJson(data,"list()"), "0");
+    }
+
+    @Test
+    public void test_03_查询医院列表_根据查询条件_拼音() {
+
+        String res = "";
+        HashMap<String, String> query = new HashMap<>();
 
         // 查询字符串为拼音
-        query.replace("hospital_name", "anyang");
+        query.put("hospital_name", "anyang");
         try {
             res = HttpRequest.sendGet(host_crm+uri, query, crm_token, null);
         } catch (IOException e) {
@@ -63,9 +70,16 @@ public class Common_SearchHospitals extends BaseTest {
         checkResponse(res);
         Assert.assertEquals(code, "1000000");
         Assert.assertNotEquals(parseJson(data,"list()"), "0");
+    }
+
+    @Test
+    public void test_04_查询医院列表_根据查询条件_中英混合() {
+
+        String res = "";
+        HashMap<String, String> query = new HashMap<>();
 
         // 查询字符串为中文拼音混合
-        query.replace("hospital_name", "安阳yiyuan");
+        query.put("hospital_name", "安阳yiyuan");
         try {
             res = HttpRequest.sendGet(host_crm+mock+uri, query, crm_token, null);
         } catch (IOException e) {
@@ -73,10 +87,16 @@ public class Common_SearchHospitals extends BaseTest {
         }
         checkResponse(res);
         Assert.assertEquals(code, "1000000");
-        Assert.assertNotEquals(parseJson(data, "list()"), "0");
+        Assert.assertNotEquals(parseJson(data, "list()"), "0", "搜索结果不应该为0");
+    }
+
+    @Test(enabled = false)
+    public void test_05_查询医院列表_根据查询条件_无key() {
+
+        String res = "";
+        HashMap<String, String> query = new HashMap<>();
 
         // 查询key不存在
-        query.remove("hospital_name");
         try {
             res = HttpRequest.sendGet(host_crm+uri, "", crm_token, null);
         } catch (IOException e) {

@@ -135,7 +135,7 @@ public class Order_RecommendDoctor extends BaseTest {
         Assert.assertEquals(parseJson(data, "surgeon_name"), KB.kb_doctor.get(recommendedId));
     }
 
-    @Test
+    @Test(enabled = false)
     public void test_03_推荐和下级医生相同的用户() {
 
         String res = "";
@@ -152,7 +152,7 @@ public class Order_RecommendDoctor extends BaseTest {
             logger.error(e);
         }
         checkResponse(res);
-        Assert.assertNotEquals(code, "1000000");
+        Assert.assertNotEquals(code, "1000000", "不应该推荐和发起医生相同的专家医生");
         res = Order_Detail.Detail(order_number);
         checkResponse(res);
         Assert.assertEquals(parseJson(data, "status"), "2000");

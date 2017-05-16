@@ -1,6 +1,7 @@
 package com.mingyizhudao.qa.common;
 
 
+import com.mingyizhudao.qa.dataprofile.doctor.DoctorProfile;
 import com.mingyizhudao.qa.testcase.crm.RegisteredDoctor_Certify;
 import com.mingyizhudao.qa.testcase.doctor.*;
 import com.mingyizhudao.qa.testcase.login.CheckVerifyCode;
@@ -35,6 +36,7 @@ public class BaseTest {
     public static String mainDoctorName = "";
     public static String mainDoctorHospitalId = "";
     public static String mainDoctorHospitalName = "";
+    public static DoctorProfile mainDP;
 
     public static String mainOperatorId = "";
     public static String mainOperatorName = "";
@@ -44,18 +46,18 @@ public class BaseTest {
     public String message = "";
     public JSONObject data;
 
-    public BaseTest() {
-
-    }
-
+//    public static void main(String[] args) {
+//        String mobile = SendVerifyCode.send();
+//        String token = CheckVerifyCode.check();
+//        CreateRegistered();
+//        CreateRegisteredDoctor();
+//    }
     static  {
         PropertyConfigurator.configure(BaseTest.class.getClassLoader().getResource("log4j.properties"));
-
         // 读取配置文件
         Properties prop = new Properties();
         try {
             InputStream in = BaseTest.class.getClassLoader().getResourceAsStream("environment.properties");
-//                    new BufferedInputStream(new FileInputStream("src/test/resources/config-test/environment.properties"));
             prop.load(in);
             in.close();
         } catch (IOException e) {
@@ -66,31 +68,36 @@ public class BaseTest {
 
         {
             // 初始化配置文件中的变量
-            BaseTest.protocol = prop.getProperty("protocol");
-            BaseTest.host_doc = prop.getProperty("host_doc");
-            BaseTest.host_crm = prop.getProperty("host_crm");
-            BaseTest.host_login = prop.getProperty("host_login");
-            BaseTest.host_kb = prop.getProperty("host_kb");
-            BaseTest.crm_token = prop.getProperty("crm_token");
+            protocol = prop.getProperty("protocol");
+            host_doc = prop.getProperty("host_doc");
+            host_crm = prop.getProperty("host_crm");
+            host_login = prop.getProperty("host_login");
+            host_kb = prop.getProperty("host_kb");
+            crm_token = prop.getProperty("crm_token");
 
-            BaseTest.host_doc = protocol.concat("://").concat(host_doc);
-            BaseTest.host_crm = protocol.concat("://").concat(host_crm);
-            BaseTest.host_login = protocol.concat("://").concat(host_login);
-            BaseTest.host_kb = protocol.concat("://").concat(host_kb);
+            host_doc = protocol.concat("://").concat(host_doc);
+            host_crm = protocol.concat("://").concat(host_crm);
+            host_login = protocol.concat("://").concat(host_login);
+            host_kb = protocol.concat("://").concat(host_kb);
         }
-        new KB();
     }
 
     @BeforeSuite
     public void setUpSuite() throws Exception {
+        KB.init();
         mainMobile = SendVerifyCode.send();
         mainToken = CheckVerifyCode.check();
+        if (mainToken.isEmpty() || mainToken == null) {
+            logger.error("初始化失败，退出");
+            System.exit(1000);
+        }
 
         String res = GetDoctorProfile.getDoctorProfile(mainToken);
         mainDoctorId = JSONObject.fromObject(res).getJSONObject("data").getJSONObject("doctor").getString("user_id");
 
         logger.info("更新医生信息...");
-        UpdateDoctorProfile.updateDoctorProfile(mainToken, null);
+        mainDP = new DoctorProfile(true);
+        UpdateDoctorProfile.updateDoctorProfile(mainToken, mainDP);
         res = GetDoctorProfile.getDoctorProfile(mainToken);
         JSONObject doctor = JSONObject.fromObject(res).getJSONObject("data").getJSONObject("doctor");
         mainDoctorName = doctor.getString("name");
@@ -106,7 +113,7 @@ public class BaseTest {
             logger.info("认证成功");
         } else {
             logger.error("医生认证没通过，无法进行后续用例，退出...");
-            System.exit(1);
+            System.exit(1001);
         }
 
         mainOperatorId = "chao.fang@mingyizhudao.com";
@@ -130,7 +137,7 @@ public class BaseTest {
         logger.info("Test Cleaning...");
         logger.info("mainDoctorId为"+mainDoctorId);
         logger.info("恢复医生信息：");
-        UpdateDoctorProfile.updateDoctorProfile(mainToken, null);
+        UpdateDoctorProfile.updateDoctorProfile(mainToken, mainDP);
         logger.info("============================================================================================================= ");
         logger.info("||    TestAPI END:\t" + getClass().getSimpleName());
         logger.info("============================================================================================================= \n");
@@ -219,7 +226,7 @@ public class BaseTest {
         logger.info("<<<<<< [ data ]:\t" + data);
     }
 
-    public String CreateRegisteredDoctor() {
+    public static String CreateRegisteredDoctor() {
         logger.info("创建医生...");
         String mobile = SendVerifyCode.send();
         String token = CheckVerifyCode.check();
@@ -229,7 +236,8 @@ public class BaseTest {
         if (doctorId.isEmpty()) return null;
 
         logger.info("更新医生信息...");
-        UpdateDoctorProfile.updateDoctorProfile(token, null);
+        DoctorProfile dp = new DoctorProfile(true);
+        UpdateDoctorProfile.updateDoctorProfile(token, dp);
         res = GetDoctorProfile.getDoctorProfile(token);
         String doctorHospitalId = JSONObject.fromObject(res).getJSONObject("data").getJSONObject("doctor").getString("hospital_id");
         String doctorHospitalName = JSONObject.fromObject(res).getJSONObject("data").getJSONObject("doctor").getString("hospital_name");
@@ -243,7 +251,7 @@ public class BaseTest {
         return doctorId;
     }
 
-    public String CreateRegistered() {
+    public static String CreateRegistered() {
         logger.info("创建注册用户...");
         String mobile = SendVerifyCode.send();
         String token = CheckVerifyCode.check();
@@ -267,7 +275,8 @@ public class BaseTest {
         if (doctorId.isEmpty()) return null;
 
         logger.info("更新医生信息...");
-        UpdateDoctorProfile.updateDoctorProfile(token, null);
+        DoctorProfile dp = new DoctorProfile(true);
+        UpdateDoctorProfile.updateDoctorProfile(token, dp);
         res = GetDoctorProfile.getDoctorProfile(token);
         String doctorHospitalId = JSONObject.fromObject(res).getJSONObject("data").getJSONObject("doctor").getString("hospital_id");
         String doctorHospitalName = JSONObject.fromObject(res).getJSONObject("data").getJSONObject("doctor").getString("hospital_name");

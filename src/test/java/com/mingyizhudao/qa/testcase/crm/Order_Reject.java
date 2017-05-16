@@ -52,6 +52,7 @@ public class Order_Reject extends BaseTest {
 
         JSONObject body = new JSONObject();
         body.put("content", "自动化推荐之前据拒订单的理由");
+        body.put("tracker_description", "自动客服填写的拒绝原因");
         try {
             res = HttpRequest.sendPost(host_crm + uri, body.toString(), crm_token, pathValue);
         } catch (IOException e) {
@@ -67,7 +68,7 @@ public class Order_Reject extends BaseTest {
     }
 
     @Test
-    public void test_02_客服拒绝订单_推荐之后() {
+    public void test_02_客服拒绝订单_推荐之后_不能拒绝() {
 
         String res = "";
         HashMap<String, String> pathValue = new HashMap<>();
@@ -99,7 +100,7 @@ public class Order_Reject extends BaseTest {
     }
 
     @Test
-    public void test_03_客服拒绝订单_三方通话待定之后() {
+    public void test_03_客服拒绝订单_三方通话待定之后_不能拒绝() {
 
         String res = "";
         HashMap<String, String> pathValue = new HashMap<>();
@@ -111,8 +112,8 @@ public class Order_Reject extends BaseTest {
         if (!Order_RecommendDoctor.recommendDoctor(order_number, mainDoctorId).equals("2020")) {
             Assert.fail("推荐专家失败，无法进行后续操作");
         }
-        if (!Order_ThreewayCall.ThreewayCall(order_number, "failed").equals("2000")) {
-            Assert.fail("未进行三方通话，无法进行后续操作");
+        if (!Order_ThreewayCall.ThreewayCall(order_number, "undetermined").equals("2020")) {
+            Assert.fail("三方通话待定失败，无法进行后续操作");
         }
         pathValue.put("orderNumber", order_number);
 
@@ -124,11 +125,12 @@ public class Order_Reject extends BaseTest {
             logger.error(e);
         }
         checkResponse(res);
-        Assert.assertEquals(code, "1000000", "拒绝订单失败");
+        // 没有确定三方通话失败，不能拒绝已有推荐医生的订单
+        Assert.assertNotEquals(code, "1000000", "拒绝订单失败");
         res = Order_Detail.Detail(order_number);
         checkResponse(res);
         Assert.assertEquals(parseJson(data, "major_reps_id"), "chao.fang@mingyizhudao.com");
-        Assert.assertEquals(parseJson(data, "status"), "9000");
+        Assert.assertEquals(parseJson(data, "status"), "2020");
         Assert.assertEquals(parseJson(data, "order_number"), order_number);
     }
 

@@ -29,7 +29,7 @@ public class GetDoctorProfile extends BaseTest {
     }
 
     @Test
-    public void 有token信息的请求可以获得有效信息() {
+    public void test_01_有token信息的请求可以获得有效信息() {
         String res = "";
         try {
             res = HttpRequest.sendGet(host_doc +mock+uri,"", mainToken);
@@ -47,7 +47,7 @@ public class GetDoctorProfile extends BaseTest {
     }
 
     @Test
-    public void 没有token信息的请求不能获得个人信息并返回正确的错误提示() {
+    public void test_02_没有token信息的请求不能获得个人信息并返回正确的错误提示() {
         String res = "";
         try {
             res = HttpRequest.sendGet(host_doc+uri,"", "");
@@ -61,7 +61,7 @@ public class GetDoctorProfile extends BaseTest {
     }
 
     @Test
-    public void 错误token的请求不能获得个人信息并返回正确的错误提示() {
+    public void test_03_错误token的请求不能获得个人信息并返回正确的错误提示() {
         String res = "";
         try {
             res = HttpRequest.sendGet(host_doc +mock+uri,"", "nidawoya");
@@ -75,7 +75,7 @@ public class GetDoctorProfile extends BaseTest {
     }
 
     @Test
-    public void 测试data字段返回了足够的医生信息() {
+    public void test_04_测试data字段返回了足够的医生信息() {
         String res = "";
         try {
             res = HttpRequest.sendGet(host_doc +mock+uri,"", mainToken);
