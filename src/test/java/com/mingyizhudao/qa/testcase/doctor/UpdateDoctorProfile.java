@@ -108,7 +108,7 @@ public class UpdateDoctorProfile extends BaseTest {
     @Test
     public void test_04_已登录有token的用户可以更新个人信息inviter_id() {
         String res = "";
-        String key = "SH000"+String.valueOf(UT.randomInt(5)+1);
+        String key = UT.randomEmployeeId();
         JSONObject doctor = new JSONObject();
         doctor.put("inviter_no", key);
         JSONObject dp = new JSONObject();

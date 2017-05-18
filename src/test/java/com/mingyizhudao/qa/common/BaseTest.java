@@ -30,6 +30,7 @@ public class BaseTest {
     public static String host_kb = "";
     public static String host_bda = "";
     public static String crm_token = "";
+    public static String bda_token = "";
 
     public static String mainMobile = "";
     public static String mainToken = "";
@@ -70,13 +71,17 @@ public class BaseTest {
         {
             // 初始化配置文件中的变量
             protocol = prop.getProperty("protocol");
+            crm_token = prop.getProperty("crm_token");
+            bda_token = prop.getProperty("bda_token");
 
             host_doc = prop.getProperty("host_doc");
             host_crm = prop.getProperty("host_crm");
             host_login = prop.getProperty("host_login");
             host_kb = prop.getProperty("host_kb");
             host_bda = prop.getProperty("host_bda");
+
             crm_token = prop.getProperty("crm_token");
+            bda_token = prop.getProperty("bda_token");
 
             host_doc = protocol.concat("://").concat(host_doc);
             host_crm = protocol.concat("://").concat(host_crm);

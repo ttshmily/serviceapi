@@ -18,7 +18,7 @@ public class OrderDetail {
         if (init) {
             order.put("patient_name", "辣妹" + UT.randomString(4));
             order.put("patient_gender", "1");
-            order.put("patient_age",  String.valueOf(UT.randomInt(100)+1));
+            order.put("patient_age",  String.valueOf(UT.randomInt(100)));
             order.put("patient_phone", UT.randomPhone());
             order.put("major_disease_id", UT.randomKey(KB.kb_disease));
             order.put("minor_disease_id", UT.randomKey(KB.kb_disease));

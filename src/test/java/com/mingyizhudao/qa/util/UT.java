@@ -15,6 +15,12 @@ public class UT {
 
     public static SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
 
+
+    public static void main(String[] args) {
+        for (int i = 0; i < 10; i++) {
+            System.out.println(randomEmployeeId());
+        }
+    }
     public static String randomString(int length) {
         StringBuffer sb = new StringBuffer();
         String string = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
@@ -25,8 +31,10 @@ public class UT {
         return sb.toString();
     }
 
-    public static long randomInt(long count) {
-        return (long) Math.floor(Math.random() * count);
+    public static long randomInt(int count) {
+        Random random = new Random();
+        return random.nextInt(count)+1;
+//        return (long) Math.floor(Math.random() * count);
     }
 
     public static String randomDateFromNow(int i, int j) {
@@ -90,6 +98,12 @@ public class UT {
         Random random = new Random();
         Integer m = random.nextInt(99999);
         return "13" + String.format("%05d", m) + "9999";
+    }
+
+    public static String randomEmployeeId() {
+        String[] prefix = {"SH"};
+        Random random = new Random();
+        return prefix[random.nextInt(prefix.length)]+"000"+randomInt(5);
     }
 
 //    public static void main(String[] args) {

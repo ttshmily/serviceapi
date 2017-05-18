@@ -20,7 +20,7 @@ public class DoctorProfile {
             doctor.put("academic_title_list", UT.randomKey(KB.kb_academic_title));
             doctor.put("medical_title_list", UT.randomKey(KB.kb_medical_title));
             doctor.put("hospital_id", UT.randomKey(KB.kb_hospital));
-            doctor.put("inviter_no", "SH000"+String.valueOf(UT.randomInt(5)+1));
+            doctor.put("inviter_no", UT.randomEmployeeId());
         } else {
             doctor.put("name", "");
             doctor.put("department", "");
