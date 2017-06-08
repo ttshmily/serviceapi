@@ -27,7 +27,8 @@ public class Order_Reject extends BaseTest {
         HashMap<String, String> pathValue = new HashMap<>();
         pathValue.put("orderNumber", orderId);
         JSONObject body = new JSONObject();
-        body.put("content", "自动化推荐之前据拒订单的理由");
+        body.put("content", "选择内容");
+        body.put("reps_content", "自动化推荐之前据拒订单的客服理由");
         try {
             res = HttpRequest.sendPost(host_crm + uri, body.toString(), crm_token, pathValue);
         } catch (IOException e) {
@@ -52,7 +53,7 @@ public class Order_Reject extends BaseTest {
 
         JSONObject body = new JSONObject();
         body.put("content", "自动化推荐之前据拒订单的理由");
-        body.put("tracker_description", "自动客服填写的拒绝原因");
+        body.put("reps_content", "自动化推荐之前据拒订单的客服理由");
         try {
             res = HttpRequest.sendPost(host_crm + uri, body.toString(), crm_token, pathValue);
         } catch (IOException e) {
@@ -84,6 +85,7 @@ public class Order_Reject extends BaseTest {
 
         JSONObject body = new JSONObject();
         body.put("content", "自动化推荐之前据拒订单的理由");
+        body.put("reps_content", "自动化推荐之前据拒订单的客服理由");
         try {
             res = HttpRequest.sendPost(host_crm + uri, body.toString(), crm_token, pathValue);
         } catch (IOException e) {
@@ -119,6 +121,7 @@ public class Order_Reject extends BaseTest {
 
         JSONObject body = new JSONObject();
         body.put("content", "自动化三方通话后拒绝订单");
+        body.put("reps_content", "自动化推荐之前据拒订单的客服理由");
         try {
             res = HttpRequest.sendPost(host_crm + uri, body.toString(), crm_token, pathValue);
         } catch (IOException e) {
@@ -148,6 +151,7 @@ public class Order_Reject extends BaseTest {
 
         JSONObject body = new JSONObject();
         body.put("content", "自动化推荐之前据拒订单的理由");
+        body.put("reps_content", "自动化推荐之前据拒订单的客服理由");
         try {
             res = HttpRequest.sendPost(host_crm + uri, body.toString(), "", pathValue);
         } catch (IOException e) {

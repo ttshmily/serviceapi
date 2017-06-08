@@ -31,6 +31,7 @@ public class UT {
         return sb.toString();
     }
 
+    //返回1 - count的int
     public static long randomInt(int count) {
         Random random = new Random();
         return random.nextInt(count)+1;
@@ -102,13 +103,103 @@ public class UT {
 
     public static String randomEmployeeId() {
         String[] prefix = {"SH"};
+//        String[] ID = {"0105", "0098", "0130", "0129", "0133"};
+        String[] ID = {"0133","0105","0129"};
+
         Random random = new Random();
-        return prefix[random.nextInt(prefix.length)]+"000"+randomInt(5);
+        return prefix[random.nextInt(prefix.length)]+ID[random.nextInt(ID.length)];
     }
 
-//    public static void main(String[] args) {
-//        for (int i = 0; i < 100; i++) {
-//            System.out.println(randomKey(KB.kb_major));
-//        }
-//    }
+    public static String randomProvinceId() {
+
+        return randomKey(KB.kb_province);
+    }
+
+    public static String provinceName(String id) {
+
+        return KB.kb_province.get(id);
+    }
+
+    public static String randomCityId() {
+
+        return randomKey(KB.kb_city);
+    }
+
+    public static String cityName(String id) {
+
+        return KB.kb_city.get(id);
+    }
+
+    public static String randomCountyId() {
+
+        return randomKey(KB.kb_county);
+    }
+
+    public static String countyName(String id) {
+
+        return KB.kb_county.get(id);
+    }
+
+    public static String randomHospitalId() {
+
+        return randomKey(KB.kb_hospital);
+    }
+
+    public static String hospitalName(String id) {
+
+        return KB.kb_hospital.get(id);
+    }
+
+    public static String randomMajorId() {
+
+        return randomKey(KB.kb_major);
+    }
+
+    public static String majorName(String id) {
+
+        return KB.kb_major.get(id);
+    }
+
+    public static String randomDiseaseId() {
+
+        return randomKey(KB.kb_disease);
+    }
+
+    public static String diseaseName(String id) {
+
+        return KB.kb_disease.get(id);
+    }
+
+    public static String randomExpertId() {
+
+        return randomKey(KB.kb_doctor);
+    }
+
+    public static String expertName(String id) {
+
+        return KB.kb_doctor.get(id);
+    }
+
+    public static String randomMedicalId() {
+
+        return randomKey(KB.kb_medical_title);
+    }
+
+    public static String randomAcademicId() {
+
+        return randomKey(KB.kb_academic_title);
+    }
+
+    public static String randomHospitalClass() {
+
+        return randomKey(KB.kb_hospital_class);
+    }
+
+    public static String randomHospitalType() {
+
+        return randomKey(KB.kb_hospital_type);
+    }
+
+
+
 }

@@ -16,19 +16,13 @@ public class DoctorProfile {
         if (init) {
             doctor.put("name", "庄恕" + UT.randomString(2));
             doctor.put("department", "胸外科");
-            doctor.put("major_id", UT.randomKey(KB.kb_major));
+            doctor.put("major_id", UT.randomMajorId());
             doctor.put("academic_title_list", UT.randomKey(KB.kb_academic_title));
             doctor.put("medical_title_list", UT.randomKey(KB.kb_medical_title));
-            doctor.put("hospital_id", UT.randomKey(KB.kb_hospital));
+            doctor.put("hospital_id", UT.randomHospitalId());
             doctor.put("inviter_no", UT.randomEmployeeId());
         } else {
-            doctor.put("name", "");
-            doctor.put("department", "");
-            doctor.put("major_id", "");
-            doctor.put("academic_title_list", "");
-            doctor.put("medical_title_list", "");
-            doctor.put("hospital_id", "");
-            doctor.put("inviter_no", "");
+
         }
         this.body.put("doctor",doctor);
     }

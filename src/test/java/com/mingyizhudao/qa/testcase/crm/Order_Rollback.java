@@ -130,7 +130,7 @@ public class Order_Rollback extends BaseTest {
         Assert.assertNotEquals(code, "1000000");
         res = Order_Detail.Detail(order_number);
         checkResponse(res);
-        Assert.assertEquals(parseJson(data, "status"), "2000");
+        Assert.assertEquals(parseJson(data, "status"), "9000");
 
     }
 

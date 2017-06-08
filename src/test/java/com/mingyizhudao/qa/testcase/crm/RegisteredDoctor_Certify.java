@@ -1,6 +1,7 @@
 package com.mingyizhudao.qa.testcase.crm;
 
 import com.mingyizhudao.qa.common.BaseTest;
+import com.mingyizhudao.qa.dataprofile.doctor.DoctorProfile;
 import com.mingyizhudao.qa.util.HttpRequest;
 import net.sf.json.JSONObject;
 import org.apache.log4j.Logger;
@@ -58,7 +59,8 @@ public class RegisteredDoctor_Certify extends BaseTest {
         HashMap<String, String> pathValue = new HashMap<>();
         JSONObject body = new JSONObject();
 
-        String doctorId = CreateRegisteredDoctor();
+        DoctorProfile dp = new DoctorProfile(true);
+        String doctorId = CreateRegisteredDoctor(dp).get("id");
         if ( doctorId == null)
             Assert.fail("创建医生失败，认证用例无法执行");
         res = RegisteredDoctor_Detail.Detail(doctorId);
@@ -89,7 +91,8 @@ public class RegisteredDoctor_Certify extends BaseTest {
         HashMap<String, String> pathValue = new HashMap<>();
         JSONObject body = new JSONObject();
 
-        String doctorId = CreateRegisteredDoctor();
+        DoctorProfile dp = new DoctorProfile(true);
+        String doctorId = CreateRegisteredDoctor(dp).get("id");
         if (doctorId == null)
             Assert.fail("创建医生失败，认证用例无法执行");
         res = RegisteredDoctor_Detail.Detail(doctorId);
@@ -118,7 +121,8 @@ public class RegisteredDoctor_Certify extends BaseTest {
         HashMap<String, String> pathValue = new HashMap<>();
         JSONObject body = new JSONObject();
 
-        String doctorId = CreateRegisteredDoctor();
+        DoctorProfile dp = new DoctorProfile(true);
+        String doctorId = CreateRegisteredDoctor(dp).get("id");
         if (doctorId == null)
             Assert.fail("创建医生失败，认证用例无法执行");
         res = RegisteredDoctor_Detail.Detail(doctorId);
@@ -148,7 +152,8 @@ public class RegisteredDoctor_Certify extends BaseTest {
         HashMap<String, String> pathValue = new HashMap<>();
         JSONObject body = new JSONObject();
 
-        String doctorId = CreateRegisteredDoctor();
+        DoctorProfile dp = new DoctorProfile(true);
+        String doctorId = CreateRegisteredDoctor(dp).get("id");
         if ( doctorId == null)
             Assert.fail("创建医生失败，认证用例无法执行");
 
@@ -172,7 +177,8 @@ public class RegisteredDoctor_Certify extends BaseTest {
         HashMap<String, String> pathValue = new HashMap<>();
         JSONObject body = new JSONObject();
 
-        String doctorId = CreateRegisteredDoctor();
+        DoctorProfile dp = new DoctorProfile(true);
+        String doctorId = CreateRegisteredDoctor(dp).get("id");
         if ( doctorId == null)
             Assert.fail("创建医生失败，认证用例无法执行");
 

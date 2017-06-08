@@ -1,14 +1,8 @@
 package com.mingyizhudao.qa.testcase.crm;
 
 import com.mingyizhudao.qa.common.BaseTest;
-import com.mingyizhudao.qa.testcase.CrmCertifiedDoctor;
 import com.mingyizhudao.qa.testcase.doctor.CreateOrder;
-import com.mingyizhudao.qa.testcase.doctor.GetDoctorProfile;
-import com.mingyizhudao.qa.testcase.doctor.UpdateDoctorProfile;
-import com.mingyizhudao.qa.testcase.login.CheckVerifyCode;
-import com.mingyizhudao.qa.testcase.login.SendVerifyCode;
 import com.mingyizhudao.qa.util.HttpRequest;
-import net.sf.json.JSONObject;
 import org.apache.log4j.Logger;
 import org.testng.Assert;
 import org.testng.annotations.Test;

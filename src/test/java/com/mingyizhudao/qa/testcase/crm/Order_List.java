@@ -23,7 +23,7 @@ public class Order_List extends BaseTest {
     public static int orderList() {
         String res = "";
         try {
-            res = HttpRequest.sendGet(host_crm+uri, "", crm_token, null);
+            res = HttpRequest.sendGet(host_crm+uri, "", crm_token);
         } catch (IOException e) {
             logger.error(e);
         }
@@ -38,7 +38,7 @@ public class Order_List extends BaseTest {
         query.put("page", "1");
         query.put("pageSize", "10");
         try {
-            res = HttpRequest.sendGet(host_crm+uri, "", crm_token, null);
+            res = HttpRequest.sendGet(host_crm+uri, "", crm_token);
         } catch (IOException e) {
             logger.error(e);
         }
@@ -56,7 +56,7 @@ public class Order_List extends BaseTest {
         query.put("page", "1");
         query.put("pageSize", "100");
         try {
-            res = HttpRequest.sendGet(host_crm+uri, query, crm_token, null);
+            res = HttpRequest.sendGet(host_crm+uri, query, crm_token);
         } catch (IOException e) {
             logger.error(e);
         }
@@ -69,7 +69,7 @@ public class Order_List extends BaseTest {
         for (int i=1; i<=total; i++) {
             query.replace("page", String.valueOf(i));
             try {
-                res = HttpRequest.sendGet(host_crm+uri, query, crm_token, null);
+                res = HttpRequest.sendGet(host_crm+uri, query, crm_token);
             } catch (IOException e) {
                 logger.error(e);
             }
@@ -79,7 +79,7 @@ public class Order_List extends BaseTest {
         }
         query.replace("page", String.valueOf(total+1));
         try {
-            res = HttpRequest.sendGet(host_crm+uri, query, crm_token, null);
+            res = HttpRequest.sendGet(host_crm+uri, query, crm_token);
         } catch (IOException e) {
             logger.error(e);
         }
@@ -98,7 +98,7 @@ public class Order_List extends BaseTest {
         query.put("status", "2000,2020");
         query.put("isRecommended", "true");
         try {
-            res = HttpRequest.sendGet(host_crm+uri, query, crm_token, null);
+            res = HttpRequest.sendGet(host_crm+uri, query, crm_token);
         } catch (IOException e) {
             logger.error(e);
         }

@@ -1,6 +1,7 @@
 package com.mingyizhudao.qa.testcase.crm;
 
 import com.mingyizhudao.qa.common.BaseTest;
+import com.mingyizhudao.qa.dataprofile.doctor.DoctorProfile;
 import com.mingyizhudao.qa.testcase.doctor.CreateOrder;
 import com.mingyizhudao.qa.testcase.doctor.UpdateDoctorProfile;
 import com.mingyizhudao.qa.util.HttpRequest;
@@ -37,7 +38,8 @@ public class RegisteredDoctor_TrackList extends BaseTest {
     public void test_01_获取医生操作记录_认证成功() {
         String res = "";
         HashMap<String, String> pathValue = new HashMap<>();
-        String doctorId = CreateRegisteredDoctor(); // create an order
+        DoctorProfile dp = new DoctorProfile(true);
+        String doctorId = CreateRegisteredDoctor(dp).get("id"); // create an order
         res = trackList(doctorId);
         logger.debug(res);
         checkResponse(res);
@@ -62,7 +64,8 @@ public class RegisteredDoctor_TrackList extends BaseTest {
     public void test_02_获取医生操作记录_认证失败() {
         String res = "";
         HashMap<String, String> pathValue = new HashMap<>();
-        String doctorId = CreateRegisteredDoctor(); // create an order
+        DoctorProfile dp = new DoctorProfile(true);
+        String doctorId = CreateRegisteredDoctor(dp).get("id"); // create an order
         res = trackList(doctorId);
         logger.debug(res);
         checkResponse(res);

@@ -1,13 +1,11 @@
 package com.mingyizhudao.qa.testcase.crm;
 
 import com.mingyizhudao.qa.common.BaseTest;
-import com.mingyizhudao.qa.common.KB;
 import com.mingyizhudao.qa.testcase.doctor.CreateOrder;
 import com.mingyizhudao.qa.util.HttpRequest;
 import com.mingyizhudao.qa.util.UT;
 import net.sf.json.JSONObject;
 import org.apache.log4j.Logger;
-import org.junit.Ignore;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
@@ -80,7 +78,8 @@ public class Order_Modify extends BaseTest {
         HashMap<String, String> pathValue = new HashMap<>();
         pathValue.put("orderNumber", order_number);
         JSONObject body = new JSONObject();
-        body.put("major_disease_id","44");
+        String diseaseId = UT.randomDiseaseId();
+        body.put("major_disease_id", diseaseId);
         try {
             res = HttpRequest.sendPut(host_crm+uri, body.toString(), crm_token, pathValue);
         } catch (IOException e) {
@@ -91,8 +90,8 @@ public class Order_Modify extends BaseTest {
         Assert.assertNotNull(data, "list");
         res = Order_Detail.Detail(order_number);
         checkResponse(res);
-        Assert.assertEquals(parseJson(data, "major_disease_id"), "44");
-        Assert.assertEquals(parseJson(data, "major_disease_name"), KB.kb_disease.get("44"));
+        Assert.assertEquals(parseJson(data, "major_disease_id"), diseaseId);
+        Assert.assertEquals(parseJson(data, "major_disease_name"), UT.diseaseName(diseaseId));
     }
 
     @Test
@@ -104,7 +103,8 @@ public class Order_Modify extends BaseTest {
         HashMap<String, String> pathValue = new HashMap<>();
         pathValue.put("orderNumber", order_number);
         JSONObject body = new JSONObject();
-        body.put("minor_disease_id","44");
+        String diseaseId = UT.randomDiseaseId();
+        body.put("minor_disease_id",diseaseId);
         try {
             res = HttpRequest.sendPut(host_crm+uri, body.toString(), crm_token, pathValue);
         } catch (IOException e) {
@@ -115,8 +115,8 @@ public class Order_Modify extends BaseTest {
         Assert.assertNotNull(data, "list");
         res = Order_Detail.Detail(order_number);
         checkResponse(res);
-        Assert.assertEquals(parseJson(data, "minor_disease_id"), "44");
-        Assert.assertEquals(parseJson(data, "minor_disease_name"), KB.kb_disease.get("44"));
+        Assert.assertEquals(parseJson(data, "minor_disease_id"), diseaseId);
+        Assert.assertEquals(parseJson(data, "minor_disease_name"), UT.diseaseName(diseaseId));
     }
 
     @Test

@@ -2,7 +2,6 @@ package com.mingyizhudao.qa.testcase.doctor;
 
 import com.mingyizhudao.qa.common.BaseTest;
 import com.mingyizhudao.qa.dataprofile.doctor.DoctorProfile;
-import com.mingyizhudao.qa.testcase.CrmCertifiedDoctor;
 import com.mingyizhudao.qa.testcase.crm.RegisteredDoctor_Certify;
 import com.mingyizhudao.qa.testcase.login.CheckVerifyCode;
 import com.mingyizhudao.qa.testcase.login.SendVerifyCode;

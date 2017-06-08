@@ -23,6 +23,21 @@ public class RegisteredDoctor_Modify extends BaseTest {
     public static String uri = version+"/doctors/{id}/profiles";
     public static String mock = false ? "/mockjs/1" : "";
 
+    public static String modify(String doctorId, JSONObject map) {
+        String res = "";
+        HashMap<String, String> pathValue = new HashMap<>();
+        pathValue.put("id",doctorId);
+        if (map == null) return null;
+        if (map.keySet().size() != 0) {
+            try {
+                res = HttpRequest.sendPut(host_crm+uri, map.toString(), crm_token, pathValue);
+            } catch (IOException e) {
+                logger.error(e);
+            }
+        }
+        return res;
+    }
+
     @Test
     public void test_01_CRM更新医生详情_综合正确调用() {
 
@@ -33,9 +48,9 @@ public class RegisteredDoctor_Modify extends BaseTest {
         JSONObject body = new JSONObject();
         body.put("content", "自动化修改医生信息");
         body.put("department","科室综合");
-        String city = UT.randomKey(KB.kb_city);
-        String hospital = UT.randomKey(KB.kb_hospital);
-        String major = UT.randomKey(KB.kb_major);
+        String city = UT.randomCityId();
+        String hospital = UT.randomHospitalId();
+        String major = UT.randomMajorId();
         String academic = UT.randomKey(KB.kb_academic_title);
         String medical = UT.randomKey(KB.kb_medical_title);
         body.put("city_id",city);
@@ -43,6 +58,9 @@ public class RegisteredDoctor_Modify extends BaseTest {
         body.put("major_id", major);
         body.put("academic_title", academic);
         body.put("medical_title", medical);
+
+        res = KBHospital_Detail.Detail(hospital);
+        String another_city = JSONObject.fromObject(res).getJSONObject("data").getString("city_id");
         try {
             res = HttpRequest.sendPut(host_crm+uri, body.toString(), crm_token, pathValue);
         } catch (IOException e) {
@@ -54,7 +72,7 @@ public class RegisteredDoctor_Modify extends BaseTest {
         checkResponse(res);
 //        Assert.assertEquals(parseJson(data, "department"), "科室综合");
         Assert.assertEquals(parseJson(data, "hospital_id"), hospital);
-        Assert.assertEquals(parseJson(data, "city_id"), city);
+        Assert.assertEquals(parseJson(data, "city_id"), another_city);
         Assert.assertEquals(parseJson(data, "major_id"), major);
         Assert.assertEquals(parseJson(data, "academic_title_list"), academic);
         Assert.assertEquals(parseJson(data, "medical_title_list"), medical);
@@ -103,8 +121,12 @@ public class RegisteredDoctor_Modify extends BaseTest {
         body.put("content", "自动化修改医生医院信息");
 
         // 更新hospital_id，应当成功
-        String hospitalId = UT.randomKey(KB.kb_hospital);
+        String hospitalId = UT.randomHospitalId();
         body.put("hospital_id", hospitalId);
+
+        res = KBHospital_Detail.Detail(hospitalId);
+        String another_city = JSONObject.fromObject(res).getJSONObject("data").getString("city_id");
+
         try {
             res = HttpRequest.sendPut(host_crm+uri, body.toString(), crm_token, pathValue);
             checkResponse(res);
@@ -115,10 +137,12 @@ public class RegisteredDoctor_Modify extends BaseTest {
         res = RegisteredDoctor_Detail.Detail(mainDoctorId);
         checkResponse(res);
         Assert.assertEquals(parseJson(data, "hospital_id"), hospitalId);
-        Assert.assertEquals(parseJson(data, "hospital_name"), KB.kb_hospital.get(hospitalId));
+        Assert.assertEquals(parseJson(data, "hospital_name"), UT.hospitalName(hospitalId));
+        Assert.assertEquals(parseJson(data, "city_id"), another_city);
+        Assert.assertEquals(parseJson(data, "city"), UT.cityName(another_city));
 
         // 更新hospital_id和hospital_name，应当以hospital_id为准。
-        hospitalId = UT.randomKey(KB.kb_hospital);
+        hospitalId = UT.randomHospitalId();
         body.replace("hospital_id", hospitalId);
         body.put("hospital_name", "测试医院");
         try {
@@ -131,7 +155,7 @@ public class RegisteredDoctor_Modify extends BaseTest {
         res = RegisteredDoctor_Detail.Detail(mainDoctorId);
         checkResponse(res);
         Assert.assertEquals(parseJson(data, "hospital_id"), hospitalId);
-        Assert.assertEquals(parseJson(data, "hospital_name"), KB.kb_hospital.get(hospitalId));
+        Assert.assertEquals(parseJson(data, "hospital_name"), UT.hospitalName(hospitalId));
     }
 
     @Test
@@ -297,25 +321,25 @@ public class RegisteredDoctor_Modify extends BaseTest {
             logger.error(e);
         }
         checkResponse(res);
-        Assert.assertEquals(code, "1000000");
-        res = RegisteredDoctor_Detail.Detail(mainDoctorId);
-        checkResponse(res);
-        Assert.assertEquals(parseJson(data, "city_id"), cityId);
-        Assert.assertEquals(parseJson(data, "city"), KB.kb_city.get(cityId));
-
-        // 更新错误的major_id，应当不成功
-        body.replace("city_id", "100000000");
-        try {
-            res = HttpRequest.sendPut(host_crm+uri, body.toString(), crm_token, pathValue);
-        } catch (IOException e) {
-            logger.error(e);
-        }
-        checkResponse(res);
-        Assert.assertNotEquals(code, "1000000", "错误的city_id不应该更新成功");
-        res = RegisteredDoctor_Detail.Detail(mainDoctorId);
-        checkResponse(res);
-        Assert.assertEquals(parseJson(data, "city_id"), cityId);
-        Assert.assertEquals(parseJson(data, "city"), KB.kb_city.get(cityId));
+        Assert.assertNotEquals(code, "1000000");
+//        res = RegisteredDoctor_Detail.Detail(mainDoctorId);
+//        checkResponse(res);
+//        Assert.assertEquals(parseJson(data, "city_id"), cityId);
+//        Assert.assertEquals(parseJson(data, "city"), KB.kb_city.get(cityId));
+//
+//        // 更新错误的major_id，应当不成功
+//        body.replace("city_id", "100000000");
+//        try {
+//            res = HttpRequest.sendPut(host_crm+uri, body.toString(), crm_token, pathValue);
+//        } catch (IOException e) {
+//            logger.error(e);
+//        }
+//        checkResponse(res);
+//        Assert.assertNotEquals(code, "1000000", "错误的city_id不应该更新成功");
+//        res = RegisteredDoctor_Detail.Detail(mainDoctorId);
+//        checkResponse(res);
+//        Assert.assertEquals(parseJson(data, "city_id"), cityId);
+//        Assert.assertEquals(parseJson(data, "city"), KB.kb_city.get(cityId));
 
     }
 

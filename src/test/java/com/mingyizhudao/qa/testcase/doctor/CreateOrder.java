@@ -61,6 +61,7 @@ public class CreateOrder extends BaseTest {
         res = GetOrderDetail.getOrderDetail(mainToken, orderId);
         checkResponse(res);
         Assert.assertEquals(code, "1000000");
+        //TODO
 //        Assert.assertEquals(parseJson(data,"order:patient_name"), "方超", "患者姓名存储不正确");
 //        Assert.assertEquals(parseJson(data,"order:patient_gender"), "1", "患者性别字段存储不正确");
 //        Assert.assertEquals(parseJson(data,"order:patient_age"), "31", "患者年龄字段存储不正确");

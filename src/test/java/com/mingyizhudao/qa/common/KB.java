@@ -15,17 +15,17 @@ public class KB {
 
     public static final Logger logger= Logger.getLogger(KB.class);
 
-    public static String hospital_uri = "/hospitals";
+    public static String hospital_uri = "/api/v1/hospitals";
     public static HashMap<String, String> kb_hospital = new HashMap<>();
     public static String hospital_file = "";
 
     public static String doctor_uri = "/api/v1/doctors";
     public static HashMap<String, String> kb_doctor = new HashMap<>();
 
-    public static String province_uri = "/provinces";
+    public static String province_uri = "/api/v1/provinces";
     public static HashMap<String, String> kb_province = new HashMap<>();
 
-    public static String city_uri = "/cities";
+    public static String city_uri = "/api/v1/cities";
     public static HashMap<String, String> kb_city = new HashMap<>();
 
     public static String medical_uri = "/api/v1/common/medicalTitleList";
@@ -34,17 +34,26 @@ public class KB {
     public static String academic_uri = "/api/v1/common/academicTitleList";
     public static HashMap<String, String> kb_academic_title = new HashMap<>();
 
-    public static String surgery_category_uri = "/surgeryCategories";
+    public static String surgery_category_uri = "/api/v1/surgeryCategories";
     public static HashMap<String, String> kb_surgery_category = new HashMap<>();
 
-    public static String surgery_uri = "/surgeries";
+    public static String surgery_uri = "/api/v1/surgeries";
     public static HashMap<String, String> kb_surgery = new HashMap<>();
 
     public static String major_uri = "/diseaseCategories/listTreeNode";
     public static HashMap<String, String> kb_major = new HashMap<>();
 
-    public static String disease_uri = "/diseases";
+    public static String disease_uri = "/api/v1/diseases";
     public static HashMap<String, String> kb_disease = new HashMap<>();
+
+    public static String hospital_type_uri = "/api/v1/common/hospitalTypeList";
+    public static HashMap<String, String> kb_hospital_type = new HashMap<>();
+
+    public static String hospital_class_uri = "/api/v1/common/hospitalClassList";
+    public static HashMap<String, String> kb_hospital_class = new HashMap<>();
+
+    public static String county_uri = "/api/v1/cities/{id}/counties";
+    public static HashMap<String, String> kb_county = new HashMap<>();
 
     public static void init() {
         try {
@@ -86,7 +95,7 @@ public class KB {
             HashMap<String, String> query = new HashMap<>();
             query.put("pageSize", "1");
             query.put("page", "1");
-            String res = HttpRequest.sendGet(BaseTest.host_kb +doctor_uri, query, "", null);
+            String res = HttpRequest.sendGet(BaseTest.host_kb +doctor_uri, query, "");
             int total = Integer.parseInt(BaseTest.parseJson(JSONObject.fromObject(res), "data:size"));
             int num = total / pageSize + 1;
             int last_page_num = total - pageSize*(num-1);
@@ -94,7 +103,7 @@ public class KB {
             query.replace("pageSize", String.valueOf(pageSize));
             for (int i = 1; i < num; i++) {
                 query.replace("page", String.valueOf(i));
-                res = HttpRequest.sendGet(BaseTest.host_kb +doctor_uri, query, "", null);
+                res = HttpRequest.sendGet(BaseTest.host_kb + doctor_uri, query, "");
                 JSONArray doctor_list = JSONObject.fromObject(res).getJSONObject("data").getJSONArray("list");
                 for (int j = 0; j < pageSize; j++) {
                     JSONObject doctor = doctor_list.getJSONObject(j);
@@ -102,7 +111,7 @@ public class KB {
                 }
             }
             query.replace("page", String.valueOf(num));
-            res = HttpRequest.sendGet(BaseTest.host_kb +doctor_uri, query, "", null);
+            res = HttpRequest.sendGet(BaseTest.host_kb +doctor_uri, query, "");
             JSONArray doctor_list = JSONObject.fromObject(res).getJSONObject("data").getJSONArray("list");
             for (int j = 0; j < last_page_num; j++) {
                 JSONObject doctor = doctor_list.getJSONObject(j);
@@ -245,7 +254,7 @@ public class KB {
             query.put("diseaseCategoryId", "100");
             for (String key:kb_major.keySet()) {
                 query.replace("diseaseCategoryId", key);
-                res = HttpRequest.sendGet(BaseTest.host_kb +disease_uri, query, "", null);
+                res = HttpRequest.sendGet(BaseTest.host_kb +disease_uri, query, "");
                 int total = Integer.parseInt(BaseTest.parseJson(JSONObject.fromObject(res), "data:list()"));
                 JSONArray disease_list = JSONObject.fromObject(res).getJSONObject("data").getJSONArray("list");
                 for (int j = 0; j < disease_list.size(); j++) {
@@ -256,6 +265,59 @@ public class KB {
         } catch (Exception e) {
             logger.error("ENUM初始化失败，准备退出");
             System.exit(10);
+        }
+
+        try {
+            String res = "";
+            res = HttpRequest.sendGet(BaseTest.host_kb + hospital_class_uri, "", "");
+            int total = Integer.parseInt(BaseTest.parseJson(JSONObject.fromObject(res), "data:list()"));
+            JSONArray ct_list = JSONObject.fromObject(res).getJSONObject("data").getJSONArray("list");
+            for (int j = 0; j < total; j++) {
+                JSONObject ct = ct_list.getJSONObject(j);
+                for (String key:(Set<String>)ct.keySet()) {
+                    kb_hospital_class.put(key, ct.getString(key));
+                }
+            }
+        } catch (Exception e) {
+            logger.error("ENUM初始化失败，准备退出");
+            logger.error(e);
+            System.exit(11);
+        }
+
+        try {
+            String res = "";
+            res = HttpRequest.sendGet(BaseTest.host_kb + hospital_type_uri, "", "");
+            int total = Integer.parseInt(BaseTest.parseJson(JSONObject.fromObject(res), "data:list()"));
+            JSONArray tt_list = JSONObject.fromObject(res).getJSONObject("data").getJSONArray("list");
+            for (int j = 0; j < total; j++) {
+                JSONObject tt = tt_list.getJSONObject(j);
+                for (String key:(Set<String>)tt.keySet()) {
+                    kb_hospital_type.put(key, tt.getString(key));
+                }
+            }
+        } catch (Exception e) {
+            logger.error("ENUM初始化失败，准备退出");
+            logger.error(e);
+            System.exit(12);
+        }
+
+        try {
+            String res = "";
+            for ( String cityId: kb_city.keySet()) {
+                HashMap<String, String> pathValue = new HashMap<>();
+                pathValue.put("id", cityId);
+                res = HttpRequest.sendGet(BaseTest.host_kb + county_uri, "", "", pathValue);
+                int total = Integer.parseInt(BaseTest.parseJson(JSONObject.fromObject(res), "data:list()"));
+                JSONArray country_list = JSONObject.fromObject(res).getJSONObject("data").getJSONArray("list");
+                for (int j = 0; j < total; j++) {
+                    JSONObject country = country_list.getJSONObject(j);
+                    kb_county.put(country.getString("id"), country.getString("name"));
+                }
+            }
+        } catch (Exception e) {
+            logger.error("ENUM初始化失败，准备退出");
+            logger.error(e);
+            System.exit(13);
         }
     }
 

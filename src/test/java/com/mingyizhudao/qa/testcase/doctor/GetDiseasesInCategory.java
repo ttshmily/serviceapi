@@ -32,7 +32,7 @@ public class GetDiseasesInCategory extends BaseTest {
         checkResponse(res);
         Assert.assertNotNull(parseJson(data, "diseases()"));
         Assert.assertNotEquals(parseJson(data, "diseases():id"), "");
-        Assert.assertEquals(parseJson(data, "diseases():disease_category_id"), "6");
+//        Assert.assertEquals(parseJson(data, "diseases():disease_category_id"), "6");
         Assert.assertNotEquals(parseJson(data, "diseases():name"), "");
     }
 

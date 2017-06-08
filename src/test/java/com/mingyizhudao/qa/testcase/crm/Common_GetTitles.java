@@ -35,7 +35,5 @@ public class Common_GetTitles extends BaseTest {
         } catch (IOException e) {
             logger.error(e);
         }
-
-
     }
 }

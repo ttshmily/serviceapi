@@ -56,21 +56,21 @@ public class UpdateDoctorProfile extends BaseTest {
     public void test_01_已登录有token的用户可以更新个人信息city_id() {
         String res = "";
         DoctorProfile body = new DoctorProfile(false);
-        body.body.getJSONObject("doctor").replace("city_id", UT.randomKey(KB.kb_city));
+        body.body.getJSONObject("doctor").put("city_id", UT.randomKey(KB.kb_city));
         try {
             res = HttpRequest.sendPost(host_doc +mock+uri, body.body.toString(), mainToken);
         } catch (IOException e) {
             logger.error(e);
         }
         checkResponse(res);
-        Assert.assertEquals(code, "1000000", "我想1000000");
+        Assert.assertNotEquals(code, "1000000", "我想1000000");
     }
 
     @Test
     public void test_02_已登录有token的用户可以更新个人信息department() {
         String res = "";
         DoctorProfile body = new DoctorProfile(false);
-        body.body.getJSONObject("doctor").replace("department","尿不出来科");
+        body.body.getJSONObject("doctor").put("department","尿不出来科");
         try {
             res = HttpRequest.sendPost(host_doc +mock+uri, body.body.toString(), mainToken);
             checkResponse(res);
@@ -91,7 +91,7 @@ public class UpdateDoctorProfile extends BaseTest {
         String res = "";
         DoctorProfile body = new DoctorProfile(false);
         String key = UT.randomKey(KB.kb_hospital);
-        body.body.getJSONObject("doctor").replace("hospital_id", key);
+        body.body.getJSONObject("doctor").put("hospital_id", key);
         try {
             res = HttpRequest.sendPost(host_doc+uri, body.body.toString(), mainToken);
             checkResponse(res);
@@ -103,26 +103,36 @@ public class UpdateDoctorProfile extends BaseTest {
         } catch (IOException e) {
             logger.error(e);
         }
+        //TODO
     }
 
     @Test
     public void test_04_已登录有token的用户可以更新个人信息inviter_id() {
         String res = "";
+
         String key = UT.randomEmployeeId();
+
         JSONObject doctor = new JSONObject();
         doctor.put("inviter_no", key);
+
         JSONObject dp = new JSONObject();
         dp.put("doctor", doctor);
-        try {
-            res = HttpRequest.sendPost(host_doc+uri, dp.toString(), mainToken);
-            checkResponse(res);
-            Assert.assertEquals(code, "1000000");
-            res = GetDoctorProfile.getDoctorProfile(mainToken);
-            checkResponse(res);
-            Assert.assertEquals(code, "1000000");
-            Assert.assertEquals(parseJson(data, "doctor:inviter_no"), key);
-        } catch (IOException e) {
-            logger.error(e);
+
+        for( int i=0; i<10; i++) {
+            key = UT.randomEmployeeId();
+            doctor.replace("inviter_no", key);
+            dp.replace("doctor", doctor);
+            try {
+                res = HttpRequest.sendPost(host_doc + uri, dp.toString(), mainToken);
+                checkResponse(res);
+                Assert.assertEquals(code, "1000000");
+                res = GetDoctorProfile.getDoctorProfile(mainToken);
+                checkResponse(res);
+                Assert.assertEquals(code, "1000000");
+                Assert.assertEquals(parseJson(data, "doctor:inviter_no"), key);
+            } catch (IOException e) {
+                logger.error(e);
+            }
         }
 
     }
@@ -132,7 +142,7 @@ public class UpdateDoctorProfile extends BaseTest {
         String res = "";
         DoctorProfile body = new DoctorProfile(false);
         String key = UT.randomKey(KB.kb_major);
-        body.body.getJSONObject("doctor").replace("major_id",key);
+        body.body.getJSONObject("doctor").put("major_id",key);
         try {
             res = HttpRequest.sendPost(host_doc+uri, body.body.toString(), mainToken);
             checkResponse(res);
@@ -176,14 +186,14 @@ public class UpdateDoctorProfile extends BaseTest {
     public void test_08_禁止更新city_name字段() {
         String res = "";
         DoctorProfile body = new DoctorProfile(false);
-        body.body.getJSONObject("doctor").replace("city_name", "城市");
+        body.body.getJSONObject("doctor").put("city_name", "城市");
         try {
             res = HttpRequest.sendPost(host_doc+uri, body.body.toString(), mainToken);
         } catch (IOException e) {
             logger.error(e);
         }
         checkResponse(res);
-        Assert.assertEquals(code, "1000000");
+        Assert.assertNotEquals(code, "1000000");
         res = GetDoctorProfile.getDoctorProfile(mainToken);
         checkResponse(res);
         Assert.assertNotEquals(parseJson(data, "doctor:city_name"), "城市", "城市名称不应该改变");
@@ -257,7 +267,7 @@ public class UpdateDoctorProfile extends BaseTest {
     public void test_10_禁止更新major_name字段() {
         String res = "";
         DoctorProfile dp = new DoctorProfile(true);
-        dp.body.getJSONObject("doctor").replace("major_name", "测试专业");
+        dp.body.getJSONObject("doctor").put("major_name", "测试专业");
         try {
             res = HttpRequest.sendPost(host_doc +mock+uri, dp.body.toString(), mainToken);
         } catch (IOException e) {
@@ -326,14 +336,14 @@ public class UpdateDoctorProfile extends BaseTest {
     public void test_11_禁止更新inviter_name字段() {
         String res = "";
         DoctorProfile body = new DoctorProfile(false);
-        body.body.getJSONObject("doctor").replace("inviter_name", "大一");
+        body.body.getJSONObject("doctor").put("inviter_name", "大一");
         try {
             res = HttpRequest.sendPost(host_doc +mock+uri, body.body.toString(), mainToken);
         } catch (IOException e) {
             logger.error(e);
         }
         checkResponse(res);
-        Assert.assertEquals(code, "1000000");
+        Assert.assertNotEquals(code, "1000000");
         res = GetDoctorProfile.getDoctorProfile(mainToken);
         checkResponse(res);
         Assert.assertNotEquals(parseJson(data, "doctor:inviter_name"), "大一", "地推名称不应该改变");
@@ -344,7 +354,7 @@ public class UpdateDoctorProfile extends BaseTest {
     public void test_12_单独更新非法的inviter_no字段() {
         String res = "";
         DoctorProfile body = new DoctorProfile(false);
-        body.body.getJSONObject("doctor").replace("inviter_no", "GF001");
+        body.body.getJSONObject("doctor").put("inviter_no", "GF001");
         try {
             res = HttpRequest.sendPost(host_doc +mock+uri, body.body.toString(), mainToken);
         } catch (IOException e) {

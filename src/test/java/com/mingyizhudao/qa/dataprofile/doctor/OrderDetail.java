@@ -31,17 +31,7 @@ public class OrderDetail {
             order.accumulate("medical_record_pictures", JSONObject.fromObject("{'key':'2017/05/04/1265834e-97d8-44a0-95e7-047c7facaee8/IMG_20170429_102737.jpg';'type':'1'}"));
             order.accumulate("medical_record_pictures", JSONObject.fromObject("{'key':'2017/05/04/1315bbe0-2836-4776-8216-ec55044f32dd/IMG_20161013_172442.jpg';'type':'1'}"));
         } else {
-            order.put("patient_name", "");
-            order.put("patient_gender", "");
-            order.put("patient_age", "");
-            order.put("patient_phone", "");
-            order.put("major_disease_id", "");
-            order.put("minor_disease_id", "");
-            order.put("diagnosis", "");
-            order.put("expected_surgery_start_date", "");
-            order.put("expected_surgery_due_date", "");
-            order.put("expected_surgery_hospital_id", "");
-            order.put("medical_record_pictures", pics.toString());
+
         }
         body.put("order",order);
     }

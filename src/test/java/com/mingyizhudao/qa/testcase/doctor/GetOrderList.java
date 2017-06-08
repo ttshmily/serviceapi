@@ -2,7 +2,6 @@ package com.mingyizhudao.qa.testcase.doctor;
 
 import com.mingyizhudao.qa.common.BaseTest;
 import com.mingyizhudao.qa.dataprofile.doctor.DoctorProfile;
-import com.mingyizhudao.qa.testcase.CrmCertifiedDoctor;
 import com.mingyizhudao.qa.testcase.crm.Order_ReceiveTask;
 import com.mingyizhudao.qa.testcase.crm.Order_RecommendDoctor;
 import com.mingyizhudao.qa.testcase.crm.Order_ThreewayCall;
@@ -16,7 +15,6 @@ import org.testng.Assert;
 import org.testng.annotations.Test;
 
 import java.io.IOException;
-import java.util.HashMap;
 
 import static org.testng.Assert.fail;
 
@@ -150,7 +148,7 @@ public class GetOrderList extends BaseTest{
     }
 
     @Test
-    public void test_04_获取订单列表_推荐医生的病历不展示上级医生信息() {
+    public void test_04_获取订单列表_推荐医生后病历不展示上级医生信息() {
         String res = "";
         logger.info("创建订单with mainToken");
         String orderId = CreateOrder.CreateOrder(mainToken);
@@ -184,7 +182,7 @@ public class GetOrderList extends BaseTest{
     }
 
     @Test
-    public void test_05_获取订单列表_推荐医生的病历不展示上级医生信息() {
+    public void test_05_获取订单列表_三方通话成功后病历上展示上级医生信息() {
         String res = "";
         logger.info("创建订单with mainToken");
         String orderId = CreateOrder.CreateOrder(mainToken);
@@ -222,7 +220,7 @@ public class GetOrderList extends BaseTest{
         Assert.assertNotNull(parseJson(data,"order():surgeon_id"), "手术医生ID字段不能缺失");
         Assert.assertNotNull(parseJson(data,"order():surgeon_name"), "手术医生姓名字段不能缺失");
         Assert.assertNotNull(parseJson(data,"order():surgeon_hospital"), "手术医生所在医院字段不能缺失");
-        Assert.assertNotNull(parseJson(data,"order():surgeon_medical_title"), "手术医生学术职称字段不能缺失");
+        Assert.assertNotNull(parseJson(data,"order():surgeon_medical_title"), "手术医生技术职称字段不能缺失");
+        Assert.assertNotNull(parseJson(data,"order():surgeon_academic_title"), "手术医生学术职称字段不能缺失");
     }
-
 }
