@@ -59,11 +59,11 @@ public class KBExpert_Detail extends BaseTest {
         Assert.assertEquals(parseJson(data, "major_id"), ep.body.getString("major_id"));
         Assert.assertEquals(parseJson(data, "hospital_name"), KB.kb_hospital.get(ep.body.getString("hospital_id")));
         Assert.assertEquals(parseJson(data, "honour"), ep.body.getString("honour"));
+        String expert_city_id = parseJson(data, "city_id");
+        HashMap<String, String> hospitalInfo = KBHospital_Detail.Detail(ep.body.getString("hospital_id"));
 
-        JSONObject node = JSONObject.fromObject(KBHospital_Detail.Detail(ep.body.getString("hospital_id")));
-
-        String city_id = node.getJSONObject("data").getString("city_id");
-        Assert.assertEquals(parseJson(data, "city_id"), city_id);
+        String hospital_city_id = hospitalInfo.get("city_id");
+        Assert.assertEquals(hospital_city_id, expert_city_id);
 
         Assert.assertEquals(parseJson(data, "certified_status"), "NOT_CERTIFIED");
         Assert.assertEquals(parseJson(data, "signed_status"), "NOT_SIGNED");

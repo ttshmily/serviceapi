@@ -4,6 +4,8 @@ import com.mingyizhudao.qa.common.BaseTest;
 import com.mingyizhudao.qa.dataprofile.crm.HospitalProfile;
 import com.mingyizhudao.qa.util.HttpRequest;
 import com.mingyizhudao.qa.util.UT;
+import net.sf.json.JSONArray;
+import net.sf.json.JSONObject;
 import org.apache.log4j.Logger;
 import org.testng.Assert;
 import org.testng.annotations.Test;
@@ -20,16 +22,43 @@ public class KBHospital_Detail extends BaseTest {
     public static String mock = false ? "/mockjs/1" : "";
     public static String token= "";
 
-    public static String Detail(String hospitalId) {
+    public static HashMap<String, String> Detail(String hospitalId) {
         String res = "";
+        JSONObject hospital = null;
         HashMap<String, String> pathValue = new HashMap<>();
         pathValue.put("hospital_id", hospitalId);
         try {
             res = HttpRequest.sendGet(host_crm+uri,"", crm_token, pathValue);
+            hospital = JSONObject.fromObject(res).getJSONObject("data");
         } catch (IOException e) {
             logger.error(e);
         }
-        return res;
+        if (null == hospital) return null;
+        HashMap<String, String> result = new HashMap<>();
+        String cityId = hospital.containsKey("city_id") ? hospital.getString("city_id") : null;
+        String countyId = hospital.containsKey("county_id") ? hospital.getString("county_id") : null;
+        String name = hospital.containsKey("name") ? hospital.getString("name") : null;
+        String short_name = hospital.containsKey("short_name") ? hospital.getString("short_name") : null;
+        String type_list = hospital.containsKey("type_list") ? hospital.getString("type_list") : "";
+        String hospital_class_list = hospital.containsKey("hospital_class_list") ? hospital.getString("hospital_class_list") : null;
+        String city_name = hospital.containsKey("city_name") ? hospital.getString("city_name") : null;
+        String county_name = hospital.containsKey("county_name") ? hospital.getString("county_name") : null;
+        String phone = hospital.containsKey("phone") ? hospital.getString("phone") : null;
+        String description = hospital.containsKey("description") ? hospital.getString("description") : null;
+        String photo_url = hospital.containsKey("photo_url") ? hospital.getString("photo_url") : null;
+        result.put("city_id", cityId);
+        result.put("city_name", city_name);
+        result.put("county_id", countyId);
+        result.put("county_name", county_name);
+        result.put("id", hospitalId);
+        result.put("name", name);
+        result.put("short_name", short_name);
+        result.put("type_list", type_list);
+        result.put("hospital_class_list", hospital_class_list);
+        result.put("phone", phone);
+        result.put("description", description);
+        result.put("photo_url", photo_url);
+        return result;
     }
 
     @Test

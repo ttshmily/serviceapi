@@ -279,7 +279,31 @@ public class CreateOrder extends BaseTest {
     }
 
     @Test
-    public void test_09_创建订单_信息齐备_未认证医生不可以创建() {
+    public void test_09_创建订单_信息齐备_认证中的医生没有邀请者不可以创建() {
+
+        String res = "";
+        logger.info("创建一个新的未认证医生");
+        SendVerifyCode.send();
+        String tmpToken = CheckVerifyCode.check();
+        res = GetDoctorProfile.getDoctorProfile(tmpToken);
+        logger.info("tmpDoctorId为"+JSONObject.fromObject(res).getJSONObject("data").getJSONObject("doctor").getString("user_id"));
+        DoctorProfile dp = new DoctorProfile(true);
+        dp.body.getJSONObject("doctor").remove("inviter_no");
+        UpdateDoctorProfile.updateDoctorProfile(tmpToken, dp);
+        logger.info("创建未认证医生成功");
+        OrderDetail order = new OrderDetail(true);
+        try {
+            res = HttpRequest.sendPost(host_doc + uri, order.body.toString(), tmpToken);
+        } catch (IOException e) {
+            logger.error(e);
+        }
+        checkResponse(res);
+        Assert.assertNotEquals(code, "1000000");
+        Assert.assertEquals(message, "医生未认证");
+    }
+
+    @Test
+    public void test_10_创建订单_信息齐备_认证中的医生有邀请者可以创建() {
 
         String res = "";
         logger.info("创建一个新的未认证医生");
@@ -297,12 +321,11 @@ public class CreateOrder extends BaseTest {
             logger.error(e);
         }
         checkResponse(res);
-        Assert.assertEquals(code, "2210409");
-        Assert.assertEquals(message, "医生未认证");
+        Assert.assertEquals(code, "1000000");
     }
 
     @Test
-    public void test_10_创建订单_信息齐备_期望手术医院不传() {
+    public void test_11_创建订单_信息齐备_期望手术医院不传() {
 
         String res = "";
 

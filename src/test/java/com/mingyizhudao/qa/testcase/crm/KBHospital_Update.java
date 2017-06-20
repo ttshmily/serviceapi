@@ -86,9 +86,9 @@ public class KBHospital_Update extends BaseTest {
         checkResponse(res);
         Assert.assertEquals(code, "1000000", "医院名称未更新成功");
 
-        res = KBHospital_Detail.Detail(hospitalId);
-        checkResponse(res);
-        Assert.assertEquals(parseJson(data, "name"), name, "医院名称未更新成功");
+        HashMap<String, String> hospitalInfo = KBHospital_Detail.Detail(hospitalId);
+        String actual_name = hospitalInfo.get("name");
+        Assert.assertEquals(actual_name, name, "医院名称未更新成功");
     }
 
     //    body.put("short_name", "测试短名" + tmp.substring(8));
@@ -112,9 +112,9 @@ public class KBHospital_Update extends BaseTest {
         checkResponse(res);
         Assert.assertEquals(code, "1000000", "短名没有更新成功");
 
-        res = KBHospital_Detail.Detail(hospitalId);
-        checkResponse(res);
-        Assert.assertEquals(parseJson(data, "short_name"), short_name, "短名没有更新成功");
+        HashMap<String, String> hospitalInfo = KBHospital_Detail.Detail(hospitalId);
+        String actual_short_name = hospitalInfo.get("short_name");
+        Assert.assertEquals(actual_short_name, short_name, "短名没有更新成功");
     }
     //    body.put("hospital_class_list", UT.randomKey(KB.kb_hospital_class));
     @Test
@@ -137,9 +137,9 @@ public class KBHospital_Update extends BaseTest {
         checkResponse(res);
         Assert.assertEquals(code, "1000000", "医院等级没有更新成功");
 
-        res = KBHospital_Detail.Detail(hospitalId);
-        checkResponse(res);
-        Assert.assertEquals(parseJson(data, "hospital_class_list"), hospital_class_list, "医院等级没有更新成功");
+        HashMap<String, String> hospitalInfo = KBHospital_Detail.Detail(hospitalId);
+        String actual_hospital_class_list = hospitalInfo.get("hospital_class_list");
+        Assert.assertEquals(actual_hospital_class_list, hospital_class_list, "医院等级没有更新成功");
     }
     //    body.put("type_list", UT.randomKey(KB.kb_hospital_type));
     @Test
@@ -162,9 +162,9 @@ public class KBHospital_Update extends BaseTest {
         checkResponse(res);
         Assert.assertEquals(code, "1000000", "医院类型没有更新成功");
 
-        res = KBHospital_Detail.Detail(hospitalId);
-        checkResponse(res);
-        Assert.assertEquals(parseJson(data, "type_list"), type_list, "医院类型没有更新成功");
+        HashMap<String, String> hospitalInfo = KBHospital_Detail.Detail(hospitalId);
+        String actual_type_list = hospitalInfo.get("type_list");
+        Assert.assertEquals(actual_type_list, type_list, "医院类型没有更新成功");
     }
     //    body.put("city_id", UT.randomCityId());
     @Test
@@ -186,10 +186,11 @@ public class KBHospital_Update extends BaseTest {
         } catch (IOException e) {
             logger.error(e);
         }
-        res = KBHospital_Detail.Detail(hospitalId);
-        checkResponse(res);
-        Assert.assertEquals(parseJson(data, "city_id"), city_id, "医院城市没有更新成功");
-        Assert.assertEquals(parseJson(data, "city_name"), UT.cityName(city_id), "医院城市没有更新成功");
+        HashMap<String, String> hospitalInfo = KBHospital_Detail.Detail(hospitalId);
+        String actual_city_id = hospitalInfo.get("city_id");
+        String actual_city_name = hospitalInfo.get("city_name");
+        Assert.assertEquals(actual_city_id, city_id, "医院城市没有更新成功");
+        Assert.assertEquals(actual_city_name, UT.cityName(city_id), "医院城市没有更新成功");
 
         hpModified.body.replace("city_id", "11"+city_id);
         try {
@@ -199,10 +200,9 @@ public class KBHospital_Update extends BaseTest {
         } catch (IOException e) {
             logger.error(e);
         }
-        res = KBHospital_Detail.Detail(hospitalId);
-        checkResponse(res);
-        Assert.assertEquals(parseJson(data, "city_id"), city_id, "医院城市没有更新成功");
-        Assert.assertEquals(parseJson(data, "city_name"), UT.cityName(city_id), "医院城市没有更新成功");
+        hospitalInfo = KBHospital_Detail.Detail(hospitalId);
+        Assert.assertEquals(hospitalInfo.get("city_id"), city_id, "医院城市没有更新成功");
+        Assert.assertEquals(hospitalInfo.get("city_name"), UT.cityName(city_id), "医院城市没有更新成功");
     }
     //    body.put("county_id", UT.randomCountryId());
     @Test
@@ -225,10 +225,11 @@ public class KBHospital_Update extends BaseTest {
         checkResponse(res);
         Assert.assertEquals(code, "1000000", "医院城市没有更新成功");
 
-        res = KBHospital_Detail.Detail(hospitalId);
-        checkResponse(res);
-        Assert.assertEquals(parseJson(data, "county_id"), county_id, "医院地区没有更新成功");
-        Assert.assertEquals(parseJson(data, "county_name"), UT.countyName(county_id), "医院地区没有更新成功");
+        HashMap<String, String> hospitalInfo = KBHospital_Detail.Detail(hospitalId);
+        String actual_county_id = hospitalInfo.get("county_id");
+        String actual_county_name = hospitalInfo.get("county_name");
+        Assert.assertEquals(actual_county_id, county_id, "医院区县没有更新成功");
+        Assert.assertEquals(actual_county_name, UT.countyName(county_id), "医院区县没有更新成功");
     }
     //    body.put("phone", "" + UT.randomPhone());
     @Test
@@ -250,10 +251,9 @@ public class KBHospital_Update extends BaseTest {
         }
         checkResponse(res);
         Assert.assertEquals(code, "1000000", "医院电话没有更新成功");
-
-        res = KBHospital_Detail.Detail(hospitalId);
-        checkResponse(res);
-        Assert.assertEquals(parseJson(data, "phone"), phone, "医院电话没有更新成功");
+        HashMap<String, String> hospitalInfo = KBHospital_Detail.Detail(hospitalId);
+        String actual_phone = hospitalInfo.get("phone");
+        Assert.assertEquals(actual_phone, phone, "医院电话没有更新成功");
     }
     //    body.put("description", "医库医院描述" + UT.randomString(30));
     @Test
@@ -274,11 +274,11 @@ public class KBHospital_Update extends BaseTest {
             logger.error(e);
         }
         checkResponse(res);
-        Assert.assertEquals(code, "1000000", "医院电话没有更新成功");
+        Assert.assertEquals(code, "1000000", "医院描述没有更新成功");
 
-        res = KBHospital_Detail.Detail(hospitalId);
-        checkResponse(res);
-        Assert.assertEquals(parseJson(data, "description"), description, "医院电话没有更新成功");
+        HashMap<String, String> hospitalInfo = KBHospital_Detail.Detail(hospitalId);
+        String actual_description = hospitalInfo.get("description");
+        Assert.assertEquals(actual_description, description, "医院描述没有更新成功");
     }
 
     @Test(enabled = true)
@@ -314,9 +314,11 @@ public class KBHospital_Update extends BaseTest {
         checkResponse(res);
         Assert.assertEquals(code, "1000000", "医院图片更新失败");
 
-        res = KBHospital_Detail.Detail(hospitalId);
-        checkResponse(res);
-        Assert.assertEquals(parseJson(data, "photo_url()"), "3", "医院图片更新失败");
-        Assert.assertNotNull(parseJson(data, "photo_url():url"), "医院图片更新失败");
+        HashMap<String, String> hospitalInfo = KBHospital_Detail.Detail(hospitalId);
+        String actual_photo_url = hospitalInfo.get("photo_url");
+        JSONArray photos = JSONArray.fromObject(actual_photo_url);
+        int size = photos.size();
+        Assert.assertEquals(size, 3, "医院图片更新失败");
+        Assert.assertNotNull(photos.getJSONObject(0).getString("url"), "医院图片更新失败");
     }
 }
