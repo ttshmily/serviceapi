@@ -376,7 +376,5 @@ public class UpdateDoctorProfile extends BaseTest {
         Assert.assertNotNull(parseJson(data, "doctor:doctor_card_pictures(0):thumbnailPicture"), "thumbnailPicture值错误");
     }
 
-
-
 }
 

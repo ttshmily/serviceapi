@@ -365,4 +365,56 @@ public class KBExpert_Diseases extends BaseTest {
 //            Assert.assertTrue(outputString.contains(inputString.get(i)));
 //        }
     }
+
+    @Test
+    public void test_06_去除所有疾病ID() {
+        String res = "";
+        ExpertProfile ep = new ExpertProfile(true);
+        HashMap<String, String> info = KBExpert_Create.Create(ep);
+        if (info == null) Assert.fail("创建医库医生失败，退出用例执行");
+        String expertId = info.get("id");
+        HashMap<String, String> pathValue = new HashMap<>();
+        pathValue.put("doctor_id", expertId);
+
+        List<String> inputString = new ArrayList<>();
+        JSONObject diseaseList = new JSONObject();
+        String id = UT.randomDiseaseId();
+        diseaseList.accumulate("disease_ids", id);
+        inputString.add(id);
+        id = UT.randomDiseaseId();
+        diseaseList.accumulate("disease_ids", id);
+        inputString.add(id);
+        id = UT.randomDiseaseId();
+        diseaseList.accumulate("disease_ids", id);
+        inputString.add(id);
+        id = UT.randomDiseaseId();
+        diseaseList.accumulate("disease_ids", id);
+        inputString.add(id);
+        id = UT.randomDiseaseId();
+        diseaseList.accumulate("disease_ids", id);
+        inputString.add(id);
+        System.out.println(inputString);
+
+        List<String> outputString = new ArrayList<>();
+        try {
+            res = HttpRequest.sendPost(host_crm+uri, diseaseList.toString(), crm_token, pathValue);
+        } catch (IOException e) {
+            logger.error(e);
+        }
+        checkResponse(res);
+        Assert.assertEquals(code, "1000000");
+
+        diseaseList.replace("disease_ids","[]");
+        try {
+            res = HttpRequest.sendPost(host_crm+uri, diseaseList.toString(), crm_token, pathValue);
+        } catch (IOException e) {
+            logger.error(e);
+        }
+        checkResponse(res);
+        Assert.assertEquals(code, "1000000");
+
+        res = KBExpert_Detail.Detail(expertId);
+        checkResponse(res);
+        Assert.assertEquals(data.getJSONArray("disease_list").size(), 0);
+    }
 }

@@ -317,7 +317,7 @@ public class RegisteredDoctor_Modify extends BaseTest {
         body.accumulate("doctor_card_pictures", JSONObject.fromObject("{'key':'2017/05/04/1265834e-97d8-44a0-95e7-047c7facaee8/IMG_20170429_102737.jpg';'type':'3'}").toString());
         body.accumulate("doctor_card_pictures", JSONObject.fromObject("{'key':'2017/05/04/1265834e-97d8-44a0-95e7-047c7facaee8/IMG_20170429_102738.jpg';'type':'3'}").toString());
         body.accumulate("doctor_card_pictures", JSONObject.fromObject("{'key':'2017/05/04/1265834e-97d8-44a0-95e7-047c7facaee8/IMG_20170429_102739.jpg';'type':'3'}").toString());
-
+        body.accumulate("doctor_card_pictures", JSONObject.fromObject("{'key':'2017/05/04/1265834e-97d8-44a0-95e7-047c7facaee8/IMG_20170429_102736.jpg';'type':'3'}").toString());
         try {
             res = HttpRequest.sendPut(host_crm+uri, body.toString(), crm_token, pathValue);
         } catch (IOException e) {
@@ -329,8 +329,68 @@ public class RegisteredDoctor_Modify extends BaseTest {
         res = RegisteredDoctor_Detail.Detail(mainDoctorId);
         checkResponse(res);
         Assert.assertNotNull(parseJson(data, "doctor_card_pictures"));
-        Assert.assertEquals(parseJson(data, "doctor_card_pictures()"), "3");
-    }
+        int actual_size = Integer.parseInt(parseJson(data, "doctor_card_pictures()"));
+        Assert.assertEquals(actual_size, body.getJSONArray("doctor_card_pictures").size());
+        for (int i=0; i<actual_size; i++) {
+            Assert.assertEquals(parseJson(data, "doctor_card_pictures("+i+"):key"), body.getJSONArray("doctor_card_pictures").getJSONObject(i).getString("key"));
+        }
 
+
+        body.accumulate("doctor_card_pictures", JSONObject.fromObject("{'key':'2017/05/04/1265834e-97d8-44a0-95e7-047c7facaee8/IMG_20170429_102740.jpg';'type':'3'}").toString());
+        try {
+            res = HttpRequest.sendPut(host_crm+uri, body.toString(), crm_token, pathValue);
+        } catch (IOException e) {
+            logger.error(e);
+        }
+        logger.debug(res);
+        checkResponse(res);
+        Assert.assertEquals(code, "1000000");
+
+        res = RegisteredDoctor_Detail.Detail(mainDoctorId);
+        checkResponse(res);
+        Assert.assertNotNull(parseJson(data, "doctor_card_pictures"));
+        actual_size = Integer.parseInt(parseJson(data, "doctor_card_pictures()"));
+        Assert.assertEquals(actual_size, body.getJSONArray("doctor_card_pictures").size());
+        for (int i=0; i<actual_size; i++) {
+            Assert.assertEquals(parseJson(data, "doctor_card_pictures("+i+"):key"), body.getJSONArray("doctor_card_pictures").getJSONObject(i).getString("key"));
+        }
+
+        body.accumulate("doctor_card_pictures", JSONObject.fromObject("{'key':'2017/05/04/1265834e-97d8-44a0-95e7-047c7facaee8/IMG_20170429_102741.jpg';'type':'3'}").toString());
+        try {
+            res = HttpRequest.sendPut(host_crm+uri, body.toString(), crm_token, pathValue);
+        } catch (IOException e) {
+            logger.error(e);
+        }
+        checkResponse(res);
+        Assert.assertEquals(code, "1000000");
+
+        res = RegisteredDoctor_Detail.Detail(mainDoctorId);
+        checkResponse(res);
+        Assert.assertNotNull(parseJson(data, "doctor_card_pictures"));
+        actual_size = Integer.parseInt(parseJson(data, "doctor_card_pictures()"));
+        Assert.assertEquals(actual_size, body.getJSONArray("doctor_card_pictures").size());
+        for (int i=0; i<actual_size; i++) {
+            Assert.assertEquals(parseJson(data, "doctor_card_pictures("+i+"):key"), body.getJSONArray("doctor_card_pictures").getJSONObject(i).getString("key"));
+        }
+// 删除所有图片
+        body.replace("doctor_card_pictures", "[]");
+        try {
+            res = HttpRequest.sendPut(host_crm+uri, body.toString(), crm_token, pathValue);
+        } catch (IOException e) {
+            logger.error(e);
+        }
+        checkResponse(res);
+        Assert.assertEquals(code, "1000000");
+
+        res = RegisteredDoctor_Detail.Detail(mainDoctorId);
+        checkResponse(res);
+        Assert.assertNotNull(parseJson(data, "doctor_card_pictures_deleted"));
+        Assert.assertEquals(actual_size, body.getJSONArray("doctor_card_pictures").size());
+        for (int i=0; i<actual_size; i++) {
+            Assert.assertEquals(parseJson(data, "doctor_card_pictures_deleted("+i+"):key"), body.getJSONArray("doctor_card_pictures_deleted").getJSONObject(i).getString("key"));
+        }
+
+
+    }
 
 }

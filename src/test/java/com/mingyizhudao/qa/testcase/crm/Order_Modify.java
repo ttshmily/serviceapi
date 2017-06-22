@@ -240,5 +240,18 @@ public class Order_Modify extends BaseTest {
         Assert.assertEquals(parseJson(data, "medical_record_pictures(0):type"), "1");
         Assert.assertNotNull(parseJson(data, "medical_record_pictures(0):thumbnailPicture"), "缺少缩略图");
         Assert.assertNotNull(parseJson(data, "medical_record_pictures(0):largePicture"), "缺少大图");
+
+        pics = JSONArray.fromObject("[]");
+        body.replace("medical_record_pictures",pics);
+        try {
+            res = HttpRequest.sendPut(host_crm+uri, body.toString(), crm_token, pathValue);
+        } catch (IOException e) {
+            logger.error(e);
+        }
+        checkResponse(res);
+        Assert.assertEquals(code, "1000000");
+        res = Order_Detail.Detail(order_number);
+        checkResponse(res);
+        Assert.assertEquals(parseJson(data, "medical_record_pictures()"), "0");
     }
 }
