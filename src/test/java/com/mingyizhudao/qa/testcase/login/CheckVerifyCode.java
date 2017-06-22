@@ -36,7 +36,7 @@ public class CheckVerifyCode extends BaseTest{
         }
 //        logger.info("返回数据: " + JSONObject.fromObject(res).toString());
 
-        if (!tmpToken.isEmpty() && null != tmpToken) {
+        if (null != tmpToken  && !tmpToken.isEmpty()) {
             logger.info("token是: " + tmpToken);
             token = tmpToken;
             Refresh.token = tmpToken;
