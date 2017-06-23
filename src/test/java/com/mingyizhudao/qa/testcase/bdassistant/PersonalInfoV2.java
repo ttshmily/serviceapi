@@ -34,6 +34,8 @@ public class PersonalInfoV2 extends BaseTest {
         for (int j=0; j<bd_city_list.size(); j++) {
             cities.add(bd_city_list.getJSONObject(j).getString("city_id"));
         }
+        // TODO
+        return result;
     }
     @Test
     public void test_01_没有token或token错误返回错误码(){
