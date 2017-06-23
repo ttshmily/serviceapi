@@ -30,6 +30,7 @@ public class RegisteredDoctor_Certify_V2 extends BaseTest {
             return null;
         }
         res = RegisteredDoctor_Detail.Detail(regId);
+        logger.debug(HttpRequest.unicodeString(res));
         if (parseJson(JSONObject.fromObject(res), "data:is_verified").equals("1")) {
             logger.info("已认证医生");
             result.put("is_verified", "1");

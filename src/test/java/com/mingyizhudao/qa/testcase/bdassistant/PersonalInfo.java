@@ -19,7 +19,7 @@ import java.util.HashMap;
  */
 public class PersonalInfo extends BaseTest {
 
-    public static final Logger logger= Logger.getLogger(DoctorList.class);
+    public static final Logger logger= Logger.getLogger(PersonalInfo.class);
     public static String uri = "/api/v1/user/personal";
     public static String mock = false ? "/mockjs/1" : "";
 

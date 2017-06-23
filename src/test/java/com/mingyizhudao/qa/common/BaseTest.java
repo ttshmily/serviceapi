@@ -42,6 +42,7 @@ public class BaseTest {
     public static String mainDoctorHospitalName = "";
     public static String mainExpertId = "";
     public static DoctorProfile mainDP;
+    public static String mainBD = "SH0133";
 
     public static String mainOperatorId = "";
     public static String mainOperatorName = "";
@@ -133,6 +134,7 @@ public class BaseTest {
         mainOperatorName = "方超（男）";
         mainOperatorRole = "";
 
+
     }
 
     @BeforeClass
@@ -160,21 +162,20 @@ public class BaseTest {
     @BeforeMethod
     public void setUpTC(Method method) throws Exception {
         logger.info(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> ");
-        logger.info("TestCase START:\t" + method.getName());
+        logger.info("||    TestCase START:\t" + method.getName());
         logger.info(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> \n");
     }
 
     @AfterMethod
     public void tearDownTC(Method method) {
         logger.info("<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< ");
-        logger.info("TestCase END:\t" + method.getName());
+        logger.info("||    TestCase END:\t" + method.getName());
         logger.info("<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< \n");
     }
 
     public static String parseJson(JSONObject node, String path) {
 
         if (node == null) return null;
-
         if (!path.contains(":")) {
             if ( path.indexOf("(")+1 == path.indexOf(")") ) { // 不指定数组坐标
                 if (node.getJSONArray(path.substring(0,path.length()-2)).size() >= 0) { //jsonArray不为空
@@ -239,6 +240,7 @@ public class BaseTest {
         logger.info("<<<<<< [ data ]:\t" + data);
     }
 
+//    生成一个医生用户
     public static String CreateRegistered() {
         logger.info("创建注册用户...");
         String mobile = SendVerifyCode.send();
@@ -253,6 +255,7 @@ public class BaseTest {
         return doctorId.isEmpty() ? null : doctorId;
     }
 
+    //创建一个医生，并且完善信息
     public static HashMap<String, String> CreateRegisteredDoctor(DoctorProfile dp) {
         logger.info("创建医生...");
         HashMap<String,String> info = new HashMap<>();
@@ -283,7 +286,7 @@ public class BaseTest {
         return info;
     }
 
-
+// 创建一个医生并且认证他
     public HashMap<String, String> CreateVerifiedDoctor(DoctorProfile dp) {
         logger.info("创建医生...");
         HashMap<String,String> info = new HashMap<>();
@@ -309,11 +312,7 @@ public class BaseTest {
         logger.info("doctorHospitalName为:\t"+doctorHospitalName);
 
         logger.info("认证医生信息...");
-//        RegisteredDoctor_Certify.certify(doctorId, "1");
         HashMap<String, String> tmp = RegisteredDoctor_Certify_V2.certify(doctorId, "1");
-//        res = GetDoctorProfile.getDoctorProfile(token);
-//        JSONObject node = JSONObject.fromObject(res).getJSONObject("data").getJSONObject("doctor");
-//        logger.debug(node.toString());
         String is_verified = tmp.get("is_verified");
         String expertId = tmp.get("register_id");
         if (!is_verified.equals("1")) {
