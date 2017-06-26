@@ -426,11 +426,31 @@ public class KBExpert_List extends BaseTest {
         }
         checkResponse(res);
         Assert.assertEquals(code, "1000000");
-        //TODO
         JSONArray exp_list = data.getJSONArray("list");
         for (int i=0; i<exp_list.size(); i++) {
             JSONObject exp = exp_list.getJSONObject(i);
             Assert.assertEquals(exp.getString("certified_status"), "CERTIFIED");
+        }
+    }
+
+    @Test
+    public void test_11_获取医库医生列表_根据精确姓名() {
+
+        String res = "";
+        HashMap<String, String> query = new HashMap<>();
+
+        query.put("exactName",mainDoctorName);
+        try {
+            res = HttpRequest.sendGet(host_crm+uri, query, crm_token);
+        } catch (IOException e) {
+            logger.error(e);
+        }
+        checkResponse(res);
+        Assert.assertEquals(code, "1000000");
+        JSONArray exp_list = data.getJSONArray("list");
+        for (int i=0; i<exp_list.size(); i++) {
+            JSONObject exp = exp_list.getJSONObject(i);
+            Assert.assertEquals(exp.getString("name"), mainDoctorName);
         }
     }
 }

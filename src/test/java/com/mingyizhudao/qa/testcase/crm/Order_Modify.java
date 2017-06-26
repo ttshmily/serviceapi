@@ -4,6 +4,7 @@ import com.mingyizhudao.qa.common.BaseTest;
 import com.mingyizhudao.qa.testcase.doctor.CreateOrder;
 import com.mingyizhudao.qa.util.HttpRequest;
 import com.mingyizhudao.qa.util.UT;
+import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 import org.apache.log4j.Logger;
 import org.testng.Assert;
@@ -211,5 +212,46 @@ public class Order_Modify extends BaseTest {
         res = Order_Detail.Detail(order_number);
         checkResponse(res);
         Assert.assertNotEquals(parseJson(data, "patient_mobile"), "13799990123");
+    }
+
+    @Test
+    public void test_09_修改订单_图片资料() {
+
+        String res = "";
+        String order_number = CreateOrder.CreateOrder(mainToken); // create an order
+        Order_ReceiveTask.receiveTask(order_number);
+        String expId = UT.randomExpertId();
+        Order_RecommendDoctor.recommendDoctor(order_number, expId);
+        HashMap<String, String> pathValue = new HashMap<>();
+        pathValue.put("orderNumber", order_number);
+        JSONObject body = new JSONObject();
+        JSONArray pics = JSONArray.fromObject("[{'key':'2017/05/04/1265834e-97d8-44a0-95e7-047c7facaee8/IMG_20170429_102737.jpg';'type':'1'},{'key':'2017/05/04/1265834e-97d8-44a0-95e7-047c7facaee8/IMG_20170429_102738.jpg';'type':'1'},{'key':'2017/05/04/1265834e-97d8-44a0-95e7-047c7facaee8/IMG_20170429_102739.jpg';'type':'1'}]");
+        body.put("medical_record_pictures",pics);
+        try {
+            res = HttpRequest.sendPut(host_crm+uri, body.toString(), crm_token, pathValue);
+        } catch (IOException e) {
+            logger.error(e);
+        }
+        checkResponse(res);
+        Assert.assertEquals(code, "1000000");
+        res = Order_Detail.Detail(order_number);
+        checkResponse(res);
+        Assert.assertEquals(parseJson(data, "medical_record_pictures(0):key"), "2017/05/04/1265834e-97d8-44a0-95e7-047c7facaee8/IMG_20170429_102737.jpg");
+        Assert.assertEquals(parseJson(data, "medical_record_pictures(0):type"), "1");
+        Assert.assertNotNull(parseJson(data, "medical_record_pictures(0):thumbnailPicture"), "缺少缩略图");
+        Assert.assertNotNull(parseJson(data, "medical_record_pictures(0):largePicture"), "缺少大图");
+
+        pics = JSONArray.fromObject("[]");
+        body.replace("medical_record_pictures",pics);
+        try {
+            res = HttpRequest.sendPut(host_crm+uri, body.toString(), crm_token, pathValue);
+        } catch (IOException e) {
+            logger.error(e);
+        }
+        checkResponse(res);
+        Assert.assertEquals(code, "1000000");
+        res = Order_Detail.Detail(order_number);
+        checkResponse(res);
+        Assert.assertEquals(parseJson(data, "medical_record_pictures()"), "0");
     }
 }

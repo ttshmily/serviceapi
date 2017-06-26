@@ -3,14 +3,17 @@ package com.mingyizhudao.qa.testcase.doctor;
 import com.mingyizhudao.qa.common.BaseTest;
 import com.mingyizhudao.qa.common.KB;
 import com.mingyizhudao.qa.dataprofile.doctor.DoctorProfile;
+import com.mingyizhudao.qa.testcase.crm.KBHospital_Detail;
 import com.mingyizhudao.qa.util.HttpRequest;
 import com.mingyizhudao.qa.util.UT;
+import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 import org.apache.log4j.Logger;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
 import java.io.IOException;
+import java.util.HashMap;
 
 /**
  * Created by ttshmily on 21/3/2017.
@@ -52,7 +55,7 @@ public class UpdateDoctorProfile extends BaseTest {
         return res;
     }
 
-    @Test
+    @Test(enabled = false)
     public void test_01_已登录有token的用户可以更新个人信息city_id() {
         String res = "";
         DoctorProfile body = new DoctorProfile(false);
@@ -90,8 +93,10 @@ public class UpdateDoctorProfile extends BaseTest {
     public void test_03_已登录有token的用户可以更新个人信息hospital_id() {
         String res = "";
         DoctorProfile body = new DoctorProfile(false);
-        String key = UT.randomKey(KB.kb_hospital);
+        String key = UT.randomHospitalId();
         body.body.getJSONObject("doctor").put("hospital_id", key);
+        HashMap<String, String> hospitalInfo = KBHospital_Detail.Detail(key);
+        String cityId = hospitalInfo.get("city_id");
         try {
             res = HttpRequest.sendPost(host_doc+uri, body.body.toString(), mainToken);
             checkResponse(res);
@@ -100,14 +105,15 @@ public class UpdateDoctorProfile extends BaseTest {
             checkResponse(res);
             Assert.assertEquals(code, "1000000");
             Assert.assertEquals(parseJson(data, "doctor:hospital_id"), key);
+//            Assert.assertEquals(parseJson(data, "doctor:city_id"), cityId);
+//            Assert.assertEquals(parseJson(data, "doctor:city_name"), UT.cityName(cityId));
         } catch (IOException e) {
             logger.error(e);
         }
-        //TODO
     }
 
     @Test
-    public void test_04_已登录有token的用户可以更新个人信息inviter_id() {
+    public void test_04_已登录有token的用户可以更新个人信息inviter_no() {
         String res = "";
 
         String key = UT.randomEmployeeId();
@@ -349,19 +355,25 @@ public class UpdateDoctorProfile extends BaseTest {
         Assert.assertNotEquals(parseJson(data, "doctor:inviter_name"), "大一", "地推名称不应该改变");
     }
 
-
     @Test
-    public void test_12_单独更新非法的inviter_no字段() {
+    public void test_12_更新doctor_card_pictures字段() {
         String res = "";
         DoctorProfile body = new DoctorProfile(false);
-        body.body.getJSONObject("doctor").put("inviter_no", "GF001");
+        body.body.getJSONObject("doctor").accumulate("doctor_card_pictures", JSONArray.fromObject("[{'key':'2017/05/04/1265834e-97d8-44a0-95e7-047c7facaee8/IMG_20170429_102737.jpg';'type':'3'}]"));
         try {
             res = HttpRequest.sendPost(host_doc +mock+uri, body.body.toString(), mainToken);
         } catch (IOException e) {
             logger.error(e);
         }
         checkResponse(res);
-        Assert.assertEquals(code, "2210317");
+        Assert.assertEquals(code, "1000000");
+
+        res = GetDoctorProfile.getDoctorProfile(mainToken);
+        checkResponse(res);
+        Assert.assertEquals(parseJson(data, "doctor:doctor_card_pictures(0):key"), "2017/05/04/1265834e-97d8-44a0-95e7-047c7facaee8/IMG_20170429_102737.jpg", "key值错误");
+        Assert.assertEquals(parseJson(data, "doctor:doctor_card_pictures(0):type"), "3", "type值错误");
+        Assert.assertNotNull(parseJson(data, "doctor:doctor_card_pictures(0):url"), "url值错误");
+        Assert.assertNotNull(parseJson(data, "doctor:doctor_card_pictures(0):thumbnailPicture"), "thumbnailPicture值错误");
     }
 
 }

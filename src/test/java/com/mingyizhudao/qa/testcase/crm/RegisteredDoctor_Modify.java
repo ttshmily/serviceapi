@@ -2,6 +2,7 @@ package com.mingyizhudao.qa.testcase.crm;
 
 import com.mingyizhudao.qa.common.BaseTest;
 import com.mingyizhudao.qa.common.KB;
+import com.mingyizhudao.qa.dataprofile.doctor.DoctorProfile;
 import com.mingyizhudao.qa.util.HttpRequest;
 import com.mingyizhudao.qa.util.UT;
 import net.sf.json.JSONObject;
@@ -51,16 +52,16 @@ public class RegisteredDoctor_Modify extends BaseTest {
         String city = UT.randomCityId();
         String hospital = UT.randomHospitalId();
         String major = UT.randomMajorId();
-        String academic = UT.randomKey(KB.kb_academic_title);
-        String medical = UT.randomKey(KB.kb_medical_title);
+        String academic = UT.randomAcademicId();
+        String medical = UT.randomMedicalId();
         body.put("city_id",city);
         body.put("hospital_id",hospital);
         body.put("major_id", major);
         body.put("academic_title", academic);
         body.put("medical_title", medical);
 
-        res = KBHospital_Detail.Detail(hospital);
-        String another_city = JSONObject.fromObject(res).getJSONObject("data").getString("city_id");
+        HashMap<String, String> hospitalInfo = KBHospital_Detail.Detail(hospital);
+        String another_city = hospitalInfo.get("city_id");
         try {
             res = HttpRequest.sendPut(host_crm+uri, body.toString(), crm_token, pathValue);
         } catch (IOException e) {
@@ -124,8 +125,8 @@ public class RegisteredDoctor_Modify extends BaseTest {
         String hospitalId = UT.randomHospitalId();
         body.put("hospital_id", hospitalId);
 
-        res = KBHospital_Detail.Detail(hospitalId);
-        String another_city = JSONObject.fromObject(res).getJSONObject("data").getString("city_id");
+        HashMap<String, String> hospitalInfo = KBHospital_Detail.Detail(hospitalId);
+        String another_city = hospitalInfo.get("city_id");
 
         try {
             res = HttpRequest.sendPut(host_crm+uri, body.toString(), crm_token, pathValue);
@@ -305,43 +306,91 @@ public class RegisteredDoctor_Modify extends BaseTest {
     }
 
     @Test
-    public void test_08_CRM更新医生详情_更新医生城市() {
+    public void test_08_CRM更新医生详情_更新医生工牌照() {
 
         String res = "";
         HashMap<String, String> pathValue = new HashMap<>();
         pathValue.put("id",mainDoctorId);
         JSONObject body = new JSONObject();
-        body.put("content", "自动化修改医生城市信息");
-        // 更新正确的city_id，应当成功
-        String cityId = UT.randomKey(KB.kb_city);
-        body.put("city_id", cityId);
+        body.put("content", "自动化修改医生工牌照信息");
+
+        body.accumulate("doctor_card_pictures", JSONObject.fromObject("{'key':'2017/05/04/1265834e-97d8-44a0-95e7-047c7facaee8/IMG_20170429_102737.jpg';'type':'3'}").toString());
+        body.accumulate("doctor_card_pictures", JSONObject.fromObject("{'key':'2017/05/04/1265834e-97d8-44a0-95e7-047c7facaee8/IMG_20170429_102738.jpg';'type':'3'}").toString());
+        body.accumulate("doctor_card_pictures", JSONObject.fromObject("{'key':'2017/05/04/1265834e-97d8-44a0-95e7-047c7facaee8/IMG_20170429_102739.jpg';'type':'3'}").toString());
+        body.accumulate("doctor_card_pictures", JSONObject.fromObject("{'key':'2017/05/04/1265834e-97d8-44a0-95e7-047c7facaee8/IMG_20170429_102736.jpg';'type':'3'}").toString());
         try {
             res = HttpRequest.sendPut(host_crm+uri, body.toString(), crm_token, pathValue);
         } catch (IOException e) {
             logger.error(e);
         }
         checkResponse(res);
-        Assert.assertNotEquals(code, "1000000");
-//        res = RegisteredDoctor_Detail.Detail(mainDoctorId);
-//        checkResponse(res);
-//        Assert.assertEquals(parseJson(data, "city_id"), cityId);
-//        Assert.assertEquals(parseJson(data, "city"), KB.kb_city.get(cityId));
-//
-//        // 更新错误的major_id，应当不成功
-//        body.replace("city_id", "100000000");
-//        try {
-//            res = HttpRequest.sendPut(host_crm+uri, body.toString(), crm_token, pathValue);
-//        } catch (IOException e) {
-//            logger.error(e);
-//        }
-//        checkResponse(res);
-//        Assert.assertNotEquals(code, "1000000", "错误的city_id不应该更新成功");
-//        res = RegisteredDoctor_Detail.Detail(mainDoctorId);
-//        checkResponse(res);
-//        Assert.assertEquals(parseJson(data, "city_id"), cityId);
-//        Assert.assertEquals(parseJson(data, "city"), KB.kb_city.get(cityId));
+        Assert.assertEquals(code, "1000000");
+
+        res = RegisteredDoctor_Detail.Detail(mainDoctorId);
+        checkResponse(res);
+        Assert.assertNotNull(parseJson(data, "doctor_card_pictures"));
+        int actual_size = Integer.parseInt(parseJson(data, "doctor_card_pictures()"));
+        Assert.assertEquals(actual_size, body.getJSONArray("doctor_card_pictures").size());
+        for (int i=0; i<actual_size; i++) {
+            Assert.assertEquals(parseJson(data, "doctor_card_pictures("+i+"):key"), body.getJSONArray("doctor_card_pictures").getJSONObject(i).getString("key"));
+        }
+
+
+        body.accumulate("doctor_card_pictures", JSONObject.fromObject("{'key':'2017/05/04/1265834e-97d8-44a0-95e7-047c7facaee8/IMG_20170429_102740.jpg';'type':'3'}").toString());
+        try {
+            res = HttpRequest.sendPut(host_crm+uri, body.toString(), crm_token, pathValue);
+        } catch (IOException e) {
+            logger.error(e);
+        }
+        logger.debug(res);
+        checkResponse(res);
+        Assert.assertEquals(code, "1000000");
+
+        res = RegisteredDoctor_Detail.Detail(mainDoctorId);
+        checkResponse(res);
+        Assert.assertNotNull(parseJson(data, "doctor_card_pictures"));
+        actual_size = Integer.parseInt(parseJson(data, "doctor_card_pictures()"));
+        Assert.assertEquals(actual_size, body.getJSONArray("doctor_card_pictures").size());
+        for (int i=0; i<actual_size; i++) {
+            Assert.assertEquals(parseJson(data, "doctor_card_pictures("+i+"):key"), body.getJSONArray("doctor_card_pictures").getJSONObject(i).getString("key"));
+        }
+
+        body.accumulate("doctor_card_pictures", JSONObject.fromObject("{'key':'2017/05/04/1265834e-97d8-44a0-95e7-047c7facaee8/IMG_20170429_102741.jpg';'type':'3'}").toString());
+        try {
+            res = HttpRequest.sendPut(host_crm+uri, body.toString(), crm_token, pathValue);
+        } catch (IOException e) {
+            logger.error(e);
+        }
+        checkResponse(res);
+        Assert.assertEquals(code, "1000000");
+
+        res = RegisteredDoctor_Detail.Detail(mainDoctorId);
+        checkResponse(res);
+        Assert.assertNotNull(parseJson(data, "doctor_card_pictures"));
+        actual_size = Integer.parseInt(parseJson(data, "doctor_card_pictures()"));
+        Assert.assertEquals(actual_size, body.getJSONArray("doctor_card_pictures").size());
+        for (int i=0; i<actual_size; i++) {
+            Assert.assertEquals(parseJson(data, "doctor_card_pictures("+i+"):key"), body.getJSONArray("doctor_card_pictures").getJSONObject(i).getString("key"));
+        }
+// 删除所有图片
+        body.replace("doctor_card_pictures", "[]");
+        try {
+            res = HttpRequest.sendPut(host_crm+uri, body.toString(), crm_token, pathValue);
+        } catch (IOException e) {
+            logger.error(e);
+        }
+        checkResponse(res);
+        Assert.assertEquals(code, "1000000");
+
+        res = RegisteredDoctor_Detail.Detail(mainDoctorId);
+        checkResponse(res);
+        Assert.assertNotNull(parseJson(data, "doctor_card_pictures_deleted"));
+        Assert.assertEquals(actual_size, body.getJSONArray("doctor_card_pictures").size());
+        for (int i=0; i<actual_size; i++) {
+            Assert.assertEquals(parseJson(data, "doctor_card_pictures_deleted("+i+"):key"), body.getJSONArray("doctor_card_pictures_deleted").getJSONObject(i).getString("key"));
+        }
+
 
     }
-
 
 }

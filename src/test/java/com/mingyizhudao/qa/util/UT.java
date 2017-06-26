@@ -104,7 +104,7 @@ public class UT {
     public static String randomEmployeeId() {
         String[] prefix = {"SH"};
 //        String[] ID = {"0105", "0098", "0130", "0129", "0133"};
-        String[] ID = {"0133"};
+        String[] ID = {"0133","0143","9999","0031", "0098","0025"};
 
         Random random = new Random();
         return prefix[random.nextInt(prefix.length)]+ID[random.nextInt(ID.length)];
@@ -199,7 +199,6 @@ public class UT {
 
         return randomKey(KB.kb_hospital_type);
     }
-
 
 
 }
