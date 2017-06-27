@@ -21,19 +21,20 @@ public class PersonalInfoV2 extends BaseTest {
     public static String uri = "/api/v2/user/personal";
     public static String mock = false ? "/mockjs/1" : "";
 
-    public static HashMap<String, String> BDInfo(String token) {
+    public static HashMap<String, List<String>> BDInfo(String token) {
         String res = "";
         try {
             res = HttpRequest.sendGet(host_bda + uri, "", token);
         } catch (IOException e) {
             logger.error(e);
         }
-        HashMap<String, String> result = new HashMap<>();
+        HashMap<String, List<String>> result = new HashMap<>();
         JSONArray bd_city_list = JSONObject.fromObject(res).getJSONObject("data").getJSONArray("city");
         List<String> cities = new ArrayList<>();
         for (int j=0; j<bd_city_list.size(); j++) {
             cities.add(bd_city_list.getJSONObject(j).getString("city_id"));
         }
+        result.put("bd_city_list", cities);
         // TODO
         return result;
     }
@@ -98,7 +99,7 @@ public class PersonalInfoV2 extends BaseTest {
         String res = "";
         HashMap<String, String> query = new HashMap<>();
         try {
-            res = HttpRequest.sendGet(host_bda + uri, query, bda_token);
+            res = HttpRequest.sendGet(host_bda + uri, query, bda_token_staff);
         } catch (IOException e) {
             logger.error(e);
         }
@@ -107,7 +108,7 @@ public class PersonalInfoV2 extends BaseTest {
         Assert.assertNotNull(parseJson(data, "user"), "user字段缺失");
         Assert.assertNotNull(parseJson(data, "staff_id"), "staff_id字段缺失");
         Assert.assertNotNull(parseJson(data, "userName"), "userName字段缺失");
-        Assert.assertNotNull(parseJson(data, "city()"), "员工主管必须返回团队人员数量");
+        Assert.assertNotNull(parseJson(data, "city()"), "分配城市字段");
         Assert.assertNotNull(parseJson(data, "role"), "role字段不能为空"); // 1-表示普通员工，2-表示主管
     }
 
@@ -116,20 +117,18 @@ public class PersonalInfoV2 extends BaseTest {
         String res = "";
         HashMap<String, String> query = new HashMap<>();
         try {
-            res = HttpRequest.sendGet(host_bda + uri, query, bda_token);
+            res = HttpRequest.sendGet(host_bda + uri, query, bda_token_staff);
         } catch (IOException e) {
             logger.error(e);
         }
         checkResponse(res);
         Assert.assertEquals(code, "1000000", "有token应该调用成功");
-        Assert.assertNotNull(parseJson(data, "city()"), "员工主管必须返回团队人员数量");
+        Assert.assertNotNull(parseJson(data, "city()"), "分配城市字段");
 
         JSONArray bd_city_list = JSONObject.fromObject(data).getJSONArray("city");
-//        List<String> cities = new ArrayList<>();
         for (int j=0; j<bd_city_list.size(); j++) {
             Assert.assertNotNull(bd_city_list.getJSONObject(j).getString("city_id"));
             Assert.assertNotNull(bd_city_list.getJSONObject(j).getString("city_name"));
-//            cities.add(bd_city_list.getJSONObject(j).getString("city_id"));
         }
     }
 }

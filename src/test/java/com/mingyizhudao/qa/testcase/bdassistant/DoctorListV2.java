@@ -11,13 +11,14 @@ import org.testng.annotations.Test;
 
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.List;
 
 /**
  * Created by dayi on 2017/6/23.
  */
 public class DoctorListV2 extends BaseTest {
     public static final Logger logger= Logger.getLogger(DoctorListV2.class);
-    public static String uri = "/api/v1/doctor/doctorList";
+    public static String uri = "/api/v2/doctors/doctorList";
     public static String mock = false ? "/mockjs/1" : "";
     public static String token= "";
 
@@ -91,14 +92,24 @@ public class DoctorListV2 extends BaseTest {
         String agent_contact_id = UT.randomEmployeeId();
         query.put("agent_contact_id", agent_contact_id);
 
+
+        // TODO
+        String cityId = "";
+
         try {
-            res = HttpRequest.sendGet(host_bda + uri, query, bda_token_staff);
+            res = HttpRequest.sendGet(host_bda + uri, query, bda_token);
         } catch (IOException e) {
             logger.error(e);
         }
         checkResponse(res);
         Assert.assertEquals(code, "1000000", "");
         // TODO
+        JSONArray doctor_list = data.getJSONArray("list");
+        for(int i=0; i<doctor_list.size(); i++) {
+            JSONObject doctor = doctor_list.getJSONObject(i);
+            // TODO 判断条件需要重写
+            Assert.assertEquals(doctor.getString("city_id"), cityId);
+        }
     }
 
     @Test
@@ -108,22 +119,113 @@ public class DoctorListV2 extends BaseTest {
         String agent_contact_id = UT.randomEmployeeId();
         query.put("agent_contact_id", agent_contact_id);
 
+        HashMap<String, List<String>> cities = PersonalInfoV2.BDInfo(bda_token_staff);
         // TODO
         String cityId = "";
         query.put("city_id", cityId);
         try {
-            res = HttpRequest.sendGet(host_bda + uri, query, bda_token_staff);
+            res = HttpRequest.sendGet(host_bda + uri, query, bda_token);
         } catch (IOException e) {
             logger.error(e);
         }
         checkResponse(res);
-        Assert.assertNotEquals(code, "1000000", "");
+        Assert.assertEquals(code, "1000000", "");
 
         JSONArray doctor_list = data.getJSONArray("list");
         for(int i=0; i<doctor_list.size(); i++) {
             JSONObject doctor = doctor_list.getJSONObject(i);
             // TODO 判断条件需要重写
             Assert.assertEquals(doctor.getString("city_id"), cityId);
+        }
+    }
+
+    @Test
+    public void test_06_查看医生列表_传入medical_title() {
+        String res = "";
+        HashMap<String, String> query = new HashMap<>();
+        String agent_contact_id = UT.randomEmployeeId();
+        query.put("agent_contact_id", agent_contact_id);
+
+        // TODO
+        String cityId = "";
+        query.put("city_id", cityId);
+
+        String medical_title_list = UT.randomMedicalId();
+        query.put("medical_title", medical_title_list);
+        try {
+            res = HttpRequest.sendGet(host_bda + uri, query, bda_token);
+        } catch (IOException e) {
+            logger.error(e);
+        }
+        checkResponse(res);
+        Assert.assertEquals(code, "1000000", "");
+
+        JSONArray doctor_list = data.getJSONArray("list");
+        for(int i=0; i<doctor_list.size(); i++) {
+            JSONObject doctor = doctor_list.getJSONObject(i);
+            // TODO 判断条件需要重写
+            Assert.assertEquals(doctor.getString("city_id"), cityId);
+            Assert.assertEquals(doctor.getString("medical_title_list"), medical_title_list);
+        }
+    }
+
+    @Test
+    public void test_06_查看医生列表_传入academic_title() {
+        String res = "";
+        HashMap<String, String> query = new HashMap<>();
+        String agent_contact_id = UT.randomEmployeeId();
+        query.put("agent_contact_id", agent_contact_id);
+
+        // TODO
+        String cityId = "";
+        query.put("city_id", cityId);
+
+        String academic_title_list = UT.randomAcademicId();
+        query.put("academic_title", academic_title_list);
+        try {
+            res = HttpRequest.sendGet(host_bda + uri, query, bda_token);
+        } catch (IOException e) {
+            logger.error(e);
+        }
+        checkResponse(res);
+        Assert.assertEquals(code, "1000000", "");
+
+        JSONArray doctor_list = data.getJSONArray("list");
+        for(int i=0; i<doctor_list.size(); i++) {
+            JSONObject doctor = doctor_list.getJSONObject(i);
+            // TODO 判断条件需要重写
+            Assert.assertEquals(doctor.getString("city_id"), cityId);
+            Assert.assertEquals(doctor.getString("academic_title_list"), academic_title_list);
+        }
+    }
+
+    @Test
+    public void test_06_查看医生列表_自己查看自己() {
+        String res = "";
+        HashMap<String, String> query = new HashMap<>();
+        String agent_contact_id = "SH9999";
+        query.put("agent_contact_id", agent_contact_id);
+
+        // TODO
+        String cityId = "";
+        query.put("city_id", cityId);
+
+        String academic_title_list = UT.randomAcademicId();
+        query.put("academic_title", academic_title_list);
+        try {
+            res = HttpRequest.sendGet(host_bda + uri, query, bda_token_staff);
+        } catch (IOException e) {
+            logger.error(e);
+        }
+        checkResponse(res);
+        Assert.assertEquals(code, "1000000", "");
+
+        JSONArray doctor_list = data.getJSONArray("list");
+        for(int i=0; i<doctor_list.size(); i++) {
+            JSONObject doctor = doctor_list.getJSONObject(i);
+            // TODO 判断条件需要重写
+            Assert.assertEquals(doctor.getString("city_id"), cityId);
+            Assert.assertEquals(doctor.getString("academic_title_list"), academic_title_list);
         }
     }
 }
