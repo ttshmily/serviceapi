@@ -1,5 +1,6 @@
 /target
 /.idea
 serviceapi.iml
-/src/test/resources/config-test/environment.properties
 .DS_Store
+/src/test/resources/*.txt
+/src/test/resources/config-test/environment.properties

@@ -4,9 +4,16 @@ import com.mingyizhudao.qa.util.HttpRequest;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 import org.apache.log4j.Logger;
+import org.omg.CORBA.DATA_CONVERSION;
 
 import java.util.HashMap;
 import java.util.Set;
+
+//created by tianjing on 2017/6/21
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.Map;
 
 /**
  * Created by ttshmily on 28/4/2017.
@@ -84,6 +91,7 @@ public class KB {
                 JSONObject hospital = hospital_list.getJSONObject(j);
                 kb_hospital.put(hospital.getString("id"), hospital.getString("name"));
             }
+            stringToFile(kb_hospital,"src/test/resources/kb_hospital.txt");//created by tianjing on 2017/6/21
         } catch (Exception e) {
             logger.error("ENUM初始化失败，准备退出");
             logger.error(e);
@@ -117,6 +125,7 @@ public class KB {
                 JSONObject doctor = doctor_list.getJSONObject(j);
                 kb_doctor.put(doctor.getString("id"), doctor.getString("name"));
             }
+            stringToFile(kb_doctor,"src/test/resources/kb_doctor.txt");//created by tianjing on 2017/6/21
         } catch (Exception e) {
             logger.error("ENUM初始化失败，准备退出");
             logger.error(e);
@@ -131,7 +140,7 @@ public class KB {
                 JSONObject province = province_list.getJSONObject(j);
                 kb_province.put(province.getString("id"), province.getString("name"));
             }
-
+            stringToFile(kb_province,"src/test/resources/kb_province.txt");//created by tianjing on 2017/6/21
         } catch (Exception e) {
             logger.error("ENUM初始化失败，准备退出");
             System.exit(3);
@@ -151,6 +160,7 @@ public class KB {
                     kb_city.put(city.getString("id"), city.getString("name"));
                 }
             }
+            stringToFile(kb_city,"src/test/resources/kb_city.txt");//created by tianjing on 2017/6/21
         } catch (Exception e) {
             logger.error("ENUM初始化失败，准备退出");
             System.exit(4);
@@ -168,6 +178,7 @@ public class KB {
                     kb_medical_title.put(key, mt.getString(key));
                 }
             }
+            stringToFile(kb_medical_title,"src/test/resources/kb_medical_title.txt");//created by tianjing on 2017/6/21
         } catch (Exception e) {
             logger.error("ENUM初始化失败，准备退出");
             logger.error(e);
@@ -185,6 +196,7 @@ public class KB {
                     kb_academic_title.put(key, at.getString(key));
                 }
             }
+            stringToFile(kb_academic_title,"src/test/resources/kb_academic_title.txt");//created by tianjing on 2017/6/21
         } catch (Exception e) {
             logger.error("ENUM初始化失败，准备退出");
             System.exit(6);
@@ -203,6 +215,7 @@ public class KB {
                     kb_surgery_category.put(sc.getString("id"), sc.getString("name"));
                 }
             }
+            stringToFile(kb_surgery_category,"src/test/resources/kb_surgery_category.txt");//created by tianjing on 2017/6/21
         } catch (Exception e) {
             logger.error("ENUM初始化失败，准备退出");
             logger.error(e);
@@ -224,6 +237,7 @@ public class KB {
                     kb_surgery.put(surgery.getString("id"), surgery.getString("name"));
                 }
             }
+            stringToFile(kb_surgery,"src/test/resources/kb_surgery.txt");//created by tianjing on 2017/6/21
         } catch (Exception e) {
             logger.error("ENUM初始化失败，准备退出");
             System.exit(8);
@@ -242,6 +256,7 @@ public class KB {
                     kb_major.put(dc.getString("id"), dc.getString("name"));
                 }
             }
+            stringToFile(kb_major,"src/test/resources/kb_major.txt");//created by tianjing on 2017/6/21
         } catch (Exception e) {
             logger.error("ENUM初始化失败，准备退出");
             System.exit(9);
@@ -262,6 +277,7 @@ public class KB {
                     kb_disease.put(disease.getString("id"), disease.getString("name"));
                 }
             }
+            stringToFile(kb_disease,"src/test/resources/kb_disease.txt");//created by tianjing on 2017/6/21
         } catch (Exception e) {
             logger.error("ENUM初始化失败，准备退出");
             System.exit(10);
@@ -278,6 +294,7 @@ public class KB {
                     kb_hospital_class.put(key, ct.getString(key));
                 }
             }
+            stringToFile(kb_hospital_class,"src/test/resources/kb_hospital_class.txt");//created by tianjing on 2017/6/21
         } catch (Exception e) {
             logger.error("ENUM初始化失败，准备退出");
             logger.error(e);
@@ -295,6 +312,7 @@ public class KB {
                     kb_hospital_type.put(key, tt.getString(key));
                 }
             }
+            stringToFile(kb_hospital_type,"src/test/resources/kb_hospital_type.txt");//created by tianjing on 2017/6/21
         } catch (Exception e) {
             logger.error("ENUM初始化失败，准备退出");
             logger.error(e);
@@ -314,12 +332,37 @@ public class KB {
                     kb_county.put(country.getString("id"), country.getString("name"));
                 }
             }
+            stringToFile(kb_county,"src/test/resources/kb_county.txt");//created by tianjing on 2017/6/21
         } catch (Exception e) {
             logger.error("ENUM初始化失败，准备退出");
             logger.error(e);
             System.exit(13);
         }
     }
+
+    //created by tianjing on 2017/6/21
+    private static void stringToFile(HashMap<String,String> id_name,String filePath){
+        try{
+            StringBuffer id_name_buffer = new StringBuffer();
+            for (Map.Entry<String,String> id_name_list : id_name.entrySet()){
+                id_name_buffer.append(id_name_list.getKey()).append(",").append(id_name_list.getValue()).append("\r\n");
+            }
+
+            FileWriter fileWriter = new FileWriter(filePath);
+            fileWriter.write(id_name_buffer.toString());
+            fileWriter.close();
+        }catch (IOException e){
+            logger.error(e);
+            e.printStackTrace();
+        }
+    }
+
+    /*public static void main(String[] args) throws IOException {
+        HashMap id_name = new HashMap();
+        id_name.put("1","第一行");
+        id_name.put("2","第二行");
+        hashMapToFile(id_name,"src/test/resources/test.txt");
+    }*/
 
 
 }

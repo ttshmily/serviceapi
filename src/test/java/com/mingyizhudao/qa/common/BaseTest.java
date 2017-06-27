@@ -101,7 +101,7 @@ public class BaseTest {
         KB.init();
         mainMobile = SendVerifyCode.send();
         mainToken = CheckVerifyCode.check();
-        if (mainToken.isEmpty() || mainToken == null) {
+        if (mainToken == null || mainToken.isEmpty()) {
             logger.error("初始化失败，退出");
             System.exit(1000);
         }
@@ -130,8 +130,8 @@ public class BaseTest {
             System.exit(1001);
         }
         mainExpertId = tmp.get("register_id");
-        mainOperatorId = "chao.fang@mingyizhudao.com";
-        mainOperatorName = "方超（男）";
+        mainOperatorId = "jing.tian@mingyizhudao.com";
+        mainOperatorName = "田静";
         mainOperatorRole = "";
 
 
