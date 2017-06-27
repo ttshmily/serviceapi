@@ -31,9 +31,9 @@ public class CreateOrder extends BaseTest {
             logger.error(e);
         }
 //        logger.debug(unicodeString(res));
-        String tmpOrderId = parseJson(JSONObject.fromObject(res), "data:order_id");
+        String tmpOrderId = parseJson(JSONObject.fromObject(res), "data:order_number");
         if (null != tmpOrderId && !tmpOrderId.isEmpty()) {
-            logger.info("orderId是: " + tmpOrderId);
+            logger.info("orderid是: " + tmpOrderId);
             return tmpOrderId;
         } else {
             logger.error("获取orderId失败");
