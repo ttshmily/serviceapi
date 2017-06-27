@@ -120,7 +120,8 @@ public class OrderList extends BaseTest {
 
         String res = "";
         HashMap<String, String> map = new HashMap<>();
-        map.put("agent_contact_id", "SH0105");
+        String agent_contact_id = UT.randomEmployeeId();
+        map.put("agent_contact_id", agent_contact_id);
         map.put("status", "1000");
         List<String> status = new ArrayList<>();
         status.add("1000");

@@ -17,6 +17,7 @@ import java.util.HashMap;
 /**
  * Created by ttshmily on 17/5/2017.
  */
+//@Test(enabled = false)
 public class PersonalInfo extends BaseTest {
 
     public static final Logger logger= Logger.getLogger(PersonalInfo.class);

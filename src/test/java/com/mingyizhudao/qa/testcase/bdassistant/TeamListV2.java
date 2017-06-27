@@ -166,7 +166,7 @@ public class TeamListV2 extends TeamList {
         }
 
         query.replace("sortKey", "doctorCounts");
-        query.replace("sortValue", "asc");
+        query.replace("sortValue", "desc");
         try {
             res = HttpRequest.sendGet(host_bda + uri, query, bda_token);
         } catch (IOException e) {

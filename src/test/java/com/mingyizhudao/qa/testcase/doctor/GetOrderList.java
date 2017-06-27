@@ -22,6 +22,7 @@ import static org.testng.Assert.fail;
 /**
  * Created by ttshmily on 7/4/2017.
  */
+@Test(enabled = false)
 public class GetOrderList extends BaseTest{
 
     public static final Logger logger= Logger.getLogger(GetOrderList.class);

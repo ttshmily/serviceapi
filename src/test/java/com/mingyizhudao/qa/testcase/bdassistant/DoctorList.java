@@ -19,6 +19,7 @@ import java.util.List;
 /**
  * Created by ttshmily on 17/5/2017.
  */
+//@Test(enabled = false)
 public class DoctorList extends BaseTest {
 
     public static final Logger logger= Logger.getLogger(DoctorList.class);
