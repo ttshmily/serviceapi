@@ -53,7 +53,7 @@ public class PersonalInfo extends BaseTest {
         Assert.assertNotNull(parseJson(data, "doctorCounts"), "doctorCounts字段缺失");
         Assert.assertNotNull(parseJson(data, "orderCounts"), "orderCounts字段缺失");
         Assert.assertNotNull(parseJson(data, "teamMemberCounts"), "teamMemberCounts字段缺失");
-        Assert.assertEquals(parseJson(data, "teamMemberCounts"), "10","teamMemberCounts字段值不正确");
+        Assert.assertEquals(parseJson(data, "teamMemberCounts"), "6","teamMemberCounts字段值不正确");
         Assert.assertEquals(parseJson(data, "role"), "2"); // 2 表示主管
 
     }

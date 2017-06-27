@@ -22,7 +22,7 @@ import java.util.List;
 public class DoctorList extends BaseTest {
 
     public static final Logger logger= Logger.getLogger(DoctorList.class);
-    public static String uri = "/api/v1/doctor/doctorList";
+    public static String uri = "/api/v1/doctors/doctorList";
     public static String mock = false ? "/mockjs/1" : "";
     public static String token= "";
 
@@ -85,7 +85,8 @@ public class DoctorList extends BaseTest {
 
         String res = "";
         HashMap<String, String> map = new HashMap<>();
-        map.put("agent_contact_id", "SH0105");
+        String agent_contact_id = UT.randomEmployeeId();
+        map.put("agent_contact_id", agent_contact_id);
         try {
             res = HttpRequest.sendGet(host_bda + uri, map, bda_token, null);
         } catch (IOException e) {
@@ -120,7 +121,8 @@ public class DoctorList extends BaseTest {
 
         String res = "";
         HashMap<String, String> map = new HashMap<>();
-        map.put("agent_contact_id", "SH0105");
+        String agent_contact_id = UT.randomEmployeeId();
+        map.put("agent_contact_id", agent_contact_id);
         try {
             res = HttpRequest.sendGet(host_bda + uri, map, bda_token, null);
         } catch (IOException e) {

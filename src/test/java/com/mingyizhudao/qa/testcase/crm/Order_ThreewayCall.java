@@ -26,7 +26,7 @@ public class Order_ThreewayCall extends BaseTest {
 
     public static SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
 
-    public static String ThreewayCall(String orderId, String result) {
+    public static String ThreewayCall(String orderId, String result) {//success,undetermined,failed
         String res = "";
         HashMap<String, String> pathValue = new HashMap<>();
         res = Order_Detail.Detail(orderId);

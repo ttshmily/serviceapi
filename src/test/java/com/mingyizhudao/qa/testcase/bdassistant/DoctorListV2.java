@@ -16,7 +16,7 @@ import java.util.List;
 /**
  * Created by dayi on 2017/6/23.
  */
-public class DoctorListV2 extends BaseTest {
+public class DoctorListV2 extends DoctorList {
     public static final Logger logger= Logger.getLogger(DoctorListV2.class);
     public static String uri = "/api/v2/doctors/doctorList";
     public static String mock = false ? "/mockjs/1" : "";

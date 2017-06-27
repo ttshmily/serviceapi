@@ -20,7 +20,7 @@ import java.util.List;
 public class OrderList extends BaseTest {
 
     public static final Logger logger= Logger.getLogger(OrderList.class);
-    public static String uri = "/api/v1/order/orderList";
+    public static String uri = "/api/v1/orders/orderList";
     public static String mock = false ? "/mockjs/1" : "";
 
     @Test
@@ -81,10 +81,11 @@ public class OrderList extends BaseTest {
     public void test_04_登录用户_传入下属地推ID获取其订单列表() {
 
         String res = "";
-        HashMap<String, String> map = new HashMap<>();
-        map.put("agent_contact_id", "SH0105");
+        HashMap<String, String> query = new HashMap<>();
+        String agent_contact_id = UT.randomEmployeeId();
+        query.put("agent_contact_id", agent_contact_id);
         try {
-            res = HttpRequest.sendGet(host_bda + uri, map, bda_token, null);
+            res = HttpRequest.sendGet(host_bda + uri, query, bda_token);
         } catch (IOException e) {
             logger.error(e);
         }
@@ -93,8 +94,6 @@ public class OrderList extends BaseTest {
         Assert.assertNotNull(parseJson(data, "list(0):agent_name"), "下级医生姓名字段缺失");
         Assert.assertNotNull(parseJson(data, "list(0):id"), "订单编号字段缺失");
         Assert.assertNotNull(parseJson(data, "list(0):major_disease_name"), "主诉疾病字段缺失");
-//        Assert.assertNotNull(parseJson(data, "list(0):minor_disease_name"), "次诉疾病字段缺失");
-//        Assert.assertNotNull(parseJson(data, "list(0):major_reps_name"), "客服姓名字段缺失");
     }
 
     @Test

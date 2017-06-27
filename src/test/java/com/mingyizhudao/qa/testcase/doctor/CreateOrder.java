@@ -31,11 +31,12 @@ public class CreateOrder extends BaseTest {
             logger.error(e);
         }
 //        logger.debug(unicodeString(res));
-        String tmpOrderId = parseJson(JSONObject.fromObject(res), "data:order_id");
+        String tmpOrderId = parseJson(JSONObject.fromObject(res), "data:order_number");
         if (null != tmpOrderId && !tmpOrderId.isEmpty()) {
             logger.info("orderId是: " + tmpOrderId);
             return tmpOrderId;
         } else {
+            logger.debug(HttpRequest.unicodeString(res));
             logger.error("获取orderId失败");
             return "";
         }
@@ -54,7 +55,7 @@ public class CreateOrder extends BaseTest {
         }
         checkResponse(res);
         Assert.assertEquals(code, "1000000", "创建订单失败");
-        String orderId = parseJson(data, "order_id");
+        String orderId = parseJson(data, "order_number");
         Assert.assertNotEquals(orderId, "", "返回的订单ID格式有误");
 
         logger.info("查看刚刚创建的订单详情");
@@ -339,7 +340,7 @@ public class CreateOrder extends BaseTest {
         }
         checkResponse(res);
         Assert.assertEquals(code, "1000000", "创建订单失败");
-        String orderId = parseJson(data, "order_id");
+        String orderId = parseJson(data, "order_number");
         Assert.assertNotEquals(orderId, "", "返回的订单ID格式有误");
 
         logger.info("查看刚刚创建的订单详情");

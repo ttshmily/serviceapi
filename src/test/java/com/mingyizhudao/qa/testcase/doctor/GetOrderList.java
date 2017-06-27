@@ -9,6 +9,7 @@ import com.mingyizhudao.qa.testcase.crm.RegisteredDoctor_Certify;
 import com.mingyizhudao.qa.testcase.login.CheckVerifyCode;
 import com.mingyizhudao.qa.testcase.login.SendVerifyCode;
 import com.mingyizhudao.qa.util.HttpRequest;
+import com.mingyizhudao.qa.util.UT;
 import net.sf.json.JSONObject;
 import org.apache.log4j.Logger;
 import org.testng.Assert;
@@ -34,7 +35,7 @@ public class GetOrderList extends BaseTest{
         String orderId = CreateOrder.CreateOrder(mainToken);
         if (orderId.isEmpty()) {
             logger.error("创建订单with mainToken失败");
-            fail();
+            Assert.fail("创建订单with mainToken失败");
         }
         try {
             res = HttpRequest.sendGet(host_doc+uri,"", mainToken);
@@ -160,7 +161,8 @@ public class GetOrderList extends BaseTest{
             logger.error("领取任务失败");
             Assert.fail("领取任务失败，退出执行");
         }
-        if (!Order_RecommendDoctor.recommendDoctor(orderId, "23").equals("2020")) {
+        String expert_id = UT.randomExpertId();
+        if (!Order_RecommendDoctor.recommendDoctor(orderId, expert_id).equals("2020")) {
             logger.error("推荐医生失败");
             Assert.fail("推荐医生失败，退出执行");
         }
@@ -194,7 +196,8 @@ public class GetOrderList extends BaseTest{
             logger.error("领取任务失败");
             Assert.fail("领取任务失败，退出执行");
         }
-        if (!Order_RecommendDoctor.recommendDoctor(orderId, "23").equals("2020")) {
+        String expert_id = UT.randomExpertId();
+        if (!Order_RecommendDoctor.recommendDoctor(orderId, expert_id).equals("2020")) {
             logger.error("推荐医生失败");
             Assert.fail("推荐医生失败，退出执行");
         }
