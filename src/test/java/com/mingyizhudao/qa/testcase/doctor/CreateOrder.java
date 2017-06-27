@@ -33,7 +33,7 @@ public class CreateOrder extends BaseTest {
 //        logger.debug(unicodeString(res));
         String tmpOrderId = parseJson(JSONObject.fromObject(res), "data:order_number");
         if (null != tmpOrderId && !tmpOrderId.isEmpty()) {
-            logger.info("orderId是: " + tmpOrderId);
+            logger.info("orderid是: " + tmpOrderId);
             return tmpOrderId;
         } else {
             logger.debug(HttpRequest.unicodeString(res));

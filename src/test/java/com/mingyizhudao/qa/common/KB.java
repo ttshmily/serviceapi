@@ -6,6 +6,7 @@ import net.sf.json.JSONObject;
 import org.apache.log4j.Logger;
 import org.omg.CORBA.DATA_CONVERSION;
 
+import java.io.BufferedWriter;
 import java.util.HashMap;
 import java.util.Set;
 
@@ -91,6 +92,7 @@ public class KB {
                 JSONObject hospital = hospital_list.getJSONObject(j);
                 kb_hospital.put(hospital.getString("id"), hospital.getString("name"));
             }
+            //writeJson("/src/test/resources/",)
             stringToFile(kb_hospital,"src/test/resources/kb_hospital.txt");//created by tianjing on 2017/6/21
         } catch (Exception e) {
             logger.error("ENUM初始化失败，准备退出");
@@ -364,5 +366,33 @@ public class KB {
         hashMapToFile(id_name,"src/test/resources/test.txt");
     }*/
 
+    /*public static void writeJson(String filePath,Object json,String fileName){
+        BufferedWriter writer = null;
+        File file = new File(filePath + fileName + ".json");
+        //如果文件不存在，则创建一个
+
+        if(!file.exists()){
+            try{
+                file.createNewFile();
+            }catch (IOException e){
+                e.printStackTrace();
+            }
+        }
+        //写入
+        try{
+            writer = new BufferedWriter(new FileWriter(file));
+            writer.write(json.toString());
+        }catch (IOException e){
+            e.printStackTrace();
+        }finally {
+            try {
+                if(writer != null){
+                    writer.close();
+                }
+            }catch (IOException e){
+                e.printStackTrace();
+            }
+        }
+    }*/
 
 }

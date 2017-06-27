@@ -40,7 +40,6 @@ public class Order_ReceiveTask extends BaseTest {
         }
         res = Order_Detail.Detail(orderId);
         return parseJson(JSONObject.fromObject(res), "data:status"); // 期望2000
-
     }
 
 

@@ -50,6 +50,7 @@ public class UpdateDoctorProfile extends BaseTest {
         if (code.equals("1000000")) {
             logger.info("更新医生信息成功");
         } else {
+            logger.debug(HttpRequest.unicodeString(res));
             logger.error("更新医生信息失败");
         }
         return res;
