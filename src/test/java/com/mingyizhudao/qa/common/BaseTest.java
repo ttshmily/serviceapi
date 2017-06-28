@@ -130,11 +130,20 @@ public class BaseTest {
             System.exit(1001);
         }
         mainExpertId = tmp.get("register_id");
-        mainOperatorId = "jing.tian@mingyizhudao.com";
-        mainOperatorName = "田静";
         mainOperatorRole = "";
 
-
+        Properties prop = new Properties();
+        try {
+            InputStream in = BaseTest.class.getClassLoader().getResourceAsStream("environment.properties");
+            prop.load(in);
+            in.close();
+        } catch (IOException e) {
+            logger.error(e);
+            logger.error("初始化配置失败，退出...");
+           System.exit(1);
+        }
+        mainOperatorId = prop.getProperty("mainOperatorId");
+        mainOperatorName = prop.getProperty("mainOperatorName");
     }
 
     @BeforeClass
