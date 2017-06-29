@@ -38,7 +38,7 @@ public class TeamList extends BaseTest {
         String res = "";
         HashMap<String, String> map = new HashMap<>();
         try {
-            res = HttpRequest.sendGet(host_bda + uri, map, bda_token_staff, null);
+            res = HttpRequest.sendGet(host_bda + uri, map, bda_token_staff);
         } catch (IOException e) {
             logger.error(e);
         }

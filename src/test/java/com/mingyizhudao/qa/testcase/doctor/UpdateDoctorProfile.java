@@ -113,7 +113,7 @@ public class UpdateDoctorProfile extends BaseTest {
         }
     }
 
-    @Test
+    @Test (enabled = false)
     public void test_04_已登录有token的用户可以更新个人信息inviter_no() {
         String res = "";
 
@@ -249,7 +249,7 @@ public class UpdateDoctorProfile extends BaseTest {
         Assert.assertEquals(code, "1000000");
         res = GetDoctorProfile.getDoctorProfile(mainToken);
         checkResponse(res);
-        Assert.assertEquals(parseJson(data, "doctor:inviter_no"), "SH0003");
+//        Assert.assertEquals(parseJson(data, "doctor:inviter_no"), "SH0003");
         Assert.assertNotEquals(parseJson(data, "doctor:hospital_name"), "测试医院", "医院名称不应该改变");
 
         logger.info("同时传入name和hospital_name");
@@ -317,7 +317,7 @@ public class UpdateDoctorProfile extends BaseTest {
         res = GetDoctorProfile.getDoctorProfile(mainToken);
         checkResponse(res);
         Assert.assertEquals(code, "1000000");
-        Assert.assertEquals(parseJson(data, "doctor:inviter_no"), "SH0002");
+//        Assert.assertEquals(parseJson(data, "doctor:inviter_no"), "SH0002");
         Assert.assertNotEquals(parseJson(data, "doctor:major_name"), "测试专业", "专业名称不应该改变");
 
         logger.info("同时传入name和major_name");
@@ -339,7 +339,7 @@ public class UpdateDoctorProfile extends BaseTest {
 
     }
 
-    @Test
+    @Test (enabled = false)
     public void test_11_禁止更新inviter_name字段() {
         String res = "";
         DoctorProfile body = new DoctorProfile(false);
@@ -374,7 +374,7 @@ public class UpdateDoctorProfile extends BaseTest {
         Assert.assertEquals(parseJson(data, "doctor:doctor_card_pictures(0):key"), "2017/05/04/1265834e-97d8-44a0-95e7-047c7facaee8/IMG_20170429_102737.jpg", "key值错误");
         Assert.assertEquals(parseJson(data, "doctor:doctor_card_pictures(0):type"), "3", "type值错误");
         Assert.assertNotNull(parseJson(data, "doctor:doctor_card_pictures(0):url"), "url值错误");
-        Assert.assertNotNull(parseJson(data, "doctor:doctor_card_pictures(0):thumbnailPicture"), "thumbnailPicture值错误");
+        Assert.assertNotNull(parseJson(data, "doctor:doctor_card_pictures(0):large_url"), "large_url缺少");
     }
 
 }

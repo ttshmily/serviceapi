@@ -17,7 +17,7 @@ import java.util.List;
 /**
  * Created by dayi on 2017/6/22.
  */
-public class TeamListV2 extends BaseTest {
+public class TeamListV2 extends TeamList {
 
     public static final Logger logger= Logger.getLogger(TeamListV2.class);
     public static String uri = "/api/v2/user/teamList";
@@ -78,7 +78,7 @@ public class TeamListV2 extends BaseTest {
         int disactiveCount = 0;
         for(int i=0; i<bd_list.size(); i++) {
             JSONObject bd = bd_list.getJSONObject(i);
-            int tmpOrderCount = Integer.parseInt(bd.getString("orderListCount"));
+            int tmpOrderCount = Integer.parseInt(bd.getString("orderCounts"));
             Assert.assertTrue(orderCount <= tmpOrderCount);
             orderCount = tmpOrderCount;
         }
@@ -95,7 +95,7 @@ public class TeamListV2 extends BaseTest {
         bd_list = data.getJSONArray("list");
         for(int i=0; i<bd_list.size(); i++) {
             JSONObject bd = bd_list.getJSONObject(i);
-            int tmpOrderCount = Integer.parseInt(bd.getString("orderListCount"));
+            int tmpOrderCount = Integer.parseInt(bd.getString("orderCounts"));
             Assert.assertTrue(orderCount >= tmpOrderCount);
             orderCount = tmpOrderCount;
         }
@@ -160,13 +160,13 @@ public class TeamListV2 extends BaseTest {
         int disactiveCount = 0;
         for(int i=0; i<bd_list.size(); i++) {
             JSONObject bd = bd_list.getJSONObject(i);
-            int tmpDoctorCount = Integer.parseInt(bd.getString("doctorListCount"));
+            int tmpDoctorCount = Integer.parseInt(bd.getString("doctorCounts"));
             Assert.assertTrue(doctorCount <= tmpDoctorCount);
             doctorCount = tmpDoctorCount;
         }
 
         query.replace("sortKey", "doctorCounts");
-        query.replace("sortValue", "asc");
+        query.replace("sortValue", "desc");
         try {
             res = HttpRequest.sendGet(host_bda + uri, query, bda_token);
         } catch (IOException e) {
@@ -177,7 +177,7 @@ public class TeamListV2 extends BaseTest {
         bd_list = data.getJSONArray("list");
         for(int i=0; i<bd_list.size(); i++) {
             JSONObject bd = bd_list.getJSONObject(i);
-            int tmpDoctorCount = Integer.parseInt(bd.getString("doctorListCount"));
+            int tmpDoctorCount = Integer.parseInt(bd.getString("doctorCounts"));
             Assert.assertTrue(doctorCount >= tmpDoctorCount);
             doctorCount = tmpDoctorCount;
         }
@@ -195,8 +195,8 @@ public class TeamListV2 extends BaseTest {
         Assert.assertEquals(code, "1000000");
         Assert.assertNotNull(parseJson(data, "list()"), "地推人员列表字段不能缺失");
         Assert.assertNotNull(parseJson(data, "page"), "页码字段缺失");
-        Assert.assertNotNull(parseJson(data, "pageSize"), "分页大小字段缺失");
-        Assert.assertNotNull(parseJson(data, "total"), "列表总数字段缺失");
+        Assert.assertNotNull(parseJson(data, "page_size"), "分页大小字段缺失");
+        Assert.assertNotNull(parseJson(data, "size"), "列表总数字段缺失");
     }
 
     @Test
@@ -215,7 +215,10 @@ public class TeamListV2 extends BaseTest {
         JSONArray bd_list = data.getJSONArray("list");
         for(int i=0; i<bd_list.size(); i++) {
             JSONObject bd = bd_list.getJSONObject(i);
-            JSONArray bd_city_list = bd.getJSONArray("city");
+            JSONArray bd_city_list = new JSONArray();
+            if (!bd.getString("city").equals("null")) {
+                bd_city_list = bd.getJSONArray("city");
+            }
             List<String> cities = new ArrayList<>();
             for (int j=0; j<bd_city_list.size(); j++) {
                 cities.add(bd_city_list.getJSONObject(j).getString("city_id"));

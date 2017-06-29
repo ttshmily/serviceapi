@@ -98,6 +98,7 @@ public class BaseTest {
 
     @BeforeSuite
     public void setUpSuite() throws Exception {
+        logger.debug("1");
         KB.init();
         mainMobile = SendVerifyCode.send();
         mainToken = CheckVerifyCode.check();

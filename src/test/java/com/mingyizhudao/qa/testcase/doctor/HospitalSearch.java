@@ -2,6 +2,7 @@ package com.mingyizhudao.qa.testcase.doctor;
 
 import com.mingyizhudao.qa.common.BaseTest;
 import com.mingyizhudao.qa.util.HttpRequest;
+import com.mingyizhudao.qa.util.UT;
 import org.apache.log4j.Logger;
 import org.testng.Assert;
 import org.testng.annotations.Test;
@@ -126,6 +127,27 @@ public class HospitalSearch extends BaseTest {
 //        Assert.assertNotNull(parseJson(data, "hospital():city"), "hospital的city字段缺失");
 //        Assert.assertNotNull(parseJson(data, "hospital():ext"), "hospital的ext字段缺失");
 //        Assert.assertNotNull(parseJson(data, "hospital():ext:surgery_list()"), "hospital的surgery字段为空");
+    }
+
+    @Test
+    public void test_08_加城市ID搜索() {
+        String res = "";
+        HashMap<String, String> query = new HashMap<>();
+        String city_id = UT.randomCityId();
+        query.put("city_id", city_id);
+        query.put("searchname","安阳医院");
+        try {
+            res = HttpRequest.sendGet(host_doc+uri, query, "");
+        } catch (IOException e) {
+            logger.error(e);
+        }
+        checkResponse(res);
+        Assert.assertNotNull(parseJson(data, "hospital()"), "hospital字段缺失");
+        Assert.assertNotNull(parseJson(data, "hospital():name"), "hospital的name字段缺失");
+        Assert.assertNotNull(parseJson(data, "hospital():id"), "hospital的id字段缺失");
+        Assert.assertEquals(parseJson(data, "hospital():city_id"), city_id,"hospital的city字段缺失");
+        Assert.assertEquals(parseJson(data, "hospital():city_name"), UT.cityName(city_id), "hospital的city字段缺失");
+
     }
 
 }

@@ -16,7 +16,7 @@ import java.util.List;
 /**
  * Created by dayi on 2017/6/23.
  */
-public class PersonalInfoV2 extends BaseTest {
+public class PersonalInfoV2 extends PersonalInfo {
     public static final Logger logger= Logger.getLogger(PersonalInfoV2.class);
     public static String uri = "/api/v2/user/personal";
     public static String mock = false ? "/mockjs/1" : "";

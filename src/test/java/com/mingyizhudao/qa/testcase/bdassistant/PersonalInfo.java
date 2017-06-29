@@ -17,6 +17,7 @@ import java.util.HashMap;
 /**
  * Created by ttshmily on 17/5/2017.
  */
+//@Test(enabled = false)
 public class PersonalInfo extends BaseTest {
 
     public static final Logger logger= Logger.getLogger(PersonalInfo.class);
@@ -53,7 +54,7 @@ public class PersonalInfo extends BaseTest {
         Assert.assertNotNull(parseJson(data, "doctorCounts"), "doctorCounts字段缺失");
         Assert.assertNotNull(parseJson(data, "orderCounts"), "orderCounts字段缺失");
         Assert.assertNotNull(parseJson(data, "teamMemberCounts"), "teamMemberCounts字段缺失");
-        Assert.assertEquals(parseJson(data, "teamMemberCounts"), "10","teamMemberCounts字段值不正确");
+        Assert.assertEquals(parseJson(data, "teamMemberCounts"), "6","teamMemberCounts字段值不正确");
         Assert.assertEquals(parseJson(data, "role"), "2"); // 2 表示主管
 
     }
