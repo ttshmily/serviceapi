@@ -87,6 +87,8 @@ public class BaseTest {
             crm_token = prop.getProperty("crm_token");
             bda_token = prop.getProperty("bda_token");
             bda_token_staff = prop.getProperty("bda_token_staff");
+            mainOperatorId = prop.getProperty("mainOperatorId");
+            mainOperatorName = prop.getProperty("mainOperatorName");
 
             host_doc = protocol.concat("://").concat(host_doc);
             host_crm = protocol.concat("://").concat(host_crm);
@@ -130,9 +132,8 @@ public class BaseTest {
             System.exit(1001);
         }
         mainExpertId = tmp.get("register_id");
-        mainOperatorId = "jing.tian@mingyizhudao.com";
-        mainOperatorName = "田静";
         mainOperatorRole = "";
+
     }
 
     @BeforeClass
