@@ -98,7 +98,6 @@ public class BaseTest {
 
     @BeforeSuite
     public void setUpSuite() throws Exception {
-        logger.debug("1");
         KB.init();
         mainMobile = SendVerifyCode.send();
         mainToken = CheckVerifyCode.check();
@@ -134,8 +133,6 @@ public class BaseTest {
         mainOperatorId = "jing.tian@mingyizhudao.com";
         mainOperatorName = "田静";
         mainOperatorRole = "";
-
-
     }
 
     @BeforeClass
@@ -172,54 +169,6 @@ public class BaseTest {
         logger.info("<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< ");
         logger.info("||    TestCase END:\t" + method.getName());
         logger.info("<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< \n");
-    }
-
-    public static String parseJson(JSONObject node, String path) {
-
-        if (node == null) return null;
-        if (!path.contains(":")) {
-            if ( path.indexOf("(")+1 == path.indexOf(")") ) { // 不指定数组坐标
-                if (node.getJSONArray(path.substring(0,path.length()-2)).size() >= 0) { //jsonArray不为空
-                    logger.info(path.substring(0, path.indexOf("(")) + "的长度为: " + node.getJSONArray(path.substring(0, path.length() - 2)).size());
-                    return String.valueOf(node.getJSONArray(path.substring(0,path.length()-2)).size()); //返回数组长度
-                } else {
-                    return null; //指定的数组key不存在
-                }
-            } else if ( path.indexOf("(")+1 < path.indexOf(")") ) { // 指定数组坐标
-                if (node.getJSONArray(path.substring(0,path.indexOf("("))).size() > 0) {
-                    logger.info(path.substring(0, path.indexOf("(")) + "的长度为: " + node.getJSONArray(path.substring(0, path.indexOf("("))));
-                    return node.getJSONArray(path.substring(0, path.indexOf("("))).getString(Integer.parseInt(path.substring(path.indexOf("(") + 1, path.indexOf(")")))); //返回指定坐标的内容
-                } else {
-                    return null; // 指定的数组key不存在，或者长度为0
-                }
-            } else { // 不是数组
-                if (node.containsKey(path)) {
-                    return node.getString(path); // 返回值,包括""
-                } else {
-                    return null; // key不存在
-                }
-            }
-        }
-
-        String nextPath = path.substring(path.indexOf(":")+1);
-        String head = path.substring(0,path.indexOf(":"));
-        if ( head.indexOf("(")+1 == head.indexOf(")") ) {
-            if (node.getJSONArray(head.substring(0,head.indexOf("("))).size() > 0)
-                return parseJson(node.getJSONArray(head.substring(0,head.length()-2)).getJSONObject(0),nextPath);
-            else
-                return null;
-        } else if ( head.indexOf("(")+1 < head.indexOf(")") ) {
-            if ( node.getJSONArray(head.substring(0,head.indexOf("("))).size() > 0 )
-                return parseJson(node.getJSONArray(head.substring(0,path.indexOf("("))).getJSONObject(Integer.parseInt(head.substring(head.indexOf("(")+1,head.indexOf(")")))),nextPath);
-            else
-                return null;
-        } else {
-            if (node.containsKey(head)) {
-                return parseJson(node.getJSONObject(head), nextPath);
-            } else {
-                return null;
-            }
-        }
     }
 
     public void checkResponse(String res) throws JSONException {

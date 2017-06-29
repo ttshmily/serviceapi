@@ -51,21 +51,21 @@ public class KBExpert_Create extends BaseTest {
             res = HttpRequest.sendPost(host_crm + uri, ep.body.toString(), crm_token);
             checkResponse(res);
             Assert.assertEquals(code, "1000000");
-            Assert.assertNotNull(parseJson(data, "id"), "医库ID不能少");
-            Assert.assertEquals(parseJson(data, "gender"), ep.body.getString("gender"));
-            Assert.assertEquals(parseJson(data, "name"), ep.body.getString("name"));
-            Assert.assertEquals(parseJson(data, "major_id"), ep.body.getString("major_id"));
-            Assert.assertNotNull(parseJson(data, "city_id"));
-            Assert.assertEquals(parseJson(data, "hospital_id"), ep.body.getString("hospital_id"));
-            Assert.assertEquals(parseJson(data, "medical_title_list"), ep.body.getString("medical_title_list"));
-            Assert.assertEquals(parseJson(data, "academic_title_list"), ep.body.getString("academic_title_list"));
-            Assert.assertEquals(parseJson(data, "description"), ep.body.getString("description"));
-            Assert.assertEquals(parseJson(data, "specialty"), ep.body.getString("specialty"));
-            Assert.assertEquals(parseJson(data, "honour"), ep.body.getString("honour"));
-            Assert.assertEquals(parseJson(data, "start_year"), ep.body.getString("start_year"));
-            Assert.assertEquals(parseJson(data, "birthday"), ep.body.getString("birthday"));
-            Assert.assertNotNull(parseJson(data, "user_visible"));
-            Assert.assertNotNull(parseJson(data, "doctor_visible"));
+            Assert.assertNotNull(UT.parseJson(data, "id"), "医库ID不能少");
+            Assert.assertEquals(UT.parseJson(data, "gender"), ep.body.getString("gender"));
+            Assert.assertEquals(UT.parseJson(data, "name"), ep.body.getString("name"));
+            Assert.assertEquals(UT.parseJson(data, "major_id"), ep.body.getString("major_id"));
+            Assert.assertNotNull(UT.parseJson(data, "city_id"));
+            Assert.assertEquals(UT.parseJson(data, "hospital_id"), ep.body.getString("hospital_id"));
+            Assert.assertEquals(UT.parseJson(data, "medical_title_list"), ep.body.getString("medical_title_list"));
+            Assert.assertEquals(UT.parseJson(data, "academic_title_list"), ep.body.getString("academic_title_list"));
+            Assert.assertEquals(UT.parseJson(data, "description"), ep.body.getString("description"));
+            Assert.assertEquals(UT.parseJson(data, "specialty"), ep.body.getString("specialty"));
+            Assert.assertEquals(UT.parseJson(data, "honour"), ep.body.getString("honour"));
+            Assert.assertEquals(UT.parseJson(data, "start_year"), ep.body.getString("start_year"));
+            Assert.assertEquals(UT.parseJson(data, "birthday"), ep.body.getString("birthday"));
+            Assert.assertNotNull(UT.parseJson(data, "user_visible"));
+            Assert.assertNotNull(UT.parseJson(data, "doctor_visible"));
 //            Assert.assertNotNull(parseJson(data, "avatar_url"));
 
         } catch (IOException e) {
@@ -87,19 +87,19 @@ public class KBExpert_Create extends BaseTest {
             res = HttpRequest.sendPost(host_crm + uri, ep.body.toString(), crm_token);
             checkResponse(res);
             Assert.assertEquals(code, "1000000");
-            Assert.assertNotNull(parseJson(data, "id"), "医库ID不能少");
-            Assert.assertEquals(parseJson(data, "name"), name);
-            Assert.assertEquals(parseJson(data, "major_id"), major_id);
-            Assert.assertEquals(parseJson(data, "major"), KB.kb_major.get(major_id));
-            Assert.assertEquals(parseJson(data, "hospital_id"), hospital_id);
-            Assert.assertEquals(parseJson(data, "hospital_name"), KB.kb_hospital.get(hospital_id));
-            Assert.assertEquals(parseJson(data, "certified_status"), "NOT_CERTIFIED");
-            Assert.assertEquals(parseJson(data, "signed_status"), "NOT_SIGNED");
-            Assert.assertEquals(parseJson(data, "source_type"), "CRM_SYSTEM");
+            Assert.assertNotNull(UT.parseJson(data, "id"), "医库ID不能少");
+            Assert.assertEquals(UT.parseJson(data, "name"), name);
+            Assert.assertEquals(UT.parseJson(data, "major_id"), major_id);
+            Assert.assertEquals(UT.parseJson(data, "major"), KB.kb_major.get(major_id));
+            Assert.assertEquals(UT.parseJson(data, "hospital_id"), hospital_id);
+            Assert.assertEquals(UT.parseJson(data, "hospital_name"), KB.kb_hospital.get(hospital_id));
+            Assert.assertEquals(UT.parseJson(data, "certified_status"), "NOT_CERTIFIED");
+            Assert.assertEquals(UT.parseJson(data, "signed_status"), "NOT_SIGNED");
+            Assert.assertEquals(UT.parseJson(data, "source_type"), "CRM_SYSTEM");
 
-            Assert.assertNotNull(parseJson(data, "user_visible"));
-            Assert.assertNotNull(parseJson(data, "doctor_visible"));
-            Assert.assertNotNull(parseJson(data, "city_id"), "城市ID不能少");
+            Assert.assertNotNull(UT.parseJson(data, "user_visible"));
+            Assert.assertNotNull(UT.parseJson(data, "doctor_visible"));
+            Assert.assertNotNull(UT.parseJson(data, "city_id"), "城市ID不能少");
 
         } catch (IOException e) {
             logger.error(e);
@@ -164,19 +164,19 @@ public class KBExpert_Create extends BaseTest {
             res = HttpRequest.sendPost(host_crm + uri, ep.body.toString(), crm_token);
             checkResponse(res);
             Assert.assertEquals(code, "1000000");
-            Assert.assertNotNull(parseJson(data, "id"), "医库ID不能少");
-            Assert.assertEquals(parseJson(data, "name"), name);
-            Assert.assertEquals(parseJson(data, "major_id"), major_id);
-            Assert.assertEquals(parseJson(data, "major"), KB.kb_major.get(major_id));
-            Assert.assertEquals(parseJson(data, "hospital_id"), hospital_id);
-            Assert.assertEquals(parseJson(data, "hospital_name"), KB.kb_hospital.get(hospital_id));
-            Assert.assertEquals(parseJson(data, "certified_status"), "NOT_CERTIFIED");
-            Assert.assertEquals(parseJson(data, "signed_status"), "NOT_SIGNED");
-            Assert.assertEquals(parseJson(data, "source_type"), "CRM_SYSTEM");
+            Assert.assertNotNull(UT.parseJson(data, "id"), "医库ID不能少");
+            Assert.assertEquals(UT.parseJson(data, "name"), name);
+            Assert.assertEquals(UT.parseJson(data, "major_id"), major_id);
+            Assert.assertEquals(UT.parseJson(data, "major"), KB.kb_major.get(major_id));
+            Assert.assertEquals(UT.parseJson(data, "hospital_id"), hospital_id);
+            Assert.assertEquals(UT.parseJson(data, "hospital_name"), KB.kb_hospital.get(hospital_id));
+            Assert.assertEquals(UT.parseJson(data, "certified_status"), "NOT_CERTIFIED");
+            Assert.assertEquals(UT.parseJson(data, "signed_status"), "NOT_SIGNED");
+            Assert.assertEquals(UT.parseJson(data, "source_type"), "CRM_SYSTEM");
 
-            Assert.assertNotNull(parseJson(data, "user_visible"));
-            Assert.assertNotNull(parseJson(data, "doctor_visible"));
-            Assert.assertNotNull(parseJson(data, "city_id"), "城市ID不能少");
+            Assert.assertNotNull(UT.parseJson(data, "user_visible"));
+            Assert.assertNotNull(UT.parseJson(data, "doctor_visible"));
+            Assert.assertNotNull(UT.parseJson(data, "city_id"), "城市ID不能少");
 
         } catch (IOException e) {
             logger.error(e);

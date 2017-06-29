@@ -2,9 +2,8 @@ package com.mingyizhudao.qa.testcase.crm;
 
 import com.mingyizhudao.qa.common.BaseTest;
 import com.mingyizhudao.qa.dataprofile.doctor.DoctorProfile;
-import com.mingyizhudao.qa.testcase.doctor.CreateOrder;
-import com.mingyizhudao.qa.testcase.doctor.UpdateDoctorProfile;
 import com.mingyizhudao.qa.util.HttpRequest;
+import com.mingyizhudao.qa.util.UT;
 import org.apache.log4j.Logger;
 import org.testng.Assert;
 import org.testng.annotations.Test;
@@ -44,17 +43,17 @@ public class RegisteredDoctor_TrackList extends BaseTest {
         logger.debug(res);
         checkResponse(res);
         Assert.assertEquals(code, "1000000");
-        Assert.assertEquals(parseJson(data, "list()"), "2");
+        Assert.assertEquals(UT.parseJson(data, "list()"), "2");
 
         logger.info(RegisteredDoctor_Certify.certify(doctorId, "1"));
         res = trackList(doctorId);
         checkResponse(res);
         Assert.assertEquals(code, "1000000");
-        Assert.assertEquals(parseJson(data, "list()"), "3");
+        Assert.assertEquals(UT.parseJson(data, "list()"), "3");
 
-        int id1 = Integer.parseInt(parseJson(data, "list(0):id"));
-        int id2 = Integer.parseInt(parseJson(data, "list(1):id"));
-        int id3 = Integer.parseInt(parseJson(data, "list(2):id"));
+        int id1 = Integer.parseInt(UT.parseJson(data, "list(0):id"));
+        int id2 = Integer.parseInt(UT.parseJson(data, "list(1):id"));
+        int id3 = Integer.parseInt(UT.parseJson(data, "list(2):id"));
 
         Assert.assertTrue(id1 > id2, "没有倒序排列");
         Assert.assertTrue(id2 > id3, "没有倒序排列");
@@ -70,17 +69,17 @@ public class RegisteredDoctor_TrackList extends BaseTest {
         logger.debug(res);
         checkResponse(res);
         Assert.assertEquals(code, "1000000");
-        Assert.assertEquals(parseJson(data, "list()"), "2");
+        Assert.assertEquals(UT.parseJson(data, "list()"), "2");
 
         logger.info(RegisteredDoctor_Certify.certify(doctorId, "-1"));
         res = trackList(doctorId);
         checkResponse(res);
         Assert.assertEquals(code, "1000000");
-        Assert.assertEquals(parseJson(data, "list()"), "3");
+        Assert.assertEquals(UT.parseJson(data, "list()"), "3");
 
-        int id1 = Integer.parseInt(parseJson(data, "list(0):id"));
-        int id2 = Integer.parseInt(parseJson(data, "list(1):id"));
-        int id3 = Integer.parseInt(parseJson(data, "list(2):id"));
+        int id1 = Integer.parseInt(UT.parseJson(data, "list(0):id"));
+        int id2 = Integer.parseInt(UT.parseJson(data, "list(1):id"));
+        int id3 = Integer.parseInt(UT.parseJson(data, "list(2):id"));
 
         Assert.assertTrue(id1 > id2, "没有倒序排列");
         Assert.assertTrue(id2 > id3, "没有倒序排列");

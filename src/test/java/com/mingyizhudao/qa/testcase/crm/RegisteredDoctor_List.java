@@ -7,7 +7,6 @@ import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 import org.apache.log4j.Logger;
 import org.testng.Assert;
-import org.testng.AssertJUnit;
 import org.testng.annotations.Test;
 
 import java.io.IOException;
@@ -32,7 +31,7 @@ public class RegisteredDoctor_List extends BaseTest{
         } catch (IOException e) {
             logger.error(e);
         }
-        return Integer.parseInt(parseJson(JSONObject.fromObject(res), "data:size"));
+        return Integer.parseInt(UT.parseJson(JSONObject.fromObject(res), "data:size"));
 
     }
     @Test
@@ -47,26 +46,26 @@ public class RegisteredDoctor_List extends BaseTest{
         }
         checkResponse(res);
         Assert.assertEquals(code, "1000000");
-        Assert.assertNotNull(parseJson(data, "list()"), "医生列表为空");
-        Assert.assertNotEquals(parseJson(data, "list(0):user_id"), "", "医生ID为空");
-        Assert.assertNotEquals(parseJson(data, "list(0):created_at"), "", "注册时间没有值");
-        Assert.assertNotEquals(parseJson(data, "list(0):name"), "", "医生姓名为空");
-        Assert.assertNotEquals(parseJson(data, "list(0):mobile"), "", "医生手机为空");
-        Assert.assertNotEquals(parseJson(data, "list(0):hospital_name"), "", "医生医院名称为空");
-        Assert.assertNotEquals(parseJson(data, "list(0):hospital_id"), "", "医生医院ID为空");
-        Assert.assertNotNull(parseJson(data, "list(0):department"), "医生科室字段不存在");
-        Assert.assertNotNull(parseJson(data, "list(0):academic_title"), "医生学术职称不存在");
-        Assert.assertNotNull(parseJson(data, "list(0):medical_title"), "医生技术职称不存在");
-        Assert.assertNotEquals(parseJson(data, "list(0):is_verified"), "", "医生是否认证字段没有值");
-        Assert.assertNotNull(parseJson(data, "list(0):inviter_name"), "医生的地推字段不存在");
-        Assert.assertNotNull(parseJson(data, "list(0):is_famous"), "医生是否是专家字段不存在");
-        Assert.assertNotNull(parseJson(data, "size"), "列表总量字段不存在");
-        Assert.assertEquals(parseJson(data, "pagesize"), "10", "默认分页大小不为10");
-        Assert.assertNotNull(parseJson(data, "page"), "默认没有传回第1页");
-        Assert.assertEquals(parseJson(data, "list()"), "10", "分页的默认值不为10");
-        Integer id1 = Integer.parseInt(parseJson(data, "list(0):user_id"));
-        Integer id2 = Integer.parseInt(parseJson(data, "list(4):user_id"));
-        Integer id3 = Integer.parseInt(parseJson(data, "list(9):user_id"));
+        Assert.assertNotNull(UT.parseJson(data, "list()"), "医生列表为空");
+        Assert.assertNotEquals(UT.parseJson(data, "list(0):user_id"), "", "医生ID为空");
+        Assert.assertNotEquals(UT.parseJson(data, "list(0):created_at"), "", "注册时间没有值");
+        Assert.assertNotEquals(UT.parseJson(data, "list(0):name"), "", "医生姓名为空");
+        Assert.assertNotEquals(UT.parseJson(data, "list(0):mobile"), "", "医生手机为空");
+        Assert.assertNotEquals(UT.parseJson(data, "list(0):hospital_name"), "", "医生医院名称为空");
+        Assert.assertNotEquals(UT.parseJson(data, "list(0):hospital_id"), "", "医生医院ID为空");
+        Assert.assertNotNull(UT.parseJson(data, "list(0):department"), "医生科室字段不存在");
+        Assert.assertNotNull(UT.parseJson(data, "list(0):academic_title"), "医生学术职称不存在");
+        Assert.assertNotNull(UT.parseJson(data, "list(0):medical_title"), "医生技术职称不存在");
+        Assert.assertNotEquals(UT.parseJson(data, "list(0):is_verified"), "", "医生是否认证字段没有值");
+        Assert.assertNotNull(UT.parseJson(data, "list(0):inviter_name"), "医生的地推字段不存在");
+        Assert.assertNotNull(UT.parseJson(data, "list(0):is_famous"), "医生是否是专家字段不存在");
+        Assert.assertNotNull(UT.parseJson(data, "size"), "列表总量字段不存在");
+        Assert.assertEquals(UT.parseJson(data, "pagesize"), "10", "默认分页大小不为10");
+        Assert.assertNotNull(UT.parseJson(data, "page"), "默认没有传回第1页");
+        Assert.assertEquals(UT.parseJson(data, "list()"), "10", "分页的默认值不为10");
+        Integer id1 = Integer.parseInt(UT.parseJson(data, "list(0):user_id"));
+        Integer id2 = Integer.parseInt(UT.parseJson(data, "list(4):user_id"));
+        Integer id3 = Integer.parseInt(UT.parseJson(data, "list(9):user_id"));
 
         query.put("page","2");
         try {
@@ -76,7 +75,7 @@ public class RegisteredDoctor_List extends BaseTest{
         }
         checkResponse(res);
         Assert.assertEquals(code, "1000000");
-        Integer id4 = Integer.parseInt(parseJson(data, "list(0):user_id"));
+        Integer id4 = Integer.parseInt(UT.parseJson(data, "list(0):user_id"));
 
         if (!(id1 > id2 && id2 > id3 && id3 > id4)) Assert.fail("没有按照医生ID倒序排列");
 
@@ -102,9 +101,9 @@ public class RegisteredDoctor_List extends BaseTest{
             }
             checkResponse(res);
             Assert.assertEquals(code, "1000000");
-            Assert.assertEquals(parseJson(data, "list()"), "10", "分页的默认值不为10");
-            Assert.assertEquals(parseJson(data, "size"), String.valueOf(total), "列表总数量错误");
-            Assert.assertEquals(parseJson(data, "page"), String.valueOf(i), "页码错误");
+            Assert.assertEquals(UT.parseJson(data, "list()"), "10", "分页的默认值不为10");
+            Assert.assertEquals(UT.parseJson(data, "size"), String.valueOf(total), "列表总数量错误");
+            Assert.assertEquals(UT.parseJson(data, "page"), String.valueOf(i), "页码错误");
         }
 
         // 设置分页大小为50
@@ -119,7 +118,7 @@ public class RegisteredDoctor_List extends BaseTest{
             }
             checkResponse(res);
             Assert.assertEquals(code, "1000000");
-            Assert.assertEquals(parseJson(data, "list()"), String.valueOf(page_size), "分页值不正确");
+            Assert.assertEquals(UT.parseJson(data, "list()"), String.valueOf(page_size), "分页值不正确");
             // 设置页数超出总量时，返回列表为空
             int page = total/page_size + 1;
             query.replace("page", String.valueOf(page+1));
@@ -130,7 +129,7 @@ public class RegisteredDoctor_List extends BaseTest{
             }
             checkResponse(res);
             Assert.assertEquals(code, "1000000");
-            Assert.assertEquals(parseJson(data, "list()"), "0", "页码超出总数时，应当返回空列表");
+            Assert.assertEquals(UT.parseJson(data, "list()"), "0", "页码超出总数时，应当返回空列表");
         }
 
     }
@@ -498,7 +497,7 @@ public class RegisteredDoctor_List extends BaseTest{
         }
         checkResponse(res);
         Assert.assertEquals(code, "1000000");
-        Assert.assertNotEquals(parseJson(data, "list()"), "0");
+        Assert.assertNotEquals(UT.parseJson(data, "list()"), "0");
         //TODO
 
 
@@ -513,7 +512,7 @@ public class RegisteredDoctor_List extends BaseTest{
         checkResponse(res);
         logger.info(HttpRequest.unicodeString(res));
         Assert.assertEquals(code, "1000000");
-        Assert.assertNotEquals(parseJson(data, "list()"), "0");
+        Assert.assertNotEquals(UT.parseJson(data, "list()"), "0");
 
         //TODO
 

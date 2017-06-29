@@ -3,6 +3,7 @@ package com.mingyizhudao.qa.testcase.crm;
 import com.mingyizhudao.qa.common.BaseTest;
 import com.mingyizhudao.qa.testcase.doctor.CreateOrder;
 import com.mingyizhudao.qa.util.HttpRequest;
+import com.mingyizhudao.qa.util.UT;
 import net.sf.json.JSONObject;
 import org.apache.log4j.Logger;
 import org.testng.Assert;
@@ -35,7 +36,7 @@ public class Order_Reject extends BaseTest {
             logger.error(e);
         }
         res = Order_Detail.Detail(orderId);
-        return parseJson(JSONObject.fromObject(res), "data:status"); // 期望9000
+        return UT.parseJson(JSONObject.fromObject(res), "data:status"); // 期望9000
     }
 
 
@@ -63,9 +64,9 @@ public class Order_Reject extends BaseTest {
         Assert.assertEquals(code, "1000000", "拒绝订单失败");
         res = Order_Detail.Detail(order_number);
         checkResponse(res);
-        Assert.assertEquals(parseJson(data, "major_reps_id"), "chao.fang@mingyizhudao.com");
-        Assert.assertEquals(parseJson(data, "status"), "9000");
-        Assert.assertEquals(parseJson(data, "order_number"), order_number);
+        Assert.assertEquals(UT.parseJson(data, "major_reps_id"), "chao.fang@mingyizhudao.com");
+        Assert.assertEquals(UT.parseJson(data, "status"), "9000");
+        Assert.assertEquals(UT.parseJson(data, "order_number"), order_number);
     }
 
     @Test
@@ -96,9 +97,9 @@ public class Order_Reject extends BaseTest {
         Assert.assertNotEquals(code, "1000000", "拒绝订单失败");
         res = Order_Detail.Detail(order_number);
         checkResponse(res);
-        Assert.assertEquals(parseJson(data, "major_reps_id"), "chao.fang@mingyizhudao.com");
-        Assert.assertEquals(parseJson(data, "status"), "2020");
-        Assert.assertEquals(parseJson(data, "order_number"), order_number);
+        Assert.assertEquals(UT.parseJson(data, "major_reps_id"), "chao.fang@mingyizhudao.com");
+        Assert.assertEquals(UT.parseJson(data, "status"), "2020");
+        Assert.assertEquals(UT.parseJson(data, "order_number"), order_number);
     }
 
     @Test
@@ -132,9 +133,9 @@ public class Order_Reject extends BaseTest {
         Assert.assertNotEquals(code, "1000000", "拒绝订单失败");
         res = Order_Detail.Detail(order_number);
         checkResponse(res);
-        Assert.assertEquals(parseJson(data, "major_reps_id"), "chao.fang@mingyizhudao.com");
-        Assert.assertEquals(parseJson(data, "status"), "2020");
-        Assert.assertEquals(parseJson(data, "order_number"), order_number);
+        Assert.assertEquals(UT.parseJson(data, "major_reps_id"), "chao.fang@mingyizhudao.com");
+        Assert.assertEquals(UT.parseJson(data, "status"), "2020");
+        Assert.assertEquals(UT.parseJson(data, "order_number"), order_number);
     }
 
     @Test
@@ -161,7 +162,7 @@ public class Order_Reject extends BaseTest {
         Assert.assertNotEquals(code, "1000000", "无证");
         res = Order_Detail.Detail(order_number);
         checkResponse(res);
-        Assert.assertEquals(parseJson(data, "status"), "2000");
-        Assert.assertEquals(parseJson(data, "order_number"), order_number);
+        Assert.assertEquals(UT.parseJson(data, "status"), "2000");
+        Assert.assertEquals(UT.parseJson(data, "order_number"), order_number);
     }
 }

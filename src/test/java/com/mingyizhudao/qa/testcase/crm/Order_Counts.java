@@ -2,6 +2,7 @@ package com.mingyizhudao.qa.testcase.crm;
 
 import com.mingyizhudao.qa.common.BaseTest;
 import com.mingyizhudao.qa.util.HttpRequest;
+import com.mingyizhudao.qa.util.UT;
 import org.apache.log4j.Logger;
 import org.testng.Assert;
 import org.testng.annotations.Test;
@@ -30,11 +31,11 @@ public class Order_Counts extends BaseTest {
         }
         checkResponse(res);
         Assert.assertEquals(code, "1000000");
-        Assert.assertNotNull(parseJson(data, "load_take"));
-        Assert.assertNotNull(parseJson(data, "handling"));
-        Assert.assertNotNull(parseJson(data, "wait_pay"));
-        Assert.assertNotNull(parseJson(data, "wait_upload_summary"));
-        Assert.assertNotNull(parseJson(data, "wait_verify_summary"));
+        Assert.assertNotNull(UT.parseJson(data, "load_take"));
+        Assert.assertNotNull(UT.parseJson(data, "handling"));
+        Assert.assertNotNull(UT.parseJson(data, "wait_pay"));
+        Assert.assertNotNull(UT.parseJson(data, "wait_upload_summary"));
+        Assert.assertNotNull(UT.parseJson(data, "wait_verify_summary"));
     }
 
     @Test
@@ -50,14 +51,14 @@ public class Order_Counts extends BaseTest {
         checkResponse(res);
         Assert.assertEquals(code, "1000000");
 
-        Assert.assertEquals(Integer.parseInt(parseJson(data, "load_take")) +
-                Integer.parseInt(parseJson(data, "handling")) +
-                Integer.parseInt(parseJson(data, "wait_pay")) +
-                Integer.parseInt(parseJson(data, "wait_upload_summary")) +
-                Integer.parseInt(parseJson(data, "wait_verify_summary")) +
-                Integer.parseInt(parseJson(data, "finish")) +
-                Integer.parseInt(parseJson(data, "cancel")) +
-                Integer.parseInt(parseJson(data, "other")), Order_List.orderList());
+        Assert.assertEquals(Integer.parseInt(UT.parseJson(data, "load_take")) +
+                Integer.parseInt(UT.parseJson(data, "handling")) +
+                Integer.parseInt(UT.parseJson(data, "wait_pay")) +
+                Integer.parseInt(UT.parseJson(data, "wait_upload_summary")) +
+                Integer.parseInt(UT.parseJson(data, "wait_verify_summary")) +
+                Integer.parseInt(UT.parseJson(data, "finish")) +
+                Integer.parseInt(UT.parseJson(data, "cancel")) +
+                Integer.parseInt(UT.parseJson(data, "other")), Order_List.orderList());
     }
 
 }

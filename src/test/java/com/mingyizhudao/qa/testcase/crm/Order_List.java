@@ -2,6 +2,7 @@ package com.mingyizhudao.qa.testcase.crm;
 
 import com.mingyizhudao.qa.common.BaseTest;
 import com.mingyizhudao.qa.util.HttpRequest;
+import com.mingyizhudao.qa.util.UT;
 import net.sf.json.JSONObject;
 import org.apache.log4j.Logger;
 import org.testng.Assert;
@@ -27,7 +28,7 @@ public class Order_List extends BaseTest {
         } catch (IOException e) {
             logger.error(e);
         }
-        return Integer.parseInt(parseJson(JSONObject.fromObject(res), "data:size"));
+        return Integer.parseInt(UT.parseJson(JSONObject.fromObject(res), "data:size"));
     }
 
     @Test
@@ -44,8 +45,8 @@ public class Order_List extends BaseTest {
         }
         checkResponse(res);
         Assert.assertEquals(code, "1000000");
-        Assert.assertEquals(parseJson(data, "list()"), "10");
-        Assert.assertEquals(parseJson(data, "page"), "1");
+        Assert.assertEquals(UT.parseJson(data, "list()"), "10");
+        Assert.assertEquals(UT.parseJson(data, "page"), "1");
     }
 
     @Test
@@ -62,9 +63,9 @@ public class Order_List extends BaseTest {
         }
         checkResponse(res);
         Assert.assertEquals(code, "1000000");
-        Assert.assertEquals(parseJson(data, "list()"), "100");
-        Assert.assertEquals(parseJson(data, "page"), "1");
-        int size = Integer.parseInt(parseJson(data, "size"));
+        Assert.assertEquals(UT.parseJson(data, "list()"), "100");
+        Assert.assertEquals(UT.parseJson(data, "page"), "1");
+        int size = Integer.parseInt(UT.parseJson(data, "size"));
         int total = size/100;
         for (int i=1; i<=total; i++) {
             query.replace("page", String.valueOf(i));
@@ -75,7 +76,7 @@ public class Order_List extends BaseTest {
             }
             checkResponse(res);
             Assert.assertEquals(code, "1000000");
-            Assert.assertEquals(parseJson(data, "list()"), "100");
+            Assert.assertEquals(UT.parseJson(data, "list()"), "100");
         }
         query.replace("page", String.valueOf(total+1));
         try {
@@ -85,7 +86,7 @@ public class Order_List extends BaseTest {
         }
         checkResponse(res);
         Assert.assertEquals(code, "1000000");
-        Assert.assertEquals(parseJson(data, "list()"), String.valueOf(size-100*total));
+        Assert.assertEquals(UT.parseJson(data, "list()"), String.valueOf(size-100*total));
     }
 
     @Test
@@ -104,8 +105,8 @@ public class Order_List extends BaseTest {
         }
         checkResponse(res);
         Assert.assertEquals(code, "1000000");
-        Assert.assertEquals(parseJson(data, "list()"), "10");
-        Assert.assertEquals(parseJson(data, "page"), "1");
-        Assert.assertEquals(parseJson(data, "list(1):status"), "2020");
+        Assert.assertEquals(UT.parseJson(data, "list()"), "10");
+        Assert.assertEquals(UT.parseJson(data, "page"), "1");
+        Assert.assertEquals(UT.parseJson(data, "list(1):status"), "2020");
     }
 }

@@ -4,6 +4,7 @@ import com.mingyizhudao.qa.common.BaseTest;
 import com.mingyizhudao.qa.dataprofile.login.RefreshProfile;
 import com.mingyizhudao.qa.testcase.doctor.GetDoctorProfile;
 import com.mingyizhudao.qa.util.HttpRequest;
+import com.mingyizhudao.qa.util.UT;
 import net.sf.json.JSONException;
 import org.apache.log4j.Logger;
 import org.testng.Assert;
@@ -44,25 +45,25 @@ public class Refresh extends BaseTest{
         } catch (JSONException e) {
         }
         Assert.assertEquals(code, "1000000");
-        Assert.assertNotNull(parseJson(data,"token"), "token not exist");
-        Assert.assertNotNull(parseJson(data, "expire"), "expire not exist");
-        Assert.assertEquals(parseJson(data, "expire"), "7200");
+        Assert.assertNotNull(UT.parseJson(data,"token"), "token not exist");
+        Assert.assertNotNull(UT.parseJson(data, "expire"), "expire not exist");
+        Assert.assertEquals(UT.parseJson(data, "expire"), "7200");
         // update token if succeed
-        token = parseJson(data, "token");
+        token = UT.parseJson(data, "token");
         CheckVerifyCode.token = token;
 
         // check old token still effective
         String r = GetDoctorProfile.getDoctorProfile(oldToken);
         checkResponse(r);
         Assert.assertEquals(code, "1000000", "old Token expired");
-        String oldProfile = parseJson(data, "doctor");
+        String oldProfile = UT.parseJson(data, "doctor");
         logger.debug(oldProfile);
 
         // check new token taking effect
         String s = GetDoctorProfile.getDoctorProfile(token);
         checkResponse(s);
         Assert.assertEquals(code, "1000000");
-        String newProfile = parseJson(data, "doctor");
+        String newProfile = UT.parseJson(data, "doctor");
         logger.debug(newProfile);
 
         Assert.assertEquals(oldProfile, newProfile, "both token get the same profile");

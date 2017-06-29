@@ -6,6 +6,7 @@ import com.mingyizhudao.qa.dataprofile.doctor.OrderDetail;
 import com.mingyizhudao.qa.testcase.login.CheckVerifyCode;
 import com.mingyizhudao.qa.testcase.login.SendVerifyCode;
 import com.mingyizhudao.qa.util.HttpRequest;
+import com.mingyizhudao.qa.util.UT;
 import net.sf.json.JSONObject;
 import org.apache.log4j.Logger;
 import org.testng.Assert;
@@ -31,7 +32,7 @@ public class CreateOrder extends BaseTest {
             logger.error(e);
         }
 //        logger.debug(unicodeString(res));
-        String tmpOrderId = parseJson(JSONObject.fromObject(res), "data:order_number");
+        String tmpOrderId = UT.parseJson(JSONObject.fromObject(res), "data:order_number");
         if (null != tmpOrderId && !tmpOrderId.isEmpty()) {
             logger.info("orderid是: " + tmpOrderId);
             return tmpOrderId;
@@ -55,7 +56,7 @@ public class CreateOrder extends BaseTest {
         }
         checkResponse(res);
         Assert.assertEquals(code, "1000000", "创建订单失败");
-        String orderId = parseJson(data, "order_number");
+        String orderId = UT.parseJson(data, "order_number");
         Assert.assertNotEquals(orderId, "", "返回的订单ID格式有误");
 
         logger.info("查看刚刚创建的订单详情");
@@ -340,15 +341,15 @@ public class CreateOrder extends BaseTest {
         }
         checkResponse(res);
         Assert.assertEquals(code, "1000000", "创建订单失败");
-        String orderId = parseJson(data, "order_number");
+        String orderId = UT.parseJson(data, "order_number");
         Assert.assertNotEquals(orderId, "", "返回的订单ID格式有误");
 
         logger.info("查看刚刚创建的订单详情");
         res = GetOrderDetail.getOrderDetail(mainToken, orderId);
         checkResponse(res);
         Assert.assertEquals(code, "1000000");
-        Assert.assertEquals(parseJson(data,"order:expected_surgery_hospital_id"), mainDoctorHospitalId);
-        Assert.assertEquals(parseJson(data,"order:expected_surgery_hospital_name"), mainDoctorHospitalName);
+        Assert.assertEquals(UT.parseJson(data,"order:expected_surgery_hospital_id"), mainDoctorHospitalId);
+        Assert.assertEquals(UT.parseJson(data,"order:expected_surgery_hospital_name"), mainDoctorHospitalName);
 
         logger.info("传入期望手术医院的ID=0。。。");
         order.body.getJSONObject("order").replace("expected_surgery_hospital_id","0");
@@ -359,15 +360,15 @@ public class CreateOrder extends BaseTest {
         }
         checkResponse(res);
         Assert.assertEquals(code, "1000000", "创建订单失败");
-        orderId = parseJson(data, "order_id");
+        orderId = UT.parseJson(data, "order_id");
         Assert.assertNotEquals(orderId, "", "返回的订单ID格式有误");
 
         logger.info("查看刚刚创建的订单详情");
         res = GetOrderDetail.getOrderDetail(mainToken, orderId);
         checkResponse(res);
         Assert.assertEquals(code, "1000000");
-        Assert.assertEquals(parseJson(data,"order:expected_surgery_hospital_id"), mainDoctorHospitalId);
-        Assert.assertEquals(parseJson(data,"order:expected_surgery_hospital_name"), mainDoctorHospitalName);
+        Assert.assertEquals(UT.parseJson(data,"order:expected_surgery_hospital_id"), mainDoctorHospitalId);
+        Assert.assertEquals(UT.parseJson(data,"order:expected_surgery_hospital_name"), mainDoctorHospitalName);
 
         logger.info("不传入期望手术医院的key。。。");
         order.body.getJSONObject("order").remove("expected_surgery_hospital_id");
@@ -378,15 +379,15 @@ public class CreateOrder extends BaseTest {
         }
         checkResponse(res);
         Assert.assertEquals(code, "1000000", "创建订单失败");
-        orderId = parseJson(data, "order_id");
+        orderId = UT.parseJson(data, "order_id");
         Assert.assertNotEquals(orderId, "", "返回的订单ID格式有误");
 
         logger.info("查看刚刚创建的订单详情");
         res = GetOrderDetail.getOrderDetail(mainToken, orderId);
         checkResponse(res);
         Assert.assertEquals(code, "1000000");
-        Assert.assertEquals(parseJson(data,"order:expected_surgery_hospital_id"), mainDoctorHospitalId);
-        Assert.assertEquals(parseJson(data,"order:expected_surgery_hospital_name"), mainDoctorHospitalName);
+        Assert.assertEquals(UT.parseJson(data,"order:expected_surgery_hospital_id"), mainDoctorHospitalId);
+        Assert.assertEquals(UT.parseJson(data,"order:expected_surgery_hospital_name"), mainDoctorHospitalName);
     }
 
 }

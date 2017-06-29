@@ -3,6 +3,7 @@ package com.mingyizhudao.qa.testcase.crm;
 import com.mingyizhudao.qa.common.BaseTest;
 import com.mingyizhudao.qa.dataprofile.doctor.DoctorProfile;
 import com.mingyizhudao.qa.util.HttpRequest;
+import com.mingyizhudao.qa.util.UT;
 import net.sf.json.JSONObject;
 import org.apache.log4j.Logger;
 import org.testng.Assert;
@@ -29,12 +30,12 @@ public class RegisteredDoctor_Certify extends BaseTest {
         }
         res = RegisteredDoctor_Detail.Detail(regId);
         logger.info(HttpRequest.unicodeString(res));
-        if (parseJson(JSONObject.fromObject(res), "data:is_verified").equals("1")) return "1";
-        if (parseJson(JSONObject.fromObject(res), "data:is_verified").equals("-1")) {
+        if (UT.parseJson(JSONObject.fromObject(res), "data:is_verified").equals("1")) return "1";
+        if (UT.parseJson(JSONObject.fromObject(res), "data:is_verified").equals("-1")) {
             logger.error("认证失败状态不能直接进行验证");
             return "-1";
         }
-        if (parseJson(JSONObject.fromObject(res), "data:is_verified").equals("0")) {
+        if (UT.parseJson(JSONObject.fromObject(res), "data:is_verified").equals("0")) {
             logger.error("信息不完整，不能验证");
             return "0";
         }
@@ -49,7 +50,7 @@ public class RegisteredDoctor_Certify extends BaseTest {
             logger.error(e);
         }
         res = RegisteredDoctor_Detail.Detail(regId);
-        return parseJson(JSONObject.fromObject(res), "data:is_verified");
+        return UT.parseJson(JSONObject.fromObject(res), "data:is_verified");
     }
 
     @Test
@@ -64,7 +65,7 @@ public class RegisteredDoctor_Certify extends BaseTest {
         if ( doctorId == null)
             Assert.fail("创建医生失败，认证用例无法执行");
         res = RegisteredDoctor_Detail.Detail(doctorId);
-        String is_verified = parseJson(JSONObject.fromObject(res), "data:is_verified");
+        String is_verified = UT.parseJson(JSONObject.fromObject(res), "data:is_verified");
         Assert.assertEquals(is_verified, "2");
 
         pathValue.put("id", doctorId);
@@ -79,7 +80,7 @@ public class RegisteredDoctor_Certify extends BaseTest {
         checkResponse(res);
         Assert.assertEquals(code, "1000000");
         res = RegisteredDoctor_Detail.Detail(doctorId);
-        is_verified = parseJson(JSONObject.fromObject(res), "data:is_verified");
+        is_verified = UT.parseJson(JSONObject.fromObject(res), "data:is_verified");
         Assert.assertEquals(is_verified, "-1");
     }
 
@@ -96,7 +97,7 @@ public class RegisteredDoctor_Certify extends BaseTest {
         if (doctorId == null)
             Assert.fail("创建医生失败，认证用例无法执行");
         res = RegisteredDoctor_Detail.Detail(doctorId);
-        String is_verified = parseJson(JSONObject.fromObject(res), "data:is_verified");
+        String is_verified = UT.parseJson(JSONObject.fromObject(res), "data:is_verified");
         Assert.assertEquals(is_verified, "2");
 
         pathValue.put("id", doctorId);
@@ -110,7 +111,7 @@ public class RegisteredDoctor_Certify extends BaseTest {
         checkResponse(res);
         Assert.assertEquals(code, "1000000");
         res = RegisteredDoctor_Detail.Detail(doctorId);
-        is_verified = parseJson(JSONObject.fromObject(res), "data:is_verified");
+        is_verified = UT.parseJson(JSONObject.fromObject(res), "data:is_verified");
         Assert.assertEquals(is_verified, "1");
     }
 
@@ -126,7 +127,7 @@ public class RegisteredDoctor_Certify extends BaseTest {
         if (doctorId == null)
             Assert.fail("创建医生失败，认证用例无法执行");
         res = RegisteredDoctor_Detail.Detail(doctorId);
-        String is_verified = parseJson(JSONObject.fromObject(res), "data:is_verified");
+        String is_verified = UT.parseJson(JSONObject.fromObject(res), "data:is_verified");
         Assert.assertEquals(is_verified, "2");
 
         pathValue.put("id", doctorId);
@@ -141,7 +142,7 @@ public class RegisteredDoctor_Certify extends BaseTest {
         checkResponse(res);
         Assert.assertEquals(code, "1000000");
         res = RegisteredDoctor_Detail.Detail(doctorId);
-        is_verified = parseJson(JSONObject.fromObject(res), "data:is_verified");
+        is_verified = UT.parseJson(JSONObject.fromObject(res), "data:is_verified");
         Assert.assertEquals(is_verified, "1");
     }
 

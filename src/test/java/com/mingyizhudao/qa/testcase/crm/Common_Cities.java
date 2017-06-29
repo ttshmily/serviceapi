@@ -2,6 +2,7 @@ package com.mingyizhudao.qa.testcase.crm;
 
 import com.mingyizhudao.qa.common.BaseTest;
 import com.mingyizhudao.qa.util.HttpRequest;
+import com.mingyizhudao.qa.util.UT;
 import net.sf.json.JSONArray;
 import org.apache.log4j.Logger;
 import org.testng.Assert;
@@ -35,7 +36,7 @@ public class Common_Cities extends BaseTest {
         checkResponse(res);
         Assert.assertEquals(code, "1000000");
         //TODO
-        Assert.assertNotNull(parseJson(data, "list()"));
+        Assert.assertNotNull(UT.parseJson(data, "list()"));
     }
 
     @Test

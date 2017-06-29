@@ -2,6 +2,7 @@ package com.mingyizhudao.qa.testcase.crm;
 
 import com.mingyizhudao.qa.common.BaseTest;
 import com.mingyizhudao.qa.util.HttpRequest;
+import com.mingyizhudao.qa.util.UT;
 import org.apache.log4j.Logger;
 import org.testng.Assert;
 import org.testng.annotations.Test;
@@ -35,9 +36,9 @@ public class Common_UploadToken extends BaseTest {
         } catch (IOException e) {
             logger.error(e);
         }
-        Assert.assertNotNull(parseJson(data, "key"));
-        Assert.assertNotNull(parseJson(data, "token"));
-        Assert.assertNotNull(parseJson(data, "thumbnailUrl"));
+        Assert.assertNotNull(UT.parseJson(data, "key"));
+        Assert.assertNotNull(UT.parseJson(data, "token"));
+        Assert.assertNotNull(UT.parseJson(data, "thumbnailUrl"));
     }
 
     @Test
@@ -57,8 +58,8 @@ public class Common_UploadToken extends BaseTest {
         } catch (IOException e) {
             logger.error(e);
         }
-        Assert.assertNotNull(parseJson(data, "key"));
-        Assert.assertNotNull(parseJson(data, "token"));
-        Assert.assertNotNull(parseJson(data, "thumbnailUrl"));
+        Assert.assertNotNull(UT.parseJson(data, "key"));
+        Assert.assertNotNull(UT.parseJson(data, "token"));
+        Assert.assertNotNull(UT.parseJson(data, "thumbnailUrl"));
     }
 }

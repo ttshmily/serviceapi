@@ -44,7 +44,7 @@ public class Order_Modify extends BaseTest {
         Assert.assertNotNull(data, "list");
         res = Order_Detail.Detail(order_number);
         checkResponse(res);
-        Assert.assertEquals(parseJson(data, "patient_name"), "修改的姓名"+name);
+        Assert.assertEquals(UT.parseJson(data, "patient_name"), "修改的姓名"+name);
     }
 
     @Test
@@ -67,7 +67,7 @@ public class Order_Modify extends BaseTest {
         Assert.assertNotNull(data, "list");
         res = Order_Detail.Detail(order_number);
         checkResponse(res);
-        Assert.assertEquals(parseJson(data, "patient_age"), "44");
+        Assert.assertEquals(UT.parseJson(data, "patient_age"), "44");
     }
 
     @Test
@@ -91,8 +91,8 @@ public class Order_Modify extends BaseTest {
         Assert.assertNotNull(data, "list");
         res = Order_Detail.Detail(order_number);
         checkResponse(res);
-        Assert.assertEquals(parseJson(data, "major_disease_id"), diseaseId);
-        Assert.assertEquals(parseJson(data, "major_disease_name"), UT.diseaseName(diseaseId));
+        Assert.assertEquals(UT.parseJson(data, "major_disease_id"), diseaseId);
+        Assert.assertEquals(UT.parseJson(data, "major_disease_name"), UT.diseaseName(diseaseId));
     }
 
     @Test
@@ -116,8 +116,8 @@ public class Order_Modify extends BaseTest {
         Assert.assertNotNull(data, "list");
         res = Order_Detail.Detail(order_number);
         checkResponse(res);
-        Assert.assertEquals(parseJson(data, "minor_disease_id"), diseaseId);
-        Assert.assertEquals(parseJson(data, "minor_disease_name"), UT.diseaseName(diseaseId));
+        Assert.assertEquals(UT.parseJson(data, "minor_disease_id"), diseaseId);
+        Assert.assertEquals(UT.parseJson(data, "minor_disease_name"), UT.diseaseName(diseaseId));
     }
 
     @Test
@@ -140,7 +140,7 @@ public class Order_Modify extends BaseTest {
         Assert.assertNotNull(data, "list");
         res = Order_Detail.Detail(order_number);
         checkResponse(res);
-        Assert.assertEquals(parseJson(data, "patient_gender"), "2");
+        Assert.assertEquals(UT.parseJson(data, "patient_gender"), "2");
     }
 
     @Test
@@ -164,7 +164,7 @@ public class Order_Modify extends BaseTest {
         Assert.assertNotNull(data, "list");
         res = Order_Detail.Detail(order_number);
         checkResponse(res);
-        Assert.assertEquals(parseJson(data, "patient_phone"), "13799990123");
+        Assert.assertEquals(UT.parseJson(data, "patient_phone"), "13799990123");
     }
 
     @Test
@@ -190,7 +190,7 @@ public class Order_Modify extends BaseTest {
         Assert.assertNotEquals(code, "1000000");
         res = Order_Detail.Detail(order_number);
         checkResponse(res);
-        Assert.assertNotEquals(parseJson(data, "patient_mobile"), "13799990123");
+        Assert.assertNotEquals(UT.parseJson(data, "patient_mobile"), "13799990123");
     }
 
     @Test(enabled = false)
@@ -211,7 +211,7 @@ public class Order_Modify extends BaseTest {
         Assert.assertNotEquals(code, "1000000");
         res = Order_Detail.Detail(order_number);
         checkResponse(res);
-        Assert.assertNotEquals(parseJson(data, "patient_mobile"), "13799990123");
+        Assert.assertNotEquals(UT.parseJson(data, "patient_mobile"), "13799990123");
     }
 
     @Test
@@ -236,10 +236,10 @@ public class Order_Modify extends BaseTest {
         Assert.assertEquals(code, "1000000");
         res = Order_Detail.Detail(order_number);
         checkResponse(res);
-        Assert.assertEquals(parseJson(data, "medical_record_pictures(0):key"), "2017/05/04/1265834e-97d8-44a0-95e7-047c7facaee8/IMG_20170429_102737.jpg");
-        Assert.assertEquals(parseJson(data, "medical_record_pictures(0):type"), "1");
-        Assert.assertNotNull(parseJson(data, "medical_record_pictures(0):thumbnailPicture"), "缺少缩略图");
-        Assert.assertNotNull(parseJson(data, "medical_record_pictures(0):largePicture"), "缺少大图");
+        Assert.assertEquals(UT.parseJson(data, "medical_record_pictures(0):key"), "2017/05/04/1265834e-97d8-44a0-95e7-047c7facaee8/IMG_20170429_102737.jpg");
+        Assert.assertEquals(UT.parseJson(data, "medical_record_pictures(0):type"), "1");
+        Assert.assertNotNull(UT.parseJson(data, "medical_record_pictures(0):thumbnailPicture"), "缺少缩略图");
+        Assert.assertNotNull(UT.parseJson(data, "medical_record_pictures(0):largePicture"), "缺少大图");
 
         pics = JSONArray.fromObject("[]");
         body.replace("medical_record_pictures",pics);
@@ -252,6 +252,6 @@ public class Order_Modify extends BaseTest {
         Assert.assertEquals(code, "1000000");
         res = Order_Detail.Detail(order_number);
         checkResponse(res);
-        Assert.assertEquals(parseJson(data, "medical_record_pictures()"), "0");
+        Assert.assertEquals(UT.parseJson(data, "medical_record_pictures()"), "0");
     }
 }

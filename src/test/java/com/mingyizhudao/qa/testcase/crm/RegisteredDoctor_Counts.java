@@ -2,6 +2,7 @@ package com.mingyizhudao.qa.testcase.crm;
 
 import com.mingyizhudao.qa.common.BaseTest;
 import com.mingyizhudao.qa.util.HttpRequest;
+import com.mingyizhudao.qa.util.UT;
 import org.apache.log4j.Logger;
 import org.testng.Assert;
 import org.testng.annotations.Test;
@@ -30,11 +31,11 @@ public class RegisteredDoctor_Counts extends BaseTest {
         }
         checkResponse(res);
         Assert.assertEquals(code, "1000000");
-        Assert.assertEquals(parseJson(data, "list()"), "4"); // 4种状态
-        Assert.assertNotNull(parseJson(data, "list(0):is_verified"));
-        Assert.assertNotNull(parseJson(data, "list(0):count"));
-        Assert.assertNotNull(parseJson(data, "list(1):is_verified"));
-        Assert.assertNotNull(parseJson(data, "list(1):count"));
+        Assert.assertEquals(UT.parseJson(data, "list()"), "4"); // 4种状态
+        Assert.assertNotNull(UT.parseJson(data, "list(0):is_verified"));
+        Assert.assertNotNull(UT.parseJson(data, "list(0):count"));
+        Assert.assertNotNull(UT.parseJson(data, "list(1):is_verified"));
+        Assert.assertNotNull(UT.parseJson(data, "list(1):count"));
     }
 
     @Test
@@ -49,11 +50,11 @@ public class RegisteredDoctor_Counts extends BaseTest {
         }
         checkResponse(res);
         Assert.assertEquals(code, "1000000");
-        Assert.assertEquals(parseJson(data, "list()"), "4"); // 4种状态
+        Assert.assertEquals(UT.parseJson(data, "list()"), "4"); // 4种状态
 
-        Assert.assertEquals(Integer.parseInt(parseJson(data, "list(0):count")) +
-                Integer.parseInt(parseJson(data, "list(1):count")) +
-                Integer.parseInt(parseJson(data, "list(2):count")) +
-                Integer.parseInt(parseJson(data, "list(3):count")) , RegisteredDoctor_List.registeredDoctorList());
+        Assert.assertEquals(Integer.parseInt(UT.parseJson(data, "list(0):count")) +
+                Integer.parseInt(UT.parseJson(data, "list(1):count")) +
+                Integer.parseInt(UT.parseJson(data, "list(2):count")) +
+                Integer.parseInt(UT.parseJson(data, "list(3):count")) , RegisteredDoctor_List.registeredDoctorList());
     }
 }

@@ -1,13 +1,10 @@
 package com.mingyizhudao.qa.testcase.crm;
 
 import com.mingyizhudao.qa.common.BaseTest;
-import com.mingyizhudao.qa.common.KB;
 import com.mingyizhudao.qa.dataprofile.crm.ExpertProfile;
-import com.mingyizhudao.qa.dataprofile.crm.HospitalProfile;
 import com.mingyizhudao.qa.dataprofile.doctor.DoctorProfile;
 import com.mingyizhudao.qa.util.HttpRequest;
 import com.mingyizhudao.qa.util.UT;
-import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 import org.apache.log4j.Logger;
 import org.testng.Assert;
@@ -90,7 +87,7 @@ public class KBExpert_Update extends BaseTest {
 
         res = KBExpert_Detail.Detail(expertId);
         checkResponse(res);
-        Assert.assertEquals(parseJson(data, "name"), name, "姓名未更新");
+        Assert.assertEquals(UT.parseJson(data, "name"), name, "姓名未更新");
     }
 
     @Test
@@ -119,10 +116,10 @@ public class KBExpert_Update extends BaseTest {
 
         res = KBExpert_Detail.Detail(expertId);
         checkResponse(res);
-        Assert.assertEquals(parseJson(data, "hospital_id"), hospitalId, "医生的医院ID没有更新");
-        Assert.assertEquals(parseJson(data, "hospital_name"), UT.hospitalName(hospitalId), "医生的医院名称没有更新");
-        Assert.assertEquals(parseJson(data, "city_id"), cityId, "医生的城市没有更新");
-        Assert.assertEquals(parseJson(data, "county_id"), countryId, "医生的地区名称没有更新");
+        Assert.assertEquals(UT.parseJson(data, "hospital_id"), hospitalId, "医生的医院ID没有更新");
+        Assert.assertEquals(UT.parseJson(data, "hospital_name"), UT.hospitalName(hospitalId), "医生的医院名称没有更新");
+        Assert.assertEquals(UT.parseJson(data, "city_id"), cityId, "医生的城市没有更新");
+        Assert.assertEquals(UT.parseJson(data, "county_id"), countryId, "医生的地区名称没有更新");
 
     }
 
@@ -193,8 +190,8 @@ public class KBExpert_Update extends BaseTest {
         }
         res = KBExpert_Detail.Detail(expertId);
         checkResponse(res);
-        Assert.assertEquals(parseJson(data, "major_id"), majorId, "专业ID没有更新");
-        Assert.assertEquals(parseJson(data, "major"), UT.majorName(majorId), "专业名称没有更新");
+        Assert.assertEquals(UT.parseJson(data, "major_id"), majorId, "专业ID没有更新");
+        Assert.assertEquals(UT.parseJson(data, "major"), UT.majorName(majorId), "专业名称没有更新");
 
 
         epModified.body.replace("major_id", "11"+majorId);
@@ -207,8 +204,8 @@ public class KBExpert_Update extends BaseTest {
         }
         res = KBExpert_Detail.Detail(expertId);
         checkResponse(res);
-        Assert.assertEquals(parseJson(data, "major_id"), majorId, "专业ID没有更新");
-        Assert.assertEquals(parseJson(data, "major"), UT.majorName(majorId), "专业名称没有更新");
+        Assert.assertEquals(UT.parseJson(data, "major_id"), majorId, "专业ID没有更新");
+        Assert.assertEquals(UT.parseJson(data, "major"), UT.majorName(majorId), "专业名称没有更新");
     }
 
     @Test
@@ -235,8 +232,8 @@ public class KBExpert_Update extends BaseTest {
 
         res = KBExpert_Detail.Detail(expertId);
         checkResponse(res);
-        Assert.assertEquals(parseJson(data, "medical_title_list"), medical_title_list, "技术职称没有更新");
-        Assert.assertEquals(parseJson(data, "academic_title_list"), academic_title_list, "学术职称没有更新");
+        Assert.assertEquals(UT.parseJson(data, "medical_title_list"), medical_title_list, "技术职称没有更新");
+        Assert.assertEquals(UT.parseJson(data, "academic_title_list"), academic_title_list, "学术职称没有更新");
 
         medical_title_list = UT.randomMedicalId();
         academic_title_list = UT.randomAcademicId();
@@ -252,8 +249,8 @@ public class KBExpert_Update extends BaseTest {
 
         res = KBExpert_Detail.Detail(expertId);
         checkResponse(res);
-        Assert.assertEquals(parseJson(data, "medical_title_list"), medical_title_list, "技术职称没有更新");
-        Assert.assertEquals(parseJson(data, "academic_title_list"), academic_title_list, "学术职称没有更新");
+        Assert.assertEquals(UT.parseJson(data, "medical_title_list"), medical_title_list, "技术职称没有更新");
+        Assert.assertEquals(UT.parseJson(data, "academic_title_list"), academic_title_list, "学术职称没有更新");
     }
 
     @Test
@@ -281,9 +278,9 @@ public class KBExpert_Update extends BaseTest {
 
         res = KBExpert_Detail.Detail(expertId);
         checkResponse(res);
-        Assert.assertEquals(parseJson(data, "specialty"), specialty, "特长没有更新");
-        Assert.assertEquals(parseJson(data, "honour"), honour, "荣誉没有更新");
-        Assert.assertEquals(parseJson(data, "description"), description, "简介没有更新");
+        Assert.assertEquals(UT.parseJson(data, "specialty"), specialty, "特长没有更新");
+        Assert.assertEquals(UT.parseJson(data, "honour"), honour, "荣誉没有更新");
+        Assert.assertEquals(UT.parseJson(data, "description"), description, "简介没有更新");
     }
 
     @Test(enabled = true)
@@ -322,8 +319,8 @@ public class KBExpert_Update extends BaseTest {
 
         res = KBExpert_Detail.Detail(doctorId);
         checkResponse(res);
-        Assert.assertEquals(parseJson(data, "avatar_url()"), "3", "医院图片更新失败");
-        Assert.assertNotNull(parseJson(data, "avatar_url():url"), "医院图片更新失败");
+        Assert.assertEquals(UT.parseJson(data, "avatar_url()"), "3", "医院图片更新失败");
+        Assert.assertNotNull(UT.parseJson(data, "avatar_url():url"), "医院图片更新失败");
     }
 
     @Test
@@ -370,34 +367,34 @@ public class KBExpert_Update extends BaseTest {
 
         res = KBExpert_Detail.Detail(expertId);
         checkResponse(res);
-        Assert.assertEquals(parseJson(data, "medical_title_list"), medical_title_list, "技术职称没有更新");
-        Assert.assertEquals(parseJson(data, "academic_title_list"), academic_title_list, "学术职称没有更新");
-        Assert.assertEquals(parseJson(data, "name"), name, "姓名没有更新");
-        Assert.assertEquals(parseJson(data, "major_id"), majorId, "专业没有更新");
-        Assert.assertEquals(parseJson(data, "major"), UT.majorName(majorId), "专业没有更新");
-        Assert.assertEquals(parseJson(data, "hospital_id"), hospitalId, "医院ID没有更新");
-        Assert.assertEquals(parseJson(data, "hospital_name"), UT.hospitalName(hospitalId), "医院名称没有更新");
-        Assert.assertEquals(parseJson(data, "city_id"), cityId, "城市ID没有更新");
-        Assert.assertEquals(parseJson(data, "city_name"), UT.cityName(cityId), "城市名称没有更新");
-        Assert.assertEquals(parseJson(data, "county_id"), countyId, "区县ID没有更新");
-        Assert.assertEquals(parseJson(data, "county_name"), UT.countyName(countyId), "区县名称没有更新");
-        Assert.assertEquals(parseJson(data, "signed_status"), "SIGNED", "主刀专家状态没有更新");
-        Assert.assertEquals(parseJson(data, "start_year"), "2007", "专家从业时间没有更新");
+        Assert.assertEquals(UT.parseJson(data, "medical_title_list"), medical_title_list, "技术职称没有更新");
+        Assert.assertEquals(UT.parseJson(data, "academic_title_list"), academic_title_list, "学术职称没有更新");
+        Assert.assertEquals(UT.parseJson(data, "name"), name, "姓名没有更新");
+        Assert.assertEquals(UT.parseJson(data, "major_id"), majorId, "专业没有更新");
+        Assert.assertEquals(UT.parseJson(data, "major"), UT.majorName(majorId), "专业没有更新");
+        Assert.assertEquals(UT.parseJson(data, "hospital_id"), hospitalId, "医院ID没有更新");
+        Assert.assertEquals(UT.parseJson(data, "hospital_name"), UT.hospitalName(hospitalId), "医院名称没有更新");
+        Assert.assertEquals(UT.parseJson(data, "city_id"), cityId, "城市ID没有更新");
+        Assert.assertEquals(UT.parseJson(data, "city_name"), UT.cityName(cityId), "城市名称没有更新");
+        Assert.assertEquals(UT.parseJson(data, "county_id"), countyId, "区县ID没有更新");
+        Assert.assertEquals(UT.parseJson(data, "county_name"), UT.countyName(countyId), "区县名称没有更新");
+        Assert.assertEquals(UT.parseJson(data, "signed_status"), "SIGNED", "主刀专家状态没有更新");
+        Assert.assertEquals(UT.parseJson(data, "start_year"), "2007", "专家从业时间没有更新");
 
         res = RegisteredDoctor_Detail.Detail(doctorId);
         checkResponse(res);
-        Assert.assertEquals(parseJson(data, "medical_title_list"), medical_title_list, "技术职称没有更新");
-        Assert.assertEquals(parseJson(data, "academic_title_list"), academic_title_list, "学术职称没有更新");
-        Assert.assertEquals(parseJson(data, "name"), name, "姓名没有更新");
-        Assert.assertEquals(parseJson(data, "major_id"), majorId, "专业没有更新");
-        Assert.assertEquals(parseJson(data, "major_name"), UT.majorName(majorId), "专业没有更新");
-        Assert.assertEquals(parseJson(data, "hospital_id"), hospitalId, "医院ID没有更新");
-        Assert.assertEquals(parseJson(data, "hospital_name"), UT.hospitalName(hospitalId), "医院名称没有更新");
-        Assert.assertEquals(parseJson(data, "city_id"), cityId, "城市ID没有更新");
-        Assert.assertEquals(parseJson(data, "city"), UT.cityName(cityId), "城市名称没有更新");
+        Assert.assertEquals(UT.parseJson(data, "medical_title_list"), medical_title_list, "技术职称没有更新");
+        Assert.assertEquals(UT.parseJson(data, "academic_title_list"), academic_title_list, "学术职称没有更新");
+        Assert.assertEquals(UT.parseJson(data, "name"), name, "姓名没有更新");
+        Assert.assertEquals(UT.parseJson(data, "major_id"), majorId, "专业没有更新");
+        Assert.assertEquals(UT.parseJson(data, "major_name"), UT.majorName(majorId), "专业没有更新");
+        Assert.assertEquals(UT.parseJson(data, "hospital_id"), hospitalId, "医院ID没有更新");
+        Assert.assertEquals(UT.parseJson(data, "hospital_name"), UT.hospitalName(hospitalId), "医院名称没有更新");
+        Assert.assertEquals(UT.parseJson(data, "city_id"), cityId, "城市ID没有更新");
+        Assert.assertEquals(UT.parseJson(data, "city"), UT.cityName(cityId), "城市名称没有更新");
 //        Assert.assertEquals(parseJson(data, "county_id"), cityId, "区县ID没有更新");
 //        Assert.assertEquals(parseJson(data, "county_name"), UT.countyName(countyId), "区县名称没有更新");
-        Assert.assertEquals(parseJson(data, "signed_status"), "SIGNED", "主刀专家状态没有更新");
+        Assert.assertEquals(UT.parseJson(data, "signed_status"), "SIGNED", "主刀专家状态没有更新");
     }
 
     @Test
@@ -421,7 +418,7 @@ public class KBExpert_Update extends BaseTest {
 
         res = KBExpert_Detail.Detail(expertId);
         checkResponse(res);
-        Assert.assertEquals(parseJson(data, "signed_status"), "NOT_SIGNED");
+        Assert.assertEquals(UT.parseJson(data, "signed_status"), "NOT_SIGNED");
 
         epModified.body.put("signed_status", "1");
         try {
@@ -434,7 +431,7 @@ public class KBExpert_Update extends BaseTest {
 
         res = KBExpert_Detail.Detail(expertId);
         checkResponse(res);
-        Assert.assertEquals(parseJson(data, "signed_status"), "SIGNED");
+        Assert.assertEquals(UT.parseJson(data, "signed_status"), "SIGNED");
     }
 
     @Test
@@ -467,7 +464,7 @@ public class KBExpert_Update extends BaseTest {
 
         res = RegisteredDoctor_Detail.Detail(doctorId);
         checkResponse(res);
-        Assert.assertEquals(parseJson(data, "signed_status"), "NOT_SIGNED");
+        Assert.assertEquals(UT.parseJson(data, "signed_status"), "NOT_SIGNED");
 
         epModified.body.put("signed_status", "1");
         try {
@@ -480,7 +477,7 @@ public class KBExpert_Update extends BaseTest {
 
         res = RegisteredDoctor_Detail.Detail(doctorId);
         checkResponse(res);
-        Assert.assertEquals(parseJson(data, "signed_status"), "SIGNED");
+        Assert.assertEquals(UT.parseJson(data, "signed_status"), "SIGNED");
     }
 
 }

@@ -20,7 +20,7 @@ import java.util.List;
 public class OrderList extends BaseTest {
 
     public static final Logger logger= Logger.getLogger(OrderList.class);
-    public static String uri = "/api/v1/orders/orderList";
+    public static String uri = "/api/v1/order/orderList";
     public static String mock = false ? "/mockjs/1" : "";
 
     @Test
@@ -50,9 +50,9 @@ public class OrderList extends BaseTest {
         }
         checkResponse(res);
         Assert.assertEquals(code, "1000000", "有token应该调用成功");
-        Assert.assertNotNull(parseJson(data, "list(0):agent_name"), "下级医生姓名字段缺失");
-        Assert.assertNotNull(parseJson(data, "list(0):id"), "订单编号字段缺失");
-        Assert.assertNotNull(parseJson(data, "list(0):major_disease_name"), "主诉疾病字段缺失");
+        Assert.assertNotNull(UT.parseJson(data, "list(0):agent_name"), "下级医生姓名字段缺失");
+        Assert.assertNotNull(UT.parseJson(data, "list(0):id"), "订单编号字段缺失");
+        Assert.assertNotNull(UT.parseJson(data, "list(0):major_disease_name"), "主诉疾病字段缺失");
 //        Assert.assertNotNull(parseJson(data, "list(0):minor_disease_name"), "次诉疾病字段缺失");
 //        Assert.assertNotNull(parseJson(data, "list(0):major_reps_name"), "客服姓名字段缺失");
     }
@@ -70,9 +70,9 @@ public class OrderList extends BaseTest {
         }
         checkResponse(res);
         Assert.assertEquals(code, "1000000", "有token应该调用成功");
-        Assert.assertNotNull(parseJson(data, "list(0):agent_name"), "下级医生姓名字段缺失");
-        Assert.assertNotNull(parseJson(data, "list(0):id"), "订单编号字段缺失");
-        Assert.assertNotNull(parseJson(data, "list(0):major_disease_name"), "主诉疾病字段缺失");
+        Assert.assertNotNull(UT.parseJson(data, "list(0):agent_name"), "下级医生姓名字段缺失");
+        Assert.assertNotNull(UT.parseJson(data, "list(0):id"), "订单编号字段缺失");
+        Assert.assertNotNull(UT.parseJson(data, "list(0):major_disease_name"), "主诉疾病字段缺失");
 //        Assert.assertNotNull(parseJson(data, "list(0):minor_disease_name"), "次诉疾病字段缺失");
 //        Assert.assertNotNull(parseJson(data, "list(0):major_reps_name"), "客服姓名字段缺失");
     }
@@ -91,9 +91,9 @@ public class OrderList extends BaseTest {
         }
         checkResponse(res);
         Assert.assertEquals(code, "1000000", "有token应该调用成功");
-        Assert.assertNotNull(parseJson(data, "list(0):agent_name"), "下级医生姓名字段缺失");
-        Assert.assertNotNull(parseJson(data, "list(0):id"), "订单编号字段缺失");
-        Assert.assertNotNull(parseJson(data, "list(0):major_disease_name"), "主诉疾病字段缺失");
+        Assert.assertNotNull(UT.parseJson(data, "list(0):agent_name"), "下级医生姓名字段缺失");
+        Assert.assertNotNull(UT.parseJson(data, "list(0):id"), "订单编号字段缺失");
+        Assert.assertNotNull(UT.parseJson(data, "list(0):major_disease_name"), "主诉疾病字段缺失");
     }
 
     @Test
@@ -147,7 +147,7 @@ public class OrderList extends BaseTest {
             JSONArray orderList = JSONObject.fromObject(res).getJSONObject("data").getJSONArray("list");
             for (int i = 0; i < orderList.size(); i++) {
                 JSONObject ord = orderList.getJSONObject(i);
-                Assert.assertEquals(parseJson(ord, "status"), s, "过滤后有杂质状态存在");
+                Assert.assertEquals(UT.parseJson(ord, "status"), s, "过滤后有杂质状态存在");
             }
         }
     }

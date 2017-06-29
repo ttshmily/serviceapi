@@ -49,15 +49,15 @@ public class KBHospital_Create extends BaseTest {
             res = HttpRequest.sendPost(host_crm + uri, hp.body.toString(), crm_token);
             checkResponse(res);
             Assert.assertEquals(code, "1000000");
-            Assert.assertNotNull(parseJson(data, "id"), "医库ID不能少");
-            Assert.assertEquals(parseJson(data, "short_name"), hp.body.getString("short_name"));
-            Assert.assertEquals(parseJson(data, "name"), hp.body.getString("name"));
-            Assert.assertEquals(parseJson(data, "city_name"), KB.kb_city.get(hp.body.getString("city_id")));
-            Assert.assertEquals(parseJson(data, "county_name"), KB.kb_county.get(hp.body.getString("county_id")));
-            Assert.assertEquals(parseJson(data, "description"), hp.body.getString("description"));
-            Assert.assertEquals(parseJson(data, "phone"), hp.body.getString("phone"));
-            Assert.assertNotNull(parseJson(data, "user_visible"));
-            Assert.assertNotNull(parseJson(data, "doctor_visible"));
+            Assert.assertNotNull(UT.parseJson(data, "id"), "医库ID不能少");
+            Assert.assertEquals(UT.parseJson(data, "short_name"), hp.body.getString("short_name"));
+            Assert.assertEquals(UT.parseJson(data, "name"), hp.body.getString("name"));
+            Assert.assertEquals(UT.parseJson(data, "city_name"), KB.kb_city.get(hp.body.getString("city_id")));
+            Assert.assertEquals(UT.parseJson(data, "county_name"), KB.kb_county.get(hp.body.getString("county_id")));
+            Assert.assertEquals(UT.parseJson(data, "description"), hp.body.getString("description"));
+            Assert.assertEquals(UT.parseJson(data, "phone"), hp.body.getString("phone"));
+            Assert.assertNotNull(UT.parseJson(data, "user_visible"));
+            Assert.assertNotNull(UT.parseJson(data, "doctor_visible"));
         } catch (IOException e) {
             logger.error(e);
         }
@@ -76,7 +76,7 @@ public class KBHospital_Create extends BaseTest {
             res = HttpRequest.sendPost(host_crm + uri, hp.body.toString(), crm_token);
             checkResponse(res);
             Assert.assertEquals(code, "1000000");
-            Assert.assertNotNull(parseJson(data, "id"), "医库ID不能少");
+            Assert.assertNotNull(UT.parseJson(data, "id"), "医库ID不能少");
         } catch (IOException e) {
             logger.error(e);
         }

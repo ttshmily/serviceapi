@@ -23,6 +23,30 @@ public class DistrictManagement extends BaseTest {
     public static String mock = false ? "/mockjs/1" : "";
     public static String token= "";
 
+    public static void districtManage(String staffId, List<String> cityList) {
+        String res = "";
+        JSONObject body = new JSONObject();
+        JSONArray cities = new JSONArray();
+        body.put("staff_id", staffId);
+        for(int i=0; i<cityList.size(); i++) {
+            String cityId = cityList.get(i);
+            JSONObject cityRow = new JSONObject();
+            cityRow.put("city_id", cityId);
+            cityRow.put("city_name", UT.cityName(cityId));
+            String province_id = UT.randomProvinceId();
+            cityRow.put("province_id", province_id);
+            cityRow.put("province_name", UT.provinceName(province_id));
+            cities.add(cityRow);
+        }
+        body.put("list", cities);
+        try {
+            res = HttpRequest.sendPost(host_bda + uri, body.toString(), bda_token);
+        } catch (IOException e) {
+            logger.debug(res);
+            logger.error(e);
+        }
+    }
+
     @Test
     public void test_01_给下属BD分配区域(){
         String res = "";
@@ -32,14 +56,14 @@ public class DistrictManagement extends BaseTest {
         List<String> city_list = new ArrayList<>();
         JSONArray cities = new JSONArray();
         for(int i=0; i<2; i++) {
-            JSONObject city1 = new JSONObject();
+            JSONObject cityRow = new JSONObject();
             String city_id = UT.randomCityId();
-            city1.put("city_id", city_id);
-            city1.put("city_name", UT.cityName(city_id));
+            cityRow.put("city_id", city_id);
+            cityRow.put("city_name", UT.cityName(city_id));
             String province_id = UT.randomProvinceId();
-            city1.put("province_id", province_id);
-            city1.put("province_name", UT.provinceName(province_id));
-            cities.add(city1);
+            cityRow.put("province_id", province_id);
+            cityRow.put("province_name", UT.provinceName(province_id));
+            cities.add(cityRow);
             city_list.add(city_id);
         }
         body.put("list", cities);
@@ -50,5 +74,9 @@ public class DistrictManagement extends BaseTest {
         }
         checkResponse(res);
         Assert.assertEquals(code, "1000000", "");
+        for (String city:city_list
+             ) {
+            Assert.assertTrue(PersonalInfoV2.BDInfo(bda_token).containsValue(city));
+        }
     }
 }

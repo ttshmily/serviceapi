@@ -30,9 +30,9 @@ public class Order_ThreewayCall extends BaseTest {
         String res = "";
         HashMap<String, String> pathValue = new HashMap<>();
         res = Order_Detail.Detail(orderId);
-        if (!parseJson(JSONObject.fromObject(res), "data:status").equals("2020")) {
+        if (!UT.parseJson(JSONObject.fromObject(res), "data:status").equals("2020")) {
             logger.error("当前订单状态无法进行三方通话");
-            return parseJson(JSONObject.fromObject(res), "data:status");
+            return UT.parseJson(JSONObject.fromObject(res), "data:status");
         }
         pathValue.put("orderNumber", orderId);
         JSONObject body = new JSONObject();
@@ -50,7 +50,7 @@ public class Order_ThreewayCall extends BaseTest {
             logger.error(e);
         }
         res = Order_Detail.Detail(orderId);
-        return parseJson(JSONObject.fromObject(res), "data:status");
+        return UT.parseJson(JSONObject.fromObject(res), "data:status");
     }
 
     @Test
@@ -84,10 +84,10 @@ public class Order_ThreewayCall extends BaseTest {
         Assert.assertEquals(code, "1000000");
         res = Order_Detail.Detail(orderId);
         checkResponse(res);
-        Assert.assertEquals(parseJson(data, "status"), "3000");
-        Assert.assertEquals(parseJson(data, "surgeon_id"), rcmdDoc);
-        Assert.assertEquals(parseJson(data, "surgeon_name"), KB.kb_doctor.get(rcmdDoc));
-        Assert.assertEquals(parseJson(data, "surgeon_fee"), fee);
+        Assert.assertEquals(UT.parseJson(data, "status"), "3000");
+        Assert.assertEquals(UT.parseJson(data, "surgeon_id"), rcmdDoc);
+        Assert.assertEquals(UT.parseJson(data, "surgeon_name"), KB.kb_doctor.get(rcmdDoc));
+        Assert.assertEquals(UT.parseJson(data, "surgeon_fee"), fee);
     }
 
     @Test
@@ -120,9 +120,9 @@ public class Order_ThreewayCall extends BaseTest {
         Assert.assertEquals(code, "1000000");
         res = Order_Detail.Detail(orderId);
         checkResponse(res);
-        Assert.assertEquals(parseJson(data, "status"), "2020");
-        Assert.assertEquals(parseJson(data, "surgeon_id"), rcmdDoc);
-        Assert.assertEquals(parseJson(data, "surgeon_name"), KB.kb_doctor.get(rcmdDoc));
+        Assert.assertEquals(UT.parseJson(data, "status"), "2020");
+        Assert.assertEquals(UT.parseJson(data, "surgeon_id"), rcmdDoc);
+        Assert.assertEquals(UT.parseJson(data, "surgeon_name"), KB.kb_doctor.get(rcmdDoc));
 //        Assert.assertEquals(parseJson(data, "surgeon_fee"), fee);
     }
 
@@ -154,9 +154,9 @@ public class Order_ThreewayCall extends BaseTest {
         Assert.assertEquals(code, "1000000");
         res = Order_Detail.Detail(orderId);
         checkResponse(res);
-        Assert.assertEquals(parseJson(data, "status"), "2000");
-        Assert.assertEquals(parseJson(data, "surgeon_id"), "555");
-        Assert.assertEquals(parseJson(data, "surgeon_name"), KB.kb_doctor.get("555"));
+        Assert.assertEquals(UT.parseJson(data, "status"), "2000");
+        Assert.assertEquals(UT.parseJson(data, "surgeon_id"), "555");
+        Assert.assertEquals(UT.parseJson(data, "surgeon_name"), KB.kb_doctor.get("555"));
 //        Assert.assertEquals(parseJson(data, "surgeon_fee"), "10000");
     }
 
@@ -187,7 +187,7 @@ public class Order_ThreewayCall extends BaseTest {
         Assert.assertNotEquals(code, "1000000");
         res = Order_Detail.Detail(orderId);
         checkResponse(res);
-        Assert.assertEquals(parseJson(data, "status"), "2020");
+        Assert.assertEquals(UT.parseJson(data, "status"), "2020");
 
         body.put("reject_reason", "");
         try {
@@ -200,7 +200,7 @@ public class Order_ThreewayCall extends BaseTest {
 
         res = Order_Detail.Detail(orderId);
         checkResponse(res);
-        Assert.assertEquals(parseJson(data, "status"), "2020");
+        Assert.assertEquals(UT.parseJson(data, "status"), "2020");
     }
 
     @Test
@@ -231,7 +231,7 @@ public class Order_ThreewayCall extends BaseTest {
         Assert.assertEquals(code, "1000000");
         res = Order_Detail.Detail(orderId);
         checkResponse(res);
-        Assert.assertEquals(parseJson(data, "status"), "3000");
+        Assert.assertEquals(UT.parseJson(data, "status"), "3000");
 
         try {
             res = HttpRequest.sendPost(host_crm+uri, body.toString(), crm_token, pathValue);
@@ -264,7 +264,7 @@ public class Order_ThreewayCall extends BaseTest {
         Assert.assertNotEquals(code, "1000000");
         res = Order_Detail.Detail(orderId);
         checkResponse(res);
-        Assert.assertNotEquals(parseJson(data, "status"), "3000");
+        Assert.assertNotEquals(UT.parseJson(data, "status"), "3000");
 
         body.put("calling_time", df.format(new Date()));
         try {
@@ -276,7 +276,7 @@ public class Order_ThreewayCall extends BaseTest {
         Assert.assertNotEquals(code, "1000000");
         res = Order_Detail.Detail(orderId);
         checkResponse(res);
-        Assert.assertNotEquals(parseJson(data, "status"), "3000");
+        Assert.assertNotEquals(UT.parseJson(data, "status"), "3000");
 
         body.put("major_disease_id", "55");
         try {
@@ -288,7 +288,7 @@ public class Order_ThreewayCall extends BaseTest {
         Assert.assertNotEquals(code, "1000000");
         res = Order_Detail.Detail(orderId);
         checkResponse(res);
-        Assert.assertNotEquals(parseJson(data, "status"), "3000");
+        Assert.assertNotEquals(UT.parseJson(data, "status"), "3000");
 
         body.put("minor_disease_id", "66");
         try {
@@ -300,7 +300,7 @@ public class Order_ThreewayCall extends BaseTest {
         Assert.assertNotEquals(code, "1000000");
         res = Order_Detail.Detail(orderId);
         checkResponse(res);
-        Assert.assertNotEquals(parseJson(data, "status"), "3000");
+        Assert.assertNotEquals(UT.parseJson(data, "status"), "3000");
 
         body.put("content", "自动创建的通话记录");
         try {
@@ -312,7 +312,7 @@ public class Order_ThreewayCall extends BaseTest {
         Assert.assertNotEquals(code, "1000000");
         res = Order_Detail.Detail(orderId);
         checkResponse(res);
-        Assert.assertNotEquals(parseJson(data, "status"), "3000");
+        Assert.assertNotEquals(UT.parseJson(data, "status"), "3000");
 
         body.put("audio_file", "http://www.automation.com");
         try {
@@ -324,7 +324,7 @@ public class Order_ThreewayCall extends BaseTest {
         Assert.assertNotEquals(code, "1000000");
         res = Order_Detail.Detail(orderId);
         checkResponse(res);
-        Assert.assertNotEquals(parseJson(data, "status"), "3000");
+        Assert.assertNotEquals(UT.parseJson(data, "status"), "3000");
 
         body.put("record_type", "success");
         try {
@@ -336,7 +336,7 @@ public class Order_ThreewayCall extends BaseTest {
         Assert.assertEquals(code, "1000000");
         res = Order_Detail.Detail(orderId);
         checkResponse(res);
-        Assert.assertEquals(parseJson(data, "status"), "3000");
+        Assert.assertEquals(UT.parseJson(data, "status"), "3000");
 
     }
 
@@ -368,7 +368,7 @@ public class Order_ThreewayCall extends BaseTest {
         Assert.assertEquals(code, "1000000");
         res = Order_Detail.Detail(orderId);
         checkResponse(res);
-        Assert.assertEquals(parseJson(data, "status"), "2000");
+        Assert.assertEquals(UT.parseJson(data, "status"), "2000");
 //        Assert.assertEquals(parseJson(data, "surgeon_id"), "555");
 //        Assert.assertEquals(parseJson(data, "surgeon_name"), KB.kb_doctor.get("555"));
 //        Assert.assertEquals(parseJson(data, "surgeon_fee"), "10000");
@@ -403,9 +403,9 @@ public class Order_ThreewayCall extends BaseTest {
         Assert.assertEquals(code, "1000000");
         res = Order_Detail.Detail(orderId);
         checkResponse(res);
-        Assert.assertEquals(parseJson(data, "status"), "2000");
-        Assert.assertNotNull(parseJson(data, "doctorFiledList"), expertId);
-        Assert.assertEquals(parseJson(data, "doctorFiledList():surgeon_id"), expertId);
+        Assert.assertEquals(UT.parseJson(data, "status"), "2000");
+        Assert.assertNotNull(UT.parseJson(data, "doctorFiledList"), expertId);
+        Assert.assertEquals(UT.parseJson(data, "doctorFiledList():surgeon_id"), expertId);
 //        Assert.assertEquals(parseJson(data, "surgeon_id"), "555");
 //        Assert.assertEquals(parseJson(data, "surgeon_name"), KB.kb_doctor.get("555"));
 //        Assert.assertEquals(parseJson(data, "surgeon_fee"), "10000");

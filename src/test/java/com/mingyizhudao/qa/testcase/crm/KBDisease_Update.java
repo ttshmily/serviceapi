@@ -69,7 +69,7 @@ public class KBDisease_Update extends BaseTest {
         }
         checkResponse(res);
         Assert.assertEquals(code, "1000000");
-        Assert.assertEquals(parseJson(data, "name"), dpModified.body.getString("name"));
+        Assert.assertEquals(UT.parseJson(data, "name"), dpModified.body.getString("name"));
 
         dpModified.body.remove("name");
         dpModified.body.put("description", "修改疾病描述" + UT.randomString(30));
@@ -80,7 +80,7 @@ public class KBDisease_Update extends BaseTest {
         }
         checkResponse(res);
         Assert.assertEquals(code, "1000000");
-        Assert.assertEquals(parseJson(data, "description"), dpModified.body.getString("description"));
+        Assert.assertEquals(UT.parseJson(data, "description"), dpModified.body.getString("description"));
 
         dpModified.body.remove("description");
         dpModified.body.put("user_visible", 0);
@@ -91,7 +91,7 @@ public class KBDisease_Update extends BaseTest {
         }
         checkResponse(res);
         Assert.assertEquals(code, "1000000");
-        Assert.assertEquals(parseJson(data, "user_visible"), "false");
+        Assert.assertEquals(UT.parseJson(data, "user_visible"), "false");
 
         dpModified.body.remove("user_visible");
         dpModified.body.put("is_common", 0);
@@ -102,7 +102,7 @@ public class KBDisease_Update extends BaseTest {
         }
         checkResponse(res);
         Assert.assertEquals(code, "1000000");
-        Assert.assertEquals(parseJson(data, "is_common"), "0");
+        Assert.assertEquals(UT.parseJson(data, "is_common"), "0");
 
     }
 

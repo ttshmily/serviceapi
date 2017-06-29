@@ -3,6 +3,7 @@ package com.mingyizhudao.qa.testcase.bdassistant;
 import com.mingyizhudao.qa.common.BaseTest;
 
 import com.mingyizhudao.qa.util.HttpRequest;
+import com.mingyizhudao.qa.util.UT;
 import org.apache.log4j.Logger;
 import org.testng.Assert;
 
@@ -28,7 +29,7 @@ public class BDCityList extends BaseTest{
         }
         checkResponse(res);
         Assert.assertEquals(code, "1000000", "");
-        Assert.assertNotNull(parseJson(data, ""));
+        Assert.assertNotNull(UT.parseJson(data, ""));
     }
 
     public void test_02_获取多人负责区域列表() {

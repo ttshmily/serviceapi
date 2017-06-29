@@ -2,6 +2,7 @@ package com.mingyizhudao.qa.testcase.crm;
 
 import com.mingyizhudao.qa.common.BaseTest;
 import com.mingyizhudao.qa.util.HttpRequest;
+import com.mingyizhudao.qa.util.UT;
 import org.apache.log4j.Logger;
 import org.testng.Assert;
 import org.testng.annotations.Test;
@@ -44,10 +45,10 @@ public class RegisteredDoctor_Detail extends BaseTest {
         }
         checkResponse(res);
         Assert.assertEquals(code, "1000000");
-        Assert.assertNotNull(parseJson(data, "medical_title_list"));
-        Assert.assertNotNull(parseJson(data, "academic_title_list"));
-        Assert.assertNotNull(parseJson(data, "inviter_name"));
-        Assert.assertNotNull(parseJson(data, "hospital_name"));
+        Assert.assertNotNull(UT.parseJson(data, "medical_title_list"));
+        Assert.assertNotNull(UT.parseJson(data, "academic_title_list"));
+        Assert.assertNotNull(UT.parseJson(data, "inviter_name"));
+        Assert.assertNotNull(UT.parseJson(data, "hospital_name"));
     }
 
     @Test

@@ -46,7 +46,7 @@ public class UpdateDoctorProfile extends BaseTest {
         } catch (IOException e) {
             logger.error(e);
         }
-        String code = parseJson(JSONObject.fromObject(res), "code");
+        String code = UT.parseJson(JSONObject.fromObject(res), "code");
         if (code.equals("1000000")) {
             logger.info("更新医生信息成功");
         } else {
@@ -82,7 +82,7 @@ public class UpdateDoctorProfile extends BaseTest {
             res = GetDoctorProfile.getDoctorProfile(mainToken);
             checkResponse(res);
             Assert.assertEquals(code, "1000000");
-            Assert.assertEquals(parseJson(data, "doctor:department"), "尿不出来科");
+            Assert.assertEquals(UT.parseJson(data, "doctor:department"), "尿不出来科");
         } catch (IOException e) {
             logger.error(e);
         }
@@ -105,7 +105,7 @@ public class UpdateDoctorProfile extends BaseTest {
             res = GetDoctorProfile.getDoctorProfile(mainToken);
             checkResponse(res);
             Assert.assertEquals(code, "1000000");
-            Assert.assertEquals(parseJson(data, "doctor:hospital_id"), key);
+            Assert.assertEquals(UT.parseJson(data, "doctor:hospital_id"), key);
 //            Assert.assertEquals(parseJson(data, "doctor:city_id"), cityId);
 //            Assert.assertEquals(parseJson(data, "doctor:city_name"), UT.cityName(cityId));
         } catch (IOException e) {
@@ -136,7 +136,7 @@ public class UpdateDoctorProfile extends BaseTest {
                 res = GetDoctorProfile.getDoctorProfile(mainToken);
                 checkResponse(res);
                 Assert.assertEquals(code, "1000000");
-                Assert.assertEquals(parseJson(data, "doctor:inviter_no"), key);
+                Assert.assertEquals(UT.parseJson(data, "doctor:inviter_no"), key);
             } catch (IOException e) {
                 logger.error(e);
             }
@@ -157,7 +157,7 @@ public class UpdateDoctorProfile extends BaseTest {
             res = GetDoctorProfile.getDoctorProfile(mainToken);
             checkResponse(res);
             Assert.assertEquals(code, "1000000");
-            Assert.assertEquals(parseJson(data, "doctor:major_id"), key);
+            Assert.assertEquals(UT.parseJson(data, "doctor:major_id"), key);
         } catch (IOException e) {
             logger.error(e);
         }
@@ -203,7 +203,7 @@ public class UpdateDoctorProfile extends BaseTest {
         Assert.assertNotEquals(code, "1000000");
         res = GetDoctorProfile.getDoctorProfile(mainToken);
         checkResponse(res);
-        Assert.assertNotEquals(parseJson(data, "doctor:city_name"), "城市", "城市名称不应该改变");
+        Assert.assertNotEquals(UT.parseJson(data, "doctor:city_name"), "城市", "城市名称不应该改变");
     }
 
     @Test
@@ -220,7 +220,7 @@ public class UpdateDoctorProfile extends BaseTest {
         Assert.assertEquals(code, "1000000");
         res = GetDoctorProfile.getDoctorProfile(mainToken);
         checkResponse(res);
-        Assert.assertNotEquals(parseJson(data, "doctor:hospital_name"), "测试医院", "医院名称不应该改变");
+        Assert.assertNotEquals(UT.parseJson(data, "doctor:hospital_name"), "测试医院", "医院名称不应该改变");
 
         logger.info("同时传入major_id和hospital_name");
         dp.body.getJSONObject("doctor").replace("hospital_name", "测试医院");
@@ -234,8 +234,8 @@ public class UpdateDoctorProfile extends BaseTest {
         Assert.assertEquals(code, "1000000");
         res = GetDoctorProfile.getDoctorProfile(mainToken);
         checkResponse(res);
-        Assert.assertEquals(parseJson(data, "doctor:major_id"), "8");
-        Assert.assertNotEquals(parseJson(data, "doctor:hospital_name"), "测试医院", "医院名称不应该改变");
+        Assert.assertEquals(UT.parseJson(data, "doctor:major_id"), "8");
+        Assert.assertNotEquals(UT.parseJson(data, "doctor:hospital_name"), "测试医院", "医院名称不应该改变");
 
         logger.info("同时传入inviter_no和hospital_name");
         dp.body.getJSONObject("doctor").replace("hospital_name", "测试医院");
@@ -250,7 +250,7 @@ public class UpdateDoctorProfile extends BaseTest {
         res = GetDoctorProfile.getDoctorProfile(mainToken);
         checkResponse(res);
 //        Assert.assertEquals(parseJson(data, "doctor:inviter_no"), "SH0003");
-        Assert.assertNotEquals(parseJson(data, "doctor:hospital_name"), "测试医院", "医院名称不应该改变");
+        Assert.assertNotEquals(UT.parseJson(data, "doctor:hospital_name"), "测试医院", "医院名称不应该改变");
 
         logger.info("同时传入name和hospital_name");
         dp.body.getJSONObject("doctor").replace("name","大一测试名称");
@@ -266,8 +266,8 @@ public class UpdateDoctorProfile extends BaseTest {
         res = GetDoctorProfile.getDoctorProfile(mainToken);
         checkResponse(res);
         Assert.assertEquals(code, "1000000");
-        Assert.assertEquals(parseJson(data, "doctor:name"), "大一测试名称");
-        Assert.assertNotEquals(parseJson(data, "doctor:hospital_name"), "测试医院", "专业名称不应该改变");
+        Assert.assertEquals(UT.parseJson(data, "doctor:name"), "大一测试名称");
+        Assert.assertNotEquals(UT.parseJson(data, "doctor:hospital_name"), "测试医院", "专业名称不应该改变");
     }
 
     @Test
@@ -284,7 +284,7 @@ public class UpdateDoctorProfile extends BaseTest {
         Assert.assertEquals(code, "1000000");
         res = GetDoctorProfile.getDoctorProfile(mainToken);
         checkResponse(res);
-        Assert.assertNotEquals(parseJson(data, "doctor:major_name"), "测试专业", "专业名称不应该改变");
+        Assert.assertNotEquals(UT.parseJson(data, "doctor:major_name"), "测试专业", "专业名称不应该改变");
 
         logger.info("同时传入hospital_id和major_name");
         dp.body.getJSONObject("doctor").replace("hospital_id","2");
@@ -300,8 +300,8 @@ public class UpdateDoctorProfile extends BaseTest {
         res = GetDoctorProfile.getDoctorProfile(mainToken);
         checkResponse(res);
         Assert.assertEquals(code, "1000000");
-        Assert.assertEquals(parseJson(data, "doctor:hospital_id"), "2");
-        Assert.assertNotEquals(parseJson(data, "doctor:major_name"), "测试专业", "专业名称不应该改变");
+        Assert.assertEquals(UT.parseJson(data, "doctor:hospital_id"), "2");
+        Assert.assertNotEquals(UT.parseJson(data, "doctor:major_name"), "测试专业", "专业名称不应该改变");
 
         logger.info("同时传入inviter_no和major_name");
         dp.body.getJSONObject("doctor").replace("inviter_no","SH0002");
@@ -318,7 +318,7 @@ public class UpdateDoctorProfile extends BaseTest {
         checkResponse(res);
         Assert.assertEquals(code, "1000000");
 //        Assert.assertEquals(parseJson(data, "doctor:inviter_no"), "SH0002");
-        Assert.assertNotEquals(parseJson(data, "doctor:major_name"), "测试专业", "专业名称不应该改变");
+        Assert.assertNotEquals(UT.parseJson(data, "doctor:major_name"), "测试专业", "专业名称不应该改变");
 
         logger.info("同时传入name和major_name");
         dp.body.getJSONObject("doctor").replace("name","大一测试名称");
@@ -334,8 +334,8 @@ public class UpdateDoctorProfile extends BaseTest {
         res = GetDoctorProfile.getDoctorProfile(mainToken);
         checkResponse(res);
         Assert.assertEquals(code, "1000000");
-        Assert.assertEquals(parseJson(data, "doctor:name"), "大一测试名称");
-        Assert.assertNotEquals(parseJson(data, "doctor:major_name"), "测试专业", "专业名称不应该改变");
+        Assert.assertEquals(UT.parseJson(data, "doctor:name"), "大一测试名称");
+        Assert.assertNotEquals(UT.parseJson(data, "doctor:major_name"), "测试专业", "专业名称不应该改变");
 
     }
 
@@ -353,7 +353,7 @@ public class UpdateDoctorProfile extends BaseTest {
         Assert.assertNotEquals(code, "1000000");
         res = GetDoctorProfile.getDoctorProfile(mainToken);
         checkResponse(res);
-        Assert.assertNotEquals(parseJson(data, "doctor:inviter_name"), "大一", "地推名称不应该改变");
+        Assert.assertNotEquals(UT.parseJson(data, "doctor:inviter_name"), "大一", "地推名称不应该改变");
     }
 
     @Test
@@ -371,10 +371,10 @@ public class UpdateDoctorProfile extends BaseTest {
 
         res = GetDoctorProfile.getDoctorProfile(mainToken);
         checkResponse(res);
-        Assert.assertEquals(parseJson(data, "doctor:doctor_card_pictures(0):key"), "2017/05/04/1265834e-97d8-44a0-95e7-047c7facaee8/IMG_20170429_102737.jpg", "key值错误");
-        Assert.assertEquals(parseJson(data, "doctor:doctor_card_pictures(0):type"), "3", "type值错误");
-        Assert.assertNotNull(parseJson(data, "doctor:doctor_card_pictures(0):url"), "url值错误");
-        Assert.assertNotNull(parseJson(data, "doctor:doctor_card_pictures(0):large_url"), "large_url缺少");
+        Assert.assertEquals(UT.parseJson(data, "doctor:doctor_card_pictures(0):key"), "2017/05/04/1265834e-97d8-44a0-95e7-047c7facaee8/IMG_20170429_102737.jpg", "key值错误");
+        Assert.assertEquals(UT.parseJson(data, "doctor:doctor_card_pictures(0):type"), "3", "type值错误");
+        Assert.assertNotNull(UT.parseJson(data, "doctor:doctor_card_pictures(0):url"), "url值错误");
+        Assert.assertNotNull(UT.parseJson(data, "doctor:doctor_card_pictures(0):large_url"), "large_url缺少");
     }
 
 }

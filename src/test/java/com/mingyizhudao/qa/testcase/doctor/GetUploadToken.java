@@ -2,6 +2,7 @@ package com.mingyizhudao.qa.testcase.doctor;
 
 import com.mingyizhudao.qa.common.BaseTest;
 import com.mingyizhudao.qa.util.HttpRequest;
+import com.mingyizhudao.qa.util.UT;
 import org.apache.log4j.Logger;
 import org.junit.Ignore;
 import org.testng.Assert;
@@ -32,7 +33,7 @@ public class GetUploadToken extends BaseTest {
             logger.error(e);
         }
         checkResponse(res);
-        Assert.assertNotNull(parseJson(data, "token"));
+        Assert.assertNotNull(UT.parseJson(data, "token"));
         Assert.assertEquals(code, "1000000");
     }
 
@@ -49,7 +50,7 @@ public class GetUploadToken extends BaseTest {
             logger.error(e);
         }
         checkResponse(res);
-        Assert.assertNotNull(parseJson(data, "token"));
+        Assert.assertNotNull(UT.parseJson(data, "token"));
         Assert.assertEquals(code, "1000000");
 
     }
@@ -67,7 +68,7 @@ public class GetUploadToken extends BaseTest {
             logger.error(e);
         }
         checkResponse(res);
-        Assert.assertNotNull(parseJson(data, "token"));
+        Assert.assertNotNull(UT.parseJson(data, "token"));
         Assert.assertEquals(code, "1000000");
     }
 

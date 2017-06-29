@@ -1,6 +1,5 @@
 package com.mingyizhudao.qa.testcase.bdassistant;
 
-import com.mingyizhudao.qa.common.BaseTest;
 import com.mingyizhudao.qa.util.HttpRequest;
 import com.mingyizhudao.qa.util.UT;
 import net.sf.json.JSONArray;
@@ -193,10 +192,10 @@ public class TeamListV2 extends TeamList {
         }
         checkResponse(res);
         Assert.assertEquals(code, "1000000");
-        Assert.assertNotNull(parseJson(data, "list()"), "地推人员列表字段不能缺失");
-        Assert.assertNotNull(parseJson(data, "page"), "页码字段缺失");
-        Assert.assertNotNull(parseJson(data, "page_size"), "分页大小字段缺失");
-        Assert.assertNotNull(parseJson(data, "size"), "列表总数字段缺失");
+        Assert.assertNotNull(UT.parseJson(data, "list()"), "地推人员列表字段不能缺失");
+        Assert.assertNotNull(UT.parseJson(data, "page"), "页码字段缺失");
+        Assert.assertNotNull(UT.parseJson(data, "page_size"), "分页大小字段缺失");
+        Assert.assertNotNull(UT.parseJson(data, "size"), "列表总数字段缺失");
     }
 
     @Test

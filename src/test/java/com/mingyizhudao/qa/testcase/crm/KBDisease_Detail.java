@@ -51,12 +51,12 @@ public class KBDisease_Detail extends BaseTest {
         }
         checkResponse(res);
         Assert.assertEquals(code, "1000000");
-        Assert.assertEquals(parseJson(data, "name"), dp.body.getString("name"));
-        Assert.assertEquals(parseJson(data, "description"), dp.body.getString("description"));
-        Assert.assertEquals(parseJson(data, "user_visible"), "true");
-        Assert.assertEquals(parseJson(data, "doctor_visible"), "true");
-        Assert.assertEquals(parseJson(data, "is_common"), "1");
-        Assert.assertEquals(parseJson(data, "category_list(0):disease_category_id"), dp.body.getJSONArray("category_list").getJSONObject(0).getString("disease_category_id"));
+        Assert.assertEquals(UT.parseJson(data, "name"), dp.body.getString("name"));
+        Assert.assertEquals(UT.parseJson(data, "description"), dp.body.getString("description"));
+        Assert.assertEquals(UT.parseJson(data, "user_visible"), "true");
+        Assert.assertEquals(UT.parseJson(data, "doctor_visible"), "true");
+        Assert.assertEquals(UT.parseJson(data, "is_common"), "1");
+        Assert.assertEquals(UT.parseJson(data, "category_list(0):disease_category_id"), dp.body.getJSONArray("category_list").getJSONObject(0).getString("disease_category_id"));
     }
 
     @Test
@@ -94,7 +94,7 @@ public class KBDisease_Detail extends BaseTest {
         }
         checkResponse(res);
         Assert.assertEquals(code, "1000000");
-        Assert.assertEquals(parseJson(data, "related_to_doctors"), "0");
+        Assert.assertEquals(UT.parseJson(data, "related_to_doctors"), "0");
         List<String> ids = new ArrayList<>();
         ids.add(diseaseId);
 
@@ -106,7 +106,7 @@ public class KBDisease_Detail extends BaseTest {
         }
         checkResponse(res);
         Assert.assertEquals(code, "1000000");
-        Assert.assertEquals(parseJson(data, "related_to_doctors"), "1");
+        Assert.assertEquals(UT.parseJson(data, "related_to_doctors"), "1");
 
         KBExpert_Diseases.Connect(UT.randomExpertId(), ids);
         try {
@@ -116,7 +116,7 @@ public class KBDisease_Detail extends BaseTest {
         }
         checkResponse(res);
         Assert.assertEquals(code, "1000000");
-        Assert.assertEquals(parseJson(data, "related_to_doctors"), "2");
+        Assert.assertEquals(UT.parseJson(data, "related_to_doctors"), "2");
 
         KBExpert_Diseases.Connect(UT.randomExpertId(), ids);
         try {
@@ -126,7 +126,7 @@ public class KBDisease_Detail extends BaseTest {
         }
         checkResponse(res);
         Assert.assertEquals(code, "1000000");
-        Assert.assertEquals(parseJson(data, "related_to_doctors"), "3");
+        Assert.assertEquals(UT.parseJson(data, "related_to_doctors"), "3");
 
     }
 }
