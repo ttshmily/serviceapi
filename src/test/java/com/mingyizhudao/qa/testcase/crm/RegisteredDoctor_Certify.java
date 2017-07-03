@@ -22,7 +22,7 @@ public class RegisteredDoctor_Certify extends BaseTest {
     public static String uri = version+"/doctors/{id}/verifications";
     public static String mock = false ? "/mockjs/1" : "";
 
-    public static String certify(String regId, String status) {
+    public static String certify_old(String regId, String status) {
         String res = "";
         if ( regId == null || regId.isEmpty()) {
             logger.error("医生ID不存在");

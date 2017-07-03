@@ -119,7 +119,8 @@ public class GetOrderDetail extends BaseTest {
         UpdateDoctorProfile.updateDoctorProfile(tmpToken, dp);
         res = GetDoctorProfile.getDoctorProfile(tmpToken);
         String docId = JSONObject.fromObject(res).getJSONObject("data").getJSONObject("doctor").getString("user_id");
-        RegisteredDoctor_Certify.certify(docId, "1");
+        RegisteredDoctor_Certify.certify_old(docId, "1");
+
         try {
             res = HttpRequest.sendGet(host_doc +mock+uri,"", tmpToken, pathValue);
         } catch (IOException e) {

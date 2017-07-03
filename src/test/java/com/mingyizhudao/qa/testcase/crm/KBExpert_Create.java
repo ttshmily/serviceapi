@@ -63,7 +63,7 @@ public class KBExpert_Create extends BaseTest {
             Assert.assertEquals(UT.parseJson(data, "specialty"), ep.body.getString("specialty"));
             Assert.assertEquals(UT.parseJson(data, "honour"), ep.body.getString("honour"));
             Assert.assertEquals(UT.parseJson(data, "start_year"), ep.body.getString("start_year"));
-            Assert.assertEquals(UT.parseJson(data, "birthday"), ep.body.getString("birthday"));
+            Assert.assertEquals(UT.parseJson(data, "birthday"), ep.body.getString("birthday").replace('/', '-'));
             Assert.assertNotNull(UT.parseJson(data, "user_visible"));
             Assert.assertNotNull(UT.parseJson(data, "doctor_visible"));
 //            Assert.assertNotNull(parseJson(data, "avatar_url"));

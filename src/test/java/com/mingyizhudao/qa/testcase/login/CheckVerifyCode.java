@@ -47,6 +47,31 @@ public class CheckVerifyCode extends BaseTest{
         return tmpToken;
     }
 
+    public static String check(String phone) {
+        String res = "";
+        JSONObject check = new JSONObject();
+        check.put("mobile", phone);
+        check.put("code", "123456");
+        logger.info("发送短信验证码到服务器进行验证...");
+        String tmpToken = "";
+        try {
+            res = HttpRequest.sendPost(host_login +uri, check.toString(), "");
+            tmpToken = UT.parseJson(JSONObject.fromObject(res), "data:token");
+        } catch (IOException e) {
+            logger.error(e);
+        }
+//        logger.info("返回数据: " + JSONObject.fromObject(res).toString());
+
+        if (null != tmpToken  && !tmpToken.isEmpty()) {
+            logger.info("token是: " + tmpToken);
+            token = tmpToken;
+            Refresh.token = tmpToken;
+        } else {
+            logger.error("获取token失败");
+        }
+        return tmpToken;
+    }
+
 
     @Test
     public void 同一手机号先请求验证码再验证应该返回token() {

@@ -15,7 +15,7 @@ import java.util.Random;
  */
 public class UT {
 
-    public static SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+    public static SimpleDateFormat df = new SimpleDateFormat("yyyy/MM/dd");
 
 
     public static void main(String[] args) {
@@ -78,7 +78,7 @@ public class UT {
 
     public static String randomDateTillNow() {
         try {
-            Date start = df.parse("2017-03-13");// 构造开始日期
+            Date start = df.parse("2017/03/13");// 构造开始日期
             Date end = df.parse(df.format(new Date()));// 构造结束日期
             if (start.getTime() >= end.getTime()) {
                 return null;
@@ -200,6 +200,18 @@ public class UT {
 
         return randomKey(KB.kb_hospital_type);
     }
+
+    public static String randomSurgeryId() {
+
+        return randomKey(KB.kb_surgery);
+    }
+
+    public static String surgeryName(String id) {
+
+        return KB.kb_surgery.get(id);
+    }
+
+
 
     public static String parseJson(JSONObject node, String path) {
 

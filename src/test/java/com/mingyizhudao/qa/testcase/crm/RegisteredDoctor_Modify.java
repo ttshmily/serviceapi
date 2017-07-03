@@ -383,12 +383,10 @@ public class RegisteredDoctor_Modify extends BaseTest {
         res = RegisteredDoctor_Detail.Detail(mainDoctorId);
         checkResponse(res);
         Assert.assertNotNull(UT.parseJson(data, "doctor_card_pictures_deleted"));
-        Assert.assertEquals(actual_size, body.getJSONArray("doctor_card_pictures").size());
-        for (int i=0; i<actual_size; i++) {
-            Assert.assertEquals(UT.parseJson(data, "doctor_card_pictures_deleted("+i+"):key"), body.getJSONArray("doctor_card_pictures_deleted").getJSONObject(i).getString("key"));
-        }
-
-
+        Assert.assertEquals(body.getJSONArray("doctor_card_pictures").size(),0);
+//        for (int i=0; i<actual_size; i++) {
+//            Assert.assertEquals(UT.parseJson(data, "doctor_card_pictures_deleted("+i+"):key"), body.getJSONArray("doctor_card_pictures_deleted").getJSONObject(i).getString("key"));
+//        }
     }
 
 }

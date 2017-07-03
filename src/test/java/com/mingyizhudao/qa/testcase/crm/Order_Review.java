@@ -1,7 +1,18 @@
 package com.mingyizhudao.qa.testcase.crm;
 
 import com.mingyizhudao.qa.common.BaseTest;
+import com.mingyizhudao.qa.testcase.doctor.CreateSurgeryBriefs;
+import com.mingyizhudao.qa.testcase.login.CheckVerifyCode;
+import com.mingyizhudao.qa.testcase.login.SendVerifyCode;
+import com.mingyizhudao.qa.util.HttpRequest;
+import com.mingyizhudao.qa.util.UT;
+import net.sf.json.JSONObject;
 import org.apache.log4j.Logger;
+import org.testng.Assert;
+import org.testng.annotations.Test;
+
+import java.io.IOException;
+import java.util.HashMap;
 
 /**
  * Created by ttshmily on 25/4/2017.
@@ -12,4 +23,70 @@ public class Order_Review extends BaseTest {
     public static final String version = "/api/v1";
     public static String uri = version+"/orders/{orderNumber}/reviewResult";
     public static String mock = false ? "/mockjs/1" : "";
+
+    @Test
+    public void test_01_正常审核手术小结_通过() {
+
+        String res = "";
+        String orderId = Order_List.SelectPaidOrder();
+        String agentPhone = JSONObject.fromObject(Order_Detail.Detail(orderId)).getJSONObject("data").getString("agent_phone");
+        SendVerifyCode.send(agentPhone);
+        String token = CheckVerifyCode.check(agentPhone);
+        if (token == null) {
+            logger.error("没有获取到token");
+            Assert.fail();
+        }
+        String status = CreateSurgeryBriefs.Brief(orderId, token);
+        if (!status.equals("4010")) {
+            logger.error("不是待审核状态");
+            Assert.fail();
+        }
+        HashMap<String, String> pathValue=new HashMap<>();
+        pathValue.put("orderNumber", orderId);
+        HashMap<String, String> body = new HashMap<>();
+        body.put("reason", "固定原因");
+        body.put("reps_content", "客服原因");
+        body.put("result", "");//TODO 审核结果
+        try {
+            res = HttpRequest.sendPost(host_crm+uri, body.toString(), crm_token, pathValue);
+        } catch (IOException e) {
+            logger.error(e);
+        }
+        checkResponse(res);
+        Assert.assertEquals(code, "1000000", "审核订单接口失败");
+        Assert.assertEquals(UT.parseJson(data, "status"), "4020");
+    }
+
+    @Test
+    public void test_01_正常审核手术小结_不通过() {
+
+        String res = "";
+        String orderId = Order_List.SelectPaidOrder();
+        String agentPhone = JSONObject.fromObject(Order_Detail.Detail(orderId)).getJSONObject("data").getString("agent_phone");
+        SendVerifyCode.send(agentPhone);
+        String token = CheckVerifyCode.check(agentPhone);
+        if (token == null) {
+            logger.error("没有获取到token");
+            Assert.fail();
+        }
+        String status = CreateSurgeryBriefs.Brief(orderId, token);
+        if (!status.equals("4010")) {
+            logger.error("不是待审核状态");
+            Assert.fail();
+        }
+        HashMap<String, String> pathValue=new HashMap<>();
+        pathValue.put("orderNumber", orderId);
+        HashMap<String, String> body = new HashMap<>();
+        body.put("reason", "固定原因");
+        body.put("reps_content", "客服原因");
+        body.put("result", "");//TODO 审核结果
+        try {
+            res = HttpRequest.sendPost(host_crm+uri, body.toString(), crm_token, pathValue);
+        } catch (IOException e) {
+            logger.error(e);
+        }
+        checkResponse(res);
+        Assert.assertEquals(code, "1000000", "审核订单接口失败");
+        Assert.assertEquals(UT.parseJson(data, "status"), "4000");
+    }
 }

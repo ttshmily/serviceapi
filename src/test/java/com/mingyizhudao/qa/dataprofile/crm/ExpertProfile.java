@@ -18,9 +18,9 @@ public class ExpertProfile {
             body.put("hospital_id", UT.randomKey(KB.kb_hospital));
             body.put("department", "胸外科");
             body.put("description", UT.randomString(200));
-            String date = UT.randomDate("1949-10-1", "2017-03-13");
+            String date = UT.randomDate("1949/10/01", "2017/03/13");
             body.put("birthday", date);
-            body.put("start_year", UT.randomDate(date, "2017-03-13").substring(0,4));
+            body.put("start_year", UT.randomDate(date, "2017/03/13").substring(0,4));
             body.put("specialty", UT.randomString(100));
             body.put("academic_title_list", UT.randomKey(KB.kb_academic_title));
             body.put("medical_title_list", UT.randomKey(KB.kb_medical_title));

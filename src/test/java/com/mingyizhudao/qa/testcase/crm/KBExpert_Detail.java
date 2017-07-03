@@ -54,7 +54,7 @@ public class KBExpert_Detail extends BaseTest {
         Assert.assertEquals(UT.parseJson(data, "academic_title_list"), ep.body.getString("academic_title_list"));
         Assert.assertEquals(UT.parseJson(data, "gender"), ep.body.getString("gender"));
         Assert.assertEquals(UT.parseJson(data, "name"), ep.body.getString("name"));
-        Assert.assertEquals(UT.parseJson(data, "birthday"), ep.body.getString("birthday"));
+        Assert.assertEquals(UT.parseJson(data, "birthday"), ep.body.getString("birthday").replace('/', '-'));
         Assert.assertEquals(UT.parseJson(data, "major_id"), ep.body.getString("major_id"));
         Assert.assertEquals(UT.parseJson(data, "hospital_name"), KB.kb_hospital.get(ep.body.getString("hospital_id")));
         Assert.assertEquals(UT.parseJson(data, "honour"), ep.body.getString("honour"));

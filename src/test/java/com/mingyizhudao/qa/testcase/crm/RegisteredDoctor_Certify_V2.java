@@ -140,7 +140,7 @@ public class RegisteredDoctor_Certify_V2 extends BaseTest {
         Assert.assertEquals(is_verified, "-1");
         res = GetDoctorProfile.getDoctorProfile(tmpTokenn);
         checkResponse(res);
-        Assert.assertEquals(UT.parseJson(data, "reject_reason"), "程序自动测试失败原因");
+        Assert.assertEquals(UT.parseJson(data, "doctor:reject_reason"), "程序自动测试失败原因");
     }
 
     @Test

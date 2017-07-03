@@ -12,6 +12,8 @@ import org.testng.annotations.Test;
 
 import java.io.IOException;
 
+import static com.mingyizhudao.qa.util.UT.parseJson;
+
 /**
  * Created by ttshmily on 20/3/2017.
  */
@@ -33,7 +35,7 @@ public class GetDoctorProfile extends BaseTest {
         return res;
     }
 
-    /*@Test
+    @Test
     public void test_01_有token信息的请求可以获得有效信息() {
         String res = "";
         try {
@@ -96,10 +98,20 @@ public class GetDoctorProfile extends BaseTest {
         Assert.assertNotNull(parseJson(data,"doctor:hospital_name"), "hospital_name字段缺失");
         Assert.assertNotNull(parseJson(data,"doctor:is_required"), "is_required字段缺失");
     }
-*/
+
     //created by tianjing on 2017/6/27
     @Test
     public void test_05_测试总订单数_测试处理中订单数_CRM未领取(){
+
+        String resOld = "";
+        try {
+            resOld = HttpRequest.sendGet(host_doc +mock+uri,"", mainToken);
+        } catch (IOException e) {
+            logger.error(e);
+        }
+        int count = Integer.parseInt(parseJson(data,"doctor:status_count:agentId:count"));
+        int countHandling = Integer.parseInt(parseJson(data,"doctor:status_count:agentId:handling"));
+
         int i = 1;
         while (i<3){
             CreateOrder.CreateOrder(mainToken);
@@ -113,14 +125,14 @@ public class GetDoctorProfile extends BaseTest {
             logger.error(e);
         }
         checkResponse(res);
-        Assert.assertNotNull(UT.parseJson(data,"doctor"),"doctor字段缺失");
-        Assert.assertNotNull(UT.parseJson(data,"doctor:name"), "name字段缺失");
-        Assert.assertNotNull(UT.parseJson(data,"doctor:inviter_name"), "inviter_name字段缺失");
-        Assert.assertNotNull(UT.parseJson(data,"doctor:is_verified"),"is_verified字段缺失");
-        Assert.assertNotNull(UT.parseJson(data,"doctor:mobile"), "mobile字段缺失");
-        Assert.assertNotNull(UT.parseJson(data,"doctor:hospital_name"), "hospital_name字段缺失");
-        Assert.assertEquals(UT.parseJson(data, "doctor:status_count:agentId:count"), String.valueOf(i-1),"总订单数不正确");
-        Assert.assertEquals(UT.parseJson(data, "doctor:status_count:agentId:handling"), String.valueOf(i-1),"处理中的订单数不正确");
+        Assert.assertNotNull(parseJson(data,"doctor"),"doctor字段缺失");
+        Assert.assertNotNull(parseJson(data,"doctor:name"), "name字段缺失");
+        Assert.assertNotNull(parseJson(data,"doctor:inviter_name"), "inviter_name字段缺失");
+        Assert.assertNotNull(parseJson(data,"doctor:is_verified"),"is_verified字段缺失");
+        Assert.assertNotNull(parseJson(data,"doctor:mobile"), "mobile字段缺失");
+        Assert.assertNotNull(parseJson(data,"doctor:hospital_name"), "hospital_name字段缺失");
+        Assert.assertEquals(parseJson(data, "doctor:status_count:agentId:count"), String.valueOf(count+i-1),"总订单数不正确");
+        Assert.assertEquals(parseJson(data, "doctor:status_count:agentId:handling"), String.valueOf(countHandling+i-1),"处理中的订单数不正确");
     }
 
     @Test
@@ -131,8 +143,8 @@ public class GetDoctorProfile extends BaseTest {
         } catch (IOException e) {
             logger.error(e);
         }
-        int count = Integer.parseInt(UT.parseJson(data,"doctor:status_count:agentId:count"));
-        int countHandling = Integer.parseInt(UT.parseJson(data,"doctor:status_count:agentId:handling"));
+        int count = Integer.parseInt(parseJson(data,"doctor:status_count:agentId:count"));
+        int countHandling = Integer.parseInt(parseJson(data,"doctor:status_count:agentId:handling"));
 
         int i = 1;
         while (i<4){
@@ -148,14 +160,14 @@ public class GetDoctorProfile extends BaseTest {
             logger.error(e);
         }
         checkResponse(res);
-        Assert.assertNotNull(UT.parseJson(data,"doctor"),"doctor字段缺失");
-        Assert.assertNotNull(UT.parseJson(data,"doctor:name"), "name字段缺失");
-        Assert.assertNotNull(UT.parseJson(data,"doctor:inviter_name"), "inviter_name字段缺失");
-        Assert.assertNotNull(UT.parseJson(data,"doctor:is_verified"),"is_verified字段缺失");
-        Assert.assertNotNull(UT.parseJson(data,"doctor:mobile"), "mobile字段缺失");
-        Assert.assertNotNull(UT.parseJson(data,"doctor:hospital_name"), "hospital_name字段缺失");
-        Assert.assertEquals(UT.parseJson(data, "doctor:status_count:agentId:count"), String.valueOf(count+i-1),"总订单数不正确");
-        Assert.assertEquals(UT.parseJson(data, "doctor:status_count:agentId:handling"), String.valueOf(countHandling+i-1),"处理中的订单数不正确");
+        Assert.assertNotNull(parseJson(data,"doctor"),"doctor字段缺失");
+        Assert.assertNotNull(parseJson(data,"doctor:name"), "name字段缺失");
+        Assert.assertNotNull(parseJson(data,"doctor:inviter_name"), "inviter_name字段缺失");
+        Assert.assertNotNull(parseJson(data,"doctor:is_verified"),"is_verified字段缺失");
+        Assert.assertNotNull(parseJson(data,"doctor:mobile"), "mobile字段缺失");
+        Assert.assertNotNull(parseJson(data,"doctor:hospital_name"), "hospital_name字段缺失");
+        Assert.assertEquals(parseJson(data, "doctor:status_count:agentId:count"), String.valueOf(count+i-1),"总订单数不正确");
+        Assert.assertEquals(parseJson(data, "doctor:status_count:agentId:handling"), String.valueOf(countHandling+i-1),"处理中的订单数不正确");
     }
 
     @Test
@@ -166,8 +178,8 @@ public class GetDoctorProfile extends BaseTest {
         } catch (IOException e) {
             logger.error(e);
         }
-        int count = Integer.parseInt(UT.parseJson(data,"doctor:status_count:agentId:count"));
-        int countHandling = Integer.parseInt(UT.parseJson(data,"doctor:status_count:agentId:handling"));
+        int count = Integer.parseInt(parseJson(data,"doctor:status_count:agentId:count"));
+        int countHandling = Integer.parseInt(parseJson(data,"doctor:status_count:agentId:handling"));
 
         int i = 1;
         while (i<3){
@@ -184,14 +196,14 @@ public class GetDoctorProfile extends BaseTest {
             logger.error(e);
         }
         checkResponse(res);
-        Assert.assertNotNull(UT.parseJson(data,"doctor"),"doctor字段缺失");
-        Assert.assertNotNull(UT.parseJson(data,"doctor:name"), "name字段缺失");
-        Assert.assertNotNull(UT.parseJson(data,"doctor:inviter_name"), "inviter_name字段缺失");
-        Assert.assertNotNull(UT.parseJson(data,"doctor:is_verified"),"is_verified字段缺失");
-        Assert.assertNotNull(UT.parseJson(data,"doctor:mobile"), "mobile字段缺失");
-        Assert.assertNotNull(UT.parseJson(data,"doctor:hospital_name"), "hospital_name字段缺失");
-        Assert.assertEquals(UT.parseJson(data, "doctor:status_count:agentId:count"), String.valueOf(count+i-1),"总订单数不正确");
-        Assert.assertEquals(UT.parseJson(data, "doctor:status_count:agentId:handling"), String.valueOf(countHandling+i-1),"处理中的订单数不正确");
+        Assert.assertNotNull(parseJson(data,"doctor"),"doctor字段缺失");
+        Assert.assertNotNull(parseJson(data,"doctor:name"), "name字段缺失");
+        Assert.assertNotNull(parseJson(data,"doctor:inviter_name"), "inviter_name字段缺失");
+        Assert.assertNotNull(parseJson(data,"doctor:is_verified"),"is_verified字段缺失");
+        Assert.assertNotNull(parseJson(data,"doctor:mobile"), "mobile字段缺失");
+        Assert.assertNotNull(parseJson(data,"doctor:hospital_name"), "hospital_name字段缺失");
+        Assert.assertEquals(parseJson(data, "doctor:status_count:agentId:count"), String.valueOf(count+i-1),"总订单数不正确");
+        Assert.assertEquals(parseJson(data, "doctor:status_count:agentId:handling"), String.valueOf(countHandling+i-1),"处理中的订单数不正确");
     }
 
     @Test
@@ -202,8 +214,9 @@ public class GetDoctorProfile extends BaseTest {
         } catch (IOException e) {
             logger.error(e);
         }
-        int count = Integer.parseInt(UT.parseJson(data,"doctor:status_count:agentId:count"));
-        int countHandling = Integer.parseInt(UT.parseJson(data,"doctor:status_count:agentId:handling"));
+        int count = Integer.parseInt(parseJson(data,"doctor:status_count:agentId:count"));
+        int countHandling = Integer.parseInt(parseJson(data,"doctor:status_count:agentId:handling"));
+        int pendingpayment = Integer.parseInt(parseJson(data, "doctor:status_count:agentId:pendingpayment"));
 
         int  i= 1;
         while (i<4){
@@ -220,19 +233,20 @@ public class GetDoctorProfile extends BaseTest {
             logger.error(e);
         }
         checkResponse(res);
-        Assert.assertNotNull(UT.parseJson(data,"doctor"),"doctor字段缺失");
-        Assert.assertNotNull(UT.parseJson(data,"doctor:name"), "name字段缺失");
-        Assert.assertNotNull(UT.parseJson(data,"doctor:inviter_name"), "inviter_name字段缺失");
-        Assert.assertNotNull(UT.parseJson(data,"doctor:is_verified"),"is_verified字段缺失");
-        Assert.assertNotNull(UT.parseJson(data,"doctor:mobile"), "mobile字段缺失");
-        Assert.assertNotNull(UT.parseJson(data,"doctor:hospital_name"), "hospital_name字段缺失");
-        Assert.assertEquals(UT.parseJson(data, "doctor:status_count:agentId:count"), String.valueOf(count+i-1),"总订单数不正确");
-        Assert.assertEquals(UT.parseJson(data, "doctor:status_count:agentId:handling"), String.valueOf(countHandling),"处理中的订单数不正确");
-        Assert.assertEquals(UT.parseJson(data, "doctor:status_count:agentId:pendingpayment"), String.valueOf(i-1),"待支付的订单数不正确");
+        Assert.assertNotNull(parseJson(data,"doctor"),"doctor字段缺失");
+        Assert.assertNotNull(parseJson(data,"doctor:name"), "name字段缺失");
+        Assert.assertNotNull(parseJson(data,"doctor:inviter_name"), "inviter_name字段缺失");
+        Assert.assertNotNull(parseJson(data,"doctor:is_verified"),"is_verified字段缺失");
+        Assert.assertNotNull(parseJson(data,"doctor:mobile"), "mobile字段缺失");
+        Assert.assertNotNull(parseJson(data,"doctor:hospital_name"), "hospital_name字段缺失");
+        Assert.assertEquals(parseJson(data, "doctor:status_count:agentId:count"), String.valueOf(count+i-1),"总订单数不正确");
+        Assert.assertEquals(parseJson(data, "doctor:status_count:agentId:handling"), String.valueOf(countHandling),"处理中的订单数不正确");
+        Assert.assertEquals(parseJson(data, "doctor:status_count:agentId:pendingpayment"), String.valueOf(pendingpayment+i-1),"待支付的订单数不正确");
     }
 
     @Test
     public void test_09_测试返回的地区服务专员(){
+        //TODO
     }
 
 }

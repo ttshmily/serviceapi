@@ -1,11 +1,12 @@
 package com.mingyizhudao.qa.testcase.doctor;
 
 import com.mingyizhudao.qa.common.BaseTest;
-import com.mingyizhudao.qa.testcase.crm.Order_Detail;
-import com.mingyizhudao.qa.testcase.crm.Order_ReceiveTask;
-import com.mingyizhudao.qa.testcase.crm.Order_RecommendDoctor;
-import com.mingyizhudao.qa.testcase.crm.Order_ThreewayCall;
+import com.mingyizhudao.qa.dataprofile.doctor.SurgeryBrief;
+import com.mingyizhudao.qa.testcase.crm.*;
+import com.mingyizhudao.qa.testcase.login.CheckVerifyCode;
+import com.mingyizhudao.qa.testcase.login.SendVerifyCode;
 import com.mingyizhudao.qa.util.HttpRequest;
+import com.mingyizhudao.qa.util.UT;
 import net.sf.json.JSONObject;
 import org.apache.log4j.Logger;
 import org.testng.Assert;
@@ -24,7 +25,7 @@ public class CreateSurgeryBriefs extends BaseTest {
     public static String uri = "/api/createsurgeryBriefs/{orderId}";
     public static String mock = false ? "/mockjs/1" : "";
 
-    public static String brief(String orderId, String token) {
+    public static String Brief(String orderId, String token) {
 
         String res = "";
         res = Order_Detail.Detail(orderId);
@@ -33,66 +34,103 @@ public class CreateSurgeryBriefs extends BaseTest {
             logger.error("订单未支付，无法上传手术小结");
             return status;
         }
-        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
-        JSONObject body = new JSONObject();
-        JSONObject order = new JSONObject();
-        order.put("surgery_brief_surgeon_name", "自动化直刀医生");
-        order.put("surgery_brief_date", df.format(new Date()));
-        order.put("surgery_brief_description", "自动化手术小结描述");
-        order.put("surgery_brief_final_diagnosed_disease_id", "90");
-        order.put("surgery_brief_surgery_id", "45");
-        body.put("order", order);
+        SurgeryBrief sb = new SurgeryBrief(true);
         HashMap<String, String> pathValue = new HashMap<>();
         pathValue.put("orderId", orderId);
         try {
-            res = HttpRequest.sendPut(host_doc + uri, body.toString(), token, pathValue);
+            res = HttpRequest.sendPut(host_doc + uri, sb.body.toString(), token, pathValue);
         } catch (IOException e) {
             logger.error(e);
         }
-        status = JSONObject.fromObject(res).getJSONObject("data").getJSONObject("order").getString("status");
+        status = JSONObject.fromObject(res).getJSONObject("data").getString("status");
         return status;
     }
 
     @Test
     public void test_01_上传手术小结() {
         String res = "";
-        String orderId = CreateOrder.CreateOrder(mainToken);
-        Order_ReceiveTask.receiveTask(orderId);
-        Order_RecommendDoctor.recommendDoctor(orderId, "666");
-        Order_ThreewayCall.ThreewayCall(orderId, "success");
-        CreatePayment.pay(orderId, mainToken); // 期望 3000 -> 4000
-        // TODO: Can't proceed since payment incompleted.
-        if (!PaymentResult.result(orderId, mainToken).equals("4000")) {
-            logger.error("订单未支付，无法上传手术小结");
-            Assert.fail("前置条件不符，退出用例");
+        String orderId = Order_List.SelectPaidOrder();
+        String agentPhone = JSONObject.fromObject(Order_Detail.Detail(orderId)).getJSONObject("data").getString("agent_phone");
+        SendVerifyCode.send(agentPhone);
+        String token = CheckVerifyCode.check(agentPhone);
+        if (token == null) {
+            logger.error("没有获取到token");
+            Assert.fail();
         }
-        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
-        JSONObject body = new JSONObject();
-        JSONObject order = new JSONObject();
-        order.put("surgery_brief_surgeon_name", "自动化执刀医生");
-        order.put("surgery_brief_date", df.format(new Date()));
-        order.put("surgery_brief_description", "自动化手术小结描述");
-        order.put("surgery_brief_final_diagnosed_disease_id", "90");
-        order.put("surgery_brief_surgery_id", "45");
-        body.put("order", order);
+        SurgeryBrief sb = new SurgeryBrief(true);
         HashMap<String, String> pathValue = new HashMap<>();
         pathValue.put("orderId", orderId);
         try {
-            res = HttpRequest.sendPut(host_doc + uri, body.toString(), mainToken, pathValue);
+            res = HttpRequest.sendPut(host_doc + uri, sb.body.toString(), token, pathValue);
         } catch (IOException e) {
             logger.error(e);
         }
-        String status = JSONObject.fromObject(res).getJSONObject("data").getJSONObject("order").getString("status");
         checkResponse(res);
         Assert.assertEquals(code, "1000000");
+        String status = JSONObject.fromObject(res).getJSONObject("data").getString("status");
         Assert.assertEquals(status, "4010", "上传完成后状态不为4010");
-
+        Assert.assertEquals(data.getString("surgery_brief_date"), sb.body.getJSONObject("order").getString("surgery_brief_date"));
+        Assert.assertEquals(data.getString("surgery_brief_description"), sb.body.getJSONObject("order").getString("surgery_brief_description"));
+        Assert.assertEquals(data.getString("surgery_brief_surgery_id"), sb.body.getJSONObject("order").getString("surgery_brief_surgery_id"));
+        Assert.assertEquals(data.getString("surgery_brief_surgery_name"), UT.diseaseName(sb.body.getJSONObject("order").getString("surgery_brief_surgery_id")));
+        Assert.assertEquals(data.getString("surgery_brief_final_diagnosed_disease_id"), sb.body.getJSONObject("order").getString("surgery_brief_final_diagnosed_disease_id"));
+        Assert.assertEquals(data.getString("surgery_brief_final_diagnosed_disease_name"), UT.diseaseName(sb.body.getJSONObject("order").getString("surgery_brief_final_diagnosed_disease_name")));
+        Assert.assertEquals(data.getString("surgery_brief_hospital_id"), sb.body.getJSONObject("order").getString("surgery_brief_hospital_id"));
+        Assert.assertEquals(data.getString("surgery_brief_hospital_name"), UT.hospitalName(sb.body.getJSONObject("order").getString("surgery_brief_hospital_id")));
     }
 
     @Test
     public void test_02_上传手术小结_缺少字段() {
+        String res = "";
+        String orderId = Order_List.SelectPaidOrder();
+        String agentPhone = JSONObject.fromObject(Order_Detail.Detail(orderId)).getJSONObject("data").getString("agent_phone");
+        SendVerifyCode.send(agentPhone);
+        String token = CheckVerifyCode.check(agentPhone);
+        if (token == null) {
+            logger.error("没有获取到token");
+            Assert.fail();
+        }
+        SurgeryBrief sb1 = new SurgeryBrief(true);
+        sb1.body.getJSONObject("order").remove("surgery_brief_surgery_id");
+        HashMap<String, String> pathValue = new HashMap<>();
+        pathValue.put("orderId", orderId);
+        try {
+            res = HttpRequest.sendPut(host_doc + uri, sb1.body.toString(), token, pathValue);
+        } catch (IOException e) {
+            logger.error(e);
+        }
+        checkResponse(res);
+        Assert.assertNotEquals(code, "1000000");
 
-        Assert.fail("Can't proceed since payment incompleted.");
+        SurgeryBrief sb2 = new SurgeryBrief(true);
+        sb2.body.getJSONObject("order").remove("surgery_brief_final_diagnosed_disease_id");
+        try {
+            res = HttpRequest.sendPut(host_doc + uri, sb2.body.toString(), token, pathValue);
+        } catch (IOException e) {
+            logger.error(e);
+        }
+        checkResponse(res);
+        Assert.assertNotEquals(code, "1000000");
+
+        SurgeryBrief sb3 = new SurgeryBrief(true);
+        sb3.body.getJSONObject("order").remove("surgery_brief_date");
+        try {
+            res = HttpRequest.sendPut(host_doc + uri, sb3.body.toString(), token, pathValue);
+        } catch (IOException e) {
+            logger.error(e);
+        }
+        checkResponse(res);
+        Assert.assertNotEquals(code, "1000000");
+
+        SurgeryBrief sb4 = new SurgeryBrief(true);
+        sb4.body.getJSONObject("order").remove("surgery_brief_hospital_id");
+        try {
+            res = HttpRequest.sendPut(host_doc + uri, sb4.body.toString(), token, pathValue);
+        } catch (IOException e) {
+            logger.error(e);
+        }
+        checkResponse(res);
+        Assert.assertNotEquals(code, "1000000");
 
     }
 }

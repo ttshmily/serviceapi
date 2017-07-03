@@ -13,6 +13,7 @@ import org.testng.Assert;
 import org.testng.annotations.Test;
 
 import java.io.IOException;
+import java.util.HashMap;
 
 import static com.mingyizhudao.qa.util.UT.parseJson;
 
@@ -66,20 +67,20 @@ public class CreateOrder extends BaseTest {
         checkResponse(res);
         Assert.assertEquals(code, "1000000");
         //TODO
-        Assert.assertEquals(parseJson(data,"order:patient_name"), body.body.getString("patient_name"), "患者姓名存储不正确");
-        Assert.assertEquals(parseJson(data,"order:patient_gender"), body.body.getString("patient_gender"), "患者性别字段存储不正确");
-        Assert.assertEquals(parseJson(data,"order:patient_age"), body.body.getString("patient_age"), "患者年龄字段存储不正确");
-        Assert.assertEquals(parseJson(data,"order:patient_phone"), body.body.getString("patient_phone"), "患者手机号字段存储不正确");
-        Assert.assertEquals(parseJson(data,"order:major_disease_id"), body.body.getString("major_disease_id"), "主诉疾病ID字段存储不正确");
-        Assert.assertEquals(parseJson(data,"order:major_disease_name"), UT.diseaseName(body.body.getString("major_disease_id")), "主诉疾病名称不正确");
-        Assert.assertEquals(parseJson(data,"order:minor_disease_id"), body.body.getString("minor_disease_id"), "次诉疾病ID字段存储不正确");
-        Assert.assertEquals(parseJson(data,"order:minor_disease_name"), UT.diseaseName(body.body.getString("minor_disease_id")), "次诉疾病名称不正确");
-        Assert.assertEquals(parseJson(data,"order:diagnosis"), body.body.getString("diagnosis"), "病例描述字段存储不正确");
-        Assert.assertEquals(parseJson(data,"order:expected_surgery_start_date"), body.body.getString("expected_surgery_start_date"), "期望手术最早开始时间字段存储不正确");
-        Assert.assertEquals(parseJson(data,"order:expected_surgery_due_date"), body.body.getString("expected_surgery_due_date"), "期望手术最晚开始时间字段存储不正确");
+        Assert.assertEquals(parseJson(data,"order:patient_name"), body.body.getJSONObject("order").getString("patient_name"), "患者姓名存储不正确");
+        Assert.assertEquals(parseJson(data,"order:patient_gender"), body.body.getJSONObject("order").getString("patient_gender"), "患者性别字段存储不正确");
+        Assert.assertEquals(parseJson(data,"order:patient_age"), body.body.getJSONObject("order").getString("patient_age"), "患者年龄字段存储不正确");
+        Assert.assertEquals(parseJson(data,"order:patient_phone"), body.body.getJSONObject("order").getString("patient_phone"), "患者手机号字段存储不正确");
+        Assert.assertEquals(parseJson(data,"order:major_disease_id"), body.body.getJSONObject("order").getString("major_disease_id"), "主诉疾病ID字段存储不正确");
+        Assert.assertEquals(parseJson(data,"order:major_disease_name"), UT.diseaseName(body.body.getJSONObject("order").getString("major_disease_id")), "主诉疾病名称不正确");
+        Assert.assertEquals(parseJson(data,"order:minor_disease_id"), body.body.getJSONObject("order").getString("minor_disease_id"), "次诉疾病ID字段存储不正确");
+        Assert.assertEquals(parseJson(data,"order:minor_disease_name"), UT.diseaseName(body.body.getJSONObject("order").getString("minor_disease_id")), "次诉疾病名称不正确");
+        Assert.assertEquals(parseJson(data,"order:diagnosis"), body.body.getJSONObject("order").getString("diagnosis"), "病例描述字段存储不正确");
+        Assert.assertEquals(parseJson(data,"order:expected_surgery_start_date"), body.body.getJSONObject("order").getString("expected_surgery_start_date"), "期望手术最早开始时间字段存储不正确");
+        Assert.assertEquals(parseJson(data,"order:expected_surgery_due_date"), body.body.getJSONObject("order").getString("expected_surgery_due_date"), "期望手术最晚开始时间字段存储不正确");
 
-        Assert.assertEquals(parseJson(data,"order:expected_surgery_hospital_id"), body.body.getString("expected_surgery_hospital_id"), "期望医院ID存储不正确");
-        Assert.assertEquals(parseJson(data,"order:expected_surgery_hospital_name"), UT.hospitalName(body.body.getString("expected_surgery_hospital_id")),"期望医院名称字段不正确");
+        Assert.assertEquals(parseJson(data,"order:expected_surgery_hospital_id"), body.body.getJSONObject("order").getString("expected_surgery_hospital_id"), "期望医院ID存储不正确");
+        Assert.assertEquals(parseJson(data,"order:expected_surgery_hospital_name"), UT.hospitalName(body.body.getJSONObject("order").getString("expected_surgery_hospital_id")),"期望医院名称字段不正确");
         Assert.assertEquals(parseJson(data,"order:status"), "1000", "新建订单状态应当为1000");
         Assert.assertEquals(parseJson(data,"order:OrderStatusText"), "待处理", "新建订单状态描述应当为'处理中'");
         Assert.assertNotEquals(parseJson(data,"order:created_at"), "", "订单创建时间字段缺失");
@@ -87,9 +88,8 @@ public class CreateOrder extends BaseTest {
         Assert.assertNotNull(parseJson(data,"order:medical_record_pictures()"), "病例图片字段缺失");
         Assert.assertNotNull(parseJson(data,"order:medical_record_pictures(0):url"), "病例图片url字段缺失");
         Assert.assertNotNull(parseJson(data,"order:medical_record_pictures(1):url"), "病例图片url字段缺失");
-        Assert.assertEquals(parseJson(data,"order:medical_record_pictures(0):key"), "123");
-        Assert.assertEquals(parseJson(data,"order:medical_record_pictures(1):key"), "456");
-
+        Assert.assertEquals(parseJson(data,"order:medical_record_pictures(0):key"), "2017/05/04/1265834e-97d8-44a0-95e7-047c7facaee8/IMG_20170429_102737.jpg");
+        Assert.assertEquals(parseJson(data,"order:medical_record_pictures(1):key"), "2017/05/04/1315bbe0-2836-4776-8216-ec55044f32dd/IMG_20161013_172442.jpg");
     }
 
     @Test
@@ -284,13 +284,11 @@ public class CreateOrder extends BaseTest {
     public void test_09_创建订单_信息齐备_认证中的医生没有邀请者不可以创建() {
 
         String res = "";
-        logger.info("创建一个新的未认证医生");
-        SendVerifyCode.send();
-        String tmpToken = CheckVerifyCode.check();
-        res = GetDoctorProfile.getDoctorProfile(tmpToken);
-        logger.info("tmpDoctorId为"+JSONObject.fromObject(res).getJSONObject("data").getJSONObject("doctor").getString("user_id"));
+
         DoctorProfile dp = new DoctorProfile(true);
         dp.body.getJSONObject("doctor").remove("inviter_no");
+        HashMap<String, String> doc = CreateRegisteredDoctor(dp);
+        String tmpToken = doc.get("token");
         UpdateDoctorProfile.updateDoctorProfile(tmpToken, dp);
         logger.info("创建未认证医生成功");
         OrderDetail order = new OrderDetail(true);
@@ -301,19 +299,16 @@ public class CreateOrder extends BaseTest {
         }
         checkResponse(res);
         Assert.assertNotEquals(code, "1000000");
-        Assert.assertEquals(message, "医生未认证");
     }
 
     @Test
     public void test_10_创建订单_信息齐备_认证中的医生有邀请者可以创建() {
 
         String res = "";
-        logger.info("创建一个新的未认证医生");
-        SendVerifyCode.send();
-        String tmpToken = CheckVerifyCode.check();
-        res = GetDoctorProfile.getDoctorProfile(tmpToken);
-        logger.info("tmpDoctorId为"+JSONObject.fromObject(res).getJSONObject("data").getJSONObject("doctor").getString("user_id"));
+
         DoctorProfile dp = new DoctorProfile(true);
+        HashMap<String, String> doc = CreateRegisteredDoctor(dp);
+        String tmpToken = doc.get("token");
         UpdateDoctorProfile.updateDoctorProfile(tmpToken, dp);
         logger.info("创建未认证医生成功");
         OrderDetail order = new OrderDetail(true);
@@ -360,7 +355,7 @@ public class CreateOrder extends BaseTest {
         }
         checkResponse(res);
         Assert.assertEquals(code, "1000000", "创建订单失败");
-        orderId = parseJson(data, "order_id");
+        orderId = parseJson(data, "order_number");
         Assert.assertNotEquals(orderId, "", "返回的订单ID格式有误");
 
         logger.info("查看刚刚创建的订单详情");
@@ -379,7 +374,7 @@ public class CreateOrder extends BaseTest {
         }
         checkResponse(res);
         Assert.assertEquals(code, "1000000", "创建订单失败");
-        orderId = parseJson(data, "order_id");
+        orderId = parseJson(data, "order_number");
         Assert.assertNotEquals(orderId, "", "返回的订单ID格式有误");
 
         logger.info("查看刚刚创建的订单详情");

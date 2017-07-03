@@ -197,15 +197,6 @@ public class KBHospital_List extends BaseTest {
             Assert.assertTrue(provinceId.contains(title));
         }
 
-        query.replace("province","-1");
-        try {
-            res = HttpRequest.sendGet(host_crm+uri, query, crm_token);
-        } catch (IOException e) {
-            logger.error(e);
-        }
-        checkResponse(res);
-        Assert.assertNotEquals(code, "1000000");
-        //TODO
     }
 
 }

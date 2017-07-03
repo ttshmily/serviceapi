@@ -8,6 +8,7 @@ import org.testng.Assert;
 import org.testng.annotations.Test;
 
 import java.io.IOException;
+import java.util.HashMap;
 
 /**
  * Created by ttshmily on 21/3/2017.
@@ -25,8 +26,10 @@ public class GetEmployeeProfile extends BaseTest {
     @Test
     public void test_01_有token的用户请求可以获得有效信息() {
         String res = "";
+        HashMap<String, String> query = new HashMap<>();
+        query.put("number", UT.randomEmployeeId());
         try {
-            res = HttpRequest.sendGet(host_doc +mock+uri,"number=SH0001", mainToken);
+            res = HttpRequest.sendGet(host_doc +uri,query, mainToken);
         } catch (IOException e) {
             logger.error(e);
             Assert.fail();
@@ -41,8 +44,10 @@ public class GetEmployeeProfile extends BaseTest {
     @Test
     public void test_02_没有token的用户请求可以获得有效信息() {
         String res = "";
+        HashMap<String, String> query = new HashMap<>();
+        query.put("number", UT.randomEmployeeId());
         try {
-            res = HttpRequest.sendGet(host_doc +mock+uri,"number=SH0001", "");
+            res = HttpRequest.sendGet(host_doc +uri, query, "");
         } catch (IOException e) {
             logger.error(e);
             Assert.fail();

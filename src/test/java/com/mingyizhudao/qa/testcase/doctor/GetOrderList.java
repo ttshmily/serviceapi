@@ -81,7 +81,7 @@ public class GetOrderList extends BaseTest{
         String docId = JSONObject.fromObject(res).getJSONObject("data").getJSONObject("doctor").getString("user_id");
         UpdateDoctorProfile.updateDoctorProfile(tmpToken, dp);
 
-        if (!RegisteredDoctor_Certify.certify(docId, "1").equals("1")) {
+        if (!RegisteredDoctor_Certify.certify_old(docId, "1").equals("1")) {
             logger.error("认证医生失败，退出用例执行");
             Assert.fail("认证医生失败，退出用例执行");
         }

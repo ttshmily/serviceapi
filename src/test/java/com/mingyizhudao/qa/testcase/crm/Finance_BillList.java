@@ -5,6 +5,7 @@ import com.mingyizhudao.qa.util.HttpRequest;
 import com.mingyizhudao.qa.util.UT;
 import org.apache.log4j.Logger;
 import org.testng.Assert;
+import org.testng.annotations.Test;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -19,7 +20,24 @@ public class Finance_BillList extends BaseTest{
     public static String uri = version+"/finances/reconciliations";
     public static String mock = false ? "/mockjs/1" : "";
 
+    @Test
     public void test_01_获取支付订单列表() {
+        String res = "";
+        HashMap<String, String> query = new HashMap<>();
+        try {
+            res = HttpRequest.sendGet(host_crm+uri, "", crm_token);
+        } catch (IOException e) {
+            logger.error(e);
+        }
+        checkResponse(res);
+        Assert.assertEquals(code, "1000000");
+        //TODO
+        Assert.assertNotNull(UT.parseJson(data, "list()"));
+        Assert.assertNotNull(UT.parseJson(data, "size"));
+        Assert.assertNotNull(UT.parseJson(data, "pageSize"));
+    }
+
+    public void test_02_获取支付订单_分页逻辑() {
         String res = "";
         HashMap<String, String> query = new HashMap<>();
         try {

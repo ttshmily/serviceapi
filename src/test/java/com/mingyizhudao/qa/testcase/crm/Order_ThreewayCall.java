@@ -155,8 +155,9 @@ public class Order_ThreewayCall extends BaseTest {
         res = Order_Detail.Detail(orderId);
         checkResponse(res);
         Assert.assertEquals(UT.parseJson(data, "status"), "2000");
-        Assert.assertEquals(UT.parseJson(data, "surgeon_id"), "555");
-        Assert.assertEquals(UT.parseJson(data, "surgeon_name"), KB.kb_doctor.get("555"));
+        //不合作以后，清除上级医生信息
+//        Assert.assertEquals(UT.parseJson(data, "surgeon_id"), "555");
+//        Assert.assertEquals(UT.parseJson(data, "surgeon_name"), KB.kb_doctor.get("555"));
 //        Assert.assertEquals(parseJson(data, "surgeon_fee"), "10000");
     }
 

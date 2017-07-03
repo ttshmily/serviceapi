@@ -4,6 +4,7 @@ import com.mingyizhudao.qa.common.BaseTest;
 import com.mingyizhudao.qa.dataprofile.login.MobileProfile;
 import com.mingyizhudao.qa.util.HttpRequest;
 import net.sf.json.JSONException;
+import net.sf.json.JSONObject;
 import org.apache.log4j.Logger;
 import org.testng.Assert;
 import org.testng.annotations.Test;
@@ -34,6 +35,19 @@ public class SendVerifyCode extends BaseTest{
         }
         logger.info("mobile是: " + mobile + "...请发送验证码到服务器进行验证");
         return mobile;
+    }
+
+    public static void send(String phone) {
+        String res = "";
+        JSONObject mobile = new JSONObject();
+        mobile.put("mobile", phone);
+        logger.info("请求验证码到手机号" + phone + " ...") ;
+        try {
+            res = HttpRequest.sendPost(host_login +uri, mobile.toString(), "");
+        } catch (IOException e) {
+            logger.error(e);
+        }
+        logger.info("mobile是: " + phone + "...请发送验证码到服务器进行验证");
     }
 
     @Test

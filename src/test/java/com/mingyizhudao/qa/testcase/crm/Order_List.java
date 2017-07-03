@@ -3,6 +3,7 @@ package com.mingyizhudao.qa.testcase.crm;
 import com.mingyizhudao.qa.common.BaseTest;
 import com.mingyizhudao.qa.util.HttpRequest;
 import com.mingyizhudao.qa.util.UT;
+import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 import org.apache.log4j.Logger;
 import org.testng.Assert;
@@ -29,6 +30,40 @@ public class Order_List extends BaseTest {
             logger.error(e);
         }
         return Integer.parseInt(UT.parseJson(JSONObject.fromObject(res), "data:size"));
+    }
+
+    public static String SelectPaidOrder() {
+        String res = "";
+        HashMap<String, String> query = new HashMap<>();
+        query.put("status", "4000");
+        query.put("page", "1");
+        query.put("pageSize", "1");
+        query.put("hideTest", "true");
+
+        try {
+            res = HttpRequest.sendGet(host_crm+uri, query, crm_token);
+        } catch (IOException e) {
+            logger.error(e);
+        }
+        if (UT.parseJson(JSONObject.fromObject(res), "data:size") == "0") return null;
+        return UT.parseJson(JSONObject.fromObject(res), "data:list(0):order_number");
+    }
+
+    public static String SelectBrievedOrder() {
+        String res = "";
+        HashMap<String, String> query = new HashMap<>();
+        query.put("status", "4010");
+        query.put("page", "1");
+        query.put("pageSize", "1");
+        query.put("hideTest", "true");
+
+        try {
+            res = HttpRequest.sendGet(host_crm+uri, query, crm_token);
+        } catch (IOException e) {
+            logger.error(e);
+        }
+        if (UT.parseJson(JSONObject.fromObject(res), "data:size") == "0") return null;
+        return UT.parseJson(JSONObject.fromObject(res), "data:list(0):order_number");
     }
 
     @Test
@@ -95,8 +130,7 @@ public class Order_List extends BaseTest {
         String res = "";
         HashMap<String, String> query = new HashMap<>();
         query.put("page", "1");
-        query.put("pageSize", "10");
-        query.put("status", "2000,2020");
+        query.put("pageSize", "500");
         query.put("isRecommended", "true");
         try {
             res = HttpRequest.sendGet(host_crm+uri, query, crm_token);
@@ -105,8 +139,60 @@ public class Order_List extends BaseTest {
         }
         checkResponse(res);
         Assert.assertEquals(code, "1000000");
-        Assert.assertEquals(UT.parseJson(data, "list()"), "10");
-        Assert.assertEquals(UT.parseJson(data, "page"), "1");
-        Assert.assertEquals(UT.parseJson(data, "list(1):status"), "2020");
+        JSONArray orderList = data.getJSONArray("list");
+        for (int i=0; i<orderList.size(); i++) {
+            JSONObject order = orderList.getJSONObject(i);
+            Assert.assertTrue(Integer.parseInt(UT.parseJson(order, "status"))>2000); // 状态码2000以上的推荐过
+        }    }
+
+    @Test
+    public void test_04_获取订单列表_状态筛选() {
+
+        String res = "";
+        HashMap<String, String> query = new HashMap<>();
+        query.put("page", "1");
+        query.put("pageSize", "500");
+
+        query.put("status", "4000");
+        try {
+            res = HttpRequest.sendGet(host_crm+uri, query, crm_token);
+        } catch (IOException e) {
+            logger.error(e);
+        }
+        checkResponse(res);
+        Assert.assertEquals(code, "1000000");
+        JSONArray orderList = data.getJSONArray("list");
+        for (int i=0; i<orderList.size(); i++) {
+            JSONObject order = orderList.getJSONObject(i);
+            Assert.assertEquals(UT.parseJson(order, "status"), "4000");
+        }
+
+        query.replace("status", "5000");
+        try {
+            res = HttpRequest.sendGet(host_crm+uri, query, crm_token);
+        } catch (IOException e) {
+            logger.error(e);
+        }
+        checkResponse(res);
+        Assert.assertEquals(code, "1000000");
+        orderList = data.getJSONArray("list");
+        for (int i=0; i<orderList.size(); i++) {
+            JSONObject order = orderList.getJSONObject(i);
+            Assert.assertEquals(UT.parseJson(order, "status"), "5000");
+        }
+
+        query.replace("status", "4020");
+        try {
+            res = HttpRequest.sendGet(host_crm+uri, query, crm_token);
+        } catch (IOException e) {
+            logger.error(e);
+        }
+        checkResponse(res);
+        Assert.assertEquals(code, "1000000");
+        orderList = data.getJSONArray("list");
+        for (int i=0; i<orderList.size(); i++) {
+            JSONObject order = orderList.getJSONObject(i);
+            Assert.assertEquals(UT.parseJson(order, "status"), "4020");
+        }
     }
 }

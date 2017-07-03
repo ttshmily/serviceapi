@@ -22,6 +22,20 @@ public class Order_Rollback extends BaseTest {
     public static String uri = version+"/orders/{orderNumber}/orderRollback";
     public static String mock = false ? "/mockjs/1" : "";
 
+    public static String Rollback(String orderId) {
+        String res = "";
+        HashMap<String, String> pathValue = new HashMap<>();
+        pathValue.put("orderNumber", orderId);
+        JSONObject body = new JSONObject();
+        body.put("content", "自动化测试的回退原因");
+        try {
+            res = HttpRequest.sendPost(host_crm+uri, body.toString(), crm_token, pathValue);
+        } catch (IOException e) {
+            logger.error(e);
+        }
+        res = Order_Detail.Detail(orderId);
+        return UT.parseJson(JSONObject.fromObject(res), "data:status"); // 期望2000
+    }
 
     @Test
     public void test_01_回退订单_三方通话确认成功之后() {

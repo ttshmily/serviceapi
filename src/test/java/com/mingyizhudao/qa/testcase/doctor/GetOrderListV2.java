@@ -243,6 +243,122 @@ public class GetOrderListV2 extends GetOrderList {
             logger.error("推荐专家失败");
             Assert.fail("推荐专家失败");
         }
+
+        try {
+            res = HttpRequest.sendGet(host_doc + uri, query, tmpToken);
+        } catch (IOException e) {
+            logger.error(e);
+        }
+        checkResponse(res);
+        Assert.assertEquals(UT.parseJson(data, "order()"), "4");
+        Assert.assertEquals(UT.parseJson(data, "order(0):order_number"), orderId4);
+        Assert.assertEquals(UT.parseJson(data, "order(1):order_number"), orderId3);
+        Assert.assertEquals(UT.parseJson(data, "order(2):order_number"), orderId2);
+        Assert.assertEquals(UT.parseJson(data, "order(3):order_number"), orderId1);
+
+        Order_ThreewayCall.ThreewayCall(orderId3,"success");
+        status = Order_Rollback.Rollback(orderId3);
+        if(!status.equals("2000")) {
+            logger.debug(status);
+            logger.error("回退订单失败"+orderId3);
+            Assert.fail("回退订单失败"+orderId3);
+        }
+        try {
+            res = HttpRequest.sendGet(host_doc + uri, query, tmpToken);
+        } catch (IOException e) {
+            logger.error(e);
+        }
+        checkResponse(res);
+        Assert.assertEquals(UT.parseJson(data, "order()"), "4");
+        Assert.assertEquals(UT.parseJson(data, "order(0):order_number"), orderId4);
+        Assert.assertEquals(UT.parseJson(data, "order(1):order_number"), orderId2);
+        Assert.assertEquals(UT.parseJson(data, "order(2):order_number"), orderId1);
+        Assert.assertEquals(UT.parseJson(data, "order(3):order_number"), orderId3);
+
+        Order_ThreewayCall.ThreewayCall(orderId4,"success");
+        status = Order_Rollback.Rollback(orderId4);
+        if(!status.equals("2000")) {
+            logger.debug(status);
+            logger.error("回退订单失败"+orderId4);
+            Assert.fail("回退订单失败"+orderId4);
+        }
+        try {
+            res = HttpRequest.sendGet(host_doc + uri, query, tmpToken);
+        } catch (IOException e) {
+            logger.error(e);
+        }
+        checkResponse(res);
+        Assert.assertEquals(UT.parseJson(data, "order()"), "4");
+        Assert.assertEquals(UT.parseJson(data, "order(0):order_number"), orderId2);
+        Assert.assertEquals(UT.parseJson(data, "order(1):order_number"), orderId1);
+        Assert.assertEquals(UT.parseJson(data, "order(2):order_number"), orderId4);
+        Assert.assertEquals(UT.parseJson(data, "order(3):order_number"), orderId3);
+    }
+
+    public void test_03_验证排序规则_我收到的手术单默认排序() {
+        //TODO
+        //当前bug，曾经推荐的医生，不展示历史订单
+        Assert.fail("当前bug，曾经推荐的医生，不展示历史订单");
+
+    }
+
+    public void test_04_验证排序规则_我收到的手术单接收时间排序() {
+        String res = "";
+
+        DoctorProfile dp = new DoctorProfile(true);
+        HashMap<String, String> result = CreateVerifiedDoctor(dp);
+        String tmpToken = result.get("token");
+        String tmpExpertId = result.get("expert_id");
+
+        HashMap<String, String> query = new HashMap<>();
+        query.put("flag","2"); //上级医生，我收到的订单
+        query.put("sortCriteria","1");// 接收时间倒序
+        query.put("collatingSequence","0");
+
+        logger.info("创建订单mainToken");
+        String orderId1 = CreateOrder.CreateOrder(mainToken);
+        String orderId2 = CreateOrder.CreateOrder(mainToken);
+        String orderId3 = CreateOrder.CreateOrder(mainToken);
+        String orderId4 = CreateOrder.CreateOrder(mainToken);
+        if (orderId1.isEmpty()) {
+            logger.error("创建订单with mainToken失败");
+            Assert.fail("创建订单with mainToken失败");
+        }
+
+        try {
+            res = HttpRequest.sendGet(host_doc + uri, query, tmpToken);
+        } catch (IOException e) {
+            logger.error(e);
+        }
+        checkResponse(res);
+        Assert.assertEquals(UT.parseJson(data, "order()"), "0");
+
+        logger.info("依次领取和推荐专家");
+        Order_ReceiveTask.receiveTask(orderId1);
+        Order_ReceiveTask.receiveTask(orderId2);
+        Order_ReceiveTask.receiveTask(orderId3);
+        Order_ReceiveTask.receiveTask(orderId4);
+        String status = Order_RecommendDoctor.recommendDoctor(orderId4, tmpExpertId);
+        if(!status.equals("2020")) {
+            logger.error("推荐专家失败");
+            Assert.fail("推荐专家失败");
+        }
+        status = Order_RecommendDoctor.recommendDoctor(orderId3, tmpExpertId);
+        if(!status.equals("2020")) {
+            logger.error("推荐专家失败");
+            Assert.fail("推荐专家失败");
+        }
+        status = Order_RecommendDoctor.recommendDoctor(orderId2, tmpExpertId);
+        if(!status.equals("2020")) {
+            logger.error("推荐专家失败");
+            Assert.fail("推荐专家失败");
+        }
+        status = Order_RecommendDoctor.recommendDoctor(orderId1, tmpExpertId);
+        if(!status.equals("2020")) {
+            logger.error("推荐专家失败");
+            Assert.fail("推荐专家失败");
+        }
+
         try {
             res = HttpRequest.sendGet(host_doc + uri, query, tmpToken);
         } catch (IOException e) {
@@ -254,17 +370,40 @@ public class GetOrderListV2 extends GetOrderList {
         Assert.assertEquals(UT.parseJson(data, "order(1):order_number"), orderId2);
         Assert.assertEquals(UT.parseJson(data, "order(2):order_number"), orderId3);
         Assert.assertEquals(UT.parseJson(data, "order(3):order_number"), orderId4);
-    }
 
-    public void test_03_验证排序规则_我收到的手术单默认排序() {
-        //TODO
-        //当前bug，曾经推荐的医生，不展示历史订单
-        Assert.fail("当前bug，曾经推荐的医生，不展示历史订单");
+        status = Order_Reject.rejectOrder(orderId3);
+        if(!status.equals("9000")) {
+            logger.error("拒绝订单失败"+orderId3);
+            Assert.fail("拒绝订单失败"+orderId3);
+        }
+        try {
+            res = HttpRequest.sendGet(host_doc + uri, query, tmpToken);
+        } catch (IOException e) {
+            logger.error(e);
+        }
+        checkResponse(res);
+        Assert.assertEquals(UT.parseJson(data, "order()"), "4");
+        Assert.assertEquals(UT.parseJson(data, "order(0):order_number"), orderId1);
+        Assert.assertEquals(UT.parseJson(data, "order(1):order_number"), orderId2);
+        Assert.assertEquals(UT.parseJson(data, "order(2):order_number"), orderId3);
+        Assert.assertEquals(UT.parseJson(data, "order(3):order_number"), orderId4);
 
-    }
-
-    public void test_04_验证排序规则_我收到的手术单接收时间排序() {
-
+        status = Order_Reject.rejectOrder(orderId4);
+        if(!status.equals("9000")) {
+            logger.error("拒绝订单失败"+orderId4);
+            Assert.fail("拒绝订单失败"+orderId4);
+        }
+        try {
+            res = HttpRequest.sendGet(host_doc + uri, query, tmpToken);
+        } catch (IOException e) {
+            logger.error(e);
+        }
+        checkResponse(res);
+        Assert.assertEquals(UT.parseJson(data, "order()"), "4");
+        Assert.assertEquals(UT.parseJson(data, "order(0):order_number"), orderId1);
+        Assert.assertEquals(UT.parseJson(data, "order(1):order_number"), orderId2);
+        Assert.assertEquals(UT.parseJson(data, "order(2):order_number"), orderId3);
+        Assert.assertEquals(UT.parseJson(data, "order(3):order_number"), orderId4);
     }
 
     public void test_05_验证我发起的手术单_状态筛选() {

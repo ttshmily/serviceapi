@@ -167,7 +167,7 @@ public class Order_Modify extends BaseTest {
         Assert.assertEquals(UT.parseJson(data, "patient_phone"), "13799990123");
     }
 
-    @Test
+    @Test(enabled = false) // 可修改，由前端控制
     public void test_07_修改订单_待支付后不可修改() {
         String res = "";
         String order_number = CreateOrder.CreateOrder(mainToken); // create an order
