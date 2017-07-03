@@ -22,13 +22,25 @@ import static org.testng.Assert.fail;
 /**
  * Created by ttshmily on 7/4/2017.
  */
-@Test(enabled = false)
 public class GetOrderList extends BaseTest{
 
     public static final Logger logger= Logger.getLogger(GetOrderList.class);
     public static String uri = "/api/getorderlist";
     public static String mock = false ? "/mockjs/1" : "";
 
+    public static String List(String token) {
+        String res = "";
+        try {
+            res = HttpRequest.sendGet(host_doc+uri,"", token);
+        } catch (IOException e) {
+            logger.debug(HttpRequest.unicodeString(res));
+            logger.error(e);
+            return null;
+        }
+        JSONObject orderList = JSONObject.fromObject(res).getJSONObject("data");
+        return String.valueOf(orderList.getJSONArray("order").size());
+
+    }
     @Test
     public void test_01_获取订单列表_登录用户() {
         String res = "";

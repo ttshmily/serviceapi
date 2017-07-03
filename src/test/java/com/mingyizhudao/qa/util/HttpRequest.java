@@ -478,6 +478,58 @@ public class HttpRequest {
         return result;
     }
 
+    public static String sendDelete(String url, String param, String authCode, HashMap<String,String> pathValue) throws IOException {
+        PrintWriter out = null;
+        BufferedReader in = null;
+        String result = "";
+        try {
+            String urlNameString;
+            if (pathValue != null ) {
+                urlNameString = restUrl(url, pathValue);
+            } else {
+                urlNameString = url;
+            }
+            URL realUrl = new URL(urlNameString);
+            URLConnection conn = realUrl.openConnection();
+            HttpURLConnection httpURLConnection = (HttpURLConnection)conn;
+            // 设置通用的请求属性
+            httpURLConnection.setRequestMethod("DELETE");
+            httpURLConnection.setRequestProperty("Content-Type", "application/json");
+            httpURLConnection.setRequestProperty("connection", "Keep-Alive");
+            if (!authCode.isEmpty())
+                httpURLConnection.setRequestProperty("Authorization", "Bearer "+authCode);
+            long start,end;
+            httpURLConnection.setDoOutput(true);
+            httpURLConnection.setDoInput(true);
+            out = new PrintWriter(conn.getOutputStream());
+            logger.info("发送请求: >>>>>  " + httpURLConnection.getRequestMethod() + " " + httpURLConnection.getURL());
+            logger.info("请求数据: >>>>>  " + param);
+            start = System.currentTimeMillis();
+            // 发送请求参数
+            out.print(param);
+            // flush输出流的缓冲
+            out.flush();
+            // 定义BufferedReader输入流来读取URL的响应
+            in = new BufferedReader(new InputStreamReader(httpURLConnection.getInputStream()));
+            end = System.currentTimeMillis();
+            logger.info("等待回应: <<<<<  " + httpURLConnection.getResponseCode() + " " + httpURLConnection.getResponseMessage());
+            logger.info("响应时间: <<<<<  " + Long.toString(end-start) + " ms");
+
+            in = new BufferedReader(new InputStreamReader(httpURLConnection.getInputStream()));
+            String line;
+            while ((line = in.readLine()) != null) {
+                result += line;
+            }
+            in.close();
+            out.close();
+        } catch (IOException e) {
+            logger.error("发送请求异常");
+            throw e;
+//            e.printStackTrace();
+        }
+        return result;
+    }
+
     /**
      * 将restful URL中的资源位替换成资源名称
      *

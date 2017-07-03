@@ -23,6 +23,9 @@ public class OrderDetail {
             order.put("major_disease_id", UT.randomKey(KB.kb_disease));
             order.put("minor_disease_id", UT.randomKey(KB.kb_disease));
             order.put("diagnosis", "病情描述"+UT.randomString(100));
+            order.put("is_reoperation", UT.randomInt(2)-1);
+            order.put("reoperation_description", "二次手术描述"+UT.randomString(100));
+            order.put("expected_doctor_id", UT.randomExpertId());
             String date1 = UT.randomDateFromNow(2, 5);
             String date2 = UT.randomDateFromNow(6,30);
             order.put("expected_surgery_start_date", date1);

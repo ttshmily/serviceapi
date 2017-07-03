@@ -4,6 +4,7 @@ import com.mingyizhudao.qa.dataprofile.doctor.DoctorProfile;
 import com.mingyizhudao.qa.testcase.crm.*;
 import com.mingyizhudao.qa.util.HttpRequest;
 import com.mingyizhudao.qa.util.UT;
+import net.sf.json.JSONObject;
 import org.apache.log4j.Logger;
 import org.testng.Assert;
 import org.testng.annotations.Test;
@@ -18,6 +19,23 @@ public class GetOrderListV2 extends GetOrderList {
     public static final Logger logger= Logger.getLogger(GetOrderListV2.class);
     public static String uri = "/api/orders";
     public static String mock = false ? "/mockjs/1" : "";
+
+    public static String List(String token, String flag) {
+        // 1 - 下级医生；2 - 上级医生
+        String res = "";
+        HashMap<String, String> query = new HashMap<>();
+        query.put("flag",flag);
+        try {
+            res = HttpRequest.sendGet(host_doc+uri, query, token);
+        } catch (IOException e) {
+            logger.debug(HttpRequest.unicodeString(res));
+            logger.error(e);
+            return null;
+        }
+        JSONObject orderList = JSONObject.fromObject(res).getJSONObject("data");
+        return String.valueOf(orderList.getJSONArray("order").size());
+
+    }
 
     @Test
     public void test_01_验证我发起的手术单_默认排序() {//已取消置底，已完成倒数第二顺位，其它会诊单按创建时间倒序混排
