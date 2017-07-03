@@ -34,7 +34,6 @@ public class GetOrderListV2 extends GetOrderList {
         }
         JSONObject orderList = JSONObject.fromObject(res).getJSONObject("data");
         return String.valueOf(orderList.getJSONArray("order").size());
-
     }
 
     @Test

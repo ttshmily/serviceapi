@@ -16,7 +16,7 @@ import java.util.HashMap;
  * Created by ttshmily on 25/4/2017.
  */
 public class Order_Rollback extends BaseTest {
-
+// 创建支付订单后的取消
     public static final Logger logger= Logger.getLogger(Order_Rollback.class);
     public static final String version = "/api/v1";
     public static String uri = version+"/orders/{orderNumber}/orderRollback";

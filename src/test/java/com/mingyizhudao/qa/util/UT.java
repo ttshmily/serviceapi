@@ -37,7 +37,6 @@ public class UT {
     public static long randomInt(int count) {
         Random random = new Random();
         return random.nextInt(count)+1;
-//        return (long) Math.floor(Math.random() * count);
     }
 
     public static String randomDateFromNow(int i, int j) {

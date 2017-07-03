@@ -16,7 +16,7 @@ import java.util.HashMap;
  * Created by ttshmily on 25/4/2017.
  */
 public class Order_Reject extends BaseTest {
-
+// 创建支付订单前的取消
     public static final Logger logger= Logger.getLogger(Order_Reject.class);
     public static final String version = "/api/v1";
     public static String uri = version+"/orders/{orderNumber}/rejectOrder";
@@ -42,7 +42,6 @@ public class Order_Reject extends BaseTest {
 
     @Test
     public void test_01_客服拒绝订单_推荐之前() {
-
         String res = "";
         HashMap<String, String> pathValue = new HashMap<>();
 
@@ -67,6 +66,8 @@ public class Order_Reject extends BaseTest {
         Assert.assertEquals(UT.parseJson(data, "major_reps_id"), "chao.fang@mingyizhudao.com");
         Assert.assertEquals(UT.parseJson(data, "status"), "9000");
         Assert.assertEquals(UT.parseJson(data, "order_number"), order_number);
+        Assert.assertEquals(UT.parseJson(data, "content"), "自动化推荐之前据拒订单的理由");
+
     }
 
     @Test

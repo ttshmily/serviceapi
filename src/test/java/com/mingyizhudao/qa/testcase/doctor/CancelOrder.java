@@ -61,6 +61,8 @@ public class CancelOrder extends BaseTest {
         checkResponse(res);
         Assert.assertEquals(code, "1000000");
         Assert.assertEquals(UT.parseJson(data, "status"), "9000");
+        Assert.assertEquals(UT.parseJson(data, "status"), "9000");
+
     }
 
     @Test
