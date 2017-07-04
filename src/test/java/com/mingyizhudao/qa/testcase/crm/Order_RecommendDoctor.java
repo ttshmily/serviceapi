@@ -2,6 +2,7 @@ package com.mingyizhudao.qa.testcase.crm;
 
 import com.mingyizhudao.qa.common.BaseTest;
 import com.mingyizhudao.qa.common.KB;
+import com.mingyizhudao.qa.dataprofile.doctor.DoctorProfile;
 import com.mingyizhudao.qa.testcase.doctor.CreateOrder;
 import com.mingyizhudao.qa.util.HttpRequest;
 import com.mingyizhudao.qa.util.UT;
@@ -58,7 +59,9 @@ public class Order_RecommendDoctor extends BaseTest {
         HashMap<String, String> pathValue = new HashMap<>();
         pathValue.put("orderNumber", order_number);
         JSONObject body = new JSONObject();
-        String recommendedId = "444";
+        DoctorProfile dp = new DoctorProfile(true);
+        HashMap<String, String> doc = CreateVerifiedDoctor(dp);
+        String recommendedId = doc.get("expert_id");
         body.put("surgeon_id",recommendedId);
         body.put("content","自动化推荐的医生");
         try {
@@ -72,8 +75,21 @@ public class Order_RecommendDoctor extends BaseTest {
         checkResponse(res);
         Assert.assertEquals(UT.parseJson(data, "status"), "2020");
         Assert.assertEquals(UT.parseJson(data, "surgeon_id"), recommendedId);
-        Assert.assertEquals(UT.parseJson(data, "surgeon_name"), KB.kb_doctor.get(recommendedId));
-
+        Assert.assertEquals(UT.parseJson(data, "surgeon_name"), dp.body.getJSONObject("doctor").getString("name"));
+        Assert.assertEquals(UT.parseJson(data, "surgeon_user_id"), doc.get("id"));
+        Assert.assertNotNull(UT.parseJson(data, "surgeon_medical_title"));
+        Assert.assertNotNull(UT.parseJson(data, "surgeon_academic_title"));
+        Assert.assertNotNull(UT.parseJson(data, "surgeon_hospital"));
+        Assert.assertNotNull(UT.parseJson(data, "surgeon_city_id"));
+        Assert.assertNotNull(UT.parseJson(data, "surgeon_city_name"));
+        Assert.assertNotNull(UT.parseJson(data, "surgeon_province_id"));
+        Assert.assertNotNull(UT.parseJson(data, "surgeon_province_name"));
+        Assert.assertNotNull(UT.parseJson(data, "surgeon_department"));
+        Assert.assertNotNull(UT.parseJson(data, "surgeon_major"));
+        Assert.assertNotNull(UT.parseJson(data, "surgeon_referrer_id"));
+        Assert.assertNotNull(UT.parseJson(data, "surgeon_referrer_name"));
+        Assert.assertNotNull(UT.parseJson(data, "surgeon_referrer_group_id"));
+        Assert.assertNotNull(UT.parseJson(data, "surgeon_registration_time"));
     }
 
     @Test
@@ -85,7 +101,7 @@ public class Order_RecommendDoctor extends BaseTest {
         HashMap<String, String> pathValue = new HashMap<>();
         pathValue.put("orderNumber", order_number);
         JSONObject body = new JSONObject();
-        String recommendedId = "555";
+        String recommendedId = UT.randomExpertId();
         body.put("surgeon_id",recommendedId);
         body.put("content","自动化推荐的医生");
         try {
@@ -199,7 +215,7 @@ public class Order_RecommendDoctor extends BaseTest {
         HashMap<String, String> pathValue = new HashMap<>();
         pathValue.put("orderNumber", order_number);
         JSONObject body = new JSONObject();
-        String recommendedId = "444";
+        String recommendedId = UT.randomExpertId();
         body.put("surgeon_id",recommendedId);
         body.put("content","无证操作");
         try {
@@ -215,7 +231,6 @@ public class Order_RecommendDoctor extends BaseTest {
         Assert.assertNull(UT.parseJson(data, "surgeon_id"));
         Assert.assertNull(UT.parseJson(data, "surgeon_name"));
 
-
     }
 
     @Test
@@ -227,7 +242,7 @@ public class Order_RecommendDoctor extends BaseTest {
         HashMap<String, String> pathValue = new HashMap<>();
         pathValue.put("orderNumber", order_number);
         JSONObject body = new JSONObject();
-        String recommendedId = "555";
+        String recommendedId = UT.randomExpertId();
         body.put("surgeon_id",recommendedId);
         body.put("content","自动化推荐的医生");
         try {
@@ -261,25 +276,5 @@ public class Order_RecommendDoctor extends BaseTest {
         res = Order_Detail.Detail(order_number);
         checkResponse(res);
         Assert.assertEquals(UT.parseJson(data, "status"), "3000");
-        Assert.assertEquals(UT.parseJson(data, "surgeon_id"), recommendedId);
-        Assert.assertEquals(UT.parseJson(data, "surgeon_name"), KB.kb_doctor.get(recommendedId));
-
-//        // 重新推荐失败后，保留原先的上级医生信息
-//        new_recommendedId = "666new_66666";
-//        body.replace("surgeon_id",recommendedId);
-//        body.replace("content","自动化重新推荐的不存在的医生");
-//        try {
-//            res = HttpRequest.sendPut(host_crm+uri, body.toString(), crm_token, pathValue);
-//        } catch (IOException e) {
-//            logger.error(e);
-//        }
-//        checkResponse(res);
-//        Assert.assertNotEquals(code, "1000000");
-//        res = Order_Detail.Detail(order_number);
-//        checkResponse(res);
-//        Assert.assertEquals(parseJson(data, "status"), "2020");
-//        Assert.assertEquals(parseJson(data, "surgeon_id"), recommendedId);
-//        Assert.assertEquals(parseJson(data, "surgeon_name"), KB.kb_doctor.get(recommendedId));
-
     }
 }

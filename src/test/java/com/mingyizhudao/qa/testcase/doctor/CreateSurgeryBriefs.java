@@ -29,7 +29,7 @@ public class CreateSurgeryBriefs extends BaseTest {
 
         String res = "";
         res = Order_Detail.Detail(orderId);
-        String status = JSONObject.fromObject(res).getJSONObject("data").getJSONObject("order").getString("status");
+        String status = JSONObject.fromObject(res).getJSONObject("data").getString("status");
         if (!status.equals("4000")) {
             logger.error("订单未支付，无法上传手术小结");
             return status;
@@ -50,6 +50,9 @@ public class CreateSurgeryBriefs extends BaseTest {
     public void test_01_上传手术小结() {
         String res = "";
         String orderId = Order_List.SelectPaidOrder();
+        if (orderId == null) {
+            Assert.fail("没有已支付的订单");
+        }
         String agentPhone = JSONObject.fromObject(Order_Detail.Detail(orderId)).getJSONObject("data").getString("agent_phone");
         SendVerifyCode.send(agentPhone);
         String token = CheckVerifyCode.check(agentPhone);
@@ -67,22 +70,28 @@ public class CreateSurgeryBriefs extends BaseTest {
         }
         checkResponse(res);
         Assert.assertEquals(code, "1000000");
-        String status = JSONObject.fromObject(res).getJSONObject("data").getString("status");
-        Assert.assertEquals(status, "4010", "上传完成后状态不为4010");
-        Assert.assertEquals(data.getString("surgery_brief_date"), sb.body.getJSONObject("order").getString("surgery_brief_date"));
-        Assert.assertEquals(data.getString("surgery_brief_description"), sb.body.getJSONObject("order").getString("surgery_brief_description"));
-        Assert.assertEquals(data.getString("surgery_brief_surgery_id"), sb.body.getJSONObject("order").getString("surgery_brief_surgery_id"));
-        Assert.assertEquals(data.getString("surgery_brief_surgery_name"), UT.diseaseName(sb.body.getJSONObject("order").getString("surgery_brief_surgery_id")));
-        Assert.assertEquals(data.getString("surgery_brief_final_diagnosed_disease_id"), sb.body.getJSONObject("order").getString("surgery_brief_final_diagnosed_disease_id"));
-        Assert.assertEquals(data.getString("surgery_brief_final_diagnosed_disease_name"), UT.diseaseName(sb.body.getJSONObject("order").getString("surgery_brief_final_diagnosed_disease_name")));
-        Assert.assertEquals(data.getString("surgery_brief_hospital_id"), sb.body.getJSONObject("order").getString("surgery_brief_hospital_id"));
-        Assert.assertEquals(data.getString("surgery_brief_hospital_name"), UT.hospitalName(sb.body.getJSONObject("order").getString("surgery_brief_hospital_id")));
+        res = GetOrderDetail.getOrderDetail(token, orderId);
+        checkResponse(res);
+        Assert.assertEquals(code, "1000000");
+        JSONObject order = data.getJSONObject("order");
+        Assert.assertEquals(order.getString("status"), "4010", "上传完成后状态不为4010");
+        Assert.assertEquals(order.getString("surgery_brief_date").substring(0, 10).replace('/', '-'), sb.body.getJSONObject("order").getString("surgery_brief_date"));
+        Assert.assertEquals(order.getString("surgery_brief_description"), sb.body.getJSONObject("order").getString("surgery_brief_description"));
+        Assert.assertEquals(order.getString("surgery_brief_surgery_id"), sb.body.getJSONObject("order").getString("surgery_brief_surgery_id"));
+        Assert.assertEquals(order.getString("surgery_brief_surgery_name"), UT.diseaseName(sb.body.getJSONObject("order").getString("surgery_brief_surgery_id")));
+        Assert.assertEquals(order.getString("surgery_brief_final_diagnosed_disease_id"), sb.body.getJSONObject("order").getString("surgery_brief_final_diagnosed_disease_id"));
+        Assert.assertEquals(order.getString("surgery_brief_final_diagnosed_disease_name"), UT.diseaseName(sb.body.getJSONObject("order").getString("surgery_brief_final_diagnosed_disease_name")));
+        Assert.assertEquals(order.getString("surgery_brief_hospital_id"), sb.body.getJSONObject("order").getString("surgery_brief_hospital_id"));
+        Assert.assertEquals(order.getString("surgery_brief_hospital_name"), UT.hospitalName(sb.body.getJSONObject("order").getString("surgery_brief_hospital_id")));
     }
 
     @Test
     public void test_02_上传手术小结_缺少字段() {
         String res = "";
         String orderId = Order_List.SelectPaidOrder();
+        if (orderId == null) {
+            Assert.fail("没有已支付的订单");
+        }
         String agentPhone = JSONObject.fromObject(Order_Detail.Detail(orderId)).getJSONObject("data").getString("agent_phone");
         SendVerifyCode.send(agentPhone);
         String token = CheckVerifyCode.check(agentPhone);

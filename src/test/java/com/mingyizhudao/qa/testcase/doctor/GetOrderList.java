@@ -2,10 +2,7 @@ package com.mingyizhudao.qa.testcase.doctor;
 
 import com.mingyizhudao.qa.common.BaseTest;
 import com.mingyizhudao.qa.dataprofile.doctor.DoctorProfile;
-import com.mingyizhudao.qa.testcase.crm.Order_ReceiveTask;
-import com.mingyizhudao.qa.testcase.crm.Order_RecommendDoctor;
-import com.mingyizhudao.qa.testcase.crm.Order_ThreewayCall;
-import com.mingyizhudao.qa.testcase.crm.RegisteredDoctor_Certify;
+import com.mingyizhudao.qa.testcase.crm.*;
 import com.mingyizhudao.qa.testcase.login.CheckVerifyCode;
 import com.mingyizhudao.qa.testcase.login.SendVerifyCode;
 import com.mingyizhudao.qa.util.HttpRequest;
@@ -16,8 +13,6 @@ import org.testng.Assert;
 import org.testng.annotations.Test;
 
 import java.io.IOException;
-
-import static org.testng.Assert.fail;
 
 /**
  * Created by ttshmily on 7/4/2017.
@@ -81,7 +76,7 @@ public class GetOrderList extends BaseTest{
         String docId = JSONObject.fromObject(res).getJSONObject("data").getJSONObject("doctor").getString("user_id");
         UpdateDoctorProfile.updateDoctorProfile(tmpToken, dp);
 
-        if (!RegisteredDoctor_Certify.certify_old(docId, "1").equals("1")) {
+        if (!RegisteredDoctor_Certify_V2.certify(docId, "1").get("is_verified").equals("1")) {
             logger.error("认证医生失败，退出用例执行");
             Assert.fail("认证医生失败，退出用例执行");
         }

@@ -24,7 +24,7 @@ public class GetOrderListV2 extends GetOrderList {
         // 1 - 下级医生；2 - 上级医生
         String res = "";
         HashMap<String, String> query = new HashMap<>();
-        query.put("flag",flag);
+        query.put("flag", flag);
         try {
             res = HttpRequest.sendGet(host_doc+uri, query, token);
         } catch (IOException e) {
@@ -36,8 +36,25 @@ public class GetOrderListV2 extends GetOrderList {
         return String.valueOf(orderList.getJSONArray("order").size());
     }
 
+    public static String ListCompleted(String token, String flag) {
+        // 1 - 下级医生；2 - 上级医生
+        String res = "";
+        HashMap<String, String> query = new HashMap<>();
+        query.put("flag",flag);
+        query.put("status", "9000");
+        query.put("page", "1");
+        query.put("pageSize", "1");
+        try {
+            res = HttpRequest.sendGet(host_doc+uri, query, token);
+        } catch (IOException e) {
+            logger.error(e);
+        }
+        if (UT.parseJson(JSONObject.fromObject(res), "data:size") == "0") return null;
+        return UT.parseJson(JSONObject.fromObject(res), "data:order(0):order_number");
+    }
+
     @Test
-    public void test_01_验证我发起的手术单_默认排序() {//已取消置底，已完成倒数第二顺位，其它会诊单按创建时间倒序混排
+    public void test_01_我发起的手术单_默认排序() {//已取消置底，已完成倒数第二顺位，其它会诊单按创建时间倒序混排
         String res = "";
 
         DoctorProfile dp = new DoctorProfile(true);
@@ -188,7 +205,7 @@ public class GetOrderListV2 extends GetOrderList {
     }
 
     @Test
-    public void test_02_验证我收到的手术单_默认排序() {//处理中->已完成->已取消，同一状态按接收时间倒序
+    public void test_02_我收到的手术单_默认排序() {//处理中->已完成->已取消，同一状态按接收时间倒序
 
         String res = "";
 
@@ -255,7 +272,7 @@ public class GetOrderListV2 extends GetOrderList {
         Assert.assertEquals(UT.parseJson(data, "order(1):order_number"), orderId3);
         Assert.assertEquals(UT.parseJson(data, "order(2):order_number"), orderId2);
         Assert.assertEquals(UT.parseJson(data, "order(3):order_number"), orderId1);
-
+//回退后，上级医生信息清除，导致无法排序
         Order_ThreewayCall.ThreewayCall(orderId3,"success");
         status = Order_Rollback.Rollback(orderId3);
         if(!status.equals("2000")) {
@@ -269,7 +286,7 @@ public class GetOrderListV2 extends GetOrderList {
             logger.error(e);
         }
         checkResponse(res);
-        Assert.assertEquals(UT.parseJson(data, "order()"), "4");
+        Assert.assertEquals(UT.parseJson(data, "order()"), "4");//回退后，上级医生信息清除，导致无法排序
         Assert.assertEquals(UT.parseJson(data, "order(0):order_number"), orderId4);
         Assert.assertEquals(UT.parseJson(data, "order(1):order_number"), orderId2);
         Assert.assertEquals(UT.parseJson(data, "order(2):order_number"), orderId1);
@@ -295,14 +312,8 @@ public class GetOrderListV2 extends GetOrderList {
         Assert.assertEquals(UT.parseJson(data, "order(3):order_number"), orderId3);
     }
 
-    public void test_03_验证排序规则_我收到的手术单默认排序() {
-        //TODO
-        //当前bug，曾经推荐的医生，不展示历史订单
-        Assert.fail("当前bug，曾经推荐的医生，不展示历史订单");
-
-    }
-
-    public void test_04_验证排序规则_我收到的手术单接收时间排序() {
+    @Test
+    public void test_03_我收到的手术单_接收时间排序() {
         String res = "";
 
         DoctorProfile dp = new DoctorProfile(true);
@@ -343,15 +354,30 @@ public class GetOrderListV2 extends GetOrderList {
             logger.error("推荐专家失败");
             Assert.fail("推荐专家失败");
         }
+        try  {
+            Thread.sleep(1000);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         status = Order_RecommendDoctor.recommendDoctor(orderId3, tmpExpertId);
         if(!status.equals("2020")) {
             logger.error("推荐专家失败");
             Assert.fail("推荐专家失败");
         }
+        try  {
+            Thread.sleep(1000);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         status = Order_RecommendDoctor.recommendDoctor(orderId2, tmpExpertId);
         if(!status.equals("2020")) {
             logger.error("推荐专家失败");
             Assert.fail("推荐专家失败");
+        }
+        try  {
+            Thread.sleep(1000);
+        } catch (Exception e) {
+            e.printStackTrace();
         }
         status = Order_RecommendDoctor.recommendDoctor(orderId1, tmpExpertId);
         if(!status.equals("2020")) {
@@ -371,10 +397,10 @@ public class GetOrderListV2 extends GetOrderList {
         Assert.assertEquals(UT.parseJson(data, "order(2):order_number"), orderId3);
         Assert.assertEquals(UT.parseJson(data, "order(3):order_number"), orderId4);
 
-        status = Order_Reject.rejectOrder(orderId3);
-        if(!status.equals("9000")) {
-            logger.error("拒绝订单失败"+orderId3);
-            Assert.fail("拒绝订单失败"+orderId3);
+        status = Order_Rollback.Rollback(orderId3);
+        if(!status.equals("2000")) {
+            logger.error("回退订单失败"+orderId3);
+            Assert.fail("回退订单失败"+orderId3);
         }
         try {
             res = HttpRequest.sendGet(host_doc + uri, query, tmpToken);
@@ -387,7 +413,7 @@ public class GetOrderListV2 extends GetOrderList {
         Assert.assertEquals(UT.parseJson(data, "order(1):order_number"), orderId2);
         Assert.assertEquals(UT.parseJson(data, "order(2):order_number"), orderId3);
         Assert.assertEquals(UT.parseJson(data, "order(3):order_number"), orderId4);
-
+// 后面没法做，无法支付，需要支付后再取消，这样不清空上级专家信息，
         status = Order_Reject.rejectOrder(orderId4);
         if(!status.equals("9000")) {
             logger.error("拒绝订单失败"+orderId4);
@@ -406,7 +432,7 @@ public class GetOrderListV2 extends GetOrderList {
         Assert.assertEquals(UT.parseJson(data, "order(3):order_number"), orderId4);
     }
 
-    public void test_05_验证我发起的手术单_状态筛选() {
+    public void test_04_验证我发起的手术单_状态筛选() {
 
     }
 

@@ -36,7 +36,10 @@ public class Order_List extends BaseTest {
         String res = "";
         HashMap<String, String> query = new HashMap<>();
         query.put("status", "4000");
+        query.put("searchKey", "agent_name");
+        query.put("searchValue", "庄恕");
         query.put("page", "1");
+        query.put("pageSize", "1");
         query.put("pageSize", "1");
         query.put("hideTest", "true");
 
@@ -143,7 +146,8 @@ public class Order_List extends BaseTest {
         for (int i=0; i<orderList.size(); i++) {
             JSONObject order = orderList.getJSONObject(i);
             Assert.assertTrue(Integer.parseInt(UT.parseJson(order, "status"))>2000); // 状态码2000以上的推荐过
-        }    }
+        }
+    }
 
     @Test
     public void test_04_获取订单列表_状态筛选() {
@@ -193,6 +197,30 @@ public class Order_List extends BaseTest {
         for (int i=0; i<orderList.size(); i++) {
             JSONObject order = orderList.getJSONObject(i);
             Assert.assertEquals(UT.parseJson(order, "status"), "4020");
+        }
+    }
+
+    @Test
+    public void test_05_获取订单列表_下级医生名称() {
+
+        String res = "";
+        HashMap<String, String> query = new HashMap<>();
+        query.put("page", "1");
+        query.put("pageSize", "500");
+
+        query.put("searchKey", "agent_name");
+        query.put("searchValue", "庄恕");
+        try {
+            res = HttpRequest.sendGet(host_crm+uri, query, crm_token);
+        } catch (IOException e) {
+            logger.error(e);
+        }
+        checkResponse(res);
+        Assert.assertEquals(code, "1000000");
+        JSONArray orderList = data.getJSONArray("list");
+        for (int i=0; i<orderList.size(); i++) {
+            JSONObject order = orderList.getJSONObject(i);
+            Assert.assertTrue(UT.parseJson(order, "agent_name").contains("庄恕"));
         }
     }
 }

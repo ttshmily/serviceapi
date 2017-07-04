@@ -2,6 +2,7 @@ package com.mingyizhudao.qa.testcase.crm;
 
 import com.mingyizhudao.qa.common.BaseTest;
 import com.mingyizhudao.qa.testcase.doctor.CreateOrder;
+import com.mingyizhudao.qa.testcase.doctor.GetOrderDetail;
 import com.mingyizhudao.qa.util.HttpRequest;
 import com.mingyizhudao.qa.util.UT;
 import net.sf.json.JSONObject;
@@ -66,6 +67,9 @@ public class Order_Reject extends BaseTest {
         Assert.assertEquals(UT.parseJson(data, "major_reps_id"), "chao.fang@mingyizhudao.com");
         Assert.assertEquals(UT.parseJson(data, "status"), "9000");
         Assert.assertEquals(UT.parseJson(data, "order_number"), order_number);
+        res = GetOrderDetail.getOrderDetail(mainToken, order_number);
+        checkResponse(res);
+        Assert.assertEquals(UT.parseJson(data, "order:header_info"), "自动化推荐之前据拒订单的理由");
 //        Assert.assertEquals(UT.parseJson(data, "content"), "自动化推荐之前据拒订单的理由");
 
     }
