@@ -146,6 +146,7 @@ public class GetDoctorProfile extends BaseTest {
         } catch (IOException e) {
             logger.error(e);
         }
+        checkResponse(resOld);
         int count = Integer.parseInt(parseJson(data,"doctor:status_count:agentId:count"));
         int countHandling = Integer.parseInt(parseJson(data,"doctor:status_count:agentId:handling"));
 
@@ -181,6 +182,7 @@ public class GetDoctorProfile extends BaseTest {
         } catch (IOException e) {
             logger.error(e);
         }
+        checkResponse(resOld);
         int count = Integer.parseInt(parseJson(data,"doctor:status_count:agentId:count"));
         int countHandling = Integer.parseInt(parseJson(data,"doctor:status_count:agentId:handling"));
 
@@ -217,6 +219,7 @@ public class GetDoctorProfile extends BaseTest {
         } catch (IOException e) {
             logger.error(e);
         }
+        checkResponse(resOld);
         int count = Integer.parseInt(parseJson(data,"doctor:status_count:agentId:count"));
         int countHandling = Integer.parseInt(parseJson(data,"doctor:status_count:agentId:handling"));
         int pendingpayment = Integer.parseInt(parseJson(data, "doctor:status_count:agentId:pendingpayment"));
