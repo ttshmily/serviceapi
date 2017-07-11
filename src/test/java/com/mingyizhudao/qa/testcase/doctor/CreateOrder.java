@@ -90,6 +90,14 @@ public class CreateOrder extends BaseTest {
         Assert.assertNotNull(parseJson(data,"order:medical_record_pictures(1):url"), "病例图片url字段缺失");
         Assert.assertEquals(parseJson(data,"order:medical_record_pictures(0):key"), "2017/05/04/1265834e-97d8-44a0-95e7-047c7facaee8/IMG_20170429_102737.jpg");
         Assert.assertEquals(parseJson(data,"order:medical_record_pictures(1):key"), "2017/05/04/1315bbe0-2836-4776-8216-ec55044f32dd/IMG_20161013_172442.jpg");
+        Assert.assertNotNull(parseJson(data,"order:agent_contact_id"));
+        Assert.assertNotNull(parseJson(data,"order:agent_referrer_id"));
+        Assert.assertNotNull(parseJson(data,"order:agent_referrer_name"));
+        Assert.assertNotNull(parseJson(data,"order:agent_city_id"));
+        Assert.assertNotNull(parseJson(data,"order:agent_city_name"));
+        Assert.assertNotNull(parseJson(data,"order:agent_hospital"));
+        Assert.assertNotNull(parseJson(data,"order:agent_referrer_group_id"));
+
     }
 
     @Test

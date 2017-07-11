@@ -47,7 +47,7 @@ public class DoctorList extends BaseTest {
         HashMap<String, String> map = new HashMap<>();
         map.put("agent_contact_id", UT.randomEmployeeId());
         try {
-            res = HttpRequest.sendGet(host_bda + uri, map, bda_token, null);
+            res = HttpRequest.sendGet(host_bda + uri, map, bda_token);
         } catch (IOException e) {
             logger.error(e);
         }
