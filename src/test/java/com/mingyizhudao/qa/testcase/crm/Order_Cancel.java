@@ -30,7 +30,7 @@ public class Order_Cancel extends BaseTest {
         String res = "";
         String orderId = Order_List.SelectPaidOrder();
         if (orderId == null) {
-            Assert.fail("没有待审核的订单");
+            Assert.fail("没有待提交小结的的订单");
         }
         String agentPhone = JSONObject.fromObject(Order_Detail.Detail(orderId)).getJSONObject("data").getString("agent_phone");
         SendVerifyCode.send(agentPhone);
@@ -42,9 +42,9 @@ public class Order_Cancel extends BaseTest {
 
         HashMap<String, String> pathValue = new HashMap<>();
         pathValue.put("orderNumber", orderId);
-        HashMap<String, String> body = new HashMap<>();
-        body.put("reason", "小姐审核不通过的列表选择原因");
-        body.put("responsible", "选择责任方 - 下级医生原因");
+        JSONObject body = new JSONObject();
+        body.put("reason", "小节审核不通过的列表选择原因");
+        body.put("responsible", "责任方：下级医生原因");
 
         try {
             res = HttpRequest.sendPost(host_crm + uri, body.toString(), crm_token, pathValue);
@@ -53,9 +53,9 @@ public class Order_Cancel extends BaseTest {
         }
         checkResponse(res);
         Assert.assertEquals(code, "1000000", "取消订单接口失败");
-        Assert.assertEquals(UT.parseJson(data, "order:status"), "4030");
+        Assert.assertEquals(UT.parseJson(data, "status"), "4030");
         res = GetOrderDetail.getOrderDetail(token, orderId);
         checkResponse(res);
-        Assert.assertEquals(UT.parseJson(data, "order:header_info"), "选择责任方 - 下级医生原因");
+        Assert.assertEquals(UT.parseJson(data, "order:header_info"), "责任方：下级医生原因");
     }
 }
