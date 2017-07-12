@@ -31,7 +31,7 @@ public class Order_Review extends BaseTest {
         String res = "";
         String orderId = Order_List.SelectPaidOrder();
         if (orderId==null) {
-            Assert.fail("没有待审核的订单");
+            Assert.fail("没有待提交小结的的订单");
         }
         String agentPhone = JSONObject.fromObject(Order_Detail.Detail(orderId)).getJSONObject("data").getString("agent_phone");
         SendVerifyCode.send(agentPhone);
@@ -47,7 +47,7 @@ public class Order_Review extends BaseTest {
         }
         HashMap<String, String> pathValue=new HashMap<>();
         pathValue.put("orderNumber", orderId);
-        HashMap<String, String> body = new HashMap<>();
+        JSONObject body = new JSONObject();
         body.put("reason", "固定原因");
         body.put("reps_content", "客服原因");
         body.put("result", "true");//TODO 审核结果
@@ -83,7 +83,7 @@ public class Order_Review extends BaseTest {
         }
         HashMap<String, String> pathValue=new HashMap<>();
         pathValue.put("orderNumber", orderId);
-        HashMap<String, String> body = new HashMap<>();
+        JSONObject body = new JSONObject();
         body.put("reason", "小姐审核不通过的列表选择原因");
         body.put("reps_content", "客服原因");
         body.put("result", "false");

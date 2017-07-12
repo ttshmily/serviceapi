@@ -75,12 +75,12 @@ public class CreateSurgeryBriefs extends BaseTest {
         Assert.assertEquals(code, "1000000");
         JSONObject order = data.getJSONObject("order");
         Assert.assertEquals(order.getString("status"), "4010", "上传完成后状态不为4010");
-        Assert.assertEquals(order.getString("surgery_brief_date").substring(0, 10).replace('/', '-'), sb.body.getJSONObject("order").getString("surgery_brief_date"));
+        Assert.assertEquals(order.getString("surgery_brief_date").substring(0, 10), sb.body.getJSONObject("order").getString("surgery_brief_date").replace('-', '/'));
         Assert.assertEquals(order.getString("surgery_brief_description"), sb.body.getJSONObject("order").getString("surgery_brief_description"));
         Assert.assertEquals(order.getString("surgery_brief_surgery_id"), sb.body.getJSONObject("order").getString("surgery_brief_surgery_id"));
-        Assert.assertEquals(order.getString("surgery_brief_surgery_name"), UT.diseaseName(sb.body.getJSONObject("order").getString("surgery_brief_surgery_id")));
+        Assert.assertEquals(order.getString("surgery_brief_surgery_name"), UT.surgeryName(sb.body.getJSONObject("order").getString("surgery_brief_surgery_id")));
         Assert.assertEquals(order.getString("surgery_brief_final_diagnosed_disease_id"), sb.body.getJSONObject("order").getString("surgery_brief_final_diagnosed_disease_id"));
-        Assert.assertEquals(order.getString("surgery_brief_final_diagnosed_disease_name"), UT.diseaseName(sb.body.getJSONObject("order").getString("surgery_brief_final_diagnosed_disease_name")));
+        Assert.assertEquals(order.getString("surgery_brief_final_diagnosed_disease_name"), UT.diseaseName(sb.body.getJSONObject("order").getString("surgery_brief_final_diagnosed_disease_id")));
         Assert.assertEquals(order.getString("surgery_brief_hospital_id"), sb.body.getJSONObject("order").getString("surgery_brief_hospital_id"));
         Assert.assertEquals(order.getString("surgery_brief_hospital_name"), UT.hospitalName(sb.body.getJSONObject("order").getString("surgery_brief_hospital_id")));
     }

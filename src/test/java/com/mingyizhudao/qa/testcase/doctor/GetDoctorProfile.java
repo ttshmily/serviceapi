@@ -103,21 +103,24 @@ public class GetDoctorProfile extends BaseTest {
     @Test
     public void test_05_测试总订单数_测试处理中订单数_CRM未领取(){
 
+        CreateOrder.CreateOrder(mainToken);
         String resOld = "";
         try {
             resOld = HttpRequest.sendGet(host_doc +mock+uri,"", mainToken);
         } catch (IOException e) {
             logger.error(e);
         }
+        checkResponse(resOld);
         int count = Integer.parseInt(parseJson(data,"doctor:status_count:agentId:count"));
         int countHandling = Integer.parseInt(parseJson(data,"doctor:status_count:agentId:handling"));
+        System.out.println("总订单数：" + count);
+        System.out.println("处理中订单数：" + countHandling);
 
         int i = 1;
         while (i<3){
             CreateOrder.CreateOrder(mainToken);
             i++;
         }
-        //CreateOrder.CreateOrder(mainToken);
         String res = "";
         try {
             res = HttpRequest.sendGet(host_doc +mock+uri,"", mainToken);
@@ -143,11 +146,12 @@ public class GetDoctorProfile extends BaseTest {
         } catch (IOException e) {
             logger.error(e);
         }
+        checkResponse(resOld);
         int count = Integer.parseInt(parseJson(data,"doctor:status_count:agentId:count"));
         int countHandling = Integer.parseInt(parseJson(data,"doctor:status_count:agentId:handling"));
 
         int i = 1;
-        while (i<4){
+        while (i<2){
             String orderId = CreateOrder.CreateOrder(mainToken);
             Order_ReceiveTask.receiveTask(orderId);
             i++;
@@ -178,6 +182,7 @@ public class GetDoctorProfile extends BaseTest {
         } catch (IOException e) {
             logger.error(e);
         }
+        checkResponse(resOld);
         int count = Integer.parseInt(parseJson(data,"doctor:status_count:agentId:count"));
         int countHandling = Integer.parseInt(parseJson(data,"doctor:status_count:agentId:handling"));
 
@@ -214,6 +219,7 @@ public class GetDoctorProfile extends BaseTest {
         } catch (IOException e) {
             logger.error(e);
         }
+        checkResponse(resOld);
         int count = Integer.parseInt(parseJson(data,"doctor:status_count:agentId:count"));
         int countHandling = Integer.parseInt(parseJson(data,"doctor:status_count:agentId:handling"));
         int pendingpayment = Integer.parseInt(parseJson(data, "doctor:status_count:agentId:pendingpayment"));
@@ -248,7 +254,4 @@ public class GetDoctorProfile extends BaseTest {
     public void test_09_测试返回的地区服务专员(){
         //TODO
     }
-
-
-
 }

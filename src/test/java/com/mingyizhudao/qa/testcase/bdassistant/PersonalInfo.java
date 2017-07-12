@@ -60,14 +60,14 @@ public class PersonalInfo extends BaseTest {
 
     }
 
-    @Test
+    @Test(enabled = false)
     public void test_03_主管用户_新建一个医生和订单() {
 
         String res = "";
 
         HashMap<String, String> map = new HashMap<>();
         try {
-            res = HttpRequest.sendGet(host_bda + uri, map, bda_token, null);
+            res = HttpRequest.sendGet(host_bda + uri, map, bda_token);
         } catch (IOException e) {
             logger.error(e);
         }
@@ -92,7 +92,7 @@ public class PersonalInfo extends BaseTest {
 
         CreateOrder.CreateOrder(info.get("token"));
         try {
-            res = HttpRequest.sendGet(host_bda + uri, map, bda_token, null);
+            res = HttpRequest.sendGet(host_bda + uri, map, bda_token);
         } catch (IOException e) {
             logger.error(e);
         }

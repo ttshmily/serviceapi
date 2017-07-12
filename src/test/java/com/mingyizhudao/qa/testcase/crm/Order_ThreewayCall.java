@@ -376,7 +376,7 @@ public class Order_ThreewayCall extends BaseTest {
     }
 
     @Test
-    public void test_0_创建三方通话_不合作医生信息记录在案() {
+    public void test_08_创建三方通话_不合作医生信息记录在案() {
         String res = "";
         HashMap<String, String> pathValue = new HashMap<>();
         String orderId = CreateOrder.CreateOrder(mainToken);

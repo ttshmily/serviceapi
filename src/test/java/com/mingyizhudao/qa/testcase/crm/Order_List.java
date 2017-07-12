@@ -40,11 +40,11 @@ public class Order_List extends BaseTest {
         query.put("searchValue", "庄恕");
         query.put("page", "1");
         query.put("pageSize", "1");
-        query.put("pageSize", "1");
-        query.put("hideTest", "true");
+        //query.put("hideTest", "true");
 
         try {
             res = HttpRequest.sendGet(host_crm+uri, query, crm_token);
+            logger.debug(HttpRequest.unicodeString(res));
         } catch (IOException e) {
             logger.error(e);
         }
@@ -58,7 +58,7 @@ public class Order_List extends BaseTest {
         query.put("status", "4010");
         query.put("page", "1");
         query.put("pageSize", "1");
-        query.put("hideTest", "true");
+//        query.put("hideTest", "true");
 
         try {
             res = HttpRequest.sendGet(host_crm+uri, query, crm_token);
