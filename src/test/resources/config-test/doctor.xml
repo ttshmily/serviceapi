@@ -2,14 +2,6 @@
 
 <suite name="doctor" verbose="1" >
 
-    <test name="login" preserve-order="true" >
-        <classes>
-            <class name="com.mingyizhudao.qa.testcase.login.SendVerifyCode" />
-            <class name="com.mingyizhudao.qa.testcase.login.CheckVerifyCode" />
-            <class name="com.mingyizhudao.qa.testcase.login.Refresh" />
-        </classes>
-    </test>
-
     <test name="doctor" preserve-order="true" >
         <classes>
             <class name="com.mingyizhudao.qa.testcase.doctor.CreateOrder" />
