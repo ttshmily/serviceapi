@@ -1,11 +1,18 @@
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
 
-<suite name="All" verbose="1" >
+<suite name="doctor" verbose="1" >
 
-    <test name="doctoruser" preserve-order="true" >
+    <test name="login" preserve-order="true" >
         <classes>
-            <class name="com.mingyizhudao.qa.testcase.doctor.GetDoctorProfile"  />
-            <class name="com.mingyizhudao.qa.testcase.doctor.UpdateDoctorProfile" />
+            <class name="com.mingyizhudao.qa.testcase.login.SendVerifyCode" />
+            <class name="com.mingyizhudao.qa.testcase.login.CheckVerifyCode" />
+            <class name="com.mingyizhudao.qa.testcase.login.Refresh" />
+        </classes>
+    </test>
+
+    <test name="doctor" preserve-order="true" >
+        <classes>
+            <class name="com.mingyizhudao.qa.testcase.doctor.CreateOrder" />
         </classes>
     </test>
 
