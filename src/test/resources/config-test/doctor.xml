@@ -4,7 +4,7 @@
 
     <test name="doctor" preserve-order="true" >
         <classes>
-            <class name="com.mingyizhudao.qa.testcase.doctor.CreateOrder" />
+            <class name="com.mingyizhudao.qa.testcase.doctor.GetDoctorProfile" />
         </classes>
     </test>
 
