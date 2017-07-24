@@ -5,7 +5,6 @@ import com.mingyizhudao.qa.testcase.crm.Order_ReceiveTask;
 import com.mingyizhudao.qa.testcase.crm.Order_RecommendDoctor;
 import com.mingyizhudao.qa.testcase.crm.Order_ThreewayCall;
 import com.mingyizhudao.qa.util.HttpRequest;
-import com.mingyizhudao.qa.util.UT;
 import org.apache.log4j.Logger;
 import org.testng.Assert;
 import org.testng.annotations.Test;
@@ -17,15 +16,15 @@ import static com.mingyizhudao.qa.util.UT.parseJson;
 /**
  * Created by ttshmily on 20/3/2017.
  */
-public class GetDoctorProfile extends BaseTest {
+public class GetDoctorProfile_V1 extends BaseTest {
 
-    public static final Logger logger= Logger.getLogger(GetDoctorProfile.class);
-    public static String uri = "/api/getdoctorprofile";
+    public static final Logger logger= Logger.getLogger(GetDoctorProfile_V1.class);
+    public static String uri = "/api/v1/getdoctorprofile";
     public static String mock = false ? "/mockjs/1" : "";
     public static String token= "";
 
 
-    public static String getDoctorProfile(String token) {
+    public static String MyProfile(String token) {
         String res = "";
         try {
             res = HttpRequest.sendGet(host_doc +mock+uri, "", token);
@@ -106,7 +105,7 @@ public class GetDoctorProfile extends BaseTest {
         CreateOrder.CreateOrder(mainToken);
         String resOld = "";
         try {
-            resOld = HttpRequest.sendGet(host_doc +mock+uri,"", mainToken);
+            resOld = HttpRequest.sendGet(host_doc + uri,"", mainToken);
         } catch (IOException e) {
             logger.error(e);
         }

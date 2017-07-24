@@ -23,7 +23,7 @@ public class CancelOrder extends BaseTest {
 
     public static String CancelOrder(String token, String orderId) {
         String res = "";
-        res = GetOrderDetail.getOrderDetail(token, orderId);
+        res = GetOrderDetail_V1.MyInitiateOrder(token, orderId);
         String status = JSONObject.fromObject(res).getJSONObject("data").getJSONObject("order").getString("status");
         if (!(Integer.parseInt(status) < 3000)) {
             logger.error("订单不可取消");
@@ -39,7 +39,7 @@ public class CancelOrder extends BaseTest {
         } catch (IOException e) {
             logger.error(e);
         }
-        res = GetOrderDetail.getOrderDetail(token, orderId);
+        res = GetOrderDetail_V1.MyInitiateOrder(token, orderId);
         status = JSONObject.fromObject(res).getJSONObject("data").getJSONObject("order").getString("status");
         return status;
     }
@@ -135,7 +135,7 @@ public class CancelOrder extends BaseTest {
         }
         checkResponse(res);
         Assert.assertNotEquals(code, "1000000");
-        res = GetOrderDetail.getOrderDetail(mainToken, orderId);
+        res = GetOrderDetail_V1.MyInitiateOrder(mainToken, orderId);
         checkResponse(res);
         Assert.assertEquals(UT.parseJson(data, "order:status"), "2000");
     }
@@ -168,7 +168,7 @@ public class CancelOrder extends BaseTest {
         }
         checkResponse(res);
         Assert.assertEquals(code, "1000000");
-        res = GetOrderDetail.getOrderDetail(mainToken, orderId);
+        res = GetOrderDetail_V1.MyInitiateOrder(mainToken, orderId);
         checkResponse(res);
         Assert.assertEquals(UT.parseJson(data, "order:status"), "9000");
     }

@@ -41,7 +41,7 @@ public class PaymentResult extends BaseTest {
         String ispaid = "";
         String code = JSONObject.fromObject(res).getString("code");
         if (!code.equals("1000000")) {
-            res = GetOrderDetail.getOrderDetail(token, orderId);
+            res = GetOrderDetail_V1.MyInitiateOrder(token, orderId);
             status = JSONObject.fromObject(res).getJSONObject("data").getJSONObject("order").getString("status");
         } else {
             ispaid = JSONObject.fromObject(res).getJSONObject("data").getString("paid");

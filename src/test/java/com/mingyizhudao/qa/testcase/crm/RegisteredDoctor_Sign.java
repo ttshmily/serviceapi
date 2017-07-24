@@ -21,7 +21,7 @@ public class RegisteredDoctor_Sign extends BaseTest {
     public static String uri = version+"/doctors/{id}/expert_verifications";
     public static String mock = false ? "/mockjs/1" : "";
 
-    @Test
+    @Test(enabled = false)
     public void test_01_通过专家认证_已认证的医生() {
 
         String res = "";
@@ -54,7 +54,7 @@ public class RegisteredDoctor_Sign extends BaseTest {
         Assert.assertEquals(UT.parseJson(data, "signed_status"), "SIGNED");
     }
 
-    @Test
+    @Test(enabled = false)
     public void test_02_通过专家认证_未认证的医生() {
         String res = "";
         DoctorProfile dp = new DoctorProfile(true);

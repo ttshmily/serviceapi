@@ -3,6 +3,7 @@ package com.mingyizhudao.qa.testcase.crm;
 import com.mingyizhudao.qa.common.BaseTest;
 import com.mingyizhudao.qa.testcase.doctor.CreateSurgeryBriefs;
 import com.mingyizhudao.qa.testcase.doctor.GetOrderDetail;
+import com.mingyizhudao.qa.testcase.doctor.GetOrderDetail_V1;
 import com.mingyizhudao.qa.testcase.login.CheckVerifyCode;
 import com.mingyizhudao.qa.testcase.login.SendVerifyCode;
 import com.mingyizhudao.qa.util.HttpRequest;
@@ -95,7 +96,7 @@ public class Order_Review extends BaseTest {
         checkResponse(res);
         Assert.assertEquals(code, "1000000", "审核订单接口失败");
         Assert.assertEquals(UT.parseJson(data, "status"), "4000");
-        res = GetOrderDetail.getOrderDetail(token, orderId);
+        res = GetOrderDetail_V1.MyInitiateOrder(token, orderId);
         checkResponse(res);
         Assert.assertEquals(UT.parseJson(data, "order:header_info"), "自动化推荐之前据拒订单的理由");
     }

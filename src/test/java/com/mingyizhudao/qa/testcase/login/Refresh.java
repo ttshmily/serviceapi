@@ -2,7 +2,7 @@ package com.mingyizhudao.qa.testcase.login;
 
 import com.mingyizhudao.qa.common.BaseTest;
 import com.mingyizhudao.qa.dataprofile.login.RefreshProfile;
-import com.mingyizhudao.qa.testcase.doctor.GetDoctorProfile;
+import com.mingyizhudao.qa.testcase.doctor.GetDoctorProfile_V1;
 import com.mingyizhudao.qa.util.HttpRequest;
 import com.mingyizhudao.qa.util.UT;
 import net.sf.json.JSONException;
@@ -53,14 +53,14 @@ public class Refresh extends BaseTest{
         CheckVerifyCode.token = token;
 
         // check old token still effective
-        String r = GetDoctorProfile.getDoctorProfile(oldToken);
+        String r = GetDoctorProfile_V1.MyProfile(oldToken);
         checkResponse(r);
         Assert.assertEquals(code, "1000000", "old Token expired");
         String oldProfile = UT.parseJson(data, "doctor");
         logger.debug(oldProfile);
 
         // check new token taking effect
-        String s = GetDoctorProfile.getDoctorProfile(token);
+        String s = GetDoctorProfile_V1.MyProfile(token);
         checkResponse(s);
         Assert.assertEquals(code, "1000000");
         String newProfile = UT.parseJson(data, "doctor");
@@ -90,7 +90,7 @@ public class Refresh extends BaseTest{
         Assert.assertEquals(code, "1000000");
 
         // check token in body still effective
-        String r = GetDoctorProfile.getDoctorProfile(mainToken);
+        String r = GetDoctorProfile_V1.MyProfile(mainToken);
         checkResponse(r);
         Assert.assertEquals(code, "1000000");
 //        Assert.assertNotNull(parseJson(data,"token"), "token not exist");

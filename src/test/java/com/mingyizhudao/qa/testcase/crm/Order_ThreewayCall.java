@@ -407,8 +407,5 @@ public class Order_ThreewayCall extends BaseTest {
         Assert.assertEquals(UT.parseJson(data, "status"), "2000");
         Assert.assertNotNull(UT.parseJson(data, "doctorFiledList"), expertId);
         Assert.assertEquals(UT.parseJson(data, "doctorFiledList():surgeon_id"), expertId);
-//        Assert.assertEquals(parseJson(data, "surgeon_id"), "555");
-//        Assert.assertEquals(parseJson(data, "surgeon_name"), KB.kb_doctor.get("555"));
-//        Assert.assertEquals(parseJson(data, "surgeon_fee"), "10000");
     }
 }

@@ -8,6 +8,7 @@ import org.apache.log4j.Logger;
 
 import java.io.*;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Set;
 
 //created by tianjing on 2017/6/21
@@ -35,6 +36,7 @@ public class KB {
     public static String city_uri = "/api/v1/cities";
     public static HashMap<String, String> kb_city = new HashMap<>();
     public static String city_file = "src/test/resources/kb_city.txt";
+    public static HashMap<String, HashMap<String, String>> kb_city_ext = new HashMap<>();
 
     public static String medical_uri = "/api/v1/common/medicalTitleList";
     public static HashMap<String, String> kb_medical_title = new HashMap<>();
@@ -59,6 +61,7 @@ public class KB {
     public static String disease_uri = "/api/v1/diseases";
     public static HashMap<String, String> kb_disease = new HashMap<>();
     public static String disease_file = "src/test/resources/kb_disease.txt";
+    public static HashMap<String, HashMap<String,String>> kb_disease_ext = new HashMap<>();
 
     public static String hospital_type_uri = "/api/v1/common/hospitalTypeList";
     public static HashMap<String, String> kb_hospital_type = new HashMap<>();
@@ -181,16 +184,19 @@ public class KB {
                 HashMap<String, String> query = new HashMap<>();
                 query.put("provinceId", "100");
                 for (String key : kb_province.keySet()) {
+                    HashMap<String, String> tmp = new HashMap<>();
                     query.replace("provinceId", key);
                     res = HttpRequest.sendGet(BaseTest.host_kb + city_uri, query, "", null);
                     int total = Integer.parseInt(UT.parseJson(JSONObject.fromObject(res), "data:list()"));
                     JSONArray city_list = JSONObject.fromObject(res).getJSONObject("data").getJSONArray("list");
                     for (int j = 0; j < total; j++) {
                         JSONObject city = city_list.getJSONObject(j);
+                        tmp.put(city.getString("id"), city.getString("name"));
                         kb_city.put(city.getString("id"), city.getString("name"));
                     }
+                    kb_city_ext.put(key, tmp);
                 }
-                stringToFile(kb_city, "src/test/resources/kb_city.txt");//created by tianjing on 2017/6/21
+//                stringToFile(kb_city, "src/test/resources/kb_city.txt");//created by tianjing on 2017/6/21
             }
         } catch (Exception e) {
             logger.error("ENUM初始化失败，准备退出");
@@ -328,16 +334,19 @@ public class KB {
                 query.put("isShowAll", "true");
                 query.put("diseaseCategoryId", "100");
                 for (String key : kb_major.keySet()) {
+                    HashMap<String, String> tmp = new HashMap<>();
                     query.replace("diseaseCategoryId", key);
                     res = HttpRequest.sendGet(BaseTest.host_kb + disease_uri, query, "");
                     int total = Integer.parseInt(UT.parseJson(JSONObject.fromObject(res), "data:list()"));
                     JSONArray disease_list = JSONObject.fromObject(res).getJSONObject("data").getJSONArray("list");
                     for (int j = 0; j < disease_list.size(); j++) {
                         JSONObject disease = disease_list.getJSONObject(j);
+                        tmp.put(disease.getString("id"), disease.getString("name"));
                         kb_disease.put(disease.getString("id"), disease.getString("name"));
                     }
+                    kb_disease_ext.put(key, tmp);
                 }
-                stringToFile(kb_disease, "src/test/resources/kb_disease.txt");//created by tianjing on 2017/6/21
+//                stringToFile(kb_disease, "src/test/resources/kb_disease.txt");//created by tianjing on 2017/6/21
             }
         } catch (Exception e) {
             logger.error("ENUM初始化失败，准备退出");
@@ -466,7 +475,27 @@ public class KB {
         }
     }
 
-   /* public static void main(String[] args) throws IOException{
-        fileToString("src/test/resources/kb_hospital.txt",kb_hospital);
+/*    public static void main(String[] args) throws IOException{
+        HashMap<String, HashMap<String, String>> a = new HashMap<>();
+        HashMap<String, String> b = new HashMap<>();
+        b.put("test1","1");
+        a.put("b",b);
+        b.put("test2","2");
+        System.out.println(a);
+        JSONObject aj=new JSONObject();
+        JSONObject bj=new JSONObject();
+        aj.put("bj",bj);
+        System.out.print(aj);
+        bj.put("test1","1");
+        aj.put("bj",bj);
+        System.out.print(aj);
+        bj.put("test2","2");
+        aj.put("bj",bj);
+        System.out.println(aj);
+        HashMap<String, String> c = b;
+        System.out.print(c);
+        b.put("test3","3");
+        System.out.print(c);
+
     }*/
 }

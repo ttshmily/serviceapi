@@ -70,7 +70,7 @@ public class CreateSurgeryBriefs extends BaseTest {
         }
         checkResponse(res);
         Assert.assertEquals(code, "1000000");
-        res = GetOrderDetail.getOrderDetail(token, orderId);
+        res = GetOrderDetail_V1.MyInitiateOrder(token, orderId);
         checkResponse(res);
         Assert.assertEquals(code, "1000000");
         JSONObject order = data.getJSONObject("order");

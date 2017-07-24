@@ -53,7 +53,7 @@ public class CreatePayment extends BaseTest {
         if (!Order_ThreewayCall.ThreewayCall(orderId, "success").equals("3000")) {
             Assert.fail("未到支付状态，不能进行支付");
         }
-        res = GetOrderDetail.getOrderDetail(mainToken, orderId);
+        res = GetOrderDetail_V1.MyInitiateOrder(mainToken, orderId);
         checkResponse(res);
         Assert.assertNotNull(UT.parseJson(data, "order:pre_order_fee"));
 

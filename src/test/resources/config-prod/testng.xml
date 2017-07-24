@@ -3,11 +3,11 @@
 <suite name="All" verbose="1" >
     <!--<test name="profile" >-->
         <!--<classes>-->
-            <!--<class name="com.mingyizhudao.qa.testcasestcase.doctor.GetDoctorProfile"  />-->
+            <!--<class name="com.mingyizhudao.qa.testcasestcase.doctor.GetDoctorProfile_V1"  />-->
             <!--<class name="com.mingyizhudao.qa.testcasestcase.doctor.GetEmployeeProfile" />-->
             <!--<class name="com.mingyizhudao.qa.testcasestcase.doctor.HospitalSearch" />-->
             <!--<class name="com.mingyizhudao.qa.testcasestcase.doctor.ProfessionList" />-->
-            <!--<class name="com.mingyizhudao.qa.testcasestcase.doctor.UpdateDoctorProfile" />-->
+            <!--<class name="com.mingyizhudao.qa.testcasestcase.doctor.UpdateDoctorProfile_V1" />-->
         <!--</classes>-->
     <!--</test>-->
     <!--<test name="login" >-->

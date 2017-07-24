@@ -60,7 +60,7 @@ public class Order_RecommendDoctor extends BaseTest {
         pathValue.put("orderNumber", order_number);
         JSONObject body = new JSONObject();
         DoctorProfile dp = new DoctorProfile(true);
-        HashMap<String, String> doc = CreateVerifiedDoctor(dp);
+        HashMap<String, String> doc = CreateSyncedDoctor(dp);
         String recommendedId = doc.get("expert_id");
         body.put("surgeon_id",recommendedId);
         body.put("content","自动化推荐的医生");

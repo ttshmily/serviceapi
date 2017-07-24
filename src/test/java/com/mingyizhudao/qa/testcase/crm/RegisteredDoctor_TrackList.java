@@ -45,7 +45,7 @@ public class RegisteredDoctor_TrackList extends BaseTest {
         Assert.assertEquals(code, "1000000");
         Assert.assertEquals(UT.parseJson(data, "list()"), "2");
 
-        logger.info(RegisteredDoctor_Certify_V2.certify(doctorId, "1"));
+        logger.info(RegisteredDoctor_CertifySync_V2.CertifyAndSync(doctorId, "1"));
         res = trackList(doctorId);
         checkResponse(res);
         Assert.assertEquals(code, "1000000");
@@ -71,7 +71,7 @@ public class RegisteredDoctor_TrackList extends BaseTest {
         Assert.assertEquals(code, "1000000");
         Assert.assertEquals(UT.parseJson(data, "list()"), "2");
 
-        logger.info(RegisteredDoctor_Certify_V2.certify(doctorId, "-1"));
+        logger.info(RegisteredDoctor_CertifySync_V2.CertifyAndSync(doctorId, "-1"));
         res = trackList(doctorId);
         checkResponse(res);
         Assert.assertEquals(code, "1000000");

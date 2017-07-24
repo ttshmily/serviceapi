@@ -27,7 +27,7 @@ public class RegisteredDoctor_List extends BaseTest{
     public static int registeredDoctorList() {
         String res = "";
         try {
-            res = HttpRequest.sendGet(host_crm+uri, "", crm_token);
+            res = HttpRequest.sendGet(host_crm + uri, "", crm_token);
         } catch (IOException e) {
             logger.error(e);
         }
@@ -49,7 +49,7 @@ public class RegisteredDoctor_List extends BaseTest{
         Assert.assertNotNull(UT.parseJson(data, "list()"), "医生列表为空");
         Assert.assertNotEquals(UT.parseJson(data, "list(0):user_id"), "", "医生ID为空");
         Assert.assertNotEquals(UT.parseJson(data, "list(0):created_at"), "", "注册时间没有值");
-        Assert.assertNotEquals(UT.parseJson(data, "list(0):name"), "", "医生姓名为空");
+        Assert.assertNotNull(UT.parseJson(data, "list(0):name"), "医生姓名为空");
         Assert.assertNotEquals(UT.parseJson(data, "list(0):mobile"), "", "医生手机为空");
         Assert.assertNotEquals(UT.parseJson(data, "list(0):hospital_name"), "", "医生医院名称为空");
         Assert.assertNotEquals(UT.parseJson(data, "list(0):hospital_id"), "", "医生医院ID为空");
@@ -112,7 +112,7 @@ public class RegisteredDoctor_List extends BaseTest{
             int page_size = (int) UT.randomInt(total);
             query.replace("page_size", String.valueOf(page_size));
             try {
-                res = HttpRequest.sendGet(host_crm+uri, query, crm_token);
+                res = HttpRequest.sendGet(host_crm + uri, query, crm_token);
             } catch (IOException e) {
                 logger.error(e);
             }

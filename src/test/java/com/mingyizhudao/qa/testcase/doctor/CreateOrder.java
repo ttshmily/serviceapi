@@ -46,6 +46,26 @@ public class CreateOrder extends BaseTest {
         }
     }
 
+    public static String CreateOrder(String token, OrderDetail mr) {
+        String res = "";
+        mr.body.getJSONObject("order").remove("medical_record_pictures");
+        try {
+            res = HttpRequest.sendPost(host_doc+uri, mr.body.toString(), token);
+        } catch (IOException e) {
+            logger.error(e);
+        }
+//        logger.debug(unicodeString(res));
+        String tmpOrderId = parseJson(JSONObject.fromObject(res), "data:order_number");
+        if (null != tmpOrderId && !tmpOrderId.isEmpty()) {
+            logger.info("orderid是: " + tmpOrderId);
+            return tmpOrderId;
+        } else {
+            logger.debug(HttpRequest.unicodeString(res));
+            logger.error("获取orderId失败");
+            return "";
+        }
+    }
+
     @Test
     public void test_01_创建订单_信息齐备_已认证用户() {
 
@@ -63,7 +83,7 @@ public class CreateOrder extends BaseTest {
         Assert.assertNotEquals(orderId, "", "返回的订单ID格式有误");
 
         logger.info("查看刚刚创建的订单详情");
-        res = GetOrderDetail.getOrderDetail(mainToken, orderId);
+        res = GetOrderDetail_V1.MyInitiateOrder(mainToken, orderId);
         checkResponse(res);
         Assert.assertEquals(code, "1000000");
         //TODO
@@ -224,7 +244,8 @@ public class CreateOrder extends BaseTest {
             logger.error(e);
         }
         checkResponse(res);
-        Assert.assertNotEquals(code, "1000000");
+//        Assert.assertNotEquals(code, "1000000");
+        Assert.assertEquals(code, "1000000"); // PD要求可以创建。。。
 
         body.body.getJSONObject("order").remove("patient_phone");
         try {
@@ -233,8 +254,8 @@ public class CreateOrder extends BaseTest {
             logger.error(e);
         }
         checkResponse(res);
-        Assert.assertNotEquals(code, "1000000");
-
+//        Assert.assertNotEquals(code, "1000000");
+        Assert.assertEquals(code, "1000000"); // PD要求可以创建。。。
     }
 
     @Test
@@ -296,9 +317,10 @@ public class CreateOrder extends BaseTest {
         DoctorProfile dp = new DoctorProfile(true);
         dp.body.getJSONObject("doctor").remove("inviter_no");
         HashMap<String, String> doc = CreateRegisteredDoctor(dp);
+        if (doc == null) {
+            Assert.fail("创建医生失败");
+        }
         String tmpToken = doc.get("token");
-        UpdateDoctorProfile.updateDoctorProfile(tmpToken, dp);
-        logger.info("创建未认证医生成功");
         OrderDetail order = new OrderDetail(true);
         try {
             res = HttpRequest.sendPost(host_doc + uri, order.body.toString(), tmpToken);
@@ -306,7 +328,9 @@ public class CreateOrder extends BaseTest {
             logger.error(e);
         }
         checkResponse(res);
-        Assert.assertNotEquals(code, "1000000");
+//        Assert.assertNotEquals(code, "1000000");
+        Assert.assertEquals(code, "1000000"); // PD要求认证中的医生也可以创建了。。。
+
     }
 
     @Test
@@ -316,9 +340,10 @@ public class CreateOrder extends BaseTest {
 
         DoctorProfile dp = new DoctorProfile(true);
         HashMap<String, String> doc = CreateRegisteredDoctor(dp);
+        if (doc == null) {
+            Assert.fail("创建医生失败");
+        }
         String tmpToken = doc.get("token");
-        UpdateDoctorProfile.updateDoctorProfile(tmpToken, dp);
-        logger.info("创建未认证医生成功");
         OrderDetail order = new OrderDetail(true);
         try {
             res = HttpRequest.sendPost(host_doc + uri, order.body.toString(), tmpToken);
@@ -348,7 +373,7 @@ public class CreateOrder extends BaseTest {
         Assert.assertNotEquals(orderId, "", "返回的订单ID格式有误");
 
         logger.info("查看刚刚创建的订单详情");
-        res = GetOrderDetail.getOrderDetail(mainToken, orderId);
+        res = GetOrderDetail_V1.MyInitiateOrder(mainToken, orderId);
         checkResponse(res);
         Assert.assertEquals(code, "1000000");
         Assert.assertEquals(parseJson(data,"order:expected_surgery_hospital_id"), mainDoctorHospitalId);
@@ -367,7 +392,7 @@ public class CreateOrder extends BaseTest {
         Assert.assertNotEquals(orderId, "", "返回的订单ID格式有误");
 
         logger.info("查看刚刚创建的订单详情");
-        res = GetOrderDetail.getOrderDetail(mainToken, orderId);
+        res = GetOrderDetail_V1.MyInitiateOrder(mainToken, orderId);
         checkResponse(res);
         Assert.assertEquals(code, "1000000");
         Assert.assertEquals(parseJson(data,"order:expected_surgery_hospital_id"), mainDoctorHospitalId);
@@ -386,11 +411,26 @@ public class CreateOrder extends BaseTest {
         Assert.assertNotEquals(orderId, "", "返回的订单ID格式有误");
 
         logger.info("查看刚刚创建的订单详情");
-        res = GetOrderDetail.getOrderDetail(mainToken, orderId);
+        res = GetOrderDetail_V1.MyInitiateOrder(mainToken, orderId);
         checkResponse(res);
         Assert.assertEquals(code, "1000000");
         Assert.assertEquals(parseJson(data,"order:expected_surgery_hospital_id"), mainDoctorHospitalId);
         Assert.assertEquals(parseJson(data,"order:expected_surgery_hospital_name"), mainDoctorHospitalName);
+    }
+
+    @Test
+    public void test_12_创建订单_病例图片作为非必填字段() {
+        String res = "";
+
+        OrderDetail order = new OrderDetail(true);
+        order.body.getJSONObject("order").remove("medical_record_pictures");
+        try {
+            res = HttpRequest.sendPost(host_doc + uri, order.body.toString(), mainToken);
+        } catch (IOException e) {
+            logger.error(e);
+        }
+        checkResponse(res);
+        Assert.assertEquals(code, "1000000");
     }
 
 }

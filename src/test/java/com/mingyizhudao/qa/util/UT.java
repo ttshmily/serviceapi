@@ -126,6 +126,11 @@ public class UT {
         return randomKey(KB.kb_city);
     }
 
+    public static String randomCityIdUnder(String provinceId) {
+
+        return randomKey(KB.kb_city_ext.get(provinceId));
+    }
+
     public static String cityName(String id) {
 
         return KB.kb_city.get(id);
@@ -165,6 +170,12 @@ public class UT {
 
         return randomKey(KB.kb_disease);
     }
+
+    public static String randomDiseaseIdUnder(String majorId) {
+
+        return randomKey(KB.kb_disease_ext.get(majorId));
+    }
+
 
     public static String diseaseName(String id) {
 

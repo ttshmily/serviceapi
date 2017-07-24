@@ -17,8 +17,8 @@ import java.util.HashMap;
 /**
  * Created by dayi on 2017/7/10.
  */
-public class Order_ThreewayCall_v2 extends Order_ThreewayCall {
-    public static final Logger logger= Logger.getLogger(Order_ThreewayCall_v2.class);
+public class Order_ThreewayCall_V2 extends Order_ThreewayCall {
+    public static final Logger logger= Logger.getLogger(Order_ThreewayCall_V2.class);
     public static final String version = "/api/v2";
     public static String uri = version+"/orders/{orderNumber}/threeWayCalling";
     public static String mock = false ? "/mockjs/1" : "";

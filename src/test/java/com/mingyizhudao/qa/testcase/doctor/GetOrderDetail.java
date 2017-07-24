@@ -2,7 +2,7 @@ package com.mingyizhudao.qa.testcase.doctor;
 
 import com.mingyizhudao.qa.common.BaseTest;
 import com.mingyizhudao.qa.dataprofile.doctor.DoctorProfile;
-import com.mingyizhudao.qa.testcase.crm.RegisteredDoctor_Certify;
+import com.mingyizhudao.qa.testcase.crm.RegisteredDoctor_Certify_V2;
 import com.mingyizhudao.qa.testcase.login.CheckVerifyCode;
 import com.mingyizhudao.qa.testcase.login.SendVerifyCode;
 import com.mingyizhudao.qa.util.HttpRequest;
@@ -23,7 +23,6 @@ public class GetOrderDetail extends BaseTest {
     public static final Logger logger= Logger.getLogger(GetOrderDetail.class);
     public static String uri = "/api/getorderdetail/{orderId}";
     public static String mock = false ? "/mockjs/1" : "";
-
 
     public static String getOrderDetail(String token, String orderId) {
         String res = "";
@@ -116,10 +115,10 @@ public class GetOrderDetail extends BaseTest {
         SendVerifyCode.send();
         String tmpToken = CheckVerifyCode.check();
         DoctorProfile dp = new DoctorProfile(true);
-        UpdateDoctorProfile.updateDoctorProfile(tmpToken, dp);
-        res = GetDoctorProfile.getDoctorProfile(tmpToken);
+        UpdateDoctorProfile_V1.updateDoctorProfile(tmpToken, dp);
+        res = GetDoctorProfile_V1.MyProfile(tmpToken);
         String docId = JSONObject.fromObject(res).getJSONObject("data").getJSONObject("doctor").getString("user_id");
-        RegisteredDoctor_Certify.certify_old(docId, "1");
+        RegisteredDoctor_Certify_V2.CertifyOnly(docId, "1");
 
         try {
             res = HttpRequest.sendGet(host_doc +mock+uri,"", tmpToken, pathValue);

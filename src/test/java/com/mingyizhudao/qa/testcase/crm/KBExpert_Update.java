@@ -328,16 +328,17 @@ public class KBExpert_Update extends BaseTest {
         String res = "";
         ExpertProfile ep = new ExpertProfile(true);
         HashMap<String, String> info = KBExpert_Create.Create(ep);
-        if (info == null)
+        if (info == null) {
             Assert.fail("创建医库医生失败，退出用例执行");
+        }
         String expertId = info.get("id");
 
         DoctorProfile dp = new DoctorProfile(true);
         String doctorId = CreateRegisteredDoctor(dp).get("id");
-        if ( doctorId == null)
+        if ( doctorId == null) {
             Assert.fail("创建医生失败，认证用例无法执行");
-
-        RegisteredDoctor_Certify_V2.certify(doctorId, "1", expertId);
+        }
+        RegisteredDoctor_CertifySync_V2.CertifyAndSync(doctorId, "1", expertId);
 
         HashMap<String, String> pathValue = new HashMap<>();
         pathValue.put("id", expertId);
@@ -357,6 +358,14 @@ public class KBExpert_Update extends BaseTest {
         epModified.body.put("academic_title_list", academic_title_list);
         epModified.body.put("signed_status", "1");
         epModified.body.put("start_year", "2007");
+        JSONObject small = new JSONObject();
+        small.put("key", "test1.jpg");
+        small.put("type", "5");
+        JSONObject large = new JSONObject();
+        large.put("key", "test1.jpg");
+        large.put("type", "5");
+        epModified.body.accumulate("avatar_url", large);
+        epModified.body.accumulate("avatar_url", small);
         try {
             res = HttpRequest.sendPut(host_crm+uri, epModified.body.toString(), crm_token, pathValue);
         } catch (IOException e) {
@@ -380,6 +389,8 @@ public class KBExpert_Update extends BaseTest {
         Assert.assertEquals(UT.parseJson(data, "county_name"), UT.countyName(countyId), "区县名称没有更新");
         Assert.assertEquals(UT.parseJson(data, "signed_status"), "SIGNED", "主刀专家状态没有更新");
         Assert.assertEquals(UT.parseJson(data, "start_year"), "2007", "专家从业时间没有更新");
+        Assert.assertEquals(UT.parseJson(data, "avatar_url()"), "2", "医院图片更新失败");
+        Assert.assertNotNull(UT.parseJson(data, "avatar_url():url"), "医院图片更新失败");
 
         res = RegisteredDoctor_Detail.Detail(doctorId);
         checkResponse(res);
@@ -395,6 +406,8 @@ public class KBExpert_Update extends BaseTest {
 //        Assert.assertEquals(parseJson(data, "county_id"), cityId, "区县ID没有更新");
 //        Assert.assertEquals(parseJson(data, "county_name"), UT.countyName(countyId), "区县名称没有更新");
         Assert.assertEquals(UT.parseJson(data, "signed_status"), "SIGNED", "主刀专家状态没有更新");
+        Assert.assertEquals(UT.parseJson(data, "icon()"), "2", "医院图片更新失败");
+        Assert.assertNotNull(UT.parseJson(data, "icon():largePicture"), "医院图片更新失败");
     }
 
     @Test
@@ -448,7 +461,7 @@ public class KBExpert_Update extends BaseTest {
         if (doctorId == null)
             Assert.fail("创建医生失败，认证用例无法执行");
 
-        RegisteredDoctor_Certify_V2.certify(doctorId, "1", expertId);
+        RegisteredDoctor_CertifySync_V2.CertifyAndSync(doctorId, "1", expertId);
 
         HashMap<String, String> pathValue = new HashMap<>();
         pathValue.put("id", expertId);

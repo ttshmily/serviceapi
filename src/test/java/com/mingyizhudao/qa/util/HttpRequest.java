@@ -2,6 +2,9 @@ package com.mingyizhudao.qa.util;
 
 import org.apache.log4j.Logger;
 
+import javax.net.ssl.SSLContext;
+import javax.net.ssl.TrustManager;
+import javax.net.ssl.X509TrustManager;
 import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.URL;
@@ -58,15 +61,37 @@ public class HttpRequest {
 			httpURLConnection.setRequestProperty("connection", "close");
 			httpURLConnection.setRequestProperty("user-agent",
 					"Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1;SV1)");
-            if (!authCode.isEmpty())
-                httpURLConnection.setRequestProperty("Authorization", "Bearer " + authCode);
+			httpURLConnection.setInstanceFollowRedirects(true);
+			HttpURLConnection.setFollowRedirects(true);
+            if (!authCode.isEmpty()) httpURLConnection.setRequestProperty("Authorization", "Bearer " + authCode);
 			// 建立实际的连接
             long start,end;
             logger.info("发送请求: >>>>>  " + httpURLConnection.getRequestMethod() + " " + httpURLConnection.getURL());
             logger.info("请求数据: >>>>>  " + param);
             start = System.currentTimeMillis();
 			httpURLConnection.connect();
-            in = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+            boolean redirect = false;
+            int status = httpURLConnection.getResponseCode();
+            if (status != HttpURLConnection.HTTP_OK) {
+                if (status == HttpURLConnection.HTTP_MOVED_TEMP || status == HttpURLConnection.HTTP_MOVED_PERM || status == HttpURLConnection.HTTP_SEE_OTHER)
+                    redirect = true;
+            }
+//            if (redirect) {
+//                // get redirect url from "location" header field
+//                String newUrl = httpURLConnection.getHeaderField("Location");
+//
+//                // get the cookie if need, for login
+//                String cookies = httpURLConnection.getHeaderField("Set-Cookie");
+//
+//                // open the new connection again
+//                httpURLConnection = (HttpURLConnection) new URL(newUrl).openConnection();
+//                httpURLConnection.setRequestProperty("accept", "*/*");
+//                httpURLConnection.setRequestProperty("connection", "close");
+//                httpURLConnection.setRequestProperty("user-agent",
+//                        "Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1;SV1)");
+//                System.out.println("Redirect to URL : " + newUrl);
+//            }
+            in = new BufferedReader(new InputStreamReader(httpURLConnection.getInputStream())); //connection
 			end = System.currentTimeMillis();
             logger.info("等待回应: <<<<<  " + httpURLConnection.getResponseCode() + " " + httpURLConnection.getResponseMessage());
             logger.info("响应时间: <<<<<  " + Long.toString(end-start) + " ms");
@@ -134,35 +159,6 @@ public class HttpRequest {
             }
             result = sendGet(urlNameString, param, authCode);
 
-//            URL realUrl = new URL(urlNameString);
-//            // 打开和URL之间的连接
-//            URLConnection connection = realUrl.openConnection();
-//            HttpURLConnection httpURLConnection = (HttpURLConnection)connection;
-//            // 设置通用的请求属性
-//            httpURLConnection.setRequestProperty("accept", "*/*");
-//            httpURLConnection.setRequestProperty("connection", "close");
-//            httpURLConnection.setRequestProperty("user-agent",
-//                    "Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1;SV1)");
-//            if (!authCode.isEmpty())
-//                httpURLConnection.setRequestProperty("Authorization", "Bearer " + authCode);
-//            // 建立实际的连接
-//            long start,end;
-//            logger.info("发送请求: >>>>>  " + httpURLConnection.getRequestMethod() + " " + httpURLConnection.getURL());
-//            logger.info("请求数据: >>>>>  " + queryBuilder(query));
-//            start = System.currentTimeMillis();
-//            httpURLConnection.connect();
-//            in = new BufferedReader(new InputStreamReader(connection.getInputStream()));
-//            end = System.currentTimeMillis();
-//            logger.info("等待回应: <<<<<  " + httpURLConnection.getResponseCode() + " " + httpURLConnection.getResponseMessage());
-//            logger.info("响应时间: <<<<<  " + Long.toString(end-start) + " ms");
-//
-//            String line;
-//            while ((line = in.readLine()) != null) {
-//                result += line;
-//            }
-//
-////			logger.debug(httpURLConnection.getRequestProperties().keySet());
-//            in.close();
         } catch (IOException e) {
             logger.error("发送请求异常");
             throw e;

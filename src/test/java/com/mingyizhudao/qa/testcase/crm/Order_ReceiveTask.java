@@ -1,6 +1,7 @@
 package com.mingyizhudao.qa.testcase.crm;
 
 import com.mingyizhudao.qa.common.BaseTest;
+import com.mingyizhudao.qa.dataprofile.doctor.DoctorProfile;
 import com.mingyizhudao.qa.testcase.doctor.CreateOrder;
 import com.mingyizhudao.qa.util.HttpRequest;
 import com.mingyizhudao.qa.util.UT;
@@ -138,6 +139,42 @@ public class Order_ReceiveTask extends BaseTest {
         res = Order_Detail.Detail(order_number);
         checkResponse(res);
         Assert.assertEquals(UT.parseJson(data, "major_reps_id"), "chao.fang@mingyizhudao.com", "");
+
+    }
+
+    @Test
+    public void test_04_客服领取订单_没有认证通过的医生订单() {
+
+        String res = "";
+        HashMap<String, String> pathValue = new HashMap<>();
+
+        HashMap<String, String> doctorInfo = CreateRegisteredDoctor(new DoctorProfile(true));// 创建一个未认证的医生
+        String tmpToken = doctorInfo.get("token");
+        String order_number = CreateOrder.CreateOrder(tmpToken); // create an order
+        pathValue.put("orderNumber", order_number);
+
+        try {
+            res = HttpRequest.sendPost(host_crm + uri, "", crm_token, pathValue);
+        } catch (IOException e) {
+            logger.error(e);
+        }
+//        logger.debug(res);
+        checkResponse(res);
+        Assert.assertNotEquals(code, "1000000");
+
+        doctorInfo = CreateVerifiedDoctor(new DoctorProfile(true));// 创建一个已认证未同步的医生
+        tmpToken = doctorInfo.get("token");
+        order_number = CreateOrder.CreateOrder(tmpToken); // create an order
+        pathValue.put("orderNumber", order_number);
+
+        try {
+            res = HttpRequest.sendPost(host_crm + uri, "", crm_token, pathValue);
+        } catch (IOException e) {
+            logger.error(e);
+        }
+//        logger.debug(res);
+        checkResponse(res);
+        Assert.assertNotEquals(code, "1000000");
 
     }
 }

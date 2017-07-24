@@ -72,11 +72,11 @@ public class GetOrderList extends BaseTest{
 
         logger.info(tmpToken);
         DoctorProfile dp = new DoctorProfile(true);
-        res = GetDoctorProfile.getDoctorProfile(tmpToken);
+        res = GetDoctorProfile_V1.MyProfile(tmpToken);
         String docId = JSONObject.fromObject(res).getJSONObject("data").getJSONObject("doctor").getString("user_id");
-        UpdateDoctorProfile.updateDoctorProfile(tmpToken, dp);
+        UpdateDoctorProfile_V1.updateDoctorProfile(tmpToken, dp);
 
-        if (!RegisteredDoctor_Certify_V2.certify(docId, "1").get("is_verified").equals("1")) {
+        if (!RegisteredDoctor_CertifySync_V2.CertifyAndSync(docId, "1").get("is_verified").equals("1")) {
             logger.error("认证医生失败，退出用例执行");
             Assert.fail("认证医生失败，退出用例执行");
         }

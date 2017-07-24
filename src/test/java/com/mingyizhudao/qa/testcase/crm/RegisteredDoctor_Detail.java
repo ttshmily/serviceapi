@@ -49,6 +49,10 @@ public class RegisteredDoctor_Detail extends BaseTest {
         Assert.assertNotNull(UT.parseJson(data, "academic_title_list"));
         Assert.assertNotNull(UT.parseJson(data, "inviter_name"));
         Assert.assertNotNull(UT.parseJson(data, "hospital_name"));
+        Assert.assertNotNull(UT.parseJson(data, "icon"));
+        Assert.assertNotNull(UT.parseJson(data, "audit_state"));
+        Assert.assertNotNull(UT.parseJson(data, "staff_id"));
+        Assert.assertNotNull(UT.parseJson(data, "staff_name"));
     }
 
     @Test
