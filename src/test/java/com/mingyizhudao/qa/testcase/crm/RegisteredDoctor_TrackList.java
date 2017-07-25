@@ -49,7 +49,7 @@ public class RegisteredDoctor_TrackList extends BaseTest {
         res = trackList(doctorId);
         checkResponse(res);
         Assert.assertEquals(code, "1000000");
-        Assert.assertEquals(UT.parseJson(data, "list()"), "3");
+        Assert.assertEquals(UT.parseJson(data, "list()"), "4");// 认证和同步，2条记录
 
         int id1 = Integer.parseInt(UT.parseJson(data, "list(0):id"));
         int id2 = Integer.parseInt(UT.parseJson(data, "list(1):id"));
