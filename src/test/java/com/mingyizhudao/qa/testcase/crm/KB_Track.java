@@ -49,7 +49,7 @@ public class KB_Track extends BaseTest {
         HashMap<String, String> query = new HashMap<>();
         String[] typeArray = new String[] {"DOCTOR","HOSPITAL","DISEASE"};
         for (String type:typeArray) {
-            logger.debug(type);
+//            logger.debug(type);
             query.put("type", type);
             try {
                 res = HttpRequest.sendGet(host_crm + uri, query, crm_token);

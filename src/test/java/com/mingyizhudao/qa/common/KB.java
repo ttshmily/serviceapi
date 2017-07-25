@@ -281,7 +281,7 @@ public class KB {
             }else {
                 String res = "";
                 HashMap<String, String> query = new HashMap<>();
-                query.put("isShowAll", "true");
+                query.put("pageSize", "1000");
                 query.put("surgeryCategoryId", "100");
                 for (String key : kb_surgery_category.keySet()) {
                     query.replace("surgeryCategoryId", key);
@@ -331,7 +331,7 @@ public class KB {
             }else {
                 String res = "";
                 HashMap<String, String> query = new HashMap<>();
-                query.put("isShowAll", "true");
+                query.put("pageSize", "1000");
                 query.put("diseaseCategoryId", "100");
                 for (String key : kb_major.keySet()) {
                     HashMap<String, String> tmp = new HashMap<>();
