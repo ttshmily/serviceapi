@@ -395,8 +395,8 @@ public class CreateOrder extends BaseTest {
         res = GetOrderDetail_V1.MyInitiateOrder(mainToken, orderId);
         checkResponse(res);
         Assert.assertEquals(code, "1000000");
-        Assert.assertEquals(parseJson(data,"order:expected_surgery_hospital_id"), mainDoctorHospitalId);
-        Assert.assertEquals(parseJson(data,"order:expected_surgery_hospital_name"), mainDoctorHospitalName);
+        Assert.assertEquals(parseJson(data,"order:expected_surgery_hospital_id"), "0");
+        Assert.assertEquals(parseJson(data,"order:expected_surgery_hospital_name"), "待回访");
 
         logger.info("不传入期望手术医院的key。。。");
         order.body.getJSONObject("order").remove("expected_surgery_hospital_id");

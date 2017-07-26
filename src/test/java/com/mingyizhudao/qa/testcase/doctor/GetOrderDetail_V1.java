@@ -3,11 +3,8 @@ package com.mingyizhudao.qa.testcase.doctor;
 import com.mingyizhudao.qa.common.BaseTest;
 import com.mingyizhudao.qa.dataprofile.doctor.DoctorProfile;
 import com.mingyizhudao.qa.testcase.crm.*;
-import com.mingyizhudao.qa.testcase.login.CheckVerifyCode;
-import com.mingyizhudao.qa.testcase.login.SendVerifyCode;
 import com.mingyizhudao.qa.util.HttpRequest;
 import com.mingyizhudao.qa.util.UT;
-import net.sf.json.JSONObject;
 import org.apache.log4j.Logger;
 import org.testng.Assert;
 import org.testng.annotations.Test;
@@ -165,7 +162,7 @@ public class GetOrderDetail_V1 extends BaseTest {
         Assert.assertEquals(UT.parseJson(data, "order:order_number"), orderId);
         Assert.assertNotNull(UT.parseJson(data, "order:NodeList:recommend_at"));
 
-        Order_ThreewayCall_V2.ThreewayCallv2(orderId, "success");
+        Order_ThreewayCall_V2.CallV2(orderId, "success");
         try {
             res = HttpRequest.sendGet(host_doc + uri, query, mainToken, pathValue);
         } catch (IOException e) {

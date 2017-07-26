@@ -549,7 +549,7 @@ public class UpdateMedicalRecords extends BaseTest {
         Assert.assertEquals(UT.parseJson(data, "order:expected_surgery_hospital_name"), expectedSurgeryHospitalName, "期望手术医院未更新成功");
 
         logger.info("更新期望手术医院ID=0");
-        mr.body.getJSONObject("order").replace("expected_surgery_hospital_id", "");
+        mr.body.getJSONObject("order").replace("expected_surgery_hospital_id", "0");
         try {
             res = HttpRequest.sendPut(host_doc + mock + uri, mr.body.toString(), mainToken, pathValue);
         } catch (IOException e) {
@@ -561,8 +561,8 @@ public class UpdateMedicalRecords extends BaseTest {
         res = GetOrderDetail_V1.MyInitiateOrder(mainToken, orderId);
         checkResponse(res);
         Assert.assertEquals(code, "1000000", "查看订单失败");
-        Assert.assertEquals(UT.parseJson(data, "order:expected_surgery_hospital_id"), expectedSurgeryHospitalId, "期望手术医院未更新成功");
-        Assert.assertEquals(UT.parseJson(data, "order:expected_surgery_hospital_name"), expectedSurgeryHospitalName, "期望手术医院未更新成功");
+        Assert.assertEquals(UT.parseJson(data, "order:expected_surgery_hospital_id"), "0", "期望手术医院未更新成功");
+        Assert.assertEquals(UT.parseJson(data, "order:expected_surgery_hospital_name"), "待回访", "期望手术医院未更新成功");
 
         String key = UT.randomKey(KB.kb_hospital);
         logger.info("更新期望手术医院ID="+key);
@@ -579,7 +579,7 @@ public class UpdateMedicalRecords extends BaseTest {
         checkResponse(res);
         Assert.assertEquals(code, "1000000", "查看订单失败");
         Assert.assertEquals(UT.parseJson(data, "order:expected_surgery_hospital_id"), key, "期望手术医院未更新成功");
-        Assert.assertEquals(UT.parseJson(data, "order:expected_surgery_hospital_name"), KB.kb_hospital.get(key), "期望手术医院未更新成功");
+        Assert.assertEquals(UT.parseJson(data, "order:expected_surgery_hospital_name"), UT.hospitalName(key), "期望手术医院未更新成功");
     }
 
     @Test
