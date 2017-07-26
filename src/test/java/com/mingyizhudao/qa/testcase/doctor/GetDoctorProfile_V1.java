@@ -254,6 +254,7 @@ public class GetDoctorProfile_V1 extends BaseTest {
     @Test
     public void test_09_测试返回的地区服务专员(){
         //TODO
+        Reporter.clear();
         Reporter.log("我就是玩二下");
         Reporter.log(Reporter.getOutput().toString(), true);
     }
