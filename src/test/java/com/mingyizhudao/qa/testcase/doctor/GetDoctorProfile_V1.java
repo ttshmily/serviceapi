@@ -248,12 +248,13 @@ public class GetDoctorProfile_V1 extends BaseTest {
         Assert.assertEquals(parseJson(data, "doctor:status_count:agentId:count"), String.valueOf(count+i-1),"总订单数不正确");
         Assert.assertEquals(parseJson(data, "doctor:status_count:agentId:handling"), String.valueOf(countHandling),"处理中的订单数不正确");
         Assert.assertEquals(parseJson(data, "doctor:status_count:agentId:pendingpayment"), String.valueOf(pendingpayment+i-1),"待支付的订单数不正确");
+        Reporter.log("我就是玩一下");
     }
 
     @Test
     public void test_09_测试返回的地区服务专员(){
         //TODO
-        Reporter.log("我就是玩一下");
+        Reporter.log("我就是玩二下");
         Reporter.log(Reporter.getOutput().toString(), true);
     }
 }
