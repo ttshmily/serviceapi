@@ -7,6 +7,7 @@ import com.mingyizhudao.qa.testcase.crm.Order_ThreewayCall;
 import com.mingyizhudao.qa.util.HttpRequest;
 import org.apache.log4j.Logger;
 import org.testng.Assert;
+import org.testng.Reporter;
 import org.testng.annotations.Test;
 
 import java.io.IOException;
@@ -252,5 +253,6 @@ public class GetDoctorProfile_V1 extends BaseTest {
     @Test
     public void test_09_测试返回的地区服务专员(){
         //TODO
+        Reporter.log("我就是玩一下");
     }
 }
