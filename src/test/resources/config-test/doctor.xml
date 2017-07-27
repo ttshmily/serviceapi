@@ -4,7 +4,25 @@
 
     <test name="doctor" preserve-order="true" >
         <classes>
+            <class name="com.mingyizhudao.qa.testcase.doctor.CancelOrder" />
+            <class name="com.mingyizhudao.qa.testcase.doctor.CreateOrder" />
+            <class name="com.mingyizhudao.qa.testcase.doctor.CreatePayment" />
+            <class name="com.mingyizhudao.qa.testcase.doctor.CreateSurgeryBriefs" />
+            <class name="com.mingyizhudao.qa.testcase.doctor.DeleteOrderByAgent" />
+            <class name="com.mingyizhudao.qa.testcase.doctor.GetDiseasesInCategory" />
             <class name="com.mingyizhudao.qa.testcase.doctor.GetDoctorProfile_V1" />
+            <class name="com.mingyizhudao.qa.testcase.doctor.GetEmployeeProfile" />
+            <class name="com.mingyizhudao.qa.testcase.doctor.GetOrderDetail" />
+            <class name="com.mingyizhudao.qa.testcase.doctor.GetOrderDetail_V1" />
+            <class name="com.mingyizhudao.qa.testcase.doctor.GetSurgeryCategory" />
+            <class name="com.mingyizhudao.qa.testcase.doctor.GetSurgeryList" />
+            <class name="com.mingyizhudao.qa.testcase.doctor.GetUploadToken" />
+            <class name="com.mingyizhudao.qa.testcase.doctor.HospitalSearch" />
+            <class name="com.mingyizhudao.qa.testcase.doctor.PaymentResult" />
+            <class name="com.mingyizhudao.qa.testcase.doctor.ProfessionList" />
+            <class name="com.mingyizhudao.qa.testcase.doctor.SurgeryCategory" />
+            <class name="com.mingyizhudao.qa.testcase.doctor.UpdateDoctorProfile_V1" />
+            <class name="com.mingyizhudao.qa.testcase.doctor.UpdateMedicalRecords" />
         </classes>
     </test>
 
