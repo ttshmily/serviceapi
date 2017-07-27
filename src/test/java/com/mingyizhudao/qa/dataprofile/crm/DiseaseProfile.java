@@ -1,6 +1,6 @@
 package com.mingyizhudao.qa.dataprofile.crm;
 
-import com.mingyizhudao.qa.util.Generator;
+import com.mingyizhudao.qa.utilities.Generator;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 

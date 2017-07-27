@@ -4,7 +4,7 @@
 
     <test name="doctoruser" >
         <classes>
-            <class name="com.mingyizhudao.qa.testcase.doctor.GetDoctorProfile_V1"  >
+            <class name="com.mingyizhudao.qa.functiontest.doctor.GetDoctorProfile_V1"  >
                 <methods>
                     <include name="test_09_测试返回的地区服务专员" />
                 </methods>

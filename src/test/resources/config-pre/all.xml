@@ -3,32 +3,32 @@
 <suite name="All" verbose="1" >
     <test name="common" preserve-order="true">
         <classes>
-            <class name="com.mingyizhudao.qa.testcase.doctor.GetEmployeeProfile" />
-            <class name="com.mingyizhudao.qa.testcase.doctor.HospitalSearch" />
-            <class name="com.mingyizhudao.qa.testcase.doctor.ProfessionList" />
-            <class name="com.mingyizhudao.qa.testcase.doctor.GetDiseasesInCategory" />
+            <class name="com.mingyizhudao.qa.functiontest.doctor.GetEmployeeProfile" />
+            <class name="com.mingyizhudao.qa.functiontest.doctor.HospitalSearch" />
+            <class name="com.mingyizhudao.qa.functiontest.doctor.ProfessionList" />
+            <class name="com.mingyizhudao.qa.functiontest.doctor.GetDiseasesInCategory" />
         </classes>
     </test>
     <test name="doctoruser" preserve-order="true" >
         <classes>
-            <class name="com.mingyizhudao.qa.testcase.doctor.GetDoctorProfile_V1"  />
-            <class name="com.mingyizhudao.qa.testcase.doctor.UpdateDoctorProfile_V1" />
+            <class name="com.mingyizhudao.qa.functiontest.doctor.GetDoctorProfile_V1"  />
+            <class name="com.mingyizhudao.qa.functiontest.doctor.UpdateDoctorProfile_V1" />
         </classes>
     </test>
     <test name="login" preserve-order="true">
         <classes>
-            <class name="com.mingyizhudao.qa.testcase.login.SendVerifyCode" />
-            <class name="com.mingyizhudao.qa.testcase.login.CheckVerifyCode" />
-            <class name="com.mingyizhudao.qa.testcase.login.Refresh" />
+            <class name="com.mingyizhudao.qa.functiontest.login.SendVerifyCode" />
+            <class name="com.mingyizhudao.qa.functiontest.login.CheckVerifyCode" />
+            <class name="com.mingyizhudao.qa.functiontest.login.Refresh" />
         </classes>
     </test>
     <test name="trade" preserve-order="true">
         <classes>
-            <class name="com.mingyizhudao.qa.testcase.doctor.CreateOrder" />
-            <class name="com.mingyizhudao.qa.testcase.doctor.GetOrderList" />
-            <class name="com.mingyizhudao.qa.testcase.doctor.GetUploadToken" />
-            <class name="com.mingyizhudao.qa.testcase.doctor.GetOrderDetail" />
-            <class name="com.mingyizhudao.qa.testcase.doctor.UpdateMedicalRecords" />
+            <class name="com.mingyizhudao.qa.functiontest.doctor.CreateOrder" />
+            <class name="com.mingyizhudao.qa.functiontest.doctor.GetOrderList" />
+            <class name="com.mingyizhudao.qa.functiontest.doctor.GetUploadToken" />
+            <class name="com.mingyizhudao.qa.functiontest.doctor.GetOrderDetail" />
+            <class name="com.mingyizhudao.qa.functiontest.doctor.UpdateMedicalRecords" />
         </classes>
     </test>
 </suite> 
