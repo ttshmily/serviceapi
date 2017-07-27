@@ -8,7 +8,6 @@
     <artifactId>serviceapi</artifactId>
     <version>1.0-SNAPSHOT</version>
 
-
     <dependencies>
         <!-- https://mvnrepository.com/artifact/org.apache.jmeter/ApacheJMeter_java -->
         <dependency>
@@ -70,9 +69,9 @@
                 <version>2.19.1</version>
                 <configuration>
                     <!--注释了以下代码tj-->
-                    <includes>
-                        <include>test.java</include>
-                    </includes>
+                    <!--<includes>-->
+                        <!--<include>test.java</include>-->
+                    <!--</includes>-->
                      <suiteXmlFiles>
                          <suiteXmlFile>src/test/resources/config-${profiles.active}/${suiteFilename}</suiteXmlFile>
                      </suiteXmlFiles>

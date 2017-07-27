@@ -1,5 +1,6 @@
 package com.mingyizhudao.qa.testcase.crm;
 
+import com.mingyizhudao.qa.common.BaseTest;
 import com.mingyizhudao.qa.common.KB;
 import com.mingyizhudao.qa.testcase.doctor.CreateOrder;
 import com.mingyizhudao.qa.util.HttpRequest;
@@ -17,7 +18,7 @@ import java.util.HashMap;
 /**
  * Created by dayi on 2017/7/10.
  */
-public class Order_ThreewayCall_V2 extends Order_ThreewayCall {
+public class Order_ThreewayCall_V2 extends BaseTest {
     public static final Logger logger= Logger.getLogger(Order_ThreewayCall_V2.class);
     public static final String version = "/api/v2";
     public static String uri = version+"/orders/{orderNumber}/threeWayCalling";
@@ -25,7 +26,7 @@ public class Order_ThreewayCall_V2 extends Order_ThreewayCall {
 
     public static SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
 
-    public static String ThreewayCallv2(String orderId, String result) {//success,undetermined,failed
+    public static String CallV2(String orderId, String result) {//success,undetermined,failed
         String res = "";
         HashMap<String, String> pathValue = new HashMap<>();
         res = Order_Detail.Detail(orderId);
