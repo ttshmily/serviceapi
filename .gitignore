@@ -1,8 +1,9 @@
 /target
 /.idea
-/logs
 serviceapi.iml
 .DS_Store
 src/test/resources/*.txt
 src/test/resources/config-test/environment.properties
-src/test/resources/config-test/environment_env.properties
+src/test/resources/config-pre/environment.properties
+src/test/resources/config-prod/environment.properties
+logs/
