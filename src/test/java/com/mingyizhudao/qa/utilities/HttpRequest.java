@@ -1,8 +1,6 @@
 package com.mingyizhudao.qa.utilities;
 
 import com.mingyizhudao.qa.common.TestLogger;
-import com.sun.tools.javac.code.Attribute;
-import org.apache.log4j.Logger;
 
 import javax.net.ssl.*;
 import java.io.*;
