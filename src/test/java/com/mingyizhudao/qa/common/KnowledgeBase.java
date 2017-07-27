@@ -436,8 +436,11 @@ public class KnowledgeBase {
             for (Map.Entry<String,String> id_name_list : id_name.entrySet()){
                 id_name_buffer.append(id_name_list.getKey()).append(",").append(id_name_list.getValue()).append(";").append("\r\n");
             }
-
-            FileWriter fileWriter = new FileWriter(filePath);
+            File file = new File(filePath);
+            if(!file.exists()) {
+                file.createNewFile();
+            }
+            FileWriter fileWriter = new FileWriter(file);
             fileWriter.write(id_name_buffer.toString());
             fileWriter.close();
         } catch (IOException e){
