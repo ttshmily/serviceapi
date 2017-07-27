@@ -16,7 +16,7 @@
             <class name="com.mingyizhudao.qa.testcase.doctor.GetOrderDetail_V1" />
             <class name="com.mingyizhudao.qa.testcase.doctor.GetSurgeryCategory" />
             <class name="com.mingyizhudao.qa.testcase.doctor.GetSurgeryList" />
-            <class name="com.mingyizhudao.qa.testcase.doctor.GetUploadToken" />
+            <class name="com.mingyizhudao.qa.testcase.doctor.GetUploadToken" />o
             <class name="com.mingyizhudao.qa.testcase.doctor.HospitalSearch" />
             <class name="com.mingyizhudao.qa.testcase.doctor.PaymentResult" />
             <class name="com.mingyizhudao.qa.testcase.doctor.ProfessionList" />
