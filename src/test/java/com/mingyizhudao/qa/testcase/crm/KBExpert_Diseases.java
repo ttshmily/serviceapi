@@ -3,7 +3,7 @@ package com.mingyizhudao.qa.testcase.crm;
 import com.mingyizhudao.qa.common.BaseTest;
 import com.mingyizhudao.qa.dataprofile.crm.ExpertProfile;
 import com.mingyizhudao.qa.util.HttpRequest;
-import com.mingyizhudao.qa.util.UT;
+import com.mingyizhudao.qa.util.Generator;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 import org.apache.log4j.Logger;
@@ -56,19 +56,19 @@ public class KBExpert_Diseases extends BaseTest {
 
         List<String> inputString = new ArrayList<>();
         JSONObject diseaseList = new JSONObject();
-        String id = UT.randomDiseaseId();
+        String id = Generator.randomDiseaseId();
         diseaseList.accumulate("disease_ids", id);
         inputString.add(id);
-        id = UT.randomDiseaseId();
+        id = Generator.randomDiseaseId();
         diseaseList.accumulate("disease_ids", id);
         inputString.add(id);
-        id = UT.randomDiseaseId();
+        id = Generator.randomDiseaseId();
         diseaseList.accumulate("disease_ids", id);
         inputString.add(id);
-        id = UT.randomDiseaseId();
+        id = Generator.randomDiseaseId();
         diseaseList.accumulate("disease_ids", id);
         inputString.add(id);
-        id = UT.randomDiseaseId();
+        id = Generator.randomDiseaseId();
         diseaseList.accumulate("disease_ids", id);
         inputString.add(id);
         System.out.println(inputString);
@@ -111,19 +111,19 @@ public class KBExpert_Diseases extends BaseTest {
 
         List<String> inputString = new ArrayList<>();
         JSONObject diseaseList = new JSONObject();
-        String id = UT.randomDiseaseId();
+        String id = Generator.randomDiseaseId();
         diseaseList.accumulate("disease_ids", id);
         inputString.add(id);
-        id = UT.randomDiseaseId();
+        id = Generator.randomDiseaseId();
         diseaseList.accumulate("disease_ids", id);
         inputString.add(id);
-        id = UT.randomDiseaseId();
+        id = Generator.randomDiseaseId();
         diseaseList.accumulate("disease_ids", id);
         inputString.add(id);
-        id = UT.randomDiseaseId();
+        id = Generator.randomDiseaseId();
         diseaseList.accumulate("disease_ids", id);
         inputString.add(id);
-        id = UT.randomDiseaseId();
+        id = Generator.randomDiseaseId();
         diseaseList.accumulate("disease_ids", id);
         inputString.add(id);
         System.out.println(inputString);
@@ -137,13 +137,13 @@ public class KBExpert_Diseases extends BaseTest {
         Assert.assertEquals(code, "1000000", "关联疾病失败");
 
 //增加3个疾病
-        id = UT.randomDiseaseId();
+        id = Generator.randomDiseaseId();
         diseaseList.accumulate("disease_ids", id);
         inputString.add(id);
-        id = UT.randomDiseaseId();
+        id = Generator.randomDiseaseId();
         diseaseList.accumulate("disease_ids", id);
         inputString.add(id);
-        id = UT.randomDiseaseId();
+        id = Generator.randomDiseaseId();
         diseaseList.accumulate("disease_ids", id);
         inputString.add(id);
         try {
@@ -185,19 +185,19 @@ public class KBExpert_Diseases extends BaseTest {
 
         List<String> inputString = new ArrayList<>();
         JSONObject diseaseList = new JSONObject();
-        String id1 = UT.randomDiseaseId();
+        String id1 = Generator.randomDiseaseId();
         diseaseList.accumulate("disease_ids", id1);
         inputString.add(id1);
-        String id2 = UT.randomDiseaseId();
+        String id2 = Generator.randomDiseaseId();
         diseaseList.accumulate("disease_ids", id2);
         inputString.add(id2);
-        String id3 = UT.randomDiseaseId();
+        String id3 = Generator.randomDiseaseId();
         diseaseList.accumulate("disease_ids", id3);
         inputString.add(id3);
-        String id4 = UT.randomDiseaseId();
+        String id4 = Generator.randomDiseaseId();
         diseaseList.accumulate("disease_ids", id4);
         inputString.add(id4);
-        String id5 = UT.randomDiseaseId();
+        String id5 = Generator.randomDiseaseId();
         diseaseList.accumulate("disease_ids", id5);
         inputString.add(id5);
         System.out.println(inputString);
@@ -258,19 +258,19 @@ public class KBExpert_Diseases extends BaseTest {
 
         List<String> inputString = new ArrayList<>();
         JSONObject diseaseList = new JSONObject();
-        String id = UT.randomDiseaseId();
+        String id = Generator.randomDiseaseId();
         diseaseList.accumulate("disease_ids", id);
         inputString.add(id);
-        id = UT.randomDiseaseId();
+        id = Generator.randomDiseaseId();
         diseaseList.accumulate("disease_ids", id);
         inputString.add(id);
-        id = UT.randomDiseaseId();
+        id = Generator.randomDiseaseId();
         diseaseList.accumulate("disease_ids", id);
         inputString.add(id);
-        id = UT.randomDiseaseId();
+        id = Generator.randomDiseaseId();
         diseaseList.accumulate("disease_ids", id);
         inputString.add(id);
-        id = UT.randomDiseaseId();
+        id = Generator.randomDiseaseId();
         diseaseList.accumulate("disease_ids", id);
         inputString.add(id);
         //以下为重复内容
@@ -318,19 +318,19 @@ public class KBExpert_Diseases extends BaseTest {
 
         List<String> inputString = new ArrayList<>();
         JSONObject diseaseList = new JSONObject();
-        String id = UT.randomDiseaseId();
+        String id = Generator.randomDiseaseId();
         diseaseList.accumulate("disease_ids", id);
         inputString.add(id);
-        id = UT.randomDiseaseId();
+        id = Generator.randomDiseaseId();
         diseaseList.accumulate("disease_ids", id);
         inputString.add(id);
-        id = UT.randomDiseaseId();
+        id = Generator.randomDiseaseId();
         diseaseList.accumulate("disease_ids", id);
         inputString.add(id);
-        id = UT.randomDiseaseId();
+        id = Generator.randomDiseaseId();
         diseaseList.accumulate("disease_ids", id);
         inputString.add(id);
-        id = UT.randomDiseaseId();
+        id = Generator.randomDiseaseId();
         diseaseList.accumulate("disease_ids", id);
         inputString.add(id);
         //以下为错误ID内容
@@ -378,19 +378,19 @@ public class KBExpert_Diseases extends BaseTest {
 
         List<String> inputString = new ArrayList<>();
         JSONObject diseaseList = new JSONObject();
-        String id = UT.randomDiseaseId();
+        String id = Generator.randomDiseaseId();
         diseaseList.accumulate("disease_ids", id);
         inputString.add(id);
-        id = UT.randomDiseaseId();
+        id = Generator.randomDiseaseId();
         diseaseList.accumulate("disease_ids", id);
         inputString.add(id);
-        id = UT.randomDiseaseId();
+        id = Generator.randomDiseaseId();
         diseaseList.accumulate("disease_ids", id);
         inputString.add(id);
-        id = UT.randomDiseaseId();
+        id = Generator.randomDiseaseId();
         diseaseList.accumulate("disease_ids", id);
         inputString.add(id);
-        id = UT.randomDiseaseId();
+        id = Generator.randomDiseaseId();
         diseaseList.accumulate("disease_ids", id);
         inputString.add(id);
         System.out.println(inputString);

@@ -1,9 +1,9 @@
 package com.mingyizhudao.qa.testcase.bdassistant;
 
 import com.mingyizhudao.qa.common.BaseTest;
-import com.mingyizhudao.qa.common.KB;
+import com.mingyizhudao.qa.common.KnowledgeBase;
 import com.mingyizhudao.qa.util.HttpRequest;
-import com.mingyizhudao.qa.util.UT;
+import com.mingyizhudao.qa.util.Generator;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 import org.apache.log4j.Logger;
@@ -45,7 +45,7 @@ public class DoctorList extends BaseTest {
 
         String res = "";
         HashMap<String, String> map = new HashMap<>();
-        map.put("agent_contact_id", UT.randomEmployeeId());
+        map.put("agent_contact_id", Generator.randomEmployeeId());
         try {
             res = HttpRequest.sendGet(host_bda + uri, map, bda_token);
         } catch (IOException e) {
@@ -53,11 +53,11 @@ public class DoctorList extends BaseTest {
         }
         checkResponse(res);
         Assert.assertEquals(code, "1000000", "有token应该调用成功");
-        Assert.assertNotNull(UT.parseJson(data, "list(0):name"), "医生的name字段缺失");
-        Assert.assertNotNull(UT.parseJson(data, "list(0):hospital_name"), "医生的hospital_name字段缺失");
-        Assert.assertNotNull(UT.parseJson(data, "list(0):academic_title"), "医生的academic_title字段缺失");
-        Assert.assertNotNull(UT.parseJson(data, "list(0):medical_title"), "医生的academic_title字段缺失");
-        Assert.assertNotNull(UT.parseJson(data, "list(0):doctor_card_pictures"), "医生的academic_title字段缺失");
+        Assert.assertNotNull(Generator.parseJson(data, "list(0):name"), "医生的name字段缺失");
+        Assert.assertNotNull(Generator.parseJson(data, "list(0):hospital_name"), "医生的hospital_name字段缺失");
+        Assert.assertNotNull(Generator.parseJson(data, "list(0):academic_title"), "医生的academic_title字段缺失");
+        Assert.assertNotNull(Generator.parseJson(data, "list(0):medical_title"), "医生的academic_title字段缺失");
+        Assert.assertNotNull(Generator.parseJson(data, "list(0):doctor_card_pictures"), "医生的academic_title字段缺失");
     }
 
     @Test
@@ -73,11 +73,11 @@ public class DoctorList extends BaseTest {
         }
         checkResponse(res);
         Assert.assertEquals(code, "1000000", "有token应该调用成功");
-        Assert.assertNotNull(UT.parseJson(data, "list(0):name"), "医生的name字段缺失");
-        Assert.assertNotNull(UT.parseJson(data, "list(0):hospital_name"), "医生的hospital_name字段缺失");
-        Assert.assertNotNull(UT.parseJson(data, "list(0):academic_title"), "医生的academic_title字段缺失");
-        Assert.assertNotNull(UT.parseJson(data, "list(0):medical_title"), "医生的academic_title字段缺失");
-        Assert.assertNotNull(UT.parseJson(data, "list(0):doctor_card_pictures"), "医生的academic_title字段缺失");
+        Assert.assertNotNull(Generator.parseJson(data, "list(0):name"), "医生的name字段缺失");
+        Assert.assertNotNull(Generator.parseJson(data, "list(0):hospital_name"), "医生的hospital_name字段缺失");
+        Assert.assertNotNull(Generator.parseJson(data, "list(0):academic_title"), "医生的academic_title字段缺失");
+        Assert.assertNotNull(Generator.parseJson(data, "list(0):medical_title"), "医生的academic_title字段缺失");
+        Assert.assertNotNull(Generator.parseJson(data, "list(0):doctor_card_pictures"), "医生的academic_title字段缺失");
     }
 
     @Test
@@ -85,7 +85,7 @@ public class DoctorList extends BaseTest {
 
         String res = "";
         HashMap<String, String> map = new HashMap<>();
-        String agent_contact_id = UT.randomEmployeeId();
+        String agent_contact_id = Generator.randomEmployeeId();
         map.put("agent_contact_id", agent_contact_id);
         try {
             res = HttpRequest.sendGet(host_bda + uri, map, bda_token, null);
@@ -94,11 +94,11 @@ public class DoctorList extends BaseTest {
         }
         checkResponse(res);
         Assert.assertEquals(code, "1000000", "有token应该调用成功");
-        Assert.assertNotNull(UT.parseJson(data, "list(0):name"), "医生的name字段缺失");
-        Assert.assertNotNull(UT.parseJson(data, "list(0):hospital_name"), "医生的hospital_name字段缺失");
-        Assert.assertNotNull(UT.parseJson(data, "list(0):academic_title"), "医生的academic_title字段缺失");
-        Assert.assertNotNull(UT.parseJson(data, "list(0):medical_title"), "医生的academic_title字段缺失");
-        Assert.assertNotNull(UT.parseJson(data, "list(0):doctor_card_pictures"), "医生的academic_title字段缺失");
+        Assert.assertNotNull(Generator.parseJson(data, "list(0):name"), "医生的name字段缺失");
+        Assert.assertNotNull(Generator.parseJson(data, "list(0):hospital_name"), "医生的hospital_name字段缺失");
+        Assert.assertNotNull(Generator.parseJson(data, "list(0):academic_title"), "医生的academic_title字段缺失");
+        Assert.assertNotNull(Generator.parseJson(data, "list(0):medical_title"), "医生的academic_title字段缺失");
+        Assert.assertNotNull(Generator.parseJson(data, "list(0):doctor_card_pictures"), "医生的academic_title字段缺失");
     }
 
     @Test
@@ -121,7 +121,7 @@ public class DoctorList extends BaseTest {
 
         String res = "";
         HashMap<String, String> map = new HashMap<>();
-        String agent_contact_id = UT.randomEmployeeId();
+        String agent_contact_id = Generator.randomEmployeeId();
         map.put("agent_contact_id", agent_contact_id);
         try {
             res = HttpRequest.sendGet(host_bda + uri, map, bda_token, null);
@@ -130,8 +130,8 @@ public class DoctorList extends BaseTest {
         }
         checkResponse(res);
         Assert.assertEquals(code, "1000000", "有token应该调用成功");
-        Assert.assertNotNull(UT.parseJson(data, "list(0):create_order_time"), "没有第一次创建订单的时间");
-        Assert.assertNotNull(UT.parseJson(data, "list(0):date_verified"), "没有认证通过的时间");
+        Assert.assertNotNull(Generator.parseJson(data, "list(0):create_order_time"), "没有第一次创建订单的时间");
+        Assert.assertNotNull(Generator.parseJson(data, "list(0):date_verified"), "没有认证通过的时间");
 
     }
 
@@ -153,7 +153,7 @@ public class DoctorList extends BaseTest {
         String res = "";
         HashMap<String, String> map = new HashMap<>();
         map.put("agent_contact_id", "SH0105");
-        String title = UT.randomKey(KB.kb_academic_title);
+        String title = Generator.randomKey(KnowledgeBase.kb_academic_title);
         map.put("academic_title", title);
         try {
             res = HttpRequest.sendGet(host_bda + uri, map, bda_token, null);
@@ -165,7 +165,7 @@ public class DoctorList extends BaseTest {
         JSONArray doctorList = JSONObject.fromObject(res).getJSONObject("data").getJSONArray("list");
         for (int i=0; i<doctorList.size(); i++) {
             JSONObject doc = doctorList.getJSONObject(i);
-            Assert.assertEquals(UT.parseJson(doc, "academic_title_list"), title, "academic_title过滤后有其他的titil存在");
+            Assert.assertEquals(Generator.parseJson(doc, "academic_title_list"), title, "academic_title过滤后有其他的titil存在");
         }
 
     }
@@ -175,7 +175,7 @@ public class DoctorList extends BaseTest {
         String res = "";
         HashMap<String, String> map = new HashMap<>();
         map.put("agent_contact_id", "SH0105");
-        String title = UT.randomKey(KB.kb_medical_title);
+        String title = Generator.randomKey(KnowledgeBase.kb_medical_title);
         map.put("medical_title", title);
         try {
             res = HttpRequest.sendGet(host_bda + uri, map, bda_token, null);
@@ -187,7 +187,7 @@ public class DoctorList extends BaseTest {
         JSONArray doctorList = JSONObject.fromObject(res).getJSONObject("data").getJSONArray("list");
         for (int i=0; i<doctorList.size(); i++) {
             JSONObject doc = doctorList.getJSONObject(i);
-            Assert.assertEquals(UT.parseJson(doc, "medical_title_list"), title, "medical_title过滤后有其他的titil存在");
+            Assert.assertEquals(Generator.parseJson(doc, "medical_title_list"), title, "medical_title过滤后有其他的titil存在");
         }
 
     }
@@ -224,7 +224,7 @@ public class DoctorList extends BaseTest {
             JSONArray doctorList = JSONObject.fromObject(res).getJSONObject("data").getJSONArray("list");
             for (int i = 0; i < doctorList.size(); i++) {
                 JSONObject doc = doctorList.getJSONObject(i);
-                Assert.assertEquals(UT.parseJson(doc, "is_verified"), s, "过滤后有杂质状态存在");
+                Assert.assertEquals(Generator.parseJson(doc, "is_verified"), s, "过滤后有杂质状态存在");
             }
         }
     }

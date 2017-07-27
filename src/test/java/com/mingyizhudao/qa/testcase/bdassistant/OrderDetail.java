@@ -2,7 +2,7 @@ package com.mingyizhudao.qa.testcase.bdassistant;
 
 import com.mingyizhudao.qa.common.BaseTest;
 import com.mingyizhudao.qa.util.HttpRequest;
-import com.mingyizhudao.qa.util.UT;
+import com.mingyizhudao.qa.util.Generator;
 import org.apache.log4j.Logger;
 import org.testng.Assert;
 import org.testng.annotations.Test;
@@ -67,20 +67,20 @@ public class OrderDetail extends BaseTest{
         checkResponse(res);
         Assert.assertEquals(code, "1000000", "有token应该调用成功");
         //String orderDetail = data.getString("list");
-        Assert.assertNotNull(UT.parseJson(data, "order_number"), "order_number字段缺失");
-        Assert.assertNotNull(UT.parseJson(data, "status"), "status字段缺失");
-        Assert.assertNotNull(UT.parseJson(data, "agent_id"), "agent_id段缺失");
-        Assert.assertNotNull(UT.parseJson(data, "agent_name"), "agent_name字段缺失");
-        Assert.assertNotNull(UT.parseJson(data, "surgeon_id"), "surgeon_id字段缺失");
-        Assert.assertNotNull(UT.parseJson(data, "surgeon_name"), "surgeon_name字段缺失");
-        Assert.assertNotNull(UT.parseJson(data, "deposit_payment_created_at"), "deposit_payment_created_at字段缺失");
-        Assert.assertNotNull(UT.parseJson(data, "deposit_payment_paid_at"), "deposit_payment_paid_at字段缺失");
-        Assert.assertNotNull(UT.parseJson(data, "patient_name"), "patient_name字段缺失");
-        Assert.assertNotNull(UT.parseJson(data, "major_disease_id"), "major_disease_id字段缺失");
-        Assert.assertNotNull(UT.parseJson(data, "major_disease_name"), "major_disease_name字段缺失");
-        Assert.assertNotNull(UT.parseJson(data, "expected_surgery_start_date"), "expected_surgery_start_date字段缺失");
-        Assert.assertNotNull(UT.parseJson(data, "expected_surgery_due_date"), "expected_surgery_due_date字段缺失");
-        Assert.assertNotNull(UT.parseJson(data, "expected_surgery_hospital_id"), "expected_surgery_hospital_id字段缺失");
+        Assert.assertNotNull(Generator.parseJson(data, "order_number"), "order_number字段缺失");
+        Assert.assertNotNull(Generator.parseJson(data, "status"), "status字段缺失");
+        Assert.assertNotNull(Generator.parseJson(data, "agent_id"), "agent_id段缺失");
+        Assert.assertNotNull(Generator.parseJson(data, "agent_name"), "agent_name字段缺失");
+        Assert.assertNotNull(Generator.parseJson(data, "surgeon_id"), "surgeon_id字段缺失");
+        Assert.assertNotNull(Generator.parseJson(data, "surgeon_name"), "surgeon_name字段缺失");
+        Assert.assertNotNull(Generator.parseJson(data, "deposit_payment_created_at"), "deposit_payment_created_at字段缺失");
+        Assert.assertNotNull(Generator.parseJson(data, "deposit_payment_paid_at"), "deposit_payment_paid_at字段缺失");
+        Assert.assertNotNull(Generator.parseJson(data, "patient_name"), "patient_name字段缺失");
+        Assert.assertNotNull(Generator.parseJson(data, "major_disease_id"), "major_disease_id字段缺失");
+        Assert.assertNotNull(Generator.parseJson(data, "major_disease_name"), "major_disease_name字段缺失");
+        Assert.assertNotNull(Generator.parseJson(data, "expected_surgery_start_date"), "expected_surgery_start_date字段缺失");
+        Assert.assertNotNull(Generator.parseJson(data, "expected_surgery_due_date"), "expected_surgery_due_date字段缺失");
+        Assert.assertNotNull(Generator.parseJson(data, "expected_surgery_hospital_id"), "expected_surgery_hospital_id字段缺失");
     }
 
         @Test

@@ -13,7 +13,7 @@ import org.testng.annotations.Test;
 
 import java.io.IOException;
 
-import static com.mingyizhudao.qa.util.UT.parseJson;
+import static com.mingyizhudao.qa.util.Generator.parseJson;
 
 /**
  * Created by ttshmily on 20/3/2017.

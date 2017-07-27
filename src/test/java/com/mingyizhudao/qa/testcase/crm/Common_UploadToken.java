@@ -2,7 +2,7 @@ package com.mingyizhudao.qa.testcase.crm;
 
 import com.mingyizhudao.qa.common.BaseTest;
 import com.mingyizhudao.qa.util.HttpRequest;
-import com.mingyizhudao.qa.util.UT;
+import com.mingyizhudao.qa.util.Generator;
 import org.apache.log4j.Logger;
 import org.testng.Assert;
 import org.testng.annotations.Test;
@@ -36,9 +36,9 @@ public class Common_UploadToken extends BaseTest {
         } catch (IOException e) {
             logger.error(e);
         }
-        Assert.assertNotNull(UT.parseJson(data, "key"));
-        Assert.assertNotNull(UT.parseJson(data, "token"));
-        Assert.assertNotNull(UT.parseJson(data, "thumbnailUrl"));
+        Assert.assertNotNull(Generator.parseJson(data, "key"));
+        Assert.assertNotNull(Generator.parseJson(data, "token"));
+        Assert.assertNotNull(Generator.parseJson(data, "thumbnailUrl"));
     }
 
     @Test
@@ -58,8 +58,8 @@ public class Common_UploadToken extends BaseTest {
         } catch (IOException e) {
             logger.error(e);
         }
-        Assert.assertNotNull(UT.parseJson(data, "key"));
-        Assert.assertNotNull(UT.parseJson(data, "token"));
-        Assert.assertNotNull(UT.parseJson(data, "thumbnailUrl"));
+        Assert.assertNotNull(Generator.parseJson(data, "key"));
+        Assert.assertNotNull(Generator.parseJson(data, "token"));
+        Assert.assertNotNull(Generator.parseJson(data, "thumbnailUrl"));
     }
 }

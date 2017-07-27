@@ -5,7 +5,7 @@ import com.mingyizhudao.qa.dataprofile.crm.DiseaseProfile;
 import com.mingyizhudao.qa.dataprofile.crm.ExpertProfile;
 import com.mingyizhudao.qa.dataprofile.crm.HospitalProfile;
 import com.mingyizhudao.qa.util.HttpRequest;
-import com.mingyizhudao.qa.util.UT;
+import com.mingyizhudao.qa.util.Generator;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 import org.apache.log4j.Logger;
@@ -58,13 +58,13 @@ public class KB_Track extends BaseTest {
             } catch (IOException e) {
                 logger.error(e);
             }
-            Assert.assertNotNull(UT.parseJson(data, "list():id"));
-            Assert.assertNotNull(UT.parseJson(data, "list():operate_object_id"));
-            Assert.assertNotNull(UT.parseJson(data, "list():operate_type"));
-            Assert.assertNotNull(UT.parseJson(data, "list():operator_id"));
-            Assert.assertNotNull(UT.parseJson(data, "list():operator_name"));
-            Assert.assertNotNull(UT.parseJson(data, "list():operator_role"));
-            Assert.assertNotNull(UT.parseJson(data, "list():records"));
+            Assert.assertNotNull(Generator.parseJson(data, "list():id"));
+            Assert.assertNotNull(Generator.parseJson(data, "list():operate_object_id"));
+            Assert.assertNotNull(Generator.parseJson(data, "list():operate_type"));
+            Assert.assertNotNull(Generator.parseJson(data, "list():operator_id"));
+            Assert.assertNotNull(Generator.parseJson(data, "list():operator_name"));
+            Assert.assertNotNull(Generator.parseJson(data, "list():operator_role"));
+            Assert.assertNotNull(Generator.parseJson(data, "list():records"));
         }
     }
 
@@ -79,13 +79,13 @@ public class KB_Track extends BaseTest {
             String id="";
             switch (type) {
                 case "DOCTOR":
-                    id = UT.randomExpertId();
+                    id = Generator.randomExpertId();
                     break;
                 case "HOSPITAL":
-                    id = UT.randomHospitalId();
+                    id = Generator.randomHospitalId();
                     break;
                 case "DISEASE":
-                    id = UT.randomDiseaseId();
+                    id = Generator.randomDiseaseId();
                     break;
             }
             query.put("type", type);
@@ -125,7 +125,7 @@ public class KB_Track extends BaseTest {
         trackList = TrackList("DOCTOR", expertId);
         Assert.assertEquals(trackList.size(), 3);
         List<String> list = new ArrayList<String>();
-        list.add(UT.randomDiseaseId());
+        list.add(Generator.randomDiseaseId());
         KBExpert_Diseases.Connect(expertId, list);
         trackList = TrackList("DOCTOR", expertId);
         Assert.assertEquals(trackList.size(), 4);

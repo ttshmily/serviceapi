@@ -1,7 +1,7 @@
 package com.mingyizhudao.qa.testcase.bdassistant;
 
 import com.mingyizhudao.qa.util.HttpRequest;
-import com.mingyizhudao.qa.util.UT;
+import com.mingyizhudao.qa.util.Generator;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 import org.apache.log4j.Logger;
@@ -192,17 +192,17 @@ public class TeamListV2 extends TeamList {
         }
         checkResponse(res);
         Assert.assertEquals(code, "1000000");
-        Assert.assertNotNull(UT.parseJson(data, "list()"), "地推人员列表字段不能缺失");
-        Assert.assertNotNull(UT.parseJson(data, "page"), "页码字段缺失");
-        Assert.assertNotNull(UT.parseJson(data, "page_size"), "分页大小字段缺失");
-        Assert.assertNotNull(UT.parseJson(data, "size"), "列表总数字段缺失");
+        Assert.assertNotNull(Generator.parseJson(data, "list()"), "地推人员列表字段不能缺失");
+        Assert.assertNotNull(Generator.parseJson(data, "page"), "页码字段缺失");
+        Assert.assertNotNull(Generator.parseJson(data, "page_size"), "分页大小字段缺失");
+        Assert.assertNotNull(Generator.parseJson(data, "size"), "列表总数字段缺失");
     }
 
     @Test
     public void test_08_根据城市ID筛选() {
         String res = "";
         HashMap<String, String> query = new HashMap<>();
-        String city = UT.randomCityId();
+        String city = Generator.randomCityId();
         query.put("city_id", city);
         try {
             res = HttpRequest.sendGet(host_bda + uri, query, bda_token);

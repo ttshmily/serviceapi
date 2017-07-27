@@ -4,7 +4,7 @@ import com.mingyizhudao.qa.common.BaseTest;
 import com.mingyizhudao.qa.dataprofile.crm.ExpertProfile;
 import com.mingyizhudao.qa.dataprofile.doctor.DoctorProfile;
 import com.mingyizhudao.qa.util.HttpRequest;
-import com.mingyizhudao.qa.util.UT;
+import com.mingyizhudao.qa.util.Generator;
 import net.sf.json.JSONObject;
 import org.apache.log4j.Logger;
 import org.testng.Assert;
@@ -50,22 +50,22 @@ public class RegisteredDoctor_SyncToKB extends BaseTest {
 
         String res_Doctor = RegisteredDoctor_Detail.Detail(doctorId);
         checkResponse(res_Doctor);
-        String expert_id = UT.parseJson(data, "register_id");
-        String hospitalId = UT.parseJson(data, "hospital_id");
-        String name = UT.parseJson(data, "name");
-        String mobile = UT.parseJson(data, "mobile");
-        String academic_title_list = UT.parseJson(data, "academic_title_list");
-        String medical_title_list = UT.parseJson(data, "medical_title_list");
+        String expert_id = Generator.parseJson(data, "register_id");
+        String hospitalId = Generator.parseJson(data, "hospital_id");
+        String name = Generator.parseJson(data, "name");
+        String mobile = Generator.parseJson(data, "mobile");
+        String academic_title_list = Generator.parseJson(data, "academic_title_list");
+        String medical_title_list = Generator.parseJson(data, "medical_title_list");
 
         res = KBExpert_Detail.Detail(expert_id);
         checkResponse(res);
-        Assert.assertEquals(UT.parseJson(data, "register_id"), doctorId);
-        Assert.assertEquals(UT.parseJson(data, "hospital_id"), hospitalId);
-        Assert.assertEquals(UT.parseJson(data, "certified_status"), "CERTIFIED");
-        Assert.assertEquals(UT.parseJson(data, "name"), name);
-        Assert.assertEquals(UT.parseJson(data, "mobile"), mobile);
-        Assert.assertEquals(UT.parseJson(data, "academic_title_list"), academic_title_list);
-        Assert.assertEquals(UT.parseJson(data, "medical_title_list"), medical_title_list);
+        Assert.assertEquals(Generator.parseJson(data, "register_id"), doctorId);
+        Assert.assertEquals(Generator.parseJson(data, "hospital_id"), hospitalId);
+        Assert.assertEquals(Generator.parseJson(data, "certified_status"), "CERTIFIED");
+        Assert.assertEquals(Generator.parseJson(data, "name"), name);
+        Assert.assertEquals(Generator.parseJson(data, "mobile"), mobile);
+        Assert.assertEquals(Generator.parseJson(data, "academic_title_list"), academic_title_list);
+        Assert.assertEquals(Generator.parseJson(data, "medical_title_list"), medical_title_list);
     }
 
     @Test
@@ -123,23 +123,23 @@ public class RegisteredDoctor_SyncToKB extends BaseTest {
 
         String res_Doctor = RegisteredDoctor_Detail.Detail(doctorId);
         checkResponse(res_Doctor);
-        Assert.assertEquals(UT.parseJson(data, "register_id"), expertId);
-        Assert.assertEquals(UT.parseJson(data, "is_verified"), "1");
-        Assert.assertEquals(UT.parseJson(data, "audit_state"), "AUDIT_PASS");
-        String hospitalId = UT.parseJson(data, "hospital_id");
-        String name = UT.parseJson(data, "name");
-        String mobile = UT.parseJson(data, "mobile");
-        String academic_title_list = UT.parseJson(data, "academic_title_list");
-        String medical_title_list = UT.parseJson(data, "medical_title_list");
+        Assert.assertEquals(Generator.parseJson(data, "register_id"), expertId);
+        Assert.assertEquals(Generator.parseJson(data, "is_verified"), "1");
+        Assert.assertEquals(Generator.parseJson(data, "audit_state"), "AUDIT_PASS");
+        String hospitalId = Generator.parseJson(data, "hospital_id");
+        String name = Generator.parseJson(data, "name");
+        String mobile = Generator.parseJson(data, "mobile");
+        String academic_title_list = Generator.parseJson(data, "academic_title_list");
+        String medical_title_list = Generator.parseJson(data, "medical_title_list");
 
         String res_Expert = KBExpert_Detail.Detail(expertId);
         checkResponse(res_Expert);
-        Assert.assertEquals(UT.parseJson(data, "register_id"), doctorId);
-        Assert.assertEquals(UT.parseJson(data, "hospital_id"), hospitalId);
-        Assert.assertEquals(UT.parseJson(data, "certified_status"), "CERTIFIED");
-        Assert.assertEquals(UT.parseJson(data, "name"), name);
-        Assert.assertEquals(UT.parseJson(data, "mobile"), mobile);
-        Assert.assertEquals(UT.parseJson(data, "academic_title_list"), academic_title_list);
-        Assert.assertEquals(UT.parseJson(data, "medical_title_list"), medical_title_list);
+        Assert.assertEquals(Generator.parseJson(data, "register_id"), doctorId);
+        Assert.assertEquals(Generator.parseJson(data, "hospital_id"), hospitalId);
+        Assert.assertEquals(Generator.parseJson(data, "certified_status"), "CERTIFIED");
+        Assert.assertEquals(Generator.parseJson(data, "name"), name);
+        Assert.assertEquals(Generator.parseJson(data, "mobile"), mobile);
+        Assert.assertEquals(Generator.parseJson(data, "academic_title_list"), academic_title_list);
+        Assert.assertEquals(Generator.parseJson(data, "medical_title_list"), medical_title_list);
     }
 }

@@ -1,14 +1,13 @@
 package com.mingyizhudao.qa.common;
 
 import com.mingyizhudao.qa.util.HttpRequest;
-import com.mingyizhudao.qa.util.UT;
+import com.mingyizhudao.qa.util.Generator;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 import org.apache.log4j.Logger;
 
 import java.io.*;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.Set;
 
 //created by tianjing on 2017/6/21
@@ -17,9 +16,9 @@ import java.util.Map;
 /**
  * Created by ttshmily on 28/4/2017.
  */
-public class KB {
+public class KnowledgeBase {
 
-    public static final Logger logger= Logger.getLogger(KB.class);
+    public static final Logger logger= Logger.getLogger(KnowledgeBase.class);
 
     public static String hospital_uri = "/api/v1/hospitals";
     public static HashMap<String, String> kb_hospital = new HashMap<>();
@@ -87,7 +86,7 @@ public class KB {
                 query.put("page", "1");
                 logger.debug(BaseTest.host_kb);
                 String res = HttpRequest.sendGet(BaseTest.host_kb + hospital_uri, query, "", null);
-                int total = Integer.parseInt(UT.parseJson(JSONObject.fromObject(res), "data:size"));
+                int total = Integer.parseInt(Generator.parseJson(JSONObject.fromObject(res), "data:size"));
                 int num = total / pageSize + 1;
                 int last_page_num = total - pageSize * (num - 1);
 
@@ -127,7 +126,7 @@ public class KB {
                 query.put("pageSize", "1");
                 query.put("page", "1");
                 String res = HttpRequest.sendGet(BaseTest.host_kb + doctor_uri, query, "");
-                int total = Integer.parseInt(UT.parseJson(JSONObject.fromObject(res), "data:size"));
+                int total = Integer.parseInt(Generator.parseJson(JSONObject.fromObject(res), "data:size"));
                 int num = total / pageSize + 1;
                 int last_page_num = total - pageSize * (num - 1);
 
@@ -162,7 +161,7 @@ public class KB {
                 fileToString(province_file,kb_province);
             }else {
                 String res = HttpRequest.sendGet(BaseTest.host_kb + province_uri, "", "", null);
-                int total = Integer.parseInt(UT.parseJson(JSONObject.fromObject(res), "data:list()"));
+                int total = Integer.parseInt(Generator.parseJson(JSONObject.fromObject(res), "data:list()"));
                 JSONArray province_list = JSONObject.fromObject(res).getJSONObject("data").getJSONArray("list");
                 for (int j = 0; j < total; j++) {
                     JSONObject province = province_list.getJSONObject(j);
@@ -187,7 +186,7 @@ public class KB {
                     HashMap<String, String> tmp = new HashMap<>();
                     query.replace("provinceId", key);
                     res = HttpRequest.sendGet(BaseTest.host_kb + city_uri, query, "", null);
-                    int total = Integer.parseInt(UT.parseJson(JSONObject.fromObject(res), "data:list()"));
+                    int total = Integer.parseInt(Generator.parseJson(JSONObject.fromObject(res), "data:list()"));
                     JSONArray city_list = JSONObject.fromObject(res).getJSONObject("data").getJSONArray("list");
                     for (int j = 0; j < total; j++) {
                         JSONObject city = city_list.getJSONObject(j);
@@ -211,7 +210,7 @@ public class KB {
                 String res = "";
                 res = HttpRequest.sendGet(BaseTest.host_kb + medical_uri, "", "", null);
                 logger.debug(res);
-                int total = Integer.parseInt(UT.parseJson(JSONObject.fromObject(res), "data:list()"));
+                int total = Integer.parseInt(Generator.parseJson(JSONObject.fromObject(res), "data:list()"));
                 JSONArray mt_list = JSONObject.fromObject(res).getJSONObject("data").getJSONArray("list");
                 for (int j = 0; j < total; j++) {
                     JSONObject mt = mt_list.getJSONObject(j);
@@ -234,7 +233,7 @@ public class KB {
             }else {
                 String res = "";
                 res = HttpRequest.sendGet(BaseTest.host_kb + academic_uri, "", "", null);
-                int total = Integer.parseInt(UT.parseJson(JSONObject.fromObject(res), "data:list()"));
+                int total = Integer.parseInt(Generator.parseJson(JSONObject.fromObject(res), "data:list()"));
                 JSONArray at_list = JSONObject.fromObject(res).getJSONObject("data").getJSONArray("list");
                 for (int j = 0; j < total; j++) {
                     JSONObject at = at_list.getJSONObject(j);
@@ -256,7 +255,7 @@ public class KB {
             }else {
                 String res = "";
                 res = HttpRequest.sendGet(BaseTest.host_kb + surgery_category_uri, "", "", null);
-                int total_1 = Integer.parseInt(UT.parseJson(JSONObject.fromObject(res), "data:list()")); // 一级分类个数
+                int total_1 = Integer.parseInt(Generator.parseJson(JSONObject.fromObject(res), "data:list()")); // 一级分类个数
                 JSONArray psc_list = JSONObject.fromObject(res).getJSONObject("data").getJSONArray("list");
                 for (int i = 0; i < total_1; i++) {
                     JSONObject psc = psc_list.getJSONObject(i);
@@ -286,7 +285,7 @@ public class KB {
                 for (String key : kb_surgery_category.keySet()) {
                     query.replace("surgeryCategoryId", key);
                     res = HttpRequest.sendGet(BaseTest.host_kb + surgery_uri, query, "", null);
-                    int total = Integer.parseInt(UT.parseJson(JSONObject.fromObject(res), "data:list()"));
+                    int total = Integer.parseInt(Generator.parseJson(JSONObject.fromObject(res), "data:list()"));
                     JSONArray surgery_list = JSONObject.fromObject(res).getJSONObject("data").getJSONArray("list");
                     for (int j = 0; j < surgery_list.size(); j++) {
                         JSONObject surgery = surgery_list.getJSONObject(j);
@@ -307,7 +306,7 @@ public class KB {
             }else {
                 String res = "";
                 res = HttpRequest.sendGet(BaseTest.host_kb + major_uri, "", "", null);
-                int total_1 = Integer.parseInt(UT.parseJson(JSONObject.fromObject(res), "data:list()")); // 一级分类个数
+                int total_1 = Integer.parseInt(Generator.parseJson(JSONObject.fromObject(res), "data:list()")); // 一级分类个数
                 JSONArray pdc_list = JSONObject.fromObject(res).getJSONObject("data").getJSONArray("list");
                 for (int i = 0; i < total_1; i++) {
                     JSONObject pdc = pdc_list.getJSONObject(i);
@@ -363,7 +362,7 @@ public class KB {
             }else {
                 String res = "";
                 res = HttpRequest.sendGet(BaseTest.host_kb + hospital_class_uri, "", "");
-                int total = Integer.parseInt(UT.parseJson(JSONObject.fromObject(res), "data:list()"));
+                int total = Integer.parseInt(Generator.parseJson(JSONObject.fromObject(res), "data:list()"));
                 JSONArray ct_list = JSONObject.fromObject(res).getJSONObject("data").getJSONArray("list");
                 for (int j = 0; j < total; j++) {
                     JSONObject ct = ct_list.getJSONObject(j);
@@ -386,7 +385,7 @@ public class KB {
             }else {
                 String res = "";
                 res = HttpRequest.sendGet(BaseTest.host_kb + hospital_type_uri, "", "");
-                int total = Integer.parseInt(UT.parseJson(JSONObject.fromObject(res), "data:list()"));
+                int total = Integer.parseInt(Generator.parseJson(JSONObject.fromObject(res), "data:list()"));
                 JSONArray tt_list = JSONObject.fromObject(res).getJSONObject("data").getJSONArray("list");
                 for (int j = 0; j < total; j++) {
                     JSONObject tt = tt_list.getJSONObject(j);
@@ -412,7 +411,7 @@ public class KB {
                     HashMap<String, String> pathValue = new HashMap<>();
                     pathValue.put("id", cityId);
                     res = HttpRequest.sendGet(BaseTest.host_kb + county_uri, "", "", pathValue);
-                    int total = Integer.parseInt(UT.parseJson(JSONObject.fromObject(res), "data:list()"));
+                    int total = Integer.parseInt(Generator.parseJson(JSONObject.fromObject(res), "data:list()"));
                     JSONArray country_list = JSONObject.fromObject(res).getJSONObject("data").getJSONArray("list");
                     for (int j = 0; j < total; j++) {
                         JSONObject country = country_list.getJSONObject(j);

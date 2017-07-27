@@ -1,8 +1,7 @@
 package com.mingyizhudao.qa.testcase.bdassistant;
 
-import com.mingyizhudao.qa.common.BaseTest;
 import com.mingyizhudao.qa.util.HttpRequest;
-import com.mingyizhudao.qa.util.UT;
+import com.mingyizhudao.qa.util.Generator;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 import org.apache.log4j.Logger;
@@ -47,7 +46,7 @@ public class DoctorListV2 extends DoctorList {
     public void test_02_登录用户_主管查看下属() {
         String res = "";
         HashMap<String, String> query = new HashMap<>();
-        String agent_contact_id = UT.randomEmployeeId();
+        String agent_contact_id = Generator.randomEmployeeId();
         query.put("agent_contact_id", agent_contact_id);
 
         //TODO 每个地推所对应的城市需要提前准备好
@@ -89,7 +88,7 @@ public class DoctorListV2 extends DoctorList {
     public void test_04_查看医生列表_不传入城市ID得到所有负责区域的医生() {
         String res = "";
         HashMap<String, String> query = new HashMap<>();
-        String agent_contact_id = UT.randomEmployeeId();
+        String agent_contact_id = Generator.randomEmployeeId();
         query.put("agent_contact_id", agent_contact_id);
 
 
@@ -116,7 +115,7 @@ public class DoctorListV2 extends DoctorList {
     public void test_05_查看医生列表_传入城市ID得到该城市区域的医生() {
         String res = "";
         HashMap<String, String> query = new HashMap<>();
-        String agent_contact_id = UT.randomEmployeeId();
+        String agent_contact_id = Generator.randomEmployeeId();
         query.put("agent_contact_id", agent_contact_id);
 
         HashMap<String, List<String>> cities = PersonalInfoV2.BDInfo(bda_token_staff);
@@ -143,14 +142,14 @@ public class DoctorListV2 extends DoctorList {
     public void test_06_查看医生列表_传入medical_title() {
         String res = "";
         HashMap<String, String> query = new HashMap<>();
-        String agent_contact_id = UT.randomEmployeeId();
+        String agent_contact_id = Generator.randomEmployeeId();
         query.put("agent_contact_id", agent_contact_id);
 
         // TODO
         String cityId = "";
         query.put("city_id", cityId);
 
-        String medical_title_list = UT.randomMedicalId();
+        String medical_title_list = Generator.randomMedicalId();
         query.put("medical_title", medical_title_list);
         try {
             res = HttpRequest.sendGet(host_bda + uri, query, bda_token);
@@ -173,14 +172,14 @@ public class DoctorListV2 extends DoctorList {
     public void test_06_查看医生列表_传入academic_title() {
         String res = "";
         HashMap<String, String> query = new HashMap<>();
-        String agent_contact_id = UT.randomEmployeeId();
+        String agent_contact_id = Generator.randomEmployeeId();
         query.put("agent_contact_id", agent_contact_id);
 
         // TODO
         String cityId = "";
         query.put("city_id", cityId);
 
-        String academic_title_list = UT.randomAcademicId();
+        String academic_title_list = Generator.randomAcademicId();
         query.put("academic_title", academic_title_list);
         try {
             res = HttpRequest.sendGet(host_bda + uri, query, bda_token);
@@ -210,7 +209,7 @@ public class DoctorListV2 extends DoctorList {
         String cityId = "";
         query.put("city_id", cityId);
 
-        String academic_title_list = UT.randomAcademicId();
+        String academic_title_list = Generator.randomAcademicId();
         query.put("academic_title", academic_title_list);
         try {
             res = HttpRequest.sendGet(host_bda + uri, query, bda_token_staff);

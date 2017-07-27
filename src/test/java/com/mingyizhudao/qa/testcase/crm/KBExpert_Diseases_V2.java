@@ -4,14 +4,13 @@ import com.mingyizhudao.qa.common.BaseTest;
 import com.mingyizhudao.qa.dataprofile.crm.ExpertProfile;
 import com.mingyizhudao.qa.dataprofile.doctor.DoctorProfile;
 import com.mingyizhudao.qa.util.HttpRequest;
-import com.mingyizhudao.qa.util.UT;
+import com.mingyizhudao.qa.util.Generator;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 import org.apache.log4j.Logger;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
-import javax.print.Doc;
 import java.io.IOException;
 import java.util.HashMap;
 
@@ -46,10 +45,10 @@ public class KBExpert_Diseases_V2 extends BaseTest {
         Assert.assertEquals(code, "1000000");
         res = KBExpert_Detail.Detail(expertId);
         checkResponse(res);
-        Assert.assertEquals(UT.parseJson(data, "specialty_list()"), "5");
+        Assert.assertEquals(Generator.parseJson(data, "specialty_list()"), "5");
         res = RegisteredDoctor_Detail.Detail(doctorId);
         checkResponse(res);
-        Assert.assertEquals(UT.parseJson(data, "exp_list()"), "5");
+        Assert.assertEquals(Generator.parseJson(data, "exp_list()"), "5");
     }
 
     @Test
@@ -92,7 +91,7 @@ public class KBExpert_Diseases_V2 extends BaseTest {
         Assert.assertEquals(code, "1000000");
         res = KBExpert_Detail.Detail(expertId);
         checkResponse(res);
-        Assert.assertEquals(UT.parseJson(data, "specialty_list()"), "5");
+        Assert.assertEquals(Generator.parseJson(data, "specialty_list()"), "5");
     }
 
     public JSONObject DiseaseJson(int cat_count, int dis_count) {
@@ -100,11 +99,11 @@ public class KBExpert_Diseases_V2 extends BaseTest {
         JSONArray specialty_list = new JSONArray();
         JSONObject specialty = new JSONObject();
         for(int i=0; i<cat_count; i++) {
-            String categoryId = UT.randomMajorId();
-            specialty.put("category", JSONObject.fromObject("{\"id\": " + categoryId + ",\"name\": \"" + UT.majorName(categoryId) + "\"}"));
+            String categoryId = Generator.randomMajorId();
+            specialty.put("category", JSONObject.fromObject("{\"id\": " + categoryId + ",\"name\": \"" + Generator.majorName(categoryId) + "\"}"));
             for(int j=0; j<dis_count; j++) {
-                String diseaseId = UT.randomDiseaseIdUnder(categoryId);
-                specialty.accumulate("disease_list", JSONObject.fromObject("{\"id\": "+diseaseId+",\"name\": \""+UT.diseaseName(diseaseId)+"\"}"));
+                String diseaseId = Generator.randomDiseaseIdUnder(categoryId);
+                specialty.accumulate("disease_list", JSONObject.fromObject("{\"id\": "+diseaseId+",\"name\": \""+ Generator.diseaseName(diseaseId)+"\"}"));
             }
             specialty_list.add(specialty);
             specialty.clear();

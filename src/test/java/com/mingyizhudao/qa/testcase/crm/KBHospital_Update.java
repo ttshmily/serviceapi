@@ -1,10 +1,10 @@
 package com.mingyizhudao.qa.testcase.crm;
 
 import com.mingyizhudao.qa.common.BaseTest;
-import com.mingyizhudao.qa.common.KB;
+import com.mingyizhudao.qa.common.KnowledgeBase;
 import com.mingyizhudao.qa.dataprofile.crm.HospitalProfile;
 import com.mingyizhudao.qa.util.HttpRequest;
-import com.mingyizhudao.qa.util.UT;
+import com.mingyizhudao.qa.util.Generator;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 import org.apache.log4j.Logger;
@@ -127,7 +127,7 @@ public class KBHospital_Update extends BaseTest {
         HashMap<String, String> pathValue = new HashMap<>();
         pathValue.put("hospital_id", hospitalId);
         HospitalProfile hpModified = new HospitalProfile(false);
-        String hospital_class_list = UT.randomKey(KB.kb_hospital_class);
+        String hospital_class_list = Generator.randomKey(KnowledgeBase.kb_hospital_class);
         hpModified.body.put("hospital_class_list", hospital_class_list);
         try {
             res = HttpRequest.sendPut(host_crm+uri, hpModified.body.toString(), crm_token, pathValue);
@@ -152,7 +152,7 @@ public class KBHospital_Update extends BaseTest {
         HashMap<String, String> pathValue = new HashMap<>();
         pathValue.put("hospital_id", hospitalId);
         HospitalProfile hpModified = new HospitalProfile(false);
-        String type_list = UT.randomKey(KB.kb_hospital_type);
+        String type_list = Generator.randomKey(KnowledgeBase.kb_hospital_type);
         hpModified.body.put("type_list", type_list);
         try {
             res = HttpRequest.sendPut(host_crm+uri, hpModified.body.toString(), crm_token, pathValue);
@@ -177,7 +177,7 @@ public class KBHospital_Update extends BaseTest {
         HashMap<String, String> pathValue = new HashMap<>();
         pathValue.put("hospital_id", hospitalId);
         HospitalProfile hpModified = new HospitalProfile(false);
-        String city_id = UT.randomCityId();
+        String city_id = Generator.randomCityId();
         hpModified.body.put("city_id", city_id);
         try {
             res = HttpRequest.sendPut(host_crm+uri, hpModified.body.toString(), crm_token, pathValue);
@@ -190,7 +190,7 @@ public class KBHospital_Update extends BaseTest {
         String actual_city_id = hospitalInfo.get("city_id");
         String actual_city_name = hospitalInfo.get("city_name");
         Assert.assertEquals(actual_city_id, city_id, "医院城市没有更新成功");
-        Assert.assertEquals(actual_city_name, UT.cityName(city_id), "医院城市没有更新成功");
+        Assert.assertEquals(actual_city_name, Generator.cityName(city_id), "医院城市没有更新成功");
 
         hpModified.body.replace("city_id", "11"+city_id);
         try {
@@ -202,7 +202,7 @@ public class KBHospital_Update extends BaseTest {
         }
         hospitalInfo = KBHospital_Detail.Detail(hospitalId);
         Assert.assertEquals(hospitalInfo.get("city_id"), city_id, "医院城市没有更新成功");
-        Assert.assertEquals(hospitalInfo.get("city_name"), UT.cityName(city_id), "医院城市没有更新成功");
+        Assert.assertEquals(hospitalInfo.get("city_name"), Generator.cityName(city_id), "医院城市没有更新成功");
     }
     //    body.put("county_id", UT.randomCountryId());
     @Test
@@ -215,7 +215,7 @@ public class KBHospital_Update extends BaseTest {
         HashMap<String, String> pathValue = new HashMap<>();
         pathValue.put("hospital_id", hospitalId);
         HospitalProfile hpModified = new HospitalProfile(false);
-        String county_id = UT.randomCountyId();
+        String county_id = Generator.randomCountyId();
         hpModified.body.put("county_id", county_id);
         try {
             res = HttpRequest.sendPut(host_crm+uri, hpModified.body.toString(), crm_token, pathValue);
@@ -229,7 +229,7 @@ public class KBHospital_Update extends BaseTest {
         String actual_county_id = hospitalInfo.get("county_id");
         String actual_county_name = hospitalInfo.get("county_name");
         Assert.assertEquals(actual_county_id, county_id, "医院区县没有更新成功");
-        Assert.assertEquals(actual_county_name, UT.countyName(county_id), "医院区县没有更新成功");
+        Assert.assertEquals(actual_county_name, Generator.countyName(county_id), "医院区县没有更新成功");
     }
     //    body.put("phone", "" + UT.randomPhone());
     @Test
@@ -242,7 +242,7 @@ public class KBHospital_Update extends BaseTest {
         HashMap<String, String> pathValue = new HashMap<>();
         pathValue.put("hospital_id", hospitalId);
         HospitalProfile hpModified = new HospitalProfile(false);
-        String phone = UT.randomPhone();
+        String phone = Generator.randomPhone();
         hpModified.body.put("phone", phone);
         try {
             res = HttpRequest.sendPut(host_crm+uri, hpModified.body.toString(), crm_token, pathValue);
@@ -266,7 +266,7 @@ public class KBHospital_Update extends BaseTest {
         HashMap<String, String> pathValue = new HashMap<>();
         pathValue.put("hospital_id", hospitalId);
         HospitalProfile hpModified = new HospitalProfile(false);
-        String description = "修改描述" + UT.randomString(70);
+        String description = "修改描述" + Generator.randomString(70);
         hpModified.body.put("description", description);
         try {
             res = HttpRequest.sendPut(host_crm+uri, hpModified.body.toString(), crm_token, pathValue);

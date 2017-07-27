@@ -2,7 +2,7 @@ package com.mingyizhudao.qa.testcase.doctor;
 
 import com.mingyizhudao.qa.common.BaseTest;
 import com.mingyizhudao.qa.util.HttpRequest;
-import com.mingyizhudao.qa.util.UT;
+import com.mingyizhudao.qa.util.Generator;
 import org.apache.log4j.Logger;
 import org.testng.Assert;
 import org.testng.annotations.Test;
@@ -31,10 +31,10 @@ public class GetDiseasesInCategory extends BaseTest {
             logger.error(e);
         }
         checkResponse(res);
-        Assert.assertNotNull(UT.parseJson(data, "diseases()"));
-        Assert.assertNotEquals(UT.parseJson(data, "diseases():id"), "");
+        Assert.assertNotNull(Generator.parseJson(data, "diseases()"));
+        Assert.assertNotEquals(Generator.parseJson(data, "diseases():id"), "");
 //        Assert.assertEquals(parseJson(data, "diseases():disease_category_id"), "6");
-        Assert.assertNotEquals(UT.parseJson(data, "diseases():name"), "");
+        Assert.assertNotEquals(Generator.parseJson(data, "diseases():name"), "");
     }
 
     @Test
@@ -50,7 +50,7 @@ public class GetDiseasesInCategory extends BaseTest {
         }
         checkResponse(res);
         Assert.assertEquals(code, "1000000");
-        Assert.assertNotNull(UT.parseJson(data, "diseases()"));
+        Assert.assertNotNull(Generator.parseJson(data, "diseases()"));
     }
 
     @Test

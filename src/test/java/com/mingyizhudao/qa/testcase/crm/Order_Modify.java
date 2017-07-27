@@ -3,7 +3,7 @@ package com.mingyizhudao.qa.testcase.crm;
 import com.mingyizhudao.qa.common.BaseTest;
 import com.mingyizhudao.qa.testcase.doctor.CreateOrder;
 import com.mingyizhudao.qa.util.HttpRequest;
-import com.mingyizhudao.qa.util.UT;
+import com.mingyizhudao.qa.util.Generator;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 import org.apache.log4j.Logger;
@@ -32,7 +32,7 @@ public class Order_Modify extends BaseTest {
         HashMap<String, String> pathValue = new HashMap<>();
         pathValue.put("orderNumber", order_number);
         JSONObject body = new JSONObject();
-        String name = UT.randomString(4);
+        String name = Generator.randomString(4);
         body.put("patient_name","修改的姓名"+name);
         try {
             res = HttpRequest.sendPut(host_crm+uri, body.toString(), crm_token, pathValue);
@@ -44,7 +44,7 @@ public class Order_Modify extends BaseTest {
         Assert.assertNotNull(data, "list");
         res = Order_Detail.Detail(order_number);
         checkResponse(res);
-        Assert.assertEquals(UT.parseJson(data, "patient_name"), "修改的姓名"+name);
+        Assert.assertEquals(Generator.parseJson(data, "patient_name"), "修改的姓名"+name);
     }
 
     @Test
@@ -67,7 +67,7 @@ public class Order_Modify extends BaseTest {
         Assert.assertNotNull(data, "list");
         res = Order_Detail.Detail(order_number);
         checkResponse(res);
-        Assert.assertEquals(UT.parseJson(data, "patient_age"), "44");
+        Assert.assertEquals(Generator.parseJson(data, "patient_age"), "44");
     }
 
     @Test
@@ -79,7 +79,7 @@ public class Order_Modify extends BaseTest {
         HashMap<String, String> pathValue = new HashMap<>();
         pathValue.put("orderNumber", order_number);
         JSONObject body = new JSONObject();
-        String diseaseId = UT.randomDiseaseId();
+        String diseaseId = Generator.randomDiseaseId();
         body.put("major_disease_id", diseaseId);
         try {
             res = HttpRequest.sendPut(host_crm+uri, body.toString(), crm_token, pathValue);
@@ -91,8 +91,8 @@ public class Order_Modify extends BaseTest {
         Assert.assertNotNull(data, "list");
         res = Order_Detail.Detail(order_number);
         checkResponse(res);
-        Assert.assertEquals(UT.parseJson(data, "major_disease_id"), diseaseId);
-        Assert.assertEquals(UT.parseJson(data, "major_disease_name"), UT.diseaseName(diseaseId));
+        Assert.assertEquals(Generator.parseJson(data, "major_disease_id"), diseaseId);
+        Assert.assertEquals(Generator.parseJson(data, "major_disease_name"), Generator.diseaseName(diseaseId));
     }
 
     @Test
@@ -104,7 +104,7 @@ public class Order_Modify extends BaseTest {
         HashMap<String, String> pathValue = new HashMap<>();
         pathValue.put("orderNumber", order_number);
         JSONObject body = new JSONObject();
-        String diseaseId = UT.randomDiseaseId();
+        String diseaseId = Generator.randomDiseaseId();
         body.put("minor_disease_id",diseaseId);
         try {
             res = HttpRequest.sendPut(host_crm+uri, body.toString(), crm_token, pathValue);
@@ -116,8 +116,8 @@ public class Order_Modify extends BaseTest {
         Assert.assertNotNull(data, "list");
         res = Order_Detail.Detail(order_number);
         checkResponse(res);
-        Assert.assertEquals(UT.parseJson(data, "minor_disease_id"), diseaseId);
-        Assert.assertEquals(UT.parseJson(data, "minor_disease_name"), UT.diseaseName(diseaseId));
+        Assert.assertEquals(Generator.parseJson(data, "minor_disease_id"), diseaseId);
+        Assert.assertEquals(Generator.parseJson(data, "minor_disease_name"), Generator.diseaseName(diseaseId));
     }
 
     @Test
@@ -140,7 +140,7 @@ public class Order_Modify extends BaseTest {
         Assert.assertNotNull(data, "list");
         res = Order_Detail.Detail(order_number);
         checkResponse(res);
-        Assert.assertEquals(UT.parseJson(data, "patient_gender"), "2");
+        Assert.assertEquals(Generator.parseJson(data, "patient_gender"), "2");
     }
 
     @Test
@@ -164,7 +164,7 @@ public class Order_Modify extends BaseTest {
         Assert.assertNotNull(data, "list");
         res = Order_Detail.Detail(order_number);
         checkResponse(res);
-        Assert.assertEquals(UT.parseJson(data, "patient_phone"), "13799990123");
+        Assert.assertEquals(Generator.parseJson(data, "patient_phone"), "13799990123");
     }
 
     @Test(enabled = false) // 可修改，由前端控制
@@ -190,7 +190,7 @@ public class Order_Modify extends BaseTest {
         Assert.assertNotEquals(code, "1000000");
         res = Order_Detail.Detail(order_number);
         checkResponse(res);
-        Assert.assertNotEquals(UT.parseJson(data, "patient_mobile"), "13799990123");
+        Assert.assertNotEquals(Generator.parseJson(data, "patient_mobile"), "13799990123");
     }
 
     @Test(enabled = false)
@@ -211,7 +211,7 @@ public class Order_Modify extends BaseTest {
         Assert.assertNotEquals(code, "1000000");
         res = Order_Detail.Detail(order_number);
         checkResponse(res);
-        Assert.assertNotEquals(UT.parseJson(data, "patient_mobile"), "13799990123");
+        Assert.assertNotEquals(Generator.parseJson(data, "patient_mobile"), "13799990123");
     }
 
     @Test
@@ -220,7 +220,7 @@ public class Order_Modify extends BaseTest {
         String res = "";
         String order_number = CreateOrder.CreateOrder(mainToken); // create an order
         Order_ReceiveTask.receiveTask(order_number);
-        String expId = UT.randomExpertId();
+        String expId = Generator.randomExpertId();
         Order_RecommendDoctor.recommendDoctor(order_number, expId);
         HashMap<String, String> pathValue = new HashMap<>();
         pathValue.put("orderNumber", order_number);
@@ -236,10 +236,10 @@ public class Order_Modify extends BaseTest {
         Assert.assertEquals(code, "1000000");
         res = Order_Detail.Detail(order_number);
         checkResponse(res);
-        Assert.assertEquals(UT.parseJson(data, "medical_record_pictures(0):key"), "2017/05/04/1265834e-97d8-44a0-95e7-047c7facaee8/IMG_20170429_102737.jpg");
-        Assert.assertEquals(UT.parseJson(data, "medical_record_pictures(0):type"), "1");
-        Assert.assertNotNull(UT.parseJson(data, "medical_record_pictures(0):thumbnailPicture"), "缺少缩略图");
-        Assert.assertNotNull(UT.parseJson(data, "medical_record_pictures(0):largePicture"), "缺少大图");
+        Assert.assertEquals(Generator.parseJson(data, "medical_record_pictures(0):key"), "2017/05/04/1265834e-97d8-44a0-95e7-047c7facaee8/IMG_20170429_102737.jpg");
+        Assert.assertEquals(Generator.parseJson(data, "medical_record_pictures(0):type"), "1");
+        Assert.assertNotNull(Generator.parseJson(data, "medical_record_pictures(0):thumbnailPicture"), "缺少缩略图");
+        Assert.assertNotNull(Generator.parseJson(data, "medical_record_pictures(0):largePicture"), "缺少大图");
 
         pics = JSONArray.fromObject("[]");
         body.replace("medical_record_pictures",pics);
@@ -252,6 +252,6 @@ public class Order_Modify extends BaseTest {
         Assert.assertEquals(code, "1000000");
         res = Order_Detail.Detail(order_number);
         checkResponse(res);
-        Assert.assertEquals(UT.parseJson(data, "medical_record_pictures()"), "0");
+        Assert.assertEquals(Generator.parseJson(data, "medical_record_pictures()"), "0");
     }
 }

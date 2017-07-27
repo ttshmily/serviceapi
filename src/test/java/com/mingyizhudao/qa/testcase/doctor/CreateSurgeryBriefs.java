@@ -6,15 +6,13 @@ import com.mingyizhudao.qa.testcase.crm.*;
 import com.mingyizhudao.qa.testcase.login.CheckVerifyCode;
 import com.mingyizhudao.qa.testcase.login.SendVerifyCode;
 import com.mingyizhudao.qa.util.HttpRequest;
-import com.mingyizhudao.qa.util.UT;
+import com.mingyizhudao.qa.util.Generator;
 import net.sf.json.JSONObject;
 import org.apache.log4j.Logger;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
 import java.io.IOException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.HashMap;
 
 /**
@@ -78,11 +76,11 @@ public class CreateSurgeryBriefs extends BaseTest {
         Assert.assertEquals(order.getString("surgery_brief_date").substring(0, 10), sb.body.getJSONObject("order").getString("surgery_brief_date").replace('-', '/'));
         Assert.assertEquals(order.getString("surgery_brief_description"), sb.body.getJSONObject("order").getString("surgery_brief_description"));
         Assert.assertEquals(order.getString("surgery_brief_surgery_id"), sb.body.getJSONObject("order").getString("surgery_brief_surgery_id"));
-        Assert.assertEquals(order.getString("surgery_brief_surgery_name"), UT.surgeryName(sb.body.getJSONObject("order").getString("surgery_brief_surgery_id")));
+        Assert.assertEquals(order.getString("surgery_brief_surgery_name"), Generator.surgeryName(sb.body.getJSONObject("order").getString("surgery_brief_surgery_id")));
         Assert.assertEquals(order.getString("surgery_brief_final_diagnosed_disease_id"), sb.body.getJSONObject("order").getString("surgery_brief_final_diagnosed_disease_id"));
-        Assert.assertEquals(order.getString("surgery_brief_final_diagnosed_disease_name"), UT.diseaseName(sb.body.getJSONObject("order").getString("surgery_brief_final_diagnosed_disease_id")));
+        Assert.assertEquals(order.getString("surgery_brief_final_diagnosed_disease_name"), Generator.diseaseName(sb.body.getJSONObject("order").getString("surgery_brief_final_diagnosed_disease_id")));
         Assert.assertEquals(order.getString("surgery_brief_hospital_id"), sb.body.getJSONObject("order").getString("surgery_brief_hospital_id"));
-        Assert.assertEquals(order.getString("surgery_brief_hospital_name"), UT.hospitalName(sb.body.getJSONObject("order").getString("surgery_brief_hospital_id")));
+        Assert.assertEquals(order.getString("surgery_brief_hospital_name"), Generator.hospitalName(sb.body.getJSONObject("order").getString("surgery_brief_hospital_id")));
     }
 
     @Test

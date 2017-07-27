@@ -8,7 +8,7 @@ import com.mingyizhudao.qa.testcase.doctor.*;
 import com.mingyizhudao.qa.testcase.login.CheckVerifyCode;
 import com.mingyizhudao.qa.testcase.login.SendVerifyCode;
 import com.mingyizhudao.qa.util.HttpRequest;
-import com.mingyizhudao.qa.util.UT;
+import com.mingyizhudao.qa.util.Generator;
 import net.sf.json.JSONException;
 import net.sf.json.JSONObject;
 import org.apache.log4j.Logger;
@@ -99,7 +99,7 @@ public class BaseTest {
 
     @BeforeSuite
     public void setUpSuite() throws Exception {
-        KB.init();
+        KnowledgeBase.init();
         crm_token = JSONObject.fromObject(HttpRequest.sendGet("http://services.dev.myzd.info/crm/api/internal/devToken" , "email="+mainOperatorId, "")).getJSONObject("data").getString("token");
 //        bda_token = JSONObject.fromObject(HttpRequest.sendGet("http://work.myzd.info/wx/internal/api/dev-tokens" , "", "")).getJSONObject("data").getJSONObject("chao.fang@mingyizhudao.com").getString("token");
 //        bda_token_staff = JSONObject.fromObject(HttpRequest.sendGet("http://work.myzd.info/wx/internal/api/dev-tokens" , "", "")).getJSONObject("data").getJSONObject("lei.wang@mingyizhudao.com").getString("token");
@@ -114,7 +114,7 @@ public class BaseTest {
         mainDoctorId = mainDoctorInfo.get("id");
         mainDoctorName = mainDP.body.getJSONObject("doctor").getString("name");
         mainDoctorHospitalId = mainDoctorInfo.get("hospitalId");
-        mainDoctorHospitalName = UT.hospitalName(mainDoctorHospitalId);
+        mainDoctorHospitalName = Generator.hospitalName(mainDoctorHospitalId);
         mainExpertId = mainDoctorInfo.get("expert_id");
 
         logger.info("mainDoctorId为:\t"+mainDoctorId);
@@ -222,7 +222,7 @@ public class BaseTest {
         info.put("hospitalId", doctorHospitalId);
         logger.info("doctorName为:\t"+dp.body.getJSONObject("doctor").getString("name"));
         logger.info("doctorHospitalId为:\t"+doctorHospitalId);
-        logger.info("doctorHospitalName为:\t"+ UT.hospitalName(doctorHospitalId));
+        logger.info("doctorHospitalName为:\t"+ Generator.hospitalName(doctorHospitalId));
         return info;
     }
 

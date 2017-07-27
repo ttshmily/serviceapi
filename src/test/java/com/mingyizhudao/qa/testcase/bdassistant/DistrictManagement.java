@@ -2,7 +2,7 @@ package com.mingyizhudao.qa.testcase.bdassistant;
 
 import com.mingyizhudao.qa.common.BaseTest;
 import com.mingyizhudao.qa.util.HttpRequest;
-import com.mingyizhudao.qa.util.UT;
+import com.mingyizhudao.qa.util.Generator;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 import org.apache.log4j.Logger;
@@ -11,7 +11,6 @@ import org.testng.annotations.Test;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -32,10 +31,10 @@ public class DistrictManagement extends BaseTest {
             String cityId = cityList.get(i);
             JSONObject cityRow = new JSONObject();
             cityRow.put("city_id", cityId);
-            cityRow.put("city_name", UT.cityName(cityId));
-            String province_id = UT.randomProvinceId();
+            cityRow.put("city_name", Generator.cityName(cityId));
+            String province_id = Generator.randomProvinceId();
             cityRow.put("province_id", province_id);
-            cityRow.put("province_name", UT.provinceName(province_id));
+            cityRow.put("province_name", Generator.provinceName(province_id));
             cities.add(cityRow);
         }
         body.put("list", cities);
@@ -51,18 +50,18 @@ public class DistrictManagement extends BaseTest {
     public void test_01_给下属BD分配区域(){
         String res = "";
         JSONObject body = new JSONObject();
-        String staff_id = UT.randomEmployeeId();
+        String staff_id = Generator.randomEmployeeId();
         body.put("staff_id", staff_id);
         List<String> city_list = new ArrayList<>();
         JSONArray cities = new JSONArray();
         for(int i=0; i<2; i++) {
             JSONObject cityRow = new JSONObject();
-            String city_id = UT.randomCityId();
+            String city_id = Generator.randomCityId();
             cityRow.put("city_id", city_id);
-            cityRow.put("city_name", UT.cityName(city_id));
-            String province_id = UT.randomProvinceId();
+            cityRow.put("city_name", Generator.cityName(city_id));
+            String province_id = Generator.randomProvinceId();
             cityRow.put("province_id", province_id);
-            cityRow.put("province_name", UT.provinceName(province_id));
+            cityRow.put("province_name", Generator.provinceName(province_id));
             cities.add(cityRow);
             city_list.add(city_id);
         }

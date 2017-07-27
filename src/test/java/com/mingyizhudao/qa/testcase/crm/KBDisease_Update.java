@@ -3,7 +3,7 @@ package com.mingyizhudao.qa.testcase.crm;
 import com.mingyizhudao.qa.common.BaseTest;
 import com.mingyizhudao.qa.dataprofile.crm.DiseaseProfile;
 import com.mingyizhudao.qa.util.HttpRequest;
-import com.mingyizhudao.qa.util.UT;
+import com.mingyizhudao.qa.util.Generator;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 import org.apache.log4j.Logger;
@@ -61,7 +61,7 @@ public class KBDisease_Update extends BaseTest {
         HashMap<String, String> pathValue = new HashMap<>();
         pathValue.put("id", info.get("id"));
         DiseaseProfile dpModified = new DiseaseProfile(false);
-        dpModified.body.put("name", "修改疾病名称" + UT.randomString(2));
+        dpModified.body.put("name", "修改疾病名称" + Generator.randomString(2));
         try {
             res = HttpRequest.sendPut(host_crm + uri, dpModified.body.toString(), crm_token, pathValue);
         } catch (IOException e) {
@@ -69,10 +69,10 @@ public class KBDisease_Update extends BaseTest {
         }
         checkResponse(res);
         Assert.assertEquals(code, "1000000");
-        Assert.assertEquals(UT.parseJson(data, "name"), dpModified.body.getString("name"));
+        Assert.assertEquals(Generator.parseJson(data, "name"), dpModified.body.getString("name"));
 
         dpModified.body.remove("name");
-        dpModified.body.put("description", "修改疾病描述" + UT.randomString(30));
+        dpModified.body.put("description", "修改疾病描述" + Generator.randomString(30));
         try {
             res = HttpRequest.sendPut(host_crm + uri, dpModified.body.toString(), crm_token, pathValue);
         } catch (IOException e) {
@@ -80,7 +80,7 @@ public class KBDisease_Update extends BaseTest {
         }
         checkResponse(res);
         Assert.assertEquals(code, "1000000");
-        Assert.assertEquals(UT.parseJson(data, "description"), dpModified.body.getString("description"));
+        Assert.assertEquals(Generator.parseJson(data, "description"), dpModified.body.getString("description"));
 
         dpModified.body.remove("description");
         dpModified.body.put("user_visible", 0);
@@ -91,7 +91,7 @@ public class KBDisease_Update extends BaseTest {
         }
         checkResponse(res);
         Assert.assertEquals(code, "1000000");
-        Assert.assertEquals(UT.parseJson(data, "user_visible"), "false");
+        Assert.assertEquals(Generator.parseJson(data, "user_visible"), "false");
 
         dpModified.body.remove("user_visible");
         dpModified.body.put("is_common", 0);
@@ -102,7 +102,7 @@ public class KBDisease_Update extends BaseTest {
         }
         checkResponse(res);
         Assert.assertEquals(code, "1000000");
-        Assert.assertEquals(UT.parseJson(data, "is_common"), "0");
+        Assert.assertEquals(Generator.parseJson(data, "is_common"), "0");
 
     }
 
@@ -121,23 +121,23 @@ public class KBDisease_Update extends BaseTest {
         List<String> input_ids = new ArrayList<>();
         List<String> output_ids = new ArrayList<>();
         JSONObject categoryId = new JSONObject();
-        String id = UT.randomMajorId();
+        String id = Generator.randomMajorId();
         categoryId.put("disease_category_id", id);
         dpModified.body.accumulate("category_list", categoryId);
         input_ids.add(id);
-        id = UT.randomMajorId();
+        id = Generator.randomMajorId();
         categoryId.replace("disease_category_id", id);
         dpModified.body.accumulate("category_list", categoryId);
         input_ids.add(id);
-        id = UT.randomMajorId();
+        id = Generator.randomMajorId();
         categoryId.replace("disease_category_id", id);
         dpModified.body.accumulate("category_list", categoryId);
         input_ids.add(id);
-        id = UT.randomMajorId();
+        id = Generator.randomMajorId();
         categoryId.replace("disease_category_id", id);
         dpModified.body.accumulate("category_list", categoryId);
         input_ids.add(id);
-        id = UT.randomMajorId();
+        id = Generator.randomMajorId();
         categoryId.replace("disease_category_id", id);
         dpModified.body.accumulate("category_list", categoryId);
         input_ids.add(id);
@@ -181,15 +181,15 @@ public class KBDisease_Update extends BaseTest {
         List<String> input_ids = new ArrayList<>();
         List<String> output_ids = new ArrayList<>();
         JSONObject categoryId = new JSONObject();
-        String id = UT.randomMajorId();
+        String id = Generator.randomMajorId();
         categoryId.put("disease_category_id", id);
         dpModified.body.accumulate("category_list", categoryId);
         input_ids.add(id);
-        id = UT.randomMajorId();
+        id = Generator.randomMajorId();
         categoryId.replace("disease_category_id", id);
         dpModified.body.accumulate("category_list", categoryId);
         input_ids.add(id);
-        id = UT.randomMajorId();
+        id = Generator.randomMajorId();
         categoryId.replace("disease_category_id", id);
         dpModified.body.accumulate("category_list", categoryId);
         input_ids.add(id);
@@ -241,15 +241,15 @@ public class KBDisease_Update extends BaseTest {
         List<String> input_ids = new ArrayList<>();
         List<String> output_ids = new ArrayList<>();
         JSONObject categoryId = new JSONObject();
-        String id = UT.randomMajorId();
+        String id = Generator.randomMajorId();
         categoryId.put("disease_category_id", id);
         dpModified.body.accumulate("category_list", categoryId);
         input_ids.add(id);
-        id = UT.randomMajorId();
+        id = Generator.randomMajorId();
         categoryId.replace("disease_category_id", id);
         dpModified.body.accumulate("category_list", categoryId);
         input_ids.add(id);
-        id = UT.randomMajorId();
+        id = Generator.randomMajorId();
         categoryId.replace("disease_category_id", id);
         dpModified.body.accumulate("category_list", categoryId);
         input_ids.add(id);

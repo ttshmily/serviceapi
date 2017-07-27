@@ -2,7 +2,7 @@ package com.mingyizhudao.qa.testcase.bdassistant;
 
 import com.mingyizhudao.qa.common.BaseTest;
 import com.mingyizhudao.qa.util.HttpRequest;
-import com.mingyizhudao.qa.util.UT;
+import com.mingyizhudao.qa.util.Generator;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 import org.apache.log4j.Logger;
@@ -42,7 +42,7 @@ public class OrderList extends BaseTest {
 
         String res = "";
         HashMap<String, String> map = new HashMap<>();
-        map.put("agent_contact_id", UT.randomEmployeeId());
+        map.put("agent_contact_id", Generator.randomEmployeeId());
         try {
             res = HttpRequest.sendGet(host_bda + uri, map, bda_token, null);
         } catch (IOException e) {
@@ -50,9 +50,9 @@ public class OrderList extends BaseTest {
         }
         checkResponse(res);
         Assert.assertEquals(code, "1000000", "有token应该调用成功");
-        Assert.assertNotNull(UT.parseJson(data, "list(0):agent_name"), "下级医生姓名字段缺失");
-        Assert.assertNotNull(UT.parseJson(data, "list(0):id"), "订单编号字段缺失");
-        Assert.assertNotNull(UT.parseJson(data, "list(0):major_disease_name"), "主诉疾病字段缺失");
+        Assert.assertNotNull(Generator.parseJson(data, "list(0):agent_name"), "下级医生姓名字段缺失");
+        Assert.assertNotNull(Generator.parseJson(data, "list(0):id"), "订单编号字段缺失");
+        Assert.assertNotNull(Generator.parseJson(data, "list(0):major_disease_name"), "主诉疾病字段缺失");
 //        Assert.assertNotNull(parseJson(data, "list(0):minor_disease_name"), "次诉疾病字段缺失");
 //        Assert.assertNotNull(parseJson(data, "list(0):major_reps_name"), "客服姓名字段缺失");
     }
@@ -70,9 +70,9 @@ public class OrderList extends BaseTest {
         }
         checkResponse(res);
         Assert.assertEquals(code, "1000000", "有token应该调用成功");
-        Assert.assertNotNull(UT.parseJson(data, "list(0):agent_name"), "下级医生姓名字段缺失");
-        Assert.assertNotNull(UT.parseJson(data, "list(0):id"), "订单编号字段缺失");
-        Assert.assertNotNull(UT.parseJson(data, "list(0):major_disease_name"), "主诉疾病字段缺失");
+        Assert.assertNotNull(Generator.parseJson(data, "list(0):agent_name"), "下级医生姓名字段缺失");
+        Assert.assertNotNull(Generator.parseJson(data, "list(0):id"), "订单编号字段缺失");
+        Assert.assertNotNull(Generator.parseJson(data, "list(0):major_disease_name"), "主诉疾病字段缺失");
 //        Assert.assertNotNull(parseJson(data, "list(0):minor_disease_name"), "次诉疾病字段缺失");
 //        Assert.assertNotNull(parseJson(data, "list(0):major_reps_name"), "客服姓名字段缺失");
     }
@@ -82,7 +82,7 @@ public class OrderList extends BaseTest {
 
         String res = "";
         HashMap<String, String> query = new HashMap<>();
-        String agent_contact_id = UT.randomEmployeeId();
+        String agent_contact_id = Generator.randomEmployeeId();
         query.put("agent_contact_id", agent_contact_id);
         try {
             res = HttpRequest.sendGet(host_bda + uri, query, bda_token);
@@ -91,9 +91,9 @@ public class OrderList extends BaseTest {
         }
         checkResponse(res);
         Assert.assertEquals(code, "1000000", "有token应该调用成功");
-        Assert.assertNotNull(UT.parseJson(data, "list(0):agent_name"), "下级医生姓名字段缺失");
-        Assert.assertNotNull(UT.parseJson(data, "list(0):id"), "订单编号字段缺失");
-        Assert.assertNotNull(UT.parseJson(data, "list(0):major_disease_name"), "主诉疾病字段缺失");
+        Assert.assertNotNull(Generator.parseJson(data, "list(0):agent_name"), "下级医生姓名字段缺失");
+        Assert.assertNotNull(Generator.parseJson(data, "list(0):id"), "订单编号字段缺失");
+        Assert.assertNotNull(Generator.parseJson(data, "list(0):major_disease_name"), "主诉疾病字段缺失");
     }
 
     @Test
@@ -120,7 +120,7 @@ public class OrderList extends BaseTest {
 
         String res = "";
         HashMap<String, String> map = new HashMap<>();
-        String agent_contact_id = UT.randomEmployeeId();
+        String agent_contact_id = Generator.randomEmployeeId();
         map.put("agent_contact_id", agent_contact_id);
         map.put("status", "1000");
         List<String> status = new ArrayList<>();
@@ -147,7 +147,7 @@ public class OrderList extends BaseTest {
             JSONArray orderList = JSONObject.fromObject(res).getJSONObject("data").getJSONArray("list");
             for (int i = 0; i < orderList.size(); i++) {
                 JSONObject ord = orderList.getJSONObject(i);
-                Assert.assertEquals(UT.parseJson(ord, "status"), s, "过滤后有杂质状态存在");
+                Assert.assertEquals(Generator.parseJson(ord, "status"), s, "过滤后有杂质状态存在");
             }
         }
     }

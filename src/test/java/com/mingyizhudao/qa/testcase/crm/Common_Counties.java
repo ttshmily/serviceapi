@@ -2,7 +2,7 @@ package com.mingyizhudao.qa.testcase.crm;
 
 import com.mingyizhudao.qa.common.BaseTest;
 import com.mingyizhudao.qa.util.HttpRequest;
-import com.mingyizhudao.qa.util.UT;
+import com.mingyizhudao.qa.util.Generator;
 import net.sf.json.JSONArray;
 import org.apache.log4j.Logger;
 import org.testng.Assert;
@@ -27,7 +27,7 @@ public class Common_Counties extends BaseTest {
         HashMap<String, String> query = new HashMap<>();
         query.put("id", "");
         for (int i=0; i<10; i++) {
-            String cityId = UT.randomCityId();
+            String cityId = Generator.randomCityId();
             query.replace("id", cityId);
             try {
                 res = HttpRequest.sendGet(host_crm + uri, query, crm_token);

@@ -3,7 +3,7 @@ package com.mingyizhudao.qa.testcase.login;
 import com.mingyizhudao.qa.common.BaseTest;
 import com.mingyizhudao.qa.dataprofile.login.CheckMobileProfile;
 import com.mingyizhudao.qa.util.HttpRequest;
-import com.mingyizhudao.qa.util.UT;
+import com.mingyizhudao.qa.util.Generator;
 import net.sf.json.JSONObject;
 import org.apache.log4j.Logger;
 import org.testng.Assert;
@@ -31,7 +31,7 @@ public class CheckVerifyCode extends BaseTest{
         String tmpToken = "";
         try {
             res = HttpRequest.sendPost(host_login +uri,cmp.body.toString(), "");
-            tmpToken = UT.parseJson(JSONObject.fromObject(res), "data:token");
+            tmpToken = Generator.parseJson(JSONObject.fromObject(res), "data:token");
         } catch (IOException e) {
             logger.error(e);
         }
@@ -56,7 +56,7 @@ public class CheckVerifyCode extends BaseTest{
         String tmpToken = "";
         try {
             res = HttpRequest.sendPost(host_login +uri, check.toString(), "");
-            tmpToken = UT.parseJson(JSONObject.fromObject(res), "data:token");
+            tmpToken = Generator.parseJson(JSONObject.fromObject(res), "data:token");
         } catch (IOException e) {
             logger.error(e);
         }
@@ -87,8 +87,8 @@ public class CheckVerifyCode extends BaseTest{
             logger.error(e);
             Assert.fail("http request returns an error");
         }
-        Assert.assertNotNull(UT.parseJson(data, "token"), "token不应该为空");
-        Assert.assertNotEquals(UT.parseJson(data, "token"), "", "code不应该为1000000");
+        Assert.assertNotNull(Generator.parseJson(data, "token"), "token不应该为空");
+        Assert.assertNotEquals(Generator.parseJson(data, "token"), "", "code不应该为1000000");
         Assert.assertEquals(code, "1000000", "code不应该为1000000");
     }
 

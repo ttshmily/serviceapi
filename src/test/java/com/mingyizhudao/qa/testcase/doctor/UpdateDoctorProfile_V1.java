@@ -1,11 +1,11 @@
 package com.mingyizhudao.qa.testcase.doctor;
 
 import com.mingyizhudao.qa.common.BaseTest;
-import com.mingyizhudao.qa.common.KB;
+import com.mingyizhudao.qa.common.KnowledgeBase;
 import com.mingyizhudao.qa.dataprofile.doctor.DoctorProfile;
 import com.mingyizhudao.qa.testcase.crm.KBHospital_Detail;
 import com.mingyizhudao.qa.util.HttpRequest;
-import com.mingyizhudao.qa.util.UT;
+import com.mingyizhudao.qa.util.Generator;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 import org.apache.log4j.Logger;
@@ -46,7 +46,7 @@ public class UpdateDoctorProfile_V1 extends BaseTest {
         } catch (IOException e) {
             logger.error(e);
         }
-        String code = UT.parseJson(JSONObject.fromObject(res), "code");
+        String code = Generator.parseJson(JSONObject.fromObject(res), "code");
         if (code.equals("1000000")) {
             logger.info("更新医生信息成功");
         } else {
@@ -60,7 +60,7 @@ public class UpdateDoctorProfile_V1 extends BaseTest {
     public void test_01_已登录有token的用户可以更新个人信息city_id() {
         String res = "";
         DoctorProfile body = new DoctorProfile(false);
-        body.body.getJSONObject("doctor").put("city_id", UT.randomKey(KB.kb_city));
+        body.body.getJSONObject("doctor").put("city_id", Generator.randomKey(KnowledgeBase.kb_city));
         try {
             res = HttpRequest.sendPost(host_doc +mock+uri, body.body.toString(), mainToken);
         } catch (IOException e) {
@@ -82,7 +82,7 @@ public class UpdateDoctorProfile_V1 extends BaseTest {
             res = GetDoctorProfile_V1.MyProfile(mainToken);
             checkResponse(res);
             Assert.assertEquals(code, "1000000");
-            Assert.assertEquals(UT.parseJson(data, "doctor:department"), "尿不出来科");
+            Assert.assertEquals(Generator.parseJson(data, "doctor:department"), "尿不出来科");
         } catch (IOException e) {
             logger.error(e);
         }
@@ -94,7 +94,7 @@ public class UpdateDoctorProfile_V1 extends BaseTest {
     public void test_03_已登录有token的用户可以更新个人信息hospital_id() {
         String res = "";
         DoctorProfile body = new DoctorProfile(false);
-        String key = UT.randomHospitalId();
+        String key = Generator.randomHospitalId();
         body.body.getJSONObject("doctor").put("hospital_id", key);
         HashMap<String, String> hospitalInfo = KBHospital_Detail.Detail(key);
         String cityId = hospitalInfo.get("city_id");
@@ -105,7 +105,7 @@ public class UpdateDoctorProfile_V1 extends BaseTest {
             res = GetDoctorProfile_V1.MyProfile(mainToken);
             checkResponse(res);
             Assert.assertEquals(code, "1000000");
-            Assert.assertEquals(UT.parseJson(data, "doctor:hospital_id"), key);
+            Assert.assertEquals(Generator.parseJson(data, "doctor:hospital_id"), key);
 //            Assert.assertEquals(parseJson(data, "doctor:city_id"), cityId);
 //            Assert.assertEquals(parseJson(data, "doctor:city_name"), UT.cityName(cityId));
         } catch (IOException e) {
@@ -117,7 +117,7 @@ public class UpdateDoctorProfile_V1 extends BaseTest {
     public void test_04_已登录有token的用户可以更新个人信息inviter_no() {
         String res = "";
 
-        String key = UT.randomEmployeeId();
+        String key = Generator.randomEmployeeId();
 
         JSONObject doctor = new JSONObject();
         doctor.put("inviter_no", key);
@@ -126,7 +126,7 @@ public class UpdateDoctorProfile_V1 extends BaseTest {
         dp.put("doctor", doctor);
 
         for( int i=0; i<10; i++) {
-            key = UT.randomEmployeeId();
+            key = Generator.randomEmployeeId();
             doctor.replace("inviter_no", key);
             dp.replace("doctor", doctor);
             try {
@@ -136,7 +136,7 @@ public class UpdateDoctorProfile_V1 extends BaseTest {
                 res = GetDoctorProfile_V1.MyProfile(mainToken);
                 checkResponse(res);
                 Assert.assertEquals(code, "1000000");
-                Assert.assertEquals(UT.parseJson(data, "doctor:inviter_no"), key);
+                Assert.assertEquals(Generator.parseJson(data, "doctor:inviter_no"), key);
             } catch (IOException e) {
                 logger.error(e);
             }
@@ -148,7 +148,7 @@ public class UpdateDoctorProfile_V1 extends BaseTest {
     public void test_05_已登录有token的用户可以更新个人信息major_id() {
         String res = "";
         DoctorProfile body = new DoctorProfile(false);
-        String key = UT.randomKey(KB.kb_major);
+        String key = Generator.randomKey(KnowledgeBase.kb_major);
         body.body.getJSONObject("doctor").put("major_id",key);
         try {
             res = HttpRequest.sendPost(host_doc+uri, body.body.toString(), mainToken);
@@ -157,7 +157,7 @@ public class UpdateDoctorProfile_V1 extends BaseTest {
             res = GetDoctorProfile_V1.MyProfile(mainToken);
             checkResponse(res);
             Assert.assertEquals(code, "1000000");
-            Assert.assertEquals(UT.parseJson(data, "doctor:major_id"), key);
+            Assert.assertEquals(Generator.parseJson(data, "doctor:major_id"), key);
         } catch (IOException e) {
             logger.error(e);
         }
@@ -203,7 +203,7 @@ public class UpdateDoctorProfile_V1 extends BaseTest {
         Assert.assertNotEquals(code, "1000000");
         res = GetDoctorProfile_V1.MyProfile(mainToken);
         checkResponse(res);
-        Assert.assertNotEquals(UT.parseJson(data, "doctor:city_name"), "城市", "城市名称不应该改变");
+        Assert.assertNotEquals(Generator.parseJson(data, "doctor:city_name"), "城市", "城市名称不应该改变");
     }
 
     @Test(enabled = false)
@@ -220,7 +220,7 @@ public class UpdateDoctorProfile_V1 extends BaseTest {
         Assert.assertEquals(code, "1000000");
         res = GetDoctorProfile_V1.MyProfile(mainToken);
         checkResponse(res);
-        Assert.assertNotEquals(UT.parseJson(data, "doctor:hospital_name"), "测试医院", "医院名称不应该改变");
+        Assert.assertNotEquals(Generator.parseJson(data, "doctor:hospital_name"), "测试医院", "医院名称不应该改变");
 
         logger.info("同时传入major_id和hospital_name");
         dp.body.getJSONObject("doctor").replace("hospital_name", "测试医院");
@@ -234,8 +234,8 @@ public class UpdateDoctorProfile_V1 extends BaseTest {
         Assert.assertEquals(code, "1000000");
         res = GetDoctorProfile_V1.MyProfile(mainToken);
         checkResponse(res);
-        Assert.assertEquals(UT.parseJson(data, "doctor:major_id"), "8");
-        Assert.assertNotEquals(UT.parseJson(data, "doctor:hospital_name"), "测试医院", "医院名称不应该改变");
+        Assert.assertEquals(Generator.parseJson(data, "doctor:major_id"), "8");
+        Assert.assertNotEquals(Generator.parseJson(data, "doctor:hospital_name"), "测试医院", "医院名称不应该改变");
 
         logger.info("同时传入inviter_no和hospital_name");
         dp.body.getJSONObject("doctor").replace("hospital_name", "测试医院");
@@ -250,7 +250,7 @@ public class UpdateDoctorProfile_V1 extends BaseTest {
         res = GetDoctorProfile_V1.MyProfile(mainToken);
         checkResponse(res);
 //        Assert.assertEquals(parseJson(data, "doctor:inviter_no"), "SH0003");
-        Assert.assertNotEquals(UT.parseJson(data, "doctor:hospital_name"), "测试医院", "医院名称不应该改变");
+        Assert.assertNotEquals(Generator.parseJson(data, "doctor:hospital_name"), "测试医院", "医院名称不应该改变");
 
         logger.info("同时传入name和hospital_name");
         dp.body.getJSONObject("doctor").replace("name","大一测试名称");
@@ -266,8 +266,8 @@ public class UpdateDoctorProfile_V1 extends BaseTest {
         res = GetDoctorProfile_V1.MyProfile(mainToken);
         checkResponse(res);
         Assert.assertEquals(code, "1000000");
-        Assert.assertEquals(UT.parseJson(data, "doctor:name"), "大一测试名称");
-        Assert.assertNotEquals(UT.parseJson(data, "doctor:hospital_name"), "测试医院", "专业名称不应该改变");
+        Assert.assertEquals(Generator.parseJson(data, "doctor:name"), "大一测试名称");
+        Assert.assertNotEquals(Generator.parseJson(data, "doctor:hospital_name"), "测试医院", "专业名称不应该改变");
     }
 
     @Test
@@ -284,7 +284,7 @@ public class UpdateDoctorProfile_V1 extends BaseTest {
         Assert.assertEquals(code, "1000000");
         res = GetDoctorProfile_V1.MyProfile(mainToken);
         checkResponse(res);
-        Assert.assertNotEquals(UT.parseJson(data, "doctor:major_name"), "测试专业", "专业名称不应该改变");
+        Assert.assertNotEquals(Generator.parseJson(data, "doctor:major_name"), "测试专业", "专业名称不应该改变");
 
         logger.info("同时传入hospital_id和major_name");
         dp.body.getJSONObject("doctor").replace("hospital_id","2");
@@ -300,8 +300,8 @@ public class UpdateDoctorProfile_V1 extends BaseTest {
         res = GetDoctorProfile_V1.MyProfile(mainToken);
         checkResponse(res);
         Assert.assertEquals(code, "1000000");
-        Assert.assertEquals(UT.parseJson(data, "doctor:hospital_id"), "2");
-        Assert.assertNotEquals(UT.parseJson(data, "doctor:major_name"), "测试专业", "专业名称不应该改变");
+        Assert.assertEquals(Generator.parseJson(data, "doctor:hospital_id"), "2");
+        Assert.assertNotEquals(Generator.parseJson(data, "doctor:major_name"), "测试专业", "专业名称不应该改变");
 
         logger.info("同时传入inviter_no和major_name");
         dp.body.getJSONObject("doctor").replace("inviter_no","SH0002");
@@ -318,7 +318,7 @@ public class UpdateDoctorProfile_V1 extends BaseTest {
         checkResponse(res);
         Assert.assertEquals(code, "1000000");
 //        Assert.assertEquals(parseJson(data, "doctor:inviter_no"), "SH0002");
-        Assert.assertNotEquals(UT.parseJson(data, "doctor:major_name"), "测试专业", "专业名称不应该改变");
+        Assert.assertNotEquals(Generator.parseJson(data, "doctor:major_name"), "测试专业", "专业名称不应该改变");
 
         logger.info("同时传入name和major_name");
         dp.body.getJSONObject("doctor").replace("name","大一测试名称");
@@ -334,8 +334,8 @@ public class UpdateDoctorProfile_V1 extends BaseTest {
         res = GetDoctorProfile_V1.MyProfile(mainToken);
         checkResponse(res);
         Assert.assertEquals(code, "1000000");
-        Assert.assertEquals(UT.parseJson(data, "doctor:name"), "大一测试名称");
-        Assert.assertNotEquals(UT.parseJson(data, "doctor:major_name"), "测试专业", "专业名称不应该改变");
+        Assert.assertEquals(Generator.parseJson(data, "doctor:name"), "大一测试名称");
+        Assert.assertNotEquals(Generator.parseJson(data, "doctor:major_name"), "测试专业", "专业名称不应该改变");
 
     }
 
@@ -353,7 +353,7 @@ public class UpdateDoctorProfile_V1 extends BaseTest {
         Assert.assertNotEquals(code, "1000000");
         res = GetDoctorProfile_V1.MyProfile(mainToken);
         checkResponse(res);
-        Assert.assertNotEquals(UT.parseJson(data, "doctor:inviter_name"), "大一", "地推名称不应该改变");
+        Assert.assertNotEquals(Generator.parseJson(data, "doctor:inviter_name"), "大一", "地推名称不应该改变");
     }
 
     @Test
@@ -371,10 +371,10 @@ public class UpdateDoctorProfile_V1 extends BaseTest {
 
         res = GetDoctorProfile_V1.MyProfile(mainToken);
         checkResponse(res);
-        Assert.assertEquals(UT.parseJson(data, "doctor:doctor_card_pictures(0):key"), "2017/05/04/1265834e-97d8-44a0-95e7-047c7facaee8/IMG_20170429_102737.jpg", "key值错误");
-        Assert.assertEquals(UT.parseJson(data, "doctor:doctor_card_pictures(0):type"), "3", "type值错误");
-        Assert.assertNotNull(UT.parseJson(data, "doctor:doctor_card_pictures(0):url"), "url值错误");
-        Assert.assertNotNull(UT.parseJson(data, "doctor:doctor_card_pictures(0):large_url"), "large_url缺少");
+        Assert.assertEquals(Generator.parseJson(data, "doctor:doctor_card_pictures(0):key"), "2017/05/04/1265834e-97d8-44a0-95e7-047c7facaee8/IMG_20170429_102737.jpg", "key值错误");
+        Assert.assertEquals(Generator.parseJson(data, "doctor:doctor_card_pictures(0):type"), "3", "type值错误");
+        Assert.assertNotNull(Generator.parseJson(data, "doctor:doctor_card_pictures(0):url"), "url值错误");
+        Assert.assertNotNull(Generator.parseJson(data, "doctor:doctor_card_pictures(0):large_url"), "large_url缺少");
     }
 
     @Test
@@ -392,7 +392,7 @@ public class UpdateDoctorProfile_V1 extends BaseTest {
 
         res = GetDoctorProfile_V1.MyProfile(mainToken);
         checkResponse(res);
-        Assert.assertEquals(UT.parseJson(data, "doctor:exp_list()"), "2");
+        Assert.assertEquals(Generator.parseJson(data, "doctor:exp_list()"), "2");
     }
 
 

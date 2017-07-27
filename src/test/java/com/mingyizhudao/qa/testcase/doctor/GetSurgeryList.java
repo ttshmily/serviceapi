@@ -2,7 +2,7 @@ package com.mingyizhudao.qa.testcase.doctor;
 
 import com.mingyizhudao.qa.common.BaseTest;
 import com.mingyizhudao.qa.util.HttpRequest;
-import com.mingyizhudao.qa.util.UT;
+import com.mingyizhudao.qa.util.Generator;
 import org.apache.log4j.Logger;
 import org.testng.Assert;
 import org.testng.annotations.Test;
@@ -30,10 +30,10 @@ public class GetSurgeryList extends BaseTest {
             logger.error(e);
         }
         checkResponse(res);
-        Assert.assertNotNull(UT.parseJson(data, "surgeryCategories()"));
-        Assert.assertNotEquals(UT.parseJson(data, "surgeryCategories():id"), "");
-        Assert.assertEquals(UT.parseJson(data, "surgeryCategories():surgery_category_id"), "6");
-        Assert.assertNotEquals(UT.parseJson(data, "surgeryCategories():name"), "");
+        Assert.assertNotNull(Generator.parseJson(data, "surgeryCategories()"));
+        Assert.assertNotEquals(Generator.parseJson(data, "surgeryCategories():id"), "");
+        Assert.assertEquals(Generator.parseJson(data, "surgeryCategories():surgery_category_id"), "6");
+        Assert.assertNotEquals(Generator.parseJson(data, "surgeryCategories():name"), "");
     }
 
     @Test
@@ -49,7 +49,7 @@ public class GetSurgeryList extends BaseTest {
         }
         checkResponse(res);
         Assert.assertEquals(code, "1000000");
-        Assert.assertNotNull(UT.parseJson(data, "surgeryCategories()"));
+        Assert.assertNotNull(Generator.parseJson(data, "surgeryCategories()"));
     }
 
     @Test

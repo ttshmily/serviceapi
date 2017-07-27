@@ -1,9 +1,9 @@
 package com.mingyizhudao.qa.testcase.crm;
 
 import com.mingyizhudao.qa.common.BaseTest;
-import com.mingyizhudao.qa.common.KB;
+import com.mingyizhudao.qa.common.KnowledgeBase;
 import com.mingyizhudao.qa.util.HttpRequest;
-import com.mingyizhudao.qa.util.UT;
+import com.mingyizhudao.qa.util.Generator;
 import net.sf.json.JSONObject;
 import org.apache.log4j.Logger;
 import org.testng.Assert;
@@ -47,11 +47,11 @@ public class RegisteredDoctor_Modify extends BaseTest {
         JSONObject body = new JSONObject();
         body.put("content", "自动化修改医生信息");
         body.put("department","科室综合");
-        String city = UT.randomCityId();
-        String hospital = UT.randomHospitalId();
-        String major = UT.randomMajorId();
-        String academic = UT.randomAcademicId();
-        String medical = UT.randomMedicalId();
+        String city = Generator.randomCityId();
+        String hospital = Generator.randomHospitalId();
+        String major = Generator.randomMajorId();
+        String academic = Generator.randomAcademicId();
+        String medical = Generator.randomMedicalId();
         body.put("city_id",city);
         body.put("hospital_id",hospital);
         body.put("major_id", major);
@@ -70,11 +70,11 @@ public class RegisteredDoctor_Modify extends BaseTest {
         res = RegisteredDoctor_Detail.Detail(mainDoctorId);
         checkResponse(res);
 //        Assert.assertEquals(parseJson(data, "department"), "科室综合");
-        Assert.assertEquals(UT.parseJson(data, "hospital_id"), hospital);
-        Assert.assertEquals(UT.parseJson(data, "city_id"), another_city);
-        Assert.assertEquals(UT.parseJson(data, "major_id"), major);
-        Assert.assertEquals(UT.parseJson(data, "academic_title_list"), academic);
-        Assert.assertEquals(UT.parseJson(data, "medical_title_list"), medical);
+        Assert.assertEquals(Generator.parseJson(data, "hospital_id"), hospital);
+        Assert.assertEquals(Generator.parseJson(data, "city_id"), another_city);
+        Assert.assertEquals(Generator.parseJson(data, "major_id"), major);
+        Assert.assertEquals(Generator.parseJson(data, "academic_title_list"), academic);
+        Assert.assertEquals(Generator.parseJson(data, "medical_title_list"), medical);
 
         // 错误的医生ID，应该更新失败
         pathValue.replace("id", mainDoctorId+"11111");
@@ -107,7 +107,7 @@ public class RegisteredDoctor_Modify extends BaseTest {
         }
         res = RegisteredDoctor_Detail.Detail(mainDoctorId);
         checkResponse(res);
-        Assert.assertEquals(UT.parseJson(data, "name"), "美女医生");
+        Assert.assertEquals(Generator.parseJson(data, "name"), "美女医生");
     }
 
     @Test
@@ -120,7 +120,7 @@ public class RegisteredDoctor_Modify extends BaseTest {
         body.put("content", "自动化修改医生医院信息");
 
         // 更新hospital_id，应当成功
-        String hospitalId = UT.randomHospitalId();
+        String hospitalId = Generator.randomHospitalId();
         body.put("hospital_id", hospitalId);
 
         HashMap<String, String> hospitalInfo = KBHospital_Detail.Detail(hospitalId);
@@ -135,13 +135,13 @@ public class RegisteredDoctor_Modify extends BaseTest {
         }
         res = RegisteredDoctor_Detail.Detail(mainDoctorId);
         checkResponse(res);
-        Assert.assertEquals(UT.parseJson(data, "hospital_id"), hospitalId);
-        Assert.assertEquals(UT.parseJson(data, "hospital_name"), UT.hospitalName(hospitalId));
-        Assert.assertEquals(UT.parseJson(data, "city_id"), another_city);
-        Assert.assertEquals(UT.parseJson(data, "city"), UT.cityName(another_city));
+        Assert.assertEquals(Generator.parseJson(data, "hospital_id"), hospitalId);
+        Assert.assertEquals(Generator.parseJson(data, "hospital_name"), Generator.hospitalName(hospitalId));
+        Assert.assertEquals(Generator.parseJson(data, "city_id"), another_city);
+        Assert.assertEquals(Generator.parseJson(data, "city"), Generator.cityName(another_city));
 
         // 更新hospital_id和hospital_name，应当以hospital_id为准。
-        hospitalId = UT.randomHospitalId();
+        hospitalId = Generator.randomHospitalId();
         body.replace("hospital_id", hospitalId);
         body.put("hospital_name", "测试医院");
         try {
@@ -153,8 +153,8 @@ public class RegisteredDoctor_Modify extends BaseTest {
         }
         res = RegisteredDoctor_Detail.Detail(mainDoctorId);
         checkResponse(res);
-        Assert.assertEquals(UT.parseJson(data, "hospital_id"), hospitalId);
-        Assert.assertEquals(UT.parseJson(data, "hospital_name"), UT.hospitalName(hospitalId));
+        Assert.assertEquals(Generator.parseJson(data, "hospital_id"), hospitalId);
+        Assert.assertEquals(Generator.parseJson(data, "hospital_name"), Generator.hospitalName(hospitalId));
     }
 
     @Test
@@ -167,7 +167,7 @@ public class RegisteredDoctor_Modify extends BaseTest {
         body.put("content", "自动化修改医生学术职称信息");
 
         // 更新正确的academic_title，应当成功
-        String academic = UT.randomKey(KB.kb_academic_title);
+        String academic = Generator.randomKey(KnowledgeBase.kb_academic_title);
         body.put("academic_title", academic);
         try {
             res = HttpRequest.sendPut(host_crm+mock+uri, body.toString(), crm_token, pathValue);
@@ -179,8 +179,8 @@ public class RegisteredDoctor_Modify extends BaseTest {
         //TODO
         res = RegisteredDoctor_Detail.Detail(mainDoctorId);
         checkResponse(res);
-        Assert.assertEquals(UT.parseJson(data, "academic_title_list"), academic);
-        Assert.assertEquals(UT.parseJson(data, "academic_title"), KB.kb_academic_title.get(academic));
+        Assert.assertEquals(Generator.parseJson(data, "academic_title_list"), academic);
+        Assert.assertEquals(Generator.parseJson(data, "academic_title"), KnowledgeBase.kb_academic_title.get(academic));
 
         // 更新错误的academic_title，应当不成功
         body.replace("academic_title", "ASSOCIATE_PROFESSOR_WRONG");
@@ -194,7 +194,7 @@ public class RegisteredDoctor_Modify extends BaseTest {
         //TODO
         res = RegisteredDoctor_Detail.Detail(mainDoctorId);
         checkResponse(res);
-        Assert.assertEquals(UT.parseJson(data, "academic_title_list"), academic);
+        Assert.assertEquals(Generator.parseJson(data, "academic_title_list"), academic);
 
     }
 
@@ -208,7 +208,7 @@ public class RegisteredDoctor_Modify extends BaseTest {
         body.put("content", "自动化修改医生技术职称信息");
 
         // 更新正确的medical_title，应当成功
-        String medical = UT.randomKey(KB.kb_medical_title);
+        String medical = Generator.randomKey(KnowledgeBase.kb_medical_title);
         body.put("medical_title", medical);
         try {
             res = HttpRequest.sendPut(host_crm+uri, body.toString(), crm_token, pathValue);
@@ -219,8 +219,8 @@ public class RegisteredDoctor_Modify extends BaseTest {
         Assert.assertEquals(code, "1000000");
         res = RegisteredDoctor_Detail.Detail(mainDoctorId);
         checkResponse(res);
-        Assert.assertEquals(UT.parseJson(data, "medical_title_list"), medical);
-        Assert.assertEquals(UT.parseJson(data, "medical_title"), KB.kb_medical_title.get(medical));
+        Assert.assertEquals(Generator.parseJson(data, "medical_title_list"), medical);
+        Assert.assertEquals(Generator.parseJson(data, "medical_title"), KnowledgeBase.kb_medical_title.get(medical));
 
         // 更新错误的medical_title，应当不成功
         body.replace("medical_title", "ARCHIATER_WRONG");
@@ -233,8 +233,8 @@ public class RegisteredDoctor_Modify extends BaseTest {
         Assert.assertNotEquals(code, "1000000");
         res = RegisteredDoctor_Detail.Detail(mainDoctorId);
         checkResponse(res);
-        Assert.assertEquals(UT.parseJson(data, "medical_title_list"), medical);
-        Assert.assertEquals(UT.parseJson(data, "medical_title"), KB.kb_medical_title.get(medical));
+        Assert.assertEquals(Generator.parseJson(data, "medical_title_list"), medical);
+        Assert.assertEquals(Generator.parseJson(data, "medical_title"), KnowledgeBase.kb_medical_title.get(medical));
     }
 
     @Test
@@ -247,7 +247,7 @@ public class RegisteredDoctor_Modify extends BaseTest {
         body.put("content", "自动化修改医生专业信息");
 
         // 更新正确的major_id，应当成功
-        String majorId = UT.randomKey(KB.kb_major);
+        String majorId = Generator.randomKey(KnowledgeBase.kb_major);
         body.put("major_id", majorId);
         try {
             res = HttpRequest.sendPut(host_crm+mock+uri, body.toString(), crm_token, pathValue);
@@ -258,8 +258,8 @@ public class RegisteredDoctor_Modify extends BaseTest {
         Assert.assertEquals(code, "1000000");
         res = RegisteredDoctor_Detail.Detail(mainDoctorId);
         checkResponse(res);
-        Assert.assertEquals(UT.parseJson(data, "major_id"), majorId);
-        Assert.assertEquals(UT.parseJson(data, "major_name"), KB.kb_major.get(majorId));
+        Assert.assertEquals(Generator.parseJson(data, "major_id"), majorId);
+        Assert.assertEquals(Generator.parseJson(data, "major_name"), KnowledgeBase.kb_major.get(majorId));
 
         // 更新错误的major_id，应当不成功
         body.replace("major_id", "1000000");
@@ -272,8 +272,8 @@ public class RegisteredDoctor_Modify extends BaseTest {
         Assert.assertNotEquals(code, "1000000");
         res = RegisteredDoctor_Detail.Detail(mainDoctorId);
         checkResponse(res);
-        Assert.assertEquals(UT.parseJson(data, "major_id"), majorId);
-        Assert.assertEquals(UT.parseJson(data, "major_name"), KB.kb_major.get(majorId));
+        Assert.assertEquals(Generator.parseJson(data, "major_id"), majorId);
+        Assert.assertEquals(Generator.parseJson(data, "major_name"), KnowledgeBase.kb_major.get(majorId));
 
     }
 
@@ -287,7 +287,7 @@ public class RegisteredDoctor_Modify extends BaseTest {
         body.put("content", "自动化修改医生手机信息");
 
         // 更新正确的mobile，应当成功
-        String phone = UT.randomPhone();
+        String phone = Generator.randomPhone();
         body.put("mobile", phone);
         try {
             res = HttpRequest.sendPut(host_crm+mock+uri, body.toString(), crm_token, pathValue);
@@ -299,7 +299,7 @@ public class RegisteredDoctor_Modify extends BaseTest {
         //TODO
         res = RegisteredDoctor_Detail.Detail(mainDoctorId);
         checkResponse(res);
-        Assert.assertEquals(UT.parseJson(data, "mobile"), phone);
+        Assert.assertEquals(Generator.parseJson(data, "mobile"), phone);
 
     }
 
@@ -326,11 +326,11 @@ public class RegisteredDoctor_Modify extends BaseTest {
 
         res = RegisteredDoctor_Detail.Detail(mainDoctorId);
         checkResponse(res);
-        Assert.assertNotNull(UT.parseJson(data, "doctor_card_pictures"));
-        int actual_size = Integer.parseInt(UT.parseJson(data, "doctor_card_pictures()"));
+        Assert.assertNotNull(Generator.parseJson(data, "doctor_card_pictures"));
+        int actual_size = Integer.parseInt(Generator.parseJson(data, "doctor_card_pictures()"));
         Assert.assertEquals(actual_size, body.getJSONArray("doctor_card_pictures").size());
         for (int i=0; i<actual_size; i++) {
-            Assert.assertEquals(UT.parseJson(data, "doctor_card_pictures("+i+"):key"), body.getJSONArray("doctor_card_pictures").getJSONObject(i).getString("key"));
+            Assert.assertEquals(Generator.parseJson(data, "doctor_card_pictures("+i+"):key"), body.getJSONArray("doctor_card_pictures").getJSONObject(i).getString("key"));
         }
 
 
@@ -346,11 +346,11 @@ public class RegisteredDoctor_Modify extends BaseTest {
 
         res = RegisteredDoctor_Detail.Detail(mainDoctorId);
         checkResponse(res);
-        Assert.assertNotNull(UT.parseJson(data, "doctor_card_pictures"));
-        actual_size = Integer.parseInt(UT.parseJson(data, "doctor_card_pictures()"));
+        Assert.assertNotNull(Generator.parseJson(data, "doctor_card_pictures"));
+        actual_size = Integer.parseInt(Generator.parseJson(data, "doctor_card_pictures()"));
         Assert.assertEquals(actual_size, body.getJSONArray("doctor_card_pictures").size());
         for (int i=0; i<actual_size; i++) {
-            Assert.assertEquals(UT.parseJson(data, "doctor_card_pictures("+i+"):key"), body.getJSONArray("doctor_card_pictures").getJSONObject(i).getString("key"));
+            Assert.assertEquals(Generator.parseJson(data, "doctor_card_pictures("+i+"):key"), body.getJSONArray("doctor_card_pictures").getJSONObject(i).getString("key"));
         }
 
         body.accumulate("doctor_card_pictures", JSONObject.fromObject("{'key':'2017/05/04/1265834e-97d8-44a0-95e7-047c7facaee8/IMG_20170429_102741.jpg';'type':'3'}").toString());
@@ -364,11 +364,11 @@ public class RegisteredDoctor_Modify extends BaseTest {
 
         res = RegisteredDoctor_Detail.Detail(mainDoctorId);
         checkResponse(res);
-        Assert.assertNotNull(UT.parseJson(data, "doctor_card_pictures"));
-        actual_size = Integer.parseInt(UT.parseJson(data, "doctor_card_pictures()"));
+        Assert.assertNotNull(Generator.parseJson(data, "doctor_card_pictures"));
+        actual_size = Integer.parseInt(Generator.parseJson(data, "doctor_card_pictures()"));
         Assert.assertEquals(actual_size, body.getJSONArray("doctor_card_pictures").size());
         for (int i=0; i<actual_size; i++) {
-            Assert.assertEquals(UT.parseJson(data, "doctor_card_pictures("+i+"):key"), body.getJSONArray("doctor_card_pictures").getJSONObject(i).getString("key"));
+            Assert.assertEquals(Generator.parseJson(data, "doctor_card_pictures("+i+"):key"), body.getJSONArray("doctor_card_pictures").getJSONObject(i).getString("key"));
         }
 // 删除所有图片
         body.replace("doctor_card_pictures", "[]");
@@ -382,7 +382,7 @@ public class RegisteredDoctor_Modify extends BaseTest {
 
         res = RegisteredDoctor_Detail.Detail(mainDoctorId);
         checkResponse(res);
-        Assert.assertNotNull(UT.parseJson(data, "doctor_card_pictures_deleted"));
+        Assert.assertNotNull(Generator.parseJson(data, "doctor_card_pictures_deleted"));
         Assert.assertEquals(body.getJSONArray("doctor_card_pictures").size(),0);
 //        for (int i=0; i<actual_size; i++) {
 //            Assert.assertEquals(UT.parseJson(data, "doctor_card_pictures_deleted("+i+"):key"), body.getJSONArray("doctor_card_pictures_deleted").getJSONObject(i).getString("key"));

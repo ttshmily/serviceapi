@@ -3,7 +3,7 @@ package com.mingyizhudao.qa.testcase.crm;
 import com.mingyizhudao.qa.common.BaseTest;
 import com.mingyizhudao.qa.dataprofile.crm.DiseaseProfile;
 import com.mingyizhudao.qa.util.HttpRequest;
-import com.mingyizhudao.qa.util.UT;
+import com.mingyizhudao.qa.util.Generator;
 import org.apache.log4j.Logger;
 import org.testng.Assert;
 import org.testng.annotations.Test;
@@ -51,12 +51,12 @@ public class KBDisease_Detail extends BaseTest {
         }
         checkResponse(res);
         Assert.assertEquals(code, "1000000");
-        Assert.assertEquals(UT.parseJson(data, "name"), dp.body.getString("name"));
-        Assert.assertEquals(UT.parseJson(data, "description"), dp.body.getString("description"));
-        Assert.assertEquals(UT.parseJson(data, "user_visible"), "true");
-        Assert.assertEquals(UT.parseJson(data, "doctor_visible"), "true");
-        Assert.assertEquals(UT.parseJson(data, "is_common"), "1");
-        Assert.assertEquals(UT.parseJson(data, "category_list(0):disease_category_id"), dp.body.getJSONArray("category_list").getJSONObject(0).getString("disease_category_id"));
+        Assert.assertEquals(Generator.parseJson(data, "name"), dp.body.getString("name"));
+        Assert.assertEquals(Generator.parseJson(data, "description"), dp.body.getString("description"));
+        Assert.assertEquals(Generator.parseJson(data, "user_visible"), "true");
+        Assert.assertEquals(Generator.parseJson(data, "doctor_visible"), "true");
+        Assert.assertEquals(Generator.parseJson(data, "is_common"), "1");
+        Assert.assertEquals(Generator.parseJson(data, "category_list(0):disease_category_id"), dp.body.getJSONArray("category_list").getJSONObject(0).getString("disease_category_id"));
     }
 
     @Test
@@ -94,11 +94,11 @@ public class KBDisease_Detail extends BaseTest {
         }
         checkResponse(res);
         Assert.assertEquals(code, "1000000");
-        Assert.assertEquals(UT.parseJson(data, "related_to_doctors"), "0");
+        Assert.assertEquals(Generator.parseJson(data, "related_to_doctors"), "0");
         List<String> ids = new ArrayList<>();
         ids.add(diseaseId);
 
-        if (!KBExpert_Diseases.Connect(UT.randomExpertId(), ids)) Assert.fail("关联疾病失败，退出用例执行");
+        if (!KBExpert_Diseases.Connect(Generator.randomExpertId(), ids)) Assert.fail("关联疾病失败，退出用例执行");
         try {
             res = HttpRequest.sendGet(host_crm+uri, "", crm_token, pathValue);
         } catch (IOException e) {
@@ -106,9 +106,9 @@ public class KBDisease_Detail extends BaseTest {
         }
         checkResponse(res);
         Assert.assertEquals(code, "1000000");
-        Assert.assertEquals(UT.parseJson(data, "related_to_doctors"), "1");
+        Assert.assertEquals(Generator.parseJson(data, "related_to_doctors"), "1");
 
-        KBExpert_Diseases.Connect(UT.randomExpertId(), ids);
+        KBExpert_Diseases.Connect(Generator.randomExpertId(), ids);
         try {
             res = HttpRequest.sendGet(host_crm+uri, "", crm_token, pathValue);
         } catch (IOException e) {
@@ -116,9 +116,9 @@ public class KBDisease_Detail extends BaseTest {
         }
         checkResponse(res);
         Assert.assertEquals(code, "1000000");
-        Assert.assertEquals(UT.parseJson(data, "related_to_doctors"), "2");
+        Assert.assertEquals(Generator.parseJson(data, "related_to_doctors"), "2");
 
-        KBExpert_Diseases.Connect(UT.randomExpertId(), ids);
+        KBExpert_Diseases.Connect(Generator.randomExpertId(), ids);
         try {
             res = HttpRequest.sendGet(host_crm+uri, "", crm_token, pathValue);
         } catch (IOException e) {
@@ -126,7 +126,7 @@ public class KBDisease_Detail extends BaseTest {
         }
         checkResponse(res);
         Assert.assertEquals(code, "1000000");
-        Assert.assertEquals(UT.parseJson(data, "related_to_doctors"), "3");
+        Assert.assertEquals(Generator.parseJson(data, "related_to_doctors"), "3");
 
     }
 }

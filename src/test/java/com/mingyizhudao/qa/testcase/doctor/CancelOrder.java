@@ -5,7 +5,7 @@ import com.mingyizhudao.qa.testcase.crm.Order_ReceiveTask;
 import com.mingyizhudao.qa.testcase.crm.Order_RecommendDoctor;
 import com.mingyizhudao.qa.testcase.crm.Order_ThreewayCall;
 import com.mingyizhudao.qa.util.HttpRequest;
-import com.mingyizhudao.qa.util.UT;
+import com.mingyizhudao.qa.util.Generator;
 import net.sf.json.JSONObject;
 import org.apache.log4j.Logger;
 import org.testng.Assert;
@@ -60,8 +60,8 @@ public class CancelOrder extends BaseTest {
         }
         checkResponse(res);
         Assert.assertEquals(code, "1000000");
-        Assert.assertEquals(UT.parseJson(data, "status"), "9000");
-        Assert.assertEquals(UT.parseJson(data, "status"), "9000");
+        Assert.assertEquals(Generator.parseJson(data, "status"), "9000");
+        Assert.assertEquals(Generator.parseJson(data, "status"), "9000");
 
     }
 
@@ -85,7 +85,7 @@ public class CancelOrder extends BaseTest {
         }
         checkResponse(res);
         Assert.assertEquals(code, "1000000");
-        Assert.assertEquals(UT.parseJson(data, "status"), "9000");
+        Assert.assertEquals(Generator.parseJson(data, "status"), "9000");
     }
 
     @Test
@@ -112,7 +112,7 @@ public class CancelOrder extends BaseTest {
         }
         checkResponse(res);
         Assert.assertEquals(code, "1000000");
-        Assert.assertEquals(UT.parseJson(data, "status"), "9000");
+        Assert.assertEquals(Generator.parseJson(data, "status"), "9000");
     }
 
     @Test
@@ -137,7 +137,7 @@ public class CancelOrder extends BaseTest {
         Assert.assertNotEquals(code, "1000000");
         res = GetOrderDetail_V1.MyInitiateOrder(mainToken, orderId);
         checkResponse(res);
-        Assert.assertEquals(UT.parseJson(data, "order:status"), "2000");
+        Assert.assertEquals(Generator.parseJson(data, "order:status"), "2000");
     }
 
     @Test
@@ -170,7 +170,7 @@ public class CancelOrder extends BaseTest {
         Assert.assertEquals(code, "1000000");
         res = GetOrderDetail_V1.MyInitiateOrder(mainToken, orderId);
         checkResponse(res);
-        Assert.assertEquals(UT.parseJson(data, "order:status"), "9000");
+        Assert.assertEquals(Generator.parseJson(data, "order:status"), "9000");
     }
 
 }

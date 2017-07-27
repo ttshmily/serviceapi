@@ -3,7 +3,7 @@ package com.mingyizhudao.qa.testcase.crm;
 import com.mingyizhudao.qa.common.BaseTest;
 import com.mingyizhudao.qa.dataprofile.crm.HospitalProfile;
 import com.mingyizhudao.qa.util.HttpRequest;
-import com.mingyizhudao.qa.util.UT;
+import com.mingyizhudao.qa.util.Generator;
 import net.sf.json.JSONObject;
 import org.apache.log4j.Logger;
 import org.testng.Assert;
@@ -77,16 +77,16 @@ public class KBHospital_Detail extends BaseTest {
         checkResponse(res);
         Assert.assertEquals(code, "1000000");
 
-        Assert.assertEquals(UT.parseJson(data, "name"), hp.body.getString("name"));
-        Assert.assertEquals(UT.parseJson(data, "short_name"), hp.body.getString("short_name"));
-        Assert.assertEquals(UT.parseJson(data, "hospital_class_list"), hp.body.getString("hospital_class_list"));
-        Assert.assertEquals(UT.parseJson(data, "type_list"), hp.body.getString("type_list"));
-        Assert.assertEquals(UT.parseJson(data, "city_id"), hp.body.getString("city_id"));
-        Assert.assertEquals(UT.parseJson(data, "city_name"), UT.cityName(hp.body.getString("city_id")));
-        Assert.assertEquals(UT.parseJson(data, "county_id"), hp.body.getString("county_id"));
-        Assert.assertEquals(UT.parseJson(data, "county_name"), UT.countyName(hp.body.getString("county_id")));
-        Assert.assertEquals(UT.parseJson(data, "phone"), hp.body.getString("phone"));
-        Assert.assertEquals(UT.parseJson(data, "description"), hp.body.getString("description"));
+        Assert.assertEquals(Generator.parseJson(data, "name"), hp.body.getString("name"));
+        Assert.assertEquals(Generator.parseJson(data, "short_name"), hp.body.getString("short_name"));
+        Assert.assertEquals(Generator.parseJson(data, "hospital_class_list"), hp.body.getString("hospital_class_list"));
+        Assert.assertEquals(Generator.parseJson(data, "type_list"), hp.body.getString("type_list"));
+        Assert.assertEquals(Generator.parseJson(data, "city_id"), hp.body.getString("city_id"));
+        Assert.assertEquals(Generator.parseJson(data, "city_name"), Generator.cityName(hp.body.getString("city_id")));
+        Assert.assertEquals(Generator.parseJson(data, "county_id"), hp.body.getString("county_id"));
+        Assert.assertEquals(Generator.parseJson(data, "county_name"), Generator.countyName(hp.body.getString("county_id")));
+        Assert.assertEquals(Generator.parseJson(data, "phone"), hp.body.getString("phone"));
+        Assert.assertEquals(Generator.parseJson(data, "description"), hp.body.getString("description"));
     }
 
     @Test

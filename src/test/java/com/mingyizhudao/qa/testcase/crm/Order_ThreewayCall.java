@@ -1,10 +1,10 @@
 package com.mingyizhudao.qa.testcase.crm;
 
 import com.mingyizhudao.qa.common.BaseTest;
-import com.mingyizhudao.qa.common.KB;
+import com.mingyizhudao.qa.common.KnowledgeBase;
 import com.mingyizhudao.qa.testcase.doctor.CreateOrder;
 import com.mingyizhudao.qa.util.HttpRequest;
-import com.mingyizhudao.qa.util.UT;
+import com.mingyizhudao.qa.util.Generator;
 import net.sf.json.JSONObject;
 import org.apache.log4j.Logger;
 import org.testng.Assert;
@@ -30,13 +30,13 @@ public class Order_ThreewayCall extends BaseTest {
         String res = "";
         HashMap<String, String> pathValue = new HashMap<>();
         res = Order_Detail.Detail(orderId);
-        if (!UT.parseJson(JSONObject.fromObject(res), "data:status").equals("2020")) {
+        if (!Generator.parseJson(JSONObject.fromObject(res), "data:status").equals("2020")) {
             logger.error("当前订单状态无法进行三方通话");
-            return UT.parseJson(JSONObject.fromObject(res), "data:status");
+            return Generator.parseJson(JSONObject.fromObject(res), "data:status");
         }
         pathValue.put("orderNumber", orderId);
         JSONObject body = new JSONObject();
-        body.put("surgeryFee", UT.randomInt(4)+1);
+        body.put("surgeryFee", Generator.randomInt(4)+1);
         body.put("calling_time", df.format(new Date()));
         body.put("major_disease_id", "55");
         body.put("minor_disease_id","66");
@@ -50,7 +50,7 @@ public class Order_ThreewayCall extends BaseTest {
             logger.error(e);
         }
         res = Order_Detail.Detail(orderId);
-        return UT.parseJson(JSONObject.fromObject(res), "data:status");
+        return Generator.parseJson(JSONObject.fromObject(res), "data:status");
     }
 
     @Test
@@ -60,17 +60,17 @@ public class Order_ThreewayCall extends BaseTest {
         HashMap<String, String> pathValue = new HashMap<>();
         String orderId = CreateOrder.CreateOrder(mainToken);
         Order_ReceiveTask.receiveTask(orderId);
-        String rcmdDoc = UT.randomKey(KB.kb_doctor);
+        String rcmdDoc = Generator.randomKey(KnowledgeBase.kb_doctor);
         if (!Order_RecommendDoctor.recommendDoctor(orderId, rcmdDoc).equals("2020")) {
             Assert.fail("订单没有到达已推荐状态，无法进行三方通话");
         }
         pathValue.put("orderNumber", orderId);
         JSONObject body = new JSONObject();
-        String fee = String.valueOf(UT.randomInt(4)+1);
+        String fee = String.valueOf(Generator.randomInt(4)+1);
         body.put("surgeryFee", fee);
         body.put("calling_time", df.format(new Date()));
-        body.put("major_disease_id", UT.randomKey(KB.kb_disease));
-        body.put("minor_disease_id",UT.randomKey(KB.kb_disease));
+        body.put("major_disease_id", Generator.randomKey(KnowledgeBase.kb_disease));
+        body.put("minor_disease_id", Generator.randomKey(KnowledgeBase.kb_disease));
         body.put("content", "自动创建的通话记录");
         body.put("audio_file", "http://www.automation.com");
         body.put("record_type", "success");
@@ -84,10 +84,10 @@ public class Order_ThreewayCall extends BaseTest {
         Assert.assertEquals(code, "1000000");
         res = Order_Detail.Detail(orderId);
         checkResponse(res);
-        Assert.assertEquals(UT.parseJson(data, "status"), "3000");
-        Assert.assertEquals(UT.parseJson(data, "surgeon_id"), rcmdDoc);
-        Assert.assertEquals(UT.parseJson(data, "surgeon_name"), KB.kb_doctor.get(rcmdDoc));
-        Assert.assertEquals(UT.parseJson(data, "surgeon_fee"), fee);
+        Assert.assertEquals(Generator.parseJson(data, "status"), "3000");
+        Assert.assertEquals(Generator.parseJson(data, "surgeon_id"), rcmdDoc);
+        Assert.assertEquals(Generator.parseJson(data, "surgeon_name"), KnowledgeBase.kb_doctor.get(rcmdDoc));
+        Assert.assertEquals(Generator.parseJson(data, "surgeon_fee"), fee);
     }
 
     @Test
@@ -96,17 +96,17 @@ public class Order_ThreewayCall extends BaseTest {
         HashMap<String, String> pathValue = new HashMap<>();
         String orderId = CreateOrder.CreateOrder(mainToken);
         Order_ReceiveTask.receiveTask(orderId);
-        String rcmdDoc = UT.randomKey(KB.kb_doctor);
+        String rcmdDoc = Generator.randomKey(KnowledgeBase.kb_doctor);
         if (!Order_RecommendDoctor.recommendDoctor(orderId, rcmdDoc).equals("2020")) {
             Assert.fail("订单没有到达已推荐状态，无法进行三方通话");
         }
         pathValue.put("orderNumber", orderId);
         JSONObject body = new JSONObject();
-        String fee = String.valueOf(UT.randomInt(4)+1);
+        String fee = String.valueOf(Generator.randomInt(4)+1);
         body.put("surgeryFee", fee);
         body.put("calling_time", df.format(new Date()));
-        body.put("major_disease_id", UT.randomKey(KB.kb_disease));
-        body.put("minor_disease_id",UT.randomKey(KB.kb_disease));
+        body.put("major_disease_id", Generator.randomKey(KnowledgeBase.kb_disease));
+        body.put("minor_disease_id", Generator.randomKey(KnowledgeBase.kb_disease));
         body.put("content", "自动创建的通话记录");
         body.put("audio_file", "http://www.automation.com");
         body.put("record_type", "undetermined");
@@ -120,9 +120,9 @@ public class Order_ThreewayCall extends BaseTest {
         Assert.assertEquals(code, "1000000");
         res = Order_Detail.Detail(orderId);
         checkResponse(res);
-        Assert.assertEquals(UT.parseJson(data, "status"), "2020");
-        Assert.assertEquals(UT.parseJson(data, "surgeon_id"), rcmdDoc);
-        Assert.assertEquals(UT.parseJson(data, "surgeon_name"), KB.kb_doctor.get(rcmdDoc));
+        Assert.assertEquals(Generator.parseJson(data, "status"), "2020");
+        Assert.assertEquals(Generator.parseJson(data, "surgeon_id"), rcmdDoc);
+        Assert.assertEquals(Generator.parseJson(data, "surgeon_name"), KnowledgeBase.kb_doctor.get(rcmdDoc));
 //        Assert.assertEquals(parseJson(data, "surgeon_fee"), fee);
     }
 
@@ -154,7 +154,7 @@ public class Order_ThreewayCall extends BaseTest {
         Assert.assertEquals(code, "1000000");
         res = Order_Detail.Detail(orderId);
         checkResponse(res);
-        Assert.assertEquals(UT.parseJson(data, "status"), "2000");
+        Assert.assertEquals(Generator.parseJson(data, "status"), "2000");
         //不合作以后，清除上级医生信息
 //        Assert.assertEquals(UT.parseJson(data, "surgeon_id"), "555");
 //        Assert.assertEquals(UT.parseJson(data, "surgeon_name"), KB.kb_doctor.get("555"));
@@ -188,7 +188,7 @@ public class Order_ThreewayCall extends BaseTest {
         Assert.assertNotEquals(code, "1000000");
         res = Order_Detail.Detail(orderId);
         checkResponse(res);
-        Assert.assertEquals(UT.parseJson(data, "status"), "2020");
+        Assert.assertEquals(Generator.parseJson(data, "status"), "2020");
 
         body.put("reject_reason", "");
         try {
@@ -201,7 +201,7 @@ public class Order_ThreewayCall extends BaseTest {
 
         res = Order_Detail.Detail(orderId);
         checkResponse(res);
-        Assert.assertEquals(UT.parseJson(data, "status"), "2020");
+        Assert.assertEquals(Generator.parseJson(data, "status"), "2020");
     }
 
     @Test
@@ -215,7 +215,7 @@ public class Order_ThreewayCall extends BaseTest {
         }
         pathValue.put("orderNumber", orderId);
         JSONObject body = new JSONObject();
-        body.put("surgeryFee", UT.randomInt(4)+1);
+        body.put("surgeryFee", Generator.randomInt(4)+1);
         body.put("calling_time", df.format(new Date()));
         body.put("major_disease_id", "55");
         body.put("minor_disease_id","66");
@@ -232,7 +232,7 @@ public class Order_ThreewayCall extends BaseTest {
         Assert.assertEquals(code, "1000000");
         res = Order_Detail.Detail(orderId);
         checkResponse(res);
-        Assert.assertEquals(UT.parseJson(data, "status"), "3000");
+        Assert.assertEquals(Generator.parseJson(data, "status"), "3000");
 
         try {
             res = HttpRequest.sendPost(host_crm+uri, body.toString(), crm_token, pathValue);
@@ -255,7 +255,7 @@ public class Order_ThreewayCall extends BaseTest {
         pathValue.put("orderNumber", orderId);
         JSONObject body = new JSONObject();
 
-        body.put("surgeryFee", UT.randomInt(4)+1);
+        body.put("surgeryFee", Generator.randomInt(4)+1);
         try {
             res = HttpRequest.sendPost(host_crm+uri, body.toString(), crm_token, pathValue);
         } catch (IOException e) {
@@ -265,7 +265,7 @@ public class Order_ThreewayCall extends BaseTest {
         Assert.assertNotEquals(code, "1000000");
         res = Order_Detail.Detail(orderId);
         checkResponse(res);
-        Assert.assertNotEquals(UT.parseJson(data, "status"), "3000");
+        Assert.assertNotEquals(Generator.parseJson(data, "status"), "3000");
 
         body.put("calling_time", df.format(new Date()));
         try {
@@ -277,7 +277,7 @@ public class Order_ThreewayCall extends BaseTest {
         Assert.assertNotEquals(code, "1000000");
         res = Order_Detail.Detail(orderId);
         checkResponse(res);
-        Assert.assertNotEquals(UT.parseJson(data, "status"), "3000");
+        Assert.assertNotEquals(Generator.parseJson(data, "status"), "3000");
 
         body.put("major_disease_id", "55");
         try {
@@ -289,7 +289,7 @@ public class Order_ThreewayCall extends BaseTest {
         Assert.assertNotEquals(code, "1000000");
         res = Order_Detail.Detail(orderId);
         checkResponse(res);
-        Assert.assertNotEquals(UT.parseJson(data, "status"), "3000");
+        Assert.assertNotEquals(Generator.parseJson(data, "status"), "3000");
 
         body.put("minor_disease_id", "66");
         try {
@@ -301,7 +301,7 @@ public class Order_ThreewayCall extends BaseTest {
         Assert.assertNotEquals(code, "1000000");
         res = Order_Detail.Detail(orderId);
         checkResponse(res);
-        Assert.assertNotEquals(UT.parseJson(data, "status"), "3000");
+        Assert.assertNotEquals(Generator.parseJson(data, "status"), "3000");
 
         body.put("content", "自动创建的通话记录");
         try {
@@ -313,7 +313,7 @@ public class Order_ThreewayCall extends BaseTest {
         Assert.assertNotEquals(code, "1000000");
         res = Order_Detail.Detail(orderId);
         checkResponse(res);
-        Assert.assertNotEquals(UT.parseJson(data, "status"), "3000");
+        Assert.assertNotEquals(Generator.parseJson(data, "status"), "3000");
 
         body.put("audio_file", "http://www.automation.com");
         try {
@@ -325,7 +325,7 @@ public class Order_ThreewayCall extends BaseTest {
         Assert.assertNotEquals(code, "1000000");
         res = Order_Detail.Detail(orderId);
         checkResponse(res);
-        Assert.assertNotEquals(UT.parseJson(data, "status"), "3000");
+        Assert.assertNotEquals(Generator.parseJson(data, "status"), "3000");
 
         body.put("record_type", "success");
         try {
@@ -337,7 +337,7 @@ public class Order_ThreewayCall extends BaseTest {
         Assert.assertEquals(code, "1000000");
         res = Order_Detail.Detail(orderId);
         checkResponse(res);
-        Assert.assertEquals(UT.parseJson(data, "status"), "3000");
+        Assert.assertEquals(Generator.parseJson(data, "status"), "3000");
 
     }
 
@@ -369,7 +369,7 @@ public class Order_ThreewayCall extends BaseTest {
         Assert.assertEquals(code, "1000000");
         res = Order_Detail.Detail(orderId);
         checkResponse(res);
-        Assert.assertEquals(UT.parseJson(data, "status"), "2000");
+        Assert.assertEquals(Generator.parseJson(data, "status"), "2000");
 //        Assert.assertEquals(parseJson(data, "surgeon_id"), "555");
 //        Assert.assertEquals(parseJson(data, "surgeon_name"), KB.kb_doctor.get("555"));
 //        Assert.assertEquals(parseJson(data, "surgeon_fee"), "10000");
@@ -381,7 +381,7 @@ public class Order_ThreewayCall extends BaseTest {
         HashMap<String, String> pathValue = new HashMap<>();
         String orderId = CreateOrder.CreateOrder(mainToken);
         Order_ReceiveTask.receiveTask(orderId);
-        String expertId = UT.randomExpertId();
+        String expertId = Generator.randomExpertId();
         if (!Order_RecommendDoctor.recommendDoctor(orderId, expertId).equals("2020")) {
             Assert.fail("订单没有到达已推荐状态，无法进行三方通话");
         }
@@ -404,8 +404,8 @@ public class Order_ThreewayCall extends BaseTest {
         Assert.assertEquals(code, "1000000");
         res = Order_Detail.Detail(orderId);
         checkResponse(res);
-        Assert.assertEquals(UT.parseJson(data, "status"), "2000");
-        Assert.assertNotNull(UT.parseJson(data, "doctorFiledList"), expertId);
-        Assert.assertEquals(UT.parseJson(data, "doctorFiledList():surgeon_id"), expertId);
+        Assert.assertEquals(Generator.parseJson(data, "status"), "2000");
+        Assert.assertNotNull(Generator.parseJson(data, "doctorFiledList"), expertId);
+        Assert.assertEquals(Generator.parseJson(data, "doctorFiledList():surgeon_id"), expertId);
     }
 }

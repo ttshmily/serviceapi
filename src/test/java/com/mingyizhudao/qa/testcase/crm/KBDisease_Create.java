@@ -3,7 +3,7 @@ package com.mingyizhudao.qa.testcase.crm;
 import com.mingyizhudao.qa.common.BaseTest;
 import com.mingyizhudao.qa.dataprofile.crm.DiseaseProfile;
 import com.mingyizhudao.qa.util.HttpRequest;
-import com.mingyizhudao.qa.util.UT;
+import com.mingyizhudao.qa.util.Generator;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 import org.apache.log4j.Logger;
@@ -61,13 +61,13 @@ public class KBDisease_Create extends BaseTest {
         }
         checkResponse(res);
         Assert.assertEquals(code, "1000000");
-        Assert.assertNotNull(UT.parseJson(data, "id"), "医库ID不能少");
-        Assert.assertEquals(UT.parseJson(data, "name"), dp.body.getString("name"));
-        Assert.assertEquals(UT.parseJson(data, "description"), dp.body.getString("description"));
-        Assert.assertEquals(UT.parseJson(data, "user_visible"), "true");
-        Assert.assertEquals(UT.parseJson(data, "doctor_visible"), "true");
-        Assert.assertEquals(UT.parseJson(data, "is_common"), "1");
-        Assert.assertEquals(UT.parseJson(data, "category_list(0):disease_category_id"), dp.body.getJSONArray("category_list").getJSONObject(0).getString("disease_category_id"));
+        Assert.assertNotNull(Generator.parseJson(data, "id"), "医库ID不能少");
+        Assert.assertEquals(Generator.parseJson(data, "name"), dp.body.getString("name"));
+        Assert.assertEquals(Generator.parseJson(data, "description"), dp.body.getString("description"));
+        Assert.assertEquals(Generator.parseJson(data, "user_visible"), "true");
+        Assert.assertEquals(Generator.parseJson(data, "doctor_visible"), "true");
+        Assert.assertEquals(Generator.parseJson(data, "is_common"), "1");
+        Assert.assertEquals(Generator.parseJson(data, "category_list(0):disease_category_id"), dp.body.getJSONArray("category_list").getJSONObject(0).getString("disease_category_id"));
     }
 
     @Test
@@ -83,13 +83,13 @@ public class KBDisease_Create extends BaseTest {
         }
         checkResponse(res);
         Assert.assertEquals(code, "1000000");
-        Assert.assertNotNull(UT.parseJson(data, "id"), "医库ID不能少");
-        Assert.assertEquals(UT.parseJson(data, "name"), dp.body.getString("name"));
-        Assert.assertEquals(UT.parseJson(data, "description"), dp.body.getString("description"));
-        Assert.assertEquals(UT.parseJson(data, "user_visible"), "false");
-        Assert.assertEquals(UT.parseJson(data, "doctor_visible"), "true");
-        Assert.assertEquals(UT.parseJson(data, "is_common"), "0");
-        Assert.assertEquals(UT.parseJson(data, "category_list(0):disease_category_id"), dp.body.getJSONArray("category_list").getJSONObject(0).getString("disease_category_id"));
+        Assert.assertNotNull(Generator.parseJson(data, "id"), "医库ID不能少");
+        Assert.assertEquals(Generator.parseJson(data, "name"), dp.body.getString("name"));
+        Assert.assertEquals(Generator.parseJson(data, "description"), dp.body.getString("description"));
+        Assert.assertEquals(Generator.parseJson(data, "user_visible"), "false");
+        Assert.assertEquals(Generator.parseJson(data, "doctor_visible"), "true");
+        Assert.assertEquals(Generator.parseJson(data, "is_common"), "0");
+        Assert.assertEquals(Generator.parseJson(data, "category_list(0):disease_category_id"), dp.body.getJSONArray("category_list").getJSONObject(0).getString("disease_category_id"));
     }
 
     @Test
@@ -106,7 +106,7 @@ public class KBDisease_Create extends BaseTest {
         checkResponse(res);
         Assert.assertNotEquals(code, "1000000");
 
-        dp.body.put("name", "疾病"+UT.randomString(2));
+        dp.body.put("name", "疾病"+ Generator.randomString(2));
         dp.body.remove("user_visible");
         try {
             res = HttpRequest.sendPost(host_crm + uri, dp.body.toString(), crm_token);

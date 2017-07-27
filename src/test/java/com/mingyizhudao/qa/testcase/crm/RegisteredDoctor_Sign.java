@@ -3,7 +3,7 @@ package com.mingyizhudao.qa.testcase.crm;
 import com.mingyizhudao.qa.common.BaseTest;
 import com.mingyizhudao.qa.dataprofile.doctor.DoctorProfile;
 import com.mingyizhudao.qa.util.HttpRequest;
-import com.mingyizhudao.qa.util.UT;
+import com.mingyizhudao.qa.util.Generator;
 import net.sf.json.JSONObject;
 import org.apache.log4j.Logger;
 import org.testng.Assert;
@@ -44,14 +44,14 @@ public class RegisteredDoctor_Sign extends BaseTest {
 
         res = RegisteredDoctor_Detail.Detail(doctorId);
         checkResponse(res);
-        Assert.assertEquals(UT.parseJson(data, "signed_status"), "SIGNED");
+        Assert.assertEquals(Generator.parseJson(data, "signed_status"), "SIGNED");
 
 
 
         res = KBExpert_Detail.Detail(expertId);
         checkResponse(res);
         Assert.assertEquals(code, "1000000");
-        Assert.assertEquals(UT.parseJson(data, "signed_status"), "SIGNED");
+        Assert.assertEquals(Generator.parseJson(data, "signed_status"), "SIGNED");
     }
 
     @Test(enabled = false)
@@ -74,6 +74,6 @@ public class RegisteredDoctor_Sign extends BaseTest {
 
         res = RegisteredDoctor_Detail.Detail(doctorId);
         checkResponse(res);
-        Assert.assertEquals(UT.parseJson(data, "signed_status"), "NOT_SIGNED");
+        Assert.assertEquals(Generator.parseJson(data, "signed_status"), "NOT_SIGNED");
     }
 }

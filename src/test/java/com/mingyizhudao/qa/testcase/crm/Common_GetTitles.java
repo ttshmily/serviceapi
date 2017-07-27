@@ -2,7 +2,7 @@ package com.mingyizhudao.qa.testcase.crm;
 
 import com.mingyizhudao.qa.common.BaseTest;
 import com.mingyizhudao.qa.util.HttpRequest;
-import com.mingyizhudao.qa.util.UT;
+import com.mingyizhudao.qa.util.Generator;
 import org.apache.log4j.Logger;
 import org.testng.Assert;
 import org.testng.annotations.Test;
@@ -28,8 +28,8 @@ public class Common_GetTitles extends BaseTest {
             res = HttpRequest.sendGet(host_crm+uri, "", crm_token, null);
             checkResponse(res);
             Assert.assertEquals(code, "1000000");
-            int academicLen = Integer.parseInt(UT.parseJson(data, "list:academic()"));
-            int medicalLen = Integer.parseInt(UT.parseJson(data, "list:medical()"));
+            int academicLen = Integer.parseInt(Generator.parseJson(data, "list:academic()"));
+            int medicalLen = Integer.parseInt(Generator.parseJson(data, "list:medical()"));
             Assert.assertEquals(academicLen, 4);
             Assert.assertEquals(medicalLen, 12);
 

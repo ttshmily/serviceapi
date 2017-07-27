@@ -1,10 +1,10 @@
 package com.mingyizhudao.qa.testcase.crm;
 
 import com.mingyizhudao.qa.common.BaseTest;
-import com.mingyizhudao.qa.common.KB;
+import com.mingyizhudao.qa.common.KnowledgeBase;
 import com.mingyizhudao.qa.dataprofile.crm.HospitalProfile;
 import com.mingyizhudao.qa.util.HttpRequest;
-import com.mingyizhudao.qa.util.UT;
+import com.mingyizhudao.qa.util.Generator;
 import net.sf.json.JSONObject;
 import org.apache.log4j.Logger;
 import org.testng.Assert;
@@ -49,15 +49,15 @@ public class KBHospital_Create extends BaseTest {
             res = HttpRequest.sendPost(host_crm + uri, hp.body.toString(), crm_token);
             checkResponse(res);
             Assert.assertEquals(code, "1000000");
-            Assert.assertNotNull(UT.parseJson(data, "id"), "医库ID不能少");
-            Assert.assertEquals(UT.parseJson(data, "short_name"), hp.body.getString("short_name"));
-            Assert.assertEquals(UT.parseJson(data, "name"), hp.body.getString("name"));
-            Assert.assertEquals(UT.parseJson(data, "city_name"), KB.kb_city.get(hp.body.getString("city_id")));
-            Assert.assertEquals(UT.parseJson(data, "county_name"), KB.kb_county.get(hp.body.getString("county_id")));
-            Assert.assertEquals(UT.parseJson(data, "description"), hp.body.getString("description"));
-            Assert.assertEquals(UT.parseJson(data, "phone"), hp.body.getString("phone"));
-            Assert.assertNotNull(UT.parseJson(data, "user_visible"));
-            Assert.assertNotNull(UT.parseJson(data, "doctor_visible"));
+            Assert.assertNotNull(Generator.parseJson(data, "id"), "医库ID不能少");
+            Assert.assertEquals(Generator.parseJson(data, "short_name"), hp.body.getString("short_name"));
+            Assert.assertEquals(Generator.parseJson(data, "name"), hp.body.getString("name"));
+            Assert.assertEquals(Generator.parseJson(data, "city_name"), KnowledgeBase.kb_city.get(hp.body.getString("city_id")));
+            Assert.assertEquals(Generator.parseJson(data, "county_name"), KnowledgeBase.kb_county.get(hp.body.getString("county_id")));
+            Assert.assertEquals(Generator.parseJson(data, "description"), hp.body.getString("description"));
+            Assert.assertEquals(Generator.parseJson(data, "phone"), hp.body.getString("phone"));
+            Assert.assertNotNull(Generator.parseJson(data, "user_visible"));
+            Assert.assertNotNull(Generator.parseJson(data, "doctor_visible"));
         } catch (IOException e) {
             logger.error(e);
         }
@@ -68,15 +68,15 @@ public class KBHospital_Create extends BaseTest {
         String res = "";
         HospitalProfile hp = new HospitalProfile(false);
         hp.body.put("name","测试医院");
-        hp.body.put("hospital_class_list", UT.randomKey(KB.kb_hospital_class));
-        hp.body.put("type_list", UT.randomKey(KB.kb_hospital_type));
-        hp.body.put("city_id", UT.randomCityId());
+        hp.body.put("hospital_class_list", Generator.randomKey(KnowledgeBase.kb_hospital_class));
+        hp.body.put("type_list", Generator.randomKey(KnowledgeBase.kb_hospital_type));
+        hp.body.put("city_id", Generator.randomCityId());
 //        hp.body.put("county_id", UT.randomCountryId());
         try {
             res = HttpRequest.sendPost(host_crm + uri, hp.body.toString(), crm_token);
             checkResponse(res);
             Assert.assertEquals(code, "1000000");
-            Assert.assertNotNull(UT.parseJson(data, "id"), "医库ID不能少");
+            Assert.assertNotNull(Generator.parseJson(data, "id"), "医库ID不能少");
         } catch (IOException e) {
             logger.error(e);
         }
@@ -86,11 +86,11 @@ public class KBHospital_Create extends BaseTest {
     public void test_03_创建医院_缺少必填字段() {
         String res = "";
         HospitalProfile hp = new HospitalProfile(false);
-        String name = "测试医院"+UT.randomString(2);
-        String hospital_class_list = UT.randomKey(KB.kb_hospital_class);
-        String type_list = UT.randomKey(KB.kb_hospital_type);
-        String city_id = UT.randomCityId();
-        String county_id = UT.randomCountyId();
+        String name = "测试医院"+ Generator.randomString(2);
+        String hospital_class_list = Generator.randomKey(KnowledgeBase.kb_hospital_class);
+        String type_list = Generator.randomKey(KnowledgeBase.kb_hospital_type);
+        String city_id = Generator.randomCityId();
+        String county_id = Generator.randomCountyId();
         hp.body.put("name", name);
         hp.body.put("hospital_class_list", hospital_class_list);
         hp.body.put("type_list", type_list);

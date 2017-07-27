@@ -4,7 +4,7 @@ import com.mingyizhudao.qa.common.BaseTest;
 import com.mingyizhudao.qa.dataprofile.doctor.DoctorProfile;
 import com.mingyizhudao.qa.testcase.crm.*;
 import com.mingyizhudao.qa.util.HttpRequest;
-import com.mingyizhudao.qa.util.UT;
+import com.mingyizhudao.qa.util.Generator;
 import net.sf.json.JSONObject;
 import org.apache.log4j.Logger;
 import org.testng.Assert;
@@ -50,8 +50,8 @@ public class GetOrderList_V1 extends BaseTest {
         } catch (IOException e) {
             logger.error(e);
         }
-        if (UT.parseJson(JSONObject.fromObject(res), "data:size") == "0") return null;
-        return UT.parseJson(JSONObject.fromObject(res), "data:order(0):order_number");
+        if (Generator.parseJson(JSONObject.fromObject(res), "data:size") == "0") return null;
+        return Generator.parseJson(JSONObject.fromObject(res), "data:order(0):order_number");
     }
 
     @Test
@@ -78,8 +78,8 @@ public class GetOrderList_V1 extends BaseTest {
             logger.error(e);
         }
         checkResponse(res);
-        Assert.assertEquals(UT.parseJson(data, "order()"), "1");
-        Assert.assertEquals(UT.parseJson(data, "order(0):order_number"), orderId1);
+        Assert.assertEquals(Generator.parseJson(data, "order()"), "1");
+        Assert.assertEquals(Generator.parseJson(data, "order(0):order_number"), orderId1);
 
         logger.info("创建订单with tmpToken");
         String orderId2 = CreateOrder.CreateOrder(tmpToken);
@@ -93,9 +93,9 @@ public class GetOrderList_V1 extends BaseTest {
             logger.error(e);
         }
         checkResponse(res);
-        Assert.assertEquals(UT.parseJson(data, "order()"), "2");
-        Assert.assertEquals(UT.parseJson(data, "order(0):order_number"), orderId2);
-        Assert.assertEquals(UT.parseJson(data, "order(1):order_number"), orderId1);
+        Assert.assertEquals(Generator.parseJson(data, "order()"), "2");
+        Assert.assertEquals(Generator.parseJson(data, "order(0):order_number"), orderId2);
+        Assert.assertEquals(Generator.parseJson(data, "order(1):order_number"), orderId1);
 
         logger.info("创建订单with tmpToken");
         String orderId3 = CreateOrder.CreateOrder(tmpToken);
@@ -109,10 +109,10 @@ public class GetOrderList_V1 extends BaseTest {
             logger.error(e);
         }
         checkResponse(res);
-        Assert.assertEquals(UT.parseJson(data, "order()"), "3");
-        Assert.assertEquals(UT.parseJson(data, "order(0):order_number"), orderId3);
-        Assert.assertEquals(UT.parseJson(data, "order(1):order_number"), orderId2);
-        Assert.assertEquals(UT.parseJson(data, "order(2):order_number"), orderId1);
+        Assert.assertEquals(Generator.parseJson(data, "order()"), "3");
+        Assert.assertEquals(Generator.parseJson(data, "order(0):order_number"), orderId3);
+        Assert.assertEquals(Generator.parseJson(data, "order(1):order_number"), orderId2);
+        Assert.assertEquals(Generator.parseJson(data, "order(2):order_number"), orderId1);
 
         logger.info("创建订单with tmpToken");
         String orderId4 = CreateOrder.CreateOrder(tmpToken);
@@ -126,11 +126,11 @@ public class GetOrderList_V1 extends BaseTest {
             logger.error(e);
         }
         checkResponse(res);
-        Assert.assertEquals(UT.parseJson(data, "order()"), "4");
-        Assert.assertEquals(UT.parseJson(data, "order(0):order_number"), orderId4);
-        Assert.assertEquals(UT.parseJson(data, "order(1):order_number"), orderId3);
-        Assert.assertEquals(UT.parseJson(data, "order(2):order_number"), orderId2);
-        Assert.assertEquals(UT.parseJson(data, "order(3):order_number"), orderId1);
+        Assert.assertEquals(Generator.parseJson(data, "order()"), "4");
+        Assert.assertEquals(Generator.parseJson(data, "order(0):order_number"), orderId4);
+        Assert.assertEquals(Generator.parseJson(data, "order(1):order_number"), orderId3);
+        Assert.assertEquals(Generator.parseJson(data, "order(2):order_number"), orderId2);
+        Assert.assertEquals(Generator.parseJson(data, "order(3):order_number"), orderId1);
 
         logger.info("子用例1：拒绝一个订单：期望其置底");
         Order_ReceiveTask.receiveTask(orderId4);
@@ -144,11 +144,11 @@ public class GetOrderList_V1 extends BaseTest {
             logger.error(e);
         }
         checkResponse(res);
-        Assert.assertEquals(UT.parseJson(data, "order()"), "4");
-        Assert.assertEquals(UT.parseJson(data, "order(0):order_number"), orderId3);
-        Assert.assertEquals(UT.parseJson(data, "order(1):order_number"), orderId2);
-        Assert.assertEquals(UT.parseJson(data, "order(2):order_number"), orderId1);
-        Assert.assertEquals(UT.parseJson(data, "order(3):order_number"), orderId4);
+        Assert.assertEquals(Generator.parseJson(data, "order()"), "4");
+        Assert.assertEquals(Generator.parseJson(data, "order(0):order_number"), orderId3);
+        Assert.assertEquals(Generator.parseJson(data, "order(1):order_number"), orderId2);
+        Assert.assertEquals(Generator.parseJson(data, "order(2):order_number"), orderId1);
+        Assert.assertEquals(Generator.parseJson(data, "order(3):order_number"), orderId4);
 
         logger.info("子用例2：领取并推荐一个订单：处理中，位置不变");
         Order_ReceiveTask.receiveTask(orderId2);
@@ -162,11 +162,11 @@ public class GetOrderList_V1 extends BaseTest {
             logger.error(e);
         }
         checkResponse(res);
-        Assert.assertEquals(UT.parseJson(data, "order()"), "4");
-        Assert.assertEquals(UT.parseJson(data, "order(0):order_number"), orderId3);
-        Assert.assertEquals(UT.parseJson(data, "order(1):order_number"), orderId2);
-        Assert.assertEquals(UT.parseJson(data, "order(2):order_number"), orderId1);
-        Assert.assertEquals(UT.parseJson(data, "order(3):order_number"), orderId4);
+        Assert.assertEquals(Generator.parseJson(data, "order()"), "4");
+        Assert.assertEquals(Generator.parseJson(data, "order(0):order_number"), orderId3);
+        Assert.assertEquals(Generator.parseJson(data, "order(1):order_number"), orderId2);
+        Assert.assertEquals(Generator.parseJson(data, "order(2):order_number"), orderId1);
+        Assert.assertEquals(Generator.parseJson(data, "order(3):order_number"), orderId4);
 
         logger.info("子用例3：领取推荐并成功创建三方通话一个订单，处理中，位置不变");
         Order_ReceiveTask.receiveTask(orderId1);
@@ -181,11 +181,11 @@ public class GetOrderList_V1 extends BaseTest {
             logger.error(e);
         }
         checkResponse(res);
-        Assert.assertEquals(UT.parseJson(data, "order()"), "4");
-        Assert.assertEquals(UT.parseJson(data, "order(0):order_number"), orderId3);
-        Assert.assertEquals(UT.parseJson(data, "order(1):order_number"), orderId2);
-        Assert.assertEquals(UT.parseJson(data, "order(2):order_number"), orderId1);
-        Assert.assertEquals(UT.parseJson(data, "order(3):order_number"), orderId4);
+        Assert.assertEquals(Generator.parseJson(data, "order()"), "4");
+        Assert.assertEquals(Generator.parseJson(data, "order(0):order_number"), orderId3);
+        Assert.assertEquals(Generator.parseJson(data, "order(1):order_number"), orderId2);
+        Assert.assertEquals(Generator.parseJson(data, "order(2):order_number"), orderId1);
+        Assert.assertEquals(Generator.parseJson(data, "order(3):order_number"), orderId4);
     }
 
     @Test
@@ -216,8 +216,8 @@ public class GetOrderList_V1 extends BaseTest {
             logger.error(e);
         }
         checkResponse(res);
-        Assert.assertEquals(UT.parseJson(data, "order()"), "0");
-        logger.info("测试医生收到"+UT.parseJson(data, "order()")+"条订单");
+        Assert.assertEquals(Generator.parseJson(data, "order()"), "0");
+        logger.info("测试医生收到"+ Generator.parseJson(data, "order()")+"条订单");
 
         logger.info("依次领取和推荐测试医生作为专家");
         Order_ReceiveTask.receiveTask(orderId1);
@@ -266,12 +266,12 @@ public class GetOrderList_V1 extends BaseTest {
             logger.error(e);
         }
         checkResponse(res);
-        Assert.assertEquals(UT.parseJson(data, "order()"), "4");
-        Assert.assertEquals(UT.parseJson(data, "order(0):order_number"), orderId4);
-        Assert.assertEquals(UT.parseJson(data, "order(1):order_number"), orderId3);
-        Assert.assertEquals(UT.parseJson(data, "order(2):order_number"), orderId2);
-        Assert.assertEquals(UT.parseJson(data, "order(3):order_number"), orderId1);
-        logger.info("测试医生收到"+UT.parseJson(data, "order()")+"条订单");
+        Assert.assertEquals(Generator.parseJson(data, "order()"), "4");
+        Assert.assertEquals(Generator.parseJson(data, "order(0):order_number"), orderId4);
+        Assert.assertEquals(Generator.parseJson(data, "order(1):order_number"), orderId3);
+        Assert.assertEquals(Generator.parseJson(data, "order(2):order_number"), orderId2);
+        Assert.assertEquals(Generator.parseJson(data, "order(3):order_number"), orderId1);
+        logger.info("测试医生收到"+ Generator.parseJson(data, "order()")+"条订单");
 
         Order_ThreewayCall_V2.CallV2(orderId3,"success");
         status = Order_Rollback.Rollback(orderId3);
@@ -285,11 +285,11 @@ public class GetOrderList_V1 extends BaseTest {
             logger.error(e);
         }
         checkResponse(res);
-        Assert.assertEquals(UT.parseJson(data, "order()"), "4");
-        Assert.assertEquals(UT.parseJson(data, "order(0):order_number"), orderId4);
-        Assert.assertEquals(UT.parseJson(data, "order(1):order_number"), orderId2);
-        Assert.assertEquals(UT.parseJson(data, "order(2):order_number"), orderId1);
-        Assert.assertEquals(UT.parseJson(data, "order(3):order_number"), orderId3);
+        Assert.assertEquals(Generator.parseJson(data, "order()"), "4");
+        Assert.assertEquals(Generator.parseJson(data, "order(0):order_number"), orderId4);
+        Assert.assertEquals(Generator.parseJson(data, "order(1):order_number"), orderId2);
+        Assert.assertEquals(Generator.parseJson(data, "order(2):order_number"), orderId1);
+        Assert.assertEquals(Generator.parseJson(data, "order(3):order_number"), orderId3);
 
         Order_ThreewayCall_V2.CallV2(orderId4,"success");
         status = Order_Rollback.Rollback(orderId4);
@@ -303,18 +303,18 @@ public class GetOrderList_V1 extends BaseTest {
             logger.error(e);
         }
         checkResponse(res);
-        Assert.assertEquals(UT.parseJson(data, "order()"), "4");
-        Assert.assertEquals(UT.parseJson(data, "order(0):order_number"), orderId2);
-        Assert.assertEquals(UT.parseJson(data, "order(1):order_number"), orderId1);
-        Assert.assertEquals(UT.parseJson(data, "order(2):order_number"), orderId4);
-        Assert.assertEquals(UT.parseJson(data, "order(3):order_number"), orderId3);
+        Assert.assertEquals(Generator.parseJson(data, "order()"), "4");
+        Assert.assertEquals(Generator.parseJson(data, "order(0):order_number"), orderId2);
+        Assert.assertEquals(Generator.parseJson(data, "order(1):order_number"), orderId1);
+        Assert.assertEquals(Generator.parseJson(data, "order(2):order_number"), orderId4);
+        Assert.assertEquals(Generator.parseJson(data, "order(3):order_number"), orderId3);
 
         status = Order_ThreewayCall_V2.CallV2(orderId2,"failed");
         if(!status.equals("2000")) {
             logger.debug(status);
             Assert.fail("三方通话调用失败"+orderId2);
         }
-        Order_RecommendDoctor.recommendDoctor(orderId2, UT.randomExpertId());
+        Order_RecommendDoctor.recommendDoctor(orderId2, Generator.randomExpertId());
         status = Order_ThreewayCall_V2.CallV2(orderId2,"success");
         if(!status.equals("3000")) {
             logger.debug(status);
@@ -326,11 +326,11 @@ public class GetOrderList_V1 extends BaseTest {
             logger.error(e);
         }
         checkResponse(res);
-        Assert.assertEquals(UT.parseJson(data, "order()"), "4");
-        Assert.assertEquals(UT.parseJson(data, "order(0):order_number"), orderId1);
-        Assert.assertEquals(UT.parseJson(data, "order(1):order_number"), orderId4); //取消
-        Assert.assertEquals(UT.parseJson(data, "order(2):order_number"), orderId3); //取消
-        Assert.assertEquals(UT.parseJson(data, "order(3):order_number"), orderId2); //取消
+        Assert.assertEquals(Generator.parseJson(data, "order()"), "4");
+        Assert.assertEquals(Generator.parseJson(data, "order(0):order_number"), orderId1);
+        Assert.assertEquals(Generator.parseJson(data, "order(1):order_number"), orderId4); //取消
+        Assert.assertEquals(Generator.parseJson(data, "order(2):order_number"), orderId3); //取消
+        Assert.assertEquals(Generator.parseJson(data, "order(3):order_number"), orderId2); //取消
     }
 
     @Test
@@ -363,8 +363,8 @@ public class GetOrderList_V1 extends BaseTest {
             logger.error(e);
         }
         checkResponse(res);
-        Assert.assertEquals(UT.parseJson(data, "order()"), "0");
-        logger.info("测试医生收到"+UT.parseJson(data, "order()")+"条订单");
+        Assert.assertEquals(Generator.parseJson(data, "order()"), "0");
+        logger.info("测试医生收到"+ Generator.parseJson(data, "order()")+"条订单");
 
         logger.info("依次领取和推荐测试医生作为专家");
         Order_ReceiveTask.receiveTask(orderId1);
@@ -413,12 +413,12 @@ public class GetOrderList_V1 extends BaseTest {
             logger.error(e);
         }
         checkResponse(res);
-        Assert.assertEquals(UT.parseJson(data, "order()"), "4");
-        Assert.assertEquals(UT.parseJson(data, "order(0):order_number"), orderId4);
-        Assert.assertEquals(UT.parseJson(data, "order(1):order_number"), orderId3);
-        Assert.assertEquals(UT.parseJson(data, "order(2):order_number"), orderId2);
-        Assert.assertEquals(UT.parseJson(data, "order(3):order_number"), orderId1);
-        logger.info("测试医生收到"+UT.parseJson(data, "order()")+"条订单");
+        Assert.assertEquals(Generator.parseJson(data, "order()"), "4");
+        Assert.assertEquals(Generator.parseJson(data, "order(0):order_number"), orderId4);
+        Assert.assertEquals(Generator.parseJson(data, "order(1):order_number"), orderId3);
+        Assert.assertEquals(Generator.parseJson(data, "order(2):order_number"), orderId2);
+        Assert.assertEquals(Generator.parseJson(data, "order(3):order_number"), orderId1);
+        logger.info("测试医生收到"+ Generator.parseJson(data, "order()")+"条订单");
 
         Order_ThreewayCall_V2.CallV2(orderId3,"success");
         status = Order_Rollback.Rollback(orderId3);
@@ -432,11 +432,11 @@ public class GetOrderList_V1 extends BaseTest {
             logger.error(e);
         }
         checkResponse(res);
-        Assert.assertEquals(UT.parseJson(data, "order()"), "4");
-        Assert.assertEquals(UT.parseJson(data, "order(0):order_number"), orderId4);
-        Assert.assertEquals(UT.parseJson(data, "order(1):order_number"), orderId3);
-        Assert.assertEquals(UT.parseJson(data, "order(2):order_number"), orderId2);
-        Assert.assertEquals(UT.parseJson(data, "order(3):order_number"), orderId1);
+        Assert.assertEquals(Generator.parseJson(data, "order()"), "4");
+        Assert.assertEquals(Generator.parseJson(data, "order(0):order_number"), orderId4);
+        Assert.assertEquals(Generator.parseJson(data, "order(1):order_number"), orderId3);
+        Assert.assertEquals(Generator.parseJson(data, "order(2):order_number"), orderId2);
+        Assert.assertEquals(Generator.parseJson(data, "order(3):order_number"), orderId1);
 
         Order_ThreewayCall_V2.CallV2(orderId4,"success");
         status = Order_Rollback.Rollback(orderId4);
@@ -450,11 +450,11 @@ public class GetOrderList_V1 extends BaseTest {
             logger.error(e);
         }
         checkResponse(res);
-        Assert.assertEquals(UT.parseJson(data, "order()"), "4");
-        Assert.assertEquals(UT.parseJson(data, "order(0):order_number"), orderId4);
-        Assert.assertEquals(UT.parseJson(data, "order(1):order_number"), orderId3);
-        Assert.assertEquals(UT.parseJson(data, "order(2):order_number"), orderId2);
-        Assert.assertEquals(UT.parseJson(data, "order(3):order_number"), orderId1);
+        Assert.assertEquals(Generator.parseJson(data, "order()"), "4");
+        Assert.assertEquals(Generator.parseJson(data, "order(0):order_number"), orderId4);
+        Assert.assertEquals(Generator.parseJson(data, "order(1):order_number"), orderId3);
+        Assert.assertEquals(Generator.parseJson(data, "order(2):order_number"), orderId2);
+        Assert.assertEquals(Generator.parseJson(data, "order(3):order_number"), orderId1);
     }
 
     @Test
@@ -487,8 +487,8 @@ public class GetOrderList_V1 extends BaseTest {
             logger.error(e);
         }
         checkResponse(res);
-        Assert.assertEquals(UT.parseJson(data, "order()"), "0");
-        logger.info("测试医生收到"+UT.parseJson(data, "order()")+"条订单");
+        Assert.assertEquals(Generator.parseJson(data, "order()"), "0");
+        logger.info("测试医生收到"+ Generator.parseJson(data, "order()")+"条订单");
 
         logger.info("依次领取和推荐测试医生作为专家");
         Order_ReceiveTask.receiveTask(orderId1);
@@ -552,9 +552,9 @@ public class GetOrderList_V1 extends BaseTest {
             logger.error(e);
         }
         checkResponse(res);
-        Assert.assertEquals(UT.parseJson(data, "order()"), "2");
-        Assert.assertEquals(UT.parseJson(data, "order(0):order_number"), orderId4);
-        Assert.assertEquals(UT.parseJson(data, "order(1):order_number"), orderId3);
+        Assert.assertEquals(Generator.parseJson(data, "order()"), "2");
+        Assert.assertEquals(Generator.parseJson(data, "order(0):order_number"), orderId4);
+        Assert.assertEquals(Generator.parseJson(data, "order(1):order_number"), orderId3);
 
         logger.info("筛选处理中状态（2020,3000,4000,4010）");
         query.replace("status","2020,3000,4000,4010");
@@ -564,9 +564,9 @@ public class GetOrderList_V1 extends BaseTest {
             logger.error(e);
         }
         checkResponse(res);
-        Assert.assertEquals(UT.parseJson(data, "order()"), "2");
-        Assert.assertEquals(UT.parseJson(data, "order(0):order_number"), orderId2);
-        Assert.assertEquals(UT.parseJson(data, "order(1):order_number"), orderId1);
+        Assert.assertEquals(Generator.parseJson(data, "order()"), "2");
+        Assert.assertEquals(Generator.parseJson(data, "order(0):order_number"), orderId2);
+        Assert.assertEquals(Generator.parseJson(data, "order(1):order_number"), orderId1);
 
         logger.info("筛选已完成状态（4020, 5000）");
         query.replace("status","4020, 5000");
@@ -609,8 +609,8 @@ public class GetOrderList_V1 extends BaseTest {
             logger.error(e);
         }
         checkResponse(res);
-        Assert.assertEquals(UT.parseJson(data, "order()"), "0");
-        logger.info("测试医生收到"+UT.parseJson(data, "order()")+"条订单");
+        Assert.assertEquals(Generator.parseJson(data, "order()"), "0");
+        logger.info("测试医生收到"+ Generator.parseJson(data, "order()")+"条订单");
 
         logger.info("依次领取和推荐测试医生作为专家");
         Order_ReceiveTask.receiveTask(orderId1);
@@ -646,8 +646,8 @@ public class GetOrderList_V1 extends BaseTest {
             logger.error(e);
         }
         checkResponse(res);
-        Assert.assertEquals(UT.parseJson(data, "order()"), "1");
-        Assert.assertEquals(UT.parseJson(data, "order(0):order_number"), orderId1);
+        Assert.assertEquals(Generator.parseJson(data, "order()"), "1");
+        Assert.assertEquals(Generator.parseJson(data, "order(0):order_number"), orderId1);
 
         logger.info("重新推荐相同的医生");
         status = Order_RecommendDoctor.recommendDoctor(orderId1, tmpExpertId);
@@ -662,7 +662,7 @@ public class GetOrderList_V1 extends BaseTest {
             logger.error(e);
         }
         checkResponse(res);
-        Assert.assertEquals(UT.parseJson(data, "order()"), "0", "订单order1应当不在已取消状态");
+        Assert.assertEquals(Generator.parseJson(data, "order()"), "0", "订单order1应当不在已取消状态");
 
         logger.info("筛选已取消状态（2020,3000,4000,4010）");
         query.replace("status","2020,3000,4000,4010");
@@ -672,7 +672,7 @@ public class GetOrderList_V1 extends BaseTest {
             logger.error(e);
         }
         checkResponse(res);
-        Assert.assertEquals(UT.parseJson(data, "order()"), "2","订单order1应当恢复到处理中");
+        Assert.assertEquals(Generator.parseJson(data, "order()"), "2","订单order1应当恢复到处理中");
 
     }
 }

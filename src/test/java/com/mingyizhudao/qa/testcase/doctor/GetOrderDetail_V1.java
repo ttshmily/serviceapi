@@ -4,7 +4,7 @@ import com.mingyizhudao.qa.common.BaseTest;
 import com.mingyizhudao.qa.dataprofile.doctor.DoctorProfile;
 import com.mingyizhudao.qa.testcase.crm.*;
 import com.mingyizhudao.qa.util.HttpRequest;
-import com.mingyizhudao.qa.util.UT;
+import com.mingyizhudao.qa.util.Generator;
 import org.apache.log4j.Logger;
 import org.testng.Assert;
 import org.testng.annotations.Test;
@@ -63,26 +63,26 @@ public class GetOrderDetail_V1 extends BaseTest {
             logger.error(e);
         }
         checkResponse(res);
-        Assert.assertNotEquals(UT.parseJson(data,"order:patient_name"), "", "患者姓名字段缺失");
-        Assert.assertNotEquals(UT.parseJson(data,"order:patient_gender"), "", "患者性别字段缺失");
-        Assert.assertNotEquals(UT.parseJson(data,"order:patient_phone"), "", "患者手机号字段缺失");
-        Assert.assertNotNull(UT.parseJson(data,"order:major_disease_id"), "主诉疾病ID字段缺失");
-        Assert.assertNotEquals(UT.parseJson(data,"order:major_disease_name"), "", "主诉疾病名称字段缺失");
-        Assert.assertNotNull(UT.parseJson(data,"order:minor_disease_id"), "次诉疾病ID字段缺失");
-        Assert.assertNotEquals(UT.parseJson(data,"order:minor_disease_name"), "", "次诉疾病名称字段缺失");
-        Assert.assertNotNull(UT.parseJson(data,"order:diagnosis"), "病例描述字段缺失");
-        Assert.assertNotNull(UT.parseJson(data,"order:expected_surgery_start_date"), "期望手术最早开始时间字段缺失");
-        Assert.assertNotNull(UT.parseJson(data,"order:expected_surgery_due_date"), "期望手术最晚开始时间字段缺失");
-        Assert.assertNotNull(UT.parseJson(data,"order:expected_surgery_hospital_id"), "期望医院ID字段缺失");
-        Assert.assertNotNull(UT.parseJson(data,"order:expected_surgery_hospital_name"), "期望医院名称字段缺失");
-        Assert.assertNotEquals(UT.parseJson(data,"order:status"), "", "订单状态字段缺失");
-        Assert.assertNotEquals(UT.parseJson(data,"order:OrderStatusText"), "", "订单状态描述字段缺失");
-        Assert.assertNotEquals(UT.parseJson(data,"order:created_at"), "", "订单创建时间字段缺失");
-        Assert.assertEquals(UT.parseJson(data,"order:order_number"), orderId, "订单号字段缺失");
-        Assert.assertNotEquals(UT.parseJson(data,"order:medical_record_pictures():type"), "");
-        Assert.assertNotEquals(UT.parseJson(data,"order:medical_record_pictures():key"), "");
-        Assert.assertNotEquals(UT.parseJson(data,"order:medical_record_pictures():url"), "");
-        Assert.assertNotEquals(UT.parseJson(data,"order:NodeList"), "", "时间字段缺失");
+        Assert.assertNotEquals(Generator.parseJson(data,"order:patient_name"), "", "患者姓名字段缺失");
+        Assert.assertNotEquals(Generator.parseJson(data,"order:patient_gender"), "", "患者性别字段缺失");
+        Assert.assertNotEquals(Generator.parseJson(data,"order:patient_phone"), "", "患者手机号字段缺失");
+        Assert.assertNotNull(Generator.parseJson(data,"order:major_disease_id"), "主诉疾病ID字段缺失");
+        Assert.assertNotEquals(Generator.parseJson(data,"order:major_disease_name"), "", "主诉疾病名称字段缺失");
+        Assert.assertNotNull(Generator.parseJson(data,"order:minor_disease_id"), "次诉疾病ID字段缺失");
+        Assert.assertNotEquals(Generator.parseJson(data,"order:minor_disease_name"), "", "次诉疾病名称字段缺失");
+        Assert.assertNotNull(Generator.parseJson(data,"order:diagnosis"), "病例描述字段缺失");
+        Assert.assertNotNull(Generator.parseJson(data,"order:expected_surgery_start_date"), "期望手术最早开始时间字段缺失");
+        Assert.assertNotNull(Generator.parseJson(data,"order:expected_surgery_due_date"), "期望手术最晚开始时间字段缺失");
+        Assert.assertNotNull(Generator.parseJson(data,"order:expected_surgery_hospital_id"), "期望医院ID字段缺失");
+        Assert.assertNotNull(Generator.parseJson(data,"order:expected_surgery_hospital_name"), "期望医院名称字段缺失");
+        Assert.assertNotEquals(Generator.parseJson(data,"order:status"), "", "订单状态字段缺失");
+        Assert.assertNotEquals(Generator.parseJson(data,"order:OrderStatusText"), "", "订单状态描述字段缺失");
+        Assert.assertNotEquals(Generator.parseJson(data,"order:created_at"), "", "订单创建时间字段缺失");
+        Assert.assertEquals(Generator.parseJson(data,"order:order_number"), orderId, "订单号字段缺失");
+        Assert.assertNotEquals(Generator.parseJson(data,"order:medical_record_pictures():type"), "");
+        Assert.assertNotEquals(Generator.parseJson(data,"order:medical_record_pictures():key"), "");
+        Assert.assertNotEquals(Generator.parseJson(data,"order:medical_record_pictures():url"), "");
+        Assert.assertNotEquals(Generator.parseJson(data,"order:NodeList"), "", "时间字段缺失");
     }
 
     @Test
@@ -159,8 +159,8 @@ public class GetOrderDetail_V1 extends BaseTest {
         }
         checkResponse(res);
         Assert.assertEquals(code, "1000000");
-        Assert.assertEquals(UT.parseJson(data, "order:order_number"), orderId);
-        Assert.assertNotNull(UT.parseJson(data, "order:NodeList:recommend_at"));
+        Assert.assertEquals(Generator.parseJson(data, "order:order_number"), orderId);
+        Assert.assertNotNull(Generator.parseJson(data, "order:NodeList:recommend_at"));
 
         Order_ThreewayCall_V2.CallV2(orderId, "success");
         try {
@@ -170,10 +170,10 @@ public class GetOrderDetail_V1 extends BaseTest {
         }
         checkResponse(res);
         Assert.assertEquals(code, "1000000");
-        Assert.assertEquals(UT.parseJson(data, "order:order_number"), orderId);
-        Assert.assertNotNull(UT.parseJson(data, "order:NodeList:recommend_at"));
-        Assert.assertNotNull(UT.parseJson(data, "order:NodeList:called_at"));
-        Assert.assertEquals(UT.parseJson(data, "order:status"), "3000");
+        Assert.assertEquals(Generator.parseJson(data, "order:order_number"), orderId);
+        Assert.assertNotNull(Generator.parseJson(data, "order:NodeList:recommend_at"));
+        Assert.assertNotNull(Generator.parseJson(data, "order:NodeList:called_at"));
+        Assert.assertEquals(Generator.parseJson(data, "order:status"), "3000");
 
         Order_Rollback.Rollback(orderId);
         try {
@@ -183,10 +183,10 @@ public class GetOrderDetail_V1 extends BaseTest {
         }
         checkResponse(res);
         Assert.assertEquals(code, "1000000");
-        Assert.assertEquals(UT.parseJson(data, "order:order_number"), orderId);
-        Assert.assertNotNull(UT.parseJson(data, "order:NodeList:recommend_at"));
-        Assert.assertNotNull(UT.parseJson(data, "order:NodeList:called_at"));
-        Assert.assertNotNull(UT.parseJson(data, "order:NodeList:canceled_at"));
-        Assert.assertEquals(UT.parseJson(data, "order:status"), "9000");
+        Assert.assertEquals(Generator.parseJson(data, "order:order_number"), orderId);
+        Assert.assertNotNull(Generator.parseJson(data, "order:NodeList:recommend_at"));
+        Assert.assertNotNull(Generator.parseJson(data, "order:NodeList:called_at"));
+        Assert.assertNotNull(Generator.parseJson(data, "order:NodeList:canceled_at"));
+        Assert.assertEquals(Generator.parseJson(data, "order:status"), "9000");
     }
 }

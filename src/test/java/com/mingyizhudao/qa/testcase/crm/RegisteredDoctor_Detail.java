@@ -2,7 +2,7 @@ package com.mingyizhudao.qa.testcase.crm;
 
 import com.mingyizhudao.qa.common.BaseTest;
 import com.mingyizhudao.qa.util.HttpRequest;
-import com.mingyizhudao.qa.util.UT;
+import com.mingyizhudao.qa.util.Generator;
 import org.apache.log4j.Logger;
 import org.testng.Assert;
 import org.testng.annotations.Test;
@@ -45,14 +45,14 @@ public class RegisteredDoctor_Detail extends BaseTest {
         }
         checkResponse(res);
         Assert.assertEquals(code, "1000000");
-        Assert.assertNotNull(UT.parseJson(data, "medical_title_list"));
-        Assert.assertNotNull(UT.parseJson(data, "academic_title_list"));
-        Assert.assertNotNull(UT.parseJson(data, "inviter_name"));
-        Assert.assertNotNull(UT.parseJson(data, "hospital_name"));
-        Assert.assertNotNull(UT.parseJson(data, "icon"));
-        Assert.assertNotNull(UT.parseJson(data, "audit_state"));
-        Assert.assertNotNull(UT.parseJson(data, "staff_id"));
-        Assert.assertNotNull(UT.parseJson(data, "staff_name"));
+        Assert.assertNotNull(Generator.parseJson(data, "medical_title_list"));
+        Assert.assertNotNull(Generator.parseJson(data, "academic_title_list"));
+        Assert.assertNotNull(Generator.parseJson(data, "inviter_name"));
+        Assert.assertNotNull(Generator.parseJson(data, "hospital_name"));
+        Assert.assertNotNull(Generator.parseJson(data, "icon"));
+        Assert.assertNotNull(Generator.parseJson(data, "audit_state"));
+        Assert.assertNotNull(Generator.parseJson(data, "staff_id"));
+        Assert.assertNotNull(Generator.parseJson(data, "staff_name"));
     }
 
     @Test

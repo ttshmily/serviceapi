@@ -2,7 +2,7 @@ package com.mingyizhudao.qa.testcase.crm;
 
 import com.mingyizhudao.qa.common.BaseTest;
 import com.mingyizhudao.qa.util.HttpRequest;
-import com.mingyizhudao.qa.util.UT;
+import com.mingyizhudao.qa.util.Generator;
 import org.apache.log4j.Logger;
 import org.testng.Assert;
 import org.testng.annotations.Test;
@@ -32,9 +32,9 @@ public class Finance_BillList extends BaseTest{
         checkResponse(res);
         Assert.assertEquals(code, "1000000");
         //TODO
-        Assert.assertNotNull(UT.parseJson(data, "list()"));
-        Assert.assertNotNull(UT.parseJson(data, "size"));
-        Assert.assertNotNull(UT.parseJson(data, "page_size"));
+        Assert.assertNotNull(Generator.parseJson(data, "list()"));
+        Assert.assertNotNull(Generator.parseJson(data, "size"));
+        Assert.assertNotNull(Generator.parseJson(data, "page_size"));
     }
 
     @Test
@@ -52,7 +52,7 @@ public class Finance_BillList extends BaseTest{
             }
             checkResponse(res);
             Assert.assertEquals(code, "1000000");
-            Assert.assertEquals(UT.parseJson(data, "list()"), String.valueOf(i));
+            Assert.assertEquals(Generator.parseJson(data, "list()"), String.valueOf(i));
         }
     }
 }

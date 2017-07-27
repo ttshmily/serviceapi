@@ -1,7 +1,7 @@
 package com.mingyizhudao.qa.util;
 
 import com.mingyizhudao.qa.common.BaseTest;
-import com.mingyizhudao.qa.common.KB;
+import com.mingyizhudao.qa.common.KnowledgeBase;
 import net.sf.json.JSONObject;
 
 import java.text.SimpleDateFormat;
@@ -13,7 +13,7 @@ import java.util.Random;
 /**
  * Created by ttshmily on 4/5/2017.
  */
-public class UT {
+public class Generator {
 
     public static SimpleDateFormat df = new SimpleDateFormat("yyyy/MM/dd");
 
@@ -113,113 +113,113 @@ public class UT {
 
     public static String randomProvinceId() {
 
-        return randomKey(KB.kb_province);
+        return randomKey(KnowledgeBase.kb_province);
     }
 
     public static String provinceName(String id) {
 
-        return KB.kb_province.get(id);
+        return KnowledgeBase.kb_province.get(id);
     }
 
     public static String randomCityId() {
 
-        return randomKey(KB.kb_city);
+        return randomKey(KnowledgeBase.kb_city);
     }
 
     public static String randomCityIdUnder(String provinceId) {
 
-        return randomKey(KB.kb_city_ext.get(provinceId));
+        return randomKey(KnowledgeBase.kb_city_ext.get(provinceId));
     }
 
     public static String cityName(String id) {
 
-        return KB.kb_city.get(id);
+        return KnowledgeBase.kb_city.get(id);
     }
 
     public static String randomCountyId() {
 
-        return randomKey(KB.kb_county);
+        return randomKey(KnowledgeBase.kb_county);
     }
 
     public static String countyName(String id) {
 
-        return KB.kb_county.get(id);
+        return KnowledgeBase.kb_county.get(id);
     }
 
     public static String randomHospitalId() {
 
-        return randomKey(KB.kb_hospital);
+        return randomKey(KnowledgeBase.kb_hospital);
     }
 
     public static String hospitalName(String id) {
 
-        return KB.kb_hospital.get(id);
+        return KnowledgeBase.kb_hospital.get(id);
     }
 
     public static String randomMajorId() {
 
-        return randomKey(KB.kb_major);
+        return randomKey(KnowledgeBase.kb_major);
     }
 
     public static String majorName(String id) {
 
-        return KB.kb_major.get(id);
+        return KnowledgeBase.kb_major.get(id);
     }
 
     public static String randomDiseaseId() {
 
-        return randomKey(KB.kb_disease);
+        return randomKey(KnowledgeBase.kb_disease);
     }
 
     public static String randomDiseaseIdUnder(String majorId) {
 
-        return randomKey(KB.kb_disease_ext.get(majorId));
+        return randomKey(KnowledgeBase.kb_disease_ext.get(majorId));
     }
 
 
     public static String diseaseName(String id) {
 
-        return KB.kb_disease.get(id);
+        return KnowledgeBase.kb_disease.get(id);
     }
 
     public static String randomExpertId() {
 
-        return randomKey(KB.kb_doctor);
+        return randomKey(KnowledgeBase.kb_doctor);
     }
 
     public static String expertName(String id) {
 
-        return KB.kb_doctor.get(id);
+        return KnowledgeBase.kb_doctor.get(id);
     }
 
     public static String randomMedicalId() {
 
-        return randomKey(KB.kb_medical_title);
+        return randomKey(KnowledgeBase.kb_medical_title);
     }
 
     public static String randomAcademicId() {
 
-        return randomKey(KB.kb_academic_title);
+        return randomKey(KnowledgeBase.kb_academic_title);
     }
 
     public static String randomHospitalClass() {
 
-        return randomKey(KB.kb_hospital_class);
+        return randomKey(KnowledgeBase.kb_hospital_class);
     }
 
     public static String randomHospitalType() {
 
-        return randomKey(KB.kb_hospital_type);
+        return randomKey(KnowledgeBase.kb_hospital_type);
     }
 
     public static String randomSurgeryId() {
 
-        return randomKey(KB.kb_surgery);
+        return randomKey(KnowledgeBase.kb_surgery);
     }
 
     public static String surgeryName(String id) {
 
-        return KB.kb_surgery.get(id);
+        return KnowledgeBase.kb_surgery.get(id);
     }
 
 
