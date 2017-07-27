@@ -208,6 +208,7 @@ public class BaseTest {
 //创建一个医生，并且完善信息
     public HashMap<String, String> CreateRegisteredDoctor(DoctorProfile dp) {
         HashMap<String,String> info = CreateRegistered();
+        if (info == null) return null;
         String token = info.get("token");
 
         logger.info("更新医生信息...");
@@ -228,6 +229,7 @@ public class BaseTest {
 // 创建一个医生并且认证
     public HashMap<String, String> CreateVerifiedDoctor(DoctorProfile dp) {
         HashMap<String,String> info = CreateRegisteredDoctor(dp);
+        if (info == null) return null;
 
         logger.info("认证医生...");
         String doctorId = info.get("id");
@@ -246,7 +248,7 @@ public class BaseTest {
 // 创建一个医生并且认证和同步
     public HashMap<String, String> CreateSyncedDoctor(DoctorProfile dp) {
         HashMap<String,String> info = CreateRegisteredDoctor(dp);
-
+        if (info == null) return null;
         logger.info("认证并同步医生...");
         String doctorId = info.get("id");
         HashMap<String,String> tmp = RegisteredDoctor_CertifySync_V2.CertifyAndSync(doctorId, "1");

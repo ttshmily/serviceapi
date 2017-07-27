@@ -54,7 +54,7 @@ public class KB {
     public static HashMap<String, String> kb_surgery = new HashMap<>();
     public static String surgery_file = "src/test/resources/kb_surgery.txt";
 
-    public static String major_uri = "/diseaseCategories/listTreeNode";
+    public static String major_uri = "/api/v1/diseaseCategories/listTreeNode";
     public static HashMap<String, String> kb_major = new HashMap<>();
     public static String major_file = "src/test/resources/kb_major.txt";
 
@@ -337,8 +337,10 @@ public class KB {
                     HashMap<String, String> tmp = new HashMap<>();
                     query.replace("diseaseCategoryId", key);
                     res = HttpRequest.sendGet(BaseTest.host_kb + disease_uri, query, "");
-                    int total = Integer.parseInt(UT.parseJson(JSONObject.fromObject(res), "data:list()"));
-                    JSONArray disease_list = JSONObject.fromObject(res).getJSONObject("data").getJSONArray("list");
+//                    int total = Integer.parseInt(UT.parseJson(JSONObject.fromObject(res), "data:list()"));
+                    JSONObject res_json = JSONObject.fromObject(res);
+                    String disease_str = res_json.getJSONObject("data").getString("list");
+                    JSONArray disease_list = JSONArray.fromObject(disease_str);
                     for (int j = 0; j < disease_list.size(); j++) {
                         JSONObject disease = disease_list.getJSONObject(j);
                         tmp.put(disease.getString("id"), disease.getString("name"));
@@ -350,6 +352,7 @@ public class KB {
             }
         } catch (Exception e) {
             logger.error("ENUM初始化失败，准备退出");
+            e.printStackTrace();
             System.exit(10);
         }
 

@@ -1,6 +1,7 @@
 package com.mingyizhudao.qa.testcase.doctor;
 
 import com.mingyizhudao.qa.common.BaseTest;
+import com.mingyizhudao.qa.common.TestLogger;
 import com.mingyizhudao.qa.testcase.crm.Order_ReceiveTask;
 import com.mingyizhudao.qa.testcase.crm.Order_RecommendDoctor;
 import com.mingyizhudao.qa.testcase.crm.Order_ThreewayCall;
@@ -256,6 +257,10 @@ public class GetDoctorProfile_V1 extends BaseTest {
         //TODO
         Reporter.clear();
         Reporter.log("我就是玩二下");
+        TestLogger.logMessage("aaa", "test testlogger");
+        TestLogger.logMessage("bbb", "test testlogger");
+        TestLogger.logMessage("bbb", "test testlogger");
+
         Reporter.log(Reporter.getOutput().toString(), true);
     }
 }

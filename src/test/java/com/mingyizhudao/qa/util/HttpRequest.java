@@ -2,18 +2,19 @@ package com.mingyizhudao.qa.util;
 
 import org.apache.log4j.Logger;
 
-import javax.net.ssl.SSLContext;
-import javax.net.ssl.TrustManager;
-import javax.net.ssl.X509TrustManager;
+import javax.net.ssl.*;
 import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLConnection;
 import java.net.URLEncoder;
+import java.security.KeyManagementException;
+import java.security.NoSuchAlgorithmException;
+import java.security.cert.CertificateException;
+import java.security.cert.X509Certificate;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -23,18 +24,21 @@ public class HttpRequest {
 
     public static void main(String[] args) {
 
-        String url = "http://rap.mingyizhudao.com/mockjs/1/hospital/{search}";
-        HashMap<String, String> map = new HashMap<String, String>();
-        map.put("search", "3");
-        map.put("search2", "4");
-        System.out.println(restUrl(url, map));
-        System.out.println(queryBuilder(map));
+//        String url = "http://rap.mingyizhudao.com/mockjs/1/hospital/{search}";
+//        HashMap<String, String> map = new HashMap<String, String>();
+//        map.put("search", "3");
+//        map.put("search2", "4");
+//        System.out.println(restUrl(url, map));
+//        System.out.println(queryBuilder(map));
 //        try {
 //            String res = sendGet(url, para, "xxx");
 //            System.out.println(res);
 //        } catch (IOException e) {
 //            e.printStackTrace();
 //        }
+        String a = "a";
+        String b = "\"b\"";
+        System.out.print(a+b);
     }
 
     /**
@@ -50,6 +54,7 @@ public class HttpRequest {
 	    String result = "";
 		BufferedReader in = null;
 		try {
+		    HttpsURLConnection httpsURLConnection;
 			String urlNameString = url;
             if (param != null && !param.isEmpty()) urlNameString = urlNameString.concat("?").concat(param);
             URL realUrl = new URL(urlNameString);
@@ -70,43 +75,71 @@ public class HttpRequest {
             logger.info("请求数据: >>>>>  " + param);
             start = System.currentTimeMillis();
 			httpURLConnection.connect();
-            boolean redirect = false;
             int status = httpURLConnection.getResponseCode();
-            if (status != HttpURLConnection.HTTP_OK) {
-                if (status == HttpURLConnection.HTTP_MOVED_TEMP || status == HttpURLConnection.HTTP_MOVED_PERM || status == HttpURLConnection.HTTP_SEE_OTHER)
-                    redirect = true;
+            if (status == HttpURLConnection.HTTP_OK) {
+                in = new BufferedReader(new InputStreamReader(httpURLConnection.getInputStream())); //connection
+                end = System.currentTimeMillis();
+                logger.info("等待回应: <<<<<  " + httpURLConnection.getResponseCode() + " " + httpURLConnection.getResponseMessage());
+                logger.info("响应时间: <<<<<  " + Long.toString(end-start) + " ms");
             }
-//            if (redirect) {
-//                // get redirect url from "location" header field
-//                String newUrl = httpURLConnection.getHeaderField("Location");
-//
-//                // get the cookie if need, for login
-//                String cookies = httpURLConnection.getHeaderField("Set-Cookie");
-//
-//                // open the new connection again
-//                httpURLConnection = (HttpURLConnection) new URL(newUrl).openConnection();
-//                httpURLConnection.setRequestProperty("accept", "*/*");
-//                httpURLConnection.setRequestProperty("connection", "close");
-//                httpURLConnection.setRequestProperty("user-agent",
-//                        "Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1;SV1)");
-//                System.out.println("Redirect to URL : " + newUrl);
-//            }
-            in = new BufferedReader(new InputStreamReader(httpURLConnection.getInputStream())); //connection
-			end = System.currentTimeMillis();
-            logger.info("等待回应: <<<<<  " + httpURLConnection.getResponseCode() + " " + httpURLConnection.getResponseMessage());
-            logger.info("响应时间: <<<<<  " + Long.toString(end-start) + " ms");
+            if (status == HttpURLConnection.HTTP_MOVED_TEMP || status == HttpURLConnection.HTTP_MOVED_PERM || status == HttpURLConnection.HTTP_SEE_OTHER) { // now only available for redirect on qiye wechat
+                // get redirect url from "location" header field
+                String newUrl = httpURLConnection.getHeaderField("Location");
+                // get the cookie if need, for login
+                String cookies = httpURLConnection.getHeaderField("Set-Cookie");
+
+                X509TrustManager trustManager = new X509TrustManager() {
+                    public void checkClientTrusted(X509Certificate[] chain, String authType)
+                            throws CertificateException {
+                        // Don't do anything.
+                    }
+
+                    public void checkServerTrusted(X509Certificate[] chain, String authType)
+                            throws CertificateException {
+                        // Don't do anything.
+                    }
+
+                    public X509Certificate[] getAcceptedIssuers() {
+                        // Don't do anything.
+                        return null;
+                    }
+                };
+                SSLContext sslcontext = SSLContext.getInstance("TLS");
+                sslcontext.init(null, new TrustManager[]{trustManager}, null);
+                // 从上述SSLContext对象中得到SSLSocketFactory对象
+                SSLSocketFactory ssf = sslcontext.getSocketFactory();
+                // open the new https connection
+                httpsURLConnection = (HttpsURLConnection) new URL(newUrl).openConnection();
+                httpsURLConnection.setSSLSocketFactory(ssf);
+                httpsURLConnection.setRequestProperty("Accept", "*/*");
+                httpsURLConnection.setRequestProperty("Connection", "keep-alive");
+                httpsURLConnection.setRequestProperty("User-Agent", "Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1;SV1)");
+                httpsURLConnection.setRequestProperty("Cookie", cookies);
+                logger.info("Redirect to URL : " + newUrl);
+                httpsURLConnection.connect();
+                in = new BufferedReader(new InputStreamReader(httpsURLConnection.getInputStream())); //connection
+                end = System.currentTimeMillis();
+                logger.info("等待回应: <<<<<  " + httpsURLConnection.getResponseCode() + " " + httpURLConnection.getResponseMessage());
+                logger.info("响应时间: <<<<<  " + Long.toString(end-start) + " ms");
+            }
+//            in = new BufferedReader(new InputStreamReader(httpsURLConnection.getInputStream())); //connection
+//			end = System.currentTimeMillis();
+//            logger.info("等待回应: <<<<<  " + httpURLConnection.getResponseCode() + " " + httpURLConnection.getResponseMessage());
+//            logger.info("响应时间: <<<<<  " + Long.toString(end-start) + " ms");
 
 			String line;
 			while ((line = in.readLine()) != null) {
 				result += line;
 			}
-
-//			logger.debug(httpURLConnection.getRequestProperties().keySet());
 			in.close();
 		} catch (IOException e) {
+		    e.printStackTrace();
 			logger.error("发送请求异常");
-            throw e;
-		}
+		} catch (NoSuchAlgorithmException e) {
+            logger.error("发送HTTPS请求异常");
+        } catch (KeyManagementException e) {
+            logger.error("发送HTTPS请求异常");
+        }
 		return result;
 	}
 
@@ -515,6 +548,7 @@ public class HttpRequest {
             String line;
             while ((line = in.readLine()) != null) {
                 result += line;
+//                result += "\n";
             }
             in.close();
             out.close();
