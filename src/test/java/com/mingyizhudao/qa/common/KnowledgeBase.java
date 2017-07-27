@@ -20,66 +20,68 @@ public class KnowledgeBase {
 
     public static final Logger logger= Logger.getLogger(KnowledgeBase.class);
 
+    public static String log_dir = "logs/";
+
     public static String hospital_uri = "/api/v1/hospitals";
     public static HashMap<String, String> kb_hospital = new HashMap<>();
-    public static String hospital_file = "src/test/resources/kb_hospital.txt";
+    public static String hospital_file = log_dir + "kb_hospital.txt";
 
     public static String doctor_uri = "/api/v1/doctors";
     public static HashMap<String, String> kb_doctor = new HashMap<>();
-    public static String doctor_file = "src/test/resources/kb_doctor.txt";
+    public static String doctor_file = log_dir + "kb_doctor.txt";
 
     public static String province_uri = "/api/v1/provinces";
     public static HashMap<String, String> kb_province = new HashMap<>();
-    public static String province_file = "src/test/resources/kb_province.txt";
+    public static String province_file = log_dir + "kb_province.txt";
 
     public static String city_uri = "/api/v1/cities";
     public static HashMap<String, String> kb_city = new HashMap<>();
-    public static String city_file = "src/test/resources/kb_city.txt";
+    public static String city_file = log_dir + "kb_city.txt";
     public static HashMap<String, HashMap<String, String>> kb_city_ext = new HashMap<>();
 
     public static String medical_uri = "/api/v1/common/medicalTitleList";
     public static HashMap<String, String> kb_medical_title = new HashMap<>();
-    public static String medical_title_file = "src/test/resources/kb_medical_title.txt";
+    public static String medical_title_file = log_dir + "kb_medical_title.txt";
 
     public static String academic_uri = "/api/v1/common/academicTitleList";
     public static HashMap<String, String> kb_academic_title = new HashMap<>();
-    public static String academic_title_file = "src/test/resources/kb_academic_title.txt";
+    public static String academic_title_file = log_dir + "kb_academic_title.txt";
 
     public static String surgery_category_uri = "/api/v1/surgeryCategories";
     public static HashMap<String, String> kb_surgery_category = new HashMap<>();
-    public static String surgery_category_file = "src/test/resources/kb_surgery_category.txt";
+    public static String surgery_category_file = log_dir + "kb_surgery_category.txt";
 
     public static String surgery_uri = "/api/v1/surgeries";
     public static HashMap<String, String> kb_surgery = new HashMap<>();
-    public static String surgery_file = "src/test/resources/kb_surgery.txt";
+    public static String surgery_file = log_dir + "kb_surgery.txt";
 
     public static String major_uri = "/api/v1/diseaseCategories/listTreeNode";
     public static HashMap<String, String> kb_major = new HashMap<>();
-    public static String major_file = "src/test/resources/kb_major.txt";
+    public static String major_file = log_dir + "kb_major.txt";
 
     public static String disease_uri = "/api/v1/diseases";
     public static HashMap<String, String> kb_disease = new HashMap<>();
-    public static String disease_file = "src/test/resources/kb_disease.txt";
+    public static String disease_file = log_dir + "kb_disease.txt";
     public static HashMap<String, HashMap<String,String>> kb_disease_ext = new HashMap<>();
 
     public static String hospital_type_uri = "/api/v1/common/hospitalTypeList";
     public static HashMap<String, String> kb_hospital_type = new HashMap<>();
-    public static String hospital_type_file = "src/test/resources/kb_hospital_type.txt";
+    public static String hospital_type_file = log_dir + "kb_hospital_type.txt";
 
     public static String hospital_class_uri = "/api/v1/common/hospitalClassList";
     public static HashMap<String, String> kb_hospital_class = new HashMap<>();
-    public static String hospital_class_file = "src/test/resources/kb_hospital_class.txt";
+    public static String hospital_class_file = log_dir + "kb_hospital_class.txt";
 
     public static String county_uri = "/api/v1/cities/{id}/counties";
     public static HashMap<String, String> kb_county = new HashMap<>();
-    public static String county_file = "src/test/resources/kb_county.txt";
+    public static String county_file = log_dir + "kb_county.txt";
 
     public static void init() {
         try {
             File file = new File(hospital_file);
             if (file.exists()) {
-                fileToString(hospital_file,kb_hospital);
-            }else {
+                fileToString(hospital_file, kb_hospital);
+            } else {
                 int pageSize = 1000;
                 HashMap<String, String> query = new HashMap<>();
                 query.put("pageSize", "1");
@@ -107,7 +109,7 @@ public class KnowledgeBase {
                     JSONObject hospital = hospital_list.getJSONObject(j);
                     kb_hospital.put(hospital.getString("id"), hospital.getString("name"));
                 }
-                stringToFile(kb_hospital,"src/test/resources/kb_hospital.txt");//created by tianjing on 2017/6/21
+                stringToFile(kb_hospital, hospital_file);//created by tianjing on 2017/6/21
             }
             //writeJson("/src/test/resources/",)
         } catch (Exception e) {
@@ -120,7 +122,7 @@ public class KnowledgeBase {
             File file = new File(doctor_file);
             if (file.exists()) {
                 fileToString(doctor_file,kb_doctor);
-            }else {
+            } else {
                 int pageSize = 1000;
                 HashMap<String, String> query = new HashMap<>();
                 query.put("pageSize", "1");
@@ -147,7 +149,7 @@ public class KnowledgeBase {
                     JSONObject doctor = doctor_list.getJSONObject(j);
                     kb_doctor.put(doctor.getString("id"), doctor.getString("name"));
                 }
-                stringToFile(kb_doctor, "src/test/resources/kb_doctor.txt");//created by tianjing on 2017/6/21
+                stringToFile(kb_doctor, doctor_file);//created by tianjing on 2017/6/21
             }
         } catch (Exception e) {
             logger.error("ENUM初始化失败，准备退出");
@@ -159,7 +161,7 @@ public class KnowledgeBase {
             File file = new File(province_file);
             if (file.exists()) {
                 fileToString(province_file,kb_province);
-            }else {
+            } else {
                 String res = HttpRequest.sendGet(BaseTest.host_kb + province_uri, "", "", null);
                 int total = Integer.parseInt(Generator.parseJson(JSONObject.fromObject(res), "data:list()"));
                 JSONArray province_list = JSONObject.fromObject(res).getJSONObject("data").getJSONArray("list");
@@ -167,7 +169,7 @@ public class KnowledgeBase {
                     JSONObject province = province_list.getJSONObject(j);
                     kb_province.put(province.getString("id"), province.getString("name"));
                 }
-                stringToFile(kb_province, "src/test/resources/kb_province.txt");//created by tianjing on 2017/6/21
+                stringToFile(kb_province, province_file);//created by tianjing on 2017/6/21
             }
         } catch (Exception e) {
             logger.error("ENUM初始化失败，准备退出");
@@ -178,7 +180,7 @@ public class KnowledgeBase {
             File file = new File(city_file);
             if (file.exists()) {
                 fileToString(city_file,kb_city);
-            }else {
+            } else {
                 String res = "";
                 HashMap<String, String> query = new HashMap<>();
                 query.put("provinceId", "100");
@@ -195,7 +197,7 @@ public class KnowledgeBase {
                     }
                     kb_city_ext.put(key, tmp);
                 }
-//                stringToFile(kb_city, "src/test/resources/kb_city.txt");//created by tianjing on 2017/6/21
+//                stringToFile(kb_city, city_file);//created by tianjing on 2017/6/21
             }
         } catch (Exception e) {
             logger.error("ENUM初始化失败，准备退出");
@@ -206,7 +208,7 @@ public class KnowledgeBase {
             File file = new File(medical_title_file);
             if (file.exists()) {
                 fileToString(medical_title_file,kb_medical_title);
-            }else {
+            } else {
                 String res = "";
                 res = HttpRequest.sendGet(BaseTest.host_kb + medical_uri, "", "", null);
                 logger.debug(res);
@@ -218,7 +220,7 @@ public class KnowledgeBase {
                         kb_medical_title.put(key, mt.getString(key));
                     }
                 }
-                stringToFile(kb_medical_title, "src/test/resources/kb_medical_title.txt");//created by tianjing on 2017/6/21
+                stringToFile(kb_medical_title, medical_title_file);//created by tianjing on 2017/6/21
             }
         } catch (Exception e) {
             logger.error("ENUM初始化失败，准备退出");
@@ -230,7 +232,7 @@ public class KnowledgeBase {
             File file = new File(academic_title_file);
             if (file.exists()) {
                 fileToString(academic_title_file,kb_academic_title);
-            }else {
+            } else {
                 String res = "";
                 res = HttpRequest.sendGet(BaseTest.host_kb + academic_uri, "", "", null);
                 int total = Integer.parseInt(Generator.parseJson(JSONObject.fromObject(res), "data:list()"));
@@ -241,7 +243,7 @@ public class KnowledgeBase {
                         kb_academic_title.put(key, at.getString(key));
                     }
                 }
-                stringToFile(kb_academic_title, "src/test/resources/kb_academic_title.txt");//created by tianjing on 2017/6/21
+                stringToFile(kb_academic_title, academic_title_file);//created by tianjing on 2017/6/21
             }
         } catch (Exception e) {
             logger.error("ENUM初始化失败，准备退出");
@@ -252,7 +254,7 @@ public class KnowledgeBase {
             File file = new File(surgery_category_file);
             if (file.exists()) {
                 fileToString(surgery_category_file,kb_surgery_category);
-            }else {
+            } else {
                 String res = "";
                 res = HttpRequest.sendGet(BaseTest.host_kb + surgery_category_uri, "", "", null);
                 int total_1 = Integer.parseInt(Generator.parseJson(JSONObject.fromObject(res), "data:list()")); // 一级分类个数
@@ -265,7 +267,7 @@ public class KnowledgeBase {
                         kb_surgery_category.put(sc.getString("id"), sc.getString("name"));
                     }
                 }
-                stringToFile(kb_surgery_category, "src/test/resources/kb_surgery_category.txt");//created by tianjing on 2017/6/21
+                stringToFile(kb_surgery_category, surgery_category_file);//created by tianjing on 2017/6/21
             }
         } catch (Exception e) {
             logger.error("ENUM初始化失败，准备退出");
@@ -277,7 +279,7 @@ public class KnowledgeBase {
             File file = new File(surgery_file);
             if (file.exists()) {
                 fileToString(surgery_file,kb_surgery);
-            }else {
+            } else {
                 String res = "";
                 HashMap<String, String> query = new HashMap<>();
                 query.put("pageSize", "1000");
@@ -292,7 +294,7 @@ public class KnowledgeBase {
                         kb_surgery.put(surgery.getString("id"), surgery.getString("name"));
                     }
                 }
-                stringToFile(kb_surgery, "src/test/resources/kb_surgery.txt");//created by tianjing on 2017/6/21
+                stringToFile(kb_surgery, surgery_file);//created by tianjing on 2017/6/21
             }
         } catch (Exception e) {
             logger.error("ENUM初始化失败，准备退出");
@@ -303,7 +305,7 @@ public class KnowledgeBase {
             File file = new File(major_file);
             if (file.exists()) {
                 fileToString(major_file,kb_major);
-            }else {
+            } else {
                 String res = "";
                 res = HttpRequest.sendGet(BaseTest.host_kb + major_uri, "", "", null);
                 int total_1 = Integer.parseInt(Generator.parseJson(JSONObject.fromObject(res), "data:list()")); // 一级分类个数
@@ -316,7 +318,7 @@ public class KnowledgeBase {
                         kb_major.put(dc.getString("id"), dc.getString("name"));
                     }
                 }
-                stringToFile(kb_major, "src/test/resources/kb_major.txt");//created by tianjing on 2017/6/21
+                stringToFile(kb_major, major_file);//created by tianjing on 2017/6/21
             }
         } catch (Exception e) {
             logger.error("ENUM初始化失败，准备退出");
@@ -327,7 +329,7 @@ public class KnowledgeBase {
             File file = new File(disease_file);
             if (file.exists()) {
                 fileToString(disease_file,kb_disease);
-            }else {
+            } else {
                 String res = "";
                 HashMap<String, String> query = new HashMap<>();
                 query.put("pageSize", "1000");
@@ -347,7 +349,7 @@ public class KnowledgeBase {
                     }
                     kb_disease_ext.put(key, tmp);
                 }
-//                stringToFile(kb_disease, "src/test/resources/kb_disease.txt");//created by tianjing on 2017/6/21
+//                stringToFile(kb_disease, disease_file);//created by tianjing on 2017/6/21
             }
         } catch (Exception e) {
             logger.error("ENUM初始化失败，准备退出");
@@ -359,7 +361,7 @@ public class KnowledgeBase {
             File file = new File(hospital_class_file);
             if (file.exists()) {
                 fileToString(hospital_class_file,kb_hospital_class);
-            }else {
+            } else {
                 String res = "";
                 res = HttpRequest.sendGet(BaseTest.host_kb + hospital_class_uri, "", "");
                 int total = Integer.parseInt(Generator.parseJson(JSONObject.fromObject(res), "data:list()"));
@@ -370,7 +372,7 @@ public class KnowledgeBase {
                         kb_hospital_class.put(key, ct.getString(key));
                     }
                 }
-                stringToFile(kb_hospital_class, "src/test/resources/kb_hospital_class.txt");//created by tianjing on 2017/6/21
+                stringToFile(kb_hospital_class, hospital_class_file);//created by tianjing on 2017/6/21
             }
         } catch (Exception e) {
             logger.error("ENUM初始化失败，准备退出");
@@ -381,8 +383,8 @@ public class KnowledgeBase {
         try {
             File file = new File(hospital_type_file);
             if (file.exists()) {
-                fileToString(hospital_type_file,kb_hospital_type);
-            }else {
+                fileToString(hospital_type_file, kb_hospital_type);
+            } else {
                 String res = "";
                 res = HttpRequest.sendGet(BaseTest.host_kb + hospital_type_uri, "", "");
                 int total = Integer.parseInt(Generator.parseJson(JSONObject.fromObject(res), "data:list()"));
@@ -393,7 +395,7 @@ public class KnowledgeBase {
                         kb_hospital_type.put(key, tt.getString(key));
                     }
                 }
-                stringToFile(kb_hospital_type, "src/test/resources/kb_hospital_type.txt");//created by tianjing on 2017/6/21
+                stringToFile(kb_hospital_type, hospital_type_file);//created by tianjing on 2017/6/21
             }
         } catch (Exception e) {
             logger.error("ENUM初始化失败，准备退出");
@@ -405,7 +407,7 @@ public class KnowledgeBase {
             File file = new File(county_file);
             if (file.exists()) {
                 fileToString(county_file,kb_county);
-            }else {
+            } else {
                 String res = "";
                 for (String cityId : kb_city.keySet()) {
                     HashMap<String, String> pathValue = new HashMap<>();
@@ -418,7 +420,7 @@ public class KnowledgeBase {
                         kb_county.put(country.getString("id"), country.getString("name"));
                     }
                 }
-                stringToFile(kb_county, "src/test/resources/kb_county.txt");//created by tianjing on 2017/6/21
+                stringToFile(kb_county, county_file);//created by tianjing on 2017/6/21
             }
         } catch (Exception e) {
             logger.error("ENUM初始化失败，准备退出");
@@ -438,7 +440,7 @@ public class KnowledgeBase {
             FileWriter fileWriter = new FileWriter(filePath);
             fileWriter.write(id_name_buffer.toString());
             fileWriter.close();
-        }catch (IOException e){
+        } catch (IOException e){
             logger.error(e);
             e.printStackTrace();
         }
@@ -468,7 +470,7 @@ public class KnowledgeBase {
                     }
                 }
                 read.close();
-            }else{
+            } else {
                 System.out.println("找不到指定的文件");
             }
         } catch (Exception e) {
