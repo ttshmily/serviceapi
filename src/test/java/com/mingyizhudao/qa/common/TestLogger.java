@@ -20,12 +20,62 @@ public class TestLogger
     private static String dir = "logs"; // Root log directory
     private static Layout layout;
     private static Logger rootLogger = Logger.getRootLogger();
+    private String jobName;
 
-    public static synchronized void logMessage(String jobName, String message)
-    {
+    public void setJobName(String jobName) {
+        this.jobName = jobName;
+    }
+
+
+    public TestLogger() {
+        this.jobName = "Default";
+    }
+
+    public TestLogger(String jobName) {
+        this.jobName = jobName;
+    }
+
+    public static synchronized void info(String jobName, String message) {
         Logger l = getTestLogger(jobName);
         l.info(message);
         Reporter.log(message); // also log to TestNG report
+    }
+    public synchronized void info(String message) {
+        Logger l = getTestLogger(jobName);
+        l.info(message);
+        Reporter.log(message); // also log to TestNG report
+    }
+
+    public static synchronized void error(String jobName, String message) {
+        Logger l = getTestLogger(jobName);
+        l.error(message);
+        Reporter.log(message); // also log to TestNG report
+    }
+    public synchronized void error(String message) {
+        Logger l = getTestLogger(jobName);
+        l.error(message);
+        Reporter.log(message); // also log to TestNG report
+    }
+    public synchronized void error(Object message) {
+        Logger l = getTestLogger(jobName);
+        l.error(message.toString());
+        Reporter.log(message.toString()); // also log to TestNG report
+    }
+
+    public static synchronized void debug(String jobName, String message) {
+        Logger l = getTestLogger(jobName);
+        l.debug(message);
+        Reporter.log(message); // also log to TestNG report
+    }
+    public synchronized void debug(String message) {
+        Logger l = getTestLogger(jobName);
+        l.debug(message);
+        Reporter.log(message); // also log to TestNG report
+    }
+    public synchronized void debug(Object message) {
+        Logger l = getTestLogger(jobName);
+        l.error(message.toString());
+        Reporter.log(message.toString()); // also log to TestNG report
     }
 
     /**

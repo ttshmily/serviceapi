@@ -25,7 +25,8 @@ import java.util.*;
  */
 public class BaseTest {
 
-    public static final Logger logger= Logger.getLogger(BaseTest.class);
+//    public static final Logger logger = Logger.getLogger(BaseTest.class);
+    public static TestLogger logger = new TestLogger(BaseTest.class.getName());
     public static String protocol = "";
     public static String host_doc = "";
     public static String host_crm = "";
@@ -53,14 +54,14 @@ public class BaseTest {
     public String message = "";
     public JSONObject data;
 
-//    public static void main(String[] args) {
+    public static void main(String[] args) {
 //        String mobile = SendVerifyCode.send();
 //        String token = CheckVerifyCode.check();
 //        CreateRegistered();
 //        CreateRegisteredDoctor();
-//    }
+    }
     static  {
-        PropertyConfigurator.configure(BaseTest.class.getClassLoader().getResource("log4j.properties"));
+//        PropertyConfigurator.configure(BaseTest.class.getClassLoader().getResource("log4j.properties"));
         // 读取配置文件
         Properties prop = new Properties();
         try {
@@ -68,8 +69,7 @@ public class BaseTest {
             prop.load(in);
             in.close();
         } catch (IOException e) {
-            logger.error(e);
-            logger.error("初始化配置失败，退出...");
+            logger.error(e.toString());
             System.exit(1);
         }
 
@@ -135,6 +135,7 @@ public class BaseTest {
         logger.info("//    TestAPI START:\t" + getClass().getSimpleName());
         logger.info("///////////////////////////////////////////////////////////////////////////////////////////////////////////// \n");
 
+
     }
 
     @AfterClass
@@ -169,12 +170,15 @@ public class BaseTest {
         this.code = json.getString("code");
         this.message = json.getString("message");
         if (json.containsKey("data")) {
-            if (json.getString("data").equals(""))
+            String tmp = json.getString("data");
+            if (tmp.equals(""))
                 this.data = JSONObject.fromObject("{}");
-            else if (json.getString("data").equals("[]"))
+            else if (tmp.equals("[]"))
                 this.data = JSONObject.fromObject("{}");
+            else if (this.code.equals("1000000"))
+                this.data = json.getJSONObject("data");
             else
-                if (this.code.equals("1000000")) this.data = json.getJSONObject("data"); else this.data = null;
+                this.data = null;
         } else {
             this.data = null;
         }

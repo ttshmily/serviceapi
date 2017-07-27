@@ -6,7 +6,6 @@ import com.mingyizhudao.qa.functiontest.crm.Order_ReceiveTask;
 import com.mingyizhudao.qa.functiontest.crm.Order_RecommendDoctor;
 import com.mingyizhudao.qa.functiontest.crm.Order_ThreewayCall;
 import com.mingyizhudao.qa.utilities.HttpRequest;
-import org.apache.log4j.Logger;
 import org.testng.Assert;
 import org.testng.Reporter;
 import org.testng.annotations.Test;
@@ -20,7 +19,7 @@ import static com.mingyizhudao.qa.utilities.Generator.parseJson;
  */
 public class GetDoctorProfile_V1 extends BaseTest {
 
-    public static final Logger logger= Logger.getLogger(GetDoctorProfile_V1.class);
+    public static final TestLogger logger= new TestLogger(GetDoctorProfile_V1.class.getName());
     public static String uri = "/api/v1/getdoctorprofile";
     public static String mock = false ? "/mockjs/1" : "";
     public static String token= "";
@@ -29,7 +28,7 @@ public class GetDoctorProfile_V1 extends BaseTest {
     public static String MyProfile(String token) {
         String res = "";
         try {
-            res = HttpRequest.sendGet(host_doc +mock+uri, "", token);
+            res = HttpRequest.sendGet(host_doc +uri, "", token);
         } catch (IOException e) {
             logger.error(e);
         }
@@ -255,12 +254,9 @@ public class GetDoctorProfile_V1 extends BaseTest {
     @Test
     public void test_09_测试返回的地区服务专员(){
         //TODO
-        Reporter.clear();
-        Reporter.log("我就是玩二下");
-        TestLogger.logMessage("aaa", "test testlogger");
-        TestLogger.logMessage("bbb", "test testlogger");
-        TestLogger.logMessage("bbb", "test testlogger");
-
-        Reporter.log(Reporter.getOutput().toString(), true);
+        logger.debug("我就是玩二下");
+        logger.info("test testlogger");
+        logger.info("test testlogger");
+        logger.error("test testlogger");
     }
 }

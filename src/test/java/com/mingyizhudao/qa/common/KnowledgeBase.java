@@ -18,9 +18,9 @@ import java.util.Map;
  */
 public class KnowledgeBase {
 
-    public static final Logger logger= Logger.getLogger(KnowledgeBase.class);
+    public static final TestLogger logger= BaseTest.logger;
 
-    public static String log_dir = "logs/";
+    public static String log_dir = "logs/kb_cache/";
 
     public static String hospital_uri = "/api/v1/hospitals";
     public static HashMap<String, String> kb_hospital = new HashMap<>();
@@ -114,7 +114,7 @@ public class KnowledgeBase {
             //writeJson("/src/test/resources/",)
         } catch (Exception e) {
             logger.error("ENUM初始化失败，准备退出");
-            logger.error(e);
+            logger.error(e.toString());
             System.exit(1);
         }
 
@@ -224,7 +224,7 @@ public class KnowledgeBase {
             }
         } catch (Exception e) {
             logger.error("ENUM初始化失败，准备退出");
-            logger.error(e);
+            logger.error(e.toString());
             System.exit(5);
         }
 
