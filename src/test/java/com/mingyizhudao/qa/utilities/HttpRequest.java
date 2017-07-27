@@ -36,9 +36,6 @@ public class HttpRequest {
 //        } catch (IOException e) {
 //            e.printStackTrace();
 //        }
-        String a = "a";
-        String b = "\"b\"";
-        System.out.print(a+b);
     }
 
     /**
