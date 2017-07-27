@@ -1,5 +1,6 @@
 /target
 /.idea
+/logs
 serviceapi.iml
 .DS_Store
 src/test/resources/*.txt
