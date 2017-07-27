@@ -107,6 +107,7 @@ public class KBExpert_Diseases_V2 extends BaseTest {
                 specialty.accumulate("disease_list", JSONObject.fromObject("{\"id\": "+diseaseId+",\"name\": \""+UT.diseaseName(diseaseId)+"\"}"));
             }
             specialty_list.add(specialty);
+            specialty.clear();
         }
         body.put("specialty_list", specialty_list);
         return body;
