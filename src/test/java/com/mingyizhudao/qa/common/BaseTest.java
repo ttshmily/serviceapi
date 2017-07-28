@@ -60,9 +60,10 @@ public class BaseTest {
 //        CreateRegistered();
 //        CreateRegisteredDoctor();
     }
-    static  {
-//        PropertyConfigurator.configure(BaseTest.class.getClassLoader().getResource("log4j.properties"));
-        // 读取配置文件
+
+    static {
+        PropertyConfigurator.configure(BaseTest.class.getClassLoader().getResource("log4j.properties"));
+//         读取配置文件
         Properties prop = new Properties();
         try {
             InputStream in = BaseTest.class.getClassLoader().getResourceAsStream("environment.properties");
@@ -82,12 +83,12 @@ public class BaseTest {
             host_bda = prop.getProperty("host_bda", "services.dev.myzd.info/bd-assistant");
             host_login = prop.getProperty("host_login", "login.dev.myzd.info");
             host_kb = prop.getProperty("host_kb", "192.168.33.1");
+            mainOperatorId = prop.getProperty("mainOperatorId", "chao.fang@mingyizhudao.com");
+            mainOperatorName = prop.getProperty("mainOperatorName");
 
             crm_token = prop.getProperty("crm_token");
             bda_token = prop.getProperty("bda_token");
             bda_token_staff = prop.getProperty("bda_token_staff");
-            mainOperatorId = prop.getProperty("mainOperatorId");
-            mainOperatorName = prop.getProperty("mainOperatorName");
 
             host_doc = protocol.concat("://").concat(host_doc);
             host_crm = protocol.concat("://").concat(host_crm);
@@ -134,7 +135,6 @@ public class BaseTest {
         logger.info("///////////////////////////////////////////////////////////////////////////////////////////////////////////// ");
         logger.info("//    TestAPI START:\t" + getClass().getSimpleName());
         logger.info("///////////////////////////////////////////////////////////////////////////////////////////////////////////// \n");
-
 
     }
 
