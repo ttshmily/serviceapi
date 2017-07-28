@@ -52,31 +52,31 @@ public class Order_Detail extends BaseTest {
             logger.error(e);
         }
         s_CheckResponse(res);
-        Assert.assertNotEquals(Generator.parseJson(data,"patient_name"), "", "患者姓名字段缺失");
-        Assert.assertNotEquals(Generator.parseJson(data,"patient_gender"), "", "患者性别字段缺失");
-        Assert.assertNotEquals(Generator.parseJson(data,"patient_phone"), "", "患者手机号字段缺失");
-        Assert.assertNotNull(Generator.parseJson(data,"major_disease_id"), "主诉疾病ID字段缺失");
-        Assert.assertNotEquals(Generator.parseJson(data,"major_disease_name"), "", "主诉疾病名称字段缺失");
-        Assert.assertNotNull(Generator.parseJson(data,"minor_disease_id"), "次诉疾病ID字段缺失");
-        Assert.assertNotEquals(Generator.parseJson(data,"minor_disease_name"), "", "次诉疾病名称字段缺失");
-        Assert.assertNotNull(Generator.parseJson(data,"diagnosis"), "病例描述字段缺失");
-        Assert.assertNotNull(Generator.parseJson(data,"expected_surgery_start_date"), "期望手术最早开始时间字段缺失");
-        Assert.assertNotNull(Generator.parseJson(data,"expected_surgery_due_date"), "期望手术最晚开始时间字段缺失");
-        Assert.assertNotNull(Generator.parseJson(data,"expected_surgery_hospital_id"), "期望医院ID字段缺失");
-        Assert.assertNotNull(Generator.parseJson(data,"expected_surgery_hospital_name"), "期望医院名称字段缺失");
-        Assert.assertNotEquals(Generator.parseJson(data,"status"), "", "订单状态字段缺失");
-        Assert.assertNotEquals(Generator.parseJson(data,"OrderStatusText"), "", "订单状态描述字段缺失");
-        Assert.assertNotEquals(Generator.parseJson(data,"created_at"), "", "订单创建时间字段缺失");
-        Assert.assertEquals(Generator.parseJson(data,"order_number"), orderId, "订单号字段缺失");
+        Assert.assertNotEquals(Generator.s_ParseJson(data,"patient_name"), "", "患者姓名字段缺失");
+        Assert.assertNotEquals(Generator.s_ParseJson(data,"patient_gender"), "", "患者性别字段缺失");
+        Assert.assertNotEquals(Generator.s_ParseJson(data,"patient_phone"), "", "患者手机号字段缺失");
+        Assert.assertNotNull(Generator.s_ParseJson(data,"major_disease_id"), "主诉疾病ID字段缺失");
+        Assert.assertNotEquals(Generator.s_ParseJson(data,"major_disease_name"), "", "主诉疾病名称字段缺失");
+        Assert.assertNotNull(Generator.s_ParseJson(data,"minor_disease_id"), "次诉疾病ID字段缺失");
+        Assert.assertNotEquals(Generator.s_ParseJson(data,"minor_disease_name"), "", "次诉疾病名称字段缺失");
+        Assert.assertNotNull(Generator.s_ParseJson(data,"diagnosis"), "病例描述字段缺失");
+        Assert.assertNotNull(Generator.s_ParseJson(data,"expected_surgery_start_date"), "期望手术最早开始时间字段缺失");
+        Assert.assertNotNull(Generator.s_ParseJson(data,"expected_surgery_due_date"), "期望手术最晚开始时间字段缺失");
+        Assert.assertNotNull(Generator.s_ParseJson(data,"expected_surgery_hospital_id"), "期望医院ID字段缺失");
+        Assert.assertNotNull(Generator.s_ParseJson(data,"expected_surgery_hospital_name"), "期望医院名称字段缺失");
+        Assert.assertNotEquals(Generator.s_ParseJson(data,"status"), "", "订单状态字段缺失");
+        Assert.assertNotEquals(Generator.s_ParseJson(data,"OrderStatusText"), "", "订单状态描述字段缺失");
+        Assert.assertNotEquals(Generator.s_ParseJson(data,"created_at"), "", "订单创建时间字段缺失");
+        Assert.assertEquals(Generator.s_ParseJson(data,"order_number"), orderId, "订单号字段缺失");
 
-        Assert.assertEquals(Generator.parseJson(data, "medical_record_pictures(0):key"), "2017/05/04/1265834e-97d8-44a0-95e7-047c7facaee8/IMG_20170429_102737.jpg");
-        Assert.assertNotNull(Generator.parseJson(data, "medical_record_pictures(0):largePicture"), "没有大图URL");
-        Assert.assertEquals(Generator.parseJson(data, "medical_record_pictures(1):key"), "2017/05/04/1315bbe0-2836-4776-8216-ec55044f32dd/IMG_20161013_172442.jpg");
-        Assert.assertNotNull(Generator.parseJson(data, "medical_record_pictures(1):thumbnailPicture"), "没有缩略图URL");
+        Assert.assertEquals(Generator.s_ParseJson(data, "medical_record_pictures(0):key"), "2017/05/04/1265834e-97d8-44a0-95e7-047c7facaee8/IMG_20170429_102737.jpg");
+        Assert.assertNotNull(Generator.s_ParseJson(data, "medical_record_pictures(0):largePicture"), "没有大图URL");
+        Assert.assertEquals(Generator.s_ParseJson(data, "medical_record_pictures(1):key"), "2017/05/04/1315bbe0-2836-4776-8216-ec55044f32dd/IMG_20161013_172442.jpg");
+        Assert.assertNotNull(Generator.s_ParseJson(data, "medical_record_pictures(1):thumbnailPicture"), "没有缩略图URL");
 
-        Assert.assertNotEquals(Generator.parseJson(data,"agent_id"), "", "下级医生id字段缺失");
-        Assert.assertNotEquals(Generator.parseJson(data,"agent_name"), "", "下级医生姓名字段缺失");
-        Assert.assertNotEquals(Generator.parseJson(data,"agent_medical_title"), "", "下级医生学术职称字段缺失");
+        Assert.assertNotEquals(Generator.s_ParseJson(data,"agent_id"), "", "下级医生id字段缺失");
+        Assert.assertNotEquals(Generator.s_ParseJson(data,"agent_name"), "", "下级医生姓名字段缺失");
+        Assert.assertNotEquals(Generator.s_ParseJson(data,"agent_medical_title"), "", "下级医生学术职称字段缺失");
 
     }
 
@@ -92,7 +92,7 @@ public class Order_Detail extends BaseTest {
         }
         s_CheckResponse(res);
         Assert.assertEquals(code, "1000000");
-        Assert.assertNull(Generator.parseJson(data, "orderNumber"), "订单ID错误，不应该有数据返回");
+        Assert.assertNull(Generator.s_ParseJson(data, "orderNumber"), "订单ID错误，不应该有数据返回");
     }
 
     @Test

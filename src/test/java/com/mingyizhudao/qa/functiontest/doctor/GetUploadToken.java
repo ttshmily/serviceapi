@@ -38,7 +38,7 @@ public class GetUploadToken extends BaseTest {
             logger.error(e);
         }
         s_CheckResponse(res);
-        Assert.assertNotNull(Generator.parseJson(data, "token"));
+        Assert.assertNotNull(Generator.s_ParseJson(data, "token"));
         Assert.assertEquals(code, "1000000");
     }
 
@@ -55,7 +55,7 @@ public class GetUploadToken extends BaseTest {
             logger.error(e);
         }
         s_CheckResponse(res);
-        Assert.assertNotNull(Generator.parseJson(data, "token"));
+        Assert.assertNotNull(Generator.s_ParseJson(data, "token"));
         Assert.assertEquals(code, "1000000");
 
     }
@@ -73,7 +73,7 @@ public class GetUploadToken extends BaseTest {
             logger.error(e);
         }
         s_CheckResponse(res);
-        Assert.assertNotNull(Generator.parseJson(data, "token"));
+        Assert.assertNotNull(Generator.s_ParseJson(data, "token"));
         Assert.assertEquals(code, "1000000");
     }
 

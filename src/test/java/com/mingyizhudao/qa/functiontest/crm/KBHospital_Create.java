@@ -56,15 +56,15 @@ public class KBHospital_Create extends BaseTest {
             res = HttpRequest.s_SendPost(host_crm + uri, hp.body.toString(), crm_token);
             s_CheckResponse(res);
             Assert.assertEquals(code, "1000000");
-            Assert.assertNotNull(Generator.parseJson(data, "id"), "医库ID不能少");
-            Assert.assertEquals(Generator.parseJson(data, "short_name"), hp.body.getString("short_name"));
-            Assert.assertEquals(Generator.parseJson(data, "name"), hp.body.getString("name"));
-            Assert.assertEquals(Generator.parseJson(data, "city_name"), KnowledgeBase.kb_city.get(hp.body.getString("city_id")));
-            Assert.assertEquals(Generator.parseJson(data, "county_name"), KnowledgeBase.kb_county.get(hp.body.getString("county_id")));
-            Assert.assertEquals(Generator.parseJson(data, "description"), hp.body.getString("description"));
-            Assert.assertEquals(Generator.parseJson(data, "phone"), hp.body.getString("phone"));
-            Assert.assertNotNull(Generator.parseJson(data, "user_visible"));
-            Assert.assertNotNull(Generator.parseJson(data, "doctor_visible"));
+            Assert.assertNotNull(Generator.s_ParseJson(data, "id"), "医库ID不能少");
+            Assert.assertEquals(Generator.s_ParseJson(data, "short_name"), hp.body.getString("short_name"));
+            Assert.assertEquals(Generator.s_ParseJson(data, "name"), hp.body.getString("name"));
+            Assert.assertEquals(Generator.s_ParseJson(data, "city_name"), KnowledgeBase.kb_city.get(hp.body.getString("city_id")));
+            Assert.assertEquals(Generator.s_ParseJson(data, "county_name"), KnowledgeBase.kb_county.get(hp.body.getString("county_id")));
+            Assert.assertEquals(Generator.s_ParseJson(data, "description"), hp.body.getString("description"));
+            Assert.assertEquals(Generator.s_ParseJson(data, "phone"), hp.body.getString("phone"));
+            Assert.assertNotNull(Generator.s_ParseJson(data, "user_visible"));
+            Assert.assertNotNull(Generator.s_ParseJson(data, "doctor_visible"));
         } catch (IOException e) {
             logger.error(e);
         }
@@ -83,7 +83,7 @@ public class KBHospital_Create extends BaseTest {
             res = HttpRequest.s_SendPost(host_crm + uri, hp.body.toString(), crm_token);
             s_CheckResponse(res);
             Assert.assertEquals(code, "1000000");
-            Assert.assertNotNull(Generator.parseJson(data, "id"), "医库ID不能少");
+            Assert.assertNotNull(Generator.s_ParseJson(data, "id"), "医库ID不能少");
         } catch (IOException e) {
             logger.error(e);
         }

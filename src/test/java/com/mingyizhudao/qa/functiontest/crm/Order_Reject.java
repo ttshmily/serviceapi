@@ -43,7 +43,7 @@ public class Order_Reject extends BaseTest {
             logger.error(e);
         }
         res = Order_Detail.s_Detail(orderId);
-        return Generator.parseJson(JSONObject.fromObject(res), "data:status"); // 期望9000
+        return Generator.s_ParseJson(JSONObject.fromObject(res), "data:status"); // 期望9000
     }
 
     @Test
@@ -69,13 +69,13 @@ public class Order_Reject extends BaseTest {
         Assert.assertEquals(code, "1000000", "拒绝订单失败");
         res = Order_Detail.s_Detail(order_number);
         s_CheckResponse(res);
-        Assert.assertEquals(Generator.parseJson(data, "major_reps_id"), "chao.fang@mingyizhudao.com");
-        Assert.assertEquals(Generator.parseJson(data, "status"), "9000");
-        Assert.assertEquals(Generator.parseJson(data, "order_number"), order_number);
+        Assert.assertEquals(Generator.s_ParseJson(data, "major_reps_id"), "chao.fang@mingyizhudao.com");
+        Assert.assertEquals(Generator.s_ParseJson(data, "status"), "9000");
+        Assert.assertEquals(Generator.s_ParseJson(data, "order_number"), order_number);
         res = GetOrderDetail_V1.s_MyInitiateOrder(mainToken, order_number);
         s_CheckResponse(res);
-        Assert.assertEquals(Generator.parseJson(data, "order:header_info"), "自动化推荐之前据拒订单的理由");
-//        Assert.assertEquals(UT.parseJson(data, "content"), "自动化推荐之前据拒订单的理由");
+        Assert.assertEquals(Generator.s_ParseJson(data, "order:header_info"), "自动化推荐之前据拒订单的理由");
+//        Assert.assertEquals(UT.s_ParseJson(data, "content"), "自动化推荐之前据拒订单的理由");
 
     }
 
@@ -107,9 +107,9 @@ public class Order_Reject extends BaseTest {
         Assert.assertNotEquals(code, "1000000", "拒绝订单失败");
         res = Order_Detail.s_Detail(order_number);
         s_CheckResponse(res);
-        Assert.assertEquals(Generator.parseJson(data, "major_reps_id"), "chao.fang@mingyizhudao.com");
-        Assert.assertEquals(Generator.parseJson(data, "status"), "2020");
-        Assert.assertEquals(Generator.parseJson(data, "order_number"), order_number);
+        Assert.assertEquals(Generator.s_ParseJson(data, "major_reps_id"), "chao.fang@mingyizhudao.com");
+        Assert.assertEquals(Generator.s_ParseJson(data, "status"), "2020");
+        Assert.assertEquals(Generator.s_ParseJson(data, "order_number"), order_number);
     }
 
     @Test
@@ -143,9 +143,9 @@ public class Order_Reject extends BaseTest {
         Assert.assertNotEquals(code, "1000000", "拒绝订单失败");
         res = Order_Detail.s_Detail(order_number);
         s_CheckResponse(res);
-        Assert.assertEquals(Generator.parseJson(data, "major_reps_id"), "chao.fang@mingyizhudao.com");
-        Assert.assertEquals(Generator.parseJson(data, "status"), "2020");
-        Assert.assertEquals(Generator.parseJson(data, "order_number"), order_number);
+        Assert.assertEquals(Generator.s_ParseJson(data, "major_reps_id"), "chao.fang@mingyizhudao.com");
+        Assert.assertEquals(Generator.s_ParseJson(data, "status"), "2020");
+        Assert.assertEquals(Generator.s_ParseJson(data, "order_number"), order_number);
     }
 
     @Test
@@ -172,7 +172,7 @@ public class Order_Reject extends BaseTest {
         Assert.assertNotEquals(code, "1000000", "无证");
         res = Order_Detail.s_Detail(order_number);
         s_CheckResponse(res);
-        Assert.assertEquals(Generator.parseJson(data, "status"), "2000");
-        Assert.assertEquals(Generator.parseJson(data, "order_number"), order_number);
+        Assert.assertEquals(Generator.s_ParseJson(data, "status"), "2000");
+        Assert.assertEquals(Generator.s_ParseJson(data, "order_number"), order_number);
     }
 }

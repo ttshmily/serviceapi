@@ -39,17 +39,17 @@ public class RegisteredDoctor_CertifySync_V2 extends BaseTest {
         }
         res = RegisteredDoctor_Detail.s_Detail(regId);
         logger.debug(HttpRequest.unicodeString(res));
-        if (Generator.parseJson(JSONObject.fromObject(res), "data:is_verified").equals("1")) {
+        if (Generator.s_ParseJson(JSONObject.fromObject(res), "data:is_verified").equals("1")) {
             logger.info("已认证医生");
             result.put("is_verified", "1");
             return result;
         }
-        if (Generator.parseJson(JSONObject.fromObject(res), "data:is_verified").equals("-1")) {
+        if (Generator.s_ParseJson(JSONObject.fromObject(res), "data:is_verified").equals("-1")) {
             logger.error("认证失败状态不能直接进行验证");
             result.put("is_verified", "-1");
             return result;
         }
-        if (Generator.parseJson(JSONObject.fromObject(res), "data:is_verified").equals("0")) {
+        if (Generator.s_ParseJson(JSONObject.fromObject(res), "data:is_verified").equals("0")) {
             logger.error("信息不完整，不能验证");
             result.put("is_verified", "0");
             return result;
@@ -69,8 +69,8 @@ public class RegisteredDoctor_CertifySync_V2 extends BaseTest {
         }
         res = RegisteredDoctor_Detail.s_Detail(regId);
         logger.debug(HttpRequest.unicodeString(res));
-        result.put("is_verified", Generator.parseJson(JSONObject.fromObject(res), "data:is_verified"));
-        result.put("kb_id", Generator.parseJson(JSONObject.fromObject(res), "data:register_id"));
+        result.put("is_verified", Generator.s_ParseJson(JSONObject.fromObject(res), "data:is_verified"));
+        result.put("kb_id", Generator.s_ParseJson(JSONObject.fromObject(res), "data:register_id"));
         return result;
     }
 
@@ -84,17 +84,17 @@ public class RegisteredDoctor_CertifySync_V2 extends BaseTest {
         }
         res = RegisteredDoctor_Detail.s_Detail(regId);
         logger.debug(HttpRequest.unicodeString(res));
-        if (Generator.parseJson(JSONObject.fromObject(res), "data:is_verified").equals("1")) {
+        if (Generator.s_ParseJson(JSONObject.fromObject(res), "data:is_verified").equals("1")) {
             logger.info("已认证医生");
             result.put("is_verified", "1");
             return result;
         }
-        if (Generator.parseJson(JSONObject.fromObject(res), "data:is_verified").equals("-1")) {
+        if (Generator.s_ParseJson(JSONObject.fromObject(res), "data:is_verified").equals("-1")) {
             logger.error("认证失败状态不能直接进行验证");
             result.put("is_verified", "-1");
             return result;
         }
-        if (Generator.parseJson(JSONObject.fromObject(res), "data:is_verified").equals("0")) {
+        if (Generator.s_ParseJson(JSONObject.fromObject(res), "data:is_verified").equals("0")) {
             logger.error("信息不完整，不能验证");
             result.put("is_verified", "0");
             return result;
@@ -113,8 +113,8 @@ public class RegisteredDoctor_CertifySync_V2 extends BaseTest {
             logger.error(e);
         }
         res = RegisteredDoctor_Detail.s_Detail(regId);
-        result.put("is_verified", Generator.parseJson(JSONObject.fromObject(res), "data:is_verified"));
-        result.put("register_id", Generator.parseJson(JSONObject.fromObject(res), "data:register_id"));
+        result.put("is_verified", Generator.s_ParseJson(JSONObject.fromObject(res), "data:is_verified"));
+        result.put("register_id", Generator.s_ParseJson(JSONObject.fromObject(res), "data:register_id"));
         return result;
     }
 
@@ -131,7 +131,7 @@ public class RegisteredDoctor_CertifySync_V2 extends BaseTest {
         if ( doctorId == null)
             Assert.fail("创建医生失败，认证用例无法执行");
         res = RegisteredDoctor_Detail.s_Detail(doctorId);
-        String is_verified = Generator.parseJson(JSONObject.fromObject(res), "data:is_verified");
+        String is_verified = Generator.s_ParseJson(JSONObject.fromObject(res), "data:is_verified");
         Assert.assertEquals(is_verified, "2");
 
         pathValue.put("id", doctorId);
@@ -146,11 +146,11 @@ public class RegisteredDoctor_CertifySync_V2 extends BaseTest {
         s_CheckResponse(res);
         Assert.assertEquals(code, "1000000");
         res = RegisteredDoctor_Detail.s_Detail(doctorId);
-        is_verified = Generator.parseJson(JSONObject.fromObject(res), "data:is_verified");
+        is_verified = Generator.s_ParseJson(JSONObject.fromObject(res), "data:is_verified");
         Assert.assertEquals(is_verified, "-1");
         res = GetDoctorProfile_V1.s_MyProfile(tmpTokenn);
         s_CheckResponse(res);
-        Assert.assertEquals(Generator.parseJson(data, "doctor:reject_reason"), "程序自动测试失败原因");
+        Assert.assertEquals(Generator.s_ParseJson(data, "doctor:reject_reason"), "程序自动测试失败原因");
     }
 
     @Test
@@ -176,27 +176,27 @@ public class RegisteredDoctor_CertifySync_V2 extends BaseTest {
 
         String res1 = RegisteredDoctor_Detail.s_Detail(doctorId);
         s_CheckResponse(res1);
-        Assert.assertEquals(Generator.parseJson(data, "is_verified"), "1");
-        String expertId = Generator.parseJson(data, "register_id");
+        Assert.assertEquals(Generator.s_ParseJson(data, "is_verified"), "1");
+        String expertId = Generator.s_ParseJson(data, "register_id");
         Assert.assertNotNull(expertId);
-        String mobile = Generator.parseJson(data, "mobile");
-        String cityId = Generator.parseJson(data, "city_id");
+        String mobile = Generator.s_ParseJson(data, "mobile");
+        String cityId = Generator.s_ParseJson(data, "city_id");
 
         String res2 = KBExpert_Detail.s_Detail(expertId);
         s_CheckResponse(res2);
         Assert.assertEquals(code, "1000000");
-        Assert.assertEquals(Generator.parseJson(data, "register_id"), doctorId);
-        Assert.assertEquals(Generator.parseJson(data, "certified_status"), "CERTIFIED");
-        Assert.assertEquals(Generator.parseJson(data, "source_type"), "DOCTOR_SERVICE");
+        Assert.assertEquals(Generator.s_ParseJson(data, "register_id"), doctorId);
+        Assert.assertEquals(Generator.s_ParseJson(data, "certified_status"), "CERTIFIED");
+        Assert.assertEquals(Generator.s_ParseJson(data, "source_type"), "DOCTOR_SERVICE");
 
         // TODO: 专家信息和医生信息同步
-        Assert.assertEquals(Generator.parseJson(data, "name"), dp.body.getJSONObject("doctor").getString("name"));
-        Assert.assertEquals(Generator.parseJson(data, "mobile"), mobile);
-        Assert.assertEquals(Generator.parseJson(data, "major_id"), dp.body.getJSONObject("doctor").getString("major_id"));
-        Assert.assertEquals(Generator.parseJson(data, "hospital_id"), dp.body.getJSONObject("doctor").getString("hospital_id"));
-        Assert.assertEquals(Generator.parseJson(data, "academic_title_list"), dp.body.getJSONObject("doctor").getString("academic_title_list"));
-        Assert.assertEquals(Generator.parseJson(data, "medical_title_list"), dp.body.getJSONObject("doctor").getString("medical_title_list"));
-        Assert.assertEquals(Generator.parseJson(data, "city_id"), cityId);
+        Assert.assertEquals(Generator.s_ParseJson(data, "name"), dp.body.getJSONObject("doctor").getString("name"));
+        Assert.assertEquals(Generator.s_ParseJson(data, "mobile"), mobile);
+        Assert.assertEquals(Generator.s_ParseJson(data, "major_id"), dp.body.getJSONObject("doctor").getString("major_id"));
+        Assert.assertEquals(Generator.s_ParseJson(data, "hospital_id"), dp.body.getJSONObject("doctor").getString("hospital_id"));
+        Assert.assertEquals(Generator.s_ParseJson(data, "academic_title_list"), dp.body.getJSONObject("doctor").getString("academic_title_list"));
+        Assert.assertEquals(Generator.s_ParseJson(data, "medical_title_list"), dp.body.getJSONObject("doctor").getString("medical_title_list"));
+        Assert.assertEquals(Generator.s_ParseJson(data, "city_id"), cityId);
 
     }
 
@@ -230,25 +230,25 @@ public class RegisteredDoctor_CertifySync_V2 extends BaseTest {
 
         String res1 = RegisteredDoctor_Detail.s_Detail(doctorId);
         s_CheckResponse(res1);
-        Assert.assertEquals(Generator.parseJson(data, "is_verified"), "1");
-        Assert.assertEquals(Generator.parseJson(data, "register_id"), expertId);
-        String mobile = Generator.parseJson(data, "mobile");
-        String cityId = Generator.parseJson(data, "city_id");
+        Assert.assertEquals(Generator.s_ParseJson(data, "is_verified"), "1");
+        Assert.assertEquals(Generator.s_ParseJson(data, "register_id"), expertId);
+        String mobile = Generator.s_ParseJson(data, "mobile");
+        String cityId = Generator.s_ParseJson(data, "city_id");
 
 
         String res2 = KBExpert_Detail.s_Detail(expertId);
         s_CheckResponse(res2);
         Assert.assertEquals(code, "1000000");
-        Assert.assertEquals(Generator.parseJson(data, "register_id"), doctorId);
-        Assert.assertEquals(Generator.parseJson(data, "certified_status"), "CERTIFIED");
+        Assert.assertEquals(Generator.s_ParseJson(data, "register_id"), doctorId);
+        Assert.assertEquals(Generator.s_ParseJson(data, "certified_status"), "CERTIFIED");
 
-        Assert.assertEquals(Generator.parseJson(data, "name"), dp.body.getJSONObject("doctor").getString("name"));
-        Assert.assertEquals(Generator.parseJson(data, "mobile"), mobile);
-        Assert.assertEquals(Generator.parseJson(data, "major_id"), dp.body.getJSONObject("doctor").getString("major_id"));
-        Assert.assertEquals(Generator.parseJson(data, "hospital_id"), dp.body.getJSONObject("doctor").getString("hospital_id"));
-        Assert.assertEquals(Generator.parseJson(data, "academic_title_list"), dp.body.getJSONObject("doctor").getString("academic_title_list"));
-        Assert.assertEquals(Generator.parseJson(data, "medical_title_list"), dp.body.getJSONObject("doctor").getString("medical_title_list"));
-        Assert.assertEquals(Generator.parseJson(data, "city_id"), cityId);
+        Assert.assertEquals(Generator.s_ParseJson(data, "name"), dp.body.getJSONObject("doctor").getString("name"));
+        Assert.assertEquals(Generator.s_ParseJson(data, "mobile"), mobile);
+        Assert.assertEquals(Generator.s_ParseJson(data, "major_id"), dp.body.getJSONObject("doctor").getString("major_id"));
+        Assert.assertEquals(Generator.s_ParseJson(data, "hospital_id"), dp.body.getJSONObject("doctor").getString("hospital_id"));
+        Assert.assertEquals(Generator.s_ParseJson(data, "academic_title_list"), dp.body.getJSONObject("doctor").getString("academic_title_list"));
+        Assert.assertEquals(Generator.s_ParseJson(data, "medical_title_list"), dp.body.getJSONObject("doctor").getString("medical_title_list"));
+        Assert.assertEquals(Generator.s_ParseJson(data, "city_id"), cityId);
     }
 
     @Test
@@ -281,26 +281,26 @@ public class RegisteredDoctor_CertifySync_V2 extends BaseTest {
 
         String res1 = RegisteredDoctor_Detail.s_Detail(doctorId);
         s_CheckResponse(res1);
-        Assert.assertEquals(Generator.parseJson(data, "is_verified"), "1");
-        Assert.assertEquals(Generator.parseJson(data, "register_id"), expertId);
-        Assert.assertEquals(Generator.parseJson(data, "signed_status"), "SIGNED");
-        String mobile = Generator.parseJson(data, "mobile");
-        String cityId = Generator.parseJson(data, "city_id");
+        Assert.assertEquals(Generator.s_ParseJson(data, "is_verified"), "1");
+        Assert.assertEquals(Generator.s_ParseJson(data, "register_id"), expertId);
+        Assert.assertEquals(Generator.s_ParseJson(data, "signed_status"), "SIGNED");
+        String mobile = Generator.s_ParseJson(data, "mobile");
+        String cityId = Generator.s_ParseJson(data, "city_id");
 
         String res2 = KBExpert_Detail.s_Detail(expertId);
         s_CheckResponse(res2);
         Assert.assertEquals(code, "1000000");
-        Assert.assertEquals(Generator.parseJson(data, "register_id"), doctorId);
-        Assert.assertEquals(Generator.parseJson(data, "certified_status"), "CERTIFIED");
-        Assert.assertEquals(Generator.parseJson(data, "signed_status"), "SIGNED");
+        Assert.assertEquals(Generator.s_ParseJson(data, "register_id"), doctorId);
+        Assert.assertEquals(Generator.s_ParseJson(data, "certified_status"), "CERTIFIED");
+        Assert.assertEquals(Generator.s_ParseJson(data, "signed_status"), "SIGNED");
 
-        Assert.assertEquals(Generator.parseJson(data, "name"), dp.body.getJSONObject("doctor").getString("name"));
-        Assert.assertEquals(Generator.parseJson(data, "mobile"), mobile);
-        Assert.assertEquals(Generator.parseJson(data, "major_id"), dp.body.getJSONObject("doctor").getString("major_id"));
-        Assert.assertEquals(Generator.parseJson(data, "hospital_id"), dp.body.getJSONObject("doctor").getString("hospital_id"));
-        Assert.assertEquals(Generator.parseJson(data, "academic_title_list"), dp.body.getJSONObject("doctor").getString("academic_title_list"));
-        Assert.assertEquals(Generator.parseJson(data, "medical_title_list"), dp.body.getJSONObject("doctor").getString("medical_title_list"));
-        Assert.assertEquals(Generator.parseJson(data, "city_id"), cityId);
+        Assert.assertEquals(Generator.s_ParseJson(data, "name"), dp.body.getJSONObject("doctor").getString("name"));
+        Assert.assertEquals(Generator.s_ParseJson(data, "mobile"), mobile);
+        Assert.assertEquals(Generator.s_ParseJson(data, "major_id"), dp.body.getJSONObject("doctor").getString("major_id"));
+        Assert.assertEquals(Generator.s_ParseJson(data, "hospital_id"), dp.body.getJSONObject("doctor").getString("hospital_id"));
+        Assert.assertEquals(Generator.s_ParseJson(data, "academic_title_list"), dp.body.getJSONObject("doctor").getString("academic_title_list"));
+        Assert.assertEquals(Generator.s_ParseJson(data, "medical_title_list"), dp.body.getJSONObject("doctor").getString("medical_title_list"));
+        Assert.assertEquals(Generator.s_ParseJson(data, "city_id"), cityId);
     }
 
     @Test
@@ -316,7 +316,7 @@ public class RegisteredDoctor_CertifySync_V2 extends BaseTest {
         if ( doctorId == null)
             Assert.fail("创建医生失败，认证用例无法执行");
         res = RegisteredDoctor_Detail.s_Detail(doctorId);
-        String is_verified = Generator.parseJson(JSONObject.fromObject(res), "data:is_verified");
+        String is_verified = Generator.s_ParseJson(JSONObject.fromObject(res), "data:is_verified");
         Assert.assertEquals(is_verified, "2");
 
         pathValue.put("id", doctorId);
@@ -331,10 +331,10 @@ public class RegisteredDoctor_CertifySync_V2 extends BaseTest {
         s_CheckResponse(res);
         Assert.assertEquals(code, "1000000");
         res = RegisteredDoctor_Detail.s_Detail(doctorId);
-        is_verified = Generator.parseJson(JSONObject.fromObject(res), "data:is_verified");
+        is_verified = Generator.s_ParseJson(JSONObject.fromObject(res), "data:is_verified");
         Assert.assertEquals(is_verified, "-1");
         res = GetDoctorProfile_V1.s_MyProfile(tmpTokenn);
         s_CheckResponse(res);
-        Assert.assertEquals(Generator.parseJson(data, "doctor:reject_reason"), "程序自动测试失败原因");
+        Assert.assertEquals(Generator.s_ParseJson(data, "doctor:reject_reason"), "程序自动测试失败原因");
     }
 }

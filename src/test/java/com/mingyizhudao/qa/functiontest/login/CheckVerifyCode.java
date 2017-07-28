@@ -37,7 +37,7 @@ public class CheckVerifyCode extends BaseTest{
         String tmpToken = "";
         try {
             res = HttpRequest.s_SendPost(host_login +uri,cmp.body.toString(), "");
-            tmpToken = Generator.parseJson(JSONObject.fromObject(res), "data:token");
+            tmpToken = Generator.s_ParseJson(JSONObject.fromObject(res), "data:token");
         } catch (IOException e) {
             logger.error(e);
         }
@@ -62,7 +62,7 @@ public class CheckVerifyCode extends BaseTest{
         String tmpToken = "";
         try {
             res = HttpRequest.s_SendPost(host_login +uri, check.toString(), "");
-            tmpToken = Generator.parseJson(JSONObject.fromObject(res), "data:token");
+            tmpToken = Generator.s_ParseJson(JSONObject.fromObject(res), "data:token");
         } catch (IOException e) {
             logger.error(e);
         }
@@ -91,8 +91,8 @@ public class CheckVerifyCode extends BaseTest{
             logger.error(e);
             Assert.fail("http request returns an error");
         }
-        Assert.assertNotNull(Generator.parseJson(data, "token"), "token不应该为空");
-        Assert.assertNotEquals(Generator.parseJson(data, "token"), "", "code不应该为1000000");
+        Assert.assertNotNull(Generator.s_ParseJson(data, "token"), "token不应该为空");
+        Assert.assertNotEquals(Generator.s_ParseJson(data, "token"), "", "code不应该为1000000");
         Assert.assertEquals(code, "1000000", "code不应该为1000000");
     }
 

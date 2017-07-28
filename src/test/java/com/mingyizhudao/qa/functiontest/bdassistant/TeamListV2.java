@@ -193,10 +193,10 @@ public class TeamListV2 extends BaseTest {
         }
         s_CheckResponse(res);
         Assert.assertEquals(code, "1000000");
-        Assert.assertNotNull(Generator.parseJson(data, "list()"), "地推人员列表字段不能缺失");
-        Assert.assertNotNull(Generator.parseJson(data, "page"), "页码字段缺失");
-        Assert.assertNotNull(Generator.parseJson(data, "page_size"), "分页大小字段缺失");
-        Assert.assertNotNull(Generator.parseJson(data, "size"), "列表总数字段缺失");
+        Assert.assertNotNull(Generator.s_ParseJson(data, "list()"), "地推人员列表字段不能缺失");
+        Assert.assertNotNull(Generator.s_ParseJson(data, "page"), "页码字段缺失");
+        Assert.assertNotNull(Generator.s_ParseJson(data, "page_size"), "分页大小字段缺失");
+        Assert.assertNotNull(Generator.s_ParseJson(data, "size"), "列表总数字段缺失");
     }
 
     @Test

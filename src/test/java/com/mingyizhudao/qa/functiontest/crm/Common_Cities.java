@@ -41,7 +41,7 @@ public class Common_Cities extends BaseTest {
         s_CheckResponse(res);
         Assert.assertEquals(code, "1000000");
         //TODO
-        Assert.assertNotNull(Generator.parseJson(data, "list()"));
+        Assert.assertNotNull(Generator.s_ParseJson(data, "list()"));
     }
 
     @Test

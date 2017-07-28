@@ -36,12 +36,12 @@ public class RegisteredDoctor_Certify_V2 extends BaseTest {
         }
         res = RegisteredDoctor_Detail.s_Detail(regId);
         logger.info(HttpRequest.unicodeString(res));
-        if (Generator.parseJson(JSONObject.fromObject(res), "data:is_verified").equals("1")) return "1";
-        if (Generator.parseJson(JSONObject.fromObject(res), "data:is_verified").equals("-1")) {
+        if (Generator.s_ParseJson(JSONObject.fromObject(res), "data:is_verified").equals("1")) return "1";
+        if (Generator.s_ParseJson(JSONObject.fromObject(res), "data:is_verified").equals("-1")) {
             logger.error("认证失败状态不能直接进行验证");
             return "-1";
         }
-        if (Generator.parseJson(JSONObject.fromObject(res), "data:is_verified").equals("0")) {
+        if (Generator.s_ParseJson(JSONObject.fromObject(res), "data:is_verified").equals("0")) {
             logger.error("信息不完整，不能验证");
             return "0";
         }
@@ -56,7 +56,7 @@ public class RegisteredDoctor_Certify_V2 extends BaseTest {
             logger.error(e);
         }
         res = RegisteredDoctor_Detail.s_Detail(regId);
-        return Generator.parseJson(JSONObject.fromObject(res), "data:is_verified");
+        return Generator.s_ParseJson(JSONObject.fromObject(res), "data:is_verified");
     }
 
     @Test
@@ -71,7 +71,7 @@ public class RegisteredDoctor_Certify_V2 extends BaseTest {
         if ( doctorId == null)
             Assert.fail("创建医生失败，认证用例无法执行");
         res = RegisteredDoctor_Detail.s_Detail(doctorId);
-        String is_verified = Generator.parseJson(JSONObject.fromObject(res), "data:is_verified");
+        String is_verified = Generator.s_ParseJson(JSONObject.fromObject(res), "data:is_verified");
         Assert.assertEquals(is_verified, "2");
 
         pathValue.put("id", doctorId);
@@ -86,7 +86,7 @@ public class RegisteredDoctor_Certify_V2 extends BaseTest {
         s_CheckResponse(res);
         Assert.assertEquals(code, "1000000");
         res = RegisteredDoctor_Detail.s_Detail(doctorId);
-        is_verified = Generator.parseJson(JSONObject.fromObject(res), "data:is_verified");
+        is_verified = Generator.s_ParseJson(JSONObject.fromObject(res), "data:is_verified");
         Assert.assertEquals(is_verified, "-1");
     }
 
@@ -103,7 +103,7 @@ public class RegisteredDoctor_Certify_V2 extends BaseTest {
         if (doctorId == null)
             Assert.fail("创建医生失败，认证用例无法执行");
         res = RegisteredDoctor_Detail.s_Detail(doctorId);
-        String is_verified = Generator.parseJson(JSONObject.fromObject(res), "data:is_verified");
+        String is_verified = Generator.s_ParseJson(JSONObject.fromObject(res), "data:is_verified");
         Assert.assertEquals(is_verified, "2");
 
         pathValue.put("id", doctorId);
@@ -117,7 +117,7 @@ public class RegisteredDoctor_Certify_V2 extends BaseTest {
         s_CheckResponse(res);
         Assert.assertEquals(code, "1000000");
         res = RegisteredDoctor_Detail.s_Detail(doctorId);
-        is_verified = Generator.parseJson(JSONObject.fromObject(res), "data:is_verified");
+        is_verified = Generator.s_ParseJson(JSONObject.fromObject(res), "data:is_verified");
         Assert.assertEquals(is_verified, "1");
     }
 
@@ -133,7 +133,7 @@ public class RegisteredDoctor_Certify_V2 extends BaseTest {
         if (doctorId == null)
             Assert.fail("创建医生失败，认证用例无法执行");
         res = RegisteredDoctor_Detail.s_Detail(doctorId);
-        String is_verified = Generator.parseJson(JSONObject.fromObject(res), "data:is_verified");
+        String is_verified = Generator.s_ParseJson(JSONObject.fromObject(res), "data:is_verified");
         Assert.assertEquals(is_verified, "2");
 
         pathValue.put("id", doctorId);
@@ -148,7 +148,7 @@ public class RegisteredDoctor_Certify_V2 extends BaseTest {
         s_CheckResponse(res);
         Assert.assertEquals(code, "1000000");
         res = RegisteredDoctor_Detail.s_Detail(doctorId);
-        is_verified = Generator.parseJson(JSONObject.fromObject(res), "data:is_verified");
+        is_verified = Generator.s_ParseJson(JSONObject.fromObject(res), "data:is_verified");
         Assert.assertEquals(is_verified, "1");
     }
 

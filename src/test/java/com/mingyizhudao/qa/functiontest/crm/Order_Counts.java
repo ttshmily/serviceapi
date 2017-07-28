@@ -36,11 +36,11 @@ public class Order_Counts extends BaseTest {
         }
         s_CheckResponse(res);
         Assert.assertEquals(code, "1000000");
-        Assert.assertNotNull(Generator.parseJson(data, "load_take"));
-        Assert.assertNotNull(Generator.parseJson(data, "handling"));
-        Assert.assertNotNull(Generator.parseJson(data, "wait_pay"));
-        Assert.assertNotNull(Generator.parseJson(data, "wait_upload_summary"));
-        Assert.assertNotNull(Generator.parseJson(data, "wait_verify_summary"));
+        Assert.assertNotNull(Generator.s_ParseJson(data, "load_take"));
+        Assert.assertNotNull(Generator.s_ParseJson(data, "handling"));
+        Assert.assertNotNull(Generator.s_ParseJson(data, "wait_pay"));
+        Assert.assertNotNull(Generator.s_ParseJson(data, "wait_upload_summary"));
+        Assert.assertNotNull(Generator.s_ParseJson(data, "wait_verify_summary"));
     }
 
     @Test
@@ -56,14 +56,14 @@ public class Order_Counts extends BaseTest {
         s_CheckResponse(res);
         Assert.assertEquals(code, "1000000");
 
-        Assert.assertEquals(Integer.parseInt(Generator.parseJson(data, "load_take")) +
-                Integer.parseInt(Generator.parseJson(data, "handling")) +
-                Integer.parseInt(Generator.parseJson(data, "wait_pay")) +
-                Integer.parseInt(Generator.parseJson(data, "wait_upload_summary")) +
-                Integer.parseInt(Generator.parseJson(data, "wait_verify_summary")) +
-                Integer.parseInt(Generator.parseJson(data, "finish")) +
-                Integer.parseInt(Generator.parseJson(data, "cancel")) +
-                Integer.parseInt(Generator.parseJson(data, "other")), Order_List.s_OrderList());
+        Assert.assertEquals(Integer.parseInt(Generator.s_ParseJson(data, "load_take")) +
+                Integer.parseInt(Generator.s_ParseJson(data, "handling")) +
+                Integer.parseInt(Generator.s_ParseJson(data, "wait_pay")) +
+                Integer.parseInt(Generator.s_ParseJson(data, "wait_upload_summary")) +
+                Integer.parseInt(Generator.s_ParseJson(data, "wait_verify_summary")) +
+                Integer.parseInt(Generator.s_ParseJson(data, "finish")) +
+                Integer.parseInt(Generator.s_ParseJson(data, "cancel")) +
+                Integer.parseInt(Generator.s_ParseJson(data, "other")), Order_List.s_OrderList());
     }
 
 }

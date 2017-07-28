@@ -40,7 +40,7 @@ public class Order_Rollback extends BaseTest {
             logger.error(e);
         }
         res = Order_Detail.s_Detail(orderId);
-        return Generator.parseJson(JSONObject.fromObject(res), "data:status"); // 期望2000
+        return Generator.s_ParseJson(JSONObject.fromObject(res), "data:status"); // 期望2000
     }
 
     @Test
@@ -68,9 +68,9 @@ public class Order_Rollback extends BaseTest {
         Assert.assertEquals(code, "1000000");
         res = Order_Detail.s_Detail(order_number);
         s_CheckResponse(res);
-        Assert.assertEquals(Generator.parseJson(data, "status"), "2000");
-        Assert.assertNull(Generator.parseJson(data, "surgeon_id"));
-        Assert.assertNull(Generator.parseJson(data, "surgeon_name"));
+        Assert.assertEquals(Generator.s_ParseJson(data, "status"), "2000");
+        Assert.assertNull(Generator.s_ParseJson(data, "surgeon_id"));
+        Assert.assertNull(Generator.s_ParseJson(data, "surgeon_name"));
     }
 
     @Test(enabled = false)
@@ -97,7 +97,7 @@ public class Order_Rollback extends BaseTest {
         Assert.assertNotEquals(code, "1000000");
         res = Order_Detail.s_Detail(order_number);
         s_CheckResponse(res);
-        Assert.assertEquals(Generator.parseJson(data, "status"), "1000");
+        Assert.assertEquals(Generator.s_ParseJson(data, "status"), "1000");
 
         // 刚领取的订单
         Order_ReceiveTask.s_ReceiveTask(order_number);
@@ -110,7 +110,7 @@ public class Order_Rollback extends BaseTest {
         Assert.assertNotEquals(code, "1000000");
         res = Order_Detail.s_Detail(order_number);
         s_CheckResponse(res);
-        Assert.assertEquals(Generator.parseJson(data, "status"), "2000");
+        Assert.assertEquals(Generator.s_ParseJson(data, "status"), "2000");
 
         // 刚推荐的订单
         Order_RecommendDoctor.s_RecommendDoctor(order_number, "666");
@@ -123,7 +123,7 @@ public class Order_Rollback extends BaseTest {
         Assert.assertNotEquals(code, "1000000");
         res = Order_Detail.s_Detail(order_number);
         s_CheckResponse(res);
-        Assert.assertEquals(Generator.parseJson(data, "status"), "2020");
+        Assert.assertEquals(Generator.s_ParseJson(data, "status"), "2020");
 
         // 三方通话中的订单
         Order_ThreewayCall_V2.s_CallV2(order_number, "undetermined");
@@ -136,7 +136,7 @@ public class Order_Rollback extends BaseTest {
         Assert.assertNotEquals(code, "1000000");
         res = Order_Detail.s_Detail(order_number);
         s_CheckResponse(res);
-        Assert.assertEquals(Generator.parseJson(data, "status"), "2020");
+        Assert.assertEquals(Generator.s_ParseJson(data, "status"), "2020");
 
         // 已拒绝合作的订单
         Order_ThreewayCall.s_Call(order_number, "failed");
@@ -150,7 +150,7 @@ public class Order_Rollback extends BaseTest {
         Assert.assertNotEquals(code, "1000000");
         res = Order_Detail.s_Detail(order_number);
         s_CheckResponse(res);
-        Assert.assertEquals(Generator.parseJson(data, "status"), "9000");
+        Assert.assertEquals(Generator.s_ParseJson(data, "status"), "9000");
 
     }
 

@@ -41,9 +41,9 @@ public class GetEmployeeProfile extends BaseTest {
         }
         s_CheckResponse(res);
         Assert.assertEquals(code, "1000000", "错误码应该是1000000");
-        Assert.assertNotNull(Generator.parseJson(data, "employee:id"), "id must not be null");
-        Assert.assertNotNull(Generator.parseJson(data, "employee:name"), "name must not be null");
-        Assert.assertNotNull(Generator.parseJson(data, "employee:number"), "number must not be null");
+        Assert.assertNotNull(Generator.s_ParseJson(data, "employee:id"), "id must not be null");
+        Assert.assertNotNull(Generator.s_ParseJson(data, "employee:name"), "name must not be null");
+        Assert.assertNotNull(Generator.s_ParseJson(data, "employee:number"), "number must not be null");
     }
 
     @Test
@@ -59,9 +59,9 @@ public class GetEmployeeProfile extends BaseTest {
         }
         s_CheckResponse(res);
         Assert.assertEquals(code, "1000000");
-        Assert.assertNotNull(Generator.parseJson(data, "employee:id"), "id must not be null");
-        Assert.assertNotNull(Generator.parseJson(data, "employee:name"), "name must not be null");
-        Assert.assertNotNull(Generator.parseJson(data, "employee:number"), "number must not be null");
+        Assert.assertNotNull(Generator.s_ParseJson(data, "employee:id"), "id must not be null");
+        Assert.assertNotNull(Generator.s_ParseJson(data, "employee:name"), "name must not be null");
+        Assert.assertNotNull(Generator.s_ParseJson(data, "employee:number"), "number must not be null");
     }
 
     @Test
@@ -74,6 +74,6 @@ public class GetEmployeeProfile extends BaseTest {
         }
         s_CheckResponse(res);
         Assert.assertEquals(code, "1000000");
-        Assert.assertNull(Generator.parseJson(data, "employee:id"));
+        Assert.assertNull(Generator.s_ParseJson(data, "employee:id"));
     }
 }

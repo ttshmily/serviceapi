@@ -34,7 +34,7 @@ public class VerifiyDoctor extends BaseTest {
         if (doctorId == null)
             Assert.fail("创建医生失败，认证用例无法执行");
         res = RegisteredDoctor_Detail.s_Detail(doctorId);
-        String is_verified = Generator.parseJson(JSONObject.fromObject(res), "data:is_verified");
+        String is_verified = Generator.s_ParseJson(JSONObject.fromObject(res), "data:is_verified");
         Assert.assertEquals(is_verified, "2");
 
         pathValue.put("id", doctorId);
@@ -48,12 +48,12 @@ public class VerifiyDoctor extends BaseTest {
         Assert.assertEquals(code, "1000000");
         res = RegisteredDoctor_Detail.s_Detail(doctorId);
         s_CheckResponse(res);
-        is_verified = Generator.parseJson(data, "is_verified");
-        String is_signed = Generator.parseJson(data, "signed_status");
+        is_verified = Generator.s_ParseJson(data, "is_verified");
+        String is_signed = Generator.s_ParseJson(data, "signed_status");
         Assert.assertEquals(is_verified, "1");
-        Assert.assertNotNull(Generator.parseJson(data, "date_verified"));
+        Assert.assertNotNull(Generator.s_ParseJson(data, "date_verified"));
         Assert.assertEquals(is_signed, "SIGNED");
-        Assert.assertNotNull(Generator.parseJson(data, "signed_time"));
+        Assert.assertNotNull(Generator.s_ParseJson(data, "signed_time"));
     }
 
     @Test
@@ -68,7 +68,7 @@ public class VerifiyDoctor extends BaseTest {
         if (doctorId == null)
             Assert.fail("创建医生失败，认证用例无法执行");
         res = RegisteredDoctor_Detail.s_Detail(doctorId);
-        String is_verified = Generator.parseJson(JSONObject.fromObject(res), "data:is_verified");
+        String is_verified = Generator.s_ParseJson(JSONObject.fromObject(res), "data:is_verified");
         Assert.assertEquals(is_verified, "2");
 
         pathValue.put("id", doctorId);
@@ -82,10 +82,10 @@ public class VerifiyDoctor extends BaseTest {
         Assert.assertEquals(code, "1000000");
         res = RegisteredDoctor_Detail.s_Detail(doctorId);
         s_CheckResponse(res);
-        is_verified = Generator.parseJson(data, "is_verified");
-        String is_signed = Generator.parseJson(data, "signed_status");
+        is_verified = Generator.s_ParseJson(data, "is_verified");
+        String is_signed = Generator.s_ParseJson(data, "signed_status");
         Assert.assertEquals(is_verified, "1");
-        Assert.assertNotNull(Generator.parseJson(data, "date_verified"));
+        Assert.assertNotNull(Generator.s_ParseJson(data, "date_verified"));
         Assert.assertEquals(is_signed, "NOT SIGNED");
     }
 

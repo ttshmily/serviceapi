@@ -50,10 +50,10 @@ public class KBExpert_Diseases_V2 extends BaseTest {
         Assert.assertEquals(code, "1000000");
         res = KBExpert_Detail.s_Detail(expertId);
         s_CheckResponse(res);
-        Assert.assertEquals(Generator.parseJson(data, "specialty_list()"), "5");
+        Assert.assertEquals(Generator.s_ParseJson(data, "specialty_list()"), "5");
         res = RegisteredDoctor_Detail.s_Detail(doctorId);
         s_CheckResponse(res);
-        Assert.assertEquals(Generator.parseJson(data, "exp_list()"), "5");
+        Assert.assertEquals(Generator.s_ParseJson(data, "exp_list()"), "5");
     }
 
     @Test
@@ -96,7 +96,7 @@ public class KBExpert_Diseases_V2 extends BaseTest {
         Assert.assertEquals(code, "1000000");
         res = KBExpert_Detail.s_Detail(expertId);
         s_CheckResponse(res);
-        Assert.assertEquals(Generator.parseJson(data, "specialty_list()"), "5");
+        Assert.assertEquals(Generator.s_ParseJson(data, "specialty_list()"), "5");
     }
 
     public JSONObject DiseaseJson(int cat_count, int dis_count) {

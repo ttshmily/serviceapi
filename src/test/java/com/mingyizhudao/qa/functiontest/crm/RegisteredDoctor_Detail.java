@@ -50,14 +50,14 @@ public class RegisteredDoctor_Detail extends BaseTest {
         }
         s_CheckResponse(res);
         Assert.assertEquals(code, "1000000");
-        Assert.assertNotNull(Generator.parseJson(data, "medical_title_list"));
-        Assert.assertNotNull(Generator.parseJson(data, "academic_title_list"));
-        Assert.assertNotNull(Generator.parseJson(data, "inviter_name"));
-        Assert.assertNotNull(Generator.parseJson(data, "hospital_name"));
-        Assert.assertNotNull(Generator.parseJson(data, "icon"));
-        Assert.assertNotNull(Generator.parseJson(data, "audit_state"));
-        Assert.assertNotNull(Generator.parseJson(data, "staff_id"));
-        Assert.assertNotNull(Generator.parseJson(data, "staff_name"));
+        Assert.assertNotNull(Generator.s_ParseJson(data, "medical_title_list"));
+        Assert.assertNotNull(Generator.s_ParseJson(data, "academic_title_list"));
+        Assert.assertNotNull(Generator.s_ParseJson(data, "inviter_name"));
+        Assert.assertNotNull(Generator.s_ParseJson(data, "hospital_name"));
+        Assert.assertNotNull(Generator.s_ParseJson(data, "icon"));
+        Assert.assertNotNull(Generator.s_ParseJson(data, "audit_state"));
+        Assert.assertNotNull(Generator.s_ParseJson(data, "staff_id"));
+        Assert.assertNotNull(Generator.s_ParseJson(data, "staff_name"));
     }
 
     @Test

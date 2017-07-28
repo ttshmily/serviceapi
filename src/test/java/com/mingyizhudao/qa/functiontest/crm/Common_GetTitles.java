@@ -33,8 +33,8 @@ public class Common_GetTitles extends BaseTest {
             res = HttpRequest.s_SendGet(host_crm + uri, "", crm_token, null);
             s_CheckResponse(res);
             Assert.assertEquals(code, "1000000");
-            int academicLen = Integer.parseInt(Generator.parseJson(data, "list:academic()"));
-            int medicalLen = Integer.parseInt(Generator.parseJson(data, "list:medical()"));
+            int academicLen = Integer.parseInt(Generator.s_ParseJson(data, "list:academic()"));
+            int medicalLen = Integer.parseInt(Generator.s_ParseJson(data, "list:medical()"));
             Assert.assertEquals(academicLen, 4);
             Assert.assertEquals(medicalLen, 12);
 

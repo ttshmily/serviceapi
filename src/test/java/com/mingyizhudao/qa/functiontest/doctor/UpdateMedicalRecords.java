@@ -50,7 +50,7 @@ public class UpdateMedicalRecords extends BaseTest {
         } catch (IOException e) {
             logger.error(e);
         }
-        String tmpOrderId = Generator.parseJson(JSONObject.fromObject(res), "data:order_number");
+        String tmpOrderId = Generator.s_ParseJson(JSONObject.fromObject(res), "data:order_number");
         if (!tmpOrderId.isEmpty() && null != tmpOrderId) {
             logger.info("orderId是: " + tmpOrderId);
             return tmpOrderId;
@@ -72,7 +72,7 @@ public class UpdateMedicalRecords extends BaseTest {
         }
         res = GetOrderDetail_V1.s_MyInitiateOrder(mainToken, orderId);
         s_CheckResponse(res);
-        String mdid = Generator.parseJson(data, "order:major_disease_id");
+        String mdid = Generator.s_ParseJson(data, "order:major_disease_id");
         HashMap<String, String> pathValue = new HashMap<String, String>();
         pathValue.put("orderId", orderId);
         MedicalRecords mr = new MedicalRecords(true);
@@ -91,7 +91,7 @@ public class UpdateMedicalRecords extends BaseTest {
         res = GetOrderDetail_V1.s_MyInitiateOrder(mainToken, orderId);
         s_CheckResponse(res);
         Assert.assertEquals(code, "1000000", "查看订单失败");
-        Assert.assertEquals(Generator.parseJson(data, "order:major_disease_id"), mdid, "主诉疾病为-1，不应该更新成功");
+        Assert.assertEquals(Generator.s_ParseJson(data, "order:major_disease_id"), mdid, "主诉疾病为-1，不应该更新成功");
         logger.info("禁止更新主诉疾病为-1");
 
         logger.info("更新主诉疾病为0");
@@ -108,7 +108,7 @@ public class UpdateMedicalRecords extends BaseTest {
         res = GetOrderDetail_V1.s_MyInitiateOrder(mainToken, orderId);
         s_CheckResponse(res);
         Assert.assertEquals(code, "1000000", "查看订单失败");
-        Assert.assertEquals(Generator.parseJson(data, "order:major_disease_id"), mdid, "主诉疾病为0，不应该更新成功");
+        Assert.assertEquals(Generator.s_ParseJson(data, "order:major_disease_id"), mdid, "主诉疾病为0，不应该更新成功");
         logger.info("禁止更新主诉疾病为0");
 
         logger.info("更新主诉疾病为30000000000");
@@ -124,7 +124,7 @@ public class UpdateMedicalRecords extends BaseTest {
         res = GetOrderDetail_V1.s_MyInitiateOrder(mainToken, orderId);
         s_CheckResponse(res);
         Assert.assertEquals(code, "1000000", "查看订单失败");
-        Assert.assertEquals(Generator.parseJson(data, "order:major_disease_id"), mdid, "主诉疾病为30000000000，不应该更新成功");
+        Assert.assertEquals(Generator.s_ParseJson(data, "order:major_disease_id"), mdid, "主诉疾病为30000000000，不应该更新成功");
         logger.info("禁止更新主诉疾病为30000000000");
 
         String key  = Generator.randomKey(KnowledgeBase.kb_disease);
@@ -141,7 +141,7 @@ public class UpdateMedicalRecords extends BaseTest {
         res = GetOrderDetail_V1.s_MyInitiateOrder(mainToken, orderId);
         s_CheckResponse(res);
         Assert.assertEquals(code, "1000000", "查看订单失败");
-        Assert.assertEquals(Generator.parseJson(data, "order:major_disease_id"), key, "主诉疾病"+key+"，未更新成功");
+        Assert.assertEquals(Generator.s_ParseJson(data, "order:major_disease_id"), key, "主诉疾病"+key+"，未更新成功");
         logger.info("更新主诉疾病为"+key+"成功");
 
         key  = Generator.randomKey(KnowledgeBase.kb_disease);
@@ -158,7 +158,7 @@ public class UpdateMedicalRecords extends BaseTest {
         res = GetOrderDetail_V1.s_MyInitiateOrder(mainToken, orderId);
         s_CheckResponse(res);
         Assert.assertEquals(code, "1000000", "查看订单失败");
-        Assert.assertEquals(Generator.parseJson(data, "order:major_disease_id"), key, "主诉疾病"+key+"，未更新成功");
+        Assert.assertEquals(Generator.s_ParseJson(data, "order:major_disease_id"), key, "主诉疾病"+key+"，未更新成功");
         logger.info("更新主诉疾病为40成功");
 
     }
@@ -175,7 +175,7 @@ public class UpdateMedicalRecords extends BaseTest {
         }
         res = GetOrderDetail_V1.s_MyInitiateOrder(mainToken, orderId);
         s_CheckResponse(res);
-        String mdId = Generator.parseJson(data, "order:minor_disease_id");
+        String mdId = Generator.s_ParseJson(data, "order:minor_disease_id");
         HashMap<String, String> pathValue = new HashMap<String, String>();
         pathValue.put("orderId", orderId);
         MedicalRecords mr = new MedicalRecords(true);
@@ -193,7 +193,7 @@ public class UpdateMedicalRecords extends BaseTest {
         res = GetOrderDetail_V1.s_MyInitiateOrder(mainToken, orderId);
         s_CheckResponse(res);
         Assert.assertEquals(code, "1000000", "查看订单失败");
-        Assert.assertEquals(Generator.parseJson(data, "order:minor_disease_id"), mdId, "次诉疾病为-1，不应该更新成功");
+        Assert.assertEquals(Generator.s_ParseJson(data, "order:minor_disease_id"), mdId, "次诉疾病为-1，不应该更新成功");
         logger.info("禁止更新次诉疾病为-1");
 
         logger.info("更新次诉疾病为0");
@@ -209,7 +209,7 @@ public class UpdateMedicalRecords extends BaseTest {
         res = GetOrderDetail_V1.s_MyInitiateOrder(mainToken, orderId);
         s_CheckResponse(res);
         Assert.assertEquals(code, "1000000", "查看订单失败");
-        Assert.assertEquals(Generator.parseJson(data, "order:minor_disease_id"), mdId, "次诉疾病为0，不应该更新成功");
+        Assert.assertEquals(Generator.s_ParseJson(data, "order:minor_disease_id"), mdId, "次诉疾病为0，不应该更新成功");
         logger.info("禁止更新次诉疾病为0");
 
         logger.info("更新次诉疾病为30000000000");
@@ -225,7 +225,7 @@ public class UpdateMedicalRecords extends BaseTest {
         res = GetOrderDetail_V1.s_MyInitiateOrder(mainToken, orderId);
         s_CheckResponse(res);
         Assert.assertEquals(code, "1000000", "查看订单失败");
-        Assert.assertEquals(Generator.parseJson(data, "order:minor_disease_id"), mdId, "次诉疾病为30000000000，不应该更新成功");
+        Assert.assertEquals(Generator.s_ParseJson(data, "order:minor_disease_id"), mdId, "次诉疾病为30000000000，不应该更新成功");
         logger.info("禁止更新次诉疾病为30000000000");
 
         String key = Generator.randomKey(KnowledgeBase.kb_disease);
@@ -242,7 +242,7 @@ public class UpdateMedicalRecords extends BaseTest {
         res = GetOrderDetail_V1.s_MyInitiateOrder(mainToken, orderId);
         s_CheckResponse(res);
         Assert.assertEquals(code, "1000000", "查看订单失败");
-        Assert.assertEquals(Generator.parseJson(data, "order:minor_disease_id"), key, "次诉疾病"+key+"，未更新成功");
+        Assert.assertEquals(Generator.s_ParseJson(data, "order:minor_disease_id"), key, "次诉疾病"+key+"，未更新成功");
         logger.info("更新次诉疾病为"+key+"成功");
 
         key = Generator.randomKey(KnowledgeBase.kb_disease);
@@ -259,7 +259,7 @@ public class UpdateMedicalRecords extends BaseTest {
         res = GetOrderDetail_V1.s_MyInitiateOrder(mainToken, orderId);
         s_CheckResponse(res);
         Assert.assertEquals(code, "1000000", "查看订单失败");
-        Assert.assertEquals(Generator.parseJson(data, "order:minor_disease_id"), key, "次诉疾病"+key+"，未更新成功");
+        Assert.assertEquals(Generator.s_ParseJson(data, "order:minor_disease_id"), key, "次诉疾病"+key+"，未更新成功");
         logger.info("更新次诉疾病为40成功");
 
     }
@@ -276,7 +276,7 @@ public class UpdateMedicalRecords extends BaseTest {
         }
         res = GetOrderDetail_V1.s_MyInitiateOrder(mainToken, orderId);
         s_CheckResponse(res);
-        String gender = Generator.parseJson(data, "order:patient_gender");
+        String gender = Generator.s_ParseJson(data, "order:patient_gender");
         HashMap<String, String> pathValue = new HashMap<String, String>();
         pathValue.put("orderId", orderId);
         MedicalRecords mr = new MedicalRecords(true);
@@ -294,7 +294,7 @@ public class UpdateMedicalRecords extends BaseTest {
         res = GetOrderDetail_V1.s_MyInitiateOrder(mainToken, orderId);
         s_CheckResponse(res);
         Assert.assertEquals(code, "1000000", "查看订单失败");
-        Assert.assertEquals(Generator.parseJson(data, "order:patient_gender"), gender, "性别为-1，不应该更新成功");
+        Assert.assertEquals(Generator.s_ParseJson(data, "order:patient_gender"), gender, "性别为-1，不应该更新成功");
 
         logger.info("更新性别为0");
         mr.body.getJSONObject("order").replace("patient_gender", "0");
@@ -309,7 +309,7 @@ public class UpdateMedicalRecords extends BaseTest {
         res = GetOrderDetail_V1.s_MyInitiateOrder(mainToken, orderId);
         s_CheckResponse(res);
         Assert.assertEquals(code, "1000000", "查看订单失败");
-        Assert.assertEquals(Generator.parseJson(data, "order:patient_gender"), gender, "性别为0，不应该更新成功");
+        Assert.assertEquals(Generator.s_ParseJson(data, "order:patient_gender"), gender, "性别为0，不应该更新成功");
 
 
         logger.info("更新性别为3");
@@ -325,7 +325,7 @@ public class UpdateMedicalRecords extends BaseTest {
         res = GetOrderDetail_V1.s_MyInitiateOrder(mainToken, orderId);
         s_CheckResponse(res);
         Assert.assertEquals(code, "1000000", "查看订单失败");
-        Assert.assertEquals(Generator.parseJson(data, "order:patient_gender"), gender, "性别为3，不应该更新成功");
+        Assert.assertEquals(Generator.s_ParseJson(data, "order:patient_gender"), gender, "性别为3，不应该更新成功");
 
         logger.info("更新性别为2");
         mr.body.getJSONObject("order").replace("patient_gender", "2");
@@ -340,7 +340,7 @@ public class UpdateMedicalRecords extends BaseTest {
         res = GetOrderDetail_V1.s_MyInitiateOrder(mainToken, orderId);
         s_CheckResponse(res);
         Assert.assertEquals(code, "1000000", "查看订单失败");
-        Assert.assertEquals(Generator.parseJson(data, "order:patient_gender"), "2", "性别2未更新成功");
+        Assert.assertEquals(Generator.s_ParseJson(data, "order:patient_gender"), "2", "性别2未更新成功");
 
         logger.info("更新性别为1");
         mr.body.getJSONObject("order").replace("patient_gender", "1");
@@ -355,7 +355,7 @@ public class UpdateMedicalRecords extends BaseTest {
         res = GetOrderDetail_V1.s_MyInitiateOrder(mainToken, orderId);
         s_CheckResponse(res);
         Assert.assertEquals(code, "1000000", "查看订单失败");
-        Assert.assertEquals(Generator.parseJson(data, "order:patient_gender"), "1", "性别1未更新成功");
+        Assert.assertEquals(Generator.s_ParseJson(data, "order:patient_gender"), "1", "性别1未更新成功");
     }
 
     @Test
@@ -370,7 +370,7 @@ public class UpdateMedicalRecords extends BaseTest {
         }
         res = GetOrderDetail_V1.s_MyInitiateOrder(mainToken, orderId);
         s_CheckResponse(res);
-        String diag = Generator.parseJson(data, "order:diagnosis");
+        String diag = Generator.s_ParseJson(data, "order:diagnosis");
         HashMap<String, String> pathValue = new HashMap<String, String>();
         pathValue.put("orderId", orderId);
         MedicalRecords mr = new MedicalRecords(true);
@@ -396,7 +396,7 @@ public class UpdateMedicalRecords extends BaseTest {
         res = GetOrderDetail_V1.s_MyInitiateOrder(mainToken, orderId);
         s_CheckResponse(res);
         Assert.assertEquals(code, "1000000", "查看订单失败");
-        Assert.assertEquals(Generator.parseJson(data, "order:diagnosis"), "思考房价的问题，关键在于逻辑。\n" +
+        Assert.assertEquals(Generator.s_ParseJson(data, "order:diagnosis"), "思考房价的问题，关键在于逻辑。\n" +
                 "但中国房地产市场最缺的恰恰是逻辑，人们对房价的判断，大多基于一种群羊效应，价格上涨的时候追涨，价格下跌的时候抛售。\n" +
                 "以本轮房地产的周期为例，本轮房地产的反转行情最早始于2014年9月30日，在全国房价开始全面下跌之时，中央政府开始出台救市政策，继而在2015年“3.30”房地产政策回到2008年救市模式，在这种情况下，基于对中国房价走势与政策周期之间强烈的相关性，以及房地产市场基本面的判断，我们认为，在房地产基本面已经发生变化的情况下，一线城市、热点城市、大城市需求持续旺盛，其实不存在库存问题，在各种政策的红利下，我们认为买房的时间窗口已经打开，呼吁大家买房，甚至在一些文章中提出：“如果政府丧心病狂的救市，你一定要同样丧心病狂出手买房”的极端话语，但在市场低迷的情况下，无论你如何展示房价的逻辑，市场的参与者是不会轻易出手买房的。同样的道理，在市场陷入疯狂模式之后，动物精神远超人的理性，各种投机因素将使市场的表现大大超越任何原理和规律的范畴。这轮房价的上涨我们有预判，但上涨如此迅猛，持续的时间如此之长，甚至在去年“9.30”之后，在高层三令五申“房子是住的，不是炒的”基调下，一些热点城市仍然疯狂炒作，逼迫政策不断加码。但市场陷入房价不会下跌的幻觉的时候，人们只会看到眼前的疯狂，而看不到逻辑在悄然起作用。\n" +
                 "我们讲中国房价的逻辑，有三个维度：一是政策的维度，中国房地产市场本质上政策市，市场周期受制于政策周期的影响，房价的表现也受制于政策的变化，在政策一松一紧之间，房价都会出现剧烈的反弹，中国的房地产政策，只有真假之分，没有见效不见效这一说，政策如果动真格，每次都是见效的，只是在下一次反弹的时候，很多人忘记了房价在政策的影响下曾经跌过；二是供需的维度，供需规律是决定中国房地产市场长期趋势的最基本逻辑。经过近20年的发展，住宅市场供需基本平衡，但因为中国大城市与其他城市之间的资源鸿沟，必然出现中小城市供应过度而大城市供应长期不足的矛盾，再加上中国大城市错误的限制人口，以及中国以中小城市为中心的错误的城镇化的方向，人为控制大城市的人口和建设用地，必然导致供需矛盾长期存在。我一直强调，库存不是中国房地产的真问题，真问题是资源错配，是土地制度和城市发展的大方向违背城镇化的基本规律，从而导致出现人为的短缺；三是价格的逻辑，房价的绝对值已经很高，这是不争的事实。价格尽管是一个历史和时空概念。在每一个时点上，衡量价格高低的标准是不一样的，美国房地产市场1940年以来，从长期趋势看，一直是上涨的，但几乎每十年都要经历一次调整。很多人现在经常以1989年人民日报一篇报道来嘲笑那些认为中国房价已经很高的人，当时房价只有1900元，大家惊呼房价太高。其实，在那个时点，按照各个元素分析，1900元一平米的房价的确很高，现在北京房价均价过了6万，如果按照人均收入，房价中位数，房价收入比，租售比等一系列的指标看，目前的房价不仅绝对值处于高位，而且按照很多指标来权衡，泡沫化程度已经很高。\n" +
@@ -422,7 +422,7 @@ public class UpdateMedicalRecords extends BaseTest {
         res = GetOrderDetail_V1.s_MyInitiateOrder(mainToken, orderId);
         s_CheckResponse(res);
         Assert.assertEquals(code, "1000000", "查看订单失败");
-        Assert.assertEquals(Generator.parseJson(data, "order:diagnosis"), "思考房价的问题，关键在于逻辑。\n" +
+        Assert.assertEquals(Generator.s_ParseJson(data, "order:diagnosis"), "思考房价的问题，关键在于逻辑。\n" +
                 "但中国房地产市场最缺的恰恰是逻辑，人们对房价的判断，大多基于一种群羊效应，价格上涨的时候追涨，价格下跌的时候抛售。\n" +
                 "以本轮房地产的周期为例，本轮房地产的反转行情最早始于2014年9月30日，在全国房价开始全面下跌之时，中央政府开始出台救市政策，继而在2015年“3.30”房地产政策回到2008年救市模式，在这种情况下，基于对中国房价走势与政策周期之间强烈的相关性，以及房地产市场基本面的判断，我们认为，在房地产基本面已经发生变化的情况下，一线城市、热点城市、大城市需求持续旺盛，其实不存在库存问题，在各种政策的红利下，我们认为买房的时间窗口已经打开，呼吁大家买房，甚至在一些文章中提出：“如果政府丧心病狂的救市，你一定要同样丧心病狂出手买房”的极端话语，但在市场低迷的情况下，无论你如何展示房价的逻辑，市场的参与者是不会轻易出手买房的。同样的道理，在市场陷入疯狂模式之后，动物精神远超人的理性，各种投机因素将使市场的表现大大超越任何原理和规律的范畴。这轮房价的上涨我们有预判，但上涨如此迅猛，持续的时间如此之长，甚至在去年“9.30”之后，在高层三令五申“房子是住的，不是炒的”基调下，一些热点城市仍然疯狂炒作，逼迫政策不断加码。但市场陷入房价不会下跌的幻觉的时候，人们只会看到眼前的疯狂，而看不到逻辑在悄然起作用。\n" +
                 "我们讲中国房价的逻辑，有三个维度：一是政策的维度，中国房地产市场本质上政策市，市场周期受制于政策周期的影响，房价的表现也受制于政策的变化，在政策一松一紧之间，房价都会出现剧烈的反弹，中国的房地产政策，只有真假之分，没有见效不见效这一说，政策如果动真格，每次都是见效的，只是在下一次反弹的时候，很多人忘记了房价在政策的影响下曾经跌过；二是供需的维度，供需规律是决定中国房地产市场长期趋势的最基本逻辑。经过近20年的发展，住宅市场供需基本平衡，但因为中国大城市与其他城市之间的资源鸿沟，必然出现中小城市供应过度而大城市供应长期不足的矛盾，再加上中国大城市错误的限制人口，以及中国以中小城市为中心的错误的城镇化的方向，人为控制大城市的人口和建设用地，必然导致供需矛盾长期存在。我一直强调，库存不是中国房地产的真问题，真问题是资源错配，是土地制度和城市发展的大方向违背城镇化的基本规律，从而导致出现人为的短缺；三是价格的逻辑，房价的绝对值已经很高，这是不争的事实。价格尽管是一个历史和时空概念。在每一个时点上，衡量价格高低的标准是不一样的，美国房地产市场1940年以来，从长期趋势看，一直是上涨的，但几乎每十年都要经历一次调整。很多人现在经常以1989年人民日报一篇报道来嘲笑那些认为中国房价已经很高的人，当时房价只有1900元，大家惊呼房价太高。其实，在那个时点，按照各个元素分析，1900元一平米的房价的确很高，现在北京房价均价过了6万，如果按照人均收入，房价中位数，房价收入比，租售比等一系列的指标看，目前的房价不仅绝对值处于高位，而且按照很多指标来权衡，泡沫化程度已经很高。", "病例描述未更新成功");
@@ -441,7 +441,7 @@ public class UpdateMedicalRecords extends BaseTest {
         }
         res = GetOrderDetail_V1.s_MyInitiateOrder(mainToken, orderId);
         s_CheckResponse(res);
-//        String diag = parseJson(data, "order:medical_record_pictures()");
+//        String diag = s_ParseJson(data, "order:medical_record_pictures()");
         HashMap<String, String> pathValue = new HashMap<String, String>();
         pathValue.put("orderId", orderId);
 
@@ -459,12 +459,12 @@ public class UpdateMedicalRecords extends BaseTest {
         res = GetOrderDetail_V1.s_MyInitiateOrder(mainToken, orderId);
         s_CheckResponse(res);
         Assert.assertEquals(code, "1000000", "查看订单失败");
-        Assert.assertEquals(Generator.parseJson(data, "order:medical_record_pictures(0):key"), "2017/05/04/1265834e-97d8-44a0-95e7-047c7facaee8/IMG_20170429_102737.jpg");
-        Assert.assertNotNull(Generator.parseJson(data, "order:medical_record_pictures(0):url"), "没有图片URL");
-        Assert.assertEquals(Generator.parseJson(data, "order:medical_record_pictures(1):key"), "2017/05/04/1315bbe0-2836-4776-8216-ec55044f32dd/IMG_20161013_172442.jpg");
-        Assert.assertNotNull(Generator.parseJson(data, "order:medical_record_pictures(1):url"), "没有图片URL");
-        Assert.assertEquals(Generator.parseJson(data, "order:medical_record_pictures(2):key"), "2017/05/04/4ab279ba-4626-4491-abee-25029d2341d6/WechatIMG560.jpeg");
-        Assert.assertNotNull(Generator.parseJson(data, "order:medical_record_pictures(2):url"), "没有图片URL");
+        Assert.assertEquals(Generator.s_ParseJson(data, "order:medical_record_pictures(0):key"), "2017/05/04/1265834e-97d8-44a0-95e7-047c7facaee8/IMG_20170429_102737.jpg");
+        Assert.assertNotNull(Generator.s_ParseJson(data, "order:medical_record_pictures(0):url"), "没有图片URL");
+        Assert.assertEquals(Generator.s_ParseJson(data, "order:medical_record_pictures(1):key"), "2017/05/04/1315bbe0-2836-4776-8216-ec55044f32dd/IMG_20161013_172442.jpg");
+        Assert.assertNotNull(Generator.s_ParseJson(data, "order:medical_record_pictures(1):url"), "没有图片URL");
+        Assert.assertEquals(Generator.s_ParseJson(data, "order:medical_record_pictures(2):key"), "2017/05/04/4ab279ba-4626-4491-abee-25029d2341d6/WechatIMG560.jpeg");
+        Assert.assertNotNull(Generator.s_ParseJson(data, "order:medical_record_pictures(2):url"), "没有图片URL");
 
         logger.info("再新增一张图片。。。");
         mr.body.getJSONObject("order").getJSONArray("medical_record_pictures").add(0, JSONObject.fromObject("{'key':'abc';'type':'1'}"));
@@ -479,14 +479,14 @@ public class UpdateMedicalRecords extends BaseTest {
         res = GetOrderDetail_V1.s_MyInitiateOrder(mainToken, orderId);
         s_CheckResponse(res);
         Assert.assertEquals(code, "1000000", "查看订单失败");
-        Assert.assertEquals(Generator.parseJson(data, "order:medical_record_pictures(0):key"), "abc");
-        Assert.assertNotNull(Generator.parseJson(data, "order:medical_record_pictures(0):url"), "没有图片URL");
-        Assert.assertEquals(Generator.parseJson(data, "order:medical_record_pictures(1):key"), "2017/05/04/1265834e-97d8-44a0-95e7-047c7facaee8/IMG_20170429_102737.jpg");
-        Assert.assertNotNull(Generator.parseJson(data, "order:medical_record_pictures(1):url"), "没有图片URL");
-        Assert.assertEquals(Generator.parseJson(data, "order:medical_record_pictures(2):key"), "2017/05/04/1315bbe0-2836-4776-8216-ec55044f32dd/IMG_20161013_172442.jpg");
-        Assert.assertNotNull(Generator.parseJson(data, "order:medical_record_pictures(2):url"), "没有图片URL");
-        Assert.assertEquals(Generator.parseJson(data, "order:medical_record_pictures(3):key"), "2017/05/04/4ab279ba-4626-4491-abee-25029d2341d6/WechatIMG560.jpeg");
-        Assert.assertNotNull(Generator.parseJson(data, "order:medical_record_pictures(3):url"), "没有图片URL");
+        Assert.assertEquals(Generator.s_ParseJson(data, "order:medical_record_pictures(0):key"), "abc");
+        Assert.assertNotNull(Generator.s_ParseJson(data, "order:medical_record_pictures(0):url"), "没有图片URL");
+        Assert.assertEquals(Generator.s_ParseJson(data, "order:medical_record_pictures(1):key"), "2017/05/04/1265834e-97d8-44a0-95e7-047c7facaee8/IMG_20170429_102737.jpg");
+        Assert.assertNotNull(Generator.s_ParseJson(data, "order:medical_record_pictures(1):url"), "没有图片URL");
+        Assert.assertEquals(Generator.s_ParseJson(data, "order:medical_record_pictures(2):key"), "2017/05/04/1315bbe0-2836-4776-8216-ec55044f32dd/IMG_20161013_172442.jpg");
+        Assert.assertNotNull(Generator.s_ParseJson(data, "order:medical_record_pictures(2):url"), "没有图片URL");
+        Assert.assertEquals(Generator.s_ParseJson(data, "order:medical_record_pictures(3):key"), "2017/05/04/4ab279ba-4626-4491-abee-25029d2341d6/WechatIMG560.jpeg");
+        Assert.assertNotNull(Generator.s_ParseJson(data, "order:medical_record_pictures(3):url"), "没有图片URL");
 
         logger.info("删除二张图片。。。");
         mr.body.getJSONObject("order").getJSONArray("medical_record_pictures").remove(3);
@@ -502,10 +502,10 @@ public class UpdateMedicalRecords extends BaseTest {
         res = GetOrderDetail_V1.s_MyInitiateOrder(mainToken, orderId);
         s_CheckResponse(res);
         Assert.assertEquals(code, "1000000", "查看订单失败");
-        Assert.assertEquals(Generator.parseJson(data, "order:medical_record_pictures(0):key"), "2017/05/04/1265834e-97d8-44a0-95e7-047c7facaee8/IMG_20170429_102737.jpg");
-        Assert.assertNotNull(Generator.parseJson(data, "order:medical_record_pictures(0):url"), "没有图片URL");
-        Assert.assertEquals(Generator.parseJson(data, "order:medical_record_pictures(1):key"), "2017/05/04/1315bbe0-2836-4776-8216-ec55044f32dd/IMG_20161013_172442.jpg");
-        Assert.assertNotNull(Generator.parseJson(data, "order:medical_record_pictures(1):url"), "没有图片URL");
+        Assert.assertEquals(Generator.s_ParseJson(data, "order:medical_record_pictures(0):key"), "2017/05/04/1265834e-97d8-44a0-95e7-047c7facaee8/IMG_20170429_102737.jpg");
+        Assert.assertNotNull(Generator.s_ParseJson(data, "order:medical_record_pictures(0):url"), "没有图片URL");
+        Assert.assertEquals(Generator.s_ParseJson(data, "order:medical_record_pictures(1):key"), "2017/05/04/1315bbe0-2836-4776-8216-ec55044f32dd/IMG_20161013_172442.jpg");
+        Assert.assertNotNull(Generator.s_ParseJson(data, "order:medical_record_pictures(1):url"), "没有图片URL");
 
         logger.info("删除所有图片。。。");
         mr.body.getJSONObject("order").getJSONArray("medical_record_pictures").clear();
@@ -518,7 +518,7 @@ public class UpdateMedicalRecords extends BaseTest {
         Assert.assertEquals(code, "1000000");
         res = GetOrderDetail_V1.s_MyInitiateOrder(mainToken, orderId);
         s_CheckResponse(res);
-        Assert.assertEquals(Generator.parseJson(data, "order:medical_record_pictures()"), "0");
+        Assert.assertEquals(Generator.s_ParseJson(data, "order:medical_record_pictures()"), "0");
     }
 
     @Test
@@ -532,8 +532,8 @@ public class UpdateMedicalRecords extends BaseTest {
         }
         res = GetOrderDetail_V1.s_MyInitiateOrder(mainToken, orderId);
         s_CheckResponse(res);
-        String expectedSurgeryHospitalId = Generator.parseJson(data, "order:expected_surgery_hospital_id");
-        String expectedSurgeryHospitalName = Generator.parseJson(data, "order:expected_surgery_hospital_name");
+        String expectedSurgeryHospitalId = Generator.s_ParseJson(data, "order:expected_surgery_hospital_id");
+        String expectedSurgeryHospitalName = Generator.s_ParseJson(data, "order:expected_surgery_hospital_name");
         HashMap<String, String> pathValue = new HashMap<String, String>();
         pathValue.put("orderId", orderId);
         MedicalRecords mr = new MedicalRecords(true);
@@ -551,8 +551,8 @@ public class UpdateMedicalRecords extends BaseTest {
         res = GetOrderDetail_V1.s_MyInitiateOrder(mainToken, orderId);
         s_CheckResponse(res);
         Assert.assertEquals(code, "1000000", "查看订单失败");
-        Assert.assertEquals(Generator.parseJson(data, "order:expected_surgery_hospital_id"), expectedSurgeryHospitalId, "期望手术医院未更新成功");
-        Assert.assertEquals(Generator.parseJson(data, "order:expected_surgery_hospital_name"), expectedSurgeryHospitalName, "期望手术医院未更新成功");
+        Assert.assertEquals(Generator.s_ParseJson(data, "order:expected_surgery_hospital_id"), expectedSurgeryHospitalId, "期望手术医院未更新成功");
+        Assert.assertEquals(Generator.s_ParseJson(data, "order:expected_surgery_hospital_name"), expectedSurgeryHospitalName, "期望手术医院未更新成功");
 
         logger.info("更新期望手术医院ID=0");
         mr.body.getJSONObject("order").replace("expected_surgery_hospital_id", "0");
@@ -567,8 +567,8 @@ public class UpdateMedicalRecords extends BaseTest {
         res = GetOrderDetail_V1.s_MyInitiateOrder(mainToken, orderId);
         s_CheckResponse(res);
         Assert.assertEquals(code, "1000000", "查看订单失败");
-        Assert.assertEquals(Generator.parseJson(data, "order:expected_surgery_hospital_id"), "0", "期望手术医院未更新成功");
-        Assert.assertEquals(Generator.parseJson(data, "order:expected_surgery_hospital_name"), "待回访", "期望手术医院未更新成功");
+        Assert.assertEquals(Generator.s_ParseJson(data, "order:expected_surgery_hospital_id"), "0", "期望手术医院未更新成功");
+        Assert.assertEquals(Generator.s_ParseJson(data, "order:expected_surgery_hospital_name"), "待回访", "期望手术医院未更新成功");
 
         String key = Generator.randomKey(KnowledgeBase.kb_hospital);
         logger.info("更新期望手术医院ID="+key);
@@ -584,8 +584,8 @@ public class UpdateMedicalRecords extends BaseTest {
         res = GetOrderDetail_V1.s_MyInitiateOrder(mainToken, orderId);
         s_CheckResponse(res);
         Assert.assertEquals(code, "1000000", "查看订单失败");
-        Assert.assertEquals(Generator.parseJson(data, "order:expected_surgery_hospital_id"), key, "期望手术医院未更新成功");
-        Assert.assertEquals(Generator.parseJson(data, "order:expected_surgery_hospital_name"), Generator.hospitalName(key), "期望手术医院未更新成功");
+        Assert.assertEquals(Generator.s_ParseJson(data, "order:expected_surgery_hospital_id"), key, "期望手术医院未更新成功");
+        Assert.assertEquals(Generator.s_ParseJson(data, "order:expected_surgery_hospital_name"), Generator.hospitalName(key), "期望手术医院未更新成功");
     }
 
     @Test
@@ -600,7 +600,7 @@ public class UpdateMedicalRecords extends BaseTest {
         }
         res = GetOrderDetail_V1.s_MyInitiateOrder(mainToken, orderId);
         s_CheckResponse(res);
-        String name = Generator.parseJson(data, "order:patient_name");
+        String name = Generator.s_ParseJson(data, "order:patient_name");
         MedicalRecords mr = new MedicalRecords(true);
 
         HashMap<String, String> pathValue = new HashMap<String, String>();
@@ -619,7 +619,7 @@ public class UpdateMedicalRecords extends BaseTest {
         res = GetOrderDetail_V1.s_MyInitiateOrder(mainToken, orderId);
         s_CheckResponse(res);
         Assert.assertEquals(code, "1000000", "查看订单失败");
-        Assert.assertEquals(Generator.parseJson(data, "order:patient_name"), "大头猪", "patient_name未更新");
+        Assert.assertEquals(Generator.s_ParseJson(data, "order:patient_name"), "大头猪", "patient_name未更新");
 
         logger.info("姓名为中文字母组合");
         mr.body.getJSONObject("order").replace("patient_name", "方超xyz");
@@ -634,7 +634,7 @@ public class UpdateMedicalRecords extends BaseTest {
         res = GetOrderDetail_V1.s_MyInitiateOrder(mainToken, orderId);
         s_CheckResponse(res);
         Assert.assertEquals(code, "1000000", "查看订单失败");
-        Assert.assertEquals(Generator.parseJson(data, "order:patient_name"), "方超xyz", "patient_name未更新");
+        Assert.assertEquals(Generator.s_ParseJson(data, "order:patient_name"), "方超xyz", "patient_name未更新");
 
         logger.info("姓名为长字符：大于前端控制");
         mr.body.getJSONObject("order").replace("patient_name", "方超xyz惺惺惜惺惺想寻寻寻寻寻寻寻寻寻寻寻寻寻寻寻寻寻寻寻寻寻寻寻寻寻寻寻寻寻寻寻寻寻寻");
@@ -649,7 +649,7 @@ public class UpdateMedicalRecords extends BaseTest {
         res = GetOrderDetail_V1.s_MyInitiateOrder(mainToken, orderId);
         s_CheckResponse(res);
         Assert.assertEquals(code, "1000000", "查看订单失败");
-        Assert.assertEquals(Generator.parseJson(data, "order:patient_name"), "方超xyz惺惺惜惺惺想寻寻寻寻寻寻寻寻寻寻寻寻寻寻寻寻寻寻寻寻寻寻寻寻寻寻寻寻寻寻寻寻寻寻", "patient_name未更新");
+        Assert.assertEquals(Generator.s_ParseJson(data, "order:patient_name"), "方超xyz惺惺惜惺惺想寻寻寻寻寻寻寻寻寻寻寻寻寻寻寻寻寻寻寻寻寻寻寻寻寻寻寻寻寻寻寻寻寻寻", "patient_name未更新");
 
     }
 
@@ -665,7 +665,7 @@ public class UpdateMedicalRecords extends BaseTest {
         }
         res = GetOrderDetail_V1.s_MyInitiateOrder(mainToken, orderId);
         s_CheckResponse(res);
-        String age = Generator.parseJson(data, "order:patient_age");
+        String age = Generator.s_ParseJson(data, "order:patient_age");
 
         HashMap<String, String> pathValue = new HashMap<>();
         pathValue.put("orderId", orderId);
@@ -684,7 +684,7 @@ public class UpdateMedicalRecords extends BaseTest {
         res = GetOrderDetail_V1.s_MyInitiateOrder(mainToken, orderId);
         s_CheckResponse(res);
         Assert.assertEquals(code, "1000000", "查看订单失败");
-        Assert.assertEquals(Generator.parseJson(data, "order:patient_age"), age, "年龄为-1，不应该更新成功");
+        Assert.assertEquals(Generator.s_ParseJson(data, "order:patient_age"), age, "年龄为-1，不应该更新成功");
         logger.info("禁止更新年龄为-1");
 
         logger.info("更新年龄为0");
@@ -700,7 +700,7 @@ public class UpdateMedicalRecords extends BaseTest {
         res = GetOrderDetail_V1.s_MyInitiateOrder(mainToken, orderId);
         s_CheckResponse(res);
         Assert.assertEquals(code, "1000000", "查看订单失败");
-        Assert.assertEquals(Generator.parseJson(data, "order:patient_age"), age, "年龄为0，不应该更新成功");
+        Assert.assertEquals(Generator.s_ParseJson(data, "order:patient_age"), age, "年龄为0，不应该更新成功");
         logger.info("禁止更新年龄为0");
 
         logger.info("更新年龄为:1000000009999999999900000000000000000000000000000000000000");
@@ -716,7 +716,7 @@ public class UpdateMedicalRecords extends BaseTest {
         res = GetOrderDetail_V1.s_MyInitiateOrder(mainToken, orderId);
         s_CheckResponse(res);
         Assert.assertEquals(code, "1000000", "查看订单失败");
-        Assert.assertEquals(Generator.parseJson(data, "order:patient_age"), age, "年龄为1000000009999999999900000000000000000000000000000000000000，不应该更新成功");
+        Assert.assertEquals(Generator.s_ParseJson(data, "order:patient_age"), age, "年龄为1000000009999999999900000000000000000000000000000000000000，不应该更新成功");
         logger.info("禁止更新年龄为:1000000009999999999900000000000000000000000000000000000000");
 
         logger.info("更新年龄为103。。。");
@@ -732,7 +732,7 @@ public class UpdateMedicalRecords extends BaseTest {
         res = GetOrderDetail_V1.s_MyInitiateOrder(mainToken, orderId);
         s_CheckResponse(res);
         Assert.assertEquals(code, "1000000", "查看订单失败");
-        Assert.assertEquals(Generator.parseJson(data, "order:patient_age"), "103", "年龄不为103，更新未成功");
+        Assert.assertEquals(Generator.s_ParseJson(data, "order:patient_age"), "103", "年龄不为103，更新未成功");
         logger.info("更新年龄为103成功");
     }
 
@@ -766,8 +766,8 @@ public class UpdateMedicalRecords extends BaseTest {
         res = GetOrderDetail_V1.s_MyInitiateOrder(mainToken, orderId);
         s_CheckResponse(res);
         Assert.assertEquals(code, "1000000", "查看订单失败");
-        Assert.assertEquals(Generator.parseJson(data, "order:medical_record_pictures(0):key"), "2017/05/04/1265834e-97d8-44a0-95e7-047c7facaee8/IMG_20170429_102737.jpg");
-        Assert.assertEquals(Generator.parseJson(data, "order:medical_record_pictures(1):key"), "2017/05/04/1265834e-97d8-44a0-95e7-047c7facaee8/IMG_20170429_102738.jpg");
+        Assert.assertEquals(Generator.s_ParseJson(data, "order:medical_record_pictures(0):key"), "2017/05/04/1265834e-97d8-44a0-95e7-047c7facaee8/IMG_20170429_102737.jpg");
+        Assert.assertEquals(Generator.s_ParseJson(data, "order:medical_record_pictures(1):key"), "2017/05/04/1265834e-97d8-44a0-95e7-047c7facaee8/IMG_20170429_102738.jpg");
     }
 
     @Test
@@ -795,7 +795,7 @@ public class UpdateMedicalRecords extends BaseTest {
         res = GetOrderDetail_V1.s_MyInitiateOrder(mainToken, orderId);
         s_CheckResponse(res);
         Assert.assertEquals(code, "1000000", "查看订单失败");
-        Assert.assertEquals(Generator.parseJson(data, "order:is_reoperation"), "false");
+        Assert.assertEquals(Generator.s_ParseJson(data, "order:is_reoperation"), "false");
 
         order.put("is_reoperation", "1");
         mr.replace("order", order);
@@ -809,7 +809,7 @@ public class UpdateMedicalRecords extends BaseTest {
         res = GetOrderDetail_V1.s_MyInitiateOrder(mainToken, orderId);
         s_CheckResponse(res);
         Assert.assertEquals(code, "1000000", "查看订单失败");
-        Assert.assertEquals(Generator.parseJson(data, "order:is_reoperation"), "true");
+        Assert.assertEquals(Generator.s_ParseJson(data, "order:is_reoperation"), "true");
     }
 
     @Test
@@ -837,7 +837,7 @@ public class UpdateMedicalRecords extends BaseTest {
         res = GetOrderDetail_V1.s_MyInitiateOrder(mainToken, orderId);
         s_CheckResponse(res);
         Assert.assertEquals(code, "1000000", "查看订单失败");
-        Assert.assertEquals(Generator.parseJson(data, "order:patient_phone"), "13899991234");
+        Assert.assertEquals(Generator.s_ParseJson(data, "order:patient_phone"), "13899991234");
 
         order.put("patient_phone", "13899991235");
         mr.replace("order", order);
@@ -851,6 +851,6 @@ public class UpdateMedicalRecords extends BaseTest {
         res = GetOrderDetail_V1.s_MyInitiateOrder(mainToken, orderId);
         s_CheckResponse(res);
         Assert.assertEquals(code, "1000000", "查看订单失败");
-        Assert.assertEquals(Generator.parseJson(data, "order:patient_phone"), "13899991235");
+        Assert.assertEquals(Generator.s_ParseJson(data, "order:patient_phone"), "13899991235");
     }
 }

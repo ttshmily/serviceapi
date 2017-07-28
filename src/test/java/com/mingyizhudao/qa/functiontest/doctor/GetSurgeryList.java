@@ -36,10 +36,10 @@ public class GetSurgeryList extends BaseTest {
             logger.error(e);
         }
         s_CheckResponse(res);
-        Assert.assertNotNull(Generator.parseJson(data, "surgeryCategories()"));
-        Assert.assertNotEquals(Generator.parseJson(data, "surgeryCategories():id"), "");
-        Assert.assertEquals(Generator.parseJson(data, "surgeryCategories():surgery_category_id"), "6");
-        Assert.assertNotEquals(Generator.parseJson(data, "surgeryCategories():name"), "");
+        Assert.assertNotNull(Generator.s_ParseJson(data, "surgeryCategories()"));
+        Assert.assertNotEquals(Generator.s_ParseJson(data, "surgeryCategories():id"), "");
+        Assert.assertEquals(Generator.s_ParseJson(data, "surgeryCategories():surgery_category_id"), "6");
+        Assert.assertNotEquals(Generator.s_ParseJson(data, "surgeryCategories():name"), "");
     }
 
     @Test
@@ -55,7 +55,7 @@ public class GetSurgeryList extends BaseTest {
         }
         s_CheckResponse(res);
         Assert.assertEquals(code, "1000000");
-        Assert.assertNotNull(Generator.parseJson(data, "surgeryCategories()"));
+        Assert.assertNotNull(Generator.s_ParseJson(data, "surgeryCategories()"));
     }
 
     @Test

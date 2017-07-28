@@ -54,30 +54,30 @@ public class Order_TrackList extends BaseTest {
         logger.debug(res);
         s_CheckResponse(res);
         Assert.assertEquals(code, "1000000");
-        Assert.assertEquals(Generator.parseJson(data, "list()"), "1");
+        Assert.assertEquals(Generator.s_ParseJson(data, "list()"), "1");
 
         logger.debug(Order_ReceiveTask.s_ReceiveTask(order_number));
         res = s_TrackList(order_number, "");
         s_CheckResponse(res);
         Assert.assertEquals(code, "1000000");
-        Assert.assertEquals(Generator.parseJson(data, "list()"), "2");
+        Assert.assertEquals(Generator.s_ParseJson(data, "list()"), "2");
 
         logger.debug(Order_RecommendDoctor.s_RecommendDoctor(order_number, "666"));
         res = s_TrackList(order_number, "");
         s_CheckResponse(res);
         Assert.assertEquals(code, "1000000");
-        Assert.assertEquals(Generator.parseJson(data, "list()"), "3");
+        Assert.assertEquals(Generator.s_ParseJson(data, "list()"), "3");
 
         logger.debug(Order_ThreewayCall_V2.s_CallV2(order_number, "success"));
         res = s_TrackList(order_number, "");
         s_CheckResponse(res);
         Assert.assertEquals(code, "1000000");
-        Assert.assertEquals(Generator.parseJson(data, "list()"), "4");
+        Assert.assertEquals(Generator.s_ParseJson(data, "list()"), "4");
 
-        int id1 = Integer.parseInt(Generator.parseJson(data, "list(0):id"));
-        int id2 = Integer.parseInt(Generator.parseJson(data, "list(1):id"));
-        int id3 = Integer.parseInt(Generator.parseJson(data, "list(2):id"));
-        int id4 = Integer.parseInt(Generator.parseJson(data, "list(3):id"));
+        int id1 = Integer.parseInt(Generator.s_ParseJson(data, "list(0):id"));
+        int id2 = Integer.parseInt(Generator.s_ParseJson(data, "list(1):id"));
+        int id3 = Integer.parseInt(Generator.s_ParseJson(data, "list(2):id"));
+        int id4 = Integer.parseInt(Generator.s_ParseJson(data, "list(3):id"));
 
         Assert.assertTrue(id1 > id2, "没有倒序排列");
         Assert.assertTrue(id2 > id3, "没有倒序排列");
@@ -86,7 +86,7 @@ public class Order_TrackList extends BaseTest {
         res = s_TrackList(order_number, "THREE_CALL");
         s_CheckResponse(res);
         Assert.assertEquals(code, "1000000");
-        Assert.assertEquals(Generator.parseJson(data, "list()"), "1");
+        Assert.assertEquals(Generator.s_ParseJson(data, "list()"), "1");
 
     }
 
@@ -99,94 +99,94 @@ public class Order_TrackList extends BaseTest {
         logger.debug(res);
         s_CheckResponse(res);
         Assert.assertEquals(code, "1000000");
-        Assert.assertEquals(Generator.parseJson(data, "list()"), "1");
+        Assert.assertEquals(Generator.s_ParseJson(data, "list()"), "1");
 
         res = s_TrackList(order_number, "THREE_CALL");
         s_CheckResponse(res);
         Assert.assertEquals(code, "1000000");
-        Assert.assertEquals(Generator.parseJson(data, "list()"), "0");
+        Assert.assertEquals(Generator.s_ParseJson(data, "list()"), "0");
 
         logger.debug(Order_ReceiveTask.s_ReceiveTask(order_number));
         res = s_TrackList(order_number, "");
         s_CheckResponse(res);
         Assert.assertEquals(code, "1000000");
-        Assert.assertEquals(Generator.parseJson(data, "list()"), "2");
+        Assert.assertEquals(Generator.s_ParseJson(data, "list()"), "2");
 
         res = s_TrackList(order_number, "THREE_CALL");
         s_CheckResponse(res);
         Assert.assertEquals(code, "1000000");
-        Assert.assertEquals(Generator.parseJson(data, "list()"), "0");
+        Assert.assertEquals(Generator.s_ParseJson(data, "list()"), "0");
 
         logger.debug(Order_RecommendDoctor.s_RecommendDoctor(order_number, "666"));
         res = s_TrackList(order_number, "");
         s_CheckResponse(res);
         Assert.assertEquals(code, "1000000");
-        Assert.assertEquals(Generator.parseJson(data, "list()"), "3");
+        Assert.assertEquals(Generator.s_ParseJson(data, "list()"), "3");
 
         res = s_TrackList(order_number, "THREE_CALL");
         s_CheckResponse(res);
         Assert.assertEquals(code, "1000000");
-        Assert.assertEquals(Generator.parseJson(data, "list()"), "0");
+        Assert.assertEquals(Generator.s_ParseJson(data, "list()"), "0");
 
         logger.debug(Order_ThreewayCall_V2.s_CallV2(order_number, "undetermined"));
         res = s_TrackList(order_number, "");
         s_CheckResponse(res);
         Assert.assertEquals(code, "1000000");
-        Assert.assertEquals(Generator.parseJson(data, "list()"), "4");
+        Assert.assertEquals(Generator.s_ParseJson(data, "list()"), "4");
 
         res = s_TrackList(order_number, "THREE_CALL");
         s_CheckResponse(res);
         Assert.assertEquals(code, "1000000");
-        Assert.assertEquals(Generator.parseJson(data, "list()"), "1");
+        Assert.assertEquals(Generator.s_ParseJson(data, "list()"), "1");
 
         logger.debug(Order_ThreewayCall.s_Call(order_number, "undetermined"));
         res = s_TrackList(order_number, "");
         s_CheckResponse(res);
         Assert.assertEquals(code, "1000000");
-        Assert.assertEquals(Generator.parseJson(data, "list()"), "5");
+        Assert.assertEquals(Generator.s_ParseJson(data, "list()"), "5");
 
         res = s_TrackList(order_number, "THREE_CALL");
         s_CheckResponse(res);
         Assert.assertEquals(code, "1000000");
-        Assert.assertEquals(Generator.parseJson(data, "list()"), "2");
+        Assert.assertEquals(Generator.s_ParseJson(data, "list()"), "2");
 
         logger.debug(Order_ThreewayCall.s_Call(order_number, "failed"));
         res = s_TrackList(order_number, "");
         s_CheckResponse(res);
         Assert.assertEquals(code, "1000000");
-        Assert.assertEquals(Generator.parseJson(data, "list()"), "6");
+        Assert.assertEquals(Generator.s_ParseJson(data, "list()"), "6");
 
         res = s_TrackList(order_number, "THREE_CALL");
         s_CheckResponse(res);
         Assert.assertEquals(code, "1000000");
-        Assert.assertEquals(Generator.parseJson(data, "list()"), "3");
+        Assert.assertEquals(Generator.s_ParseJson(data, "list()"), "3");
 
         logger.debug(Order_RecommendDoctor.s_RecommendDoctor(order_number, "777"));
         res = s_TrackList(order_number, "");
         s_CheckResponse(res);
         Assert.assertEquals(code, "1000000");
-        Assert.assertEquals(Generator.parseJson(data, "list()"), "7");
+        Assert.assertEquals(Generator.s_ParseJson(data, "list()"), "7");
 
         res = s_TrackList(order_number, "THREE_CALL");
         s_CheckResponse(res);
         Assert.assertEquals(code, "1000000");
-        Assert.assertEquals(Generator.parseJson(data, "list()"), "3");
+        Assert.assertEquals(Generator.s_ParseJson(data, "list()"), "3");
 
         logger.debug(Order_ThreewayCall.s_Call(order_number, "success"));
         res = s_TrackList(order_number, "");
         s_CheckResponse(res);
         Assert.assertEquals(code, "1000000");
-        Assert.assertEquals(Generator.parseJson(data, "list()"), "8");
+        Assert.assertEquals(Generator.s_ParseJson(data, "list()"), "8");
 
         res = s_TrackList(order_number, "THREE_CALL");
         s_CheckResponse(res);
         Assert.assertEquals(code, "1000000");
-        Assert.assertEquals(Generator.parseJson(data, "list()"), "4");
+        Assert.assertEquals(Generator.s_ParseJson(data, "list()"), "4");
 
-        int id1 = Integer.parseInt(Generator.parseJson(data, "list(0):id"));
-        int id2 = Integer.parseInt(Generator.parseJson(data, "list(1):id"));
-        int id3 = Integer.parseInt(Generator.parseJson(data, "list(2):id"));
-        int id4 = Integer.parseInt(Generator.parseJson(data, "list(3):id"));
+        int id1 = Integer.parseInt(Generator.s_ParseJson(data, "list(0):id"));
+        int id2 = Integer.parseInt(Generator.s_ParseJson(data, "list(1):id"));
+        int id3 = Integer.parseInt(Generator.s_ParseJson(data, "list(2):id"));
+        int id4 = Integer.parseInt(Generator.s_ParseJson(data, "list(3):id"));
         Assert.assertTrue(id1 > id2, "没有倒序排列");
         Assert.assertTrue(id2 > id3, "没有倒序排列");
         Assert.assertTrue(id3 > id4, "没有倒序排列");

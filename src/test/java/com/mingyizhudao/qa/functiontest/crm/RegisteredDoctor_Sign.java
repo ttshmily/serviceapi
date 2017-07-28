@@ -50,14 +50,14 @@ public class RegisteredDoctor_Sign extends BaseTest {
 
         res = RegisteredDoctor_Detail.s_Detail(doctorId);
         s_CheckResponse(res);
-        Assert.assertEquals(Generator.parseJson(data, "signed_status"), "SIGNED");
+        Assert.assertEquals(Generator.s_ParseJson(data, "signed_status"), "SIGNED");
 
 
 
         res = KBExpert_Detail.s_Detail(expertId);
         s_CheckResponse(res);
         Assert.assertEquals(code, "1000000");
-        Assert.assertEquals(Generator.parseJson(data, "signed_status"), "SIGNED");
+        Assert.assertEquals(Generator.s_ParseJson(data, "signed_status"), "SIGNED");
     }
 
     @Test(enabled = false)
@@ -80,6 +80,6 @@ public class RegisteredDoctor_Sign extends BaseTest {
 
         res = RegisteredDoctor_Detail.s_Detail(doctorId);
         s_CheckResponse(res);
-        Assert.assertEquals(Generator.parseJson(data, "signed_status"), "NOT_SIGNED");
+        Assert.assertEquals(Generator.s_ParseJson(data, "signed_status"), "NOT_SIGNED");
     }
 }

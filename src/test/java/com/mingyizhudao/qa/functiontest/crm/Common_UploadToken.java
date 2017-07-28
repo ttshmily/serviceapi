@@ -42,9 +42,9 @@ public class Common_UploadToken extends BaseTest {
         } catch (IOException e) {
             logger.error(e);
         }
-        Assert.assertNotNull(Generator.parseJson(data, "key"));
-        Assert.assertNotNull(Generator.parseJson(data, "token"));
-        Assert.assertNotNull(Generator.parseJson(data, "thumbnailUrl"));
+        Assert.assertNotNull(Generator.s_ParseJson(data, "key"));
+        Assert.assertNotNull(Generator.s_ParseJson(data, "token"));
+        Assert.assertNotNull(Generator.s_ParseJson(data, "thumbnailUrl"));
     }
 
     @Test
@@ -64,8 +64,8 @@ public class Common_UploadToken extends BaseTest {
         } catch (IOException e) {
             logger.error(e);
         }
-        Assert.assertNotNull(Generator.parseJson(data, "key"));
-        Assert.assertNotNull(Generator.parseJson(data, "token"));
-        Assert.assertNotNull(Generator.parseJson(data, "thumbnailUrl"));
+        Assert.assertNotNull(Generator.s_ParseJson(data, "key"));
+        Assert.assertNotNull(Generator.s_ParseJson(data, "token"));
+        Assert.assertNotNull(Generator.s_ParseJson(data, "thumbnailUrl"));
     }
 }

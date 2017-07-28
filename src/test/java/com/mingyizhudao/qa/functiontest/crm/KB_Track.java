@@ -65,13 +65,13 @@ public class KB_Track extends BaseTest {
             } catch (IOException e) {
                 logger.error(e);
             }
-            Assert.assertNotNull(Generator.parseJson(data, "list():id"));
-            Assert.assertNotNull(Generator.parseJson(data, "list():operate_object_id"));
-            Assert.assertNotNull(Generator.parseJson(data, "list():operate_type"));
-            Assert.assertNotNull(Generator.parseJson(data, "list():operator_id"));
-            Assert.assertNotNull(Generator.parseJson(data, "list():operator_name"));
-            Assert.assertNotNull(Generator.parseJson(data, "list():operator_role"));
-            Assert.assertNotNull(Generator.parseJson(data, "list():records"));
+            Assert.assertNotNull(Generator.s_ParseJson(data, "list():id"));
+            Assert.assertNotNull(Generator.s_ParseJson(data, "list():operate_object_id"));
+            Assert.assertNotNull(Generator.s_ParseJson(data, "list():operate_type"));
+            Assert.assertNotNull(Generator.s_ParseJson(data, "list():operator_id"));
+            Assert.assertNotNull(Generator.s_ParseJson(data, "list():operator_name"));
+            Assert.assertNotNull(Generator.s_ParseJson(data, "list():operator_role"));
+            Assert.assertNotNull(Generator.s_ParseJson(data, "list():records"));
         }
     }
 

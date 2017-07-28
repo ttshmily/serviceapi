@@ -28,7 +28,7 @@ public class BDCityList extends BaseTest{
         }
         s_CheckResponse(res);
         Assert.assertEquals(code, "1000000", "");
-        Assert.assertNotNull(Generator.parseJson(data, ""));
+        Assert.assertNotNull(Generator.s_ParseJson(data, ""));
     }
 
     public void test_02_获取多人负责区域列表() {

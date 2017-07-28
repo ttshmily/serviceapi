@@ -37,9 +37,9 @@ public class Order_RecommendDoctor extends BaseTest {
         pathValue.put("orderNumber", orderId);
         res = Order_Detail.s_Detail(orderId);
 
-        if (!Generator.parseJson(JSONObject.fromObject(res), "data:status").equals("2000")) {
+        if (!Generator.s_ParseJson(JSONObject.fromObject(res), "data:status").equals("2000")) {
             logger.error("订单处于不可推荐状态");
-            return Generator.parseJson(JSONObject.fromObject(res), "data:status");
+            return Generator.s_ParseJson(JSONObject.fromObject(res), "data:status");
         }
         JSONObject body = new JSONObject();
         body.put("surgeon_id",doctorId);
@@ -50,7 +50,7 @@ public class Order_RecommendDoctor extends BaseTest {
             logger.error(e);
         }
         res = Order_Detail.s_Detail(orderId);
-        return Generator.parseJson(JSONObject.fromObject(res), "data:status"); // 期望2020
+        return Generator.s_ParseJson(JSONObject.fromObject(res), "data:status"); // 期望2020
     }
 
     @Test
@@ -77,23 +77,23 @@ public class Order_RecommendDoctor extends BaseTest {
         Assert.assertEquals(code, "1000000");
         res = Order_Detail.s_Detail(order_number);
         s_CheckResponse(res);
-        Assert.assertEquals(Generator.parseJson(data, "status"), "2020");
-        Assert.assertEquals(Generator.parseJson(data, "surgeon_id"), recommendedId);
-        Assert.assertEquals(Generator.parseJson(data, "surgeon_name"), dp.body.getJSONObject("doctor").getString("name"));
-        Assert.assertEquals(Generator.parseJson(data, "surgeon_user_id"), doc.get("id"));
-        Assert.assertNotNull(Generator.parseJson(data, "surgeon_medical_title"));
-        Assert.assertNotNull(Generator.parseJson(data, "surgeon_academic_title"));
-        Assert.assertNotNull(Generator.parseJson(data, "surgeon_hospital"));
-        Assert.assertNotNull(Generator.parseJson(data, "surgeon_city_id"));
-        Assert.assertNotNull(Generator.parseJson(data, "surgeon_city_name"));
-        Assert.assertNotNull(Generator.parseJson(data, "surgeon_province_id"));
-        Assert.assertNotNull(Generator.parseJson(data, "surgeon_province_name"));
-        Assert.assertNotNull(Generator.parseJson(data, "surgeon_department"));
-        Assert.assertNotNull(Generator.parseJson(data, "surgeon_major"));
-        Assert.assertNotNull(Generator.parseJson(data, "surgeon_referrer_id"));
-        Assert.assertNotNull(Generator.parseJson(data, "surgeon_referrer_name"));
-        Assert.assertNotNull(Generator.parseJson(data, "surgeon_referrer_group_id"));
-        Assert.assertNotNull(Generator.parseJson(data, "surgeon_registration_time"));
+        Assert.assertEquals(Generator.s_ParseJson(data, "status"), "2020");
+        Assert.assertEquals(Generator.s_ParseJson(data, "surgeon_id"), recommendedId);
+        Assert.assertEquals(Generator.s_ParseJson(data, "surgeon_name"), dp.body.getJSONObject("doctor").getString("name"));
+        Assert.assertEquals(Generator.s_ParseJson(data, "surgeon_user_id"), doc.get("id"));
+        Assert.assertNotNull(Generator.s_ParseJson(data, "surgeon_medical_title"));
+        Assert.assertNotNull(Generator.s_ParseJson(data, "surgeon_academic_title"));
+        Assert.assertNotNull(Generator.s_ParseJson(data, "surgeon_hospital"));
+        Assert.assertNotNull(Generator.s_ParseJson(data, "surgeon_city_id"));
+        Assert.assertNotNull(Generator.s_ParseJson(data, "surgeon_city_name"));
+        Assert.assertNotNull(Generator.s_ParseJson(data, "surgeon_province_id"));
+        Assert.assertNotNull(Generator.s_ParseJson(data, "surgeon_province_name"));
+        Assert.assertNotNull(Generator.s_ParseJson(data, "surgeon_department"));
+        Assert.assertNotNull(Generator.s_ParseJson(data, "surgeon_major"));
+        Assert.assertNotNull(Generator.s_ParseJson(data, "surgeon_referrer_id"));
+        Assert.assertNotNull(Generator.s_ParseJson(data, "surgeon_referrer_name"));
+        Assert.assertNotNull(Generator.s_ParseJson(data, "surgeon_referrer_group_id"));
+        Assert.assertNotNull(Generator.s_ParseJson(data, "surgeon_registration_time"));
     }
 
     @Test
@@ -117,9 +117,9 @@ public class Order_RecommendDoctor extends BaseTest {
         Assert.assertEquals(code, "1000000");
         res = Order_Detail.s_Detail(order_number);
         s_CheckResponse(res);
-        Assert.assertEquals(Generator.parseJson(data, "status"), "2020");
-        Assert.assertEquals(Generator.parseJson(data, "surgeon_id"), recommendedId);
-        Assert.assertEquals(Generator.parseJson(data, "surgeon_name"), KnowledgeBase.kb_doctor.get(recommendedId));
+        Assert.assertEquals(Generator.s_ParseJson(data, "status"), "2020");
+        Assert.assertEquals(Generator.s_ParseJson(data, "surgeon_id"), recommendedId);
+        Assert.assertEquals(Generator.s_ParseJson(data, "surgeon_name"), KnowledgeBase.kb_doctor.get(recommendedId));
 
         // 重新推荐
         recommendedId = "666";
@@ -134,9 +134,9 @@ public class Order_RecommendDoctor extends BaseTest {
         Assert.assertEquals(code, "1000000");
         res = Order_Detail.s_Detail(order_number);
         s_CheckResponse(res);
-        Assert.assertEquals(Generator.parseJson(data, "status"), "2020");
-        Assert.assertEquals(Generator.parseJson(data, "surgeon_id"), recommendedId);
-        Assert.assertEquals(Generator.parseJson(data, "surgeon_name"), KnowledgeBase.kb_doctor.get(recommendedId));
+        Assert.assertEquals(Generator.s_ParseJson(data, "status"), "2020");
+        Assert.assertEquals(Generator.s_ParseJson(data, "surgeon_id"), recommendedId);
+        Assert.assertEquals(Generator.s_ParseJson(data, "surgeon_name"), KnowledgeBase.kb_doctor.get(recommendedId));
 
         // 重新推荐失败后，保留原先的上级医生信息
         String new_recommendedId = "666new_66666";
@@ -151,9 +151,9 @@ public class Order_RecommendDoctor extends BaseTest {
         Assert.assertNotEquals(code, "1000000");
         res = Order_Detail.s_Detail(order_number);
         s_CheckResponse(res);
-        Assert.assertEquals(Generator.parseJson(data, "status"), "2020");
-        Assert.assertEquals(Generator.parseJson(data, "surgeon_id"), recommendedId);
-        Assert.assertEquals(Generator.parseJson(data, "surgeon_name"), KnowledgeBase.kb_doctor.get(recommendedId));
+        Assert.assertEquals(Generator.s_ParseJson(data, "status"), "2020");
+        Assert.assertEquals(Generator.s_ParseJson(data, "surgeon_id"), recommendedId);
+        Assert.assertEquals(Generator.s_ParseJson(data, "surgeon_name"), KnowledgeBase.kb_doctor.get(recommendedId));
     }
 
     @Test(enabled = false)
@@ -176,9 +176,9 @@ public class Order_RecommendDoctor extends BaseTest {
         Assert.assertNotEquals(code, "1000000", "不应该推荐和发起医生相同的专家医生");
         res = Order_Detail.s_Detail(order_number);
         s_CheckResponse(res);
-        Assert.assertEquals(Generator.parseJson(data, "status"), "2000");
-        Assert.assertNull(Generator.parseJson(data, "surgeon_id"));
-        Assert.assertNull(Generator.parseJson(data, "surgeon_name"));
+        Assert.assertEquals(Generator.s_ParseJson(data, "status"), "2000");
+        Assert.assertNull(Generator.s_ParseJson(data, "surgeon_id"));
+        Assert.assertNull(Generator.s_ParseJson(data, "surgeon_name"));
 
     }
 
@@ -203,9 +203,9 @@ public class Order_RecommendDoctor extends BaseTest {
         Assert.assertNotEquals(code, "1000000");
         res = Order_Detail.s_Detail(order_number);
         s_CheckResponse(res);
-        Assert.assertEquals(Generator.parseJson(data, "status"), "2000");
-        Assert.assertNull(Generator.parseJson(data, "surgeon_id"), "不应该出现上级医生ID");
-        Assert.assertNull(Generator.parseJson(data, "surgeon_name"), "不应该出现上级医生姓名");
+        Assert.assertEquals(Generator.s_ParseJson(data, "status"), "2000");
+        Assert.assertNull(Generator.s_ParseJson(data, "surgeon_id"), "不应该出现上级医生ID");
+        Assert.assertNull(Generator.s_ParseJson(data, "surgeon_name"), "不应该出现上级医生姓名");
 
 
     }
@@ -231,9 +231,9 @@ public class Order_RecommendDoctor extends BaseTest {
         Assert.assertNotEquals(code, "1000000");
         res = Order_Detail.s_Detail(order_number);
         s_CheckResponse(res);
-        Assert.assertEquals(Generator.parseJson(data, "status"), "2000");
-        Assert.assertNull(Generator.parseJson(data, "surgeon_id"));
-        Assert.assertNull(Generator.parseJson(data, "surgeon_name"));
+        Assert.assertEquals(Generator.s_ParseJson(data, "status"), "2000");
+        Assert.assertNull(Generator.s_ParseJson(data, "surgeon_id"));
+        Assert.assertNull(Generator.s_ParseJson(data, "surgeon_name"));
 
     }
 
@@ -258,9 +258,9 @@ public class Order_RecommendDoctor extends BaseTest {
         Assert.assertEquals(code, "1000000");
         res = Order_Detail.s_Detail(order_number);
         s_CheckResponse(res);
-        Assert.assertEquals(Generator.parseJson(data, "status"), "2020");
-        Assert.assertEquals(Generator.parseJson(data, "surgeon_id"), recommendedId);
-        Assert.assertEquals(Generator.parseJson(data, "surgeon_name"), KnowledgeBase.kb_doctor.get(recommendedId));
+        Assert.assertEquals(Generator.s_ParseJson(data, "status"), "2020");
+        Assert.assertEquals(Generator.s_ParseJson(data, "surgeon_id"), recommendedId);
+        Assert.assertEquals(Generator.s_ParseJson(data, "surgeon_name"), KnowledgeBase.kb_doctor.get(recommendedId));
 
         if (!Order_ThreewayCall_V2.s_CallV2(order_number,"success").equals("3000")) {
             Assert.fail("三方确认失败，无法继续执行");
@@ -279,6 +279,6 @@ public class Order_RecommendDoctor extends BaseTest {
         Assert.assertNotEquals(code, "1000000");
         res = Order_Detail.s_Detail(order_number);
         s_CheckResponse(res);
-        Assert.assertEquals(Generator.parseJson(data, "status"), "3000");
+        Assert.assertEquals(Generator.s_ParseJson(data, "status"), "3000");
     }
 }

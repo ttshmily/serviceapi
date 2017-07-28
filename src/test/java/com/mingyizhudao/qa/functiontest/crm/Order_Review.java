@@ -63,7 +63,7 @@ public class Order_Review extends BaseTest {
         }
         s_CheckResponse(res);
         Assert.assertEquals(code, "1000000", "审核订单接口失败");
-        Assert.assertEquals(Generator.parseJson(data, "status"), "4020");
+        Assert.assertEquals(Generator.s_ParseJson(data, "status"), "4020");
     }
 
     @Test
@@ -99,9 +99,9 @@ public class Order_Review extends BaseTest {
         }
         s_CheckResponse(res);
         Assert.assertEquals(code, "1000000", "审核订单接口失败");
-        Assert.assertEquals(Generator.parseJson(data, "status"), "4000");
+        Assert.assertEquals(Generator.s_ParseJson(data, "status"), "4000");
         res = GetOrderDetail_V1.s_MyInitiateOrder(token, orderId);
         s_CheckResponse(res);
-        Assert.assertEquals(Generator.parseJson(data, "order:header_info"), "自动化推荐之前据拒订单的理由");
+        Assert.assertEquals(Generator.s_ParseJson(data, "order:header_info"), "自动化推荐之前据拒订单的理由");
     }
 }

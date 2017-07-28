@@ -4,7 +4,6 @@ import com.mingyizhudao.qa.common.BaseTest;
 import com.mingyizhudao.qa.common.TestLogger;
 import com.mingyizhudao.qa.functiontest.crm.Order_ReceiveTask;
 import com.mingyizhudao.qa.functiontest.crm.Order_RecommendDoctor;
-import com.mingyizhudao.qa.functiontest.crm.Order_ThreewayCall;
 import com.mingyizhudao.qa.functiontest.crm.Order_ThreewayCall_V2;
 import com.mingyizhudao.qa.utilities.HttpRequest;
 import com.mingyizhudao.qa.utilities.Generator;
@@ -68,8 +67,8 @@ public class CancelOrder extends BaseTest {
         }
         s_CheckResponse(res);
         Assert.assertEquals(code, "1000000");
-        Assert.assertEquals(Generator.parseJson(data, "status"), "9000");
-        Assert.assertEquals(Generator.parseJson(data, "status"), "9000");
+        Assert.assertEquals(Generator.s_ParseJson(data, "status"), "9000");
+        Assert.assertEquals(Generator.s_ParseJson(data, "status"), "9000");
 
     }
 
@@ -93,7 +92,7 @@ public class CancelOrder extends BaseTest {
         }
         s_CheckResponse(res);
         Assert.assertEquals(code, "1000000");
-        Assert.assertEquals(Generator.parseJson(data, "status"), "9000");
+        Assert.assertEquals(Generator.s_ParseJson(data, "status"), "9000");
     }
 
     @Test
@@ -120,7 +119,7 @@ public class CancelOrder extends BaseTest {
         }
         s_CheckResponse(res);
         Assert.assertEquals(code, "1000000");
-        Assert.assertEquals(Generator.parseJson(data, "status"), "9000");
+        Assert.assertEquals(Generator.s_ParseJson(data, "status"), "9000");
     }
 
     @Test
@@ -145,7 +144,7 @@ public class CancelOrder extends BaseTest {
         Assert.assertNotEquals(code, "1000000");
         res = GetOrderDetail_V1.s_MyInitiateOrder(mainToken, orderId);
         s_CheckResponse(res);
-        Assert.assertEquals(Generator.parseJson(data, "order:status"), "2000");
+        Assert.assertEquals(Generator.s_ParseJson(data, "order:status"), "2000");
     }
 
     @Test
@@ -178,7 +177,7 @@ public class CancelOrder extends BaseTest {
         Assert.assertEquals(code, "1000000");
         res = GetOrderDetail_V1.s_MyInitiateOrder(mainToken, orderId);
         s_CheckResponse(res);
-        Assert.assertEquals(Generator.parseJson(data, "order:status"), "9000");
+        Assert.assertEquals(Generator.s_ParseJson(data, "order:status"), "9000");
     }
 
 }

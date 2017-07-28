@@ -12,7 +12,10 @@ import com.mingyizhudao.qa.utilities.Generator;
 import net.sf.json.JSONException;
 import net.sf.json.JSONObject;
 import org.apache.log4j.PropertyConfigurator;
+import org.testng.*;
 import org.testng.annotations.*;
+import org.testng.xml.SuiteGenerator;
+import org.testng.xml.TestNGContentHandler;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -40,6 +43,7 @@ public class BaseTest {
     public static String crm_token = "";
     public static String bda_token = "";
     public static String bda_token_staff = "";
+    public static String init_kb = "";
 
     public static String mainMobile = "";
     public static String mainToken = "";
@@ -88,9 +92,11 @@ public class BaseTest {
             mainOperatorId = prop.getProperty("mainOperatorId", "chao.fang@mingyizhudao.com");
             mainOperatorName = prop.getProperty("mainOperatorName");
 
+
             crm_token = prop.getProperty("crm_token");
             bda_token = prop.getProperty("bda_token");
             bda_token_staff = prop.getProperty("bda_token_staff");
+            init_kb = prop.getProperty("init_kb", "false");
 
             host_doc = protocol.concat("://").concat(host_doc);
             host_crm = protocol.concat("://").concat(host_crm);
@@ -100,13 +106,16 @@ public class BaseTest {
         }
     }
 
-    protected static String s_JobName() {
+    public static String s_JobName() {
         String jobName = "";
         StackTraceElement stack[] = (new Throwable()).getStackTrace();
         for (int i = 0; i < stack.length; i++) {
             StackTraceElement s = stack[i];
             if (s.getMethodName().startsWith("s_")) {
                 continue;
+            } else if (s.getMethodName().endsWith("Class")) {
+                jobName = "TODO";
+                break;
             } else {
                 jobName = s.getClassName();
                 break;
@@ -116,7 +125,7 @@ public class BaseTest {
     }
 
     @BeforeSuite
-    public void s_SetUpSuite() throws Exception {
+    public void SetUpSuite() throws Exception {
         KnowledgeBase.s_Init();
         crm_token = JSONObject.fromObject(HttpRequest.s_SendGet("http://services.dev.myzd.info/crm/api/internal/devToken" , "email="+mainOperatorId, "")).getJSONObject("data").getString("token");
 //        bda_token = JSONObject.fromObject(HttpRequest.s_SendGet("http://work.myzd.info/wx/internal/api/dev-tokens" , "", "")).getJSONObject("data").getJSONObject("chao.fang@mingyizhudao.com").getString("token");
@@ -141,14 +150,13 @@ public class BaseTest {
         logger.info("mainDoctorHospitalId为:\t"+mainDoctorHospitalId);
         logger.info("mainDoctorHospitalName为:\t"+mainDoctorHospitalName);
         logger.info("mainExpertId为:\t"+mainExpertId);
-
         logger.info("mainOperatorId为:\t"+mainOperatorId);
         logger.info("crm_token为:\t"+crm_token);
     }
 
     @BeforeClass
-    public void s_SetUpClass() throws Exception {
-        TestLogger logger = new TestLogger(s_JobName());
+    public void SetUpClass() throws Exception {
+        TestLogger logger = new TestLogger(getClass().getName());
         logger.info("///////////////////////////////////////////////////////////////////////////////////////////////////////////// ");
         logger.info("//    TestAPI START:\t" + getClass().getSimpleName());
         logger.info("///////////////////////////////////////////////////////////////////////////////////////////////////////////// \n");
@@ -156,29 +164,24 @@ public class BaseTest {
     }
 
     @AfterClass
-    public void s_TearDownClass() throws Exception {
-        TestLogger logger = new TestLogger(s_JobName());
-        logger.info("Test Cleaning...");
-        logger.info("mainDoctorId为"+mainDoctorId);
-        logger.info("恢复医生信息：");
-        UpdateDoctorProfile_V1.s_Update(mainToken, mainDP);
+    public void TearDownClass() throws Exception {
+        TestLogger logger = new TestLogger(getClass().getName());
         logger.info("============================================================================================================= ");
         logger.info("||    TestAPI END:\t" + getClass().getSimpleName());
         logger.info("============================================================================================================= \n");
-
     }
 
     @BeforeMethod
-    public void s_SetUpTC(Method method) throws Exception {
-        TestLogger logger = new TestLogger(s_JobName());
+    public void SetUpTC(Method method) throws Exception {
+        TestLogger logger = new TestLogger(getClass().getName());
         logger.info(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> ");
         logger.info("||    TestCase START:\t" + method.getName());
         logger.info(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> \n");
     }
 
     @AfterMethod
-    public void s_TearDownTC(Method method) {
-        TestLogger logger = new TestLogger(s_JobName());
+    public void TearDownTC(Method method) throws Exception {
+        TestLogger logger = new TestLogger(getClass().getName());
         logger.info("<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< ");
         logger.info("||    TestCase END:\t" + method.getName());
         logger.info("<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< \n");
@@ -202,9 +205,9 @@ public class BaseTest {
         } else {
             this.data = null;
         }
-        logger.info("<<<<<< [ code ]:\t" + code);
-        logger.info("<<<<<< [ message ]:\t" + message);
-        logger.info("<<<<<< [ data ]:\t" + data);
+        logger.info("[ code ]:\t" + code);
+        logger.info("[ message ]:\t" + message);
+        logger.info("[ data ]:\t" + data);
     }
 
 //    生成一个医生用户

@@ -32,13 +32,13 @@ public class ProfessionList extends BaseTest {
             logger.error(e);
         }
         s_CheckResponse(res);
-        Assert.assertNotNull(Generator.parseJson(data, "diseasecategory()"));
-        Assert.assertNotNull(Generator.parseJson(data, "diseasecategory():root_id"));
-        Assert.assertNotNull(Generator.parseJson(data, "diseasecategory():root"));
-        Assert.assertNotNull(Generator.parseJson(data, "diseasecategory():branch()"));
-        Assert.assertNotNull(Generator.parseJson(data, "diseasecategory():branch():id"));
-        Assert.assertNotNull(Generator.parseJson(data, "diseasecategory():branch():parent_category_id"));
-        Assert.assertNotNull(Generator.parseJson(data, "diseasecategory():branch():name"));
+        Assert.assertNotNull(Generator.s_ParseJson(data, "diseasecategory()"));
+        Assert.assertNotNull(Generator.s_ParseJson(data, "diseasecategory():root_id"));
+        Assert.assertNotNull(Generator.s_ParseJson(data, "diseasecategory():root"));
+        Assert.assertNotNull(Generator.s_ParseJson(data, "diseasecategory():branch()"));
+        Assert.assertNotNull(Generator.s_ParseJson(data, "diseasecategory():branch():id"));
+        Assert.assertNotNull(Generator.s_ParseJson(data, "diseasecategory():branch():parent_category_id"));
+        Assert.assertNotNull(Generator.s_ParseJson(data, "diseasecategory():branch():name"));
     }
 
     @Test
@@ -50,13 +50,13 @@ public class ProfessionList extends BaseTest {
             logger.error(e);
         }
         s_CheckResponse(res);
-        Assert.assertNotNull(Generator.parseJson(data, "diseasecategory()"));
-        Assert.assertNotNull(Generator.parseJson(data, "diseasecategory():root_id"));
-        Assert.assertNotNull(Generator.parseJson(data, "diseasecategory():root"));
-        Assert.assertNotNull(Generator.parseJson(data, "diseasecategory():branch()"));
-        Assert.assertNotNull(Generator.parseJson(data, "diseasecategory():branch():id"));
-        Assert.assertNotNull(Generator.parseJson(data, "diseasecategory():branch():parent_category_id"));
-        Assert.assertNotNull(Generator.parseJson(data, "diseasecategory():branch():name"));
+        Assert.assertNotNull(Generator.s_ParseJson(data, "diseasecategory()"));
+        Assert.assertNotNull(Generator.s_ParseJson(data, "diseasecategory():root_id"));
+        Assert.assertNotNull(Generator.s_ParseJson(data, "diseasecategory():root"));
+        Assert.assertNotNull(Generator.s_ParseJson(data, "diseasecategory():branch()"));
+        Assert.assertNotNull(Generator.s_ParseJson(data, "diseasecategory():branch():id"));
+        Assert.assertNotNull(Generator.s_ParseJson(data, "diseasecategory():branch():parent_category_id"));
+        Assert.assertNotNull(Generator.s_ParseJson(data, "diseasecategory():branch():name"));
     }
 
 }

@@ -13,7 +13,7 @@ import org.testng.annotations.Test;
 import java.io.IOException;
 import java.util.HashMap;
 
-import static com.mingyizhudao.qa.utilities.Generator.parseJson;
+import static com.mingyizhudao.qa.utilities.Generator.s_ParseJson;
 
 /**
  * Created by dayi on 2017/7/3.
@@ -53,7 +53,7 @@ public class DeleteOrderByAgent extends BaseTest {
         Assert.assertEquals(orderCountAfter, orderCountBefore-1);
         res = GetOrderDetail_V1.s_MyInitiateOrder(doctor.get("token"), orderId);
         s_CheckResponse(res);
-        Assert.assertNotNull(parseJson(data, "order:agent_deleted_at"));
+        Assert.assertNotNull(s_ParseJson(data, "order:agent_deleted_at"));
     }
 
     @Test
@@ -83,6 +83,6 @@ public class DeleteOrderByAgent extends BaseTest {
         Assert.assertEquals(orderCountAfter, orderCountBefore-1);
         res = GetOrderDetail_V1.s_MyReceivedOrder(doctor.get("token"), orderId);
         s_CheckResponse(res);
-        Assert.assertNotNull(parseJson(data, "order:surgeon_deleted_at"));
+        Assert.assertNotNull(s_ParseJson(data, "order:surgeon_deleted_at"));
     }
 }

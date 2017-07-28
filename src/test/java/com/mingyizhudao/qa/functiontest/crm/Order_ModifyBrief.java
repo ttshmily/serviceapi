@@ -46,11 +46,11 @@ public class Order_ModifyBrief extends BaseTest {
         Assert.assertEquals(code, "1000000");
         res = Order_Detail.s_Detail(orderId);
         s_CheckResponse(res);
-        Assert.assertEquals(Generator.parseJson(data, "surgery_brief_pictures()"), "3");
-        Assert.assertEquals(Generator.parseJson(data, "surgery_brief_pictures(0):key"), "2017/05/04/1265834e-97d8-44a0-95e7-047c7facaee8/IMG_20170429_102737.jpg");
-        Assert.assertEquals(Generator.parseJson(data, "surgery_brief_pictures(0):type"), "2");
-        Assert.assertNotNull(Generator.parseJson(data, "surgery_brief_pictures(0):thumbnailPicture"), "缺少缩略图");
-        Assert.assertNotNull(Generator.parseJson(data, "surgery_brief_pictures(0):largePicture"), "缺少大图");
+        Assert.assertEquals(Generator.s_ParseJson(data, "surgery_brief_pictures()"), "3");
+        Assert.assertEquals(Generator.s_ParseJson(data, "surgery_brief_pictures(0):key"), "2017/05/04/1265834e-97d8-44a0-95e7-047c7facaee8/IMG_20170429_102737.jpg");
+        Assert.assertEquals(Generator.s_ParseJson(data, "surgery_brief_pictures(0):type"), "2");
+        Assert.assertNotNull(Generator.s_ParseJson(data, "surgery_brief_pictures(0):thumbnailPicture"), "缺少缩略图");
+        Assert.assertNotNull(Generator.s_ParseJson(data, "surgery_brief_pictures(0):largePicture"), "缺少大图");
     }
 
 }

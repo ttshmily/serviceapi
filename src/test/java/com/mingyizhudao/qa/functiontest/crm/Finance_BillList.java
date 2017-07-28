@@ -37,9 +37,9 @@ public class Finance_BillList extends BaseTest{
         s_CheckResponse(res);
         Assert.assertEquals(code, "1000000");
         //TODO
-        Assert.assertNotNull(Generator.parseJson(data, "list()"));
-        Assert.assertNotNull(Generator.parseJson(data, "size"));
-        Assert.assertNotNull(Generator.parseJson(data, "page_size"));
+        Assert.assertNotNull(Generator.s_ParseJson(data, "list()"));
+        Assert.assertNotNull(Generator.s_ParseJson(data, "size"));
+        Assert.assertNotNull(Generator.s_ParseJson(data, "page_size"));
     }
 
     @Test
@@ -57,7 +57,7 @@ public class Finance_BillList extends BaseTest{
             }
             s_CheckResponse(res);
             Assert.assertEquals(code, "1000000");
-            Assert.assertEquals(Generator.parseJson(data, "list()"), String.valueOf(i));
+            Assert.assertEquals(Generator.s_ParseJson(data, "list()"), String.valueOf(i));
         }
     }
 }

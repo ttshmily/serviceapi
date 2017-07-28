@@ -32,13 +32,13 @@ public class SurgeryCategory extends BaseTest {
             logger.error(e);
         }
         s_CheckResponse(res);
-        Assert.assertNotNull(Generator.parseJson(data, "surgeryCategories()"));
-        Assert.assertNotNull(Generator.parseJson(data, "surgeryCategories():root_id"));
-        Assert.assertNotNull(Generator.parseJson(data, "surgeryCategories():root"));
-        Assert.assertNotNull(Generator.parseJson(data, "surgeryCategories():branch()"));
-        Assert.assertNotNull(Generator.parseJson(data, "surgeryCategories():branch():id"));
-        Assert.assertNotNull(Generator.parseJson(data, "surgeryCategories():branch():parent_category_id"));
-        Assert.assertNotNull(Generator.parseJson(data, "surgeryCategories():branch():name"));
+        Assert.assertNotNull(Generator.s_ParseJson(data, "surgeryCategories()"));
+        Assert.assertNotNull(Generator.s_ParseJson(data, "surgeryCategories():root_id"));
+        Assert.assertNotNull(Generator.s_ParseJson(data, "surgeryCategories():root"));
+        Assert.assertNotNull(Generator.s_ParseJson(data, "surgeryCategories():branch()"));
+        Assert.assertNotNull(Generator.s_ParseJson(data, "surgeryCategories():branch():id"));
+        Assert.assertNotNull(Generator.s_ParseJson(data, "surgeryCategories():branch():parent_category_id"));
+        Assert.assertNotNull(Generator.s_ParseJson(data, "surgeryCategories():branch():name"));
     }
 
     @Test
@@ -50,12 +50,12 @@ public class SurgeryCategory extends BaseTest {
             logger.error(e);
         }
         s_CheckResponse(res);
-        Assert.assertNotNull(Generator.parseJson(data, "surgeryCategories()"));
-        Assert.assertNotNull(Generator.parseJson(data, "surgeryCategories():root_id"));
-        Assert.assertNotNull(Generator.parseJson(data, "surgeryCategories():root"));
-        Assert.assertNotNull(Generator.parseJson(data, "surgeryCategories():branch()"));
-        Assert.assertNotNull(Generator.parseJson(data, "surgeryCategories():branch():id"));
-        Assert.assertNotNull(Generator.parseJson(data, "surgeryCategories():branch():parent_category_id"));
-        Assert.assertNotNull(Generator.parseJson(data, "surgeryCategories():branch():name"));
+        Assert.assertNotNull(Generator.s_ParseJson(data, "surgeryCategories()"));
+        Assert.assertNotNull(Generator.s_ParseJson(data, "surgeryCategories():root_id"));
+        Assert.assertNotNull(Generator.s_ParseJson(data, "surgeryCategories():root"));
+        Assert.assertNotNull(Generator.s_ParseJson(data, "surgeryCategories():branch()"));
+        Assert.assertNotNull(Generator.s_ParseJson(data, "surgeryCategories():branch():id"));
+        Assert.assertNotNull(Generator.s_ParseJson(data, "surgeryCategories():branch():parent_category_id"));
+        Assert.assertNotNull(Generator.s_ParseJson(data, "surgeryCategories():branch():name"));
     }
 }
