@@ -113,9 +113,6 @@ public class BaseTest {
             StackTraceElement s = stack[i];
             if (s.getMethodName().startsWith("s_")) {
                 continue;
-            } else if (s.getMethodName().endsWith("Class")) {
-                jobName = "TODO";
-                break;
             } else {
                 jobName = s.getClassName();
                 break;
