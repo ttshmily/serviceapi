@@ -5,7 +5,6 @@ import com.mingyizhudao.qa.common.TestLogger;
 import com.mingyizhudao.qa.utilities.HttpRequest;
 import com.mingyizhudao.qa.utilities.Generator;
 import net.sf.json.JSONArray;
-import org.apache.log4j.Logger;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
@@ -38,7 +37,7 @@ public class Common_Provinces extends BaseTest {
             query.replace("initial", initial);
             try {
                 res = HttpRequest.s_SendGet(host_crm + uri, query, crm_token);
-                checkResponse(res);
+                s_CheckResponse(res);
                 Assert.assertEquals(code, "1000000");
             } catch (IOException e) {
                 logger.error(e);
@@ -60,7 +59,7 @@ public class Common_Provinces extends BaseTest {
         HashMap<String, String> query = new HashMap<>();
         try {
             res = HttpRequest.s_SendGet(host_crm+uri, query, crm_token);
-            checkResponse(res);
+            s_CheckResponse(res);
             Assert.assertEquals(code, "1000000");
         } catch (IOException e) {
             logger.error(e);

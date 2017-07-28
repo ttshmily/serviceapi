@@ -52,7 +52,7 @@ public class KBExpert_List extends BaseTest {
         } catch (IOException e) {
             logger.error(e);
         }
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertEquals(code, "1000000");
         Assert.assertNotNull(Generator.parseJson(data, "list()"), "医生列表为空");
         Assert.assertNotEquals(Generator.parseJson(data, "list(0):id"), "", "医生ID为空");
@@ -81,7 +81,7 @@ public class KBExpert_List extends BaseTest {
         } catch (IOException e) {
             logger.error(e);
         }
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertEquals(code, "1000000");
         Integer id4 = Integer.parseInt(Generator.parseJson(data, "list(0):id"));
 
@@ -107,7 +107,7 @@ public class KBExpert_List extends BaseTest {
                 logger.error(e);
                 Assert.fail("请求出错");
             }
-            checkResponse(res);
+            s_CheckResponse(res);
             Assert.assertEquals(code, "1000000");
             Assert.assertEquals(Generator.parseJson(data, "list()"), "10", "分页的默认值不为10");
             Assert.assertEquals(Generator.parseJson(data, "size"), String.valueOf(total), "列表总数量错误");
@@ -121,7 +121,7 @@ public class KBExpert_List extends BaseTest {
             query.replace("pageSize", String.valueOf(page_size));
             try {
                 res = HttpRequest.s_SendGet(host_crm+uri, query, crm_token);
-                checkResponse(res);
+                s_CheckResponse(res);
                 Assert.assertEquals(code, "1000000");
                 Assert.assertEquals(Generator.parseJson(data, "list()"), String.valueOf(page_size), "分页值不正确");
             } catch (IOException e) {
@@ -134,7 +134,7 @@ public class KBExpert_List extends BaseTest {
             query.replace("page", String.valueOf(page+1));
             try {
                 res = HttpRequest.s_SendGet(host_crm+uri, query, crm_token);
-                checkResponse(res);
+                s_CheckResponse(res);
                 Assert.assertEquals(code, "1000000");
                 Assert.assertEquals(Generator.parseJson(data, "list()"), "0", "页码超出总数时，应当返回空列表");
             } catch (IOException e) {
@@ -158,7 +158,7 @@ public class KBExpert_List extends BaseTest {
         } catch (IOException e) {
             logger.error(e);
         }
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertEquals(code, "1000000");
         //TODO
         JSONArray exp_list = data.getJSONArray("list");
@@ -182,7 +182,7 @@ public class KBExpert_List extends BaseTest {
         } catch (IOException e) {
             logger.error(e);
         }
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertEquals(code, "1000000");
         //TODO
         JSONArray doc_list = data.getJSONArray("list");
@@ -197,7 +197,7 @@ public class KBExpert_List extends BaseTest {
         } catch (IOException e) {
             logger.error(e);
         }
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertEquals(code, "1000000");
         //TODO
         doc_list = data.getJSONArray("list");
@@ -220,7 +220,7 @@ public class KBExpert_List extends BaseTest {
         } catch (IOException e) {
             logger.error(e);
         }
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertEquals(code, "1000000");
         //TODO
         JSONArray doc_list = data.getJSONArray("list");
@@ -236,7 +236,7 @@ public class KBExpert_List extends BaseTest {
         } catch (IOException e) {
             logger.error(e);
         }
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertEquals(code, "1000000");
         //TODO
         doc_list = data.getJSONArray("list");
@@ -252,7 +252,7 @@ public class KBExpert_List extends BaseTest {
         } catch (IOException e) {
             logger.error(e);
         }
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertNotEquals(code, "1000000");
         //TODO
     }
@@ -269,7 +269,7 @@ public class KBExpert_List extends BaseTest {
         } catch (IOException e) {
             logger.error(e);
         }
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertEquals(code, "1000000");
 
         JSONArray doc_list = data.getJSONArray("list");
@@ -285,7 +285,7 @@ public class KBExpert_List extends BaseTest {
         } catch (IOException e) {
             logger.error(e);
         }
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertEquals(code, "1000000");
 
         doc_list = data.getJSONArray("list");
@@ -301,7 +301,7 @@ public class KBExpert_List extends BaseTest {
         } catch (IOException e) {
             logger.error(e);
         }
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertNotEquals(code, "1000000");
 
     }
@@ -318,7 +318,7 @@ public class KBExpert_List extends BaseTest {
         } catch (IOException e) {
             logger.error(e);
         }
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertEquals(code, "1000000");
         //TODO
         JSONArray doc_list = data.getJSONArray("list");
@@ -333,7 +333,7 @@ public class KBExpert_List extends BaseTest {
         } catch (IOException e) {
             logger.error(e);
         }
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertEquals(code, "1000000");
         //TODO
         doc_list = data.getJSONArray("list");
@@ -356,7 +356,7 @@ public class KBExpert_List extends BaseTest {
         } catch (IOException e) {
             logger.error(e);
         }
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertEquals(code, "1000000");
         //TODO
         JSONArray exp_list = data.getJSONArray("list");
@@ -379,7 +379,7 @@ public class KBExpert_List extends BaseTest {
         } catch (IOException e) {
             logger.error(e);
         }
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertEquals(code, "1000000");
         //TODO
         JSONArray exp_list = data.getJSONArray("list");
@@ -402,7 +402,7 @@ public class KBExpert_List extends BaseTest {
         } catch (IOException e) {
             logger.error(e);
         }
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertEquals(code, "1000000");
         //TODO
         JSONArray exp_list = data.getJSONArray("list");
@@ -430,7 +430,7 @@ public class KBExpert_List extends BaseTest {
         } catch (IOException e) {
             logger.error(e);
         }
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertEquals(code, "1000000");
         JSONArray exp_list = data.getJSONArray("list");
         for (int i=0; i<exp_list.size(); i++) {
@@ -451,7 +451,7 @@ public class KBExpert_List extends BaseTest {
         } catch (IOException e) {
             logger.error(e);
         }
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertEquals(code, "1000000");
         JSONArray exp_list = data.getJSONArray("list");
         for (int i=0; i<exp_list.size(); i++) {

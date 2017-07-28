@@ -3,7 +3,6 @@ package com.mingyizhudao.qa.functiontest.crm;
 import com.mingyizhudao.qa.common.BaseTest;
 import com.mingyizhudao.qa.common.TestLogger;
 import com.mingyizhudao.qa.utilities.HttpRequest;
-import org.apache.log4j.Logger;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
@@ -42,7 +41,7 @@ public class Common_SearchDiseases extends BaseTest {
         } catch (IOException e) {
             logger.error(e);
         }
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertEquals(code, "1000000");
 
     }
@@ -62,7 +61,7 @@ public class Common_SearchDiseases extends BaseTest {
         } catch (IOException e) {
             logger.error(e);
         }
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertEquals(code, "1000000");
     }
 }

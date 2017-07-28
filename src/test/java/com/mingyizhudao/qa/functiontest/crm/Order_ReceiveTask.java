@@ -65,10 +65,10 @@ public class Order_ReceiveTask extends BaseTest {
             logger.error(e);
         }
         logger.debug(res);
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertEquals(code, "1000000", "领取订单失败");
         res = Order_Detail.s_Detail(order_number);
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertEquals(Generator.parseJson(data, "major_reps_id"), "chao.fang@mingyizhudao.com");
         Assert.assertEquals(Generator.parseJson(data, "status"), "2000");
         Assert.assertEquals(Generator.parseJson(data, "order_number"), order_number);
@@ -88,10 +88,10 @@ public class Order_ReceiveTask extends BaseTest {
         } catch (IOException e) {
             logger.error(e);
         }
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertNotEquals(code, "1000000", "领取订单失败");
         res = Order_Detail.s_Detail(order_number);
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertNull(Generator.parseJson(data, "major_reps_id"));
         Assert.assertEquals(Generator.parseJson(data, "status"), "1000");
         Assert.assertEquals(Generator.parseJson(data, "order_number"), order_number);
@@ -111,10 +111,10 @@ public class Order_ReceiveTask extends BaseTest {
         } catch (IOException e) {
             logger.error(e);
         }
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertEquals(code, "1000000", "领取订单失败");
         res = Order_Detail.s_Detail(order_number);
-        checkResponse(res);
+        s_CheckResponse(res);
         String status = Generator.parseJson(data, "status");
         logger.debug(status);
         Assert.assertEquals(Generator.parseJson(data, "major_reps_id"), "chao.fang@mingyizhudao.com");
@@ -124,13 +124,13 @@ public class Order_ReceiveTask extends BaseTest {
         // do it again
         try {
             res = HttpRequest.s_SendPost(host_crm + uri, "", crm_token, pathValue);
-            checkResponse(res);
+            s_CheckResponse(res);
         } catch (IOException e) {
             logger.error(e);
         }
         Assert.assertNotEquals(code, "1000000", "领取了已经领取过的订单");
         res = Order_Detail.s_Detail(order_number);
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertEquals(Generator.parseJson(data, "major_reps_id"), "chao.fang@mingyizhudao.com", "");
 
         // do it again
@@ -139,10 +139,10 @@ public class Order_ReceiveTask extends BaseTest {
         } catch (IOException e) {
             logger.error(e);
         }
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertNotEquals(code, "1000000", "领取已经领取过的订单失败");
         res = Order_Detail.s_Detail(order_number);
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertEquals(Generator.parseJson(data, "major_reps_id"), "chao.fang@mingyizhudao.com", "");
 
     }
@@ -153,7 +153,7 @@ public class Order_ReceiveTask extends BaseTest {
         String res = "";
         HashMap<String, String> pathValue = new HashMap<>();
 
-        HashMap<String, String> doctorInfo = CreateRegisteredDoctor(new DoctorProfile(true));// 创建一个未认证的医生
+        HashMap<String, String> doctorInfo = s_CreateRegisteredDoctor(new DoctorProfile(true));// 创建一个未认证的医生
         String tmpToken = doctorInfo.get("token");
         String order_number = CreateOrder.s_CreateOrder(tmpToken); // create an order
         pathValue.put("orderNumber", order_number);
@@ -164,10 +164,10 @@ public class Order_ReceiveTask extends BaseTest {
             logger.error(e);
         }
 //        logger.debug(res);
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertNotEquals(code, "1000000");
 
-        doctorInfo = CreateVerifiedDoctor(new DoctorProfile(true));// 创建一个已认证未同步的医生
+        doctorInfo = s_CreateVerifiedDoctor(new DoctorProfile(true));// 创建一个已认证未同步的医生
         tmpToken = doctorInfo.get("token");
         order_number = CreateOrder.s_CreateOrder(tmpToken); // create an order
         pathValue.put("orderNumber", order_number);
@@ -178,7 +178,7 @@ public class Order_ReceiveTask extends BaseTest {
             logger.error(e);
         }
 //        logger.debug(res);
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertNotEquals(code, "1000000");
 
     }

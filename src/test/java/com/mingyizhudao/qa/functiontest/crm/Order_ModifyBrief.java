@@ -42,10 +42,10 @@ public class Order_ModifyBrief extends BaseTest {
         } catch (IOException e) {
             logger.error(e);
         }
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertEquals(code, "1000000");
         res = Order_Detail.s_Detail(orderId);
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertEquals(Generator.parseJson(data, "surgery_brief_pictures()"), "3");
         Assert.assertEquals(Generator.parseJson(data, "surgery_brief_pictures(0):key"), "2017/05/04/1265834e-97d8-44a0-95e7-047c7facaee8/IMG_20170429_102737.jpg");
         Assert.assertEquals(Generator.parseJson(data, "surgery_brief_pictures(0):type"), "2");

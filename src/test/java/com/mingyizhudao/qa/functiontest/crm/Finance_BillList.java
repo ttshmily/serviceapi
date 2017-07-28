@@ -4,7 +4,6 @@ import com.mingyizhudao.qa.common.BaseTest;
 import com.mingyizhudao.qa.common.TestLogger;
 import com.mingyizhudao.qa.utilities.HttpRequest;
 import com.mingyizhudao.qa.utilities.Generator;
-import org.apache.log4j.Logger;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
@@ -35,7 +34,7 @@ public class Finance_BillList extends BaseTest{
         } catch (IOException e) {
             logger.error(e);
         }
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertEquals(code, "1000000");
         //TODO
         Assert.assertNotNull(Generator.parseJson(data, "list()"));
@@ -56,7 +55,7 @@ public class Finance_BillList extends BaseTest{
             } catch (IOException e) {
                 logger.error(e);
             }
-            checkResponse(res);
+            s_CheckResponse(res);
             Assert.assertEquals(code, "1000000");
             Assert.assertEquals(Generator.parseJson(data, "list()"), String.valueOf(i));
         }

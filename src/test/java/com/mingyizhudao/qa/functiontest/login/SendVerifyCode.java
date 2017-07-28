@@ -6,7 +6,6 @@ import com.mingyizhudao.qa.dataprofile.login.MobileProfile;
 import com.mingyizhudao.qa.utilities.HttpRequest;
 import net.sf.json.JSONException;
 import net.sf.json.JSONObject;
-import org.apache.log4j.Logger;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
@@ -65,7 +64,7 @@ public class SendVerifyCode extends BaseTest{
         body.body.replace("mobile", "");
         try {
             res = HttpRequest.s_SendPost(host_login + uri,body.body.toString(), "");
-            checkResponse(res);
+            s_CheckResponse(res);
             Assert.fail("res should fail"); // 如果没有exception，就是fail
         } catch (IOException e) {
             logger.info("res returns error because of malformed input");
@@ -82,7 +81,7 @@ public class SendVerifyCode extends BaseTest{
         } catch (IOException e) {
             logger.error(e);
         }
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertEquals(code,"1000000","消息码不正确");
     }
 
@@ -93,7 +92,7 @@ public class SendVerifyCode extends BaseTest{
         body.body.replace("mobile", "1330000000");
         try {
             res = HttpRequest.s_SendPost(host_login + uri,body.body.toString(), "");
-            checkResponse(res);
+            s_CheckResponse(res);
             Assert.fail("res should fail"); // 如果没有exception，就是fail
         } catch (IOException e) {
             logger.info("res returns error because of malformed input: mobile number less than 11");

@@ -31,7 +31,7 @@ public class DoctorListV2 extends BaseTest {
         } catch (IOException e) {
             logger.error(e);
         }
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertNotEquals(code, "1000000", "没有token不应该调用成功");
 
         try {
@@ -39,7 +39,7 @@ public class DoctorListV2 extends BaseTest {
         } catch (IOException e) {
             logger.error(e);
         }
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertNotEquals(code, "1000000", "token错误不应该调用成功");
     }
 
@@ -58,7 +58,7 @@ public class DoctorListV2 extends BaseTest {
         } catch (IOException e) {
             logger.error(e);
         }
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertEquals(code, "1000000", "主管查看下属应该成功");
 
         JSONArray doctor_list = data.getJSONArray("list");
@@ -81,7 +81,7 @@ public class DoctorListV2 extends BaseTest {
         } catch (IOException e) {
             logger.error(e);
         }
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertNotEquals(code, "1000000", "主管查看非下属不应该成功");
     }
 
@@ -101,7 +101,7 @@ public class DoctorListV2 extends BaseTest {
         } catch (IOException e) {
             logger.error(e);
         }
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertEquals(code, "1000000", "");
         // TODO
         JSONArray doctor_list = data.getJSONArray("list");
@@ -128,7 +128,7 @@ public class DoctorListV2 extends BaseTest {
         } catch (IOException e) {
             logger.error(e);
         }
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertEquals(code, "1000000", "");
 
         JSONArray doctor_list = data.getJSONArray("list");
@@ -157,7 +157,7 @@ public class DoctorListV2 extends BaseTest {
         } catch (IOException e) {
             logger.error(e);
         }
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertEquals(code, "1000000", "");
 
         JSONArray doctor_list = data.getJSONArray("list");
@@ -187,7 +187,7 @@ public class DoctorListV2 extends BaseTest {
         } catch (IOException e) {
             logger.error(e);
         }
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertEquals(code, "1000000", "");
 
         JSONArray doctor_list = data.getJSONArray("list");
@@ -217,7 +217,7 @@ public class DoctorListV2 extends BaseTest {
         } catch (IOException e) {
             logger.error(e);
         }
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertEquals(code, "1000000", "");
 
         JSONArray doctor_list = data.getJSONArray("list");

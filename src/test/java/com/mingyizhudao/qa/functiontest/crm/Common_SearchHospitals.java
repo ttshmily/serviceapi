@@ -4,7 +4,6 @@ import com.mingyizhudao.qa.common.BaseTest;
 import com.mingyizhudao.qa.common.TestLogger;
 import com.mingyizhudao.qa.utilities.HttpRequest;
 import com.mingyizhudao.qa.utilities.Generator;
-import org.apache.log4j.Logger;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
@@ -39,7 +38,7 @@ public class Common_SearchHospitals extends BaseTest {
         } catch (IOException e) {
             logger.error(e);
         }
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertEquals(code, "1000000");
     }
 
@@ -56,7 +55,7 @@ public class Common_SearchHospitals extends BaseTest {
         } catch (IOException e) {
             logger.error(e);
         }
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertEquals(code, "1000000"); // 必须要有输入
         Assert.assertNotEquals(Generator.parseJson(data,"list()"), "0");
     }
@@ -74,7 +73,7 @@ public class Common_SearchHospitals extends BaseTest {
         } catch (IOException e) {
             logger.error(e);
         }
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertEquals(code, "1000000");
         Assert.assertNotEquals(Generator.parseJson(data,"list()"), "0");
     }
@@ -92,7 +91,7 @@ public class Common_SearchHospitals extends BaseTest {
         } catch (IOException e) {
             logger.error(e);
         }
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertEquals(code, "1000000");
         Assert.assertNotEquals(Generator.parseJson(data, "list()"), "0", "搜索结果不应该为0");
     }
@@ -109,7 +108,7 @@ public class Common_SearchHospitals extends BaseTest {
         } catch (IOException e) {
             logger.error(e);
         }
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertEquals(code, "1000000");
     }
 }

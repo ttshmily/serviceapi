@@ -5,6 +5,7 @@ import com.mingyizhudao.qa.common.TestLogger;
 import com.mingyizhudao.qa.functiontest.crm.Order_ReceiveTask;
 import com.mingyizhudao.qa.functiontest.crm.Order_RecommendDoctor;
 import com.mingyizhudao.qa.functiontest.crm.Order_ThreewayCall;
+import com.mingyizhudao.qa.functiontest.crm.Order_ThreewayCall_V2;
 import com.mingyizhudao.qa.utilities.HttpRequest;
 import org.testng.Assert;
 import org.testng.Reporter;
@@ -47,7 +48,7 @@ public class GetDoctorProfile_V1 extends BaseTest {
         } catch (IOException e) {
             logger.error(e);
         }
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertNotNull(parseJson(data,"doctor"),"doctor字段缺失");
         Assert.assertNotNull(parseJson(data,"doctor:name"), "name字段缺失");
         Assert.assertNotNull(parseJson(data,"doctor:inviter_name"), "inviter_name字段缺失");
@@ -66,7 +67,7 @@ public class GetDoctorProfile_V1 extends BaseTest {
             logger.error(e);
         }
     //    logger.info(unicodeString(res));
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertNotEquals(code, "1000000","没有登录信息，不应该返回data");
 
     }
@@ -80,7 +81,7 @@ public class GetDoctorProfile_V1 extends BaseTest {
             logger.error(e);
         }
         //    logger.info(unicodeString(res));
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertNotEquals(code, "1000000","错误token信息，不应该返回data");
 
     }
@@ -93,7 +94,7 @@ public class GetDoctorProfile_V1 extends BaseTest {
         } catch (IOException e) {
             logger.error(e);
         }
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertNotNull(parseJson(data,"doctor"),"doctor字段缺失");
         Assert.assertNotNull(parseJson(data,"doctor:name"), "name字段缺失");
         Assert.assertNotNull(parseJson(data,"doctor:inviter_name"), "inviter_name字段缺失");
@@ -114,7 +115,7 @@ public class GetDoctorProfile_V1 extends BaseTest {
         } catch (IOException e) {
             logger.error(e);
         }
-        checkResponse(resOld);
+        s_CheckResponse(resOld);
         int count = Integer.parseInt(parseJson(data,"doctor:status_count:agentId:count"));
         int countHandling = Integer.parseInt(parseJson(data,"doctor:status_count:agentId:handling"));
         System.out.println("总订单数：" + count);
@@ -131,7 +132,7 @@ public class GetDoctorProfile_V1 extends BaseTest {
         } catch (IOException e) {
             logger.error(e);
         }
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertNotNull(parseJson(data,"doctor"),"doctor字段缺失");
         Assert.assertNotNull(parseJson(data,"doctor:name"), "name字段缺失");
         Assert.assertNotNull(parseJson(data,"doctor:inviter_name"), "inviter_name字段缺失");
@@ -150,7 +151,7 @@ public class GetDoctorProfile_V1 extends BaseTest {
         } catch (IOException e) {
             logger.error(e);
         }
-        checkResponse(resOld);
+        s_CheckResponse(resOld);
         int count = Integer.parseInt(parseJson(data,"doctor:status_count:agentId:count"));
         int countHandling = Integer.parseInt(parseJson(data,"doctor:status_count:agentId:handling"));
 
@@ -167,7 +168,7 @@ public class GetDoctorProfile_V1 extends BaseTest {
         } catch (IOException e) {
             logger.error(e);
         }
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertNotNull(parseJson(data,"doctor"),"doctor字段缺失");
         Assert.assertNotNull(parseJson(data,"doctor:name"), "name字段缺失");
         Assert.assertNotNull(parseJson(data,"doctor:inviter_name"), "inviter_name字段缺失");
@@ -186,7 +187,7 @@ public class GetDoctorProfile_V1 extends BaseTest {
         } catch (IOException e) {
             logger.error(e);
         }
-        checkResponse(resOld);
+        s_CheckResponse(resOld);
         int count = Integer.parseInt(parseJson(data,"doctor:status_count:agentId:count"));
         int countHandling = Integer.parseInt(parseJson(data,"doctor:status_count:agentId:handling"));
 
@@ -204,7 +205,7 @@ public class GetDoctorProfile_V1 extends BaseTest {
         } catch (IOException e) {
             logger.error(e);
         }
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertNotNull(parseJson(data,"doctor"),"doctor字段缺失");
         Assert.assertNotNull(parseJson(data,"doctor:name"), "name字段缺失");
         Assert.assertNotNull(parseJson(data,"doctor:inviter_name"), "inviter_name字段缺失");
@@ -223,7 +224,7 @@ public class GetDoctorProfile_V1 extends BaseTest {
         } catch (IOException e) {
             logger.error(e);
         }
-        checkResponse(resOld);
+        s_CheckResponse(resOld);
         int count = Integer.parseInt(parseJson(data,"doctor:status_count:agentId:count"));
         int countHandling = Integer.parseInt(parseJson(data,"doctor:status_count:agentId:handling"));
         int pendingpayment = Integer.parseInt(parseJson(data, "doctor:status_count:agentId:pendingpayment"));
@@ -233,7 +234,7 @@ public class GetDoctorProfile_V1 extends BaseTest {
             String orderId = CreateOrder.s_CreateOrder(mainToken);
             Order_ReceiveTask.s_ReceiveTask(orderId);
             Order_RecommendDoctor.s_RecommendDoctor(orderId,"3721");
-            Order_ThreewayCall.s_Call(orderId,"success");
+            Order_ThreewayCall_V2.s_CallV2(orderId,"success");
             i++;
         }
         String res = "";
@@ -242,7 +243,7 @@ public class GetDoctorProfile_V1 extends BaseTest {
         } catch (IOException e) {
             logger.error(e);
         }
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertNotNull(parseJson(data,"doctor"),"doctor字段缺失");
         Assert.assertNotNull(parseJson(data,"doctor:name"), "name字段缺失");
         Assert.assertNotNull(parseJson(data,"doctor:inviter_name"), "inviter_name字段缺失");

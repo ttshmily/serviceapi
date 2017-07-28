@@ -56,7 +56,7 @@ public class GetOrderList extends BaseTest{
         } catch (IOException e) {
             logger.error(e);
         }
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertNotEquals(Generator.parseJson(data,"order():patient_name"), "", "患者姓名字段缺失");
         Assert.assertNotEquals(Generator.parseJson(data,"order():patient_gender"), "", "患者性别字段缺失");
         Assert.assertNotEquals(Generator.parseJson(data,"order():patient_phone"), "", "患者手机号字段缺失");
@@ -98,7 +98,7 @@ public class GetOrderList extends BaseTest{
         } catch (IOException e) {
             logger.error(e);
         }
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertEquals(Generator.parseJson(data, "order(0):order_number"), orderId1);
 
         logger.info("创建订单with tmpToken");
@@ -112,7 +112,7 @@ public class GetOrderList extends BaseTest{
         } catch (IOException e) {
             logger.error(e);
         }
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertEquals(Generator.parseJson(data, "order(0):order_number"), orderId2);
         Assert.assertEquals(Generator.parseJson(data, "order(1):order_number"), orderId1);
 
@@ -127,7 +127,7 @@ public class GetOrderList extends BaseTest{
         } catch (IOException e) {
             logger.error(e);
         }
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertEquals(Generator.parseJson(data, "order(0):order_number"), orderId3);
         Assert.assertEquals(Generator.parseJson(data, "order(1):order_number"), orderId2);
         Assert.assertEquals(Generator.parseJson(data, "order(2):order_number"), orderId1);
@@ -143,7 +143,7 @@ public class GetOrderList extends BaseTest{
         } catch (IOException e) {
             logger.error(e);
         }
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertEquals(Generator.parseJson(data, "order(0):order_number"), orderId4);
         Assert.assertEquals(Generator.parseJson(data, "order(1):order_number"), orderId3);
         Assert.assertEquals(Generator.parseJson(data, "order(2):order_number"), orderId2);
@@ -158,7 +158,7 @@ public class GetOrderList extends BaseTest{
         } catch (IOException e) {
             logger.error(e);
         }
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertEquals(code, "2210304", "应当提示未登录");
     }
 
@@ -185,7 +185,7 @@ public class GetOrderList extends BaseTest{
         } catch (IOException e) {
             logger.error(e);
         }
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertNotEquals(Generator.parseJson(data,"order():patient_name"), "", "患者姓名字段缺失");
         Assert.assertNotEquals(Generator.parseJson(data,"order():patient_gender"), "", "患者性别字段缺失");
         Assert.assertNotEquals(Generator.parseJson(data,"order():patient_phone"), "", "患者手机号字段缺失");
@@ -215,7 +215,7 @@ public class GetOrderList extends BaseTest{
             logger.error("推荐医生失败");
             Assert.fail("推荐医生失败，退出执行");
         }
-        if (!Order_ThreewayCall.s_Call(orderId, "success").equals("3000")) {
+        if (!Order_ThreewayCall_V2.s_CallV2(orderId, "success").equals("3000")) {
             logger.error("确定三方通话失败");
             Assert.fail("确定三方通话失败，退出执行");
         }
@@ -224,7 +224,7 @@ public class GetOrderList extends BaseTest{
         } catch (IOException e) {
             logger.error(e);
         }
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertNotEquals(Generator.parseJson(data,"order():patient_name"), "", "患者姓名字段缺失");
         Assert.assertNotEquals(Generator.parseJson(data,"order():patient_gender"), "", "患者性别字段缺失");
         Assert.assertNotEquals(Generator.parseJson(data,"order():patient_phone"), "", "患者手机号字段缺失");

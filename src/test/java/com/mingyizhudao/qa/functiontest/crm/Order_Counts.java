@@ -34,7 +34,7 @@ public class Order_Counts extends BaseTest {
         } catch (IOException e) {
             logger.error(e);
         }
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertEquals(code, "1000000");
         Assert.assertNotNull(Generator.parseJson(data, "load_take"));
         Assert.assertNotNull(Generator.parseJson(data, "handling"));
@@ -53,7 +53,7 @@ public class Order_Counts extends BaseTest {
         } catch (IOException e) {
             logger.error(e);
         }
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertEquals(code, "1000000");
 
         Assert.assertEquals(Integer.parseInt(Generator.parseJson(data, "load_take")) +

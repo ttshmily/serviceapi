@@ -32,7 +32,7 @@ public class RegisteredDoctor_Sign extends BaseTest {
 
         String res = "";
         DoctorProfile dp = new DoctorProfile(true);
-        HashMap<String, String> info = CreateVerifiedDoctor(dp);
+        HashMap<String, String> info = s_CreateVerifiedDoctor(dp);
         String doctorId = info.get("id");
         String expertId = info.get("expert_id");
         if (doctorId == null) Assert.fail("创建医生失败，认证用例无法执行");
@@ -45,17 +45,17 @@ public class RegisteredDoctor_Sign extends BaseTest {
         } catch (IOException e) {
             logger.error(e);
         }
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertEquals(code, "1000000");
 
         res = RegisteredDoctor_Detail.s_Detail(doctorId);
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertEquals(Generator.parseJson(data, "signed_status"), "SIGNED");
 
 
 
         res = KBExpert_Detail.s_Detail(expertId);
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertEquals(code, "1000000");
         Assert.assertEquals(Generator.parseJson(data, "signed_status"), "SIGNED");
     }
@@ -64,7 +64,7 @@ public class RegisteredDoctor_Sign extends BaseTest {
     public void test_02_通过专家认证_未认证的医生() {
         String res = "";
         DoctorProfile dp = new DoctorProfile(true);
-        HashMap<String, String> info = CreateRegisteredDoctor(dp);
+        HashMap<String, String> info = s_CreateRegisteredDoctor(dp);
         String doctorId = info.get("id");
         HashMap<String, String> pathValue = new HashMap<>();
         pathValue.put("id", doctorId);
@@ -75,11 +75,11 @@ public class RegisteredDoctor_Sign extends BaseTest {
         } catch (IOException e) {
             logger.error(e);
         }
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertNotEquals(code, "1000000");
 
         res = RegisteredDoctor_Detail.s_Detail(doctorId);
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertEquals(Generator.parseJson(data, "signed_status"), "NOT_SIGNED");
     }
 }

@@ -4,7 +4,6 @@ import com.mingyizhudao.qa.common.BaseTest;
 import com.mingyizhudao.qa.common.TestLogger;
 import com.mingyizhudao.qa.utilities.HttpRequest;
 import com.mingyizhudao.qa.utilities.Generator;
-import org.apache.log4j.Logger;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
@@ -34,7 +33,7 @@ public class RegisteredDoctor_Counts extends BaseTest {
         } catch (IOException e) {
             logger.error(e);
         }
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertEquals(code, "1000000");
         Assert.assertEquals(Generator.parseJson(data, "list()"), "4"); // 4种状态
         Assert.assertNotNull(Generator.parseJson(data, "list(0):is_verified"));
@@ -53,7 +52,7 @@ public class RegisteredDoctor_Counts extends BaseTest {
         } catch (IOException e) {
             logger.error(e);
         }
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertEquals(code, "1000000");
         Assert.assertEquals(Generator.parseJson(data, "list()"), "4"); // 4种状态
 

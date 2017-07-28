@@ -6,7 +6,6 @@ import com.mingyizhudao.qa.utilities.HttpRequest;
 import com.mingyizhudao.qa.utilities.Generator;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
-import org.apache.log4j.Logger;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
@@ -37,7 +36,7 @@ public class KBHospital_List extends BaseTest {
         } catch (IOException e) {
             logger.error(e);
         }
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertEquals(code, "1000000");
         Assert.assertNotNull(Generator.parseJson(data, "list()"), "医院列表为空");
         Assert.assertNotEquals(Generator.parseJson(data, "list(0):id"), "", "医院ID为空");
@@ -60,7 +59,7 @@ public class KBHospital_List extends BaseTest {
         } catch (IOException e) {
             logger.error(e);
         }
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertEquals(code, "1000000");
         Integer id4 = Integer.parseInt(Generator.parseJson(data, "list(0):id"));
 
@@ -79,7 +78,7 @@ public class KBHospital_List extends BaseTest {
         } catch (IOException e) {
             logger.error(e);
         }
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertEquals(code, "1000000");
         //TODO
         JSONArray hos_list = data.getJSONArray("list");
@@ -95,7 +94,7 @@ public class KBHospital_List extends BaseTest {
         } catch (IOException e) {
             logger.error(e);
         }
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertEquals(code, "1000000");
         //TODO
         hos_list = data.getJSONArray("list");
@@ -111,7 +110,7 @@ public class KBHospital_List extends BaseTest {
         } catch (IOException e) {
             logger.error(e);
         }
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertNotEquals(code, "1000000");
         //TODO
     }
@@ -128,7 +127,7 @@ public class KBHospital_List extends BaseTest {
         } catch (IOException e) {
             logger.error(e);
         }
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertEquals(code, "1000000");
         //TODO
         JSONArray hos_list = data.getJSONArray("list");
@@ -144,7 +143,7 @@ public class KBHospital_List extends BaseTest {
         } catch (IOException e) {
             logger.error(e);
         }
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertEquals(code, "1000000");
         //TODO
         hos_list = data.getJSONArray("list");
@@ -160,7 +159,7 @@ public class KBHospital_List extends BaseTest {
         } catch (IOException e) {
             logger.error(e);
         }
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertNotEquals(code, "1000000");
         //TODO
     }
@@ -177,7 +176,7 @@ public class KBHospital_List extends BaseTest {
         } catch (IOException e) {
             logger.error(e);
         }
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertEquals(code, "1000000");
         //TODO
         JSONArray hos_list = data.getJSONArray("list");
@@ -193,7 +192,7 @@ public class KBHospital_List extends BaseTest {
         } catch (IOException e) {
             logger.error(e);
         }
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertEquals(code, "1000000");
         //TODO
         hos_list = data.getJSONArray("list");

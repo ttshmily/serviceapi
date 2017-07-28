@@ -66,7 +66,7 @@ public class KBHospital_Update extends BaseTest {
         } catch (IOException e) {
             logger.error(e);
         }
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertNotEquals(code, "1000000", "没有token不能操作");
     }
 
@@ -88,7 +88,7 @@ public class KBHospital_Update extends BaseTest {
         } catch (IOException e) {
             logger.error(e);
         }
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertEquals(code, "1000000", "医院名称未更新成功");
 
         HashMap<String, String> hospitalInfo = KBHospital_Detail.s_Detail(hospitalId);
@@ -114,7 +114,7 @@ public class KBHospital_Update extends BaseTest {
         } catch (IOException e) {
             logger.error(e);
         }
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertEquals(code, "1000000", "短名没有更新成功");
 
         HashMap<String, String> hospitalInfo = KBHospital_Detail.s_Detail(hospitalId);
@@ -139,7 +139,7 @@ public class KBHospital_Update extends BaseTest {
         } catch (IOException e) {
             logger.error(e);
         }
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertEquals(code, "1000000", "医院等级没有更新成功");
 
         HashMap<String, String> hospitalInfo = KBHospital_Detail.s_Detail(hospitalId);
@@ -164,7 +164,7 @@ public class KBHospital_Update extends BaseTest {
         } catch (IOException e) {
             logger.error(e);
         }
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertEquals(code, "1000000", "医院类型没有更新成功");
 
         HashMap<String, String> hospitalInfo = KBHospital_Detail.s_Detail(hospitalId);
@@ -186,7 +186,7 @@ public class KBHospital_Update extends BaseTest {
         hpModified.body.put("city_id", city_id);
         try {
             res = HttpRequest.s_SendPut(host_crm+uri, hpModified.body.toString(), crm_token, pathValue);
-            checkResponse(res);
+            s_CheckResponse(res);
             Assert.assertEquals(code, "1000000", "医院城市没有更新成功");
         } catch (IOException e) {
             logger.error(e);
@@ -200,7 +200,7 @@ public class KBHospital_Update extends BaseTest {
         hpModified.body.replace("city_id", "11"+city_id);
         try {
             res = HttpRequest.s_SendPut(host_crm+uri, hpModified.body.toString(), crm_token, pathValue);
-            checkResponse(res);
+            s_CheckResponse(res);
             Assert.assertNotEquals(code, "1000000", "错误的城市ID不能更新成功");
         } catch (IOException e) {
             logger.error(e);
@@ -227,7 +227,7 @@ public class KBHospital_Update extends BaseTest {
         } catch (IOException e) {
             logger.error(e);
         }
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertEquals(code, "1000000", "医院城市没有更新成功");
 
         HashMap<String, String> hospitalInfo = KBHospital_Detail.s_Detail(hospitalId);
@@ -254,7 +254,7 @@ public class KBHospital_Update extends BaseTest {
         } catch (IOException e) {
             logger.error(e);
         }
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertEquals(code, "1000000", "医院电话没有更新成功");
         HashMap<String, String> hospitalInfo = KBHospital_Detail.s_Detail(hospitalId);
         String actual_phone = hospitalInfo.get("phone");
@@ -278,7 +278,7 @@ public class KBHospital_Update extends BaseTest {
         } catch (IOException e) {
             logger.error(e);
         }
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertEquals(code, "1000000", "医院描述没有更新成功");
 
         HashMap<String, String> hospitalInfo = KBHospital_Detail.s_Detail(hospitalId);
@@ -316,7 +316,7 @@ public class KBHospital_Update extends BaseTest {
         } catch (IOException e) {
             logger.error(e);
         }
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertEquals(code, "1000000", "医院图片更新失败");
 
         HashMap<String, String> hospitalInfo = KBHospital_Detail.s_Detail(hospitalId);

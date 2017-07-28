@@ -65,15 +65,15 @@ public class Order_Reject extends BaseTest {
         } catch (IOException e) {
             logger.error(e);
         }
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertEquals(code, "1000000", "拒绝订单失败");
         res = Order_Detail.s_Detail(order_number);
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertEquals(Generator.parseJson(data, "major_reps_id"), "chao.fang@mingyizhudao.com");
         Assert.assertEquals(Generator.parseJson(data, "status"), "9000");
         Assert.assertEquals(Generator.parseJson(data, "order_number"), order_number);
         res = GetOrderDetail_V1.s_MyInitiateOrder(mainToken, order_number);
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertEquals(Generator.parseJson(data, "order:header_info"), "自动化推荐之前据拒订单的理由");
 //        Assert.assertEquals(UT.parseJson(data, "content"), "自动化推荐之前据拒订单的理由");
 
@@ -102,11 +102,11 @@ public class Order_Reject extends BaseTest {
         } catch (IOException e) {
             logger.error(e);
         }
-        checkResponse(res);
+        s_CheckResponse(res);
         // 没有确定三方通话失败，不能拒绝已有推荐医生的订单
         Assert.assertNotEquals(code, "1000000", "拒绝订单失败");
         res = Order_Detail.s_Detail(order_number);
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertEquals(Generator.parseJson(data, "major_reps_id"), "chao.fang@mingyizhudao.com");
         Assert.assertEquals(Generator.parseJson(data, "status"), "2020");
         Assert.assertEquals(Generator.parseJson(data, "order_number"), order_number);
@@ -125,7 +125,7 @@ public class Order_Reject extends BaseTest {
         if (!Order_RecommendDoctor.s_RecommendDoctor(order_number, mainDoctorId).equals("2020")) {
             Assert.fail("推荐专家失败，无法进行后续操作");
         }
-        if (!Order_ThreewayCall.s_Call(order_number, "undetermined").equals("2020")) {
+        if (!Order_ThreewayCall_V2.s_CallV2(order_number, "undetermined").equals("2020")) {
             Assert.fail("三方通话待定失败，无法进行后续操作");
         }
         pathValue.put("orderNumber", order_number);
@@ -138,11 +138,11 @@ public class Order_Reject extends BaseTest {
         } catch (IOException e) {
             logger.error(e);
         }
-        checkResponse(res);
+        s_CheckResponse(res);
         // 没有确定三方通话失败，不能拒绝已有推荐医生的订单
         Assert.assertNotEquals(code, "1000000", "拒绝订单失败");
         res = Order_Detail.s_Detail(order_number);
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertEquals(Generator.parseJson(data, "major_reps_id"), "chao.fang@mingyizhudao.com");
         Assert.assertEquals(Generator.parseJson(data, "status"), "2020");
         Assert.assertEquals(Generator.parseJson(data, "order_number"), order_number);
@@ -168,10 +168,10 @@ public class Order_Reject extends BaseTest {
         } catch (IOException e) {
             logger.error(e);
         }
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertNotEquals(code, "1000000", "无证");
         res = Order_Detail.s_Detail(order_number);
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertEquals(Generator.parseJson(data, "status"), "2000");
         Assert.assertEquals(Generator.parseJson(data, "order_number"), order_number);
     }

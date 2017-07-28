@@ -72,7 +72,7 @@ public class KBDisease_Update extends BaseTest {
         } catch (IOException e) {
             logger.error(e);
         }
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertEquals(code, "1000000");
         Assert.assertEquals(Generator.parseJson(data, "name"), dpModified.body.getString("name"));
 
@@ -83,7 +83,7 @@ public class KBDisease_Update extends BaseTest {
         } catch (IOException e) {
             logger.error(e);
         }
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertEquals(code, "1000000");
         Assert.assertEquals(Generator.parseJson(data, "description"), dpModified.body.getString("description"));
 
@@ -94,7 +94,7 @@ public class KBDisease_Update extends BaseTest {
         } catch (IOException e) {
             logger.error(e);
         }
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertEquals(code, "1000000");
         Assert.assertEquals(Generator.parseJson(data, "user_visible"), "false");
 
@@ -105,7 +105,7 @@ public class KBDisease_Update extends BaseTest {
         } catch (IOException e) {
             logger.error(e);
         }
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertEquals(code, "1000000");
         Assert.assertEquals(Generator.parseJson(data, "is_common"), "0");
 
@@ -151,11 +151,11 @@ public class KBDisease_Update extends BaseTest {
         } catch (IOException e) {
             logger.error(e);
         }
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertEquals(code, "1000000");
 
         res = KBDisease_Detail.s_Detail(diseaseId);
-        checkResponse(res);
+        s_CheckResponse(res);
         JSONArray category_list = data.getJSONArray("category_list");
         for (int i=0; i<category_list.size(); i++) {
             JSONObject category = category_list.getJSONObject(i);
@@ -210,11 +210,11 @@ public class KBDisease_Update extends BaseTest {
         } catch (IOException e) {
             logger.error(e);
         }
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertEquals(code, "1000000");
 
         res = KBDisease_Detail.s_Detail(diseaseId);
-        checkResponse(res);
+        s_CheckResponse(res);
         JSONArray category_list = data.getJSONArray("category_list");
         for (int i=0; i<category_list.size(); i++) {
             JSONObject category = category_list.getJSONObject(i);
@@ -270,11 +270,11 @@ public class KBDisease_Update extends BaseTest {
         } catch (IOException e) {
             logger.error(e);
         }
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertNotEquals(code, "1000000"); //抱专业错误
 
 //        res = KBDisease_Detail.s_Detail(diseaseId);
-//        checkResponse(res);
+//        s_CheckResponse(res);
 //        JSONArray category_list = data.getJSONArray("category_list");
 //        for (int i=0; i<category_list.size(); i++) {
 //            JSONObject category = category_list.getJSONObject(i);

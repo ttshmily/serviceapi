@@ -6,7 +6,6 @@ import com.mingyizhudao.qa.utilities.HttpRequest;
 import com.mingyizhudao.qa.utilities.Generator;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
-import org.apache.log4j.Logger;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
@@ -89,7 +88,7 @@ public class Order_List extends BaseTest {
         } catch (IOException e) {
             logger.error(e);
         }
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertEquals(code, "1000000");
         Assert.assertEquals(Generator.parseJson(data, "list()"), "10");
         Assert.assertEquals(Generator.parseJson(data, "page"), "1");
@@ -107,7 +106,7 @@ public class Order_List extends BaseTest {
         } catch (IOException e) {
             logger.error(e);
         }
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertEquals(code, "1000000");
         Assert.assertEquals(Generator.parseJson(data, "list()"), "100");
         Assert.assertEquals(Generator.parseJson(data, "page"), "1");
@@ -120,7 +119,7 @@ public class Order_List extends BaseTest {
             } catch (IOException e) {
                 logger.error(e);
             }
-            checkResponse(res);
+            s_CheckResponse(res);
             Assert.assertEquals(code, "1000000");
             Assert.assertEquals(Generator.parseJson(data, "list()"), "100");
         }
@@ -130,7 +129,7 @@ public class Order_List extends BaseTest {
         } catch (IOException e) {
             logger.error(e);
         }
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertEquals(code, "1000000");
         Assert.assertEquals(Generator.parseJson(data, "list()"), String.valueOf(size-100*total));
     }
@@ -148,7 +147,7 @@ public class Order_List extends BaseTest {
         } catch (IOException e) {
             logger.error(e);
         }
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertEquals(code, "1000000");
         JSONArray orderList = data.getJSONArray("list");
         for (int i=0; i<orderList.size(); i++) {
@@ -171,7 +170,7 @@ public class Order_List extends BaseTest {
         } catch (IOException e) {
             logger.error(e);
         }
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertEquals(code, "1000000");
         JSONArray orderList = data.getJSONArray("list");
         for (int i=0; i<orderList.size(); i++) {
@@ -185,7 +184,7 @@ public class Order_List extends BaseTest {
         } catch (IOException e) {
             logger.error(e);
         }
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertEquals(code, "1000000");
         orderList = data.getJSONArray("list");
         for (int i=0; i<orderList.size(); i++) {
@@ -199,7 +198,7 @@ public class Order_List extends BaseTest {
         } catch (IOException e) {
             logger.error(e);
         }
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertEquals(code, "1000000");
         orderList = data.getJSONArray("list");
         for (int i=0; i<orderList.size(); i++) {
@@ -223,7 +222,7 @@ public class Order_List extends BaseTest {
         } catch (IOException e) {
             logger.error(e);
         }
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertEquals(code, "1000000");
         JSONArray orderList = data.getJSONArray("list");
         for (int i=0; i<orderList.size(); i++) {

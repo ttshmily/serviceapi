@@ -4,7 +4,6 @@ import com.mingyizhudao.qa.common.BaseTest;
 import com.mingyizhudao.qa.common.TestLogger;
 import com.mingyizhudao.qa.utilities.HttpRequest;
 import com.mingyizhudao.qa.utilities.Generator;
-import org.apache.log4j.Logger;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
@@ -36,7 +35,7 @@ public class GetDiseasesInCategory extends BaseTest {
         } catch (IOException e) {
             logger.error(e);
         }
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertNotNull(Generator.parseJson(data, "diseases()"));
         Assert.assertNotEquals(Generator.parseJson(data, "diseases():id"), "");
 //        Assert.assertEquals(parseJson(data, "diseases():disease_category_id"), "6");
@@ -54,7 +53,7 @@ public class GetDiseasesInCategory extends BaseTest {
         } catch (IOException e) {
             logger.error(e);
         }
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertEquals(code, "1000000");
         Assert.assertNotNull(Generator.parseJson(data, "diseases()"));
     }
@@ -71,7 +70,7 @@ public class GetDiseasesInCategory extends BaseTest {
         } catch (IOException e) {
             logger.error(e);
         }
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertEquals(code, "2210423");
 
         logger.info("case2: categoryId = abc12");
@@ -81,7 +80,7 @@ public class GetDiseasesInCategory extends BaseTest {
         } catch (IOException e) {
             logger.error(e);
         }
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertEquals(code, "2210423");
 
         logger.info("case3: categoryId = -1");
@@ -91,7 +90,7 @@ public class GetDiseasesInCategory extends BaseTest {
         } catch (IOException e) {
             logger.error(e);
         }
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertEquals(code, "2210423");
     }
 

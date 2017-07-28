@@ -70,7 +70,7 @@ public class GetOrderDetail_V1 extends BaseTest {
         } catch (IOException e) {
             logger.error(e);
         }
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertNotEquals(Generator.parseJson(data,"order:patient_name"), "", "患者姓名字段缺失");
         Assert.assertNotEquals(Generator.parseJson(data,"order:patient_gender"), "", "患者性别字段缺失");
         Assert.assertNotEquals(Generator.parseJson(data,"order:patient_phone"), "", "患者手机号字段缺失");
@@ -105,7 +105,7 @@ public class GetOrderDetail_V1 extends BaseTest {
         } catch (IOException e) {
             logger.error(e);
         }
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertEquals(code, "2210430");
     }
 
@@ -121,7 +121,7 @@ public class GetOrderDetail_V1 extends BaseTest {
         } catch (IOException e) {
             logger.error(e);
         }
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertEquals(code, "2210430");
 
     }
@@ -136,7 +136,7 @@ public class GetOrderDetail_V1 extends BaseTest {
             logger.error("创建订单with mainToken失败");
         }
         pathValue.put("orderId", orderId);
-        HashMap<String, String> doctorInfo = CreateSyncedDoctor(new DoctorProfile(true));
+        HashMap<String, String> doctorInfo = s_CreateSyncedDoctor(new DoctorProfile(true));
         String tmpToken = doctorInfo.get("token");
         HashMap<String, String> query = new HashMap<>();
         query.put("flag", "1");
@@ -145,14 +145,14 @@ public class GetOrderDetail_V1 extends BaseTest {
         } catch (IOException e) {
             logger.error(e);
         }
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertNotEquals(code, "1000000");
     }
 
     @Test
     public void test_05_获取订单详情_我收到的订单_刚被推荐() {
         String res = "";
-        String tmpToken = CreateSyncedDoctor(new DoctorProfile(true)).get("token");
+        String tmpToken = s_CreateSyncedDoctor(new DoctorProfile(true)).get("token");
         String orderId = CreateOrder.s_CreateOrder(tmpToken);
         Order_ReceiveTask.s_ReceiveTask(orderId);
         Order_RecommendDoctor.s_RecommendDoctor(orderId, mainExpertId);
@@ -165,7 +165,7 @@ public class GetOrderDetail_V1 extends BaseTest {
         } catch (IOException e) {
             logger.error(e);
         }
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertEquals(code, "1000000");
         Assert.assertEquals(Generator.parseJson(data, "order:order_number"), orderId);
         Assert.assertNotNull(Generator.parseJson(data, "order:NodeList:recommend_at"));
@@ -176,7 +176,7 @@ public class GetOrderDetail_V1 extends BaseTest {
         } catch (IOException e) {
             logger.error(e);
         }
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertEquals(code, "1000000");
         Assert.assertEquals(Generator.parseJson(data, "order:order_number"), orderId);
         Assert.assertNotNull(Generator.parseJson(data, "order:NodeList:recommend_at"));
@@ -189,7 +189,7 @@ public class GetOrderDetail_V1 extends BaseTest {
         } catch (IOException e) {
             logger.error(e);
         }
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertEquals(code, "1000000");
         Assert.assertEquals(Generator.parseJson(data, "order:order_number"), orderId);
         Assert.assertNotNull(Generator.parseJson(data, "order:NodeList:recommend_at"));

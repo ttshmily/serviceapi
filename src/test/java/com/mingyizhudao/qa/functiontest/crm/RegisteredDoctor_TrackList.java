@@ -44,14 +44,14 @@ public class RegisteredDoctor_TrackList extends BaseTest {
         String res = "";
         HashMap<String, String> pathValue = new HashMap<>();
         DoctorProfile dp = new DoctorProfile(true);
-        String doctorId = CreateRegisteredDoctor(dp).get("id"); // create an order
+        String doctorId = s_CreateRegisteredDoctor(dp).get("id"); // create an order
         res = s_TrackList(doctorId);
         logger.debug(res);
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertEquals(code, "1000000");
         Assert.assertEquals(Generator.parseJson(data, "list()"), "2");
         res = s_TrackList(doctorId);
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertEquals(code, "1000000");
         Assert.assertEquals(Generator.parseJson(data, "list()"), "4");// 认证和同步，2条记录
 
@@ -68,14 +68,14 @@ public class RegisteredDoctor_TrackList extends BaseTest {
         String res = "";
         HashMap<String, String> pathValue = new HashMap<>();
         DoctorProfile dp = new DoctorProfile(true);
-        String doctorId = CreateRegisteredDoctor(dp).get("id"); // create an order
+        String doctorId = s_CreateRegisteredDoctor(dp).get("id"); // create an order
         res = s_TrackList(doctorId);
         logger.debug(res);
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertEquals(code, "1000000");
         Assert.assertEquals(Generator.parseJson(data, "list()"), "2");
         res = s_TrackList(doctorId);
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertEquals(code, "1000000");
         Assert.assertEquals(Generator.parseJson(data, "list()"), "3");
 

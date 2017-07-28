@@ -73,9 +73,9 @@ public class RegisteredDoctor_Modify extends BaseTest {
             logger.error(e);
         }
         logger.info(HttpRequest.unicodeString(res));
-        checkResponse(res);
+        s_CheckResponse(res);
         res = RegisteredDoctor_Detail.s_Detail(mainDoctorId);
-        checkResponse(res);
+        s_CheckResponse(res);
 //        Assert.assertEquals(parseJson(data, "department"), "科室综合");
         Assert.assertEquals(Generator.parseJson(data, "hospital_id"), hospital);
         Assert.assertEquals(Generator.parseJson(data, "city_id"), another_city);
@@ -90,7 +90,7 @@ public class RegisteredDoctor_Modify extends BaseTest {
         } catch (IOException e) {
             logger.error(e);
         }
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertNotEquals(code, "1000000");
 
     }
@@ -107,13 +107,13 @@ public class RegisteredDoctor_Modify extends BaseTest {
         body.put("name", "美女医生");
         try {
             res = HttpRequest.s_SendPut(host_crm+uri, body.toString(), crm_token, pathValue);
-            checkResponse(res);
+            s_CheckResponse(res);
             Assert.assertEquals(code, "1000000");
         } catch (IOException e) {
             logger.error(e);
         }
         res = RegisteredDoctor_Detail.s_Detail(mainDoctorId);
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertEquals(Generator.parseJson(data, "name"), "美女医生");
     }
 
@@ -135,13 +135,13 @@ public class RegisteredDoctor_Modify extends BaseTest {
 
         try {
             res = HttpRequest.s_SendPut(host_crm+uri, body.toString(), crm_token, pathValue);
-            checkResponse(res);
+            s_CheckResponse(res);
             Assert.assertEquals(code, "1000000");
         } catch (IOException e) {
             logger.error(e);
         }
         res = RegisteredDoctor_Detail.s_Detail(mainDoctorId);
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertEquals(Generator.parseJson(data, "hospital_id"), hospitalId);
         Assert.assertEquals(Generator.parseJson(data, "hospital_name"), Generator.hospitalName(hospitalId));
         Assert.assertEquals(Generator.parseJson(data, "city_id"), another_city);
@@ -153,13 +153,13 @@ public class RegisteredDoctor_Modify extends BaseTest {
         body.put("hospital_name", "测试医院");
         try {
             res = HttpRequest.s_SendPut(host_crm+uri, body.toString(), crm_token, pathValue);
-            checkResponse(res);
+            s_CheckResponse(res);
             Assert.assertEquals(code, "1000000");
         } catch (IOException e) {
             logger.error(e);
         }
         res = RegisteredDoctor_Detail.s_Detail(mainDoctorId);
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertEquals(Generator.parseJson(data, "hospital_id"), hospitalId);
         Assert.assertEquals(Generator.parseJson(data, "hospital_name"), Generator.hospitalName(hospitalId));
     }
@@ -181,11 +181,11 @@ public class RegisteredDoctor_Modify extends BaseTest {
         } catch (IOException e) {
             logger.error(e);
         }
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertEquals(code, "1000000");
         //TODO
         res = RegisteredDoctor_Detail.s_Detail(mainDoctorId);
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertEquals(Generator.parseJson(data, "academic_title_list"), academic);
         Assert.assertEquals(Generator.parseJson(data, "academic_title"), KnowledgeBase.kb_academic_title.get(academic));
 
@@ -196,11 +196,11 @@ public class RegisteredDoctor_Modify extends BaseTest {
         } catch (IOException e) {
             logger.error(e);
         }
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertNotEquals(code, "1000000");
         //TODO
         res = RegisteredDoctor_Detail.s_Detail(mainDoctorId);
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertEquals(Generator.parseJson(data, "academic_title_list"), academic);
 
     }
@@ -222,10 +222,10 @@ public class RegisteredDoctor_Modify extends BaseTest {
         } catch (IOException e) {
             logger.error(e);
         }
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertEquals(code, "1000000");
         res = RegisteredDoctor_Detail.s_Detail(mainDoctorId);
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertEquals(Generator.parseJson(data, "medical_title_list"), medical);
         Assert.assertEquals(Generator.parseJson(data, "medical_title"), KnowledgeBase.kb_medical_title.get(medical));
 
@@ -236,10 +236,10 @@ public class RegisteredDoctor_Modify extends BaseTest {
         } catch (IOException e) {
             logger.error(e);
         }
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertNotEquals(code, "1000000");
         res = RegisteredDoctor_Detail.s_Detail(mainDoctorId);
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertEquals(Generator.parseJson(data, "medical_title_list"), medical);
         Assert.assertEquals(Generator.parseJson(data, "medical_title"), KnowledgeBase.kb_medical_title.get(medical));
     }
@@ -261,10 +261,10 @@ public class RegisteredDoctor_Modify extends BaseTest {
         } catch (IOException e) {
             logger.error(e);
         }
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertEquals(code, "1000000");
         res = RegisteredDoctor_Detail.s_Detail(mainDoctorId);
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertEquals(Generator.parseJson(data, "major_id"), majorId);
         Assert.assertEquals(Generator.parseJson(data, "major_name"), KnowledgeBase.kb_major.get(majorId));
 
@@ -275,10 +275,10 @@ public class RegisteredDoctor_Modify extends BaseTest {
         } catch (IOException e) {
             logger.error(e);
         }
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertNotEquals(code, "1000000");
         res = RegisteredDoctor_Detail.s_Detail(mainDoctorId);
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertEquals(Generator.parseJson(data, "major_id"), majorId);
         Assert.assertEquals(Generator.parseJson(data, "major_name"), KnowledgeBase.kb_major.get(majorId));
 
@@ -301,11 +301,11 @@ public class RegisteredDoctor_Modify extends BaseTest {
         } catch (IOException e) {
             logger.error(e);
         }
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertEquals(code, "1000000");
         //TODO
         res = RegisteredDoctor_Detail.s_Detail(mainDoctorId);
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertEquals(Generator.parseJson(data, "mobile"), phone);
 
     }
@@ -328,11 +328,11 @@ public class RegisteredDoctor_Modify extends BaseTest {
         } catch (IOException e) {
             logger.error(e);
         }
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertEquals(code, "1000000");
 
         res = RegisteredDoctor_Detail.s_Detail(mainDoctorId);
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertNotNull(Generator.parseJson(data, "doctor_card_pictures"));
         int actual_size = Integer.parseInt(Generator.parseJson(data, "doctor_card_pictures()"));
         Assert.assertEquals(actual_size, body.getJSONArray("doctor_card_pictures").size());
@@ -348,11 +348,11 @@ public class RegisteredDoctor_Modify extends BaseTest {
             logger.error(e);
         }
         logger.debug(res);
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertEquals(code, "1000000");
 
         res = RegisteredDoctor_Detail.s_Detail(mainDoctorId);
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertNotNull(Generator.parseJson(data, "doctor_card_pictures"));
         actual_size = Integer.parseInt(Generator.parseJson(data, "doctor_card_pictures()"));
         Assert.assertEquals(actual_size, body.getJSONArray("doctor_card_pictures").size());
@@ -366,11 +366,11 @@ public class RegisteredDoctor_Modify extends BaseTest {
         } catch (IOException e) {
             logger.error(e);
         }
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertEquals(code, "1000000");
 
         res = RegisteredDoctor_Detail.s_Detail(mainDoctorId);
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertNotNull(Generator.parseJson(data, "doctor_card_pictures"));
         actual_size = Integer.parseInt(Generator.parseJson(data, "doctor_card_pictures()"));
         Assert.assertEquals(actual_size, body.getJSONArray("doctor_card_pictures").size());
@@ -384,11 +384,11 @@ public class RegisteredDoctor_Modify extends BaseTest {
         } catch (IOException e) {
             logger.error(e);
         }
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertEquals(code, "1000000");
 
         res = RegisteredDoctor_Detail.s_Detail(mainDoctorId);
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertNotNull(Generator.parseJson(data, "doctor_card_pictures_deleted"));
         Assert.assertEquals(body.getJSONArray("doctor_card_pictures").size(),0);
 //        for (int i=0; i<actual_size; i++) {

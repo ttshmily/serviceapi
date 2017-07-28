@@ -73,10 +73,10 @@ public class CreateSurgeryBriefs extends BaseTest {
         } catch (IOException e) {
             logger.error(e);
         }
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertEquals(code, "1000000");
         res = GetOrderDetail_V1.s_MyInitiateOrder(token, orderId);
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertEquals(code, "1000000");
         JSONObject order = data.getJSONObject("order");
         Assert.assertEquals(order.getString("status"), "4010", "上传完成后状态不为4010");
@@ -113,7 +113,7 @@ public class CreateSurgeryBriefs extends BaseTest {
         } catch (IOException e) {
             logger.error(e);
         }
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertNotEquals(code, "1000000");
 
         SurgeryBrief sb2 = new SurgeryBrief(true);
@@ -123,7 +123,7 @@ public class CreateSurgeryBriefs extends BaseTest {
         } catch (IOException e) {
             logger.error(e);
         }
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertNotEquals(code, "1000000");
 
         SurgeryBrief sb3 = new SurgeryBrief(true);
@@ -133,7 +133,7 @@ public class CreateSurgeryBriefs extends BaseTest {
         } catch (IOException e) {
             logger.error(e);
         }
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertNotEquals(code, "1000000");
 
         SurgeryBrief sb4 = new SurgeryBrief(true);
@@ -143,7 +143,7 @@ public class CreateSurgeryBriefs extends BaseTest {
         } catch (IOException e) {
             logger.error(e);
         }
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertNotEquals(code, "1000000");
 
     }

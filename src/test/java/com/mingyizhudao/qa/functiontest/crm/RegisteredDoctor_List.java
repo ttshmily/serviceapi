@@ -6,7 +6,6 @@ import com.mingyizhudao.qa.utilities.HttpRequest;
 import com.mingyizhudao.qa.utilities.Generator;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
-import org.apache.log4j.Logger;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
@@ -51,7 +50,7 @@ public class RegisteredDoctor_List extends BaseTest{
         } catch (IOException e) {
             logger.error(e);
         }
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertEquals(code, "1000000");
         Assert.assertNotNull(Generator.parseJson(data, "list()"), "医生列表为空");
         Assert.assertNotEquals(Generator.parseJson(data, "list(0):user_id"), "", "医生ID为空");
@@ -80,7 +79,7 @@ public class RegisteredDoctor_List extends BaseTest{
         } catch (IOException e) {
             logger.error(e);
         }
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertEquals(code, "1000000");
         Integer id4 = Integer.parseInt(Generator.parseJson(data, "list(0):user_id"));
 
@@ -106,7 +105,7 @@ public class RegisteredDoctor_List extends BaseTest{
             } catch (IOException e) {
                 logger.error(e);
             }
-            checkResponse(res);
+            s_CheckResponse(res);
             Assert.assertEquals(code, "1000000");
             Assert.assertEquals(Generator.parseJson(data, "list()"), "10", "分页的默认值不为10");
             Assert.assertEquals(Generator.parseJson(data, "size"), String.valueOf(total), "列表总数量错误");
@@ -123,7 +122,7 @@ public class RegisteredDoctor_List extends BaseTest{
             } catch (IOException e) {
                 logger.error(e);
             }
-            checkResponse(res);
+            s_CheckResponse(res);
             Assert.assertEquals(code, "1000000");
             Assert.assertEquals(Generator.parseJson(data, "list()"), String.valueOf(page_size), "分页值不正确");
             // 设置页数超出总量时，返回列表为空
@@ -134,7 +133,7 @@ public class RegisteredDoctor_List extends BaseTest{
             } catch (IOException e) {
                 logger.error(e);
             }
-            checkResponse(res);
+            s_CheckResponse(res);
             Assert.assertEquals(code, "1000000");
             Assert.assertEquals(Generator.parseJson(data, "list()"), "0", "页码超出总数时，应当返回空列表");
         }
@@ -154,7 +153,7 @@ public class RegisteredDoctor_List extends BaseTest{
         } catch (IOException e) {
             logger.error(e);
         }
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertEquals(code, "1000000");
         //TODO
         JSONArray doc_list = data.getJSONArray("list");
@@ -170,7 +169,7 @@ public class RegisteredDoctor_List extends BaseTest{
         } catch (IOException e) {
             logger.error(e);
         }
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertEquals(code, "1000000");
         //TODO
         doc_list = data.getJSONArray("list");
@@ -192,7 +191,7 @@ public class RegisteredDoctor_List extends BaseTest{
         } catch (IOException e) {
             logger.error(e);
         }
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertEquals(code, "1000000");
         //TODO
         JSONArray doc_list = data.getJSONArray("list");
@@ -207,7 +206,7 @@ public class RegisteredDoctor_List extends BaseTest{
         } catch (IOException e) {
             logger.error(e);
         }
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertEquals(code, "1000000");
         //TODO
         doc_list = data.getJSONArray("list");
@@ -229,7 +228,7 @@ public class RegisteredDoctor_List extends BaseTest{
         } catch (IOException e) {
             logger.error(e);
         }
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertEquals(code, "1000000");
         //TODO
 
@@ -239,7 +238,7 @@ public class RegisteredDoctor_List extends BaseTest{
         } catch (IOException e) {
             logger.error(e);
         }
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertEquals(code, "1000000");
         //TODO
 
@@ -256,7 +255,7 @@ public class RegisteredDoctor_List extends BaseTest{
         } catch (IOException e) {
             logger.error(e);
         }
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertEquals(code, "1000000");
         //TODO
 
@@ -266,7 +265,7 @@ public class RegisteredDoctor_List extends BaseTest{
         } catch (IOException e) {
             logger.error(e);
         }
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertEquals(code, "1000000");
         //TODO
 
@@ -284,7 +283,7 @@ public class RegisteredDoctor_List extends BaseTest{
         } catch (IOException e) {
             logger.error(e);
         }
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertEquals(code, "1000000");
         //TODO
         JSONArray doc_list = data.getJSONArray("list");
@@ -303,7 +302,7 @@ public class RegisteredDoctor_List extends BaseTest{
         } catch (IOException e) {
             logger.error(e);
         }
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertEquals(code, "1000000");
         //TODO
         doc_list = data.getJSONArray("list");
@@ -320,7 +319,7 @@ public class RegisteredDoctor_List extends BaseTest{
         } catch (IOException e) {
             logger.error(e);
         }
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertEquals(code, "1000000");
         //TODO
         doc_list = data.getJSONArray("list");
@@ -345,7 +344,7 @@ public class RegisteredDoctor_List extends BaseTest{
         } catch (IOException e) {
             logger.error(e);
         }
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertEquals(code, "1000000");
         //TODO
         JSONArray doc_list = data.getJSONArray("list");
@@ -361,7 +360,7 @@ public class RegisteredDoctor_List extends BaseTest{
         } catch (IOException e) {
             logger.error(e);
         }
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertEquals(code, "1000000");
         //TODO
         doc_list = data.getJSONArray("list");
@@ -377,7 +376,7 @@ public class RegisteredDoctor_List extends BaseTest{
         } catch (IOException e) {
             logger.error(e);
         }
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertEquals(code, "1000000");
         //TODO
         doc_list = data.getJSONArray("list");
@@ -401,7 +400,7 @@ public class RegisteredDoctor_List extends BaseTest{
         } catch (IOException e) {
             logger.error(e);
         }
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertEquals(code, "1000000");
         //TODO
         JSONArray doc_list = data.getJSONArray("list");
@@ -417,7 +416,7 @@ public class RegisteredDoctor_List extends BaseTest{
         } catch (IOException e) {
             logger.error(e);
         }
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertEquals(code, "1000000");
         //TODO
         doc_list = data.getJSONArray("list");
@@ -433,7 +432,7 @@ public class RegisteredDoctor_List extends BaseTest{
         } catch (IOException e) {
             logger.error(e);
         }
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertNotEquals(code, "1000000");
         //TODO
 
@@ -453,7 +452,7 @@ public class RegisteredDoctor_List extends BaseTest{
         } catch (IOException e) {
             logger.error(e);
         }
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertEquals(code, "1000000");
         //TODO
         JSONArray doc_list = data.getJSONArray("list");
@@ -469,7 +468,7 @@ public class RegisteredDoctor_List extends BaseTest{
         } catch (IOException e) {
             logger.error(e);
         }
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertEquals(code, "1000000");
         //TODO
         doc_list = data.getJSONArray("list");
@@ -485,7 +484,7 @@ public class RegisteredDoctor_List extends BaseTest{
         } catch (IOException e) {
             logger.error(e);
         }
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertNotEquals(code, "1000000");
         //TODO
     }
@@ -502,7 +501,7 @@ public class RegisteredDoctor_List extends BaseTest{
             logger.error(e);
             Assert.fail("");
         }
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertEquals(code, "1000000");
         Assert.assertNotEquals(Generator.parseJson(data, "list()"), "0");
         //TODO
@@ -516,7 +515,7 @@ public class RegisteredDoctor_List extends BaseTest{
             logger.error(e);
             Assert.fail("");
         }
-        checkResponse(res);
+        s_CheckResponse(res);
         logger.info(HttpRequest.unicodeString(res));
         Assert.assertEquals(code, "1000000");
         Assert.assertNotEquals(Generator.parseJson(data, "list()"), "0");
@@ -531,7 +530,7 @@ public class RegisteredDoctor_List extends BaseTest{
             logger.error(e);
             Assert.fail("");
         }
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertEquals(code, "1000000");
         //TODO
 
@@ -542,7 +541,7 @@ public class RegisteredDoctor_List extends BaseTest{
             logger.error(e);
             Assert.fail("");
         }
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertEquals(code, "1000000");
         //TODO
 
@@ -553,7 +552,7 @@ public class RegisteredDoctor_List extends BaseTest{
             logger.error(e);
             Assert.fail("");
         }
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertEquals(code, "1000000");
         //TODO
 

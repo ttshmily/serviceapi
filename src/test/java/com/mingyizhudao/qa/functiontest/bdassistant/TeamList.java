@@ -28,7 +28,7 @@ public class TeamList extends BaseTest {
         } catch (IOException e) {
             logger.error(e);
         }
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertNotEquals(code, "1000000", "没有token不应该调用成功");
     }
 
@@ -42,7 +42,7 @@ public class TeamList extends BaseTest {
         } catch (IOException e) {
             logger.error(e);
         }
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertNotEquals(code, "1000000", "非主管用户能调用teamList接口");
     }
 
@@ -56,7 +56,7 @@ public class TeamList extends BaseTest {
         } catch (IOException e) {
             logger.error(e);
         }
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertEquals(code, "1000000", "主管用户不能调用teamList接口");
     }
 

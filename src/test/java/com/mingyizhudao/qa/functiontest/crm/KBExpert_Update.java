@@ -66,7 +66,7 @@ public class KBExpert_Update extends BaseTest {
         } catch (IOException e) {
             logger.error(e);
         }
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertNotEquals(code, "1000000", "没有token不能操作");
     }
 
@@ -87,11 +87,11 @@ public class KBExpert_Update extends BaseTest {
         } catch (IOException e) {
             logger.error(e);
         }
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertEquals(code, "1000000", "我想1000000");
 
         res = KBExpert_Detail.s_Detail(expertId);
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertEquals(Generator.parseJson(data, "name"), name, "姓名未更新");
     }
 
@@ -112,7 +112,7 @@ public class KBExpert_Update extends BaseTest {
         } catch (IOException e) {
             logger.error(e);
         }
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertEquals(code, "1000000", "我想1000000");
 
         HashMap<String, String> hosInfo = KBHospital_Detail.s_Detail(hospitalId);
@@ -120,7 +120,7 @@ public class KBExpert_Update extends BaseTest {
         String countryId =  hosInfo.get("county_id");
 
         res = KBExpert_Detail.s_Detail(expertId);
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertEquals(Generator.parseJson(data, "hospital_id"), hospitalId, "医生的医院ID没有更新");
         Assert.assertEquals(Generator.parseJson(data, "hospital_name"), Generator.hospitalName(hospitalId), "医生的医院名称没有更新");
         Assert.assertEquals(Generator.parseJson(data, "city_id"), cityId, "医生的城市没有更新");
@@ -145,7 +145,7 @@ public class KBExpert_Update extends BaseTest {
         } catch (IOException e) {
             logger.error(e);
         }
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertNotEquals(code, "1000000", "禁止更新city_id");
 
         res = KBExpert_Detail.s_Detail(expertId);
@@ -168,7 +168,7 @@ public class KBExpert_Update extends BaseTest {
         } catch (IOException e) {
             logger.error(e);
         }
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertNotEquals(code, "1000000", "禁止更新country_id");
 
         res = KBExpert_Detail.s_Detail(expertId);
@@ -188,13 +188,13 @@ public class KBExpert_Update extends BaseTest {
         epModified.body.put("major_id", majorId);
         try {
             res = HttpRequest.s_SendPut(host_crm+uri, epModified.body.toString(), crm_token, pathValue);
-            checkResponse(res);
+            s_CheckResponse(res);
             Assert.assertEquals(code, "1000000", "更新major_id失败");
         } catch (IOException e) {
             logger.error(e);
         }
         res = KBExpert_Detail.s_Detail(expertId);
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertEquals(Generator.parseJson(data, "major_id"), majorId, "专业ID没有更新");
         Assert.assertEquals(Generator.parseJson(data, "major"), Generator.majorName(majorId), "专业名称没有更新");
 
@@ -202,13 +202,13 @@ public class KBExpert_Update extends BaseTest {
         epModified.body.replace("major_id", "11"+majorId);
         try {
             res = HttpRequest.s_SendPut(host_crm+uri, epModified.body.toString(), crm_token, pathValue);
-            checkResponse(res);
+            s_CheckResponse(res);
             Assert.assertNotEquals(code, "1000000", "错误major_id");
         } catch (IOException e) {
             logger.error(e);
         }
         res = KBExpert_Detail.s_Detail(expertId);
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertEquals(Generator.parseJson(data, "major_id"), majorId, "专业ID没有更新");
         Assert.assertEquals(Generator.parseJson(data, "major"), Generator.majorName(majorId), "专业名称没有更新");
     }
@@ -232,11 +232,11 @@ public class KBExpert_Update extends BaseTest {
         } catch (IOException e) {
             logger.error(e);
         }
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertEquals(code, "1000000", "更新medical_title_list失败");
 
         res = KBExpert_Detail.s_Detail(expertId);
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertEquals(Generator.parseJson(data, "medical_title_list"), medical_title_list, "技术职称没有更新");
         Assert.assertEquals(Generator.parseJson(data, "academic_title_list"), academic_title_list, "学术职称没有更新");
 
@@ -249,11 +249,11 @@ public class KBExpert_Update extends BaseTest {
         } catch (IOException e) {
             logger.error(e);
         }
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertEquals(code, "1000000", "更新medical_title_list失败");
 
         res = KBExpert_Detail.s_Detail(expertId);
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertEquals(Generator.parseJson(data, "medical_title_list"), medical_title_list, "技术职称没有更新");
         Assert.assertEquals(Generator.parseJson(data, "academic_title_list"), academic_title_list, "学术职称没有更新");
     }
@@ -278,11 +278,11 @@ public class KBExpert_Update extends BaseTest {
         } catch (IOException e) {
             logger.error(e);
         }
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertEquals(code, "1000000", "更新三个说明字段失败");
 
         res = KBExpert_Detail.s_Detail(expertId);
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertEquals(Generator.parseJson(data, "specialty"), specialty, "特长没有更新");
         Assert.assertEquals(Generator.parseJson(data, "honour"), honour, "荣誉没有更新");
         Assert.assertEquals(Generator.parseJson(data, "description"), description, "简介没有更新");
@@ -319,11 +319,11 @@ public class KBExpert_Update extends BaseTest {
         } catch (IOException e) {
             logger.error(e);
         }
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertEquals(code, "1000000", "医院图片更新失败");
 
         res = KBExpert_Detail.s_Detail(doctorId);
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertEquals(Generator.parseJson(data, "avatar_url()"), "3", "医院图片更新失败");
         Assert.assertNotNull(Generator.parseJson(data, "avatar_url():url"), "医院图片更新失败");
     }
@@ -339,7 +339,7 @@ public class KBExpert_Update extends BaseTest {
         String expertId = info.get("id");
 
         DoctorProfile dp = new DoctorProfile(true);
-        String doctorId = CreateRegisteredDoctor(dp).get("id");
+        String doctorId = s_CreateRegisteredDoctor(dp).get("id");
         if ( doctorId == null) {
             Assert.fail("创建医生失败，认证用例无法执行");
         }
@@ -376,11 +376,11 @@ public class KBExpert_Update extends BaseTest {
         } catch (IOException e) {
             logger.error(e);
         }
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertEquals(code, "1000000", "更新已关联的医库医生信息失败");
 
         res = KBExpert_Detail.s_Detail(expertId);
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertEquals(Generator.parseJson(data, "medical_title_list"), medical_title_list, "技术职称没有更新");
         Assert.assertEquals(Generator.parseJson(data, "academic_title_list"), academic_title_list, "学术职称没有更新");
         Assert.assertEquals(Generator.parseJson(data, "name"), name, "姓名没有更新");
@@ -398,7 +398,7 @@ public class KBExpert_Update extends BaseTest {
         Assert.assertNotNull(Generator.parseJson(data, "avatar_url():url"), "医院图片更新失败");
 
         res = RegisteredDoctor_Detail.s_Detail(doctorId);
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertEquals(Generator.parseJson(data, "medical_title_list"), medical_title_list, "技术职称没有更新");
         Assert.assertEquals(Generator.parseJson(data, "academic_title_list"), academic_title_list, "学术职称没有更新");
         Assert.assertEquals(Generator.parseJson(data, "name"), name, "姓名没有更新");
@@ -431,11 +431,11 @@ public class KBExpert_Update extends BaseTest {
         } catch (IOException e) {
             logger.error(e);
         }
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertEquals(code, "1000000", "更新主刀专家状态字段失败");
 
         res = KBExpert_Detail.s_Detail(expertId);
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertEquals(Generator.parseJson(data, "signed_status"), "NOT_SIGNED");
 
         epModified.body.put("signed_status", "1");
@@ -444,11 +444,11 @@ public class KBExpert_Update extends BaseTest {
         } catch (IOException e) {
             logger.error(e);
         }
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertEquals(code, "1000000", "更新主刀专家状态字段失败");
 
         res = KBExpert_Detail.s_Detail(expertId);
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertEquals(Generator.parseJson(data, "signed_status"), "SIGNED");
     }
 
@@ -462,7 +462,7 @@ public class KBExpert_Update extends BaseTest {
         String expertId = info.get("id");
 
         DoctorProfile dp = new DoctorProfile(true);
-        String doctorId = CreateRegisteredDoctor(dp).get("id");
+        String doctorId = s_CreateRegisteredDoctor(dp).get("id");
         if (doctorId == null)
             Assert.fail("创建医生失败，认证用例无法执行");
 
@@ -477,11 +477,11 @@ public class KBExpert_Update extends BaseTest {
         } catch (IOException e) {
             logger.error(e);
         }
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertEquals(code, "1000000", "更新主刀专家状态字段失败");
 
         res = RegisteredDoctor_Detail.s_Detail(doctorId);
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertEquals(Generator.parseJson(data, "signed_status"), "NOT_SIGNED");
 
         epModified.body.put("signed_status", "1");
@@ -490,11 +490,11 @@ public class KBExpert_Update extends BaseTest {
         } catch (IOException e) {
             logger.error(e);
         }
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertEquals(code, "1000000", "更新主刀专家状态字段失败");
 
         res = RegisteredDoctor_Detail.s_Detail(doctorId);
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertEquals(Generator.parseJson(data, "signed_status"), "SIGNED");
     }
 

@@ -85,11 +85,11 @@ public class KBExpert_Diseases extends BaseTest {
         } catch (IOException e) {
             logger.error(e);
         }
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertEquals(code, "1000000", "关联疾病失败");
 
         res = KBExpert_Detail.s_Detail(expertId);
-        checkResponse(res);
+        s_CheckResponse(res);
         JSONArray disease_list = data.getJSONArray("disease_list");
         for (int i=0; i<disease_list.size(); i++) {
             JSONObject disease = disease_list.getJSONObject(i);
@@ -139,7 +139,7 @@ public class KBExpert_Diseases extends BaseTest {
         } catch (IOException e) {
             logger.error(e);
         }
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertEquals(code, "1000000", "关联疾病失败");
 
 //增加3个疾病
@@ -157,13 +157,13 @@ public class KBExpert_Diseases extends BaseTest {
         } catch (IOException e) {
             logger.error(e);
         }
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertEquals(code, "1000000", "关联疾病失败");
 
 
         List<String> outputString = new ArrayList<>();
         res = KBExpert_Detail.s_Detail(expertId);
-        checkResponse(res);
+        s_CheckResponse(res);
         JSONArray disease_list = data.getJSONArray("disease_list");
         for (int i=0; i<disease_list.size(); i++) {
             JSONObject disease = disease_list.getJSONObject(i);
@@ -213,7 +213,7 @@ public class KBExpert_Diseases extends BaseTest {
         } catch (IOException e) {
             logger.error(e);
         }
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertEquals(code, "1000000", "关联疾病失败");
 
 //减少3个疾病
@@ -230,13 +230,13 @@ public class KBExpert_Diseases extends BaseTest {
         } catch (IOException e) {
             logger.error(e);
         }
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertEquals(code, "1000000", "关联疾病失败");
 
 
         List<String> outputString = new ArrayList<>();
         res = KBExpert_Detail.s_Detail(expertId);
-        checkResponse(res);
+        s_CheckResponse(res);
         JSONArray disease_list = data.getJSONArray("disease_list");
         for (int i=0; i<disease_list.size(); i++) {
             JSONObject disease = disease_list.getJSONObject(i);
@@ -292,11 +292,11 @@ public class KBExpert_Diseases extends BaseTest {
         } catch (IOException e) {
             logger.error(e);
         }
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertEquals(code, "1000000", "关联疾病失败");
 
         res = KBExpert_Detail.s_Detail(expertId);
-        checkResponse(res);
+        s_CheckResponse(res);
         JSONArray disease_list = data.getJSONArray("disease_list");
         for (int i=0; i<disease_list.size(); i++) {
             JSONObject disease = disease_list.getJSONObject(i);
@@ -352,11 +352,11 @@ public class KBExpert_Diseases extends BaseTest {
         } catch (IOException e) {
             logger.error(e);
         }
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertNotEquals(code, "1000000");
 
 //        res = KBExpert_Detail.s_Detail(expertId);
-//        checkResponse(res);
+//        s_CheckResponse(res);
 //        JSONArray disease_list = data.getJSONArray("disease_list");
 //        for (int i=0; i<disease_list.size(); i++) {
 //            JSONObject disease = disease_list.getJSONObject(i);
@@ -407,7 +407,7 @@ public class KBExpert_Diseases extends BaseTest {
         } catch (IOException e) {
             logger.error(e);
         }
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertEquals(code, "1000000");
 
         diseaseList.replace("disease_ids","[]");
@@ -416,11 +416,11 @@ public class KBExpert_Diseases extends BaseTest {
         } catch (IOException e) {
             logger.error(e);
         }
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertEquals(code, "1000000");
 
         res = KBExpert_Detail.s_Detail(expertId);
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertEquals(data.getJSONArray("disease_list").size(), 0);
     }
 }

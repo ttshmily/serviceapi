@@ -4,7 +4,6 @@ import com.mingyizhudao.qa.common.BaseTest;
 import com.mingyizhudao.qa.common.TestLogger;
 import com.mingyizhudao.qa.utilities.HttpRequest;
 import com.mingyizhudao.qa.utilities.Generator;
-import org.apache.log4j.Logger;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
@@ -32,7 +31,7 @@ public class ProfessionList extends BaseTest {
         } catch (IOException e) {
             logger.error(e);
         }
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertNotNull(Generator.parseJson(data, "diseasecategory()"));
         Assert.assertNotNull(Generator.parseJson(data, "diseasecategory():root_id"));
         Assert.assertNotNull(Generator.parseJson(data, "diseasecategory():root"));
@@ -50,7 +49,7 @@ public class ProfessionList extends BaseTest {
         } catch (IOException e) {
             logger.error(e);
         }
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertNotNull(Generator.parseJson(data, "diseasecategory()"));
         Assert.assertNotNull(Generator.parseJson(data, "diseasecategory():root_id"));
         Assert.assertNotNull(Generator.parseJson(data, "diseasecategory():root"));

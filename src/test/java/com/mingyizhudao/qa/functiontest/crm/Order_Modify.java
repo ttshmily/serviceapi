@@ -44,11 +44,11 @@ public class Order_Modify extends BaseTest {
         } catch (IOException e) {
             logger.error(e);
         }
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertEquals(code, "1000000");
         Assert.assertNotNull(data, "list");
         res = Order_Detail.s_Detail(order_number);
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertEquals(Generator.parseJson(data, "patient_name"), "修改的姓名"+name);
     }
 
@@ -67,11 +67,11 @@ public class Order_Modify extends BaseTest {
         } catch (IOException e) {
             logger.error(e);
         }
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertEquals(code, "1000000");
         Assert.assertNotNull(data, "list");
         res = Order_Detail.s_Detail(order_number);
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertEquals(Generator.parseJson(data, "patient_age"), "44");
     }
 
@@ -91,11 +91,11 @@ public class Order_Modify extends BaseTest {
         } catch (IOException e) {
             logger.error(e);
         }
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertEquals(code, "1000000");
         Assert.assertNotNull(data, "list");
         res = Order_Detail.s_Detail(order_number);
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertEquals(Generator.parseJson(data, "major_disease_id"), diseaseId);
         Assert.assertEquals(Generator.parseJson(data, "major_disease_name"), Generator.diseaseName(diseaseId));
     }
@@ -116,11 +116,11 @@ public class Order_Modify extends BaseTest {
         } catch (IOException e) {
             logger.error(e);
         }
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertEquals(code, "1000000");
         Assert.assertNotNull(data, "list");
         res = Order_Detail.s_Detail(order_number);
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertEquals(Generator.parseJson(data, "minor_disease_id"), diseaseId);
         Assert.assertEquals(Generator.parseJson(data, "minor_disease_name"), Generator.diseaseName(diseaseId));
     }
@@ -140,11 +140,11 @@ public class Order_Modify extends BaseTest {
         } catch (IOException e) {
             logger.error(e);
         }
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertEquals(code, "1000000");
         Assert.assertNotNull(data, "list");
         res = Order_Detail.s_Detail(order_number);
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertEquals(Generator.parseJson(data, "patient_gender"), "2");
     }
 
@@ -164,11 +164,11 @@ public class Order_Modify extends BaseTest {
         } catch (IOException e) {
             logger.error(e);
         }
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertEquals(code, "1000000");
         Assert.assertNotNull(data, "list");
         res = Order_Detail.s_Detail(order_number);
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertEquals(Generator.parseJson(data, "patient_phone"), "13799990123");
     }
 
@@ -178,7 +178,7 @@ public class Order_Modify extends BaseTest {
         String order_number = CreateOrder.s_CreateOrder(mainToken); // create an order
         logger.debug(Order_ReceiveTask.s_ReceiveTask(order_number));
         logger.debug(Order_RecommendDoctor.s_RecommendDoctor(order_number, "666"));
-        if (!Order_ThreewayCall.s_Call(order_number, "success").equals("3000")) {
+        if (!Order_ThreewayCall_V2.s_CallV2(order_number, "success").equals("3000")) {
             Assert.fail("未进行到支付状态，无法继续执行该用例");
         }
 
@@ -191,10 +191,10 @@ public class Order_Modify extends BaseTest {
         } catch (IOException e) {
             logger.error(e);
         }
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertNotEquals(code, "1000000");
         res = Order_Detail.s_Detail(order_number);
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertNotEquals(Generator.parseJson(data, "patient_mobile"), "13799990123");
     }
 
@@ -212,10 +212,10 @@ public class Order_Modify extends BaseTest {
         } catch (IOException e) {
             logger.error(e);
         }
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertNotEquals(code, "1000000");
         res = Order_Detail.s_Detail(order_number);
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertNotEquals(Generator.parseJson(data, "patient_mobile"), "13799990123");
     }
 
@@ -237,10 +237,10 @@ public class Order_Modify extends BaseTest {
         } catch (IOException e) {
             logger.error(e);
         }
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertEquals(code, "1000000");
         res = Order_Detail.s_Detail(order_number);
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertEquals(Generator.parseJson(data, "medical_record_pictures(0):key"), "2017/05/04/1265834e-97d8-44a0-95e7-047c7facaee8/IMG_20170429_102737.jpg");
         Assert.assertEquals(Generator.parseJson(data, "medical_record_pictures(0):type"), "1");
         Assert.assertNotNull(Generator.parseJson(data, "medical_record_pictures(0):thumbnailPicture"), "缺少缩略图");
@@ -253,10 +253,10 @@ public class Order_Modify extends BaseTest {
         } catch (IOException e) {
             logger.error(e);
         }
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertEquals(code, "1000000");
         res = Order_Detail.s_Detail(order_number);
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertEquals(Generator.parseJson(data, "medical_record_pictures()"), "0");
     }
 }

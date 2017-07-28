@@ -7,7 +7,6 @@ import com.mingyizhudao.qa.dataprofile.crm.HospitalProfile;
 import com.mingyizhudao.qa.utilities.HttpRequest;
 import com.mingyizhudao.qa.utilities.Generator;
 import net.sf.json.JSONObject;
-import org.apache.log4j.Logger;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
@@ -55,7 +54,7 @@ public class KBHospital_Create extends BaseTest {
         HospitalProfile hp = new HospitalProfile(true);
         try {
             res = HttpRequest.s_SendPost(host_crm + uri, hp.body.toString(), crm_token);
-            checkResponse(res);
+            s_CheckResponse(res);
             Assert.assertEquals(code, "1000000");
             Assert.assertNotNull(Generator.parseJson(data, "id"), "医库ID不能少");
             Assert.assertEquals(Generator.parseJson(data, "short_name"), hp.body.getString("short_name"));
@@ -82,7 +81,7 @@ public class KBHospital_Create extends BaseTest {
 //        hp.body.put("county_id", UT.randomCountryId());
         try {
             res = HttpRequest.s_SendPost(host_crm + uri, hp.body.toString(), crm_token);
-            checkResponse(res);
+            s_CheckResponse(res);
             Assert.assertEquals(code, "1000000");
             Assert.assertNotNull(Generator.parseJson(data, "id"), "医库ID不能少");
         } catch (IOException e) {
@@ -107,27 +106,27 @@ public class KBHospital_Create extends BaseTest {
         try {
             hp.body.remove("name", name); // name
             res = HttpRequest.s_SendPost(host_crm + uri, hp.body.toString(), crm_token);
-            checkResponse(res);
+            s_CheckResponse(res);
             Assert.assertNotEquals(code, "1000000");
             hp.body.put("name", name); // name
             hp.body.remove("hospital_class_list", hospital_class_list);
             res = HttpRequest.s_SendPost(host_crm + uri, hp.body.toString(), crm_token);
-            checkResponse(res);
+            s_CheckResponse(res);
             Assert.assertNotEquals(code, "1000000");
             hp.body.put("hospital_class_list", hospital_class_list);
             hp.body.remove("type_list", type_list);
             res = HttpRequest.s_SendPost(host_crm + uri, hp.body.toString(), crm_token);
-            checkResponse(res);
+            s_CheckResponse(res);
             Assert.assertNotEquals(code, "1000000");
             hp.body.put("type_list", type_list);
             hp.body.remove("city_id", city_id);
             res = HttpRequest.s_SendPost(host_crm + uri, hp.body.toString(), crm_token);
-            checkResponse(res);
+            s_CheckResponse(res);
             Assert.assertNotEquals(code, "1000000");
             hp.body.put("city_id", city_id);
             hp.body.remove("county_id", county_id);
             res = HttpRequest.s_SendPost(host_crm + uri, hp.body.toString(), crm_token);
-            checkResponse(res);
+            s_CheckResponse(res);
             Assert.assertEquals(code, "1000000");
         } catch (Exception e) {
             logger.error(e);

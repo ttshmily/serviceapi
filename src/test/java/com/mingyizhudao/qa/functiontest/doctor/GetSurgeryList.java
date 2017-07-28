@@ -4,7 +4,6 @@ import com.mingyizhudao.qa.common.BaseTest;
 import com.mingyizhudao.qa.common.TestLogger;
 import com.mingyizhudao.qa.utilities.HttpRequest;
 import com.mingyizhudao.qa.utilities.Generator;
-import org.apache.log4j.Logger;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
@@ -36,7 +35,7 @@ public class GetSurgeryList extends BaseTest {
         } catch (IOException e) {
             logger.error(e);
         }
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertNotNull(Generator.parseJson(data, "surgeryCategories()"));
         Assert.assertNotEquals(Generator.parseJson(data, "surgeryCategories():id"), "");
         Assert.assertEquals(Generator.parseJson(data, "surgeryCategories():surgery_category_id"), "6");
@@ -54,7 +53,7 @@ public class GetSurgeryList extends BaseTest {
         } catch (IOException e) {
             logger.error(e);
         }
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertEquals(code, "1000000");
         Assert.assertNotNull(Generator.parseJson(data, "surgeryCategories()"));
     }
@@ -71,7 +70,7 @@ public class GetSurgeryList extends BaseTest {
         } catch (IOException e) {
             logger.error(e);
         }
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertEquals(code, "2210621");
 
         logger.info("case2: Id = abc12");
@@ -81,7 +80,7 @@ public class GetSurgeryList extends BaseTest {
         } catch (IOException e) {
             logger.error(e);
         }
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertEquals(code, "2210621");
 
         logger.info("case3: Id = -1");
@@ -91,7 +90,7 @@ public class GetSurgeryList extends BaseTest {
         } catch (IOException e) {
             logger.error(e);
         }
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertEquals(code, "2210621");
     }
 }

@@ -5,6 +5,7 @@ import com.mingyizhudao.qa.common.TestLogger;
 import com.mingyizhudao.qa.functiontest.crm.Order_ReceiveTask;
 import com.mingyizhudao.qa.functiontest.crm.Order_RecommendDoctor;
 import com.mingyizhudao.qa.functiontest.crm.Order_ThreewayCall;
+import com.mingyizhudao.qa.functiontest.crm.Order_ThreewayCall_V2;
 import com.mingyizhudao.qa.utilities.HttpRequest;
 import net.sf.json.JSONObject;
 import org.testng.Assert;
@@ -73,7 +74,7 @@ public class PaymentResult extends BaseTest {
         s_Result(orderId,mainToken);
         Assert.assertEquals(s_Result(orderId, mainToken),"2020");
 
-        Order_ThreewayCall.s_Call(orderId, "failed");
+        Order_ThreewayCall_V2.s_CallV2(orderId, "failed");
         s_Result(orderId,mainToken);
         Assert.assertEquals(s_Result(orderId, mainToken),"2000");
 

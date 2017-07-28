@@ -94,10 +94,10 @@ public class Order_ThreewayCall_V2 extends BaseTest {
         } catch (IOException e) {
             logger.error(e);
         }
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertEquals(code, "1000000");
         res = Order_Detail.s_Detail(orderId);
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertEquals(Generator.parseJson(data, "status"), "3000");
         Assert.assertEquals(Generator.parseJson(data, "surgeon_id"), rcmdDoc);
         Assert.assertEquals(Generator.parseJson(data, "surgeon_name"), Generator.expertName(rcmdDoc));
@@ -143,10 +143,10 @@ public class Order_ThreewayCall_V2 extends BaseTest {
         } catch (IOException e) {
             logger.error(e);
         }
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertEquals(code, "1000000");
         res = Order_Detail.s_Detail(orderId);
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertEquals(Generator.parseJson(data, "status"), "2020");
         Assert.assertEquals(Generator.parseJson(data, "surgeon_id"), rcmdDoc);
         Assert.assertEquals(Generator.parseJson(data, "surgeon_name"), Generator.expertName(rcmdDoc));

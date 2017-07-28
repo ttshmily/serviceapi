@@ -71,7 +71,7 @@ public class DistrictManagement extends BaseTest {
         } catch (IOException e) {
             logger.error(e);
         }
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertEquals(code, "1000000", "");
         for (String city:city_list
              ) {

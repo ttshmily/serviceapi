@@ -30,7 +30,7 @@ public class VerifiyDoctor extends BaseTest {
         JSONObject body = new JSONObject();
 
         DoctorProfile dp = new DoctorProfile(true);
-        String doctorId = CreateRegisteredDoctor(dp).get("id");
+        String doctorId = s_CreateRegisteredDoctor(dp).get("id");
         if (doctorId == null)
             Assert.fail("创建医生失败，认证用例无法执行");
         res = RegisteredDoctor_Detail.s_Detail(doctorId);
@@ -44,10 +44,10 @@ public class VerifiyDoctor extends BaseTest {
         } catch (IOException e) {
             logger.error(e);
         }
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertEquals(code, "1000000");
         res = RegisteredDoctor_Detail.s_Detail(doctorId);
-        checkResponse(res);
+        s_CheckResponse(res);
         is_verified = Generator.parseJson(data, "is_verified");
         String is_signed = Generator.parseJson(data, "signed_status");
         Assert.assertEquals(is_verified, "1");
@@ -64,7 +64,7 @@ public class VerifiyDoctor extends BaseTest {
         JSONObject body = new JSONObject();
 
         DoctorProfile dp = new DoctorProfile(true);
-        String doctorId = CreateRegisteredDoctor(dp).get("id");
+        String doctorId = s_CreateRegisteredDoctor(dp).get("id");
         if (doctorId == null)
             Assert.fail("创建医生失败，认证用例无法执行");
         res = RegisteredDoctor_Detail.s_Detail(doctorId);
@@ -78,10 +78,10 @@ public class VerifiyDoctor extends BaseTest {
         } catch (IOException e) {
             logger.error(e);
         }
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertEquals(code, "1000000");
         res = RegisteredDoctor_Detail.s_Detail(doctorId);
-        checkResponse(res);
+        s_CheckResponse(res);
         is_verified = Generator.parseJson(data, "is_verified");
         String is_signed = Generator.parseJson(data, "signed_status");
         Assert.assertEquals(is_verified, "1");

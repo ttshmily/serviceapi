@@ -4,7 +4,6 @@ import com.mingyizhudao.qa.common.BaseTest;
 import com.mingyizhudao.qa.common.TestLogger;
 import com.mingyizhudao.qa.utilities.HttpRequest;
 import com.mingyizhudao.qa.utilities.Generator;
-import org.apache.log4j.Logger;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
@@ -33,7 +32,7 @@ public class HospitalSearch extends BaseTest {
         } catch (IOException e) {
             logger.error(e);
         }
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertNotNull(Generator.parseJson(data, "hospital()"));
     }
 
@@ -45,7 +44,7 @@ public class HospitalSearch extends BaseTest {
         } catch (IOException e) {
             logger.error(e);
         }
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertNotNull(Generator.parseJson(data, "hospital()"));
     }
 
@@ -59,7 +58,7 @@ public class HospitalSearch extends BaseTest {
         } catch (IOException e) {
             logger.error(e);
         }
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertNotNull(Generator.parseJson(data, "hospital()"));
     }
 
@@ -73,7 +72,7 @@ public class HospitalSearch extends BaseTest {
         } catch (IOException e) {
             logger.error(e);
         }
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertNotNull(Generator.parseJson(data, "hospital()"));
     }
 
@@ -87,7 +86,7 @@ public class HospitalSearch extends BaseTest {
         } catch (IOException e) {
             logger.error(e);
         }
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertNotNull(Generator.parseJson(data, "hospital()"));
     }
 
@@ -101,7 +100,7 @@ public class HospitalSearch extends BaseTest {
         } catch (IOException e) {
             logger.error(e);
         }
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertNotEquals(Generator.parseJson(data, "hospital()"), "0");
     }
 
@@ -115,7 +114,7 @@ public class HospitalSearch extends BaseTest {
         } catch (IOException e) {
             logger.error(e);
         }
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertNotNull(Generator.parseJson(data, "hospital()"), "hospital字段缺失");
         Assert.assertNotNull(Generator.parseJson(data, "hospital():name"), "hospital的name字段缺失");
         Assert.assertNotNull(Generator.parseJson(data, "hospital():id"), "hospital的id字段缺失");
@@ -136,7 +135,7 @@ public class HospitalSearch extends BaseTest {
         } catch (IOException e) {
             logger.error(e);
         }
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertNotNull(Generator.parseJson(data, "hospital()"), "hospital字段缺失");
         Assert.assertNotNull(Generator.parseJson(data, "hospital():name"), "hospital的name字段缺失");
         Assert.assertNotNull(Generator.parseJson(data, "hospital():id"), "hospital的id字段缺失");

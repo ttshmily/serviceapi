@@ -64,7 +64,7 @@ public class Order_RecommendDoctor extends BaseTest {
         pathValue.put("orderNumber", order_number);
         JSONObject body = new JSONObject();
         DoctorProfile dp = new DoctorProfile(true);
-        HashMap<String, String> doc = CreateSyncedDoctor(dp);
+        HashMap<String, String> doc = s_CreateSyncedDoctor(dp);
         String recommendedId = doc.get("expert_id");
         body.put("surgeon_id",recommendedId);
         body.put("content","自动化推荐的医生");
@@ -73,10 +73,10 @@ public class Order_RecommendDoctor extends BaseTest {
         } catch (IOException e) {
             logger.error(e);
         }
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertEquals(code, "1000000");
         res = Order_Detail.s_Detail(order_number);
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertEquals(Generator.parseJson(data, "status"), "2020");
         Assert.assertEquals(Generator.parseJson(data, "surgeon_id"), recommendedId);
         Assert.assertEquals(Generator.parseJson(data, "surgeon_name"), dp.body.getJSONObject("doctor").getString("name"));
@@ -113,10 +113,10 @@ public class Order_RecommendDoctor extends BaseTest {
         } catch (IOException e) {
             logger.error(e);
         }
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertEquals(code, "1000000");
         res = Order_Detail.s_Detail(order_number);
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertEquals(Generator.parseJson(data, "status"), "2020");
         Assert.assertEquals(Generator.parseJson(data, "surgeon_id"), recommendedId);
         Assert.assertEquals(Generator.parseJson(data, "surgeon_name"), KnowledgeBase.kb_doctor.get(recommendedId));
@@ -130,10 +130,10 @@ public class Order_RecommendDoctor extends BaseTest {
         } catch (IOException e) {
             logger.error(e);
         }
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertEquals(code, "1000000");
         res = Order_Detail.s_Detail(order_number);
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertEquals(Generator.parseJson(data, "status"), "2020");
         Assert.assertEquals(Generator.parseJson(data, "surgeon_id"), recommendedId);
         Assert.assertEquals(Generator.parseJson(data, "surgeon_name"), KnowledgeBase.kb_doctor.get(recommendedId));
@@ -144,13 +144,13 @@ public class Order_RecommendDoctor extends BaseTest {
         body.replace("content","自动化重新推荐的不存在的医生");
         try {
             res = HttpRequest.s_SendPut(host_crm+uri, body.toString(), crm_token, pathValue);
-            checkResponse(res);
+            s_CheckResponse(res);
         } catch (IOException e) {
             logger.error(e);
         }
         Assert.assertNotEquals(code, "1000000");
         res = Order_Detail.s_Detail(order_number);
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertEquals(Generator.parseJson(data, "status"), "2020");
         Assert.assertEquals(Generator.parseJson(data, "surgeon_id"), recommendedId);
         Assert.assertEquals(Generator.parseJson(data, "surgeon_name"), KnowledgeBase.kb_doctor.get(recommendedId));
@@ -172,10 +172,10 @@ public class Order_RecommendDoctor extends BaseTest {
         } catch (IOException e) {
             logger.error(e);
         }
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertNotEquals(code, "1000000", "不应该推荐和发起医生相同的专家医生");
         res = Order_Detail.s_Detail(order_number);
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertEquals(Generator.parseJson(data, "status"), "2000");
         Assert.assertNull(Generator.parseJson(data, "surgeon_id"));
         Assert.assertNull(Generator.parseJson(data, "surgeon_name"));
@@ -199,10 +199,10 @@ public class Order_RecommendDoctor extends BaseTest {
         } catch (IOException e) {
             logger.error(e);
         }
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertNotEquals(code, "1000000");
         res = Order_Detail.s_Detail(order_number);
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertEquals(Generator.parseJson(data, "status"), "2000");
         Assert.assertNull(Generator.parseJson(data, "surgeon_id"), "不应该出现上级医生ID");
         Assert.assertNull(Generator.parseJson(data, "surgeon_name"), "不应该出现上级医生姓名");
@@ -227,10 +227,10 @@ public class Order_RecommendDoctor extends BaseTest {
         } catch (IOException e) {
             logger.error(e);
         }
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertNotEquals(code, "1000000");
         res = Order_Detail.s_Detail(order_number);
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertEquals(Generator.parseJson(data, "status"), "2000");
         Assert.assertNull(Generator.parseJson(data, "surgeon_id"));
         Assert.assertNull(Generator.parseJson(data, "surgeon_name"));
@@ -254,15 +254,15 @@ public class Order_RecommendDoctor extends BaseTest {
         } catch (IOException e) {
             logger.error(e);
         }
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertEquals(code, "1000000");
         res = Order_Detail.s_Detail(order_number);
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertEquals(Generator.parseJson(data, "status"), "2020");
         Assert.assertEquals(Generator.parseJson(data, "surgeon_id"), recommendedId);
         Assert.assertEquals(Generator.parseJson(data, "surgeon_name"), KnowledgeBase.kb_doctor.get(recommendedId));
 
-        if (!Order_ThreewayCall.s_Call(order_number,"success").equals("3000")) {
+        if (!Order_ThreewayCall_V2.s_CallV2(order_number,"success").equals("3000")) {
             Assert.fail("三方确认失败，无法继续执行");
         }
 
@@ -272,13 +272,13 @@ public class Order_RecommendDoctor extends BaseTest {
         body.replace("content","自动化重新推荐的医生");
         try {
             res = HttpRequest.s_SendPut(host_crm+uri, body.toString(), crm_token, pathValue);
-            checkResponse(res);
+            s_CheckResponse(res);
         } catch (IOException e) {
             logger.error(e);
         }
         Assert.assertNotEquals(code, "1000000");
         res = Order_Detail.s_Detail(order_number);
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertEquals(Generator.parseJson(data, "status"), "3000");
     }
 }

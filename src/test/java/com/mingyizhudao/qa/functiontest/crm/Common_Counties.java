@@ -5,7 +5,6 @@ import com.mingyizhudao.qa.common.TestLogger;
 import com.mingyizhudao.qa.utilities.HttpRequest;
 import com.mingyizhudao.qa.utilities.Generator;
 import net.sf.json.JSONArray;
-import org.apache.log4j.Logger;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
@@ -41,7 +40,7 @@ public class Common_Counties extends BaseTest {
             } catch (IOException e) {
                 logger.error(e);
             }
-            checkResponse(res);
+            s_CheckResponse(res);
             Assert.assertEquals(code, "1000000");
             //TODO
             JSONArray countyList = data.getJSONArray("list");
@@ -63,7 +62,7 @@ public class Common_Counties extends BaseTest {
         } catch (IOException e) {
             logger.error(e);
         }
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertNotEquals(code, "1000000");
 
     }

@@ -32,7 +32,7 @@ public class TeamListV2 extends BaseTest {
         } catch (IOException e) {
             logger.error(e);
         }
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertNotEquals(code, "1000000", "没有token不应该调用成功");
     }
     @Test
@@ -44,7 +44,7 @@ public class TeamListV2 extends BaseTest {
         } catch (IOException e) {
             logger.error(e);
         }
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertNotEquals(code, "1000000", "错误token不应该调用成功");
     }
     @Test
@@ -56,7 +56,7 @@ public class TeamListV2 extends BaseTest {
         } catch (IOException e) {
             logger.error(e);
         }
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertNotEquals(code, "1000000", "非主管token不应该调用成功");
     }
     @Test
@@ -70,7 +70,7 @@ public class TeamListV2 extends BaseTest {
         } catch (IOException e) {
             logger.error(e);
         }
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertEquals(code, "1000000");
         JSONArray bd_list = data.getJSONArray("list");
         int orderCount = 0;
@@ -90,7 +90,7 @@ public class TeamListV2 extends BaseTest {
         } catch (IOException e) {
             logger.error(e);
         }
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertEquals(code, "1000000");
         bd_list = data.getJSONArray("list");
         for(int i=0; i<bd_list.size(); i++) {
@@ -111,7 +111,7 @@ public class TeamListV2 extends BaseTest {
         } catch (IOException e) {
             logger.error(e);
         }
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertEquals(code, "1000000");
         JSONArray bd_list = data.getJSONArray("list");
         int orderCount = 0;
@@ -131,7 +131,7 @@ public class TeamListV2 extends BaseTest {
         } catch (IOException e) {
             logger.error(e);
         }
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertEquals(code, "1000000");
         bd_list = data.getJSONArray("list");
         for(int i=0; i<bd_list.size(); i++) {
@@ -152,7 +152,7 @@ public class TeamListV2 extends BaseTest {
         } catch (IOException e) {
             logger.error(e);
         }
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertEquals(code, "1000000");
         JSONArray bd_list = data.getJSONArray("list");
         int orderCount = 0;
@@ -172,7 +172,7 @@ public class TeamListV2 extends BaseTest {
         } catch (IOException e) {
             logger.error(e);
         }
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertEquals(code, "1000000");
         bd_list = data.getJSONArray("list");
         for(int i=0; i<bd_list.size(); i++) {
@@ -191,7 +191,7 @@ public class TeamListV2 extends BaseTest {
         } catch (IOException e) {
             logger.error(e);
         }
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertEquals(code, "1000000");
         Assert.assertNotNull(Generator.parseJson(data, "list()"), "地推人员列表字段不能缺失");
         Assert.assertNotNull(Generator.parseJson(data, "page"), "页码字段缺失");
@@ -210,7 +210,7 @@ public class TeamListV2 extends BaseTest {
         } catch (IOException e) {
             logger.error(e);
         }
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertEquals(code, "1000000");
         JSONArray bd_list = data.getJSONArray("list");
         for(int i=0; i<bd_list.size(); i++) {

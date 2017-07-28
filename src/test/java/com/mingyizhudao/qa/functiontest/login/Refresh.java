@@ -7,7 +7,6 @@ import com.mingyizhudao.qa.functiontest.doctor.GetDoctorProfile_V1;
 import com.mingyizhudao.qa.utilities.HttpRequest;
 import com.mingyizhudao.qa.utilities.Generator;
 import net.sf.json.JSONException;
-import org.apache.log4j.Logger;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
@@ -45,7 +44,7 @@ public class Refresh extends BaseTest{
         RefreshProfile body = new RefreshProfile(true);
         try {
             res = HttpRequest.s_SendPost(host_login + uri,body.body.toString(), oldToken);
-            checkResponse(res);
+            s_CheckResponse(res);
         } catch (IOException e) {
 
         } catch (JSONException e) {
@@ -60,14 +59,14 @@ public class Refresh extends BaseTest{
 
         // s_Check old token still effective
         String r = GetDoctorProfile_V1.s_MyProfile(oldToken);
-        checkResponse(r);
+        s_CheckResponse(r);
         Assert.assertEquals(code, "1000000", "old Token expired");
         String oldProfile = Generator.parseJson(data, "doctor");
         logger.debug(oldProfile);
 
         // s_Check new token taking effect
         String s = GetDoctorProfile_V1.s_MyProfile(token);
-        checkResponse(s);
+        s_CheckResponse(s);
         Assert.assertEquals(code, "1000000");
         String newProfile = Generator.parseJson(data, "doctor");
         logger.debug(newProfile);
@@ -88,7 +87,7 @@ public class Refresh extends BaseTest{
         body.body.replace("token", mainToken);
         try {
             res = HttpRequest.s_SendPost(host_login + uri,body.body.toString(), oldToken);
-            checkResponse(res);
+            s_CheckResponse(res);
         } catch (IOException e) {
             Assert.fail();
         } catch (JSONException e) {
@@ -97,7 +96,7 @@ public class Refresh extends BaseTest{
 
         // s_Check token in body still effective
         String r = GetDoctorProfile_V1.s_MyProfile(mainToken);
-        checkResponse(r);
+        s_CheckResponse(r);
         Assert.assertEquals(code, "1000000");
     }
 }

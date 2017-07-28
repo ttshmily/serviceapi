@@ -67,7 +67,7 @@ public class GetOrderList_V1 extends BaseTest {
         String res = "";
 
         DoctorProfile dp = new DoctorProfile(true);
-        HashMap<String, String> result = CreateSyncedDoctor(dp);
+        HashMap<String, String> result = s_CreateSyncedDoctor(dp);
         String tmpToken = result.get("token");
 
         HashMap<String, String> query = new HashMap<>();
@@ -85,7 +85,7 @@ public class GetOrderList_V1 extends BaseTest {
         } catch (IOException e) {
             logger.error(e);
         }
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertEquals(Generator.parseJson(data, "order()"), "1");
         Assert.assertEquals(Generator.parseJson(data, "order(0):order_number"), orderId1);
 
@@ -100,7 +100,7 @@ public class GetOrderList_V1 extends BaseTest {
         } catch (IOException e) {
             logger.error(e);
         }
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertEquals(Generator.parseJson(data, "order()"), "2");
         Assert.assertEquals(Generator.parseJson(data, "order(0):order_number"), orderId2);
         Assert.assertEquals(Generator.parseJson(data, "order(1):order_number"), orderId1);
@@ -116,7 +116,7 @@ public class GetOrderList_V1 extends BaseTest {
         } catch (IOException e) {
             logger.error(e);
         }
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertEquals(Generator.parseJson(data, "order()"), "3");
         Assert.assertEquals(Generator.parseJson(data, "order(0):order_number"), orderId3);
         Assert.assertEquals(Generator.parseJson(data, "order(1):order_number"), orderId2);
@@ -133,7 +133,7 @@ public class GetOrderList_V1 extends BaseTest {
         } catch (IOException e) {
             logger.error(e);
         }
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertEquals(Generator.parseJson(data, "order()"), "4");
         Assert.assertEquals(Generator.parseJson(data, "order(0):order_number"), orderId4);
         Assert.assertEquals(Generator.parseJson(data, "order(1):order_number"), orderId3);
@@ -151,7 +151,7 @@ public class GetOrderList_V1 extends BaseTest {
         } catch (IOException e) {
             logger.error(e);
         }
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertEquals(Generator.parseJson(data, "order()"), "4");
         Assert.assertEquals(Generator.parseJson(data, "order(0):order_number"), orderId3);
         Assert.assertEquals(Generator.parseJson(data, "order(1):order_number"), orderId2);
@@ -169,7 +169,7 @@ public class GetOrderList_V1 extends BaseTest {
         } catch (IOException e) {
             logger.error(e);
         }
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertEquals(Generator.parseJson(data, "order()"), "4");
         Assert.assertEquals(Generator.parseJson(data, "order(0):order_number"), orderId3);
         Assert.assertEquals(Generator.parseJson(data, "order(1):order_number"), orderId2);
@@ -188,7 +188,7 @@ public class GetOrderList_V1 extends BaseTest {
         } catch (IOException e) {
             logger.error(e);
         }
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertEquals(Generator.parseJson(data, "order()"), "4");
         Assert.assertEquals(Generator.parseJson(data, "order(0):order_number"), orderId3);
         Assert.assertEquals(Generator.parseJson(data, "order(1):order_number"), orderId2);
@@ -201,7 +201,7 @@ public class GetOrderList_V1 extends BaseTest {
 
         String res = "";
         DoctorProfile dp = new DoctorProfile(true);
-        HashMap<String, String> result = CreateSyncedDoctor(dp);
+        HashMap<String, String> result = s_CreateSyncedDoctor(dp);
         String tmpToken = result.get("token");
         String tmpExpertId = result.get("expert_id");
 
@@ -223,7 +223,7 @@ public class GetOrderList_V1 extends BaseTest {
         } catch (IOException e) {
             logger.error(e);
         }
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertEquals(Generator.parseJson(data, "order()"), "0");
         logger.info("测试医生收到"+ Generator.parseJson(data, "order()")+"条订单");
 
@@ -273,7 +273,7 @@ public class GetOrderList_V1 extends BaseTest {
         } catch (IOException e) {
             logger.error(e);
         }
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertEquals(Generator.parseJson(data, "order()"), "4");
         Assert.assertEquals(Generator.parseJson(data, "order(0):order_number"), orderId4);
         Assert.assertEquals(Generator.parseJson(data, "order(1):order_number"), orderId3);
@@ -292,7 +292,7 @@ public class GetOrderList_V1 extends BaseTest {
         } catch (IOException e) {
             logger.error(e);
         }
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertEquals(Generator.parseJson(data, "order()"), "4");
         Assert.assertEquals(Generator.parseJson(data, "order(0):order_number"), orderId4);
         Assert.assertEquals(Generator.parseJson(data, "order(1):order_number"), orderId2);
@@ -310,7 +310,7 @@ public class GetOrderList_V1 extends BaseTest {
         } catch (IOException e) {
             logger.error(e);
         }
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertEquals(Generator.parseJson(data, "order()"), "4");
         Assert.assertEquals(Generator.parseJson(data, "order(0):order_number"), orderId2);
         Assert.assertEquals(Generator.parseJson(data, "order(1):order_number"), orderId1);
@@ -333,7 +333,7 @@ public class GetOrderList_V1 extends BaseTest {
         } catch (IOException e) {
             logger.error(e);
         }
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertEquals(Generator.parseJson(data, "order()"), "4");
         Assert.assertEquals(Generator.parseJson(data, "order(0):order_number"), orderId1);
         Assert.assertEquals(Generator.parseJson(data, "order(1):order_number"), orderId4); //取消
@@ -346,7 +346,7 @@ public class GetOrderList_V1 extends BaseTest {
         String res = "";
 
         DoctorProfile dp = new DoctorProfile(true);
-        HashMap<String, String> result = CreateSyncedDoctor(dp);
+        HashMap<String, String> result = s_CreateSyncedDoctor(dp);
         String tmpToken = result.get("token");
         String tmpExpertId = result.get("expert_id");
 
@@ -370,7 +370,7 @@ public class GetOrderList_V1 extends BaseTest {
         } catch (IOException e) {
             logger.error(e);
         }
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertEquals(Generator.parseJson(data, "order()"), "0");
         logger.info("测试医生收到"+ Generator.parseJson(data, "order()")+"条订单");
 
@@ -420,7 +420,7 @@ public class GetOrderList_V1 extends BaseTest {
         } catch (IOException e) {
             logger.error(e);
         }
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertEquals(Generator.parseJson(data, "order()"), "4");
         Assert.assertEquals(Generator.parseJson(data, "order(0):order_number"), orderId4);
         Assert.assertEquals(Generator.parseJson(data, "order(1):order_number"), orderId3);
@@ -439,7 +439,7 @@ public class GetOrderList_V1 extends BaseTest {
         } catch (IOException e) {
             logger.error(e);
         }
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertEquals(Generator.parseJson(data, "order()"), "4");
         Assert.assertEquals(Generator.parseJson(data, "order(0):order_number"), orderId4);
         Assert.assertEquals(Generator.parseJson(data, "order(1):order_number"), orderId3);
@@ -457,7 +457,7 @@ public class GetOrderList_V1 extends BaseTest {
         } catch (IOException e) {
             logger.error(e);
         }
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertEquals(Generator.parseJson(data, "order()"), "4");
         Assert.assertEquals(Generator.parseJson(data, "order(0):order_number"), orderId4);
         Assert.assertEquals(Generator.parseJson(data, "order(1):order_number"), orderId3);
@@ -470,7 +470,7 @@ public class GetOrderList_V1 extends BaseTest {
         String res = "";
 
         DoctorProfile dp = new DoctorProfile(true);
-        HashMap<String, String> result = CreateSyncedDoctor(dp);
+        HashMap<String, String> result = s_CreateSyncedDoctor(dp);
         String tmpToken = result.get("token");
         String tmpExpertId = result.get("expert_id");
 
@@ -494,7 +494,7 @@ public class GetOrderList_V1 extends BaseTest {
         } catch (IOException e) {
             logger.error(e);
         }
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertEquals(Generator.parseJson(data, "order()"), "0");
         logger.info("测试医生收到"+ Generator.parseJson(data, "order()")+"条订单");
 
@@ -559,7 +559,7 @@ public class GetOrderList_V1 extends BaseTest {
         } catch (IOException e) {
             logger.error(e);
         }
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertEquals(Generator.parseJson(data, "order()"), "2");
         Assert.assertEquals(Generator.parseJson(data, "order(0):order_number"), orderId4);
         Assert.assertEquals(Generator.parseJson(data, "order(1):order_number"), orderId3);
@@ -571,7 +571,7 @@ public class GetOrderList_V1 extends BaseTest {
         } catch (IOException e) {
             logger.error(e);
         }
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertEquals(Generator.parseJson(data, "order()"), "2");
         Assert.assertEquals(Generator.parseJson(data, "order(0):order_number"), orderId2);
         Assert.assertEquals(Generator.parseJson(data, "order(1):order_number"), orderId1);
@@ -583,7 +583,7 @@ public class GetOrderList_V1 extends BaseTest {
         } catch (IOException e) {
             logger.error(e);
         }
-        checkResponse(res);
+        s_CheckResponse(res);
 //        Assert.assertEquals(UT.parseJson(data, "order()"), "2");
 //        Assert.assertEquals(UT.parseJson(data, "order(0):order_number"), orderId4);
 //        Assert.assertEquals(UT.parseJson(data, "order(1):order_number"), orderId3);
@@ -594,7 +594,7 @@ public class GetOrderList_V1 extends BaseTest {
         String res = "";
 
         DoctorProfile dp = new DoctorProfile(true);
-        HashMap<String, String> result = CreateSyncedDoctor(dp);
+        HashMap<String, String> result = s_CreateSyncedDoctor(dp);
         String tmpToken = result.get("token");
         String tmpExpertId = result.get("expert_id");
 
@@ -616,7 +616,7 @@ public class GetOrderList_V1 extends BaseTest {
         } catch (IOException e) {
             logger.error(e);
         }
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertEquals(Generator.parseJson(data, "order()"), "0");
         logger.info("测试医生收到"+ Generator.parseJson(data, "order()")+"条订单");
 
@@ -653,7 +653,7 @@ public class GetOrderList_V1 extends BaseTest {
         } catch (IOException e) {
             logger.error(e);
         }
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertEquals(Generator.parseJson(data, "order()"), "1");
         Assert.assertEquals(Generator.parseJson(data, "order(0):order_number"), orderId1);
 
@@ -669,7 +669,7 @@ public class GetOrderList_V1 extends BaseTest {
         } catch (IOException e) {
             logger.error(e);
         }
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertEquals(Generator.parseJson(data, "order()"), "0", "订单order1应当不在已取消状态");
 
         logger.info("筛选已取消状态（2020,3000,4000,4010）");
@@ -679,7 +679,7 @@ public class GetOrderList_V1 extends BaseTest {
         } catch (IOException e) {
             logger.error(e);
         }
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertEquals(Generator.parseJson(data, "order()"), "2","订单order1应当恢复到处理中");
 
     }

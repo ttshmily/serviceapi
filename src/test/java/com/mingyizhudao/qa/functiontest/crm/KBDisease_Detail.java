@@ -55,7 +55,7 @@ public class KBDisease_Detail extends BaseTest {
         } catch (IOException e) {
             logger.error(e);
         }
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertEquals(code, "1000000");
         Assert.assertEquals(Generator.parseJson(data, "name"), dp.body.getString("name"));
         Assert.assertEquals(Generator.parseJson(data, "description"), dp.body.getString("description"));
@@ -79,7 +79,7 @@ public class KBDisease_Detail extends BaseTest {
         } catch (IOException e) {
             logger.error(e);
         }
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertNotEquals(code, "1000000");
     }
 
@@ -98,7 +98,7 @@ public class KBDisease_Detail extends BaseTest {
         } catch (IOException e) {
             logger.error(e);
         }
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertEquals(code, "1000000");
         Assert.assertEquals(Generator.parseJson(data, "related_to_doctors"), "0");
         List<String> ids = new ArrayList<>();
@@ -110,7 +110,7 @@ public class KBDisease_Detail extends BaseTest {
         } catch (IOException e) {
             logger.error(e);
         }
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertEquals(code, "1000000");
         Assert.assertEquals(Generator.parseJson(data, "related_to_doctors"), "1");
 
@@ -120,7 +120,7 @@ public class KBDisease_Detail extends BaseTest {
         } catch (IOException e) {
             logger.error(e);
         }
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertEquals(code, "1000000");
         Assert.assertEquals(Generator.parseJson(data, "related_to_doctors"), "2");
 
@@ -130,7 +130,7 @@ public class KBDisease_Detail extends BaseTest {
         } catch (IOException e) {
             logger.error(e);
         }
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertEquals(code, "1000000");
         Assert.assertEquals(Generator.parseJson(data, "related_to_doctors"), "3");
 

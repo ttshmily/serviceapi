@@ -51,7 +51,7 @@ public class Order_Detail extends BaseTest {
         } catch (IOException e) {
             logger.error(e);
         }
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertNotEquals(Generator.parseJson(data,"patient_name"), "", "患者姓名字段缺失");
         Assert.assertNotEquals(Generator.parseJson(data,"patient_gender"), "", "患者性别字段缺失");
         Assert.assertNotEquals(Generator.parseJson(data,"patient_phone"), "", "患者手机号字段缺失");
@@ -90,7 +90,7 @@ public class Order_Detail extends BaseTest {
         } catch (IOException e) {
             logger.error(e);
         }
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertEquals(code, "1000000");
         Assert.assertNull(Generator.parseJson(data, "orderNumber"), "订单ID错误，不应该有数据返回");
     }
@@ -106,7 +106,7 @@ public class Order_Detail extends BaseTest {
             logger.error(e);
             return;
         }
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertEquals(code, "2210430");
 
     }

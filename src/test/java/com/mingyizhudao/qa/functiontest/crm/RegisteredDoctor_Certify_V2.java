@@ -67,7 +67,7 @@ public class RegisteredDoctor_Certify_V2 extends BaseTest {
         JSONObject body = new JSONObject();
 
         DoctorProfile dp = new DoctorProfile(true);
-        String doctorId = CreateRegisteredDoctor(dp).get("id");
+        String doctorId = s_CreateRegisteredDoctor(dp).get("id");
         if ( doctorId == null)
             Assert.fail("创建医生失败，认证用例无法执行");
         res = RegisteredDoctor_Detail.s_Detail(doctorId);
@@ -83,7 +83,7 @@ public class RegisteredDoctor_Certify_V2 extends BaseTest {
             logger.error(e);
         }
         logger.info(HttpRequest.unicodeString(res));
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertEquals(code, "1000000");
         res = RegisteredDoctor_Detail.s_Detail(doctorId);
         is_verified = Generator.parseJson(JSONObject.fromObject(res), "data:is_verified");
@@ -99,7 +99,7 @@ public class RegisteredDoctor_Certify_V2 extends BaseTest {
         JSONObject body = new JSONObject();
 
         DoctorProfile dp = new DoctorProfile(true);
-        String doctorId = CreateRegisteredDoctor(dp).get("id");
+        String doctorId = s_CreateRegisteredDoctor(dp).get("id");
         if (doctorId == null)
             Assert.fail("创建医生失败，认证用例无法执行");
         res = RegisteredDoctor_Detail.s_Detail(doctorId);
@@ -114,7 +114,7 @@ public class RegisteredDoctor_Certify_V2 extends BaseTest {
         } catch (IOException e) {
             logger.error(e);
         }
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertEquals(code, "1000000");
         res = RegisteredDoctor_Detail.s_Detail(doctorId);
         is_verified = Generator.parseJson(JSONObject.fromObject(res), "data:is_verified");
@@ -129,7 +129,7 @@ public class RegisteredDoctor_Certify_V2 extends BaseTest {
         JSONObject body = new JSONObject();
 
         DoctorProfile dp = new DoctorProfile(true);
-        String doctorId = CreateRegisteredDoctor(dp).get("id");
+        String doctorId = s_CreateRegisteredDoctor(dp).get("id");
         if (doctorId == null)
             Assert.fail("创建医生失败，认证用例无法执行");
         res = RegisteredDoctor_Detail.s_Detail(doctorId);
@@ -145,7 +145,7 @@ public class RegisteredDoctor_Certify_V2 extends BaseTest {
             logger.error(e);
         }
         logger.info(HttpRequest.unicodeString(res));
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertEquals(code, "1000000");
         res = RegisteredDoctor_Detail.s_Detail(doctorId);
         is_verified = Generator.parseJson(JSONObject.fromObject(res), "data:is_verified");
@@ -160,7 +160,7 @@ public class RegisteredDoctor_Certify_V2 extends BaseTest {
         JSONObject body = new JSONObject();
 
         DoctorProfile dp = new DoctorProfile(true);
-        String doctorId = CreateRegisteredDoctor(dp).get("id");
+        String doctorId = s_CreateRegisteredDoctor(dp).get("id");
         if ( doctorId == null)
             Assert.fail("创建医生失败，认证用例无法执行");
 
@@ -172,7 +172,7 @@ public class RegisteredDoctor_Certify_V2 extends BaseTest {
         } catch (IOException e) {
             logger.error(e);
         }
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertNotEquals(code, "1000000");
 
     }
@@ -185,7 +185,7 @@ public class RegisteredDoctor_Certify_V2 extends BaseTest {
         JSONObject body = new JSONObject();
 
         DoctorProfile dp = new DoctorProfile(true);
-        String doctorId = CreateRegisteredDoctor(dp).get("id");
+        String doctorId = s_CreateRegisteredDoctor(dp).get("id");
         if ( doctorId == null)
             Assert.fail("创建医生失败，认证用例无法执行");
 
@@ -197,7 +197,7 @@ public class RegisteredDoctor_Certify_V2 extends BaseTest {
         } catch (IOException e) {
             logger.error(e);
         }
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertEquals(code, "1000000");
 
         body.replace("status", "1");
@@ -207,7 +207,7 @@ public class RegisteredDoctor_Certify_V2 extends BaseTest {
         } catch (IOException e) {
             logger.error(e);
         }
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertNotEquals(code, "1000000", "原先认证失败的医生不应该直接通过认证");
     }
 
@@ -218,7 +218,7 @@ public class RegisteredDoctor_Certify_V2 extends BaseTest {
         HashMap<String, String> pathValue = new HashMap<>();
         JSONObject body = new JSONObject();
 
-        String doctorId = CreateRegistered().get("id");
+        String doctorId = s_CreateRegistered().get("id");
         pathValue.put("id", doctorId);
         if ( doctorId == null)
             Assert.fail("创建用户失败，认证用例无法执行");
@@ -231,7 +231,7 @@ public class RegisteredDoctor_Certify_V2 extends BaseTest {
             logger.error(e);
         }
         logger.info(HttpRequest.unicodeString(res));
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertNotEquals(code, "1000000", "信息不全的医生不应该直接通过认证");
     }
 }

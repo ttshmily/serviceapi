@@ -82,14 +82,14 @@ public class CreateOrder extends BaseTest {
         } catch (IOException e) {
             logger.error(e);
         }
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertEquals(code, "1000000", "创建订单失败");
         String orderId = parseJson(data, "order_number");
         Assert.assertNotEquals(orderId, "", "返回的订单ID格式有误");
 
         logger.info("查看刚刚创建的订单详情");
         res = GetOrderDetail_V1.s_MyInitiateOrder(mainToken, orderId);
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertEquals(code, "1000000");
         //TODO
         Assert.assertEquals(parseJson(data,"order:patient_name"), body.body.getJSONObject("order").getString("patient_name"), "患者姓名存储不正确");
@@ -135,7 +135,7 @@ public class CreateOrder extends BaseTest {
         } catch (IOException e) {
             logger.error(e);
         }
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertNotEquals(code, "1000000");
         Assert.assertEquals(code, "2210304");
     }
@@ -152,7 +152,7 @@ public class CreateOrder extends BaseTest {
         } catch (IOException e) {
             logger.error(e);
         }
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertNotEquals(code, "1000000");
 
         body.body.getJSONObject("order").replace("patient_name", "abcdefghijklmnopqrstuvwxyz一二三四五六七八九十甲乙丙地子卯寅丑");
@@ -161,7 +161,7 @@ public class CreateOrder extends BaseTest {
         } catch (IOException e) {
             logger.error(e);
         }
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertEquals(code, "1000000");
 
         body.body.getJSONObject("order").remove("patient_name");
@@ -170,7 +170,7 @@ public class CreateOrder extends BaseTest {
         } catch (IOException e) {
             logger.error(e);
         }
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertNotEquals(code, "1000000");
 
     }
@@ -187,7 +187,7 @@ public class CreateOrder extends BaseTest {
         } catch (IOException e) {
             logger.error(e);
         }
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertNotEquals(code, "1000000");
 
         body.body.getJSONObject("order").replace("patient_gender", "3");
@@ -196,7 +196,7 @@ public class CreateOrder extends BaseTest {
         } catch (IOException e) {
             logger.error(e);
         }
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertNotEquals(code, "1000000");
 
         body.body.getJSONObject("order").remove("patient_gender");
@@ -205,7 +205,7 @@ public class CreateOrder extends BaseTest {
         } catch (IOException e) {
             logger.error(e);
         }
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertNotEquals(code, "1000000", "性别为3不应该能创建病历");
 
     }
@@ -222,7 +222,7 @@ public class CreateOrder extends BaseTest {
         } catch (IOException e) {
             logger.error(e);
         }
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertNotEquals(code, "1000000");
 
         body.body.getJSONObject("order").remove("patient_age");
@@ -231,7 +231,7 @@ public class CreateOrder extends BaseTest {
         } catch (IOException e) {
             logger.error(e);
         }
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertNotEquals(code, "1000000");
 
     }
@@ -248,7 +248,7 @@ public class CreateOrder extends BaseTest {
         } catch (IOException e) {
             logger.error(e);
         }
-        checkResponse(res);
+        s_CheckResponse(res);
 //        Assert.assertNotEquals(code, "1000000");
         Assert.assertEquals(code, "1000000"); // PD要求可以创建。。。
 
@@ -258,7 +258,7 @@ public class CreateOrder extends BaseTest {
         } catch (IOException e) {
             logger.error(e);
         }
-        checkResponse(res);
+        s_CheckResponse(res);
 //        Assert.assertNotEquals(code, "1000000");
         Assert.assertEquals(code, "1000000"); // PD要求可以创建。。。
     }
@@ -275,7 +275,7 @@ public class CreateOrder extends BaseTest {
         } catch (IOException e) {
             logger.error(e);
         }
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertNotEquals(code, "1000000");
 
         order.body.getJSONObject("order").remove("major_disease_id");
@@ -284,7 +284,7 @@ public class CreateOrder extends BaseTest {
         } catch (IOException e) {
             logger.error(e);
         }
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertNotEquals(code, "1000000");
 
     }
@@ -301,7 +301,7 @@ public class CreateOrder extends BaseTest {
         } catch (IOException e) {
             logger.error(e);
         }
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertEquals(code, "1000000");
 
         order.body.getJSONObject("order").remove("minor_disease_id");
@@ -310,7 +310,7 @@ public class CreateOrder extends BaseTest {
         } catch (IOException e) {
             logger.error(e);
         }
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertEquals(code, "1000000");
     }
 
@@ -321,7 +321,7 @@ public class CreateOrder extends BaseTest {
 
         DoctorProfile dp = new DoctorProfile(true);
         dp.body.getJSONObject("doctor").remove("inviter_no");
-        HashMap<String, String> doc = CreateRegisteredDoctor(dp);
+        HashMap<String, String> doc = s_CreateRegisteredDoctor(dp);
         if (doc == null) {
             Assert.fail("创建医生失败");
         }
@@ -332,7 +332,7 @@ public class CreateOrder extends BaseTest {
         } catch (IOException e) {
             logger.error(e);
         }
-        checkResponse(res);
+        s_CheckResponse(res);
 //        Assert.assertNotEquals(code, "1000000");
         Assert.assertEquals(code, "1000000"); // PD要求认证中的医生也可以创建了。。。
 
@@ -344,7 +344,7 @@ public class CreateOrder extends BaseTest {
         String res = "";
 
         DoctorProfile dp = new DoctorProfile(true);
-        HashMap<String, String> doc = CreateRegisteredDoctor(dp);
+        HashMap<String, String> doc = s_CreateRegisteredDoctor(dp);
         if (doc == null) {
             Assert.fail("创建医生失败");
         }
@@ -355,7 +355,7 @@ public class CreateOrder extends BaseTest {
         } catch (IOException e) {
             logger.error(e);
         }
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertEquals(code, "1000000");
     }
 
@@ -372,14 +372,14 @@ public class CreateOrder extends BaseTest {
         } catch (IOException e) {
             logger.error(e);
         }
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertEquals(code, "1000000", "创建订单失败");
         String orderId = parseJson(data, "order_number");
         Assert.assertNotEquals(orderId, "", "返回的订单ID格式有误");
 
         logger.info("查看刚刚创建的订单详情");
         res = GetOrderDetail_V1.s_MyInitiateOrder(mainToken, orderId);
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertEquals(code, "1000000");
         Assert.assertEquals(parseJson(data,"order:expected_surgery_hospital_id"), mainDoctorHospitalId);
         Assert.assertEquals(parseJson(data,"order:expected_surgery_hospital_name"), mainDoctorHospitalName);
@@ -391,14 +391,14 @@ public class CreateOrder extends BaseTest {
         } catch (IOException e) {
             logger.error(e);
         }
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertEquals(code, "1000000", "创建订单失败");
         orderId = parseJson(data, "order_number");
         Assert.assertNotEquals(orderId, "", "返回的订单ID格式有误");
 
         logger.info("查看刚刚创建的订单详情");
         res = GetOrderDetail_V1.s_MyInitiateOrder(mainToken, orderId);
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertEquals(code, "1000000");
         Assert.assertEquals(parseJson(data,"order:expected_surgery_hospital_id"), "0");
         Assert.assertEquals(parseJson(data,"order:expected_surgery_hospital_name"), "待回访");
@@ -410,14 +410,14 @@ public class CreateOrder extends BaseTest {
         } catch (IOException e) {
             logger.error(e);
         }
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertEquals(code, "1000000", "创建订单失败");
         orderId = parseJson(data, "order_number");
         Assert.assertNotEquals(orderId, "", "返回的订单ID格式有误");
 
         logger.info("查看刚刚创建的订单详情");
         res = GetOrderDetail_V1.s_MyInitiateOrder(mainToken, orderId);
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertEquals(code, "1000000");
         Assert.assertEquals(parseJson(data,"order:expected_surgery_hospital_id"), mainDoctorHospitalId);
         Assert.assertEquals(parseJson(data,"order:expected_surgery_hospital_name"), mainDoctorHospitalName);
@@ -434,7 +434,7 @@ public class CreateOrder extends BaseTest {
         } catch (IOException e) {
             logger.error(e);
         }
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertEquals(code, "1000000");
     }
 

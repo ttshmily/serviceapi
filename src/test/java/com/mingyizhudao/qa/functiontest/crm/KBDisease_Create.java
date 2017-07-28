@@ -7,7 +7,6 @@ import com.mingyizhudao.qa.utilities.HttpRequest;
 import com.mingyizhudao.qa.utilities.Generator;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
-import org.apache.log4j.Logger;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
@@ -66,7 +65,7 @@ public class KBDisease_Create extends BaseTest {
         } catch (IOException e) {
             logger.error(e);
         }
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertEquals(code, "1000000");
         Assert.assertNotNull(Generator.parseJson(data, "id"), "医库ID不能少");
         Assert.assertEquals(Generator.parseJson(data, "name"), dp.body.getString("name"));
@@ -88,7 +87,7 @@ public class KBDisease_Create extends BaseTest {
         } catch (IOException e) {
             logger.error(e);
         }
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertEquals(code, "1000000");
         Assert.assertNotNull(Generator.parseJson(data, "id"), "医库ID不能少");
         Assert.assertEquals(Generator.parseJson(data, "name"), dp.body.getString("name"));
@@ -110,7 +109,7 @@ public class KBDisease_Create extends BaseTest {
         } catch (IOException e) {
             logger.error(e);
         }
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertNotEquals(code, "1000000");
 
         dp.body.put("name", "疾病"+ Generator.randomString(2));
@@ -120,7 +119,7 @@ public class KBDisease_Create extends BaseTest {
         } catch (IOException e) {
             logger.error(e);
         }
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertNotEquals(code, "1000000");
 
         dp.body.put("user_visible", 1);
@@ -130,7 +129,7 @@ public class KBDisease_Create extends BaseTest {
         } catch (IOException e) {
             logger.error(e);
         }
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertNotEquals(code, "1000000");
 
         dp.body.put("is_common", 1);
@@ -140,7 +139,7 @@ public class KBDisease_Create extends BaseTest {
         } catch (IOException e) {
             logger.error(e);
         }
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertNotEquals(code, "1000000");
     }
 

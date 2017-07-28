@@ -48,7 +48,7 @@ public class PersonalInfoV2 extends BaseTest {
         } catch (IOException e) {
             logger.error(e);
         }
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertNotEquals(code, "1000000", "没有token不应该调用成功");
 
         //错误的无效token
@@ -57,7 +57,7 @@ public class PersonalInfoV2 extends BaseTest {
         } catch (IOException e) {
             logger.error(e);
         }
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertNotEquals(code, "1000000", "没有token不应该调用成功");
     }
 
@@ -70,7 +70,7 @@ public class PersonalInfoV2 extends BaseTest {
         } catch (IOException e) {
             logger.error(e);
         }
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertEquals(code, "1000000", "有token应该调用成功");
         Assert.assertNotNull(Generator.parseJson(data, "doctorCounts"), "doctorCounts字段缺失");
         Assert.assertNotNull(Generator.parseJson(data, "orderCounts"), "orderCounts字段缺失");
@@ -87,7 +87,7 @@ public class PersonalInfoV2 extends BaseTest {
         } catch (IOException e) {
             logger.error(e);
         }
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertEquals(code, "1000000", "有token应该调用成功");
         Assert.assertNotNull(Generator.parseJson(data, "doctorCounts"), "doctorCounts字段缺失");
         Assert.assertNotNull(Generator.parseJson(data, "orderCounts"), "orderCounts字段缺失");
@@ -104,7 +104,7 @@ public class PersonalInfoV2 extends BaseTest {
         } catch (IOException e) {
             logger.error(e);
         }
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertEquals(code, "1000000", "有token应该调用成功");
         Assert.assertNotNull(Generator.parseJson(data, "user"), "user字段缺失");
         Assert.assertNotNull(Generator.parseJson(data, "staff_id"), "staff_id字段缺失");
@@ -122,7 +122,7 @@ public class PersonalInfoV2 extends BaseTest {
         } catch (IOException e) {
             logger.error(e);
         }
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertEquals(code, "1000000", "有token应该调用成功");
         Assert.assertNotNull(Generator.parseJson(data, "city()"), "分配城市字段");
 

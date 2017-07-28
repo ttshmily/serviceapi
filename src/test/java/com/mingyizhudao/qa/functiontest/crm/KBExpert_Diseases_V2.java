@@ -32,7 +32,7 @@ public class KBExpert_Diseases_V2 extends BaseTest {
     public void test_01_关联专业和疾病_已同步的医生() {
         String res = "";
         DoctorProfile dp = new DoctorProfile(true);
-        HashMap<String, String> info = CreateSyncedDoctor(dp);
+        HashMap<String, String> info = s_CreateSyncedDoctor(dp);
         if (info == null) {
             Assert.fail("创建医库医生失败，退出用例执行");
         }
@@ -46,13 +46,13 @@ public class KBExpert_Diseases_V2 extends BaseTest {
         } catch (IOException e) {
             logger.error(e);
         }
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertEquals(code, "1000000");
         res = KBExpert_Detail.s_Detail(expertId);
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertEquals(Generator.parseJson(data, "specialty_list()"), "5");
         res = RegisteredDoctor_Detail.s_Detail(doctorId);
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertEquals(Generator.parseJson(data, "exp_list()"), "5");
     }
 
@@ -92,10 +92,10 @@ public class KBExpert_Diseases_V2 extends BaseTest {
         } catch (IOException e) {
             logger.error(e);
         }
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertEquals(code, "1000000");
         res = KBExpert_Detail.s_Detail(expertId);
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertEquals(Generator.parseJson(data, "specialty_list()"), "5");
     }
 

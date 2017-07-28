@@ -7,7 +7,6 @@ import com.mingyizhudao.qa.dataprofile.crm.ExpertProfile;
 import com.mingyizhudao.qa.utilities.HttpRequest;
 import com.mingyizhudao.qa.utilities.Generator;
 import net.sf.json.JSONObject;
-import org.apache.log4j.Logger;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
@@ -55,7 +54,7 @@ public class KBExpert_Create extends BaseTest {
 
         try {
             res = HttpRequest.s_SendPost(host_crm + uri, ep.body.toString(), crm_token);
-            checkResponse(res);
+            s_CheckResponse(res);
             Assert.assertEquals(code, "1000000");
             Assert.assertNotNull(Generator.parseJson(data, "id"), "医库ID不能少");
             Assert.assertEquals(Generator.parseJson(data, "gender"), ep.body.getString("gender"));
@@ -91,7 +90,7 @@ public class KBExpert_Create extends BaseTest {
         ep.body.put("major_id", major_id);
         try {
             res = HttpRequest.s_SendPost(host_crm + uri, ep.body.toString(), crm_token);
-            checkResponse(res);
+            s_CheckResponse(res);
             Assert.assertEquals(code, "1000000");
             Assert.assertNotNull(Generator.parseJson(data, "id"), "医库ID不能少");
             Assert.assertEquals(Generator.parseJson(data, "name"), name);
@@ -122,28 +121,28 @@ public class KBExpert_Create extends BaseTest {
         try {
             ep.body.put("name", name); // name
             res = HttpRequest.s_SendPost(host_crm + uri, ep.body.toString(), crm_token);
-            checkResponse(res);
+            s_CheckResponse(res);
             Assert.assertNotEquals(code, "1000000");
             ep.body.put("hospital_id", hospital_id); // name + hospital
             res = HttpRequest.s_SendPost(host_crm + uri, ep.body.toString(), crm_token);
-            checkResponse(res);
+            s_CheckResponse(res);
             Assert.assertNotEquals(code, "1000000");
             ep.body.remove("hospital_id");
             ep.body.put("major_id", major_id); // name + major
             res = HttpRequest.s_SendPost(host_crm + uri, ep.body.toString(), crm_token);
-            checkResponse(res);
+            s_CheckResponse(res);
             Assert.assertNotEquals(code, "1000000");
             ep.body.remove("name"); // major
             res = HttpRequest.s_SendPost(host_crm + uri, ep.body.toString(), crm_token);
-            checkResponse(res);
+            s_CheckResponse(res);
             Assert.assertNotEquals(code, "1000000");
             ep.body.put("hospital_id", hospital_id); // major + hospital
             res = HttpRequest.s_SendPost(host_crm + uri, ep.body.toString(), crm_token);
-            checkResponse(res);
+            s_CheckResponse(res);
             Assert.assertNotEquals(code, "1000000");
             ep.body.remove("major_id"); // hospital
             res = HttpRequest.s_SendPost(host_crm + uri, ep.body.toString(), crm_token);
-            checkResponse(res);
+            s_CheckResponse(res);
             Assert.assertNotEquals(code, "1000000");
 
         } catch (IOException e) {
@@ -168,7 +167,7 @@ public class KBExpert_Create extends BaseTest {
 
         try {
             res = HttpRequest.s_SendPost(host_crm + uri, ep.body.toString(), crm_token);
-            checkResponse(res);
+            s_CheckResponse(res);
             Assert.assertEquals(code, "1000000");
             Assert.assertNotNull(Generator.parseJson(data, "id"), "医库ID不能少");
             Assert.assertEquals(Generator.parseJson(data, "name"), name);

@@ -30,7 +30,7 @@ public class SearchHospital extends BaseTest {
         } catch (IOException e) {
             logger.error(e);
         }
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertNotNull(Generator.parseJson(data, "list(0)"), "hospital字段缺失");
         Assert.assertNotNull(Generator.parseJson(data, "list(0):name"), "hospital的name字段缺失");
         Assert.assertNotNull(Generator.parseJson(data, "list(0):id"), "hospital的id字段缺失");
@@ -44,7 +44,7 @@ public class SearchHospital extends BaseTest {
         } catch (IOException e) {
             logger.error(e);
         }
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertNotNull(Generator.parseJson(data, "list()"));
     }
 
@@ -58,7 +58,7 @@ public class SearchHospital extends BaseTest {
         } catch (IOException e) {
             logger.error(e);
         }
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertNotNull(Generator.parseJson(data, "list()"));
     }
 
@@ -72,7 +72,7 @@ public class SearchHospital extends BaseTest {
         } catch (IOException e) {
             logger.error(e);
         }
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertNotNull(Generator.parseJson(data, "list()"));
     }
 
@@ -86,7 +86,7 @@ public class SearchHospital extends BaseTest {
         } catch (IOException e) {
             logger.error(e);
         }
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertNotNull(Generator.parseJson(data, "list()"));
     }
 
@@ -100,7 +100,7 @@ public class SearchHospital extends BaseTest {
         } catch (IOException e) {
             logger.error(e);
         }
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertNotEquals(Generator.parseJson(data, "list()"), "0");
     }
 

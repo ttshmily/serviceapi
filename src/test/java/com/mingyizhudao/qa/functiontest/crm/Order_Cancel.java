@@ -56,11 +56,11 @@ public class Order_Cancel extends BaseTest {
         } catch (IOException e) {
             logger.error(e);
         }
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertEquals(code, "1000000", "取消订单接口失败");
         Assert.assertEquals(Generator.parseJson(data, "status"), "4030");
         res = GetOrderDetail_V1.s_MyInitiateOrder(token, orderId);
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertEquals(Generator.parseJson(data, "order:header_info"), "责任方：下级医生原因");
     }
 }

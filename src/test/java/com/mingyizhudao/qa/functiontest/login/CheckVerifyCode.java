@@ -6,7 +6,6 @@ import com.mingyizhudao.qa.dataprofile.login.CheckMobileProfile;
 import com.mingyizhudao.qa.utilities.HttpRequest;
 import com.mingyizhudao.qa.utilities.Generator;
 import net.sf.json.JSONObject;
-import org.apache.log4j.Logger;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
@@ -87,7 +86,7 @@ public class CheckVerifyCode extends BaseTest{
         body.body.replace("mobile", mobile);
         try {
             res = HttpRequest.s_SendPost(host_login + uri, body.body.toString(), "");
-            checkResponse(res);
+            s_CheckResponse(res);
         } catch (IOException e) {
             logger.error(e);
             Assert.fail("http request returns an error");
@@ -107,7 +106,7 @@ public class CheckVerifyCode extends BaseTest{
             logger.error(e);
             Assert.fail("http request returns an error");
         }
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertNotEquals(code, "1000000", "code不应该为1000000");
     }
 
@@ -123,7 +122,7 @@ public class CheckVerifyCode extends BaseTest{
             logger.error(e);
             Assert.fail("http request returns an error");
         }
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertNotEquals(code, "1000000", "code不应该为1000000");
     }
 
@@ -134,7 +133,7 @@ public class CheckVerifyCode extends BaseTest{
         body.body.replace("mobile", "1380000"+"9999");
         try {
             res = HttpRequest.s_SendPost(host_login + uri, body.body.toString(), "");
-            checkResponse(res);
+            s_CheckResponse(res);
             Assert.fail();
         } catch (IOException e) {
             logger.info("res returns error because of malformed input");
@@ -148,7 +147,7 @@ public class CheckVerifyCode extends BaseTest{
         body.body.replace("code", "123456");
         try {
             res = HttpRequest.s_SendPost(host_login + uri, body.body.toString(), "");
-            checkResponse(res);
+            s_CheckResponse(res);
             Assert.fail();
         } catch (IOException e) {
             logger.info("res returns error because of malformed input");

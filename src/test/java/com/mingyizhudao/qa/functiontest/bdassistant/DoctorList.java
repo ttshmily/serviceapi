@@ -36,7 +36,7 @@ public class DoctorList extends BaseTest {
         } catch (IOException e) {
             logger.error(e);
         }
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertNotEquals(code, "1000000", "没有token不应该调用成功");
     }
 
@@ -51,7 +51,7 @@ public class DoctorList extends BaseTest {
         } catch (IOException e) {
             logger.error(e);
         }
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertEquals(code, "1000000", "有token应该调用成功");
         Assert.assertNotNull(Generator.parseJson(data, "list(0):name"), "医生的name字段缺失");
         Assert.assertNotNull(Generator.parseJson(data, "list(0):hospital_name"), "医生的hospital_name字段缺失");
@@ -71,7 +71,7 @@ public class DoctorList extends BaseTest {
         } catch (IOException e) {
             logger.error(e);
         }
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertEquals(code, "1000000", "有token应该调用成功");
         Assert.assertNotNull(Generator.parseJson(data, "list(0):name"), "医生的name字段缺失");
         Assert.assertNotNull(Generator.parseJson(data, "list(0):hospital_name"), "医生的hospital_name字段缺失");
@@ -92,7 +92,7 @@ public class DoctorList extends BaseTest {
         } catch (IOException e) {
             logger.error(e);
         }
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertEquals(code, "1000000", "有token应该调用成功");
         Assert.assertNotNull(Generator.parseJson(data, "list(0):name"), "医生的name字段缺失");
         Assert.assertNotNull(Generator.parseJson(data, "list(0):hospital_name"), "医生的hospital_name字段缺失");
@@ -112,7 +112,7 @@ public class DoctorList extends BaseTest {
         } catch (IOException e) {
             logger.error(e);
         }
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertNotEquals(code, "1000000", "非下属的ID不应该调用成功");
     }
 
@@ -128,7 +128,7 @@ public class DoctorList extends BaseTest {
         } catch (IOException e) {
             logger.error(e);
         }
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertEquals(code, "1000000", "有token应该调用成功");
         Assert.assertNotNull(Generator.parseJson(data, "list(0):create_order_time"), "没有第一次创建订单的时间");
         Assert.assertNotNull(Generator.parseJson(data, "list(0):date_verified"), "没有认证通过的时间");
@@ -160,7 +160,7 @@ public class DoctorList extends BaseTest {
         } catch (IOException e) {
             logger.error(e);
         }
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertEquals(code, "1000000", "有token应该调用成功");
         JSONArray doctorList = JSONObject.fromObject(res).getJSONObject("data").getJSONArray("list");
         for (int i=0; i<doctorList.size(); i++) {
@@ -182,7 +182,7 @@ public class DoctorList extends BaseTest {
         } catch (IOException e) {
             logger.error(e);
         }
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertEquals(code, "1000000", "有token应该调用成功");
         JSONArray doctorList = JSONObject.fromObject(res).getJSONObject("data").getJSONArray("list");
         for (int i=0; i<doctorList.size(); i++) {
@@ -219,7 +219,7 @@ public class DoctorList extends BaseTest {
             } catch (IOException e) {
                 logger.error(e);
             }
-            checkResponse(res);
+            s_CheckResponse(res);
             Assert.assertEquals(code, "1000000", "有token应该调用成功");
             JSONArray doctorList = JSONObject.fromObject(res).getJSONObject("data").getJSONArray("list");
             for (int i = 0; i < doctorList.size(); i++) {

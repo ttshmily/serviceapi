@@ -4,7 +4,6 @@ import com.mingyizhudao.qa.common.BaseTest;
 import com.mingyizhudao.qa.common.TestLogger;
 import com.mingyizhudao.qa.utilities.HttpRequest;
 import com.mingyizhudao.qa.utilities.Generator;
-import org.apache.log4j.Logger;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
@@ -40,7 +39,7 @@ public class GetEmployeeProfile extends BaseTest {
             logger.error(e);
             Assert.fail();
         }
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertEquals(code, "1000000", "错误码应该是1000000");
         Assert.assertNotNull(Generator.parseJson(data, "employee:id"), "id must not be null");
         Assert.assertNotNull(Generator.parseJson(data, "employee:name"), "name must not be null");
@@ -58,7 +57,7 @@ public class GetEmployeeProfile extends BaseTest {
             logger.error(e);
             Assert.fail();
         }
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertEquals(code, "1000000");
         Assert.assertNotNull(Generator.parseJson(data, "employee:id"), "id must not be null");
         Assert.assertNotNull(Generator.parseJson(data, "employee:name"), "name must not be null");
@@ -73,7 +72,7 @@ public class GetEmployeeProfile extends BaseTest {
         } catch (IOException e) {
             logger.error(e);
         }
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertEquals(code, "1000000");
         Assert.assertNull(Generator.parseJson(data, "employee:id"));
     }

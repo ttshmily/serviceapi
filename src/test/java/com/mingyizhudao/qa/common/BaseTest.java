@@ -60,8 +60,8 @@ public class BaseTest {
     public static void main(String[] args) {
 //        String mobile = SendVerifyCode.s_Send();
 //        String token = CheckVerifyCode.s_Check();
-//        CreateRegistered();
-//        CreateRegisteredDoctor();
+//        s_CreateRegistered();
+//        s_CreateRegisteredDoctor();
     }
 
     static {
@@ -116,13 +116,13 @@ public class BaseTest {
     }
 
     @BeforeSuite
-    public void setUpSuite() throws Exception {
+    public void s_SetUpSuite() throws Exception {
         KnowledgeBase.s_Init();
         crm_token = JSONObject.fromObject(HttpRequest.s_SendGet("http://services.dev.myzd.info/crm/api/internal/devToken" , "email="+mainOperatorId, "")).getJSONObject("data").getString("token");
 //        bda_token = JSONObject.fromObject(HttpRequest.s_SendGet("http://work.myzd.info/wx/internal/api/dev-tokens" , "", "")).getJSONObject("data").getJSONObject("chao.fang@mingyizhudao.com").getString("token");
 //        bda_token_staff = JSONObject.fromObject(HttpRequest.s_SendGet("http://work.myzd.info/wx/internal/api/dev-tokens" , "", "")).getJSONObject("data").getJSONObject("lei.wang@mingyizhudao.com").getString("token");
         mainDP = new DoctorProfile(true);
-        HashMap<String,String> mainDoctorInfo = CreateSyncedDoctor(mainDP);
+        HashMap<String,String> mainDoctorInfo = s_CreateSyncedDoctor(mainDP);
         if(mainDoctorInfo == null) {
             logger.error("创建注册专家失败，退出执行");
             System.exit(10000);
@@ -147,8 +147,8 @@ public class BaseTest {
     }
 
     @BeforeClass
-    public void setUpClass() throws Exception {
-
+    public void s_SetUpClass() throws Exception {
+        TestLogger logger = new TestLogger(s_JobName());
         logger.info("///////////////////////////////////////////////////////////////////////////////////////////////////////////// ");
         logger.info("//    TestAPI START:\t" + getClass().getSimpleName());
         logger.info("///////////////////////////////////////////////////////////////////////////////////////////////////////////// \n");
@@ -156,8 +156,8 @@ public class BaseTest {
     }
 
     @AfterClass
-    public void tearDownClass() throws Exception {
-
+    public void s_TearDownClass() throws Exception {
+        TestLogger logger = new TestLogger(s_JobName());
         logger.info("Test Cleaning...");
         logger.info("mainDoctorId为"+mainDoctorId);
         logger.info("恢复医生信息：");
@@ -169,20 +169,23 @@ public class BaseTest {
     }
 
     @BeforeMethod
-    public void setUpTC(Method method) throws Exception {
+    public void s_SetUpTC(Method method) throws Exception {
+        TestLogger logger = new TestLogger(s_JobName());
         logger.info(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> ");
         logger.info("||    TestCase START:\t" + method.getName());
         logger.info(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> \n");
     }
 
     @AfterMethod
-    public void tearDownTC(Method method) {
+    public void s_TearDownTC(Method method) {
+        TestLogger logger = new TestLogger(s_JobName());
         logger.info("<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< ");
         logger.info("||    TestCase END:\t" + method.getName());
         logger.info("<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< \n");
     }
 
-    public void checkResponse(String res) throws JSONException {
+    public void s_CheckResponse(String res) throws JSONException {
+        TestLogger logger = new TestLogger(s_JobName());
         JSONObject json = JSONObject.fromObject(res);
         this.code = json.getString("code");
         this.message = json.getString("message");
@@ -205,7 +208,8 @@ public class BaseTest {
     }
 
 //    生成一个医生用户
-    protected static HashMap<String, String> CreateRegistered() {
+    protected static HashMap<String, String> s_CreateRegistered() {
+        TestLogger logger = new TestLogger(s_JobName());
         logger.info("创建注册用户...");
         String mobile = SendVerifyCode.s_Send();
         String token = CheckVerifyCode.s_Check();
@@ -227,8 +231,9 @@ public class BaseTest {
     }
 
 //    创建一个医生，并且完善信息
-    protected static HashMap<String, String> CreateRegisteredDoctor(DoctorProfile dp) {
-        HashMap<String,String> info = CreateRegistered();
+    protected static HashMap<String, String> s_CreateRegisteredDoctor(DoctorProfile dp) {
+        TestLogger logger = new TestLogger(s_JobName());
+        HashMap<String,String> info = s_CreateRegistered();
         if (info == null) return null;
         String token = info.get("token");
 
@@ -248,8 +253,9 @@ public class BaseTest {
     }
 
 //    创建一个医生并且认证
-    protected static HashMap<String, String> CreateVerifiedDoctor(DoctorProfile dp) {
-        HashMap<String,String> info = CreateRegisteredDoctor(dp);
+    protected static HashMap<String, String> s_CreateVerifiedDoctor(DoctorProfile dp) {
+        TestLogger logger = new TestLogger(s_JobName());
+        HashMap<String,String> info = s_CreateRegisteredDoctor(dp);
         if (info == null) return null;
 
         logger.info("认证医生...");
@@ -267,8 +273,9 @@ public class BaseTest {
     }
 
 //    创建一个医生并且认证和同步
-    protected static HashMap<String, String> CreateSyncedDoctor(DoctorProfile dp) {
-        HashMap<String,String> info = CreateRegisteredDoctor(dp);
+    protected static HashMap<String, String> s_CreateSyncedDoctor(DoctorProfile dp) {
+        TestLogger logger = new TestLogger(s_JobName());
+        HashMap<String,String> info = s_CreateRegisteredDoctor(dp);
         if (info == null) return null;
         logger.info("认证并同步医生...");
         String doctorId = info.get("id");

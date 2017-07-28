@@ -4,7 +4,6 @@ import com.mingyizhudao.qa.common.BaseTest;
 import com.mingyizhudao.qa.common.TestLogger;
 import com.mingyizhudao.qa.utilities.HttpRequest;
 import com.mingyizhudao.qa.utilities.Generator;
-import org.apache.log4j.Logger;
 import org.junit.Ignore;
 import org.testng.Assert;
 import org.testng.annotations.Test;
@@ -38,7 +37,7 @@ public class GetUploadToken extends BaseTest {
         } catch (IOException e) {
             logger.error(e);
         }
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertNotNull(Generator.parseJson(data, "token"));
         Assert.assertEquals(code, "1000000");
     }
@@ -55,7 +54,7 @@ public class GetUploadToken extends BaseTest {
         } catch (IOException e) {
             logger.error(e);
         }
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertNotNull(Generator.parseJson(data, "token"));
         Assert.assertEquals(code, "1000000");
 
@@ -73,7 +72,7 @@ public class GetUploadToken extends BaseTest {
         } catch (IOException e) {
             logger.error(e);
         }
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertNotNull(Generator.parseJson(data, "token"));
         Assert.assertEquals(code, "1000000");
     }
@@ -90,7 +89,7 @@ public class GetUploadToken extends BaseTest {
         } catch (IOException e) {
             logger.error(e);
         }
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertEquals(code, "1000000");
 
         query.replace("filename", "abcdefg.PNG");
@@ -99,7 +98,7 @@ public class GetUploadToken extends BaseTest {
         } catch (IOException e) {
             logger.error(e);
         }
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertEquals(code, "1000000");
     }
 
@@ -115,7 +114,7 @@ public class GetUploadToken extends BaseTest {
         } catch (IOException e) {
             logger.error(e);
         }
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertEquals(code, "1000000");
 
         query.replace("filename", "abcd.GIF");
@@ -124,7 +123,7 @@ public class GetUploadToken extends BaseTest {
         } catch (IOException e) {
             logger.error(e);
         }
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertEquals(code, "1000000");
     }
 
@@ -140,7 +139,7 @@ public class GetUploadToken extends BaseTest {
         } catch (IOException e) {
             logger.error(e);
         }
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertEquals(code, "1000000");
 
         query.replace("filename", "+_)(*&^%$#@!.PNG");
@@ -149,7 +148,7 @@ public class GetUploadToken extends BaseTest {
         } catch (IOException e) {
             logger.error(e);
         }
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertEquals(code, "1000000");
     }
 
@@ -166,7 +165,7 @@ public class GetUploadToken extends BaseTest {
         } catch (IOException e) {
             logger.error(e);
         }
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertNotEquals(code, "1000000");
     }
 

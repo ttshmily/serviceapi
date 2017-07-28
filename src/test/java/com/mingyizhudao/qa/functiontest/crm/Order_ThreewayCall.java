@@ -87,10 +87,10 @@ public class Order_ThreewayCall extends BaseTest {
         } catch (IOException e) {
             logger.error(e);
         }
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertEquals(code, "1000000");
         res = Order_Detail.s_Detail(orderId);
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertEquals(Generator.parseJson(data, "status"), "3000");
         Assert.assertEquals(Generator.parseJson(data, "surgeon_id"), rcmdDoc);
         Assert.assertEquals(Generator.parseJson(data, "surgeon_name"), KnowledgeBase.kb_doctor.get(rcmdDoc));
@@ -123,10 +123,10 @@ public class Order_ThreewayCall extends BaseTest {
         } catch (IOException e) {
             logger.error(e);
         }
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertEquals(code, "1000000");
         res = Order_Detail.s_Detail(orderId);
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertEquals(Generator.parseJson(data, "status"), "2020");
         Assert.assertEquals(Generator.parseJson(data, "surgeon_id"), rcmdDoc);
         Assert.assertEquals(Generator.parseJson(data, "surgeon_name"), KnowledgeBase.kb_doctor.get(rcmdDoc));
@@ -157,10 +157,10 @@ public class Order_ThreewayCall extends BaseTest {
         } catch (IOException e) {
             logger.error(e);
         }
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertEquals(code, "1000000");
         res = Order_Detail.s_Detail(orderId);
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertEquals(Generator.parseJson(data, "status"), "2000");
         //不合作以后，清除上级医生信息
 //        Assert.assertEquals(UT.parseJson(data, "surgeon_id"), "555");
@@ -191,10 +191,10 @@ public class Order_ThreewayCall extends BaseTest {
         } catch (IOException e) {
             logger.error(e);
         }
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertNotEquals(code, "1000000");
         res = Order_Detail.s_Detail(orderId);
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertEquals(Generator.parseJson(data, "status"), "2020");
 
         body.put("reject_reason", "");
@@ -203,11 +203,11 @@ public class Order_ThreewayCall extends BaseTest {
         } catch (IOException e) {
             logger.error(e);
         }
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertNotEquals(code, "1000000");
 
         res = Order_Detail.s_Detail(orderId);
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertEquals(Generator.parseJson(data, "status"), "2020");
     }
 
@@ -235,10 +235,10 @@ public class Order_ThreewayCall extends BaseTest {
         } catch (IOException e) {
             logger.error(e);
         }
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertEquals(code, "1000000");
         res = Order_Detail.s_Detail(orderId);
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertEquals(Generator.parseJson(data, "status"), "3000");
 
         try {
@@ -246,7 +246,7 @@ public class Order_ThreewayCall extends BaseTest {
         } catch (IOException e) {
             logger.error(e);
         }
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertNotEquals(code, "1000000", "三方通话确认后，不能再次三方通话");
     }
 
@@ -268,10 +268,10 @@ public class Order_ThreewayCall extends BaseTest {
         } catch (IOException e) {
             logger.error(e);
         }
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertNotEquals(code, "1000000");
         res = Order_Detail.s_Detail(orderId);
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertNotEquals(Generator.parseJson(data, "status"), "3000");
 
         body.put("calling_time", df.format(new Date()));
@@ -280,10 +280,10 @@ public class Order_ThreewayCall extends BaseTest {
         } catch (IOException e) {
             logger.error(e);
         }
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertNotEquals(code, "1000000");
         res = Order_Detail.s_Detail(orderId);
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertNotEquals(Generator.parseJson(data, "status"), "3000");
 
         body.put("major_disease_id", "55");
@@ -292,10 +292,10 @@ public class Order_ThreewayCall extends BaseTest {
         } catch (IOException e) {
             logger.error(e);
         }
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertNotEquals(code, "1000000");
         res = Order_Detail.s_Detail(orderId);
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertNotEquals(Generator.parseJson(data, "status"), "3000");
 
         body.put("minor_disease_id", "66");
@@ -304,10 +304,10 @@ public class Order_ThreewayCall extends BaseTest {
         } catch (IOException e) {
             logger.error(e);
         }
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertNotEquals(code, "1000000");
         res = Order_Detail.s_Detail(orderId);
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertNotEquals(Generator.parseJson(data, "status"), "3000");
 
         body.put("content", "自动创建的通话记录");
@@ -316,10 +316,10 @@ public class Order_ThreewayCall extends BaseTest {
         } catch (IOException e) {
             logger.error(e);
         }
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertNotEquals(code, "1000000");
         res = Order_Detail.s_Detail(orderId);
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertNotEquals(Generator.parseJson(data, "status"), "3000");
 
         body.put("audio_file", "http://www.automation.com");
@@ -328,10 +328,10 @@ public class Order_ThreewayCall extends BaseTest {
         } catch (IOException e) {
             logger.error(e);
         }
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertNotEquals(code, "1000000");
         res = Order_Detail.s_Detail(orderId);
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertNotEquals(Generator.parseJson(data, "status"), "3000");
 
         body.put("record_type", "success");
@@ -340,10 +340,10 @@ public class Order_ThreewayCall extends BaseTest {
         } catch (IOException e) {
             logger.error(e);
         }
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertEquals(code, "1000000");
         res = Order_Detail.s_Detail(orderId);
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertEquals(Generator.parseJson(data, "status"), "3000");
 
     }
@@ -372,10 +372,10 @@ public class Order_ThreewayCall extends BaseTest {
         } catch (IOException e) {
             logger.error(e);
         }
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertEquals(code, "1000000");
         res = Order_Detail.s_Detail(orderId);
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertEquals(Generator.parseJson(data, "status"), "2000");
 //        Assert.assertEquals(parseJson(data, "surgeon_id"), "555");
 //        Assert.assertEquals(parseJson(data, "surgeon_name"), KB.kb_doctor.get("555"));
@@ -407,10 +407,10 @@ public class Order_ThreewayCall extends BaseTest {
         } catch (IOException e) {
             logger.error(e);
         }
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertEquals(code, "1000000");
         res = Order_Detail.s_Detail(orderId);
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertEquals(Generator.parseJson(data, "status"), "2000");
         Assert.assertNotNull(Generator.parseJson(data, "doctorFiledList"), expertId);
         Assert.assertEquals(Generator.parseJson(data, "doctorFiledList():surgeon_id"), expertId);

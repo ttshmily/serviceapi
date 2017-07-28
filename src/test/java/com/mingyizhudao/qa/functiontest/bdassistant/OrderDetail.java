@@ -28,7 +28,7 @@ public class OrderDetail extends BaseTest{
         } catch (IOException e) {
             logger.error(e);
         }
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertNotEquals(code, "1000000", "没有token不应该调用成功");
 
         try {
@@ -36,7 +36,7 @@ public class OrderDetail extends BaseTest{
         } catch (IOException e) {
             logger.error(e);
         }
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertNotEquals(code, "1000000", "token错误不应该调用成功");
     }
 
@@ -49,7 +49,7 @@ public class OrderDetail extends BaseTest{
         } catch (IOException e) {
             logger.error(e);
         }
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertEquals(code, "1411002", "订单编号不能为空");
 
     }
@@ -64,7 +64,7 @@ public class OrderDetail extends BaseTest{
         } catch (IOException e) {
             logger.error(e);
         }
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertEquals(code, "1000000", "有token应该调用成功");
         //String orderDetail = data.getString("list");
         Assert.assertNotNull(Generator.parseJson(data, "order_number"), "order_number字段缺失");
@@ -93,7 +93,7 @@ public class OrderDetail extends BaseTest{
             } catch (IOException e) {
                 logger.error(e);
             }
-            checkResponse(res);
+            s_CheckResponse(res);
             Assert.assertNotEquals(code, "1000000", "传入不存在的订单编号应返回订单号不存在");
         }
 }

@@ -54,7 +54,7 @@ public class KBExpert_Detail extends BaseTest {
         } catch (IOException e) {
             logger.error(e);
         }
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertEquals(code, "1000000");
         Assert.assertEquals(Generator.parseJson(data, "medical_title_list"), ep.body.getString("medical_title_list"));
         Assert.assertEquals(Generator.parseJson(data, "academic_title_list"), ep.body.getString("academic_title_list"));
@@ -88,7 +88,7 @@ public class KBExpert_Detail extends BaseTest {
         } catch (IOException e) {
             logger.error(e);
         }
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertNotEquals(code, "1000000");
     }
 

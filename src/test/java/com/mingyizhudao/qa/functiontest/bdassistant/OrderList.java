@@ -33,7 +33,7 @@ public class OrderList extends BaseTest {
         } catch (IOException e) {
             logger.error(e);
         }
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertNotEquals(code, "1000000", "没有token不应该调用成功");
     }
 
@@ -48,7 +48,7 @@ public class OrderList extends BaseTest {
         } catch (IOException e) {
             logger.error(e);
         }
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertEquals(code, "1000000", "有token应该调用成功");
         Assert.assertNotNull(Generator.parseJson(data, "list(0):agent_name"), "下级医生姓名字段缺失");
         Assert.assertNotNull(Generator.parseJson(data, "list(0):id"), "订单编号字段缺失");
@@ -68,7 +68,7 @@ public class OrderList extends BaseTest {
         } catch (IOException e) {
             logger.error(e);
         }
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertEquals(code, "1000000", "有token应该调用成功");
         Assert.assertNotNull(Generator.parseJson(data, "list(0):agent_name"), "下级医生姓名字段缺失");
         Assert.assertNotNull(Generator.parseJson(data, "list(0):id"), "订单编号字段缺失");
@@ -89,7 +89,7 @@ public class OrderList extends BaseTest {
         } catch (IOException e) {
             logger.error(e);
         }
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertEquals(code, "1000000", "有token应该调用成功");
         Assert.assertNotNull(Generator.parseJson(data, "list(0):agent_name"), "下级医生姓名字段缺失");
         Assert.assertNotNull(Generator.parseJson(data, "list(0):id"), "订单编号字段缺失");
@@ -107,7 +107,7 @@ public class OrderList extends BaseTest {
         } catch (IOException e) {
             logger.error(e);
         }
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertNotEquals(code, "1000000", "传入非下属ID不应该获取成功");
     }
 
@@ -142,7 +142,7 @@ public class OrderList extends BaseTest {
             } catch (IOException e) {
                 logger.error(e);
             }
-            checkResponse(res);
+            s_CheckResponse(res);
             Assert.assertEquals(code, "1000000", "有token应该调用成功");
             JSONArray orderList = JSONObject.fromObject(res).getJSONObject("data").getJSONArray("list");
             for (int i = 0; i < orderList.size(); i++) {

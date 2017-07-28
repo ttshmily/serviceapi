@@ -35,7 +35,7 @@ public class PersonalInfo extends BaseTest {
         } catch (IOException e) {
             logger.error(e);
         }
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertNotEquals(code, "1000000", "没有token不应该调用成功");
 
     }
@@ -50,7 +50,7 @@ public class PersonalInfo extends BaseTest {
         } catch (IOException e) {
             logger.error(e);
         }
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertEquals(code, "1000000", "有token应该调用成功");
         Assert.assertNotNull(Generator.parseJson(data, "doctorCounts"), "doctorCounts字段缺失");
         Assert.assertNotNull(Generator.parseJson(data, "orderCounts"), "orderCounts字段缺失");
@@ -71,13 +71,13 @@ public class PersonalInfo extends BaseTest {
         } catch (IOException e) {
             logger.error(e);
         }
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertEquals(code, "1000000");
         int doctorCountsBefore = Integer.parseInt(Generator.parseJson(data, "doctorCounts"));
         int orderCountsBefore = Integer.parseInt(Generator.parseJson(data, "orderCounts"));
 
         DoctorProfile dop = new DoctorProfile(true);
-        HashMap<String, String> info = CreateVerifiedDoctor(dop);
+        HashMap<String, String> info = s_CreateVerifiedDoctor(dop);
         String doctorId = info.get("id");
         if (doctorId == null) {
             Assert.fail("创建医生失败，退出用例执行");
@@ -86,7 +86,7 @@ public class PersonalInfo extends BaseTest {
         dp.put("inviter_no", "SH0133");
         RegisteredDoctor_Modify.s_Modify(doctorId, dp);
         res = RegisteredDoctor_Detail.s_Detail(doctorId);
-        checkResponse(res);
+        s_CheckResponse(res);
         String inviter_no = Generator.parseJson(data, "inviter_no");
         if(!inviter_no.equals("SH0133")) Assert.fail("更新医生的invitor_no失败，退出用例执行");
 
@@ -96,7 +96,7 @@ public class PersonalInfo extends BaseTest {
         } catch (IOException e) {
             logger.error(e);
         }
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertEquals(code, "1000000");
         int doctorCountsAfter = Integer.parseInt(Generator.parseJson(data, "doctorCounts"));
         int orderCountsAfter = Integer.parseInt(Generator.parseJson(data, "orderCounts"));

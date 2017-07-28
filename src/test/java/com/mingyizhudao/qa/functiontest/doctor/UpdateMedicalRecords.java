@@ -71,7 +71,7 @@ public class UpdateMedicalRecords extends BaseTest {
             fail();
         }
         res = GetOrderDetail_V1.s_MyInitiateOrder(mainToken, orderId);
-        checkResponse(res);
+        s_CheckResponse(res);
         String mdid = Generator.parseJson(data, "order:major_disease_id");
         HashMap<String, String> pathValue = new HashMap<String, String>();
         pathValue.put("orderId", orderId);
@@ -84,12 +84,12 @@ public class UpdateMedicalRecords extends BaseTest {
         } catch (IOException e) {
             logger.error(e);
         }
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertNotEquals(code, "1000000", "更新异常数据成功");
         Assert.assertEquals(code, "2210416", "更新异常数据成功");
         logger.info("查看刚刚更新的订单详情");
         res = GetOrderDetail_V1.s_MyInitiateOrder(mainToken, orderId);
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertEquals(code, "1000000", "查看订单失败");
         Assert.assertEquals(Generator.parseJson(data, "order:major_disease_id"), mdid, "主诉疾病为-1，不应该更新成功");
         logger.info("禁止更新主诉疾病为-1");
@@ -101,12 +101,12 @@ public class UpdateMedicalRecords extends BaseTest {
         } catch (IOException e) {
             logger.error(e);
         }
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertNotEquals(code, "1000000", "更新异常数据成功");
         Assert.assertEquals(code, "2210416", "更新异常数据成功");
         logger.info("查看刚刚更新的订单详情");
         res = GetOrderDetail_V1.s_MyInitiateOrder(mainToken, orderId);
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertEquals(code, "1000000", "查看订单失败");
         Assert.assertEquals(Generator.parseJson(data, "order:major_disease_id"), mdid, "主诉疾病为0，不应该更新成功");
         logger.info("禁止更新主诉疾病为0");
@@ -118,11 +118,11 @@ public class UpdateMedicalRecords extends BaseTest {
         } catch (IOException e) {
             logger.error(e);
         }
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertNotEquals(code, "1000000", "更新异常数据成功");
         logger.info("查看刚刚更新的订单详情");
         res = GetOrderDetail_V1.s_MyInitiateOrder(mainToken, orderId);
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertEquals(code, "1000000", "查看订单失败");
         Assert.assertEquals(Generator.parseJson(data, "order:major_disease_id"), mdid, "主诉疾病为30000000000，不应该更新成功");
         logger.info("禁止更新主诉疾病为30000000000");
@@ -135,11 +135,11 @@ public class UpdateMedicalRecords extends BaseTest {
         } catch (IOException e) {
             logger.error(e);
         }
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertEquals(code, "1000000", "更新正常数据未成功");
         logger.info("查看刚刚更新的订单详情");
         res = GetOrderDetail_V1.s_MyInitiateOrder(mainToken, orderId);
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertEquals(code, "1000000", "查看订单失败");
         Assert.assertEquals(Generator.parseJson(data, "order:major_disease_id"), key, "主诉疾病"+key+"，未更新成功");
         logger.info("更新主诉疾病为"+key+"成功");
@@ -152,11 +152,11 @@ public class UpdateMedicalRecords extends BaseTest {
         } catch (IOException e) {
             logger.error(e);
         }
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertEquals(code, "1000000", "更新正常数据未成功");
         logger.info("查看刚刚更新的订单详情");
         res = GetOrderDetail_V1.s_MyInitiateOrder(mainToken, orderId);
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertEquals(code, "1000000", "查看订单失败");
         Assert.assertEquals(Generator.parseJson(data, "order:major_disease_id"), key, "主诉疾病"+key+"，未更新成功");
         logger.info("更新主诉疾病为40成功");
@@ -174,7 +174,7 @@ public class UpdateMedicalRecords extends BaseTest {
             fail();
         }
         res = GetOrderDetail_V1.s_MyInitiateOrder(mainToken, orderId);
-        checkResponse(res);
+        s_CheckResponse(res);
         String mdId = Generator.parseJson(data, "order:minor_disease_id");
         HashMap<String, String> pathValue = new HashMap<String, String>();
         pathValue.put("orderId", orderId);
@@ -187,11 +187,11 @@ public class UpdateMedicalRecords extends BaseTest {
         } catch (IOException e) {
             logger.error(e);
         }
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertNotEquals(code, "1000000", "更新异常数据成功");
         logger.info("查看刚刚更新的订单详情");
         res = GetOrderDetail_V1.s_MyInitiateOrder(mainToken, orderId);
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertEquals(code, "1000000", "查看订单失败");
         Assert.assertEquals(Generator.parseJson(data, "order:minor_disease_id"), mdId, "次诉疾病为-1，不应该更新成功");
         logger.info("禁止更新次诉疾病为-1");
@@ -203,11 +203,11 @@ public class UpdateMedicalRecords extends BaseTest {
         } catch (IOException e) {
             logger.error(e);
         }
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertNotEquals(code, "1000000", "更新异常数据成功");
         logger.info("查看刚刚更新的订单详情");
         res = GetOrderDetail_V1.s_MyInitiateOrder(mainToken, orderId);
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertEquals(code, "1000000", "查看订单失败");
         Assert.assertEquals(Generator.parseJson(data, "order:minor_disease_id"), mdId, "次诉疾病为0，不应该更新成功");
         logger.info("禁止更新次诉疾病为0");
@@ -219,11 +219,11 @@ public class UpdateMedicalRecords extends BaseTest {
         } catch (IOException e) {
             logger.error(e);
         }
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertNotEquals(code, "1000000", "更新异常数据成功");
         logger.info("查看刚刚更新的订单详情");
         res = GetOrderDetail_V1.s_MyInitiateOrder(mainToken, orderId);
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertEquals(code, "1000000", "查看订单失败");
         Assert.assertEquals(Generator.parseJson(data, "order:minor_disease_id"), mdId, "次诉疾病为30000000000，不应该更新成功");
         logger.info("禁止更新次诉疾病为30000000000");
@@ -236,11 +236,11 @@ public class UpdateMedicalRecords extends BaseTest {
         } catch (IOException e) {
             logger.error(e);
         }
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertEquals(code, "1000000", "更新正常数据未成功");
         logger.info("查看刚刚更新的订单详情");
         res = GetOrderDetail_V1.s_MyInitiateOrder(mainToken, orderId);
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertEquals(code, "1000000", "查看订单失败");
         Assert.assertEquals(Generator.parseJson(data, "order:minor_disease_id"), key, "次诉疾病"+key+"，未更新成功");
         logger.info("更新次诉疾病为"+key+"成功");
@@ -253,11 +253,11 @@ public class UpdateMedicalRecords extends BaseTest {
         } catch (IOException e) {
             logger.error(e);
         }
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertEquals(code, "1000000", "更新正常数据未成功");
         logger.info("查看刚刚更新的订单详情");
         res = GetOrderDetail_V1.s_MyInitiateOrder(mainToken, orderId);
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertEquals(code, "1000000", "查看订单失败");
         Assert.assertEquals(Generator.parseJson(data, "order:minor_disease_id"), key, "次诉疾病"+key+"，未更新成功");
         logger.info("更新次诉疾病为40成功");
@@ -275,7 +275,7 @@ public class UpdateMedicalRecords extends BaseTest {
             fail();
         }
         res = GetOrderDetail_V1.s_MyInitiateOrder(mainToken, orderId);
-        checkResponse(res);
+        s_CheckResponse(res);
         String gender = Generator.parseJson(data, "order:patient_gender");
         HashMap<String, String> pathValue = new HashMap<String, String>();
         pathValue.put("orderId", orderId);
@@ -288,11 +288,11 @@ public class UpdateMedicalRecords extends BaseTest {
         } catch (IOException e) {
             logger.error(e);
         }
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertNotEquals(code, "1000000", "更新异常数据成功");
         logger.info("查看刚刚更新的订单详情");
         res = GetOrderDetail_V1.s_MyInitiateOrder(mainToken, orderId);
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertEquals(code, "1000000", "查看订单失败");
         Assert.assertEquals(Generator.parseJson(data, "order:patient_gender"), gender, "性别为-1，不应该更新成功");
 
@@ -303,11 +303,11 @@ public class UpdateMedicalRecords extends BaseTest {
         } catch (IOException e) {
             logger.error(e);
         }
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertNotEquals(code, "1000000", "更新异常数据成功");
         logger.info("查看刚刚更新的订单详情");
         res = GetOrderDetail_V1.s_MyInitiateOrder(mainToken, orderId);
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertEquals(code, "1000000", "查看订单失败");
         Assert.assertEquals(Generator.parseJson(data, "order:patient_gender"), gender, "性别为0，不应该更新成功");
 
@@ -319,11 +319,11 @@ public class UpdateMedicalRecords extends BaseTest {
         } catch (IOException e) {
             logger.error(e);
         }
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertNotEquals(code, "1000000", "更新异常数据成功");
         logger.info("查看刚刚更新的订单详情");
         res = GetOrderDetail_V1.s_MyInitiateOrder(mainToken, orderId);
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertEquals(code, "1000000", "查看订单失败");
         Assert.assertEquals(Generator.parseJson(data, "order:patient_gender"), gender, "性别为3，不应该更新成功");
 
@@ -334,11 +334,11 @@ public class UpdateMedicalRecords extends BaseTest {
         } catch (IOException e) {
             logger.error(e);
         }
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertEquals(code, "1000000", "更新正常数据未成功");
         logger.info("查看刚刚更新的订单详情");
         res = GetOrderDetail_V1.s_MyInitiateOrder(mainToken, orderId);
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertEquals(code, "1000000", "查看订单失败");
         Assert.assertEquals(Generator.parseJson(data, "order:patient_gender"), "2", "性别2未更新成功");
 
@@ -349,11 +349,11 @@ public class UpdateMedicalRecords extends BaseTest {
         } catch (IOException e) {
             logger.error(e);
         }
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertEquals(code, "1000000", "更新正常数据未成功");
         logger.info("查看刚刚更新的订单详情");
         res = GetOrderDetail_V1.s_MyInitiateOrder(mainToken, orderId);
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertEquals(code, "1000000", "查看订单失败");
         Assert.assertEquals(Generator.parseJson(data, "order:patient_gender"), "1", "性别1未更新成功");
     }
@@ -369,7 +369,7 @@ public class UpdateMedicalRecords extends BaseTest {
             fail();
         }
         res = GetOrderDetail_V1.s_MyInitiateOrder(mainToken, orderId);
-        checkResponse(res);
+        s_CheckResponse(res);
         String diag = Generator.parseJson(data, "order:diagnosis");
         HashMap<String, String> pathValue = new HashMap<String, String>();
         pathValue.put("orderId", orderId);
@@ -390,11 +390,11 @@ public class UpdateMedicalRecords extends BaseTest {
         } catch (IOException e) {
             logger.error(e);
         }
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertEquals(code, "1000000", "更新正常数据未成功");
         logger.info("查看刚刚更新的订单详情");
         res = GetOrderDetail_V1.s_MyInitiateOrder(mainToken, orderId);
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertEquals(code, "1000000", "查看订单失败");
         Assert.assertEquals(Generator.parseJson(data, "order:diagnosis"), "思考房价的问题，关键在于逻辑。\n" +
                 "但中国房地产市场最缺的恰恰是逻辑，人们对房价的判断，大多基于一种群羊效应，价格上涨的时候追涨，价格下跌的时候抛售。\n" +
@@ -416,11 +416,11 @@ public class UpdateMedicalRecords extends BaseTest {
         } catch (IOException e) {
             logger.error(e);
         }
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertEquals(code, "1000000", "更新正常数据未成功");
         logger.info("查看刚刚更新的订单详情");
         res = GetOrderDetail_V1.s_MyInitiateOrder(mainToken, orderId);
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertEquals(code, "1000000", "查看订单失败");
         Assert.assertEquals(Generator.parseJson(data, "order:diagnosis"), "思考房价的问题，关键在于逻辑。\n" +
                 "但中国房地产市场最缺的恰恰是逻辑，人们对房价的判断，大多基于一种群羊效应，价格上涨的时候追涨，价格下跌的时候抛售。\n" +
@@ -440,7 +440,7 @@ public class UpdateMedicalRecords extends BaseTest {
             fail();
         }
         res = GetOrderDetail_V1.s_MyInitiateOrder(mainToken, orderId);
-        checkResponse(res);
+        s_CheckResponse(res);
 //        String diag = parseJson(data, "order:medical_record_pictures()");
         HashMap<String, String> pathValue = new HashMap<String, String>();
         pathValue.put("orderId", orderId);
@@ -453,11 +453,11 @@ public class UpdateMedicalRecords extends BaseTest {
         } catch (IOException e) {
             logger.error(e);
         }
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertEquals(code, "1000000", "更新正常数据未成功");
         logger.info("查看刚刚更新的订单详情");
         res = GetOrderDetail_V1.s_MyInitiateOrder(mainToken, orderId);
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertEquals(code, "1000000", "查看订单失败");
         Assert.assertEquals(Generator.parseJson(data, "order:medical_record_pictures(0):key"), "2017/05/04/1265834e-97d8-44a0-95e7-047c7facaee8/IMG_20170429_102737.jpg");
         Assert.assertNotNull(Generator.parseJson(data, "order:medical_record_pictures(0):url"), "没有图片URL");
@@ -473,11 +473,11 @@ public class UpdateMedicalRecords extends BaseTest {
         } catch (IOException e) {
             logger.error(e);
         }
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertEquals(code, "1000000", "更新正常数据未成功");
         logger.info("查看刚刚更新的订单详情");
         res = GetOrderDetail_V1.s_MyInitiateOrder(mainToken, orderId);
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertEquals(code, "1000000", "查看订单失败");
         Assert.assertEquals(Generator.parseJson(data, "order:medical_record_pictures(0):key"), "abc");
         Assert.assertNotNull(Generator.parseJson(data, "order:medical_record_pictures(0):url"), "没有图片URL");
@@ -496,11 +496,11 @@ public class UpdateMedicalRecords extends BaseTest {
         } catch (IOException e) {
             logger.error(e);
         }
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertEquals(code, "1000000", "更新正常数据未成功");
         logger.info("查看刚刚更新的订单详情");
         res = GetOrderDetail_V1.s_MyInitiateOrder(mainToken, orderId);
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertEquals(code, "1000000", "查看订单失败");
         Assert.assertEquals(Generator.parseJson(data, "order:medical_record_pictures(0):key"), "2017/05/04/1265834e-97d8-44a0-95e7-047c7facaee8/IMG_20170429_102737.jpg");
         Assert.assertNotNull(Generator.parseJson(data, "order:medical_record_pictures(0):url"), "没有图片URL");
@@ -514,10 +514,10 @@ public class UpdateMedicalRecords extends BaseTest {
         } catch (IOException e) {
             logger.error(e);
         }
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertEquals(code, "1000000");
         res = GetOrderDetail_V1.s_MyInitiateOrder(mainToken, orderId);
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertEquals(Generator.parseJson(data, "order:medical_record_pictures()"), "0");
     }
 
@@ -531,7 +531,7 @@ public class UpdateMedicalRecords extends BaseTest {
             Assert.fail("创建订单失败");
         }
         res = GetOrderDetail_V1.s_MyInitiateOrder(mainToken, orderId);
-        checkResponse(res);
+        s_CheckResponse(res);
         String expectedSurgeryHospitalId = Generator.parseJson(data, "order:expected_surgery_hospital_id");
         String expectedSurgeryHospitalName = Generator.parseJson(data, "order:expected_surgery_hospital_name");
         HashMap<String, String> pathValue = new HashMap<String, String>();
@@ -545,11 +545,11 @@ public class UpdateMedicalRecords extends BaseTest {
         } catch (IOException e) {
             logger.error(e);
         }
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertEquals(code, "1000000", "更新正常数据未成功");
         logger.info("查看刚刚更新的订单详情");
         res = GetOrderDetail_V1.s_MyInitiateOrder(mainToken, orderId);
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertEquals(code, "1000000", "查看订单失败");
         Assert.assertEquals(Generator.parseJson(data, "order:expected_surgery_hospital_id"), expectedSurgeryHospitalId, "期望手术医院未更新成功");
         Assert.assertEquals(Generator.parseJson(data, "order:expected_surgery_hospital_name"), expectedSurgeryHospitalName, "期望手术医院未更新成功");
@@ -561,11 +561,11 @@ public class UpdateMedicalRecords extends BaseTest {
         } catch (IOException e) {
             logger.error(e);
         }
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertEquals(code, "1000000", "更新正常数据未成功");
         logger.info("查看刚刚更新的订单详情");
         res = GetOrderDetail_V1.s_MyInitiateOrder(mainToken, orderId);
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertEquals(code, "1000000", "查看订单失败");
         Assert.assertEquals(Generator.parseJson(data, "order:expected_surgery_hospital_id"), "0", "期望手术医院未更新成功");
         Assert.assertEquals(Generator.parseJson(data, "order:expected_surgery_hospital_name"), "待回访", "期望手术医院未更新成功");
@@ -578,11 +578,11 @@ public class UpdateMedicalRecords extends BaseTest {
         } catch (IOException e) {
             logger.error(e);
         }
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertEquals(code, "1000000", "更新正常数据未成功");
         logger.info("查看刚刚更新的订单详情");
         res = GetOrderDetail_V1.s_MyInitiateOrder(mainToken, orderId);
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertEquals(code, "1000000", "查看订单失败");
         Assert.assertEquals(Generator.parseJson(data, "order:expected_surgery_hospital_id"), key, "期望手术医院未更新成功");
         Assert.assertEquals(Generator.parseJson(data, "order:expected_surgery_hospital_name"), Generator.hospitalName(key), "期望手术医院未更新成功");
@@ -599,7 +599,7 @@ public class UpdateMedicalRecords extends BaseTest {
             fail();
         }
         res = GetOrderDetail_V1.s_MyInitiateOrder(mainToken, orderId);
-        checkResponse(res);
+        s_CheckResponse(res);
         String name = Generator.parseJson(data, "order:patient_name");
         MedicalRecords mr = new MedicalRecords(true);
 
@@ -613,11 +613,11 @@ public class UpdateMedicalRecords extends BaseTest {
         } catch (IOException e) {
             logger.error(e);
         }
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertEquals(code, "1000000", "更新订单失败");
         logger.info("查看刚刚更新的订单详情");
         res = GetOrderDetail_V1.s_MyInitiateOrder(mainToken, orderId);
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertEquals(code, "1000000", "查看订单失败");
         Assert.assertEquals(Generator.parseJson(data, "order:patient_name"), "大头猪", "patient_name未更新");
 
@@ -628,11 +628,11 @@ public class UpdateMedicalRecords extends BaseTest {
         } catch (IOException e) {
             logger.error(e);
         }
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertEquals(code, "1000000", "更新订单失败");
         logger.info("查看刚刚更新的订单详情");
         res = GetOrderDetail_V1.s_MyInitiateOrder(mainToken, orderId);
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertEquals(code, "1000000", "查看订单失败");
         Assert.assertEquals(Generator.parseJson(data, "order:patient_name"), "方超xyz", "patient_name未更新");
 
@@ -643,11 +643,11 @@ public class UpdateMedicalRecords extends BaseTest {
         } catch (IOException e) {
             logger.error(e);
         }
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertEquals(code, "1000000", "更新订单失败");
         logger.info("查看刚刚更新的订单详情");
         res = GetOrderDetail_V1.s_MyInitiateOrder(mainToken, orderId);
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertEquals(code, "1000000", "查看订单失败");
         Assert.assertEquals(Generator.parseJson(data, "order:patient_name"), "方超xyz惺惺惜惺惺想寻寻寻寻寻寻寻寻寻寻寻寻寻寻寻寻寻寻寻寻寻寻寻寻寻寻寻寻寻寻寻寻寻寻", "patient_name未更新");
 
@@ -664,7 +664,7 @@ public class UpdateMedicalRecords extends BaseTest {
             fail();
         }
         res = GetOrderDetail_V1.s_MyInitiateOrder(mainToken, orderId);
-        checkResponse(res);
+        s_CheckResponse(res);
         String age = Generator.parseJson(data, "order:patient_age");
 
         HashMap<String, String> pathValue = new HashMap<>();
@@ -678,11 +678,11 @@ public class UpdateMedicalRecords extends BaseTest {
         } catch (IOException e) {
             logger.error(e);
         }
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertNotEquals(code, "1000000", "更新异常数据成功");
         logger.info("查看刚刚更新的订单详情");
         res = GetOrderDetail_V1.s_MyInitiateOrder(mainToken, orderId);
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertEquals(code, "1000000", "查看订单失败");
         Assert.assertEquals(Generator.parseJson(data, "order:patient_age"), age, "年龄为-1，不应该更新成功");
         logger.info("禁止更新年龄为-1");
@@ -694,11 +694,11 @@ public class UpdateMedicalRecords extends BaseTest {
         } catch (IOException e) {
             logger.error(e);
         }
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertNotEquals(code, "1000000", "更新异常数据成功");
         logger.info("查看刚刚更新的订单详情");
         res = GetOrderDetail_V1.s_MyInitiateOrder(mainToken, orderId);
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertEquals(code, "1000000", "查看订单失败");
         Assert.assertEquals(Generator.parseJson(data, "order:patient_age"), age, "年龄为0，不应该更新成功");
         logger.info("禁止更新年龄为0");
@@ -710,11 +710,11 @@ public class UpdateMedicalRecords extends BaseTest {
         } catch (IOException e) {
             logger.error(e);
         }
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertNotEquals(code, "1000000", "更新异常数据成功");
         logger.info("查看刚刚更新的订单详情");
         res = GetOrderDetail_V1.s_MyInitiateOrder(mainToken, orderId);
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertEquals(code, "1000000", "查看订单失败");
         Assert.assertEquals(Generator.parseJson(data, "order:patient_age"), age, "年龄为1000000009999999999900000000000000000000000000000000000000，不应该更新成功");
         logger.info("禁止更新年龄为:1000000009999999999900000000000000000000000000000000000000");
@@ -726,11 +726,11 @@ public class UpdateMedicalRecords extends BaseTest {
         } catch (IOException e) {
             logger.error(e);
         }
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertEquals(code, "1000000", "更新正常数据未成功");
         logger.info("查看刚刚更新的订单详情");
         res = GetOrderDetail_V1.s_MyInitiateOrder(mainToken, orderId);
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertEquals(code, "1000000", "查看订单失败");
         Assert.assertEquals(Generator.parseJson(data, "order:patient_age"), "103", "年龄不为103，更新未成功");
         logger.info("更新年龄为103成功");
@@ -760,11 +760,11 @@ public class UpdateMedicalRecords extends BaseTest {
         } catch (IOException e) {
             logger.error(e);
         }
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertEquals(code, "1000000", "仅仅更新图片信息失败");
         logger.info("查看刚刚更新的订单详情");
         res = GetOrderDetail_V1.s_MyInitiateOrder(mainToken, orderId);
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertEquals(code, "1000000", "查看订单失败");
         Assert.assertEquals(Generator.parseJson(data, "order:medical_record_pictures(0):key"), "2017/05/04/1265834e-97d8-44a0-95e7-047c7facaee8/IMG_20170429_102737.jpg");
         Assert.assertEquals(Generator.parseJson(data, "order:medical_record_pictures(1):key"), "2017/05/04/1265834e-97d8-44a0-95e7-047c7facaee8/IMG_20170429_102738.jpg");
@@ -790,10 +790,10 @@ public class UpdateMedicalRecords extends BaseTest {
         } catch (IOException e) {
             logger.error(e);
         }
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertEquals(code, "1000000");
         res = GetOrderDetail_V1.s_MyInitiateOrder(mainToken, orderId);
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertEquals(code, "1000000", "查看订单失败");
         Assert.assertEquals(Generator.parseJson(data, "order:is_reoperation"), "false");
 
@@ -804,10 +804,10 @@ public class UpdateMedicalRecords extends BaseTest {
         } catch (IOException e) {
             logger.error(e);
         }
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertEquals(code, "1000000");
         res = GetOrderDetail_V1.s_MyInitiateOrder(mainToken, orderId);
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertEquals(code, "1000000", "查看订单失败");
         Assert.assertEquals(Generator.parseJson(data, "order:is_reoperation"), "true");
     }
@@ -832,10 +832,10 @@ public class UpdateMedicalRecords extends BaseTest {
         } catch (IOException e) {
             logger.error(e);
         }
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertEquals(code, "1000000");
         res = GetOrderDetail_V1.s_MyInitiateOrder(mainToken, orderId);
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertEquals(code, "1000000", "查看订单失败");
         Assert.assertEquals(Generator.parseJson(data, "order:patient_phone"), "13899991234");
 
@@ -846,10 +846,10 @@ public class UpdateMedicalRecords extends BaseTest {
         } catch (IOException e) {
             logger.error(e);
         }
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertEquals(code, "1000000");
         res = GetOrderDetail_V1.s_MyInitiateOrder(mainToken, orderId);
-        checkResponse(res);
+        s_CheckResponse(res);
         Assert.assertEquals(code, "1000000", "查看订单失败");
         Assert.assertEquals(Generator.parseJson(data, "order:patient_phone"), "13899991235");
     }
