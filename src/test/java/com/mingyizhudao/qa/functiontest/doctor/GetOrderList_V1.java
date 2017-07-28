@@ -1,6 +1,7 @@
 package com.mingyizhudao.qa.functiontest.doctor;
 
 import com.mingyizhudao.qa.common.BaseTest;
+import com.mingyizhudao.qa.common.TestLogger;
 import com.mingyizhudao.qa.dataprofile.doctor.DoctorProfile;
 import com.mingyizhudao.qa.functiontest.crm.*;
 import com.mingyizhudao.qa.utilities.HttpRequest;
@@ -17,13 +18,21 @@ import java.util.HashMap;
  * Created by dayi on 2017/6/27.
  */
 public class GetOrderList_V1 extends BaseTest {
-    public static final Logger logger= Logger.getLogger(GetOrderList_V1.class);
+
+    public static String clazzName = new Object() {
+        public String getClassName() {
+            String clazzName = this.getClass().getName();
+            return clazzName.substring(0, clazzName.lastIndexOf('$'));
+        }
+    }.getClassName();
+    public static TestLogger logger = new TestLogger(clazzName);
     public static String uri = "/api/v1/orders";
     public static String mock = false ? "/mockjs/1" : "";
 
     public static String List(String token, String flag) {
         // 1 - 下级医生；2 - 上级医生
         String res = "";
+        TestLogger logger = new TestLogger(s_JobName());
         HashMap<String, String> query = new HashMap<>();
         query.put("flag", flag);
         try {
@@ -40,6 +49,7 @@ public class GetOrderList_V1 extends BaseTest {
     public static String ListCompleted(String token, String flag) {
         // 1 - 下级医生；2 - 上级医生
         String res = "";
+        TestLogger logger = new TestLogger(s_JobName());
         HashMap<String, String> query = new HashMap<>();
         query.put("flag",flag);
         query.put("status", "9000");

@@ -1,6 +1,7 @@
 package com.mingyizhudao.qa.functiontest.doctor;
 
 import com.mingyizhudao.qa.common.BaseTest;
+import com.mingyizhudao.qa.common.TestLogger;
 import com.mingyizhudao.qa.dataprofile.doctor.DoctorProfile;
 import com.mingyizhudao.qa.functiontest.crm.*;
 import com.mingyizhudao.qa.utilities.HttpRequest;
@@ -16,12 +17,20 @@ import java.util.HashMap;
  * Created by dayi on 2017/7/20.
  */
 public class GetOrderDetail_V1 extends BaseTest {
-    public static final Logger logger= Logger.getLogger(GetOrderDetail_V1.class);
+
+    public static String clazzName = new Object() {
+        public String getClassName() {
+            String clazzName = this.getClass().getName();
+            return clazzName.substring(0, clazzName.lastIndexOf('$'));
+        }
+    }.getClassName();
+    public static TestLogger logger = new TestLogger(clazzName);
     public static String uri = "/api/v1/orders/{orderId}";
     public static String mock = false ? "/mockjs/1" : "";
 
     public static String MyInitiateOrder(String token, String orderId) {
         String res = "";
+        TestLogger logger = new TestLogger(s_JobName());
         HashMap<String, String> pathValue = new HashMap<>();
         pathValue.put("orderId", orderId);
         HashMap<String, String> query = new HashMap<>();
@@ -36,6 +45,7 @@ public class GetOrderDetail_V1 extends BaseTest {
 
     public static String MyReceivedOrder(String token, String orderId) {
         String res = "";
+        TestLogger logger = new TestLogger(s_JobName());
         HashMap<String, String> pathValue = new HashMap<>();
         pathValue.put("orderId", orderId);
         HashMap<String, String> query = new HashMap<>();

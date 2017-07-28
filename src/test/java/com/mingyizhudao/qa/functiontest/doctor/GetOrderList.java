@@ -1,6 +1,7 @@
 package com.mingyizhudao.qa.functiontest.doctor;
 
 import com.mingyizhudao.qa.common.BaseTest;
+import com.mingyizhudao.qa.common.TestLogger;
 import com.mingyizhudao.qa.dataprofile.doctor.DoctorProfile;
 import com.mingyizhudao.qa.functiontest.crm.*;
 import com.mingyizhudao.qa.functiontest.login.CheckVerifyCode;
@@ -19,12 +20,19 @@ import java.io.IOException;
  */
 public class GetOrderList extends BaseTest{
 
-    public static final Logger logger= Logger.getLogger(GetOrderList.class);
+    public static String clazzName = new Object() {
+        public String getClassName() {
+            String clazzName = this.getClass().getName();
+            return clazzName.substring(0, clazzName.lastIndexOf('$'));
+        }
+    }.getClassName();
+    public static TestLogger logger = new TestLogger(clazzName);
     public static String uri = "/api/getorderlist";
     public static String mock = false ? "/mockjs/1" : "";
 
     public static String List(String token) {
         String res = "";
+        TestLogger logger = new TestLogger(s_JobName());
         try {
             res = HttpRequest.s_SendGet(host_doc+uri,"", token);
         } catch (IOException e) {

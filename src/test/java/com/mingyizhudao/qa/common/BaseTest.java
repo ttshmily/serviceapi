@@ -100,9 +100,24 @@ public class BaseTest {
         }
     }
 
+    protected static String s_JobName() {
+        String jobName = "";
+        StackTraceElement stack[] = (new Throwable()).getStackTrace();
+        for (int i = 0; i < stack.length; i++) {
+            StackTraceElement s = stack[i];
+            if (s.getMethodName().startsWith("s_")) {
+                continue;
+            } else {
+                jobName = s.getClassName();
+                break;
+            }
+        }
+        return jobName;
+    }
+
     @BeforeSuite
     public void setUpSuite() throws Exception {
-        KnowledgeBase.init();
+        KnowledgeBase.s_Init();
         crm_token = JSONObject.fromObject(HttpRequest.s_SendGet("http://services.dev.myzd.info/crm/api/internal/devToken" , "email="+mainOperatorId, "")).getJSONObject("data").getString("token");
 //        bda_token = JSONObject.fromObject(HttpRequest.s_SendGet("http://work.myzd.info/wx/internal/api/dev-tokens" , "", "")).getJSONObject("data").getJSONObject("chao.fang@mingyizhudao.com").getString("token");
 //        bda_token_staff = JSONObject.fromObject(HttpRequest.s_SendGet("http://work.myzd.info/wx/internal/api/dev-tokens" , "", "")).getJSONObject("data").getJSONObject("lei.wang@mingyizhudao.com").getString("token");

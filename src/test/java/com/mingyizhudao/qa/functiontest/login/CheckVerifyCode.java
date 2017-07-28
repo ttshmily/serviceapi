@@ -1,6 +1,7 @@
 package com.mingyizhudao.qa.functiontest.login;
 
 import com.mingyizhudao.qa.common.BaseTest;
+import com.mingyizhudao.qa.common.TestLogger;
 import com.mingyizhudao.qa.dataprofile.login.CheckMobileProfile;
 import com.mingyizhudao.qa.utilities.HttpRequest;
 import com.mingyizhudao.qa.utilities.Generator;
@@ -16,7 +17,13 @@ import java.io.IOException;
  */
 public class CheckVerifyCode extends BaseTest{
 
-    public static final Logger logger= Logger.getLogger(CheckVerifyCode.class);
+    public static String clazzName = new Object() {
+        public String getClassName() {
+            String clazzName = this.getClass().getName();
+            return clazzName.substring(0, clazzName.lastIndexOf('$'));
+        }
+    }.getClassName();
+    public static TestLogger logger = new TestLogger(clazzName);
     public static String uri = "/api/login/checkVerifyCode";
     public static String mock = false ? "/mockjs/1" : "";
     public static String mobile;
@@ -35,7 +42,6 @@ public class CheckVerifyCode extends BaseTest{
         } catch (IOException e) {
             logger.error(e);
         }
-//        logger.info("返回数据: " + JSONObject.fromObject(res).toString());
 
         if (null != tmpToken  && !tmpToken.isEmpty()) {
             logger.info("token是: " + tmpToken);
@@ -60,7 +66,6 @@ public class CheckVerifyCode extends BaseTest{
         } catch (IOException e) {
             logger.error(e);
         }
-//        logger.info("返回数据: " + JSONObject.fromObject(res).toString());
 
         if (null != tmpToken  && !tmpToken.isEmpty()) {
             logger.info("token是: " + tmpToken);
@@ -71,7 +76,6 @@ public class CheckVerifyCode extends BaseTest{
         }
         return tmpToken;
     }
-
 
     @Test
     public void 同一手机号先请求验证码再验证应该返回token() {

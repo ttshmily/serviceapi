@@ -1,6 +1,7 @@
 package com.mingyizhudao.qa.functiontest.doctor;
 
 import com.mingyizhudao.qa.common.BaseTest;
+import com.mingyizhudao.qa.common.TestLogger;
 import com.mingyizhudao.qa.dataprofile.doctor.DoctorProfile;
 import com.mingyizhudao.qa.functiontest.crm.RegisteredDoctor_Certify_V2;
 import com.mingyizhudao.qa.functiontest.login.CheckVerifyCode;
@@ -20,12 +21,19 @@ import java.util.HashMap;
  */
 public class GetOrderDetail extends BaseTest {
 
-    public static final Logger logger= Logger.getLogger(GetOrderDetail.class);
+    public static String clazzName = new Object() {
+        public String getClassName() {
+            String clazzName = this.getClass().getName();
+            return clazzName.substring(0, clazzName.lastIndexOf('$'));
+        }
+    }.getClassName();
+    public static TestLogger logger = new TestLogger(clazzName);
     public static String uri = "/api/getorderdetail/{orderId}";
     public static String mock = false ? "/mockjs/1" : "";
 
     public static String getOrderDetail(String token, String orderId) {
         String res = "";
+        TestLogger logger = new TestLogger(s_JobName());
         HashMap<String, String> pathValue = new HashMap<String, String>();
         pathValue.put("orderId", orderId);
         try {

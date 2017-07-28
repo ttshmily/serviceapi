@@ -2,6 +2,7 @@ package com.mingyizhudao.qa.functiontest.doctor;
 
 import com.mingyizhudao.qa.common.BaseTest;
 import com.mingyizhudao.qa.common.KnowledgeBase;
+import com.mingyizhudao.qa.common.TestLogger;
 import com.mingyizhudao.qa.dataprofile.doctor.MedicalRecords;
 import com.mingyizhudao.qa.dataprofile.doctor.OrderDetail;
 import com.mingyizhudao.qa.utilities.HttpRequest;
@@ -27,6 +28,7 @@ public class UpdateMedicalRecords extends BaseTest {
 
     public static String UpdateMedicalRecords(String token, String orderId, HashMap<String, String> map) {
         String res = "";
+        TestLogger logger = new TestLogger(s_JobName());
         MedicalRecords mr = new MedicalRecords(true);
         for (String key:map.keySet()
              ) {

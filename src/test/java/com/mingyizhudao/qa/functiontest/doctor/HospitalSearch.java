@@ -1,6 +1,7 @@
 package com.mingyizhudao.qa.functiontest.doctor;
 
 import com.mingyizhudao.qa.common.BaseTest;
+import com.mingyizhudao.qa.common.TestLogger;
 import com.mingyizhudao.qa.utilities.HttpRequest;
 import com.mingyizhudao.qa.utilities.Generator;
 import org.apache.log4j.Logger;
@@ -15,7 +16,13 @@ import java.util.HashMap;
  */
 public class HospitalSearch extends BaseTest {
 
-    public static final Logger logger= Logger.getLogger(HospitalSearch.class);
+    public static String clazzName = new Object() {
+        public String getClassName() {
+            String clazzName = this.getClass().getName();
+            return clazzName.substring(0, clazzName.lastIndexOf('$'));
+        }
+    }.getClassName();
+    public static TestLogger logger = new TestLogger(clazzName);
     public static String uri = "/api/hospitalsearch";
     public static String mock = false ? "/mockjs/1" : "";
 

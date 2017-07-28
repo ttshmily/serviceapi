@@ -33,6 +33,7 @@ public class GetDoctorProfile_V1 extends BaseTest {
 
     public static String s_MyProfile(String token) {
         String res = "";
+        TestLogger logger = new TestLogger(s_JobName());
         try {
             res = HttpRequest.s_SendGet(host_doc +uri, "", token);
         } catch (IOException e) {

@@ -1,6 +1,7 @@
 package com.mingyizhudao.qa.functiontest.login;
 
 import com.mingyizhudao.qa.common.BaseTest;
+import com.mingyizhudao.qa.common.TestLogger;
 import com.mingyizhudao.qa.dataprofile.login.RefreshProfile;
 import com.mingyizhudao.qa.functiontest.doctor.GetDoctorProfile_V1;
 import com.mingyizhudao.qa.utilities.HttpRequest;
@@ -17,7 +18,13 @@ import java.io.IOException;
  */
 public class Refresh extends BaseTest{
 
-    public static final Logger logger= Logger.getLogger(Refresh.class);
+    public static String clazzName = new Object() {
+        public String getClassName() {
+            String clazzName = this.getClass().getName();
+            return clazzName.substring(0, clazzName.lastIndexOf('$'));
+        }
+    }.getClassName();
+    public static TestLogger logger = new TestLogger(clazzName);
     public static String uri = "/api/login/refresh";
     public static String mock = false ? "/mockjs/1" : "";
     public static String mobile;

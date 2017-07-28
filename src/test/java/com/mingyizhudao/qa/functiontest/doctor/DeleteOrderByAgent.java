@@ -1,6 +1,7 @@
 package com.mingyizhudao.qa.functiontest.doctor;
 
 import com.mingyizhudao.qa.common.BaseTest;
+import com.mingyizhudao.qa.common.TestLogger;
 import com.mingyizhudao.qa.dataprofile.doctor.DoctorProfile;
 import com.mingyizhudao.qa.functiontest.crm.Order_ReceiveTask;
 import com.mingyizhudao.qa.functiontest.crm.Order_RecommendDoctor;
@@ -20,7 +21,13 @@ import static com.mingyizhudao.qa.utilities.Generator.parseJson;
  */
 public class DeleteOrderByAgent extends BaseTest {
 
-    public static final Logger logger= Logger.getLogger(DeleteOrderByAgent.class);
+    public static String clazzName = new Object() {
+        public String getClassName() {
+            String clazzName = this.getClass().getName();
+            return clazzName.substring(0, clazzName.lastIndexOf('$'));
+        }
+    }.getClassName();
+    public static TestLogger logger = new TestLogger(clazzName);
     public static String uri = "/api/orders/{orderId}";
     public static String mock = false ? "/mockjs/1" : "";
 

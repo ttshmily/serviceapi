@@ -53,7 +53,7 @@ public class HttpRequest {
 	    StackTraceElement stack[] = (new Throwable()).getStackTrace();
         for (int i = 0; i < stack.length; i++) {
             StackTraceElement s = stack[i];
-            if ("s_SendGet".equals(s.getMethodName()) || "init".equals(s.getMethodName())) {
+            if (s.getMethodName().startsWith("s_")) {
                 continue;
             } else {
                 jobName = s.getClassName();
@@ -224,7 +224,7 @@ public class HttpRequest {
         StackTraceElement stack[] = (new Throwable()).getStackTrace();
         for (int i = 0; i < stack.length; i++) {
             StackTraceElement s = stack[i];
-            if ("s_SendPost".equals(s.getMethodName()) || "init".equals(s.getMethodName())) {
+            if (s.getMethodName().startsWith("s_")) {
                 continue;
             } else {
                 jobName = s.getClassName();
@@ -398,7 +398,7 @@ public class HttpRequest {
         StackTraceElement stack[] = (new Throwable()).getStackTrace();
         for (int i = 0; i < stack.length; i++) {
             StackTraceElement s = stack[i];
-            if ("s_SendPut".equals(s.getMethodName()) || "init".equals(s.getMethodName())) {
+            if (s.getMethodName().startsWith("s_")) {
                 continue;
             } else {
                 jobName = s.getClassName();
@@ -485,7 +485,7 @@ public class HttpRequest {
         StackTraceElement stack[] = (new Throwable()).getStackTrace();
         for (int i = 0; i < stack.length; i++) {
             StackTraceElement s = stack[i];
-            if ("s_SendDelete".equals(s.getMethodName()) || "init".equals(s.getMethodName())) {
+            if (s.getMethodName().startsWith("s_")) {
                 continue;
             } else {
                 jobName = s.getClassName();

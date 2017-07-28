@@ -2,6 +2,7 @@ package com.mingyizhudao.qa.functiontest.doctor;
 
 import com.mingyizhudao.qa.common.BaseTest;
 import com.mingyizhudao.qa.common.KnowledgeBase;
+import com.mingyizhudao.qa.common.TestLogger;
 import com.mingyizhudao.qa.dataprofile.doctor.DoctorProfile;
 import com.mingyizhudao.qa.functiontest.crm.KBHospital_Detail;
 import com.mingyizhudao.qa.utilities.HttpRequest;
@@ -20,27 +21,19 @@ import java.util.HashMap;
  */
 public class UpdateDoctorProfile_V1 extends BaseTest {
 
-    public static final Logger logger= Logger.getLogger(UpdateDoctorProfile_V1.class);
+    public static String clazzName = new Object() {
+        public String getClassName() {
+            String clazzName = this.getClass().getName();
+            return clazzName.substring(0, clazzName.lastIndexOf('$'));
+        }
+    }.getClassName();
+    public static TestLogger logger = new TestLogger(clazzName);
     public static String uri = "/api/v1/updatedoctorprofile";
     public static String mock = false ? "/mockjs/1" : "";
-    public static String token= "";
-
-
 
     public static String updateDoctorProfile(String token, DoctorProfile dp) {
         String res = "";
-//        DoctorProfile dp = new DoctorProfile(true);
-//
-//        if (map != null) {
-//            for (String key : map.keySet()
-//                    ) {
-//                if (dp.body.getJSONObject("doctor").containsKey(key)) {
-//                    dp.body.getJSONObject("doctor").replace(key, map.get(key));
-//                } else {
-//                    dp.body.getJSONObject("doctor").accumulate(key, map.get(key));
-//                }
-//            }
-//        }
+        TestLogger logger = new TestLogger(s_JobName());
         try {
             res = HttpRequest.s_SendPost(host_doc+uri, dp.body.toString(), token);
         } catch (IOException e) {

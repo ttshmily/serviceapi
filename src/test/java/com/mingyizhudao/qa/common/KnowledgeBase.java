@@ -75,7 +75,7 @@ public class KnowledgeBase {
     public static HashMap<String, String> kb_county = new HashMap<>();
     public static String county_file = log_dir + "kb_county.txt";
 
-    public static void init() {
+    public static void s_Init() {
         try {
             File file = new File(hospital_file);
             if (file.exists()) {

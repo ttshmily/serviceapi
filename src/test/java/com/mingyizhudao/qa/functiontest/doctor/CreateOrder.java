@@ -1,6 +1,7 @@
 package com.mingyizhudao.qa.functiontest.doctor;
 
 import com.mingyizhudao.qa.common.BaseTest;
+import com.mingyizhudao.qa.common.TestLogger;
 import com.mingyizhudao.qa.dataprofile.doctor.DoctorProfile;
 import com.mingyizhudao.qa.dataprofile.doctor.OrderDetail;
 import com.mingyizhudao.qa.utilities.HttpRequest;
@@ -20,12 +21,19 @@ import static com.mingyizhudao.qa.utilities.Generator.parseJson;
  */
 public class CreateOrder extends BaseTest {
 
-    public static final Logger logger= Logger.getLogger(CreateOrder.class);
+    public static String clazzName = new Object() {
+        public String getClassName() {
+            String clazzName = this.getClass().getName();
+            return clazzName.substring(0, clazzName.lastIndexOf('$'));
+        }
+    }.getClassName();
+    public static TestLogger logger = new TestLogger(clazzName);
     public static String uri = "/api/createorder";
     public static String mock = false ? "/mockjs/1" : "";
 
     public static String CreateOrder(String token) {
         String res = "";
+        TestLogger logger = new TestLogger(s_JobName());
         OrderDetail body = new OrderDetail(true);
         try {
             res = HttpRequest.s_SendPost(host_doc+uri, body.body.toString(), token);
@@ -46,6 +54,7 @@ public class CreateOrder extends BaseTest {
 
     public static String CreateOrder(String token, OrderDetail mr) {
         String res = "";
+        TestLogger logger = new TestLogger(s_JobName());
         mr.body.getJSONObject("order").remove("medical_record_pictures");
         try {
             res = HttpRequest.s_SendPost(host_doc+uri, mr.body.toString(), token);
