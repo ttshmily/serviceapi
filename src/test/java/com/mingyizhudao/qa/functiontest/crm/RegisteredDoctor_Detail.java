@@ -25,7 +25,7 @@ public class RegisteredDoctor_Detail extends BaseTest {
         HashMap<String, String> pathValue = new HashMap<>();
         pathValue.put("id",regId);
         try {
-            res = HttpRequest.sendGet(host_crm+uri,"", crm_token, pathValue);
+            res = HttpRequest.s_SendGet(host_crm+uri,"", crm_token, pathValue);
         } catch (IOException e) {
             logger.error(e);
         }
@@ -39,7 +39,7 @@ public class RegisteredDoctor_Detail extends BaseTest {
         HashMap<String, String> pathValue = new HashMap<>();
         pathValue.put("id",mainDoctorId);
         try {
-            res = HttpRequest.sendGet(host_crm+mock+uri, "", crm_token, pathValue);
+            res = HttpRequest.s_SendGet(host_crm+mock+uri, "", crm_token, pathValue);
         } catch (IOException e) {
             logger.error(e);
         }
@@ -62,7 +62,7 @@ public class RegisteredDoctor_Detail extends BaseTest {
         HashMap<String, String> pathValue = new HashMap<>();
         pathValue.put("id","1"+mainDoctorId);
         try {
-            res = HttpRequest.sendGet(host_crm+mock+uri, "", crm_token, pathValue);
+            res = HttpRequest.s_SendGet(host_crm+mock+uri, "", crm_token, pathValue);
         } catch (IOException e) {
             logger.error(e);
         }

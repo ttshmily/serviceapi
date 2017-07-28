@@ -28,7 +28,7 @@ public class KBDisease_Detail extends BaseTest {
         HashMap<String, String> pathValue = new HashMap<>();
         pathValue.put("id",diseaseId);
         try {
-            res = HttpRequest.sendGet(host_crm+uri,"", crm_token, pathValue);
+            res = HttpRequest.s_SendGet(host_crm+uri,"", crm_token, pathValue);
         } catch (IOException e) {
             logger.error(e);
         }
@@ -45,7 +45,7 @@ public class KBDisease_Detail extends BaseTest {
         HashMap<String, String> pathValue = new HashMap<>();
         pathValue.put("id",info.get("id"));
         try {
-            res = HttpRequest.sendGet(host_crm+uri, "", crm_token, pathValue);
+            res = HttpRequest.s_SendGet(host_crm+uri, "", crm_token, pathValue);
         } catch (IOException e) {
             logger.error(e);
         }
@@ -69,7 +69,7 @@ public class KBDisease_Detail extends BaseTest {
         HashMap<String, String> pathValue = new HashMap<>();
         pathValue.put("id","111"+info.get("id"));
         try {
-            res = HttpRequest.sendGet(host_crm+uri, "", crm_token, pathValue);
+            res = HttpRequest.s_SendGet(host_crm+uri, "", crm_token, pathValue);
         } catch (IOException e) {
             logger.error(e);
         }
@@ -88,7 +88,7 @@ public class KBDisease_Detail extends BaseTest {
         HashMap<String, String> pathValue = new HashMap<>();
         pathValue.put("id", diseaseId);
         try {
-            res = HttpRequest.sendGet(host_crm+uri, "", crm_token, pathValue);
+            res = HttpRequest.s_SendGet(host_crm+uri, "", crm_token, pathValue);
         } catch (IOException e) {
             logger.error(e);
         }
@@ -100,7 +100,7 @@ public class KBDisease_Detail extends BaseTest {
 
         if (!KBExpert_Diseases.Connect(Generator.randomExpertId(), ids)) Assert.fail("关联疾病失败，退出用例执行");
         try {
-            res = HttpRequest.sendGet(host_crm+uri, "", crm_token, pathValue);
+            res = HttpRequest.s_SendGet(host_crm+uri, "", crm_token, pathValue);
         } catch (IOException e) {
             logger.error(e);
         }
@@ -110,7 +110,7 @@ public class KBDisease_Detail extends BaseTest {
 
         KBExpert_Diseases.Connect(Generator.randomExpertId(), ids);
         try {
-            res = HttpRequest.sendGet(host_crm+uri, "", crm_token, pathValue);
+            res = HttpRequest.s_SendGet(host_crm+uri, "", crm_token, pathValue);
         } catch (IOException e) {
             logger.error(e);
         }
@@ -120,7 +120,7 @@ public class KBDisease_Detail extends BaseTest {
 
         KBExpert_Diseases.Connect(Generator.randomExpertId(), ids);
         try {
-            res = HttpRequest.sendGet(host_crm+uri, "", crm_token, pathValue);
+            res = HttpRequest.s_SendGet(host_crm+uri, "", crm_token, pathValue);
         } catch (IOException e) {
             logger.error(e);
         }

@@ -30,7 +30,7 @@ public class Common_UploadToken extends BaseTest {
         query.put("fileSize", "15869");
         query.put("MIME", "JPG");
         try {
-            res = HttpRequest.sendGet(host_crm + uri, query, crm_token);
+            res = HttpRequest.s_SendGet(host_crm + uri, query, crm_token);
             checkResponse(res);
             Assert.assertEquals(code, "1000000");
         } catch (IOException e) {
@@ -52,7 +52,7 @@ public class Common_UploadToken extends BaseTest {
         query.put("fileSize", "1356949");
         query.put("MIME", "JPG");
         try {
-            res = HttpRequest.sendGet(host_crm + uri, query, crm_token);
+            res = HttpRequest.s_SendGet(host_crm + uri, query, crm_token);
             checkResponse(res);
             Assert.assertEquals(code, "1000000");
         } catch (IOException e) {

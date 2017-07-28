@@ -22,7 +22,7 @@ public class SurgeryCategory extends BaseTest {
     public void test_01_有token信息的请求可以获得有效信息() {
         String res = "";
         try {
-            res = HttpRequest.sendGet(host_doc+uri,"", mainToken);
+            res = HttpRequest.s_SendGet(host_doc+uri,"", mainToken);
         } catch (IOException e) {
             logger.error(e);
         }
@@ -40,7 +40,7 @@ public class SurgeryCategory extends BaseTest {
     public void test_02_没有token信息的请求可以获得有效信息() {
         String res = "";
         try {
-            res = HttpRequest.sendGet(host_doc+uri,"","");
+            res = HttpRequest.s_SendGet(host_doc+uri,"","");
         } catch (IOException e) {
             logger.error(e);
         }

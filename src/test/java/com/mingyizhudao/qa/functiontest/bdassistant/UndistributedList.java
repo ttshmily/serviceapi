@@ -22,7 +22,7 @@ public class UndistributedList extends BaseTest {
         String res = "";
         HashMap<String, String> query = new HashMap<>();
         try {
-            res = HttpRequest.sendGet(host_bda + uri, query, bda_token);
+            res = HttpRequest.s_SendGet(host_bda + uri, query, bda_token);
         } catch (IOException e) {
             logger.error(e);
         }

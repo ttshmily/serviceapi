@@ -26,7 +26,7 @@ public class Order_Detail extends BaseTest {
         HashMap<String, String> pathValue = new HashMap<>();
         pathValue.put("orderNumber", orderId);
         try {
-            res = HttpRequest.sendGet(host_crm+uri, "", crm_token, pathValue);
+            res = HttpRequest.s_SendGet(host_crm+uri, "", crm_token, pathValue);
         } catch (IOException e) {
             logger.error(e);
         }
@@ -41,7 +41,7 @@ public class Order_Detail extends BaseTest {
         String orderId = CreateOrder.CreateOrder(mainToken);
         pathValue.put("orderNumber", orderId);
         try {
-            res = HttpRequest.sendGet(host_crm+uri,"", crm_token, pathValue);
+            res = HttpRequest.s_SendGet(host_crm+uri,"", crm_token, pathValue);
         } catch (IOException e) {
             logger.error(e);
         }
@@ -80,7 +80,7 @@ public class Order_Detail extends BaseTest {
         HashMap<String, String> pathValue = new HashMap<>();
         pathValue.put("orderNumber", "2000000");
         try {
-            res = HttpRequest.sendGet(host_crm+uri,"", crm_token, pathValue);
+            res = HttpRequest.s_SendGet(host_crm+uri,"", crm_token, pathValue);
         } catch (IOException e) {
             logger.error(e);
         }
@@ -95,7 +95,7 @@ public class Order_Detail extends BaseTest {
         HashMap<String, String> pathValue = new HashMap<>();
         pathValue.put("orderNumber", "20000asdfa000");
         try {
-            res = HttpRequest.sendGet(host_crm + uri,"", crm_token, pathValue);
+            res = HttpRequest.s_SendGet(host_crm + uri,"", crm_token, pathValue);
         } catch (IOException e) {
             logger.error(e);
             return;

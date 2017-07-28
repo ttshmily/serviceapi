@@ -29,7 +29,7 @@ public class OrderList extends BaseTest {
         String res = "";
         HashMap<String, String> map = new HashMap<>();
         try {
-            res = HttpRequest.sendGet(host_bda + uri, map, "", null);
+            res = HttpRequest.s_SendGet(host_bda + uri, map, "", null);
         } catch (IOException e) {
             logger.error(e);
         }
@@ -44,7 +44,7 @@ public class OrderList extends BaseTest {
         HashMap<String, String> map = new HashMap<>();
         map.put("agent_contact_id", Generator.randomEmployeeId());
         try {
-            res = HttpRequest.sendGet(host_bda + uri, map, bda_token, null);
+            res = HttpRequest.s_SendGet(host_bda + uri, map, bda_token, null);
         } catch (IOException e) {
             logger.error(e);
         }
@@ -64,7 +64,7 @@ public class OrderList extends BaseTest {
         HashMap<String, String> map = new HashMap<>();
         map.put("agent_contact_id", "SH0133");
         try {
-            res = HttpRequest.sendGet(host_bda + uri, map, bda_token, null);
+            res = HttpRequest.s_SendGet(host_bda + uri, map, bda_token, null);
         } catch (IOException e) {
             logger.error(e);
         }
@@ -85,7 +85,7 @@ public class OrderList extends BaseTest {
         String agent_contact_id = Generator.randomEmployeeId();
         query.put("agent_contact_id", agent_contact_id);
         try {
-            res = HttpRequest.sendGet(host_bda + uri, query, bda_token);
+            res = HttpRequest.s_SendGet(host_bda + uri, query, bda_token);
         } catch (IOException e) {
             logger.error(e);
         }
@@ -103,7 +103,7 @@ public class OrderList extends BaseTest {
         HashMap<String, String> map = new HashMap<>();
         map.put("agent_contact_id", "SH0001");
         try {
-            res = HttpRequest.sendGet(host_bda + uri, map, bda_token, null);
+            res = HttpRequest.s_SendGet(host_bda + uri, map, bda_token, null);
         } catch (IOException e) {
             logger.error(e);
         }
@@ -138,7 +138,7 @@ public class OrderList extends BaseTest {
                 ) {
             map.replace("status", s);
             try {
-                res = HttpRequest.sendGet(host_bda + uri, map, bda_token, null);
+                res = HttpRequest.s_SendGet(host_bda + uri, map, bda_token, null);
             } catch (IOException e) {
                 logger.error(e);
             }

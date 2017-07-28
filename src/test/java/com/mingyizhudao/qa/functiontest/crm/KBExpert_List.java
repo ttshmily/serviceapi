@@ -28,7 +28,7 @@ public class KBExpert_List extends BaseTest {
     public static int expertList() {
         String res = "";
         try {
-            res = HttpRequest.sendGet(host_crm+uri, "", crm_token);
+            res = HttpRequest.s_SendGet(host_crm+uri, "", crm_token);
         } catch (IOException e) {
             logger.error(e);
         }
@@ -42,7 +42,7 @@ public class KBExpert_List extends BaseTest {
         String res = "";
         HashMap<String, String> query = new HashMap<>();
         try {
-            res = HttpRequest.sendGet(host_crm + uri, "", crm_token);
+            res = HttpRequest.s_SendGet(host_crm + uri, "", crm_token);
         } catch (IOException e) {
             logger.error(e);
         }
@@ -71,7 +71,7 @@ public class KBExpert_List extends BaseTest {
 
         query.put("page","2");
         try {
-            res = HttpRequest.sendGet(host_crm + uri, query, crm_token, null);
+            res = HttpRequest.s_SendGet(host_crm + uri, query, crm_token, null);
         } catch (IOException e) {
             logger.error(e);
         }
@@ -96,7 +96,7 @@ public class KBExpert_List extends BaseTest {
         for (int i = 1; i < pageNum; i++) {
             query.replace("page",String.valueOf(i));
             try {
-                res = HttpRequest.sendGet(host_crm+uri, query, crm_token);
+                res = HttpRequest.s_SendGet(host_crm+uri, query, crm_token);
             } catch (IOException e) {
                 logger.error(e);
                 Assert.fail("请求出错");
@@ -114,7 +114,7 @@ public class KBExpert_List extends BaseTest {
             int page_size = (int) Generator.randomInt(200);
             query.replace("pageSize", String.valueOf(page_size));
             try {
-                res = HttpRequest.sendGet(host_crm+uri, query, crm_token);
+                res = HttpRequest.s_SendGet(host_crm+uri, query, crm_token);
                 checkResponse(res);
                 Assert.assertEquals(code, "1000000");
                 Assert.assertEquals(Generator.parseJson(data, "list()"), String.valueOf(page_size), "分页值不正确");
@@ -127,7 +127,7 @@ public class KBExpert_List extends BaseTest {
             int page = total/page_size + 1;
             query.replace("page", String.valueOf(page+1));
             try {
-                res = HttpRequest.sendGet(host_crm+uri, query, crm_token);
+                res = HttpRequest.s_SendGet(host_crm+uri, query, crm_token);
                 checkResponse(res);
                 Assert.assertEquals(code, "1000000");
                 Assert.assertEquals(Generator.parseJson(data, "list()"), "0", "页码超出总数时，应当返回空列表");
@@ -148,7 +148,7 @@ public class KBExpert_List extends BaseTest {
         //以姓名进行搜索
         query.put("DoctorName","钟西北");
         try {
-            res = HttpRequest.sendGet(host_crm+uri, query, crm_token);
+            res = HttpRequest.s_SendGet(host_crm+uri, query, crm_token);
         } catch (IOException e) {
             logger.error(e);
         }
@@ -172,7 +172,7 @@ public class KBExpert_List extends BaseTest {
         String mobile = Generator.randomPhone();
         query.put("mobile", mobile);
         try {
-            res = HttpRequest.sendGet(host_crm+uri, query, crm_token);
+            res = HttpRequest.s_SendGet(host_crm+uri, query, crm_token);
         } catch (IOException e) {
             logger.error(e);
         }
@@ -187,7 +187,7 @@ public class KBExpert_List extends BaseTest {
 
         query.replace("mobile",mainMobile);
         try {
-            res = HttpRequest.sendGet(host_crm+uri, query, crm_token);
+            res = HttpRequest.s_SendGet(host_crm+uri, query, crm_token);
         } catch (IOException e) {
             logger.error(e);
         }
@@ -210,7 +210,7 @@ public class KBExpert_List extends BaseTest {
         String medical = Generator.randomMedicalId();
         query.put("medical_title_list", medical);
         try {
-            res = HttpRequest.sendGet(host_crm+uri, query, crm_token);
+            res = HttpRequest.s_SendGet(host_crm+uri, query, crm_token);
         } catch (IOException e) {
             logger.error(e);
         }
@@ -226,7 +226,7 @@ public class KBExpert_List extends BaseTest {
         medical = Generator.randomMedicalId().concat(",").concat(Generator.randomMedicalId());
         query.replace("medical_title_list",medical);
         try {
-            res = HttpRequest.sendGet(host_crm+uri, query, crm_token);
+            res = HttpRequest.s_SendGet(host_crm+uri, query, crm_token);
         } catch (IOException e) {
             logger.error(e);
         }
@@ -242,7 +242,7 @@ public class KBExpert_List extends BaseTest {
 
         query.replace("medical_title_list","-1");
         try {
-            res = HttpRequest.sendGet(host_crm+uri, query, crm_token);
+            res = HttpRequest.s_SendGet(host_crm+uri, query, crm_token);
         } catch (IOException e) {
             logger.error(e);
         }
@@ -259,7 +259,7 @@ public class KBExpert_List extends BaseTest {
         String academic = Generator.randomAcademicId();
         query.put("academic_title_list",academic);
         try {
-            res = HttpRequest.sendGet(host_crm+uri, query, crm_token);
+            res = HttpRequest.s_SendGet(host_crm+uri, query, crm_token);
         } catch (IOException e) {
             logger.error(e);
         }
@@ -275,7 +275,7 @@ public class KBExpert_List extends BaseTest {
         academic = Generator.randomAcademicId().concat(",").concat(Generator.randomAcademicId());
         query.replace("academic_title_list",academic);
         try {
-            res = HttpRequest.sendGet(host_crm+uri, query, crm_token);
+            res = HttpRequest.s_SendGet(host_crm+uri, query, crm_token);
         } catch (IOException e) {
             logger.error(e);
         }
@@ -291,7 +291,7 @@ public class KBExpert_List extends BaseTest {
 
         query.replace("academic_title_list","-1");
         try {
-            res = HttpRequest.sendGet(host_crm+mock+uri, query, crm_token);
+            res = HttpRequest.s_SendGet(host_crm+mock+uri, query, crm_token);
         } catch (IOException e) {
             logger.error(e);
         }
@@ -308,7 +308,7 @@ public class KBExpert_List extends BaseTest {
         String hospital_id = Generator.randomHospitalId();
         query.put("hospital_id", hospital_id);
         try {
-            res = HttpRequest.sendGet(host_crm+uri, query, crm_token);
+            res = HttpRequest.s_SendGet(host_crm+uri, query, crm_token);
         } catch (IOException e) {
             logger.error(e);
         }
@@ -323,7 +323,7 @@ public class KBExpert_List extends BaseTest {
 
         query.replace("hospital_id",mainDoctorHospitalId);
         try {
-            res = HttpRequest.sendGet(host_crm+uri, query, crm_token);
+            res = HttpRequest.s_SendGet(host_crm+uri, query, crm_token);
         } catch (IOException e) {
             logger.error(e);
         }
@@ -346,7 +346,7 @@ public class KBExpert_List extends BaseTest {
 
         query.put("signed_status","1");
         try {
-            res = HttpRequest.sendGet(host_crm+uri, query, crm_token);
+            res = HttpRequest.s_SendGet(host_crm+uri, query, crm_token);
         } catch (IOException e) {
             logger.error(e);
         }
@@ -369,7 +369,7 @@ public class KBExpert_List extends BaseTest {
         String major_id = Generator.randomMajorId();
         query.put("major_id", major_id);
         try {
-            res = HttpRequest.sendGet(host_crm+uri, query, crm_token);
+            res = HttpRequest.s_SendGet(host_crm+uri, query, crm_token);
         } catch (IOException e) {
             logger.error(e);
         }
@@ -392,7 +392,7 @@ public class KBExpert_List extends BaseTest {
         String disease_id = Generator.randomDiseaseId();
         query.put("disease_id", disease_id);
         try {
-            res = HttpRequest.sendGet(host_crm+uri, query, crm_token);
+            res = HttpRequest.s_SendGet(host_crm+uri, query, crm_token);
         } catch (IOException e) {
             logger.error(e);
         }
@@ -420,7 +420,7 @@ public class KBExpert_List extends BaseTest {
 
         query.put("is_registered","1");
         try {
-            res = HttpRequest.sendGet(host_crm+uri, query, crm_token);
+            res = HttpRequest.s_SendGet(host_crm+uri, query, crm_token);
         } catch (IOException e) {
             logger.error(e);
         }
@@ -441,7 +441,7 @@ public class KBExpert_List extends BaseTest {
 
         query.put("exactName",mainDoctorName);
         try {
-            res = HttpRequest.sendGet(host_crm+uri, query, crm_token);
+            res = HttpRequest.s_SendGet(host_crm+uri, query, crm_token);
         } catch (IOException e) {
             logger.error(e);
         }

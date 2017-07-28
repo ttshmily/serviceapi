@@ -26,7 +26,7 @@ public class GetOrderList extends BaseTest{
     public static String List(String token) {
         String res = "";
         try {
-            res = HttpRequest.sendGet(host_doc+uri,"", token);
+            res = HttpRequest.s_SendGet(host_doc+uri,"", token);
         } catch (IOException e) {
             logger.debug(HttpRequest.unicodeString(res));
             logger.error(e);
@@ -46,7 +46,7 @@ public class GetOrderList extends BaseTest{
             Assert.fail("创建订单with mainToken失败");
         }
         try {
-            res = HttpRequest.sendGet(host_doc+uri,"", mainToken);
+            res = HttpRequest.s_SendGet(host_doc+uri,"", mainToken);
         } catch (IOException e) {
             logger.error(e);
         }
@@ -67,12 +67,12 @@ public class GetOrderList extends BaseTest{
     public void test_02_获取订单列表_登录用户_订单列表会更新且按时间倒序() {
         String res = "";
 
-        SendVerifyCode.send();
-        String tmpToken = CheckVerifyCode.check();
+        SendVerifyCode.s_Send();
+        String tmpToken = CheckVerifyCode.s_Check();
 
         logger.info(tmpToken);
         DoctorProfile dp = new DoctorProfile(true);
-        res = GetDoctorProfile_V1.MyProfile(tmpToken);
+        res = GetDoctorProfile_V1.s_MyProfile(tmpToken);
         String docId = JSONObject.fromObject(res).getJSONObject("data").getJSONObject("doctor").getString("user_id");
         UpdateDoctorProfile_V1.updateDoctorProfile(tmpToken, dp);
 
@@ -88,7 +88,7 @@ public class GetOrderList extends BaseTest{
             Assert.fail("创建订单with tmpToken失败");
         }
         try {
-            res = HttpRequest.sendGet(host_doc +mock+uri,"", tmpToken);
+            res = HttpRequest.s_SendGet(host_doc +mock+uri,"", tmpToken);
         } catch (IOException e) {
             logger.error(e);
         }
@@ -102,7 +102,7 @@ public class GetOrderList extends BaseTest{
             Assert.fail("创建订单with tmpToken失败");
         }
         try {
-            res = HttpRequest.sendGet(host_doc +mock+uri,"", tmpToken);
+            res = HttpRequest.s_SendGet(host_doc +mock+uri,"", tmpToken);
         } catch (IOException e) {
             logger.error(e);
         }
@@ -117,7 +117,7 @@ public class GetOrderList extends BaseTest{
             Assert.fail("创建订单with tmpToken失败");
         }
         try {
-            res = HttpRequest.sendGet(host_doc +mock+uri,"", tmpToken);
+            res = HttpRequest.s_SendGet(host_doc +mock+uri,"", tmpToken);
         } catch (IOException e) {
             logger.error(e);
         }
@@ -133,7 +133,7 @@ public class GetOrderList extends BaseTest{
             Assert.fail("创建订单with tmpToken失败");
         }
         try {
-            res = HttpRequest.sendGet(host_doc +mock+uri,"", tmpToken);
+            res = HttpRequest.s_SendGet(host_doc +mock+uri,"", tmpToken);
         } catch (IOException e) {
             logger.error(e);
         }
@@ -148,7 +148,7 @@ public class GetOrderList extends BaseTest{
     public void test_03_获取订单列表_未登录用户() {
         String res = "";
         try {
-            res = HttpRequest.sendGet(host_doc +mock+uri,"", "");
+            res = HttpRequest.s_SendGet(host_doc +mock+uri,"", "");
         } catch (IOException e) {
             logger.error(e);
         }
@@ -175,7 +175,7 @@ public class GetOrderList extends BaseTest{
             Assert.fail("推荐医生失败，退出执行");
         }
         try {
-            res = HttpRequest.sendGet(host_doc+uri,"", mainToken);
+            res = HttpRequest.s_SendGet(host_doc+uri,"", mainToken);
         } catch (IOException e) {
             logger.error(e);
         }
@@ -214,7 +214,7 @@ public class GetOrderList extends BaseTest{
             Assert.fail("确定三方通话失败，退出执行");
         }
         try {
-            res = HttpRequest.sendGet(host_doc+uri,"", mainToken);
+            res = HttpRequest.s_SendGet(host_doc+uri,"", mainToken);
         } catch (IOException e) {
             logger.error(e);
         }

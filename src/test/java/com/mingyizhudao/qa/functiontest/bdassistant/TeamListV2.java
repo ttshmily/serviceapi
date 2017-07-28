@@ -1,5 +1,6 @@
 package com.mingyizhudao.qa.functiontest.bdassistant;
 
+import com.mingyizhudao.qa.common.BaseTest;
 import com.mingyizhudao.qa.utilities.HttpRequest;
 import com.mingyizhudao.qa.utilities.Generator;
 import net.sf.json.JSONArray;
@@ -16,7 +17,7 @@ import java.util.List;
 /**
  * Created by dayi on 2017/6/22.
  */
-public class TeamListV2 extends TeamList {
+public class TeamListV2 extends BaseTest {
 
     public static final Logger logger= Logger.getLogger(TeamListV2.class);
     public static String uri = "/api/v2/user/teamList";
@@ -27,7 +28,7 @@ public class TeamListV2 extends TeamList {
         String res = "";
         HashMap<String, String> query = new HashMap<>();
         try {
-            res = HttpRequest.sendGet(host_bda + uri, query, "");
+            res = HttpRequest.s_SendGet(host_bda + uri, query, "");
         } catch (IOException e) {
             logger.error(e);
         }
@@ -39,7 +40,7 @@ public class TeamListV2 extends TeamList {
         String res = "";
         HashMap<String, String> query = new HashMap<>();
         try {
-            res = HttpRequest.sendGet(host_bda + uri, query, "aaaaaaa");
+            res = HttpRequest.s_SendGet(host_bda + uri, query, "aaaaaaa");
         } catch (IOException e) {
             logger.error(e);
         }
@@ -51,7 +52,7 @@ public class TeamListV2 extends TeamList {
         String res = "";
         HashMap<String, String> query = new HashMap<>();
         try {
-            res = HttpRequest.sendGet(host_bda + uri, query, bda_token_staff);
+            res = HttpRequest.s_SendGet(host_bda + uri, query, bda_token_staff);
         } catch (IOException e) {
             logger.error(e);
         }
@@ -65,7 +66,7 @@ public class TeamListV2 extends TeamList {
         query.put("sortKey", "orderCounts");
         query.put("sortValue", "asc");
         try {
-            res = HttpRequest.sendGet(host_bda + uri, query, bda_token);
+            res = HttpRequest.s_SendGet(host_bda + uri, query, bda_token);
         } catch (IOException e) {
             logger.error(e);
         }
@@ -85,7 +86,7 @@ public class TeamListV2 extends TeamList {
         query.replace("sortKey", "orderCounts");
         query.replace("sortValue", "desc");
         try {
-            res = HttpRequest.sendGet(host_bda + uri, query, bda_token);
+            res = HttpRequest.s_SendGet(host_bda + uri, query, bda_token);
         } catch (IOException e) {
             logger.error(e);
         }
@@ -106,7 +107,7 @@ public class TeamListV2 extends TeamList {
         query.put("sortKey", "disActivationDoctorCount");
         query.put("sortValue", "asc");
         try {
-            res = HttpRequest.sendGet(host_bda + uri, query, bda_token);
+            res = HttpRequest.s_SendGet(host_bda + uri, query, bda_token);
         } catch (IOException e) {
             logger.error(e);
         }
@@ -126,7 +127,7 @@ public class TeamListV2 extends TeamList {
         query.replace("sortKey", "disActivationDoctorCount");
         query.replace("sortValue", "desc");
         try {
-            res = HttpRequest.sendGet(host_bda + uri, query, bda_token);
+            res = HttpRequest.s_SendGet(host_bda + uri, query, bda_token);
         } catch (IOException e) {
             logger.error(e);
         }
@@ -147,7 +148,7 @@ public class TeamListV2 extends TeamList {
         query.put("sortKey", "doctorCounts");
         query.put("sortValue", "asc");
         try {
-            res = HttpRequest.sendGet(host_bda + uri, query, bda_token);
+            res = HttpRequest.s_SendGet(host_bda + uri, query, bda_token);
         } catch (IOException e) {
             logger.error(e);
         }
@@ -167,7 +168,7 @@ public class TeamListV2 extends TeamList {
         query.replace("sortKey", "doctorCounts");
         query.replace("sortValue", "desc");
         try {
-            res = HttpRequest.sendGet(host_bda + uri, query, bda_token);
+            res = HttpRequest.s_SendGet(host_bda + uri, query, bda_token);
         } catch (IOException e) {
             logger.error(e);
         }
@@ -186,7 +187,7 @@ public class TeamListV2 extends TeamList {
         String res = "";
         HashMap<String, String> query = new HashMap<>();
         try {
-            res = HttpRequest.sendGet(host_bda + uri, query, bda_token);
+            res = HttpRequest.s_SendGet(host_bda + uri, query, bda_token);
         } catch (IOException e) {
             logger.error(e);
         }
@@ -205,7 +206,7 @@ public class TeamListV2 extends TeamList {
         String city = Generator.randomCityId();
         query.put("city_id", city);
         try {
-            res = HttpRequest.sendGet(host_bda + uri, query, bda_token);
+            res = HttpRequest.s_SendGet(host_bda + uri, query, bda_token);
         } catch (IOException e) {
             logger.error(e);
         }

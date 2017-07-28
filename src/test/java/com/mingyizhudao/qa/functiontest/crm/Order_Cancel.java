@@ -33,8 +33,8 @@ public class Order_Cancel extends BaseTest {
             Assert.fail("没有待提交小结的的订单");
         }
         String agentPhone = JSONObject.fromObject(Order_Detail.Detail(orderId)).getJSONObject("data").getString("agent_phone");
-        SendVerifyCode.send(agentPhone);
-        String token = CheckVerifyCode.check(agentPhone);
+        SendVerifyCode.s_Send(agentPhone);
+        String token = CheckVerifyCode.s_Check(agentPhone);
         if (token == null) {
             logger.error("没有获取到token");
             Assert.fail();
@@ -47,7 +47,7 @@ public class Order_Cancel extends BaseTest {
         body.put("responsible", "责任方：下级医生原因");
 
         try {
-            res = HttpRequest.sendPost(host_crm + uri, body.toString(), crm_token, pathValue);
+            res = HttpRequest.s_SendPost(host_crm + uri, body.toString(), crm_token, pathValue);
         } catch (IOException e) {
             logger.error(e);
         }

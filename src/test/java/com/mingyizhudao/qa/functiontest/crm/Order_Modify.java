@@ -35,7 +35,7 @@ public class Order_Modify extends BaseTest {
         String name = Generator.randomString(4);
         body.put("patient_name","修改的姓名"+name);
         try {
-            res = HttpRequest.sendPut(host_crm+uri, body.toString(), crm_token, pathValue);
+            res = HttpRequest.s_SendPut(host_crm+uri, body.toString(), crm_token, pathValue);
         } catch (IOException e) {
             logger.error(e);
         }
@@ -58,7 +58,7 @@ public class Order_Modify extends BaseTest {
         JSONObject body = new JSONObject();
         body.put("patient_age","44");
         try {
-            res = HttpRequest.sendPut(host_crm+uri, body.toString(), crm_token, pathValue);
+            res = HttpRequest.s_SendPut(host_crm+uri, body.toString(), crm_token, pathValue);
         } catch (IOException e) {
             logger.error(e);
         }
@@ -82,7 +82,7 @@ public class Order_Modify extends BaseTest {
         String diseaseId = Generator.randomDiseaseId();
         body.put("major_disease_id", diseaseId);
         try {
-            res = HttpRequest.sendPut(host_crm+uri, body.toString(), crm_token, pathValue);
+            res = HttpRequest.s_SendPut(host_crm+uri, body.toString(), crm_token, pathValue);
         } catch (IOException e) {
             logger.error(e);
         }
@@ -107,7 +107,7 @@ public class Order_Modify extends BaseTest {
         String diseaseId = Generator.randomDiseaseId();
         body.put("minor_disease_id",diseaseId);
         try {
-            res = HttpRequest.sendPut(host_crm+uri, body.toString(), crm_token, pathValue);
+            res = HttpRequest.s_SendPut(host_crm+uri, body.toString(), crm_token, pathValue);
         } catch (IOException e) {
             logger.error(e);
         }
@@ -131,7 +131,7 @@ public class Order_Modify extends BaseTest {
         JSONObject body = new JSONObject();
         body.put("patient_gender","2");
         try {
-            res = HttpRequest.sendPut(host_crm+uri, body.toString(), crm_token, pathValue);
+            res = HttpRequest.s_SendPut(host_crm+uri, body.toString(), crm_token, pathValue);
         } catch (IOException e) {
             logger.error(e);
         }
@@ -155,7 +155,7 @@ public class Order_Modify extends BaseTest {
         JSONObject body = new JSONObject();
         body.put("patient_phone","13799990123");
         try {
-            res = HttpRequest.sendPut(host_crm+uri, body.toString(), crm_token, pathValue);
+            res = HttpRequest.s_SendPut(host_crm+uri, body.toString(), crm_token, pathValue);
         } catch (IOException e) {
             logger.error(e);
         }
@@ -182,7 +182,7 @@ public class Order_Modify extends BaseTest {
         JSONObject body = new JSONObject();
         body.put("patient_phone","13799990123");
         try {
-            res = HttpRequest.sendPut(host_crm+uri, body.toString(), crm_token, pathValue);
+            res = HttpRequest.s_SendPut(host_crm+uri, body.toString(), crm_token, pathValue);
         } catch (IOException e) {
             logger.error(e);
         }
@@ -203,7 +203,7 @@ public class Order_Modify extends BaseTest {
         JSONObject body = new JSONObject();
         body.put("patient_phone","13799990123");
         try {
-            res = HttpRequest.sendPut(host_crm+uri, body.toString(), crm_token, pathValue);
+            res = HttpRequest.s_SendPut(host_crm+uri, body.toString(), crm_token, pathValue);
         } catch (IOException e) {
             logger.error(e);
         }
@@ -228,7 +228,7 @@ public class Order_Modify extends BaseTest {
         JSONArray pics = JSONArray.fromObject("[{'key':'2017/05/04/1265834e-97d8-44a0-95e7-047c7facaee8/IMG_20170429_102737.jpg';'type':'1'},{'key':'2017/05/04/1265834e-97d8-44a0-95e7-047c7facaee8/IMG_20170429_102738.jpg';'type':'1'},{'key':'2017/05/04/1265834e-97d8-44a0-95e7-047c7facaee8/IMG_20170429_102739.jpg';'type':'1'}]");
         body.put("medical_record_pictures",pics);
         try {
-            res = HttpRequest.sendPut(host_crm+uri, body.toString(), crm_token, pathValue);
+            res = HttpRequest.s_SendPut(host_crm+uri, body.toString(), crm_token, pathValue);
         } catch (IOException e) {
             logger.error(e);
         }
@@ -244,7 +244,7 @@ public class Order_Modify extends BaseTest {
         pics = JSONArray.fromObject("[]");
         body.replace("medical_record_pictures",pics);
         try {
-            res = HttpRequest.sendPut(host_crm+uri, body.toString(), crm_token, pathValue);
+            res = HttpRequest.s_SendPut(host_crm+uri, body.toString(), crm_token, pathValue);
         } catch (IOException e) {
             logger.error(e);
         }

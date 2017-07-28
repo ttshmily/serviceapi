@@ -11,7 +11,6 @@ import com.mingyizhudao.qa.utilities.HttpRequest;
 import com.mingyizhudao.qa.utilities.Generator;
 import net.sf.json.JSONException;
 import net.sf.json.JSONObject;
-import org.apache.log4j.Logger;
 import org.apache.log4j.PropertyConfigurator;
 import org.testng.annotations.*;
 
@@ -25,8 +24,13 @@ import java.util.*;
  */
 public class BaseTest {
 
-//    public static final Logger logger = Logger.getLogger(BaseTest.class);
-    public static TestLogger logger = new TestLogger(BaseTest.class.getName());
+    public static String clazzName = new Object() {
+        public String getClassName() {
+            String clazzName = this.getClass().getName();
+            return clazzName.substring(0, clazzName.lastIndexOf('$'));
+        }
+    }.getClassName();
+    public static TestLogger logger = new TestLogger(clazzName);
     public static String protocol = "";
     public static String host_doc = "";
     public static String host_crm = "";
@@ -45,7 +49,6 @@ public class BaseTest {
     public static String mainDoctorHospitalName = "";
     public static String mainExpertId = "";
     public static DoctorProfile mainDP;
-    public static String mainBD = "SH0133";
 
     public static String mainOperatorId = "";
     public static String mainOperatorName = "";
@@ -55,8 +58,8 @@ public class BaseTest {
     public JSONObject data;
 
     public static void main(String[] args) {
-//        String mobile = SendVerifyCode.send();
-//        String token = CheckVerifyCode.check();
+//        String mobile = SendVerifyCode.s_Send();
+//        String token = CheckVerifyCode.s_Check();
 //        CreateRegistered();
 //        CreateRegisteredDoctor();
     }
@@ -77,7 +80,6 @@ public class BaseTest {
         {
             // 初始化配置文件中的变量
             protocol = prop.getProperty("protocol", "http");
-
             host_doc = prop.getProperty("host_doc", "services.dev.myzd.info/doctor");
             host_crm = prop.getProperty("host_crm", "services.dev.myzd.info/crm");
             host_bda = prop.getProperty("host_bda", "services.dev.myzd.info/bd-assistant");
@@ -101,9 +103,9 @@ public class BaseTest {
     @BeforeSuite
     public void setUpSuite() throws Exception {
         KnowledgeBase.init();
-        crm_token = JSONObject.fromObject(HttpRequest.sendGet("http://services.dev.myzd.info/crm/api/internal/devToken" , "email="+mainOperatorId, "")).getJSONObject("data").getString("token");
-//        bda_token = JSONObject.fromObject(HttpRequest.sendGet("http://work.myzd.info/wx/internal/api/dev-tokens" , "", "")).getJSONObject("data").getJSONObject("chao.fang@mingyizhudao.com").getString("token");
-//        bda_token_staff = JSONObject.fromObject(HttpRequest.sendGet("http://work.myzd.info/wx/internal/api/dev-tokens" , "", "")).getJSONObject("data").getJSONObject("lei.wang@mingyizhudao.com").getString("token");
+        crm_token = JSONObject.fromObject(HttpRequest.s_SendGet("http://services.dev.myzd.info/crm/api/internal/devToken" , "email="+mainOperatorId, "")).getJSONObject("data").getString("token");
+//        bda_token = JSONObject.fromObject(HttpRequest.s_SendGet("http://work.myzd.info/wx/internal/api/dev-tokens" , "", "")).getJSONObject("data").getJSONObject("chao.fang@mingyizhudao.com").getString("token");
+//        bda_token_staff = JSONObject.fromObject(HttpRequest.s_SendGet("http://work.myzd.info/wx/internal/api/dev-tokens" , "", "")).getJSONObject("data").getJSONObject("lei.wang@mingyizhudao.com").getString("token");
         mainDP = new DoctorProfile(true);
         HashMap<String,String> mainDoctorInfo = CreateSyncedDoctor(mainDP);
         if(mainDoctorInfo == null) {
@@ -188,12 +190,12 @@ public class BaseTest {
     }
 
 //    生成一个医生用户
-    public HashMap<String, String> CreateRegistered() {
+    protected static HashMap<String, String> CreateRegistered() {
         logger.info("创建注册用户...");
-        String mobile = SendVerifyCode.send();
-        String token = CheckVerifyCode.check();
+        String mobile = SendVerifyCode.s_Send();
+        String token = CheckVerifyCode.s_Check();
 
-        String res = GetDoctorProfile_V1.MyProfile(token);
+        String res = GetDoctorProfile_V1.s_MyProfile(token);
         String doctorId = JSONObject.fromObject(res).getJSONObject("data").getJSONObject("doctor").getString("user_id");
         if( doctorId == null || doctorId.isEmpty()) {
             logger.error("创建注册用户失败");
@@ -209,15 +211,15 @@ public class BaseTest {
         return result;
     }
 
-//创建一个医生，并且完善信息
-    public HashMap<String, String> CreateRegisteredDoctor(DoctorProfile dp) {
+//    创建一个医生，并且完善信息
+    protected static HashMap<String, String> CreateRegisteredDoctor(DoctorProfile dp) {
         HashMap<String,String> info = CreateRegistered();
         if (info == null) return null;
         String token = info.get("token");
 
         logger.info("更新医生信息...");
         UpdateDoctorProfile_V1.updateDoctorProfile(token, dp);
-        String res = GetDoctorProfile_V1.MyProfile(token);
+        String res = GetDoctorProfile_V1.s_MyProfile(token);
         String doctorHospitalId = JSONObject.fromObject(res).getJSONObject("data").getJSONObject("doctor").getString("hospital_id");
         if (doctorHospitalId == null || doctorHospitalId.isEmpty()) {
             logger.error("更新失败，医生信息不完整");
@@ -230,8 +232,8 @@ public class BaseTest {
         return info;
     }
 
-// 创建一个医生并且认证
-    public HashMap<String, String> CreateVerifiedDoctor(DoctorProfile dp) {
+//    创建一个医生并且认证
+    protected static HashMap<String, String> CreateVerifiedDoctor(DoctorProfile dp) {
         HashMap<String,String> info = CreateRegisteredDoctor(dp);
         if (info == null) return null;
 
@@ -249,8 +251,8 @@ public class BaseTest {
         return info;
     }
 
-// 创建一个医生并且认证和同步
-    public HashMap<String, String> CreateSyncedDoctor(DoctorProfile dp) {
+//    创建一个医生并且认证和同步
+    protected static HashMap<String, String> CreateSyncedDoctor(DoctorProfile dp) {
         HashMap<String,String> info = CreateRegisteredDoctor(dp);
         if (info == null) return null;
         logger.info("认证并同步医生...");
@@ -275,5 +277,4 @@ public class BaseTest {
     info.get("is_verified")
     info.get("expert_id")
     */
-
 }

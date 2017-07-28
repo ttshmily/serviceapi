@@ -31,7 +31,7 @@ public class PersonalInfo extends BaseTest {
         String res = "";
         HashMap<String, String> map = new HashMap<>();
         try {
-            res = HttpRequest.sendGet(host_bda + uri, map, "", null);
+            res = HttpRequest.s_SendGet(host_bda + uri, map, "", null);
         } catch (IOException e) {
             logger.error(e);
         }
@@ -46,7 +46,7 @@ public class PersonalInfo extends BaseTest {
         String res = "";
         HashMap<String, String> map = new HashMap<>();
         try {
-            res = HttpRequest.sendGet(host_bda + uri, map, bda_token, null);
+            res = HttpRequest.s_SendGet(host_bda + uri, map, bda_token, null);
         } catch (IOException e) {
             logger.error(e);
         }
@@ -67,7 +67,7 @@ public class PersonalInfo extends BaseTest {
 
         HashMap<String, String> map = new HashMap<>();
         try {
-            res = HttpRequest.sendGet(host_bda + uri, map, bda_token);
+            res = HttpRequest.s_SendGet(host_bda + uri, map, bda_token);
         } catch (IOException e) {
             logger.error(e);
         }
@@ -92,7 +92,7 @@ public class PersonalInfo extends BaseTest {
 
         CreateOrder.CreateOrder(info.get("token"));
         try {
-            res = HttpRequest.sendGet(host_bda + uri, map, bda_token);
+            res = HttpRequest.s_SendGet(host_bda + uri, map, bda_token);
         } catch (IOException e) {
             logger.error(e);
         }

@@ -39,7 +39,7 @@ public class DeleteOrderByAgent extends BaseTest {
         order.put("role", "1"); // 1 - agent
         body.put("order", order);
         try {
-            res = HttpRequest.sendDelete(host_doc+uri, body.toString(), doctor.get("token"), pathValue);
+            res = HttpRequest.s_SendDelete(host_doc+uri, body.toString(), doctor.get("token"), pathValue);
         } catch (IOException e) {
             logger.error(e);
         }
@@ -69,7 +69,7 @@ public class DeleteOrderByAgent extends BaseTest {
         order.put("role", "2"); // 2 - expert
         body.put("order", order);
         try {
-            res = HttpRequest.sendDelete(host_doc+uri, body.toString(), doctor.get("token"), pathValue);
+            res = HttpRequest.s_SendDelete(host_doc+uri, body.toString(), doctor.get("token"), pathValue);
         } catch (IOException e) {
             logger.error(e);
         }

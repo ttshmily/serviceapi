@@ -32,7 +32,7 @@ public class Order_TrackList extends BaseTest {
             query = null;
         }
         try {
-            res = HttpRequest.sendGet(host_crm+uri, query, crm_token, pathValue);
+            res = HttpRequest.s_SendGet(host_crm+uri, query, crm_token, pathValue);
         } catch (IOException e) {
             logger.error(e);
         }

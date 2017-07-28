@@ -40,7 +40,7 @@ public class VerifiyDoctor extends BaseTest {
         pathValue.put("id", doctorId);
         body.put("status", "1");  // 认证成功
         try {
-            res = HttpRequest.sendPut(host_crm + mock + uri, body.toString(), crm_token, pathValue);
+            res = HttpRequest.s_SendPut(host_crm + mock + uri, body.toString(), crm_token, pathValue);
         } catch (IOException e) {
             logger.error(e);
         }
@@ -74,7 +74,7 @@ public class VerifiyDoctor extends BaseTest {
         pathValue.put("id", doctorId);
         body.put("status", "1");  // 认证成功
         try {
-            res = HttpRequest.sendPut(host_crm + uri, body.toString(), crm_token, pathValue);
+            res = HttpRequest.s_SendPut(host_crm + uri, body.toString(), crm_token, pathValue);
         } catch (IOException e) {
             logger.error(e);
         }

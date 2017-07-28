@@ -29,7 +29,7 @@ public class GetOrderDetail extends BaseTest {
         HashMap<String, String> pathValue = new HashMap<String, String>();
         pathValue.put("orderId", orderId);
         try {
-            res = HttpRequest.sendGet(host_doc +mock+uri, "", token, pathValue);
+            res = HttpRequest.s_SendGet(host_doc +mock+uri, "", token, pathValue);
         } catch (IOException e) {
             logger.error(e);
         }
@@ -44,7 +44,7 @@ public class GetOrderDetail extends BaseTest {
         String orderId = CreateOrder.CreateOrder(mainToken);
         pathValue.put("orderId", orderId);
         try {
-            res = HttpRequest.sendGet(host_doc +mock+uri,"", mainToken, pathValue);
+            res = HttpRequest.s_SendGet(host_doc +mock+uri,"", mainToken, pathValue);
         } catch (IOException e) {
             logger.error(e);
         }
@@ -79,7 +79,7 @@ public class GetOrderDetail extends BaseTest {
         HashMap<String, String> pathValue = new HashMap<String, String>();
         pathValue.put("orderId", "20000000000");
         try {
-            res = HttpRequest.sendGet(host_doc +mock+uri,"", mainToken, pathValue);
+            res = HttpRequest.s_SendGet(host_doc +mock+uri,"", mainToken, pathValue);
         } catch (IOException e) {
             logger.error(e);
         }
@@ -93,7 +93,7 @@ public class GetOrderDetail extends BaseTest {
         HashMap<String, String> pathValue = new HashMap<String, String>();
         pathValue.put("orderId", "20000asdfa000");
         try {
-            res = HttpRequest.sendGet(host_doc +mock+uri,"", mainToken, pathValue);
+            res = HttpRequest.s_SendGet(host_doc +mock+uri,"", mainToken, pathValue);
         } catch (IOException e) {
             logger.error(e);
         }
@@ -112,16 +112,16 @@ public class GetOrderDetail extends BaseTest {
             logger.error("创建订单with mainToken失败");
         }
         pathValue.put("orderId", orderId);
-        SendVerifyCode.send();
-        String tmpToken = CheckVerifyCode.check();
+        SendVerifyCode.s_Send();
+        String tmpToken = CheckVerifyCode.s_Check();
         DoctorProfile dp = new DoctorProfile(true);
         UpdateDoctorProfile_V1.updateDoctorProfile(tmpToken, dp);
-        res = GetDoctorProfile_V1.MyProfile(tmpToken);
+        res = GetDoctorProfile_V1.s_MyProfile(tmpToken);
         String docId = JSONObject.fromObject(res).getJSONObject("data").getJSONObject("doctor").getString("user_id");
         RegisteredDoctor_Certify_V2.CertifyOnly(docId, "1");
 
         try {
-            res = HttpRequest.sendGet(host_doc +mock+uri,"", tmpToken, pathValue);
+            res = HttpRequest.s_SendGet(host_doc +mock+uri,"", tmpToken, pathValue);
         } catch (IOException e) {
             logger.error(e);
         }

@@ -28,7 +28,7 @@ public class KBDisease_Create extends BaseTest {
     public static HashMap<String, String> Create(DiseaseProfile dp) {
         String res = "";
         try {
-            res = HttpRequest.sendPost(host_crm+uri, dp.body.toString(), crm_token);
+            res = HttpRequest.s_SendPost(host_crm+uri, dp.body.toString(), crm_token);
         } catch (IOException e) {
             logger.error(e);
         }
@@ -55,7 +55,7 @@ public class KBDisease_Create extends BaseTest {
         DiseaseProfile dp = new DiseaseProfile(true);
 
         try {
-            res = HttpRequest.sendPost(host_crm + uri, dp.body.toString(), crm_token);
+            res = HttpRequest.s_SendPost(host_crm + uri, dp.body.toString(), crm_token);
         } catch (IOException e) {
             logger.error(e);
         }
@@ -77,7 +77,7 @@ public class KBDisease_Create extends BaseTest {
         dp.body.replace("is_common", 0);
         dp.body.replace("user_visible", 0);
         try {
-            res = HttpRequest.sendPost(host_crm + uri, dp.body.toString(), crm_token);
+            res = HttpRequest.s_SendPost(host_crm + uri, dp.body.toString(), crm_token);
         } catch (IOException e) {
             logger.error(e);
         }
@@ -99,7 +99,7 @@ public class KBDisease_Create extends BaseTest {
 
         dp.body.remove("name");
         try {
-            res = HttpRequest.sendPost(host_crm + uri, dp.body.toString(), crm_token);
+            res = HttpRequest.s_SendPost(host_crm + uri, dp.body.toString(), crm_token);
         } catch (IOException e) {
             logger.error(e);
         }
@@ -109,7 +109,7 @@ public class KBDisease_Create extends BaseTest {
         dp.body.put("name", "疾病"+ Generator.randomString(2));
         dp.body.remove("user_visible");
         try {
-            res = HttpRequest.sendPost(host_crm + uri, dp.body.toString(), crm_token);
+            res = HttpRequest.s_SendPost(host_crm + uri, dp.body.toString(), crm_token);
         } catch (IOException e) {
             logger.error(e);
         }
@@ -119,7 +119,7 @@ public class KBDisease_Create extends BaseTest {
         dp.body.put("user_visible", 1);
         dp.body.remove("is_common");
         try {
-            res = HttpRequest.sendPost(host_crm + uri, dp.body.toString(), crm_token);
+            res = HttpRequest.s_SendPost(host_crm + uri, dp.body.toString(), crm_token);
         } catch (IOException e) {
             logger.error(e);
         }
@@ -129,7 +129,7 @@ public class KBDisease_Create extends BaseTest {
         dp.body.put("is_common", 1);
         dp.body.remove("category_list");
         try {
-            res = HttpRequest.sendPost(host_crm + uri, dp.body.toString(), crm_token);
+            res = HttpRequest.s_SendPost(host_crm + uri, dp.body.toString(), crm_token);
         } catch (IOException e) {
             logger.error(e);
         }

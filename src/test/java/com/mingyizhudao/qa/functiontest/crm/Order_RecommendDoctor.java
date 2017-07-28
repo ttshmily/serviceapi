@@ -41,7 +41,7 @@ public class Order_RecommendDoctor extends BaseTest {
         body.put("surgeon_id",doctorId);
         body.put("content","自动化推荐的医生");
         try {
-            res = HttpRequest.sendPut(host_crm + uri, body.toString(), crm_token, pathValue);
+            res = HttpRequest.s_SendPut(host_crm + uri, body.toString(), crm_token, pathValue);
         } catch (IOException e) {
             logger.error(e);
         }
@@ -65,7 +65,7 @@ public class Order_RecommendDoctor extends BaseTest {
         body.put("surgeon_id",recommendedId);
         body.put("content","自动化推荐的医生");
         try {
-            res = HttpRequest.sendPut(host_crm+uri, body.toString(), crm_token, pathValue);
+            res = HttpRequest.s_SendPut(host_crm+uri, body.toString(), crm_token, pathValue);
         } catch (IOException e) {
             logger.error(e);
         }
@@ -105,7 +105,7 @@ public class Order_RecommendDoctor extends BaseTest {
         body.put("surgeon_id",recommendedId);
         body.put("content","自动化推荐的医生");
         try {
-            res = HttpRequest.sendPut(host_crm+uri, body.toString(), crm_token, pathValue);
+            res = HttpRequest.s_SendPut(host_crm+uri, body.toString(), crm_token, pathValue);
         } catch (IOException e) {
             logger.error(e);
         }
@@ -122,7 +122,7 @@ public class Order_RecommendDoctor extends BaseTest {
         body.replace("surgeon_id",recommendedId);
         body.replace("content","自动化重新推荐的医生");
         try {
-            res = HttpRequest.sendPut(host_crm+uri, body.toString(), crm_token, pathValue);
+            res = HttpRequest.s_SendPut(host_crm+uri, body.toString(), crm_token, pathValue);
         } catch (IOException e) {
             logger.error(e);
         }
@@ -139,7 +139,7 @@ public class Order_RecommendDoctor extends BaseTest {
         body.replace("surgeon_id",new_recommendedId);
         body.replace("content","自动化重新推荐的不存在的医生");
         try {
-            res = HttpRequest.sendPut(host_crm+uri, body.toString(), crm_token, pathValue);
+            res = HttpRequest.s_SendPut(host_crm+uri, body.toString(), crm_token, pathValue);
             checkResponse(res);
         } catch (IOException e) {
             logger.error(e);
@@ -164,7 +164,7 @@ public class Order_RecommendDoctor extends BaseTest {
         body.put("surgeon_id",mainDoctorId);
         body.put("content","和下级医生相同的上级医生");
         try {
-            res = HttpRequest.sendPut(host_crm+uri, body.toString(), crm_token, pathValue);
+            res = HttpRequest.s_SendPut(host_crm+uri, body.toString(), crm_token, pathValue);
         } catch (IOException e) {
             logger.error(e);
         }
@@ -191,7 +191,7 @@ public class Order_RecommendDoctor extends BaseTest {
         body.put("surgeon_id",recommendedId);
         body.put("content","自动化推荐的不存在的医生");
         try {
-            res = HttpRequest.sendPut(host_crm+uri, body.toString(), crm_token, pathValue);
+            res = HttpRequest.s_SendPut(host_crm+uri, body.toString(), crm_token, pathValue);
         } catch (IOException e) {
             logger.error(e);
         }
@@ -219,7 +219,7 @@ public class Order_RecommendDoctor extends BaseTest {
         body.put("surgeon_id",recommendedId);
         body.put("content","无证操作");
         try {
-            res = HttpRequest.sendPut(host_crm+uri, body.toString(), "", pathValue);
+            res = HttpRequest.s_SendPut(host_crm+uri, body.toString(), "", pathValue);
         } catch (IOException e) {
             logger.error(e);
         }
@@ -246,7 +246,7 @@ public class Order_RecommendDoctor extends BaseTest {
         body.put("surgeon_id",recommendedId);
         body.put("content","自动化推荐的医生");
         try {
-            res = HttpRequest.sendPut(host_crm+uri, body.toString(), crm_token, pathValue);
+            res = HttpRequest.s_SendPut(host_crm+uri, body.toString(), crm_token, pathValue);
         } catch (IOException e) {
             logger.error(e);
         }
@@ -267,7 +267,7 @@ public class Order_RecommendDoctor extends BaseTest {
         body.replace("surgeon_id",new_recommendedId);
         body.replace("content","自动化重新推荐的医生");
         try {
-            res = HttpRequest.sendPut(host_crm+uri, body.toString(), crm_token, pathValue);
+            res = HttpRequest.s_SendPut(host_crm+uri, body.toString(), crm_token, pathValue);
             checkResponse(res);
         } catch (IOException e) {
             logger.error(e);

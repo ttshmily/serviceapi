@@ -1,5 +1,6 @@
 package com.mingyizhudao.qa.functiontest.bdassistant;
 
+import com.mingyizhudao.qa.common.BaseTest;
 import com.mingyizhudao.qa.utilities.HttpRequest;
 import com.mingyizhudao.qa.utilities.Generator;
 import net.sf.json.JSONArray;
@@ -16,7 +17,7 @@ import java.util.List;
 /**
  * Created by dayi on 2017/6/23.
  */
-public class PersonalInfoV2 extends PersonalInfo {
+public class PersonalInfoV2 extends BaseTest {
     public static final Logger logger= Logger.getLogger(PersonalInfoV2.class);
     public static String uri = "/api/v2/user/personal";
     public static String mock = false ? "/mockjs/1" : "";
@@ -24,7 +25,7 @@ public class PersonalInfoV2 extends PersonalInfo {
     public static HashMap<String, List<String>> BDInfo(String token) {
         String res = "";
         try {
-            res = HttpRequest.sendGet(host_bda + uri, "", token);
+            res = HttpRequest.s_SendGet(host_bda + uri, "", token);
         } catch (IOException e) {
             logger.error(e);
         }
@@ -43,7 +44,7 @@ public class PersonalInfoV2 extends PersonalInfo {
         String res = "";
         HashMap<String, String> query = new HashMap<>();
         try {
-            res = HttpRequest.sendGet(host_bda + uri, query, "");
+            res = HttpRequest.s_SendGet(host_bda + uri, query, "");
         } catch (IOException e) {
             logger.error(e);
         }
@@ -52,7 +53,7 @@ public class PersonalInfoV2 extends PersonalInfo {
 
         //错误的无效token
         try {
-            res = HttpRequest.sendGet(host_bda + uri, query, "aaa");
+            res = HttpRequest.s_SendGet(host_bda + uri, query, "aaa");
         } catch (IOException e) {
             logger.error(e);
         }
@@ -65,7 +66,7 @@ public class PersonalInfoV2 extends PersonalInfo {
         String res = "";
         HashMap<String, String> query = new HashMap<>();
         try {
-            res = HttpRequest.sendGet(host_bda + uri, query, bda_token_staff);
+            res = HttpRequest.s_SendGet(host_bda + uri, query, bda_token_staff);
         } catch (IOException e) {
             logger.error(e);
         }
@@ -82,7 +83,7 @@ public class PersonalInfoV2 extends PersonalInfo {
         String res = "";
         HashMap<String, String> query = new HashMap<>();
         try {
-            res = HttpRequest.sendGet(host_bda + uri, query, bda_token);
+            res = HttpRequest.s_SendGet(host_bda + uri, query, bda_token);
         } catch (IOException e) {
             logger.error(e);
         }
@@ -99,7 +100,7 @@ public class PersonalInfoV2 extends PersonalInfo {
         String res = "";
         HashMap<String, String> query = new HashMap<>();
         try {
-            res = HttpRequest.sendGet(host_bda + uri, query, bda_token_staff);
+            res = HttpRequest.s_SendGet(host_bda + uri, query, bda_token_staff);
         } catch (IOException e) {
             logger.error(e);
         }
@@ -117,7 +118,7 @@ public class PersonalInfoV2 extends PersonalInfo {
         String res = "";
         HashMap<String, String> query = new HashMap<>();
         try {
-            res = HttpRequest.sendGet(host_bda + uri, query, bda_token_staff);
+            res = HttpRequest.s_SendGet(host_bda + uri, query, bda_token_staff);
         } catch (IOException e) {
             logger.error(e);
         }

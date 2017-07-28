@@ -28,7 +28,7 @@ public class KBHospital_Update extends BaseTest {
         HashMap<String, String> pathValue = new HashMap<>();
         pathValue.put("hospital_id", hospitalId);
         try {
-            res = HttpRequest.sendPut(host_crm+uri, hp.body.toString(), crm_token, pathValue);
+            res = HttpRequest.s_SendPut(host_crm+uri, hp.body.toString(), crm_token, pathValue);
         } catch (IOException e) {
             logger.error(e);
         }
@@ -57,7 +57,7 @@ public class KBHospital_Update extends BaseTest {
         String name = "医院改名了";
         hpModified.body.put("name", name);
         try {
-            res = HttpRequest.sendPut(host_crm+uri, hpModified.body.toString(), "", pathValue);
+            res = HttpRequest.s_SendPut(host_crm+uri, hpModified.body.toString(), "", pathValue);
         } catch (IOException e) {
             logger.error(e);
         }
@@ -79,7 +79,7 @@ public class KBHospital_Update extends BaseTest {
         String name = "医院改名了";
         hpModified.body.put("name", name);
         try {
-            res = HttpRequest.sendPut(host_crm+uri, hpModified.body.toString(), crm_token, pathValue);
+            res = HttpRequest.s_SendPut(host_crm+uri, hpModified.body.toString(), crm_token, pathValue);
         } catch (IOException e) {
             logger.error(e);
         }
@@ -105,7 +105,7 @@ public class KBHospital_Update extends BaseTest {
         String short_name = "改短名了";
         hpModified.body.put("short_name", short_name);
         try {
-            res = HttpRequest.sendPut(host_crm+uri, hpModified.body.toString(), crm_token, pathValue);
+            res = HttpRequest.s_SendPut(host_crm+uri, hpModified.body.toString(), crm_token, pathValue);
         } catch (IOException e) {
             logger.error(e);
         }
@@ -130,7 +130,7 @@ public class KBHospital_Update extends BaseTest {
         String hospital_class_list = Generator.randomKey(KnowledgeBase.kb_hospital_class);
         hpModified.body.put("hospital_class_list", hospital_class_list);
         try {
-            res = HttpRequest.sendPut(host_crm+uri, hpModified.body.toString(), crm_token, pathValue);
+            res = HttpRequest.s_SendPut(host_crm+uri, hpModified.body.toString(), crm_token, pathValue);
         } catch (IOException e) {
             logger.error(e);
         }
@@ -155,7 +155,7 @@ public class KBHospital_Update extends BaseTest {
         String type_list = Generator.randomKey(KnowledgeBase.kb_hospital_type);
         hpModified.body.put("type_list", type_list);
         try {
-            res = HttpRequest.sendPut(host_crm+uri, hpModified.body.toString(), crm_token, pathValue);
+            res = HttpRequest.s_SendPut(host_crm+uri, hpModified.body.toString(), crm_token, pathValue);
         } catch (IOException e) {
             logger.error(e);
         }
@@ -180,7 +180,7 @@ public class KBHospital_Update extends BaseTest {
         String city_id = Generator.randomCityId();
         hpModified.body.put("city_id", city_id);
         try {
-            res = HttpRequest.sendPut(host_crm+uri, hpModified.body.toString(), crm_token, pathValue);
+            res = HttpRequest.s_SendPut(host_crm+uri, hpModified.body.toString(), crm_token, pathValue);
             checkResponse(res);
             Assert.assertEquals(code, "1000000", "医院城市没有更新成功");
         } catch (IOException e) {
@@ -194,7 +194,7 @@ public class KBHospital_Update extends BaseTest {
 
         hpModified.body.replace("city_id", "11"+city_id);
         try {
-            res = HttpRequest.sendPut(host_crm+uri, hpModified.body.toString(), crm_token, pathValue);
+            res = HttpRequest.s_SendPut(host_crm+uri, hpModified.body.toString(), crm_token, pathValue);
             checkResponse(res);
             Assert.assertNotEquals(code, "1000000", "错误的城市ID不能更新成功");
         } catch (IOException e) {
@@ -218,7 +218,7 @@ public class KBHospital_Update extends BaseTest {
         String county_id = Generator.randomCountyId();
         hpModified.body.put("county_id", county_id);
         try {
-            res = HttpRequest.sendPut(host_crm+uri, hpModified.body.toString(), crm_token, pathValue);
+            res = HttpRequest.s_SendPut(host_crm+uri, hpModified.body.toString(), crm_token, pathValue);
         } catch (IOException e) {
             logger.error(e);
         }
@@ -245,7 +245,7 @@ public class KBHospital_Update extends BaseTest {
         String phone = Generator.randomPhone();
         hpModified.body.put("phone", phone);
         try {
-            res = HttpRequest.sendPut(host_crm+uri, hpModified.body.toString(), crm_token, pathValue);
+            res = HttpRequest.s_SendPut(host_crm+uri, hpModified.body.toString(), crm_token, pathValue);
         } catch (IOException e) {
             logger.error(e);
         }
@@ -269,7 +269,7 @@ public class KBHospital_Update extends BaseTest {
         String description = "修改描述" + Generator.randomString(70);
         hpModified.body.put("description", description);
         try {
-            res = HttpRequest.sendPut(host_crm+uri, hpModified.body.toString(), crm_token, pathValue);
+            res = HttpRequest.s_SendPut(host_crm+uri, hpModified.body.toString(), crm_token, pathValue);
         } catch (IOException e) {
             logger.error(e);
         }
@@ -307,7 +307,7 @@ public class KBHospital_Update extends BaseTest {
         hpModified.body.accumulate("photo_url", medium);
         hpModified.body.accumulate("photo_url", small);
         try {
-            res = HttpRequest.sendPut(host_crm+uri, hpModified.body.toString(), crm_token, pathValue);
+            res = HttpRequest.s_SendPut(host_crm+uri, hpModified.body.toString(), crm_token, pathValue);
         } catch (IOException e) {
             logger.error(e);
         }

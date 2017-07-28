@@ -42,7 +42,7 @@ public class UpdateDoctorProfile_V1 extends BaseTest {
 //            }
 //        }
         try {
-            res = HttpRequest.sendPost(host_doc+uri, dp.body.toString(), token);
+            res = HttpRequest.s_SendPost(host_doc+uri, dp.body.toString(), token);
         } catch (IOException e) {
             logger.error(e);
         }
@@ -62,7 +62,7 @@ public class UpdateDoctorProfile_V1 extends BaseTest {
         DoctorProfile body = new DoctorProfile(false);
         body.body.getJSONObject("doctor").put("city_id", Generator.randomKey(KnowledgeBase.kb_city));
         try {
-            res = HttpRequest.sendPost(host_doc +mock+uri, body.body.toString(), mainToken);
+            res = HttpRequest.s_SendPost(host_doc +mock+uri, body.body.toString(), mainToken);
         } catch (IOException e) {
             logger.error(e);
         }
@@ -76,10 +76,10 @@ public class UpdateDoctorProfile_V1 extends BaseTest {
         DoctorProfile body = new DoctorProfile(false);
         body.body.getJSONObject("doctor").put("department","尿不出来科");
         try {
-            res = HttpRequest.sendPost(host_doc +mock+uri, body.body.toString(), mainToken);
+            res = HttpRequest.s_SendPost(host_doc +mock+uri, body.body.toString(), mainToken);
             checkResponse(res);
             Assert.assertEquals(code, "1000000", "我想1000000");
-            res = GetDoctorProfile_V1.MyProfile(mainToken);
+            res = GetDoctorProfile_V1.s_MyProfile(mainToken);
             checkResponse(res);
             Assert.assertEquals(code, "1000000");
             Assert.assertEquals(Generator.parseJson(data, "doctor:department"), "尿不出来科");
@@ -99,10 +99,10 @@ public class UpdateDoctorProfile_V1 extends BaseTest {
         HashMap<String, String> hospitalInfo = KBHospital_Detail.Detail(key);
         String cityId = hospitalInfo.get("city_id");
         try {
-            res = HttpRequest.sendPost(host_doc+uri, body.body.toString(), mainToken);
+            res = HttpRequest.s_SendPost(host_doc+uri, body.body.toString(), mainToken);
             checkResponse(res);
             Assert.assertEquals(code, "1000000");
-            res = GetDoctorProfile_V1.MyProfile(mainToken);
+            res = GetDoctorProfile_V1.s_MyProfile(mainToken);
             checkResponse(res);
             Assert.assertEquals(code, "1000000");
             Assert.assertEquals(Generator.parseJson(data, "doctor:hospital_id"), key);
@@ -130,10 +130,10 @@ public class UpdateDoctorProfile_V1 extends BaseTest {
             doctor.replace("inviter_no", key);
             dp.replace("doctor", doctor);
             try {
-                res = HttpRequest.sendPost(host_doc + uri, dp.toString(), mainToken);
+                res = HttpRequest.s_SendPost(host_doc + uri, dp.toString(), mainToken);
                 checkResponse(res);
                 Assert.assertEquals(code, "1000000");
-                res = GetDoctorProfile_V1.MyProfile(mainToken);
+                res = GetDoctorProfile_V1.s_MyProfile(mainToken);
                 checkResponse(res);
                 Assert.assertEquals(code, "1000000");
                 Assert.assertEquals(Generator.parseJson(data, "doctor:inviter_no"), key);
@@ -151,10 +151,10 @@ public class UpdateDoctorProfile_V1 extends BaseTest {
         String key = Generator.randomKey(KnowledgeBase.kb_major);
         body.body.getJSONObject("doctor").put("major_id",key);
         try {
-            res = HttpRequest.sendPost(host_doc+uri, body.body.toString(), mainToken);
+            res = HttpRequest.s_SendPost(host_doc+uri, body.body.toString(), mainToken);
             checkResponse(res);
             Assert.assertEquals(code, "1000000");
-            res = GetDoctorProfile_V1.MyProfile(mainToken);
+            res = GetDoctorProfile_V1.s_MyProfile(mainToken);
             checkResponse(res);
             Assert.assertEquals(code, "1000000");
             Assert.assertEquals(Generator.parseJson(data, "doctor:major_id"), key);
@@ -168,7 +168,7 @@ public class UpdateDoctorProfile_V1 extends BaseTest {
         String res = "";
         DoctorProfile body = new DoctorProfile(true);
         try {
-            res = HttpRequest.sendPost(host_doc +uri, body.body.toString(), "");
+            res = HttpRequest.s_SendPost(host_doc +uri, body.body.toString(), "");
         } catch (IOException e) {
             logger.error(e);
         }
@@ -181,7 +181,7 @@ public class UpdateDoctorProfile_V1 extends BaseTest {
         String res = "";
         DoctorProfile body = new DoctorProfile(true);
         try {
-            res = HttpRequest.sendPost(host_doc +mock+uri, body.body.toString(), "niyaowoa");
+            res = HttpRequest.s_SendPost(host_doc +mock+uri, body.body.toString(), "niyaowoa");
         } catch (IOException e) {
             logger.error(e);
         }
@@ -195,13 +195,13 @@ public class UpdateDoctorProfile_V1 extends BaseTest {
         DoctorProfile body = new DoctorProfile(false);
         body.body.getJSONObject("doctor").put("city_name", "城市");
         try {
-            res = HttpRequest.sendPost(host_doc+uri, body.body.toString(), mainToken);
+            res = HttpRequest.s_SendPost(host_doc+uri, body.body.toString(), mainToken);
         } catch (IOException e) {
             logger.error(e);
         }
         checkResponse(res);
         Assert.assertNotEquals(code, "1000000");
-        res = GetDoctorProfile_V1.MyProfile(mainToken);
+        res = GetDoctorProfile_V1.s_MyProfile(mainToken);
         checkResponse(res);
         Assert.assertNotEquals(Generator.parseJson(data, "doctor:city_name"), "城市", "城市名称不应该改变");
     }
@@ -212,13 +212,13 @@ public class UpdateDoctorProfile_V1 extends BaseTest {
         DoctorProfile dp = new DoctorProfile(true);
         dp.body.getJSONObject("doctor").replace("hospital_name", "测试医院");
         try {
-            res = HttpRequest.sendPost(host_doc +mock+uri, dp.body.toString(), mainToken);
+            res = HttpRequest.s_SendPost(host_doc +mock+uri, dp.body.toString(), mainToken);
         } catch (IOException e) {
             logger.error(e);
         }
         checkResponse(res);
         Assert.assertEquals(code, "1000000");
-        res = GetDoctorProfile_V1.MyProfile(mainToken);
+        res = GetDoctorProfile_V1.s_MyProfile(mainToken);
         checkResponse(res);
         Assert.assertNotEquals(Generator.parseJson(data, "doctor:hospital_name"), "测试医院", "医院名称不应该改变");
 
@@ -226,13 +226,13 @@ public class UpdateDoctorProfile_V1 extends BaseTest {
         dp.body.getJSONObject("doctor").replace("hospital_name", "测试医院");
         dp.body.getJSONObject("doctor").replace("major_id", "8");
         try {
-            res = HttpRequest.sendPost(host_doc +mock+uri, dp.body.toString(), mainToken);
+            res = HttpRequest.s_SendPost(host_doc +mock+uri, dp.body.toString(), mainToken);
         } catch (IOException e) {
             logger.error(e);
         }
         checkResponse(res);
         Assert.assertEquals(code, "1000000");
-        res = GetDoctorProfile_V1.MyProfile(mainToken);
+        res = GetDoctorProfile_V1.s_MyProfile(mainToken);
         checkResponse(res);
         Assert.assertEquals(Generator.parseJson(data, "doctor:major_id"), "8");
         Assert.assertNotEquals(Generator.parseJson(data, "doctor:hospital_name"), "测试医院", "医院名称不应该改变");
@@ -241,13 +241,13 @@ public class UpdateDoctorProfile_V1 extends BaseTest {
         dp.body.getJSONObject("doctor").replace("hospital_name", "测试医院");
         dp.body.getJSONObject("doctor").replace("inviter_no", "SH0003");
         try {
-            res = HttpRequest.sendPost(host_doc +mock+uri, dp.body.toString(), mainToken);
+            res = HttpRequest.s_SendPost(host_doc +mock+uri, dp.body.toString(), mainToken);
         } catch (IOException e) {
             logger.error(e);
         }
         checkResponse(res);
         Assert.assertEquals(code, "1000000");
-        res = GetDoctorProfile_V1.MyProfile(mainToken);
+        res = GetDoctorProfile_V1.s_MyProfile(mainToken);
         checkResponse(res);
 //        Assert.assertEquals(parseJson(data, "doctor:inviter_no"), "SH0003");
         Assert.assertNotEquals(Generator.parseJson(data, "doctor:hospital_name"), "测试医院", "医院名称不应该改变");
@@ -256,14 +256,14 @@ public class UpdateDoctorProfile_V1 extends BaseTest {
         dp.body.getJSONObject("doctor").replace("name","大一测试名称");
         dp.body.getJSONObject("doctor").replace("hospital_name","测试医院");
         try {
-            res = HttpRequest.sendPost(host_doc +mock+uri, dp.body.toString(), mainToken);
+            res = HttpRequest.s_SendPost(host_doc +mock+uri, dp.body.toString(), mainToken);
 
         } catch (IOException e) {
             logger.error(e);
         }
         checkResponse(res);
         Assert.assertEquals(code, "1000000");
-        res = GetDoctorProfile_V1.MyProfile(mainToken);
+        res = GetDoctorProfile_V1.s_MyProfile(mainToken);
         checkResponse(res);
         Assert.assertEquals(code, "1000000");
         Assert.assertEquals(Generator.parseJson(data, "doctor:name"), "大一测试名称");
@@ -276,13 +276,13 @@ public class UpdateDoctorProfile_V1 extends BaseTest {
         DoctorProfile dp = new DoctorProfile(true);
         dp.body.getJSONObject("doctor").put("major_name", "测试专业");
         try {
-            res = HttpRequest.sendPost(host_doc +mock+uri, dp.body.toString(), mainToken);
+            res = HttpRequest.s_SendPost(host_doc +mock+uri, dp.body.toString(), mainToken);
         } catch (IOException e) {
             logger.error(e);
         }
         checkResponse(res);
         Assert.assertEquals(code, "1000000");
-        res = GetDoctorProfile_V1.MyProfile(mainToken);
+        res = GetDoctorProfile_V1.s_MyProfile(mainToken);
         checkResponse(res);
         Assert.assertNotEquals(Generator.parseJson(data, "doctor:major_name"), "测试专业", "专业名称不应该改变");
 
@@ -290,14 +290,14 @@ public class UpdateDoctorProfile_V1 extends BaseTest {
         dp.body.getJSONObject("doctor").replace("hospital_id","2");
         dp.body.getJSONObject("doctor").replace("major_name","test_major");
         try {
-            res = HttpRequest.sendPost(host_doc +mock+uri, dp.body.toString(), mainToken);
+            res = HttpRequest.s_SendPost(host_doc +mock+uri, dp.body.toString(), mainToken);
 
         } catch (IOException e) {
             logger.error(e);
         }
         checkResponse(res);
         Assert.assertEquals(code, "1000000");
-        res = GetDoctorProfile_V1.MyProfile(mainToken);
+        res = GetDoctorProfile_V1.s_MyProfile(mainToken);
         checkResponse(res);
         Assert.assertEquals(code, "1000000");
         Assert.assertEquals(Generator.parseJson(data, "doctor:hospital_id"), "2");
@@ -307,14 +307,14 @@ public class UpdateDoctorProfile_V1 extends BaseTest {
         dp.body.getJSONObject("doctor").replace("inviter_no","SH0002");
         dp.body.getJSONObject("doctor").replace("major_name","test_major");
         try {
-            res = HttpRequest.sendPost(host_doc +mock+uri, dp.body.toString(), mainToken);
+            res = HttpRequest.s_SendPost(host_doc +mock+uri, dp.body.toString(), mainToken);
 
         } catch (IOException e) {
             logger.error(e);
         }
         checkResponse(res);
         Assert.assertEquals(code, "1000000");
-        res = GetDoctorProfile_V1.MyProfile(mainToken);
+        res = GetDoctorProfile_V1.s_MyProfile(mainToken);
         checkResponse(res);
         Assert.assertEquals(code, "1000000");
 //        Assert.assertEquals(parseJson(data, "doctor:inviter_no"), "SH0002");
@@ -324,14 +324,14 @@ public class UpdateDoctorProfile_V1 extends BaseTest {
         dp.body.getJSONObject("doctor").replace("name","大一测试名称");
         dp.body.getJSONObject("doctor").replace("major_name","test_major");
         try {
-            res = HttpRequest.sendPost(host_doc +mock+uri, dp.body.toString(), mainToken);
+            res = HttpRequest.s_SendPost(host_doc +mock+uri, dp.body.toString(), mainToken);
 
         } catch (IOException e) {
             logger.error(e);
         }
         checkResponse(res);
         Assert.assertEquals(code, "1000000");
-        res = GetDoctorProfile_V1.MyProfile(mainToken);
+        res = GetDoctorProfile_V1.s_MyProfile(mainToken);
         checkResponse(res);
         Assert.assertEquals(code, "1000000");
         Assert.assertEquals(Generator.parseJson(data, "doctor:name"), "大一测试名称");
@@ -345,13 +345,13 @@ public class UpdateDoctorProfile_V1 extends BaseTest {
         DoctorProfile body = new DoctorProfile(false);
         body.body.getJSONObject("doctor").put("inviter_name", "大一");
         try {
-            res = HttpRequest.sendPost(host_doc +mock+uri, body.body.toString(), mainToken);
+            res = HttpRequest.s_SendPost(host_doc +mock+uri, body.body.toString(), mainToken);
         } catch (IOException e) {
             logger.error(e);
         }
         checkResponse(res);
         Assert.assertNotEquals(code, "1000000");
-        res = GetDoctorProfile_V1.MyProfile(mainToken);
+        res = GetDoctorProfile_V1.s_MyProfile(mainToken);
         checkResponse(res);
         Assert.assertNotEquals(Generator.parseJson(data, "doctor:inviter_name"), "大一", "地推名称不应该改变");
     }
@@ -362,14 +362,14 @@ public class UpdateDoctorProfile_V1 extends BaseTest {
         DoctorProfile body = new DoctorProfile(false);
         body.body.getJSONObject("doctor").accumulate("doctor_card_pictures", JSONArray.fromObject("[{'key':'2017/05/04/1265834e-97d8-44a0-95e7-047c7facaee8/IMG_20170429_102737.jpg';'type':'3'}]"));
         try {
-            res = HttpRequest.sendPost(host_doc +mock+uri, body.body.toString(), mainToken);
+            res = HttpRequest.s_SendPost(host_doc +mock+uri, body.body.toString(), mainToken);
         } catch (IOException e) {
             logger.error(e);
         }
         checkResponse(res);
         Assert.assertEquals(code, "1000000");
 
-        res = GetDoctorProfile_V1.MyProfile(mainToken);
+        res = GetDoctorProfile_V1.s_MyProfile(mainToken);
         checkResponse(res);
         Assert.assertEquals(Generator.parseJson(data, "doctor:doctor_card_pictures(0):key"), "2017/05/04/1265834e-97d8-44a0-95e7-047c7facaee8/IMG_20170429_102737.jpg", "key值错误");
         Assert.assertEquals(Generator.parseJson(data, "doctor:doctor_card_pictures(0):type"), "3", "type值错误");
@@ -383,14 +383,14 @@ public class UpdateDoctorProfile_V1 extends BaseTest {
         DoctorProfile body = new DoctorProfile(false);
         body.body.getJSONObject("doctor").put("exp_list", JSONArray.fromObject("[{\"category\": {\"id\": 6,\"name\": \"皮肤肿瘤\"},\"disease_list\": [{\"id\": 339,\"name\": \"早期乳腺癌\"},{\"id\": 336,\"name\": \"炎性乳腺癌\"}]},{\"category\": {\"id\": 7,\"name\": \"神经肿瘤\"},\"disease_list\": [{\"id\": 394,\"name\": \"垂体腺瘤\"},{\"id\": 393,\"name\": \"催乳素瘤\"}]}]"));
         try {
-            res = HttpRequest.sendPost(host_doc + uri, body.body.toString(), mainToken);
+            res = HttpRequest.s_SendPost(host_doc + uri, body.body.toString(), mainToken);
         } catch (IOException e) {
             logger.error(e);
         }
         checkResponse(res);
         Assert.assertEquals(code, "1000000");
 
-        res = GetDoctorProfile_V1.MyProfile(mainToken);
+        res = GetDoctorProfile_V1.s_MyProfile(mainToken);
         checkResponse(res);
         Assert.assertEquals(Generator.parseJson(data, "doctor:exp_list()"), "2");
     }

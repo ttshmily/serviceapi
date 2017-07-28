@@ -27,7 +27,7 @@ public class GetOrderList_V1 extends BaseTest {
         HashMap<String, String> query = new HashMap<>();
         query.put("flag", flag);
         try {
-            res = HttpRequest.sendGet(host_doc+uri, query, token);
+            res = HttpRequest.s_SendGet(host_doc+uri, query, token);
         } catch (IOException e) {
             logger.debug(HttpRequest.unicodeString(res));
             logger.error(e);
@@ -46,7 +46,7 @@ public class GetOrderList_V1 extends BaseTest {
         query.put("page", "1");
         query.put("pageSize", "1");
         try {
-            res = HttpRequest.sendGet(host_doc+uri, query, token);
+            res = HttpRequest.s_SendGet(host_doc+uri, query, token);
         } catch (IOException e) {
             logger.error(e);
         }
@@ -73,7 +73,7 @@ public class GetOrderList_V1 extends BaseTest {
         }
 
         try {
-            res = HttpRequest.sendGet(host_doc + uri, query, tmpToken);
+            res = HttpRequest.s_SendGet(host_doc + uri, query, tmpToken);
         } catch (IOException e) {
             logger.error(e);
         }
@@ -88,7 +88,7 @@ public class GetOrderList_V1 extends BaseTest {
             Assert.fail("创建订单with tmpToken失败");
         }
         try {
-            res = HttpRequest.sendGet(host_doc +uri, query, tmpToken);
+            res = HttpRequest.s_SendGet(host_doc +uri, query, tmpToken);
         } catch (IOException e) {
             logger.error(e);
         }
@@ -104,7 +104,7 @@ public class GetOrderList_V1 extends BaseTest {
             Assert.fail("创建订单with tmpToken失败");
         }
         try {
-            res = HttpRequest.sendGet(host_doc +mock+uri, query, tmpToken);
+            res = HttpRequest.s_SendGet(host_doc +mock+uri, query, tmpToken);
         } catch (IOException e) {
             logger.error(e);
         }
@@ -121,7 +121,7 @@ public class GetOrderList_V1 extends BaseTest {
             Assert.fail("创建订单with tmpToken失败");
         }
         try {
-            res = HttpRequest.sendGet(host_doc +mock+uri, query, tmpToken);
+            res = HttpRequest.s_SendGet(host_doc +mock+uri, query, tmpToken);
         } catch (IOException e) {
             logger.error(e);
         }
@@ -139,7 +139,7 @@ public class GetOrderList_V1 extends BaseTest {
             Assert.fail("拒绝订单失败");
         }
         try {
-            res = HttpRequest.sendGet(host_doc +mock+uri, query, tmpToken);
+            res = HttpRequest.s_SendGet(host_doc +mock+uri, query, tmpToken);
         } catch (IOException e) {
             logger.error(e);
         }
@@ -157,7 +157,7 @@ public class GetOrderList_V1 extends BaseTest {
             Assert.fail("推荐专家失败");
         }
         try {
-            res = HttpRequest.sendGet(host_doc +mock+uri, query, tmpToken);
+            res = HttpRequest.s_SendGet(host_doc +mock+uri, query, tmpToken);
         } catch (IOException e) {
             logger.error(e);
         }
@@ -176,7 +176,7 @@ public class GetOrderList_V1 extends BaseTest {
             Assert.fail("三方通话调用失败");
         }
         try {
-            res = HttpRequest.sendGet(host_doc +mock+uri, query, tmpToken);
+            res = HttpRequest.s_SendGet(host_doc +mock+uri, query, tmpToken);
         } catch (IOException e) {
             logger.error(e);
         }
@@ -211,7 +211,7 @@ public class GetOrderList_V1 extends BaseTest {
         }
 
         try {
-            res = HttpRequest.sendGet(host_doc + uri, query, tmpToken);
+            res = HttpRequest.s_SendGet(host_doc + uri, query, tmpToken);
         } catch (IOException e) {
             logger.error(e);
         }
@@ -261,7 +261,7 @@ public class GetOrderList_V1 extends BaseTest {
         }
 
         try {
-            res = HttpRequest.sendGet(host_doc + uri, query, tmpToken);
+            res = HttpRequest.s_SendGet(host_doc + uri, query, tmpToken);
         } catch (IOException e) {
             logger.error(e);
         }
@@ -280,7 +280,7 @@ public class GetOrderList_V1 extends BaseTest {
             Assert.fail("回退订单调用失败"+orderId3);
         }
         try {
-            res = HttpRequest.sendGet(host_doc + uri, query, tmpToken);
+            res = HttpRequest.s_SendGet(host_doc + uri, query, tmpToken);
         } catch (IOException e) {
             logger.error(e);
         }
@@ -298,7 +298,7 @@ public class GetOrderList_V1 extends BaseTest {
             Assert.fail("回退订单调用失败"+orderId4);
         }
         try {
-            res = HttpRequest.sendGet(host_doc + uri, query, tmpToken);
+            res = HttpRequest.s_SendGet(host_doc + uri, query, tmpToken);
         } catch (IOException e) {
             logger.error(e);
         }
@@ -321,7 +321,7 @@ public class GetOrderList_V1 extends BaseTest {
             Assert.fail("三方通话调用失败"+orderId2);
         }
         try {
-            res = HttpRequest.sendGet(host_doc + uri, query, tmpToken);
+            res = HttpRequest.s_SendGet(host_doc + uri, query, tmpToken);
         } catch (IOException e) {
             logger.error(e);
         }
@@ -358,7 +358,7 @@ public class GetOrderList_V1 extends BaseTest {
         }
 
         try {
-            res = HttpRequest.sendGet(host_doc + uri, query, tmpToken);
+            res = HttpRequest.s_SendGet(host_doc + uri, query, tmpToken);
         } catch (IOException e) {
             logger.error(e);
         }
@@ -408,7 +408,7 @@ public class GetOrderList_V1 extends BaseTest {
         }
 
         try {
-            res = HttpRequest.sendGet(host_doc + uri, query, tmpToken);
+            res = HttpRequest.s_SendGet(host_doc + uri, query, tmpToken);
         } catch (IOException e) {
             logger.error(e);
         }
@@ -427,7 +427,7 @@ public class GetOrderList_V1 extends BaseTest {
             Assert.fail("回退订单调用失败"+orderId3);
         }
         try {
-            res = HttpRequest.sendGet(host_doc + uri, query, tmpToken);
+            res = HttpRequest.s_SendGet(host_doc + uri, query, tmpToken);
         } catch (IOException e) {
             logger.error(e);
         }
@@ -445,7 +445,7 @@ public class GetOrderList_V1 extends BaseTest {
             Assert.fail("回退订单调用失败"+orderId4);
         }
         try {
-            res = HttpRequest.sendGet(host_doc + uri, query, tmpToken);
+            res = HttpRequest.s_SendGet(host_doc + uri, query, tmpToken);
         } catch (IOException e) {
             logger.error(e);
         }
@@ -482,7 +482,7 @@ public class GetOrderList_V1 extends BaseTest {
         }
 
         try {
-            res = HttpRequest.sendGet(host_doc + uri, query, tmpToken);
+            res = HttpRequest.s_SendGet(host_doc + uri, query, tmpToken);
         } catch (IOException e) {
             logger.error(e);
         }
@@ -547,7 +547,7 @@ public class GetOrderList_V1 extends BaseTest {
         logger.info("筛选已取消状态（4030,9000）");
         query.put("status","4030,9000");
         try {
-            res = HttpRequest.sendGet(host_doc + uri, query, tmpToken);
+            res = HttpRequest.s_SendGet(host_doc + uri, query, tmpToken);
         } catch (IOException e) {
             logger.error(e);
         }
@@ -559,7 +559,7 @@ public class GetOrderList_V1 extends BaseTest {
         logger.info("筛选处理中状态（2020,3000,4000,4010）");
         query.replace("status","2020,3000,4000,4010");
         try {
-            res = HttpRequest.sendGet(host_doc + uri, query, tmpToken);
+            res = HttpRequest.s_SendGet(host_doc + uri, query, tmpToken);
         } catch (IOException e) {
             logger.error(e);
         }
@@ -571,7 +571,7 @@ public class GetOrderList_V1 extends BaseTest {
         logger.info("筛选已完成状态（4020, 5000）");
         query.replace("status","4020, 5000");
         try {
-            res = HttpRequest.sendGet(host_doc + uri, query, tmpToken);
+            res = HttpRequest.s_SendGet(host_doc + uri, query, tmpToken);
         } catch (IOException e) {
             logger.error(e);
         }
@@ -604,7 +604,7 @@ public class GetOrderList_V1 extends BaseTest {
         }
 
         try {
-            res = HttpRequest.sendGet(host_doc + uri, query, tmpToken);
+            res = HttpRequest.s_SendGet(host_doc + uri, query, tmpToken);
         } catch (IOException e) {
             logger.error(e);
         }
@@ -641,7 +641,7 @@ public class GetOrderList_V1 extends BaseTest {
         logger.info("筛选已取消状态（4030,9000）");
         query.put("status","4030,9000");
         try {
-            res = HttpRequest.sendGet(host_doc + uri, query, tmpToken);
+            res = HttpRequest.s_SendGet(host_doc + uri, query, tmpToken);
         } catch (IOException e) {
             logger.error(e);
         }
@@ -657,7 +657,7 @@ public class GetOrderList_V1 extends BaseTest {
         }
 
         try {
-            res = HttpRequest.sendGet(host_doc + uri, query, tmpToken);
+            res = HttpRequest.s_SendGet(host_doc + uri, query, tmpToken);
         } catch (IOException e) {
             logger.error(e);
         }
@@ -667,7 +667,7 @@ public class GetOrderList_V1 extends BaseTest {
         logger.info("筛选已取消状态（2020,3000,4000,4010）");
         query.replace("status","2020,3000,4000,4010");
         try {
-            res = HttpRequest.sendGet(host_doc + uri, query, tmpToken);
+            res = HttpRequest.s_SendGet(host_doc + uri, query, tmpToken);
         } catch (IOException e) {
             logger.error(e);
         }

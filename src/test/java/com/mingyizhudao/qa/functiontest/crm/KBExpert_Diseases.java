@@ -35,7 +35,7 @@ public class KBExpert_Diseases extends BaseTest {
         diseaseList.put("disease_ids", disease_ids.toArray());
         logger.debug(diseaseList.toString());
         try {
-            res = HttpRequest.sendPost(host_crm+uri, diseaseList.toString(), crm_token, pathValue);
+            res = HttpRequest.s_SendPost(host_crm+uri, diseaseList.toString(), crm_token, pathValue);
         } catch (IOException e) {
             logger.error(e);
         }
@@ -75,7 +75,7 @@ public class KBExpert_Diseases extends BaseTest {
 
         List<String> outputString = new ArrayList<>();
         try {
-            res = HttpRequest.sendPost(host_crm+uri, diseaseList.toString(), crm_token, pathValue);
+            res = HttpRequest.s_SendPost(host_crm+uri, diseaseList.toString(), crm_token, pathValue);
         } catch (IOException e) {
             logger.error(e);
         }
@@ -129,7 +129,7 @@ public class KBExpert_Diseases extends BaseTest {
         System.out.println(inputString);
 
         try {
-            res = HttpRequest.sendPost(host_crm+uri, diseaseList.toString(), crm_token, pathValue);
+            res = HttpRequest.s_SendPost(host_crm+uri, diseaseList.toString(), crm_token, pathValue);
         } catch (IOException e) {
             logger.error(e);
         }
@@ -147,7 +147,7 @@ public class KBExpert_Diseases extends BaseTest {
         diseaseList.accumulate("disease_ids", id);
         inputString.add(id);
         try {
-            res = HttpRequest.sendPost(host_crm+uri, diseaseList.toString(), crm_token, pathValue);
+            res = HttpRequest.s_SendPost(host_crm+uri, diseaseList.toString(), crm_token, pathValue);
         } catch (IOException e) {
             logger.error(e);
         }
@@ -203,7 +203,7 @@ public class KBExpert_Diseases extends BaseTest {
         System.out.println(inputString);
 
         try {
-            res = HttpRequest.sendPost(host_crm+uri, diseaseList.toString(), crm_token, pathValue);
+            res = HttpRequest.s_SendPost(host_crm+uri, diseaseList.toString(), crm_token, pathValue);
         } catch (IOException e) {
             logger.error(e);
         }
@@ -220,7 +220,7 @@ public class KBExpert_Diseases extends BaseTest {
         inputString.add(id3);
         inputString.add(id5);
         try {
-            res = HttpRequest.sendPost(host_crm+uri, diseaseList.toString(), crm_token, pathValue);
+            res = HttpRequest.s_SendPost(host_crm+uri, diseaseList.toString(), crm_token, pathValue);
         } catch (IOException e) {
             logger.error(e);
         }
@@ -282,7 +282,7 @@ public class KBExpert_Diseases extends BaseTest {
 
         List<String> outputString = new ArrayList<>();
         try {
-            res = HttpRequest.sendPost(host_crm+uri, diseaseList.toString(), crm_token, pathValue);
+            res = HttpRequest.s_SendPost(host_crm+uri, diseaseList.toString(), crm_token, pathValue);
         } catch (IOException e) {
             logger.error(e);
         }
@@ -342,7 +342,7 @@ public class KBExpert_Diseases extends BaseTest {
 
         List<String> outputString = new ArrayList<>();
         try {
-            res = HttpRequest.sendPost(host_crm+uri, diseaseList.toString(), crm_token, pathValue);
+            res = HttpRequest.s_SendPost(host_crm+uri, diseaseList.toString(), crm_token, pathValue);
         } catch (IOException e) {
             logger.error(e);
         }
@@ -397,7 +397,7 @@ public class KBExpert_Diseases extends BaseTest {
 
         List<String> outputString = new ArrayList<>();
         try {
-            res = HttpRequest.sendPost(host_crm+uri, diseaseList.toString(), crm_token, pathValue);
+            res = HttpRequest.s_SendPost(host_crm+uri, diseaseList.toString(), crm_token, pathValue);
         } catch (IOException e) {
             logger.error(e);
         }
@@ -406,7 +406,7 @@ public class KBExpert_Diseases extends BaseTest {
 
         diseaseList.replace("disease_ids","[]");
         try {
-            res = HttpRequest.sendPost(host_crm+uri, diseaseList.toString(), crm_token, pathValue);
+            res = HttpRequest.s_SendPost(host_crm+uri, diseaseList.toString(), crm_token, pathValue);
         } catch (IOException e) {
             logger.error(e);
         }

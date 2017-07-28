@@ -30,7 +30,7 @@ public class Common_Counties extends BaseTest {
             String cityId = Generator.randomCityId();
             query.replace("id", cityId);
             try {
-                res = HttpRequest.sendGet(host_crm + uri, query, crm_token);
+                res = HttpRequest.s_SendGet(host_crm + uri, query, crm_token);
             } catch (IOException e) {
                 logger.error(e);
             }
@@ -52,7 +52,7 @@ public class Common_Counties extends BaseTest {
         String res = "";
         HashMap<String, String> query = new HashMap<>();
         try {
-            res = HttpRequest.sendGet(host_crm+uri, query, crm_token);
+            res = HttpRequest.s_SendGet(host_crm+uri, query, crm_token);
         } catch (IOException e) {
             logger.error(e);
         }

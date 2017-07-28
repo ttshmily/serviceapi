@@ -25,7 +25,7 @@ public class Finance_BillList extends BaseTest{
         String res = "";
         HashMap<String, String> query = new HashMap<>();
         try {
-            res = HttpRequest.sendGet(host_crm+uri, "", crm_token);
+            res = HttpRequest.s_SendGet(host_crm+uri, "", crm_token);
         } catch (IOException e) {
             logger.error(e);
         }
@@ -46,7 +46,7 @@ public class Finance_BillList extends BaseTest{
         for (int i = 1; i < 10; i++) {
             query.replace("pageSize", String.valueOf(i));
             try {
-                res = HttpRequest.sendGet(host_crm + uri, query, crm_token);
+                res = HttpRequest.s_SendGet(host_crm + uri, query, crm_token);
             } catch (IOException e) {
                 logger.error(e);
             }

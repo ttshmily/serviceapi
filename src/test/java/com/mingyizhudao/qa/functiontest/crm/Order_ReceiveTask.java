@@ -36,7 +36,7 @@ public class Order_ReceiveTask extends BaseTest {
             return Generator.parseJson(JSONObject.fromObject(res), "data:status");
         }
         try {
-            res = HttpRequest.sendPost(host_crm + uri, "", crm_token, pathValue);
+            res = HttpRequest.s_SendPost(host_crm + uri, "", crm_token, pathValue);
         } catch (IOException e) {
             logger.error(e);
         }
@@ -55,7 +55,7 @@ public class Order_ReceiveTask extends BaseTest {
         pathValue.put("orderNumber", order_number);
 
         try {
-            res = HttpRequest.sendPost(host_crm + uri, "", crm_token, pathValue);
+            res = HttpRequest.s_SendPost(host_crm + uri, "", crm_token, pathValue);
         } catch (IOException e) {
             logger.error(e);
         }
@@ -79,7 +79,7 @@ public class Order_ReceiveTask extends BaseTest {
         pathValue.put("orderNumber", order_number);
 
         try {
-            res = HttpRequest.sendPost(host_crm + uri, "", "", pathValue);
+            res = HttpRequest.s_SendPost(host_crm + uri, "", "", pathValue);
         } catch (IOException e) {
             logger.error(e);
         }
@@ -102,7 +102,7 @@ public class Order_ReceiveTask extends BaseTest {
         pathValue.put("orderNumber", order_number);
 
         try {
-            res = HttpRequest.sendPost(host_crm + uri, "", crm_token, pathValue);
+            res = HttpRequest.s_SendPost(host_crm + uri, "", crm_token, pathValue);
         } catch (IOException e) {
             logger.error(e);
         }
@@ -118,7 +118,7 @@ public class Order_ReceiveTask extends BaseTest {
 
         // do it again
         try {
-            res = HttpRequest.sendPost(host_crm + uri, "", crm_token, pathValue);
+            res = HttpRequest.s_SendPost(host_crm + uri, "", crm_token, pathValue);
             checkResponse(res);
         } catch (IOException e) {
             logger.error(e);
@@ -130,7 +130,7 @@ public class Order_ReceiveTask extends BaseTest {
 
         // do it again
         try {
-            res = HttpRequest.sendPost(host_crm + uri, "", crm_token, pathValue);
+            res = HttpRequest.s_SendPost(host_crm + uri, "", crm_token, pathValue);
         } catch (IOException e) {
             logger.error(e);
         }
@@ -154,7 +154,7 @@ public class Order_ReceiveTask extends BaseTest {
         pathValue.put("orderNumber", order_number);
 
         try {
-            res = HttpRequest.sendPost(host_crm + uri, "", crm_token, pathValue);
+            res = HttpRequest.s_SendPost(host_crm + uri, "", crm_token, pathValue);
         } catch (IOException e) {
             logger.error(e);
         }
@@ -168,7 +168,7 @@ public class Order_ReceiveTask extends BaseTest {
         pathValue.put("orderNumber", order_number);
 
         try {
-            res = HttpRequest.sendPost(host_crm + uri, "", crm_token, pathValue);
+            res = HttpRequest.s_SendPost(host_crm + uri, "", crm_token, pathValue);
         } catch (IOException e) {
             logger.error(e);
         }

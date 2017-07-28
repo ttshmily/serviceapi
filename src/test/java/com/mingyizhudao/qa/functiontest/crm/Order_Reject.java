@@ -32,7 +32,7 @@ public class Order_Reject extends BaseTest {
         body.put("content", "选择内容");
         body.put("reps_content", "自动化推荐之前据拒订单的客服理由");
         try {
-            res = HttpRequest.sendPost(host_crm + uri, body.toString(), crm_token, pathValue);
+            res = HttpRequest.s_SendPost(host_crm + uri, body.toString(), crm_token, pathValue);
         } catch (IOException e) {
             logger.error(e);
         }
@@ -56,7 +56,7 @@ public class Order_Reject extends BaseTest {
         body.put("content", "自动化推荐之前据拒订单的理由");
         body.put("reps_content", "自动化推荐之前据拒订单的客服理由");
         try {
-            res = HttpRequest.sendPost(host_crm + uri, body.toString(), crm_token, pathValue);
+            res = HttpRequest.s_SendPost(host_crm + uri, body.toString(), crm_token, pathValue);
         } catch (IOException e) {
             logger.error(e);
         }
@@ -93,7 +93,7 @@ public class Order_Reject extends BaseTest {
         body.put("content", "自动化推荐之前据拒订单的理由");
         body.put("reps_content", "自动化推荐之前据拒订单的客服理由");
         try {
-            res = HttpRequest.sendPost(host_crm + uri, body.toString(), crm_token, pathValue);
+            res = HttpRequest.s_SendPost(host_crm + uri, body.toString(), crm_token, pathValue);
         } catch (IOException e) {
             logger.error(e);
         }
@@ -129,7 +129,7 @@ public class Order_Reject extends BaseTest {
         body.put("content", "自动化三方通话后拒绝订单");
         body.put("reps_content", "自动化推荐之前据拒订单的客服理由");
         try {
-            res = HttpRequest.sendPost(host_crm + uri, body.toString(), crm_token, pathValue);
+            res = HttpRequest.s_SendPost(host_crm + uri, body.toString(), crm_token, pathValue);
         } catch (IOException e) {
             logger.error(e);
         }
@@ -159,7 +159,7 @@ public class Order_Reject extends BaseTest {
         body.put("content", "自动化推荐之前据拒订单的理由");
         body.put("reps_content", "自动化推荐之前据拒订单的客服理由");
         try {
-            res = HttpRequest.sendPost(host_crm + uri, body.toString(), "", pathValue);
+            res = HttpRequest.s_SendPost(host_crm + uri, body.toString(), "", pathValue);
         } catch (IOException e) {
             logger.error(e);
         }

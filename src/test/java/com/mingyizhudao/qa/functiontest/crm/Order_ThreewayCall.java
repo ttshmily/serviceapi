@@ -45,7 +45,7 @@ public class Order_ThreewayCall extends BaseTest {
         body.put("record_type", result);
         body.put("reject_reason", "http://www.automation.com");
         try {
-            res = HttpRequest.sendPost(host_crm+uri, body.toString(), crm_token, pathValue);
+            res = HttpRequest.s_SendPost(host_crm+uri, body.toString(), crm_token, pathValue);
         } catch (IOException e) {
             logger.error(e);
         }
@@ -76,7 +76,7 @@ public class Order_ThreewayCall extends BaseTest {
         body.put("record_type", "success");
         body.put("reject_reason", "http://www.automation.com");
         try {
-            res = HttpRequest.sendPost(host_crm+uri, body.toString(), crm_token, pathValue);
+            res = HttpRequest.s_SendPost(host_crm+uri, body.toString(), crm_token, pathValue);
         } catch (IOException e) {
             logger.error(e);
         }
@@ -112,7 +112,7 @@ public class Order_ThreewayCall extends BaseTest {
         body.put("record_type", "undetermined");
         body.put("reject_reason", "http://www.automation.com");
         try {
-            res = HttpRequest.sendPost(host_crm+uri, body.toString(), crm_token, pathValue);
+            res = HttpRequest.s_SendPost(host_crm+uri, body.toString(), crm_token, pathValue);
         } catch (IOException e) {
             logger.error(e);
         }
@@ -146,7 +146,7 @@ public class Order_ThreewayCall extends BaseTest {
         body.put("record_type", "failed");
         body.put("reject_reason", "http://www.automation.com");
         try {
-            res = HttpRequest.sendPost(host_crm+uri, body.toString(), crm_token, pathValue);
+            res = HttpRequest.s_SendPost(host_crm+uri, body.toString(), crm_token, pathValue);
         } catch (IOException e) {
             logger.error(e);
         }
@@ -180,7 +180,7 @@ public class Order_ThreewayCall extends BaseTest {
         body.put("audio_file", "http://www.automation.com");
         body.put("record_type", "failed");
         try {
-            res = HttpRequest.sendPost(host_crm+uri, body.toString(), crm_token, pathValue);
+            res = HttpRequest.s_SendPost(host_crm+uri, body.toString(), crm_token, pathValue);
         } catch (IOException e) {
             logger.error(e);
         }
@@ -192,7 +192,7 @@ public class Order_ThreewayCall extends BaseTest {
 
         body.put("reject_reason", "");
         try {
-            res = HttpRequest.sendPost(host_crm+uri, body.toString(), crm_token, pathValue);
+            res = HttpRequest.s_SendPost(host_crm+uri, body.toString(), crm_token, pathValue);
         } catch (IOException e) {
             logger.error(e);
         }
@@ -224,7 +224,7 @@ public class Order_ThreewayCall extends BaseTest {
         body.put("record_type", "success");
         body.put("reject_reason", "http://www.automation.com");
         try {
-            res = HttpRequest.sendPost(host_crm+uri, body.toString(), crm_token, pathValue);
+            res = HttpRequest.s_SendPost(host_crm+uri, body.toString(), crm_token, pathValue);
         } catch (IOException e) {
             logger.error(e);
         }
@@ -235,7 +235,7 @@ public class Order_ThreewayCall extends BaseTest {
         Assert.assertEquals(Generator.parseJson(data, "status"), "3000");
 
         try {
-            res = HttpRequest.sendPost(host_crm+uri, body.toString(), crm_token, pathValue);
+            res = HttpRequest.s_SendPost(host_crm+uri, body.toString(), crm_token, pathValue);
         } catch (IOException e) {
             logger.error(e);
         }
@@ -257,7 +257,7 @@ public class Order_ThreewayCall extends BaseTest {
 
         body.put("surgeryFee", Generator.randomInt(4)+1);
         try {
-            res = HttpRequest.sendPost(host_crm+uri, body.toString(), crm_token, pathValue);
+            res = HttpRequest.s_SendPost(host_crm+uri, body.toString(), crm_token, pathValue);
         } catch (IOException e) {
             logger.error(e);
         }
@@ -269,7 +269,7 @@ public class Order_ThreewayCall extends BaseTest {
 
         body.put("calling_time", df.format(new Date()));
         try {
-            res = HttpRequest.sendPost(host_crm+uri, body.toString(), crm_token, pathValue);
+            res = HttpRequest.s_SendPost(host_crm+uri, body.toString(), crm_token, pathValue);
         } catch (IOException e) {
             logger.error(e);
         }
@@ -281,7 +281,7 @@ public class Order_ThreewayCall extends BaseTest {
 
         body.put("major_disease_id", "55");
         try {
-            res = HttpRequest.sendPost(host_crm+uri, body.toString(), crm_token, pathValue);
+            res = HttpRequest.s_SendPost(host_crm+uri, body.toString(), crm_token, pathValue);
         } catch (IOException e) {
             logger.error(e);
         }
@@ -293,7 +293,7 @@ public class Order_ThreewayCall extends BaseTest {
 
         body.put("minor_disease_id", "66");
         try {
-            res = HttpRequest.sendPost(host_crm+uri, body.toString(), crm_token, pathValue);
+            res = HttpRequest.s_SendPost(host_crm+uri, body.toString(), crm_token, pathValue);
         } catch (IOException e) {
             logger.error(e);
         }
@@ -305,7 +305,7 @@ public class Order_ThreewayCall extends BaseTest {
 
         body.put("content", "自动创建的通话记录");
         try {
-            res = HttpRequest.sendPost(host_crm+uri, body.toString(), crm_token, pathValue);
+            res = HttpRequest.s_SendPost(host_crm+uri, body.toString(), crm_token, pathValue);
         } catch (IOException e) {
             logger.error(e);
         }
@@ -317,7 +317,7 @@ public class Order_ThreewayCall extends BaseTest {
 
         body.put("audio_file", "http://www.automation.com");
         try {
-            res = HttpRequest.sendPost(host_crm+uri, body.toString(), crm_token, pathValue);
+            res = HttpRequest.s_SendPost(host_crm+uri, body.toString(), crm_token, pathValue);
         } catch (IOException e) {
             logger.error(e);
         }
@@ -329,7 +329,7 @@ public class Order_ThreewayCall extends BaseTest {
 
         body.put("record_type", "success");
         try {
-            res = HttpRequest.sendPost(host_crm+uri, body.toString(), crm_token, pathValue);
+            res = HttpRequest.s_SendPost(host_crm+uri, body.toString(), crm_token, pathValue);
         } catch (IOException e) {
             logger.error(e);
         }
@@ -361,7 +361,7 @@ public class Order_ThreewayCall extends BaseTest {
         body.put("record_type", "failed");
         body.put("reject_reason", "http://www.automation.com");
         try {
-            res = HttpRequest.sendPost(host_crm+uri, body.toString(), crm_token, pathValue);
+            res = HttpRequest.s_SendPost(host_crm+uri, body.toString(), crm_token, pathValue);
         } catch (IOException e) {
             logger.error(e);
         }
@@ -396,7 +396,7 @@ public class Order_ThreewayCall extends BaseTest {
         body.put("record_type", "failed");
         body.put("reject_reason", "http://www.automation.com");
         try {
-            res = HttpRequest.sendPost(host_crm+uri, body.toString(), crm_token, pathValue);
+            res = HttpRequest.s_SendPost(host_crm+uri, body.toString(), crm_token, pathValue);
         } catch (IOException e) {
             logger.error(e);
         }

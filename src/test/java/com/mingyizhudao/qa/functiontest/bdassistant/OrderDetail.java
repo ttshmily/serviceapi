@@ -24,7 +24,7 @@ public class OrderDetail extends BaseTest{
         String res = "";
         HashMap<String, String> query = new HashMap<>();
         try {
-            res = HttpRequest.sendGet(host_bda + uri, query, "",null);
+            res = HttpRequest.s_SendGet(host_bda + uri, query, "",null);
         } catch (IOException e) {
             logger.error(e);
         }
@@ -32,7 +32,7 @@ public class OrderDetail extends BaseTest{
         Assert.assertNotEquals(code, "1000000", "没有token不应该调用成功");
 
         try {
-            res = HttpRequest.sendGet(host_bda + uri, query, "aaa",null);
+            res = HttpRequest.s_SendGet(host_bda + uri, query, "aaa",null);
         } catch (IOException e) {
             logger.error(e);
         }
@@ -45,7 +45,7 @@ public class OrderDetail extends BaseTest{
         String res = "";
         HashMap<String, String> query = new HashMap<>();
         try {
-            res = HttpRequest.sendGet(host_bda + uri, query, bda_token, null);
+            res = HttpRequest.s_SendGet(host_bda + uri, query, bda_token, null);
         } catch (IOException e) {
             logger.error(e);
         }
@@ -60,7 +60,7 @@ public class OrderDetail extends BaseTest{
         HashMap<String, String> query = new HashMap<>();
         query.put("orderNumber", "1017690178");
         try {
-            res = HttpRequest.sendGet(host_bda + uri, query, bda_token, null);
+            res = HttpRequest.s_SendGet(host_bda + uri, query, bda_token, null);
         } catch (IOException e) {
             logger.error(e);
         }
@@ -89,7 +89,7 @@ public class OrderDetail extends BaseTest{
             HashMap<String, String> query = new HashMap<>();
             query.put("orderNumber", "0000000000");
             try {
-                res = HttpRequest.sendGet(host_bda + uri, query, bda_token, null);
+                res = HttpRequest.s_SendGet(host_bda + uri, query, bda_token, null);
             } catch (IOException e) {
                 logger.error(e);
             }

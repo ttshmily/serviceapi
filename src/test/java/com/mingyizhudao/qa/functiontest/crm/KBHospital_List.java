@@ -27,7 +27,7 @@ public class KBHospital_List extends BaseTest {
         String res = "";
         HashMap<String, String> query = new HashMap<>();
         try {
-            res = HttpRequest.sendGet(host_crm + uri, "", crm_token);
+            res = HttpRequest.s_SendGet(host_crm + uri, "", crm_token);
         } catch (IOException e) {
             logger.error(e);
         }
@@ -50,7 +50,7 @@ public class KBHospital_List extends BaseTest {
 
         query.put("page","2");
         try {
-            res = HttpRequest.sendGet(host_crm + uri, query, crm_token, null);
+            res = HttpRequest.s_SendGet(host_crm + uri, query, crm_token, null);
         } catch (IOException e) {
             logger.error(e);
         }
@@ -69,7 +69,7 @@ public class KBHospital_List extends BaseTest {
         String hospitalClass = Generator.randomHospitalClass();
         query.put("hospitalClass", hospitalClass);
         try {
-            res = HttpRequest.sendGet(host_crm+uri, query, crm_token);
+            res = HttpRequest.s_SendGet(host_crm+uri, query, crm_token);
         } catch (IOException e) {
             logger.error(e);
         }
@@ -85,7 +85,7 @@ public class KBHospital_List extends BaseTest {
         hospitalClass = Generator.randomHospitalClass().concat(",").concat(Generator.randomHospitalClass());
         query.replace("hospitalClass",hospitalClass);
         try {
-            res = HttpRequest.sendGet(host_crm+uri, query, crm_token);
+            res = HttpRequest.s_SendGet(host_crm+uri, query, crm_token);
         } catch (IOException e) {
             logger.error(e);
         }
@@ -101,7 +101,7 @@ public class KBHospital_List extends BaseTest {
 
         query.replace("hospitalClass","-1");
         try {
-            res = HttpRequest.sendGet(host_crm+uri, query, crm_token);
+            res = HttpRequest.s_SendGet(host_crm+uri, query, crm_token);
         } catch (IOException e) {
             logger.error(e);
         }
@@ -118,7 +118,7 @@ public class KBHospital_List extends BaseTest {
         String type = Generator.randomHospitalType();
         query.put("type", type);
         try {
-            res = HttpRequest.sendGet(host_crm+uri, query, crm_token);
+            res = HttpRequest.s_SendGet(host_crm+uri, query, crm_token);
         } catch (IOException e) {
             logger.error(e);
         }
@@ -134,7 +134,7 @@ public class KBHospital_List extends BaseTest {
         type = Generator.randomHospitalType().concat(",").concat(Generator.randomHospitalType());
         query.replace("type",type);
         try {
-            res = HttpRequest.sendGet(host_crm+uri, query, crm_token);
+            res = HttpRequest.s_SendGet(host_crm+uri, query, crm_token);
         } catch (IOException e) {
             logger.error(e);
         }
@@ -150,7 +150,7 @@ public class KBHospital_List extends BaseTest {
 
         query.replace("type","-1");
         try {
-            res = HttpRequest.sendGet(host_crm+uri, query, crm_token);
+            res = HttpRequest.s_SendGet(host_crm+uri, query, crm_token);
         } catch (IOException e) {
             logger.error(e);
         }
@@ -167,7 +167,7 @@ public class KBHospital_List extends BaseTest {
         String provinceId = Generator.randomProvinceId();
         query.put("province", provinceId);
         try {
-            res = HttpRequest.sendGet(host_crm+uri, query, crm_token);
+            res = HttpRequest.s_SendGet(host_crm+uri, query, crm_token);
         } catch (IOException e) {
             logger.error(e);
         }
@@ -183,7 +183,7 @@ public class KBHospital_List extends BaseTest {
         provinceId = Generator.randomProvinceId().concat(",").concat(Generator.randomProvinceId()).concat(",").concat(Generator.randomProvinceId()).concat(",").concat(Generator.randomProvinceId()).concat(",").concat(Generator.randomProvinceId()).concat(",").concat(Generator.randomProvinceId()).concat(",").concat(Generator.randomProvinceId());
         query.replace("province",provinceId);
         try {
-            res = HttpRequest.sendGet(host_crm+uri, query, crm_token);
+            res = HttpRequest.s_SendGet(host_crm+uri, query, crm_token);
         } catch (IOException e) {
             logger.error(e);
         }

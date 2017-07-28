@@ -25,7 +25,7 @@ public class Common_GetTitles extends BaseTest {
         String res = "";
 
         try {
-            res = HttpRequest.sendGet(host_crm+uri, "", crm_token, null);
+            res = HttpRequest.s_SendGet(host_crm+uri, "", crm_token, null);
             checkResponse(res);
             Assert.assertEquals(code, "1000000");
             int academicLen = Integer.parseInt(Generator.parseJson(data, "list:academic()"));

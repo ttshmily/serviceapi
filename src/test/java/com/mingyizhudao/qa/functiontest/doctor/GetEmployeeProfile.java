@@ -29,7 +29,7 @@ public class GetEmployeeProfile extends BaseTest {
         HashMap<String, String> query = new HashMap<>();
         query.put("number", Generator.randomEmployeeId());
         try {
-            res = HttpRequest.sendGet(host_doc +uri,query, mainToken);
+            res = HttpRequest.s_SendGet(host_doc +uri,query, mainToken);
         } catch (IOException e) {
             logger.error(e);
             Assert.fail();
@@ -47,7 +47,7 @@ public class GetEmployeeProfile extends BaseTest {
         HashMap<String, String> query = new HashMap<>();
         query.put("number", Generator.randomEmployeeId());
         try {
-            res = HttpRequest.sendGet(host_doc +uri, query, "");
+            res = HttpRequest.s_SendGet(host_doc +uri, query, "");
         } catch (IOException e) {
             logger.error(e);
             Assert.fail();
@@ -63,7 +63,7 @@ public class GetEmployeeProfile extends BaseTest {
     public void test_03_员工ID无效时返回空的Employee() {
         String res = "";
         try {
-            res = HttpRequest.sendGet(host_doc +mock+uri,"number=SH0444", "");
+            res = HttpRequest.s_SendGet(host_doc +mock+uri,"number=SH0444", "");
         } catch (IOException e) {
             logger.error(e);
         }

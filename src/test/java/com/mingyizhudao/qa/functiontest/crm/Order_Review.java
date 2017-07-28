@@ -34,8 +34,8 @@ public class Order_Review extends BaseTest {
             Assert.fail("没有待提交小结的的订单");
         }
         String agentPhone = JSONObject.fromObject(Order_Detail.Detail(orderId)).getJSONObject("data").getString("agent_phone");
-        SendVerifyCode.send(agentPhone);
-        String token = CheckVerifyCode.check(agentPhone);
+        SendVerifyCode.s_Send(agentPhone);
+        String token = CheckVerifyCode.s_Check(agentPhone);
         if (token == null) {
             logger.error("没有获取到token");
             Assert.fail();
@@ -52,7 +52,7 @@ public class Order_Review extends BaseTest {
         body.put("reps_content", "客服原因");
         body.put("result", "true");//TODO 审核结果
         try {
-            res = HttpRequest.sendPost(host_crm+uri, body.toString(), crm_token, pathValue);
+            res = HttpRequest.s_SendPost(host_crm+uri, body.toString(), crm_token, pathValue);
         } catch (IOException e) {
             logger.error(e);
         }
@@ -70,8 +70,8 @@ public class Order_Review extends BaseTest {
             Assert.fail("没有待审核的订单");
         }
         String agentPhone = JSONObject.fromObject(Order_Detail.Detail(orderId)).getJSONObject("data").getString("agent_phone");
-        SendVerifyCode.send(agentPhone);
-        String token = CheckVerifyCode.check(agentPhone);
+        SendVerifyCode.s_Send(agentPhone);
+        String token = CheckVerifyCode.s_Check(agentPhone);
         if (token == null) {
             logger.error("没有获取到token");
             Assert.fail();
@@ -88,7 +88,7 @@ public class Order_Review extends BaseTest {
         body.put("reps_content", "客服原因");
         body.put("result", "false");
         try {
-            res = HttpRequest.sendPost(host_crm+uri, body.toString(), crm_token, pathValue);
+            res = HttpRequest.s_SendPost(host_crm+uri, body.toString(), crm_token, pathValue);
         } catch (IOException e) {
             logger.error(e);
         }

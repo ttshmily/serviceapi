@@ -29,7 +29,7 @@ public class Order_Rollback extends BaseTest {
         JSONObject body = new JSONObject();
         body.put("content", "自动化测试的回退原因");
         try {
-            res = HttpRequest.sendPost(host_crm+uri, body.toString(), crm_token, pathValue);
+            res = HttpRequest.s_SendPost(host_crm+uri, body.toString(), crm_token, pathValue);
         } catch (IOException e) {
             logger.error(e);
         }
@@ -54,7 +54,7 @@ public class Order_Rollback extends BaseTest {
         JSONObject body = new JSONObject();
         body.put("content", "自动化测试的回退原因");
         try {
-            res = HttpRequest.sendPost(host_crm+uri, body.toString(), crm_token, pathValue);
+            res = HttpRequest.s_SendPost(host_crm+uri, body.toString(), crm_token, pathValue);
         } catch (IOException e) {
             logger.error(e);
         }
@@ -83,7 +83,7 @@ public class Order_Rollback extends BaseTest {
         JSONObject body = new JSONObject();
         body.put("content", "自动化测试的回退原因");
         try {
-            res = HttpRequest.sendPost(host_crm+uri, body.toString(), crm_token, pathValue);
+            res = HttpRequest.s_SendPost(host_crm+uri, body.toString(), crm_token, pathValue);
         } catch (IOException e) {
             logger.error(e);
         }
@@ -96,7 +96,7 @@ public class Order_Rollback extends BaseTest {
         // 刚领取的订单
         Order_ReceiveTask.receiveTask(order_number);
         try {
-            res = HttpRequest.sendPost(host_crm+uri, body.toString(), crm_token, pathValue);
+            res = HttpRequest.s_SendPost(host_crm+uri, body.toString(), crm_token, pathValue);
         } catch (IOException e) {
             logger.error(e);
         }
@@ -109,7 +109,7 @@ public class Order_Rollback extends BaseTest {
         // 刚推荐的订单
         Order_RecommendDoctor.recommendDoctor(order_number, "666");
         try {
-            res = HttpRequest.sendPost(host_crm+uri, body.toString(), crm_token, pathValue);
+            res = HttpRequest.s_SendPost(host_crm+uri, body.toString(), crm_token, pathValue);
         } catch (IOException e) {
             logger.error(e);
         }
@@ -122,7 +122,7 @@ public class Order_Rollback extends BaseTest {
         // 三方通话中的订单
         Order_ThreewayCall.ThreewayCall(order_number, "undetermined");
         try {
-            res = HttpRequest.sendPost(host_crm+uri, body.toString(), crm_token, pathValue);
+            res = HttpRequest.s_SendPost(host_crm+uri, body.toString(), crm_token, pathValue);
         } catch (IOException e) {
             logger.error(e);
         }
@@ -136,7 +136,7 @@ public class Order_Rollback extends BaseTest {
         Order_ThreewayCall.ThreewayCall(order_number, "failed");
         Order_Reject.rejectOrder(order_number);
         try {
-            res = HttpRequest.sendPost(host_crm+uri, body.toString(), crm_token, pathValue);
+            res = HttpRequest.s_SendPost(host_crm+uri, body.toString(), crm_token, pathValue);
         } catch (IOException e) {
             logger.error(e);
         }

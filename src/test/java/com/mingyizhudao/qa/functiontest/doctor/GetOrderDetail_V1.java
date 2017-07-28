@@ -27,7 +27,7 @@ public class GetOrderDetail_V1 extends BaseTest {
         HashMap<String, String> query = new HashMap<>();
         query.put("flag", "1");
         try {
-            res = HttpRequest.sendGet(host_doc +uri, query, token, pathValue);
+            res = HttpRequest.s_SendGet(host_doc +uri, query, token, pathValue);
         } catch (IOException e) {
             logger.error(e);
         }
@@ -41,7 +41,7 @@ public class GetOrderDetail_V1 extends BaseTest {
         HashMap<String, String> query = new HashMap<>();
         query.put("flag", "2");
         try {
-            res = HttpRequest.sendGet(host_doc + uri, query, token, pathValue);
+            res = HttpRequest.s_SendGet(host_doc + uri, query, token, pathValue);
         } catch (IOException e) {
             logger.error(e);
         }
@@ -58,7 +58,7 @@ public class GetOrderDetail_V1 extends BaseTest {
         HashMap<String, String> query = new HashMap<>();
         query.put("flag", "1");
         try {
-            res = HttpRequest.sendGet(host_doc +uri,query, mainToken, pathValue);
+            res = HttpRequest.s_SendGet(host_doc +uri,query, mainToken, pathValue);
         } catch (IOException e) {
             logger.error(e);
         }
@@ -93,7 +93,7 @@ public class GetOrderDetail_V1 extends BaseTest {
         HashMap<String, String> query = new HashMap<>();
         query.put("flag", "1");
         try {
-            res = HttpRequest.sendGet(host_doc + uri,query, mainToken, pathValue);
+            res = HttpRequest.s_SendGet(host_doc + uri,query, mainToken, pathValue);
         } catch (IOException e) {
             logger.error(e);
         }
@@ -109,7 +109,7 @@ public class GetOrderDetail_V1 extends BaseTest {
         HashMap<String, String> query = new HashMap<>();
         query.put("flag", "1");
         try {
-            res = HttpRequest.sendGet(host_doc + uri,query, mainToken, pathValue);
+            res = HttpRequest.s_SendGet(host_doc + uri,query, mainToken, pathValue);
         } catch (IOException e) {
             logger.error(e);
         }
@@ -133,7 +133,7 @@ public class GetOrderDetail_V1 extends BaseTest {
         HashMap<String, String> query = new HashMap<>();
         query.put("flag", "1");
         try {
-            res = HttpRequest.sendGet(host_doc + uri, query, tmpToken, pathValue);
+            res = HttpRequest.s_SendGet(host_doc + uri, query, tmpToken, pathValue);
         } catch (IOException e) {
             logger.error(e);
         }
@@ -153,7 +153,7 @@ public class GetOrderDetail_V1 extends BaseTest {
         HashMap<String, String> query = new HashMap<>();
         query.put("flag", "2");
         try {
-            res = HttpRequest.sendGet(host_doc + uri, query, mainToken, pathValue);
+            res = HttpRequest.s_SendGet(host_doc + uri, query, mainToken, pathValue);
         } catch (IOException e) {
             logger.error(e);
         }
@@ -164,7 +164,7 @@ public class GetOrderDetail_V1 extends BaseTest {
 
         Order_ThreewayCall_V2.CallV2(orderId, "success");
         try {
-            res = HttpRequest.sendGet(host_doc + uri, query, mainToken, pathValue);
+            res = HttpRequest.s_SendGet(host_doc + uri, query, mainToken, pathValue);
         } catch (IOException e) {
             logger.error(e);
         }
@@ -177,7 +177,7 @@ public class GetOrderDetail_V1 extends BaseTest {
 
         Order_Rollback.Rollback(orderId);
         try {
-            res = HttpRequest.sendGet(host_doc + uri, query, mainToken, pathValue);
+            res = HttpRequest.s_SendGet(host_doc + uri, query, mainToken, pathValue);
         } catch (IOException e) {
             logger.error(e);
         }

@@ -29,7 +29,7 @@ public class Common_Cities extends BaseTest {
         String res = "";
         HashMap<String, String> query = new HashMap<>();
         try {
-            res = HttpRequest.sendGet(host_crm+uri, "", crm_token, null);
+            res = HttpRequest.s_SendGet(host_crm+uri, "", crm_token, null);
         } catch (IOException e) {
             logger.error(e);
         }
@@ -49,7 +49,7 @@ public class Common_Cities extends BaseTest {
         query.put("province_id", "340000"); // 安徽
         query.put("city_name", "安庆");
         try {
-            res = HttpRequest.sendGet(host_crm+mock+uri, query, crm_token, null);
+            res = HttpRequest.s_SendGet(host_crm+mock+uri, query, crm_token, null);
         } catch (IOException e) {
             logger.error(e);
         }
@@ -61,7 +61,7 @@ public class Common_Cities extends BaseTest {
         query.replace("city_name", "安庆");
         logger.info("在非安徽省搜索城市关键字：安庆");
         try {
-            res = HttpRequest.sendGet(host_crm+mock+uri, query, crm_token, null);
+            res = HttpRequest.s_SendGet(host_crm+mock+uri, query, crm_token, null);
         } catch (IOException e) {
             logger.error(e);
         }
@@ -79,7 +79,7 @@ public class Common_Cities extends BaseTest {
         logger.info("搜索城市关键字："+exp);
         query.put("city_name", exp);
         try {
-            res = HttpRequest.sendGet(host_crm+uri, query, crm_token);
+            res = HttpRequest.s_SendGet(host_crm+uri, query, crm_token);
         } catch (IOException e) {
             logger.error(e);
         }
@@ -97,7 +97,7 @@ public class Common_Cities extends BaseTest {
         logger.info("搜索城市关键字："+exp);
         query.replace("city_name", exp);
         try {
-            res = HttpRequest.sendGet(host_crm+uri, query, crm_token);
+            res = HttpRequest.s_SendGet(host_crm+uri, query, crm_token);
         } catch (IOException e) {
             logger.error(e);
         }
@@ -116,7 +116,7 @@ public class Common_Cities extends BaseTest {
         logger.info("搜索城市关键字："+exp);
         query.replace("city_name", exp);
         try {
-            res = HttpRequest.sendGet(host_crm+uri, query, crm_token);
+            res = HttpRequest.s_SendGet(host_crm+uri, query, crm_token);
         } catch (IOException e) {
             logger.error(e);
         }

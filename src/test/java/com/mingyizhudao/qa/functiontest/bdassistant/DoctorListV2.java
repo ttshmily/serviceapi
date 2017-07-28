@@ -1,5 +1,6 @@
 package com.mingyizhudao.qa.functiontest.bdassistant;
 
+import com.mingyizhudao.qa.common.BaseTest;
 import com.mingyizhudao.qa.utilities.HttpRequest;
 import com.mingyizhudao.qa.utilities.Generator;
 import net.sf.json.JSONArray;
@@ -15,7 +16,7 @@ import java.util.List;
 /**
  * Created by dayi on 2017/6/23.
  */
-public class DoctorListV2 extends DoctorList {
+public class DoctorListV2 extends BaseTest {
     public static final Logger logger= Logger.getLogger(DoctorListV2.class);
     public static String uri = "/api/v2/doctors/doctorList";
     public static String mock = false ? "/mockjs/1" : "";
@@ -26,7 +27,7 @@ public class DoctorListV2 extends DoctorList {
         String res = "";
         HashMap<String, String> query = new HashMap<>();
         try {
-            res = HttpRequest.sendGet(host_bda + uri, query, "");
+            res = HttpRequest.s_SendGet(host_bda + uri, query, "");
         } catch (IOException e) {
             logger.error(e);
         }
@@ -34,7 +35,7 @@ public class DoctorListV2 extends DoctorList {
         Assert.assertNotEquals(code, "1000000", "没有token不应该调用成功");
 
         try {
-            res = HttpRequest.sendGet(host_bda + uri, query, "aaa");
+            res = HttpRequest.s_SendGet(host_bda + uri, query, "aaa");
         } catch (IOException e) {
             logger.error(e);
         }
@@ -53,7 +54,7 @@ public class DoctorListV2 extends DoctorList {
         String cityId = "";
 
         try {
-            res = HttpRequest.sendGet(host_bda + uri, query, bda_token);
+            res = HttpRequest.s_SendGet(host_bda + uri, query, bda_token);
         } catch (IOException e) {
             logger.error(e);
         }
@@ -76,7 +77,7 @@ public class DoctorListV2 extends DoctorList {
         query.put("agent_contact_id", agent_contact_id);
 
         try {
-            res = HttpRequest.sendGet(host_bda + uri, query, bda_token);
+            res = HttpRequest.s_SendGet(host_bda + uri, query, bda_token);
         } catch (IOException e) {
             logger.error(e);
         }
@@ -96,7 +97,7 @@ public class DoctorListV2 extends DoctorList {
         String cityId = "";
 
         try {
-            res = HttpRequest.sendGet(host_bda + uri, query, bda_token);
+            res = HttpRequest.s_SendGet(host_bda + uri, query, bda_token);
         } catch (IOException e) {
             logger.error(e);
         }
@@ -123,7 +124,7 @@ public class DoctorListV2 extends DoctorList {
         String cityId = "";
         query.put("city_id", cityId);
         try {
-            res = HttpRequest.sendGet(host_bda + uri, query, bda_token);
+            res = HttpRequest.s_SendGet(host_bda + uri, query, bda_token);
         } catch (IOException e) {
             logger.error(e);
         }
@@ -152,7 +153,7 @@ public class DoctorListV2 extends DoctorList {
         String medical_title_list = Generator.randomMedicalId();
         query.put("medical_title", medical_title_list);
         try {
-            res = HttpRequest.sendGet(host_bda + uri, query, bda_token);
+            res = HttpRequest.s_SendGet(host_bda + uri, query, bda_token);
         } catch (IOException e) {
             logger.error(e);
         }
@@ -182,7 +183,7 @@ public class DoctorListV2 extends DoctorList {
         String academic_title_list = Generator.randomAcademicId();
         query.put("academic_title", academic_title_list);
         try {
-            res = HttpRequest.sendGet(host_bda + uri, query, bda_token);
+            res = HttpRequest.s_SendGet(host_bda + uri, query, bda_token);
         } catch (IOException e) {
             logger.error(e);
         }
@@ -212,7 +213,7 @@ public class DoctorListV2 extends DoctorList {
         String academic_title_list = Generator.randomAcademicId();
         query.put("academic_title", academic_title_list);
         try {
-            res = HttpRequest.sendGet(host_bda + uri, query, bda_token_staff);
+            res = HttpRequest.s_SendGet(host_bda + uri, query, bda_token_staff);
         } catch (IOException e) {
             logger.error(e);
         }

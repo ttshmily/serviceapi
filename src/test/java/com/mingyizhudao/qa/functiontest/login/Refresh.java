@@ -23,7 +23,7 @@ public class Refresh extends BaseTest{
     public static String mobile;
     public static String token;
 
-    public static String refresh() {
+    public static String s_Refresh() {
         return "";
     }
 
@@ -31,14 +31,14 @@ public class Refresh extends BaseTest{
     public void 刷新token后返回新的token且老token依然可用() {
         String res = "";
 
-        SendVerifyCode.send();
-        CheckVerifyCode.check();
+        SendVerifyCode.s_Send();
+        CheckVerifyCode.s_Check();
         // record the old token
         String oldToken = token;
 
         RefreshProfile body = new RefreshProfile(true);
         try {
-            res = HttpRequest.sendPost(host_login +mock+uri,body.body.toString(), oldToken);
+            res = HttpRequest.s_SendPost(host_login +mock+uri,body.body.toString(), oldToken);
             checkResponse(res);
         } catch (IOException e) {
 
@@ -52,15 +52,15 @@ public class Refresh extends BaseTest{
         token = Generator.parseJson(data, "token");
         CheckVerifyCode.token = token;
 
-        // check old token still effective
-        String r = GetDoctorProfile_V1.MyProfile(oldToken);
+        // s_Check old token still effective
+        String r = GetDoctorProfile_V1.s_MyProfile(oldToken);
         checkResponse(r);
         Assert.assertEquals(code, "1000000", "old Token expired");
         String oldProfile = Generator.parseJson(data, "doctor");
         logger.debug(oldProfile);
 
-        // check new token taking effect
-        String s = GetDoctorProfile_V1.MyProfile(token);
+        // s_Check new token taking effect
+        String s = GetDoctorProfile_V1.s_MyProfile(token);
         checkResponse(s);
         Assert.assertEquals(code, "1000000");
         String newProfile = Generator.parseJson(data, "doctor");
@@ -73,15 +73,15 @@ public class Refresh extends BaseTest{
     public void body中的token和http头中的token不一致() {
         String res = "";
 
-        SendVerifyCode.send();
-        CheckVerifyCode.check();
+        SendVerifyCode.s_Send();
+        CheckVerifyCode.s_Check();
 
         // record the old token
         String oldToken = token;
         RefreshProfile body = new RefreshProfile(false);
         body.body.replace("token", mainToken);
         try {
-            res = HttpRequest.sendPost(host_login +mock+uri,body.body.toString(), oldToken);
+            res = HttpRequest.s_SendPost(host_login +mock+uri,body.body.toString(), oldToken);
             checkResponse(res);
         } catch (IOException e) {
             Assert.fail();
@@ -89,8 +89,8 @@ public class Refresh extends BaseTest{
         }
         Assert.assertEquals(code, "1000000");
 
-        // check token in body still effective
-        String r = GetDoctorProfile_V1.MyProfile(mainToken);
+        // s_Check token in body still effective
+        String r = GetDoctorProfile_V1.s_MyProfile(mainToken);
         checkResponse(r);
         Assert.assertEquals(code, "1000000");
 //        Assert.assertNotNull(parseJson(data,"token"), "token not exist");

@@ -29,7 +29,7 @@ public class RegisteredDoctor_Modify extends BaseTest {
         if (map == null) return null;
         if (map.keySet().size() != 0) {
             try {
-                res = HttpRequest.sendPut(host_crm+uri, map.toString(), crm_token, pathValue);
+                res = HttpRequest.s_SendPut(host_crm+uri, map.toString(), crm_token, pathValue);
             } catch (IOException e) {
                 logger.error(e);
             }
@@ -61,7 +61,7 @@ public class RegisteredDoctor_Modify extends BaseTest {
         HashMap<String, String> hospitalInfo = KBHospital_Detail.Detail(hospital);
         String another_city = hospitalInfo.get("city_id");
         try {
-            res = HttpRequest.sendPut(host_crm+uri, body.toString(), crm_token, pathValue);
+            res = HttpRequest.s_SendPut(host_crm+uri, body.toString(), crm_token, pathValue);
         } catch (IOException e) {
             logger.error(e);
         }
@@ -79,7 +79,7 @@ public class RegisteredDoctor_Modify extends BaseTest {
         // 错误的医生ID，应该更新失败
         pathValue.replace("id", mainDoctorId+"11111");
         try {
-            res = HttpRequest.sendPut(host_crm+uri, body.toString(), crm_token, pathValue);
+            res = HttpRequest.s_SendPut(host_crm+uri, body.toString(), crm_token, pathValue);
         } catch (IOException e) {
             logger.error(e);
         }
@@ -99,7 +99,7 @@ public class RegisteredDoctor_Modify extends BaseTest {
         // 更新正确的name，应当成功
         body.put("name", "美女医生");
         try {
-            res = HttpRequest.sendPut(host_crm+uri, body.toString(), crm_token, pathValue);
+            res = HttpRequest.s_SendPut(host_crm+uri, body.toString(), crm_token, pathValue);
             checkResponse(res);
             Assert.assertEquals(code, "1000000");
         } catch (IOException e) {
@@ -127,7 +127,7 @@ public class RegisteredDoctor_Modify extends BaseTest {
         String another_city = hospitalInfo.get("city_id");
 
         try {
-            res = HttpRequest.sendPut(host_crm+uri, body.toString(), crm_token, pathValue);
+            res = HttpRequest.s_SendPut(host_crm+uri, body.toString(), crm_token, pathValue);
             checkResponse(res);
             Assert.assertEquals(code, "1000000");
         } catch (IOException e) {
@@ -145,7 +145,7 @@ public class RegisteredDoctor_Modify extends BaseTest {
         body.replace("hospital_id", hospitalId);
         body.put("hospital_name", "测试医院");
         try {
-            res = HttpRequest.sendPut(host_crm+uri, body.toString(), crm_token, pathValue);
+            res = HttpRequest.s_SendPut(host_crm+uri, body.toString(), crm_token, pathValue);
             checkResponse(res);
             Assert.assertEquals(code, "1000000");
         } catch (IOException e) {
@@ -170,7 +170,7 @@ public class RegisteredDoctor_Modify extends BaseTest {
         String academic = Generator.randomKey(KnowledgeBase.kb_academic_title);
         body.put("academic_title", academic);
         try {
-            res = HttpRequest.sendPut(host_crm+mock+uri, body.toString(), crm_token, pathValue);
+            res = HttpRequest.s_SendPut(host_crm+mock+uri, body.toString(), crm_token, pathValue);
         } catch (IOException e) {
             logger.error(e);
         }
@@ -185,7 +185,7 @@ public class RegisteredDoctor_Modify extends BaseTest {
         // 更新错误的academic_title，应当不成功
         body.replace("academic_title", "ASSOCIATE_PROFESSOR_WRONG");
         try {
-            res = HttpRequest.sendPut(host_crm+mock+uri, body.toString(), crm_token, pathValue);
+            res = HttpRequest.s_SendPut(host_crm+mock+uri, body.toString(), crm_token, pathValue);
         } catch (IOException e) {
             logger.error(e);
         }
@@ -211,7 +211,7 @@ public class RegisteredDoctor_Modify extends BaseTest {
         String medical = Generator.randomKey(KnowledgeBase.kb_medical_title);
         body.put("medical_title", medical);
         try {
-            res = HttpRequest.sendPut(host_crm+uri, body.toString(), crm_token, pathValue);
+            res = HttpRequest.s_SendPut(host_crm+uri, body.toString(), crm_token, pathValue);
         } catch (IOException e) {
             logger.error(e);
         }
@@ -225,7 +225,7 @@ public class RegisteredDoctor_Modify extends BaseTest {
         // 更新错误的medical_title，应当不成功
         body.replace("medical_title", "ARCHIATER_WRONG");
         try {
-            res = HttpRequest.sendPut(host_crm+uri, body.toString(), crm_token, pathValue);
+            res = HttpRequest.s_SendPut(host_crm+uri, body.toString(), crm_token, pathValue);
         } catch (IOException e) {
             logger.error(e);
         }
@@ -250,7 +250,7 @@ public class RegisteredDoctor_Modify extends BaseTest {
         String majorId = Generator.randomKey(KnowledgeBase.kb_major);
         body.put("major_id", majorId);
         try {
-            res = HttpRequest.sendPut(host_crm+mock+uri, body.toString(), crm_token, pathValue);
+            res = HttpRequest.s_SendPut(host_crm+mock+uri, body.toString(), crm_token, pathValue);
         } catch (IOException e) {
             logger.error(e);
         }
@@ -264,7 +264,7 @@ public class RegisteredDoctor_Modify extends BaseTest {
         // 更新错误的major_id，应当不成功
         body.replace("major_id", "1000000");
         try {
-            res = HttpRequest.sendPut(host_crm+uri, body.toString(), crm_token, pathValue);
+            res = HttpRequest.s_SendPut(host_crm+uri, body.toString(), crm_token, pathValue);
         } catch (IOException e) {
             logger.error(e);
         }
@@ -290,7 +290,7 @@ public class RegisteredDoctor_Modify extends BaseTest {
         String phone = Generator.randomPhone();
         body.put("mobile", phone);
         try {
-            res = HttpRequest.sendPut(host_crm+mock+uri, body.toString(), crm_token, pathValue);
+            res = HttpRequest.s_SendPut(host_crm+mock+uri, body.toString(), crm_token, pathValue);
         } catch (IOException e) {
             logger.error(e);
         }
@@ -317,7 +317,7 @@ public class RegisteredDoctor_Modify extends BaseTest {
         body.accumulate("doctor_card_pictures", JSONObject.fromObject("{'key':'2017/05/04/1265834e-97d8-44a0-95e7-047c7facaee8/IMG_20170429_102739.jpg';'type':'3'}").toString());
         body.accumulate("doctor_card_pictures", JSONObject.fromObject("{'key':'2017/05/04/1265834e-97d8-44a0-95e7-047c7facaee8/IMG_20170429_102736.jpg';'type':'3'}").toString());
         try {
-            res = HttpRequest.sendPut(host_crm+uri, body.toString(), crm_token, pathValue);
+            res = HttpRequest.s_SendPut(host_crm+uri, body.toString(), crm_token, pathValue);
         } catch (IOException e) {
             logger.error(e);
         }
@@ -336,7 +336,7 @@ public class RegisteredDoctor_Modify extends BaseTest {
 
         body.accumulate("doctor_card_pictures", JSONObject.fromObject("{'key':'2017/05/04/1265834e-97d8-44a0-95e7-047c7facaee8/IMG_20170429_102740.jpg';'type':'3'}").toString());
         try {
-            res = HttpRequest.sendPut(host_crm+uri, body.toString(), crm_token, pathValue);
+            res = HttpRequest.s_SendPut(host_crm+uri, body.toString(), crm_token, pathValue);
         } catch (IOException e) {
             logger.error(e);
         }
@@ -355,7 +355,7 @@ public class RegisteredDoctor_Modify extends BaseTest {
 
         body.accumulate("doctor_card_pictures", JSONObject.fromObject("{'key':'2017/05/04/1265834e-97d8-44a0-95e7-047c7facaee8/IMG_20170429_102741.jpg';'type':'3'}").toString());
         try {
-            res = HttpRequest.sendPut(host_crm+uri, body.toString(), crm_token, pathValue);
+            res = HttpRequest.s_SendPut(host_crm+uri, body.toString(), crm_token, pathValue);
         } catch (IOException e) {
             logger.error(e);
         }
@@ -373,7 +373,7 @@ public class RegisteredDoctor_Modify extends BaseTest {
 // 删除所有图片
         body.replace("doctor_card_pictures", "[]");
         try {
-            res = HttpRequest.sendPut(host_crm+uri, body.toString(), crm_token, pathValue);
+            res = HttpRequest.s_SendPut(host_crm+uri, body.toString(), crm_token, pathValue);
         } catch (IOException e) {
             logger.error(e);
         }

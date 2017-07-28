@@ -27,7 +27,7 @@ public class KBExpert_Detail extends BaseTest {
         HashMap<String, String> pathValue = new HashMap<>();
         pathValue.put("id",expertId);
         try {
-            res = HttpRequest.sendGet(host_crm+uri,"", crm_token, pathValue);
+            res = HttpRequest.s_SendGet(host_crm+uri,"", crm_token, pathValue);
         } catch (IOException e) {
             logger.error(e);
         }
@@ -44,7 +44,7 @@ public class KBExpert_Detail extends BaseTest {
         HashMap<String, String> pathValue = new HashMap<>();
         pathValue.put("id",info.get("id"));
         try {
-            res = HttpRequest.sendGet(host_crm+uri, "", crm_token, pathValue);
+            res = HttpRequest.s_SendGet(host_crm+uri, "", crm_token, pathValue);
         } catch (IOException e) {
             logger.error(e);
         }
@@ -78,7 +78,7 @@ public class KBExpert_Detail extends BaseTest {
         HashMap<String, String> pathValue = new HashMap<>();
         pathValue.put("id", "111"+info.get("id"));
         try {
-            res = HttpRequest.sendGet(host_crm+uri, "", crm_token, pathValue);
+            res = HttpRequest.s_SendGet(host_crm+uri, "", crm_token, pathValue);
         } catch (IOException e) {
             logger.error(e);
         }

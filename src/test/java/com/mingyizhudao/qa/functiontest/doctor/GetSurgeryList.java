@@ -25,7 +25,7 @@ public class GetSurgeryList extends BaseTest {
         HashMap<String, String> query = new HashMap<>();
         query.put("id", "6");
         try {
-            res = HttpRequest.sendGet(host_doc+uri, query, mainToken, null);
+            res = HttpRequest.s_SendGet(host_doc+uri, query, mainToken, null);
         } catch (IOException e) {
             logger.error(e);
         }
@@ -43,7 +43,7 @@ public class GetSurgeryList extends BaseTest {
         HashMap<String, String> query = new HashMap<String, String>();
         query.put("id", "600000");
         try {
-            res = HttpRequest.sendGet(host_doc +uri, query, mainToken, null);
+            res = HttpRequest.s_SendGet(host_doc +uri, query, mainToken, null);
         } catch (IOException e) {
             logger.error(e);
         }
@@ -60,7 +60,7 @@ public class GetSurgeryList extends BaseTest {
         HashMap<String, String> query = new HashMap<String, String>();
         query.put("id", "abc");
         try {
-            res = HttpRequest.sendGet(host_doc +uri, query, mainToken, null);
+            res = HttpRequest.s_SendGet(host_doc +uri, query, mainToken, null);
         } catch (IOException e) {
             logger.error(e);
         }
@@ -70,7 +70,7 @@ public class GetSurgeryList extends BaseTest {
         logger.info("case2: Id = abc12");
         query.replace("id", "abc12");
         try {
-            res = HttpRequest.sendGet(host_doc +uri, query, mainToken, null);
+            res = HttpRequest.s_SendGet(host_doc +uri, query, mainToken, null);
         } catch (IOException e) {
             logger.error(e);
         }
@@ -80,7 +80,7 @@ public class GetSurgeryList extends BaseTest {
         logger.info("case3: Id = -1");
         query.replace("id", "-1");
         try {
-            res = HttpRequest.sendGet(host_doc +uri, query, mainToken, null);
+            res = HttpRequest.s_SendGet(host_doc +uri, query, mainToken, null);
         } catch (IOException e) {
             logger.error(e);
         }

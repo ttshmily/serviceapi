@@ -22,14 +22,14 @@ public class SendVerifyCode extends BaseTest{
     public static String mobile;
     public static String token;
 
-    public static String send() {
+    public static String s_Send() {
         String res = "";
         MobileProfile body = new MobileProfile(true);
         CheckVerifyCode.mobile = mobile;
         Refresh.mobile = mobile;
         logger.info("请求验证码到手机号" + mobile + " ...") ;
         try {
-            res = HttpRequest.sendPost(host_login +uri, body.body.toString(), "");
+            res = HttpRequest.s_SendPost(host_login +uri, body.body.toString(), "");
         } catch (IOException e) {
             logger.error(e);
         }
@@ -37,13 +37,13 @@ public class SendVerifyCode extends BaseTest{
         return mobile;
     }
 
-    public static void send(String phone) {
+    public static void s_Send(String phone) {
         String res = "";
         JSONObject mobile = new JSONObject();
         mobile.put("mobile", phone);
         logger.info("请求验证码到手机号" + phone + " ...") ;
         try {
-            res = HttpRequest.sendPost(host_login +uri, mobile.toString(), "");
+            res = HttpRequest.s_SendPost(host_login +uri, mobile.toString(), "");
         } catch (IOException e) {
             logger.error(e);
         }
@@ -56,7 +56,7 @@ public class SendVerifyCode extends BaseTest{
         MobileProfile body = new MobileProfile(false);
         body.body.replace("mobile", "");
         try {
-            res = HttpRequest.sendPost(host_login +mock+uri,body.body.toString(), "");
+            res = HttpRequest.s_SendPost(host_login +mock+uri,body.body.toString(), "");
             checkResponse(res);
             Assert.fail("res should fail"); // 如果没有exception，就是fail
         } catch (IOException e) {
@@ -70,7 +70,7 @@ public class SendVerifyCode extends BaseTest{
         String res = "";
         MobileProfile body = new MobileProfile(true);
         try {
-            res = HttpRequest.sendPost(host_login +mock+uri,body.body.toString(), "");
+            res = HttpRequest.s_SendPost(host_login +mock+uri,body.body.toString(), "");
         } catch (IOException e) {
             logger.error(e);
         }
@@ -84,7 +84,7 @@ public class SendVerifyCode extends BaseTest{
         MobileProfile body = new MobileProfile(false);
         body.body.replace("mobile", "1330000000");
         try {
-            res = HttpRequest.sendPost(host_login +mock+uri,body.body.toString(), "");
+            res = HttpRequest.s_SendPost(host_login +mock+uri,body.body.toString(), "");
             checkResponse(res);
             Assert.fail("res should fail"); // 如果没有exception，就是fail
         } catch (IOException e) {

@@ -19,16 +19,22 @@ import static com.mingyizhudao.qa.utilities.Generator.parseJson;
  */
 public class GetDoctorProfile_V1 extends BaseTest {
 
-    public static final TestLogger logger= new TestLogger(GetDoctorProfile_V1.class.getName());
+    public static String clazzName = new Object() {
+        public String getClassName() {
+            String clazzName = this.getClass().getName();
+            return clazzName.substring(0, clazzName.lastIndexOf('$'));
+        }
+    }.getClassName();
+    public static TestLogger logger = new TestLogger(clazzName);
     public static String uri = "/api/v1/getdoctorprofile";
     public static String mock = false ? "/mockjs/1" : "";
     public static String token= "";
 
 
-    public static String MyProfile(String token) {
+    public static String s_MyProfile(String token) {
         String res = "";
         try {
-            res = HttpRequest.sendGet(host_doc +uri, "", token);
+            res = HttpRequest.s_SendGet(host_doc +uri, "", token);
         } catch (IOException e) {
             logger.error(e);
         }
@@ -39,7 +45,7 @@ public class GetDoctorProfile_V1 extends BaseTest {
     public void test_01_有token信息的请求可以获得有效信息() {
         String res = "";
         try {
-            res = HttpRequest.sendGet(host_doc +mock+uri,"", mainToken);
+            res = HttpRequest.s_SendGet(host_doc +mock+uri,"", mainToken);
         } catch (IOException e) {
             logger.error(e);
         }
@@ -57,7 +63,7 @@ public class GetDoctorProfile_V1 extends BaseTest {
     public void test_02_没有token信息的请求不能获得个人信息并返回正确的错误提示() {
         String res = "";
         try {
-            res = HttpRequest.sendGet(host_doc+uri,"", "");
+            res = HttpRequest.s_SendGet(host_doc+uri,"", "");
         } catch (IOException e) {
             logger.error(e);
         }
@@ -71,7 +77,7 @@ public class GetDoctorProfile_V1 extends BaseTest {
     public void test_03_错误token的请求不能获得个人信息并返回正确的错误提示() {
         String res = "";
         try {
-            res = HttpRequest.sendGet(host_doc +mock+uri,"", "nidawoya");
+            res = HttpRequest.s_SendGet(host_doc +mock+uri,"", "nidawoya");
         } catch (IOException e) {
             logger.error(e);
         }
@@ -85,7 +91,7 @@ public class GetDoctorProfile_V1 extends BaseTest {
     public void test_04_测试data字段返回了足够的医生信息() {
         String res = "";
         try {
-            res = HttpRequest.sendGet(host_doc +mock+uri,"", mainToken);
+            res = HttpRequest.s_SendGet(host_doc +mock+uri,"", mainToken);
         } catch (IOException e) {
             logger.error(e);
         }
@@ -106,7 +112,7 @@ public class GetDoctorProfile_V1 extends BaseTest {
         CreateOrder.CreateOrder(mainToken);
         String resOld = "";
         try {
-            resOld = HttpRequest.sendGet(host_doc + uri,"", mainToken);
+            resOld = HttpRequest.s_SendGet(host_doc + uri,"", mainToken);
         } catch (IOException e) {
             logger.error(e);
         }
@@ -123,7 +129,7 @@ public class GetDoctorProfile_V1 extends BaseTest {
         }
         String res = "";
         try {
-            res = HttpRequest.sendGet(host_doc +mock+uri,"", mainToken);
+            res = HttpRequest.s_SendGet(host_doc +mock+uri,"", mainToken);
         } catch (IOException e) {
             logger.error(e);
         }
@@ -142,7 +148,7 @@ public class GetDoctorProfile_V1 extends BaseTest {
     public void test_06_测试总订单数_测试处理中订单数_CRM已领取(){
         String resOld = "";
         try {
-            resOld = HttpRequest.sendGet(host_doc +mock+uri,"", mainToken);
+            resOld = HttpRequest.s_SendGet(host_doc +mock+uri,"", mainToken);
         } catch (IOException e) {
             logger.error(e);
         }
@@ -159,7 +165,7 @@ public class GetDoctorProfile_V1 extends BaseTest {
         //CreateOrder.CreateOrder(mainToken);
         String res = "";
         try {
-            res = HttpRequest.sendGet(host_doc +mock+uri,"", mainToken);
+            res = HttpRequest.s_SendGet(host_doc +mock+uri,"", mainToken);
         } catch (IOException e) {
             logger.error(e);
         }
@@ -178,7 +184,7 @@ public class GetDoctorProfile_V1 extends BaseTest {
     public void test_07_测试总订单数_测试处理中订单数_推荐完医生(){
         String resOld = "";
         try {
-            resOld = HttpRequest.sendGet(host_doc +mock+uri,"", mainToken);
+            resOld = HttpRequest.s_SendGet(host_doc +mock+uri,"", mainToken);
         } catch (IOException e) {
             logger.error(e);
         }
@@ -196,7 +202,7 @@ public class GetDoctorProfile_V1 extends BaseTest {
         //CreateOrder.CreateOrder(mainToken);
         String res = "";
         try {
-            res = HttpRequest.sendGet(host_doc +mock+uri,"", mainToken);
+            res = HttpRequest.s_SendGet(host_doc +mock+uri,"", mainToken);
         } catch (IOException e) {
             logger.error(e);
         }
@@ -215,7 +221,7 @@ public class GetDoctorProfile_V1 extends BaseTest {
     public void test_08_测试总订单数_待支付状态的订单数(){
         String resOld = "";
         try {
-            resOld = HttpRequest.sendGet(host_doc +mock+uri,"", mainToken);
+            resOld = HttpRequest.s_SendGet(host_doc +mock+uri,"", mainToken);
         } catch (IOException e) {
             logger.error(e);
         }
@@ -234,7 +240,7 @@ public class GetDoctorProfile_V1 extends BaseTest {
         }
         String res = "";
         try {
-            res = HttpRequest.sendGet(host_doc +mock+uri,"", mainToken);
+            res = HttpRequest.s_SendGet(host_doc +mock+uri,"", mainToken);
         } catch (IOException e) {
             logger.error(e);
         }

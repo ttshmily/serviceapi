@@ -30,7 +30,7 @@ public class KBDisease_Update extends BaseTest {
         HashMap<String, String> pathValue = new HashMap<>();
         pathValue.put("id", diseaseId);
         try {
-            res = HttpRequest.sendPut(host_crm+uri, dp.body.toString(), crm_token, pathValue);
+            res = HttpRequest.s_SendPut(host_crm+uri, dp.body.toString(), crm_token, pathValue);
         } catch (IOException e) {
             logger.error(e);
         }
@@ -63,7 +63,7 @@ public class KBDisease_Update extends BaseTest {
         DiseaseProfile dpModified = new DiseaseProfile(false);
         dpModified.body.put("name", "修改疾病名称" + Generator.randomString(2));
         try {
-            res = HttpRequest.sendPut(host_crm + uri, dpModified.body.toString(), crm_token, pathValue);
+            res = HttpRequest.s_SendPut(host_crm + uri, dpModified.body.toString(), crm_token, pathValue);
         } catch (IOException e) {
             logger.error(e);
         }
@@ -74,7 +74,7 @@ public class KBDisease_Update extends BaseTest {
         dpModified.body.remove("name");
         dpModified.body.put("description", "修改疾病描述" + Generator.randomString(30));
         try {
-            res = HttpRequest.sendPut(host_crm + uri, dpModified.body.toString(), crm_token, pathValue);
+            res = HttpRequest.s_SendPut(host_crm + uri, dpModified.body.toString(), crm_token, pathValue);
         } catch (IOException e) {
             logger.error(e);
         }
@@ -85,7 +85,7 @@ public class KBDisease_Update extends BaseTest {
         dpModified.body.remove("description");
         dpModified.body.put("user_visible", 0);
         try {
-            res = HttpRequest.sendPut(host_crm + uri, dpModified.body.toString(), crm_token, pathValue);
+            res = HttpRequest.s_SendPut(host_crm + uri, dpModified.body.toString(), crm_token, pathValue);
         } catch (IOException e) {
             logger.error(e);
         }
@@ -96,7 +96,7 @@ public class KBDisease_Update extends BaseTest {
         dpModified.body.remove("user_visible");
         dpModified.body.put("is_common", 0);
         try {
-            res = HttpRequest.sendPut(host_crm + uri, dpModified.body.toString(), crm_token, pathValue);
+            res = HttpRequest.s_SendPut(host_crm + uri, dpModified.body.toString(), crm_token, pathValue);
         } catch (IOException e) {
             logger.error(e);
         }
@@ -142,7 +142,7 @@ public class KBDisease_Update extends BaseTest {
         dpModified.body.accumulate("category_list", categoryId);
         input_ids.add(id);
         try {
-            res = HttpRequest.sendPut(host_crm + uri, dpModified.body.toString(), crm_token, pathValue);
+            res = HttpRequest.s_SendPut(host_crm + uri, dpModified.body.toString(), crm_token, pathValue);
         } catch (IOException e) {
             logger.error(e);
         }
@@ -201,7 +201,7 @@ public class KBDisease_Update extends BaseTest {
         dpModified.body.accumulate("category_list", categoryId);
 //        input_ids.add(id);
         try {
-            res = HttpRequest.sendPut(host_crm + uri, dpModified.body.toString(), crm_token, pathValue);
+            res = HttpRequest.s_SendPut(host_crm + uri, dpModified.body.toString(), crm_token, pathValue);
         } catch (IOException e) {
             logger.error(e);
         }
@@ -261,7 +261,7 @@ public class KBDisease_Update extends BaseTest {
         dpModified.body.accumulate("category_list", categoryId);
 //        input_ids.add(id);
         try {
-            res = HttpRequest.sendPut(host_crm + uri, dpModified.body.toString(), crm_token, pathValue);
+            res = HttpRequest.s_SendPut(host_crm + uri, dpModified.body.toString(), crm_token, pathValue);
         } catch (IOException e) {
             logger.error(e);
         }

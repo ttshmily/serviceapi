@@ -32,7 +32,7 @@ public class CreatePayment extends BaseTest {
         body.put("payment", payment);
 
         try {
-            res = HttpRequest.sendPost(host_doc + uri, body.toString(), token);
+            res = HttpRequest.s_SendPost(host_doc + uri, body.toString(), token);
         } catch (IOException e) {
             logger.error(e);
         }
@@ -62,7 +62,7 @@ public class CreatePayment extends BaseTest {
         body.put("payment", payment);
 
         try {
-            res = HttpRequest.sendPost(host_doc + uri, body.toString(), mainToken);
+            res = HttpRequest.s_SendPost(host_doc + uri, body.toString(), mainToken);
             checkResponse(res);
             Assert.assertEquals(code, "1000000", "支付调用失败");
             Assert.assertNotNull(Generator.parseJson(data, "payment:url"), "返回的订单ID格式有误");

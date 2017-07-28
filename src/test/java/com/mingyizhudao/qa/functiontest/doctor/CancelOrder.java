@@ -35,7 +35,7 @@ public class CancelOrder extends BaseTest {
         body.put("order", order);
 
         try {
-            res = HttpRequest.sendPost(host_doc + uri, body.toString(), token, null);
+            res = HttpRequest.s_SendPost(host_doc + uri, body.toString(), token, null);
         } catch (IOException e) {
             logger.error(e);
         }
@@ -54,7 +54,7 @@ public class CancelOrder extends BaseTest {
         order.put("orderNumber", orderId);
         body.put("order", order);
         try {
-            res = HttpRequest.sendPost(host_doc +mock+uri, body.toString(), mainToken);
+            res = HttpRequest.s_SendPost(host_doc +mock+uri, body.toString(), mainToken);
         } catch (IOException e) {
             logger.error(e);
         }
@@ -79,7 +79,7 @@ public class CancelOrder extends BaseTest {
         order.put("orderNumber", orderId);
         body.put("order", order);
         try {
-            res = HttpRequest.sendPost(host_doc+uri, body.toString(), mainToken);
+            res = HttpRequest.s_SendPost(host_doc+uri, body.toString(), mainToken);
         } catch (IOException e) {
             logger.error(e);
         }
@@ -106,7 +106,7 @@ public class CancelOrder extends BaseTest {
         order.put("orderNumber", orderId);
         body.put("order", order);
         try {
-            res = HttpRequest.sendPost(host_doc+uri, body.toString(), mainToken);
+            res = HttpRequest.s_SendPost(host_doc+uri, body.toString(), mainToken);
         } catch (IOException e) {
             logger.error(e);
         }
@@ -129,7 +129,7 @@ public class CancelOrder extends BaseTest {
         order.put("orderNumber", orderId);
         body.put("order", order);
         try {
-            res = HttpRequest.sendPost(host_doc+uri, body.toString(), "");
+            res = HttpRequest.s_SendPost(host_doc+uri, body.toString(), "");
         } catch (IOException e) {
             logger.error(e);
         }
@@ -162,7 +162,7 @@ public class CancelOrder extends BaseTest {
         order.put("orderNumber", orderId);
         body.put("order", order);
         try {
-            res = HttpRequest.sendPost(host_doc+uri, body.toString(), mainToken);
+            res = HttpRequest.s_SendPost(host_doc+uri, body.toString(), mainToken);
         } catch (IOException e) {
             logger.error(e);
         }

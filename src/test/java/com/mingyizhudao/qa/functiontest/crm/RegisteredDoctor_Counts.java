@@ -25,7 +25,7 @@ public class RegisteredDoctor_Counts extends BaseTest {
         String res = "";
 
         try {
-            res = HttpRequest.sendGet(host_crm+mock+uri, "", crm_token, null);
+            res = HttpRequest.s_SendGet(host_crm+mock+uri, "", crm_token, null);
         } catch (IOException e) {
             logger.error(e);
         }
@@ -44,7 +44,7 @@ public class RegisteredDoctor_Counts extends BaseTest {
         String res = "";
 
         try {
-            res = HttpRequest.sendGet(host_crm+mock+uri, "", crm_token, null);
+            res = HttpRequest.s_SendGet(host_crm+mock+uri, "", crm_token, null);
         } catch (IOException e) {
             logger.error(e);
         }

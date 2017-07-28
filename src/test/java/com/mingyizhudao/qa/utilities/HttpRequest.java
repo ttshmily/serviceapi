@@ -31,7 +31,7 @@ public class HttpRequest {
 //        System.out.println(restUrl(url, map));
 //        System.out.println(queryBuilder(map));
 //        try {
-//            String res = sendGet(url, para, "xxx");
+//            String res = s_SendGet(url, para, "xxx");
 //            System.out.println(res);
 //        } catch (IOException e) {
 //            e.printStackTrace();
@@ -47,13 +47,13 @@ public class HttpRequest {
      *            请求参数，请求参数应该是 name1=value1&name2=value2 的形式。
      * @return URL所代表远程资源的响应结果，类型为String
      */
-	public static String sendGet(String url, String param, String authCode) throws IOException {
+	public static String s_SendGet(String url, String param, String authCode) throws IOException {
 
         String jobName = "";
 	    StackTraceElement stack[] = (new Throwable()).getStackTrace();
         for (int i = 0; i < stack.length; i++) {
             StackTraceElement s = stack[i];
-            if ("sendGet".equals(s.getMethodName()) || "init".equals(s.getMethodName())) {
+            if ("s_SendGet".equals(s.getMethodName()) || "init".equals(s.getMethodName())) {
                 continue;
             } else {
                 jobName = s.getClassName();
@@ -153,14 +153,14 @@ public class HttpRequest {
 		return result;
 	}
 
-    public static String sendGet(String url, HashMap<String,String> query, String authCode) throws IOException {
+    public static String s_SendGet(String url, HashMap<String,String> query, String authCode) throws IOException {
         String result = "";
         String param = "";
         try {
             if (query != null ) {
                 param = queryBuilder(query);
             }
-            result = sendGet(url, param, authCode);
+            result = s_SendGet(url, param, authCode);
         } catch (IOException e) {
             logger.error("发送请求异常");
             throw e;
@@ -168,7 +168,7 @@ public class HttpRequest {
         return result;
     }
 
-    public static String sendGet(String url, String param, String authCode, HashMap<String,String> pathValue) throws IOException {
+    public static String s_SendGet(String url, String param, String authCode, HashMap<String,String> pathValue) throws IOException {
         String result = "";
         try {
             String urlNameString;
@@ -177,7 +177,7 @@ public class HttpRequest {
             } else {
                 urlNameString = url;
             }
-            result = sendGet(urlNameString, param, authCode);
+            result = s_SendGet(urlNameString, param, authCode);
 
         } catch (IOException e) {
             logger.error("发送请求异常");
@@ -186,7 +186,7 @@ public class HttpRequest {
         return result;
     }
 
-    public static String sendGet(String url, HashMap<String,String> query, String authCode, HashMap<String,String> pathValue) throws IOException {
+    public static String s_SendGet(String url, HashMap<String,String> query, String authCode, HashMap<String,String> pathValue) throws IOException {
         String result = "";
         String param = "";
         BufferedReader in = null;
@@ -200,7 +200,7 @@ public class HttpRequest {
             if (query != null ) {
                 param = queryBuilder(query);
             }
-            result = sendGet(urlNameString, param, authCode);
+            result = s_SendGet(urlNameString, param, authCode);
 
         } catch (IOException e) {
             logger.error("发送请求异常");
@@ -208,7 +208,6 @@ public class HttpRequest {
         }
         return result;
     }
-
 
     /**
      * 向指定 URL 发送POST方法的请求
@@ -219,13 +218,13 @@ public class HttpRequest {
      *            请求参数，请求参数是JsonString的形式。
      * @return 所代表远程资源的响应结果，JSON转换的String
      */
-    public static String sendPost(String url, String param, String authCode) throws IOException {
+    public static String s_SendPost(String url, String param, String authCode) throws IOException {
 
         String jobName = "";
         StackTraceElement stack[] = (new Throwable()).getStackTrace();
         for (int i = 0; i < stack.length; i++) {
             StackTraceElement s = stack[i];
-            if ("sendPost".equals(s.getMethodName()) || "init".equals(s.getMethodName())) {
+            if ("s_SendPost".equals(s.getMethodName()) || "init".equals(s.getMethodName())) {
                 continue;
             } else {
                 jobName = s.getClassName();
@@ -278,12 +277,12 @@ public class HttpRequest {
         return result;
 	}
 
-    public static String sendPost(String url, String param, String authCode, HashMap<String,String> pathValue) throws IOException {
+    public static String s_SendPost(String url, String param, String authCode, HashMap<String,String> pathValue) throws IOException {
 
         String result = "";
         try {
             String urlString = restUrl(url, pathValue);
-            result = sendPost(urlString, param, authCode);
+            result = s_SendPost(urlString, param, authCode);
         } catch (IOException e) {
             logger.error("发送请求异常");
             throw e;
@@ -291,7 +290,7 @@ public class HttpRequest {
         return result;
     }
 
-    public static String sendPostForm(String url, String param, String authCode) throws IOException {
+    public static String s_SendPostForm(String url, String param, String authCode) throws IOException {
         PrintWriter out = null;
         BufferedReader in = null;
         String result = "";
@@ -336,7 +335,7 @@ public class HttpRequest {
         return result;
     }
 
-    public static String sendPostText(String url, String param, String authCode) throws IOException {
+    public static String s_SendPostText(String url, String param, String authCode) throws IOException {
         PrintWriter out = null;
         BufferedReader in = null;
         String result = "";
@@ -383,7 +382,6 @@ public class HttpRequest {
         return result;
     }
 
-
     /**
      * 向指定 URL 发送PUT方法的请求
      *
@@ -394,13 +392,13 @@ public class HttpRequest {
      * @return 所代表远程资源的响应结果，JSON转换的String
      */
 
-    public static String sendPut(String url, String param, String authCode) throws IOException {
+    public static String s_SendPut(String url, String param, String authCode) throws IOException {
 
         String jobName = "";
         StackTraceElement stack[] = (new Throwable()).getStackTrace();
         for (int i = 0; i < stack.length; i++) {
             StackTraceElement s = stack[i];
-            if ("sendPut".equals(s.getMethodName()) || "init".equals(s.getMethodName())) {
+            if ("s_SendPut".equals(s.getMethodName()) || "init".equals(s.getMethodName())) {
                 continue;
             } else {
                 jobName = s.getClassName();
@@ -454,7 +452,7 @@ public class HttpRequest {
         return result;
 	}
 
-    public static String sendPut(String url, String param, String authCode, HashMap<String,String> pathValue) throws IOException {
+    public static String s_SendPut(String url, String param, String authCode, HashMap<String,String> pathValue) throws IOException {
 
         String result = "";
         try {
@@ -464,7 +462,7 @@ public class HttpRequest {
             } else {
                 urlString = url;
             }
-            result = sendPut(urlString, param, authCode);
+            result = s_SendPut(urlString, param, authCode);
         } catch (IOException e) {
             logger.error("发送请求异常");
             throw e;
@@ -482,12 +480,12 @@ public class HttpRequest {
      * @return 所代表远程资源的响应结果，JSON转换的String
      */
 
-    public static String sendDelete(String url, String param, String authCode, HashMap<String,String> pathValue) throws IOException {
+    public static String s_SendDelete(String url, String param, String authCode, HashMap<String,String> pathValue) throws IOException {
         String jobName = "";
         StackTraceElement stack[] = (new Throwable()).getStackTrace();
         for (int i = 0; i < stack.length; i++) {
             StackTraceElement s = stack[i];
-            if ("sendDelete".equals(s.getMethodName()) || "init".equals(s.getMethodName())) {
+            if ("s_SendDelete".equals(s.getMethodName()) || "init".equals(s.getMethodName())) {
                 continue;
             } else {
                 jobName = s.getClassName();

@@ -39,7 +39,7 @@ public class DistrictManagement extends BaseTest {
         }
         body.put("list", cities);
         try {
-            res = HttpRequest.sendPost(host_bda + uri, body.toString(), bda_token);
+            res = HttpRequest.s_SendPost(host_bda + uri, body.toString(), bda_token);
         } catch (IOException e) {
             logger.debug(res);
             logger.error(e);
@@ -67,7 +67,7 @@ public class DistrictManagement extends BaseTest {
         }
         body.put("list", cities);
         try {
-            res = HttpRequest.sendPost(host_bda + uri, body.toString(), bda_token);
+            res = HttpRequest.s_SendPost(host_bda + uri, body.toString(), bda_token);
         } catch (IOException e) {
             logger.error(e);
         }

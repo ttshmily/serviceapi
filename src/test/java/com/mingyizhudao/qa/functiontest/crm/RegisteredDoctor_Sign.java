@@ -35,7 +35,7 @@ public class RegisteredDoctor_Sign extends BaseTest {
         JSONObject body = new JSONObject();
         body.put("status", "SIGNED");
         try {
-            res = HttpRequest.sendPut(host_crm + uri, body.toString(), crm_token, pathValue);
+            res = HttpRequest.s_SendPut(host_crm + uri, body.toString(), crm_token, pathValue);
         } catch (IOException e) {
             logger.error(e);
         }
@@ -65,7 +65,7 @@ public class RegisteredDoctor_Sign extends BaseTest {
         JSONObject body = new JSONObject();
         body.put("status", "SIGNED");
         try {
-            res = HttpRequest.sendPut(host_crm + uri, body.toString(), crm_token, pathValue);
+            res = HttpRequest.s_SendPut(host_crm + uri, body.toString(), crm_token, pathValue);
         } catch (IOException e) {
             logger.error(e);
         }

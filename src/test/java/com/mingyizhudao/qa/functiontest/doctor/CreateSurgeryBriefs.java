@@ -36,7 +36,7 @@ public class CreateSurgeryBriefs extends BaseTest {
         HashMap<String, String> pathValue = new HashMap<>();
         pathValue.put("orderId", orderId);
         try {
-            res = HttpRequest.sendPut(host_doc + uri, sb.body.toString(), token, pathValue);
+            res = HttpRequest.s_SendPut(host_doc + uri, sb.body.toString(), token, pathValue);
         } catch (IOException e) {
             logger.error(e);
         }
@@ -52,8 +52,8 @@ public class CreateSurgeryBriefs extends BaseTest {
             Assert.fail("没有已支付的订单");
         }
         String agentPhone = JSONObject.fromObject(Order_Detail.Detail(orderId)).getJSONObject("data").getString("agent_phone");
-        SendVerifyCode.send(agentPhone);
-        String token = CheckVerifyCode.check(agentPhone);
+        SendVerifyCode.s_Send(agentPhone);
+        String token = CheckVerifyCode.s_Check(agentPhone);
         if (token == null) {
             logger.error("没有获取到token");
             Assert.fail();
@@ -62,7 +62,7 @@ public class CreateSurgeryBriefs extends BaseTest {
         HashMap<String, String> pathValue = new HashMap<>();
         pathValue.put("orderId", orderId);
         try {
-            res = HttpRequest.sendPut(host_doc + uri, sb.body.toString(), token, pathValue);
+            res = HttpRequest.s_SendPut(host_doc + uri, sb.body.toString(), token, pathValue);
         } catch (IOException e) {
             logger.error(e);
         }
@@ -91,8 +91,8 @@ public class CreateSurgeryBriefs extends BaseTest {
             Assert.fail("没有已支付的订单");
         }
         String agentPhone = JSONObject.fromObject(Order_Detail.Detail(orderId)).getJSONObject("data").getString("agent_phone");
-        SendVerifyCode.send(agentPhone);
-        String token = CheckVerifyCode.check(agentPhone);
+        SendVerifyCode.s_Send(agentPhone);
+        String token = CheckVerifyCode.s_Check(agentPhone);
         if (token == null) {
             logger.error("没有获取到token");
             Assert.fail();
@@ -102,7 +102,7 @@ public class CreateSurgeryBriefs extends BaseTest {
         HashMap<String, String> pathValue = new HashMap<>();
         pathValue.put("orderId", orderId);
         try {
-            res = HttpRequest.sendPut(host_doc + uri, sb1.body.toString(), token, pathValue);
+            res = HttpRequest.s_SendPut(host_doc + uri, sb1.body.toString(), token, pathValue);
         } catch (IOException e) {
             logger.error(e);
         }
@@ -112,7 +112,7 @@ public class CreateSurgeryBriefs extends BaseTest {
         SurgeryBrief sb2 = new SurgeryBrief(true);
         sb2.body.getJSONObject("order").remove("surgery_brief_final_diagnosed_disease_id");
         try {
-            res = HttpRequest.sendPut(host_doc + uri, sb2.body.toString(), token, pathValue);
+            res = HttpRequest.s_SendPut(host_doc + uri, sb2.body.toString(), token, pathValue);
         } catch (IOException e) {
             logger.error(e);
         }
@@ -122,7 +122,7 @@ public class CreateSurgeryBriefs extends BaseTest {
         SurgeryBrief sb3 = new SurgeryBrief(true);
         sb3.body.getJSONObject("order").remove("surgery_brief_date");
         try {
-            res = HttpRequest.sendPut(host_doc + uri, sb3.body.toString(), token, pathValue);
+            res = HttpRequest.s_SendPut(host_doc + uri, sb3.body.toString(), token, pathValue);
         } catch (IOException e) {
             logger.error(e);
         }
@@ -132,7 +132,7 @@ public class CreateSurgeryBriefs extends BaseTest {
         SurgeryBrief sb4 = new SurgeryBrief(true);
         sb4.body.getJSONObject("order").remove("surgery_brief_hospital_id");
         try {
-            res = HttpRequest.sendPut(host_doc + uri, sb4.body.toString(), token, pathValue);
+            res = HttpRequest.s_SendPut(host_doc + uri, sb4.body.toString(), token, pathValue);
         } catch (IOException e) {
             logger.error(e);
         }

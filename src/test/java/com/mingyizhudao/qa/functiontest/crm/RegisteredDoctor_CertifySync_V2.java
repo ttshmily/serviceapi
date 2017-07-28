@@ -55,7 +55,7 @@ public class RegisteredDoctor_CertifySync_V2 extends BaseTest {
         body.put("reason", "程序认证注册医生并关联到医库");
         body.put("is_signed", "1");
         try {
-            res = HttpRequest.sendPut(host_crm+uri, body.toString(), crm_token, pathValue);
+            res = HttpRequest.s_SendPut(host_crm+uri, body.toString(), crm_token, pathValue);
             logger.debug(HttpRequest.unicodeString(res));
         } catch (IOException e) {
             logger.error(e);
@@ -100,7 +100,7 @@ public class RegisteredDoctor_CertifySync_V2 extends BaseTest {
         body.put("kb_id", expertId);
         body.put("is_signed", "1");
         try {
-            HttpRequest.sendPut(host_crm+uri, body.toString(), crm_token, pathValue);
+            HttpRequest.s_SendPut(host_crm+uri, body.toString(), crm_token, pathValue);
         } catch (IOException e) {
             logger.error(e);
         }
@@ -130,7 +130,7 @@ public class RegisteredDoctor_CertifySync_V2 extends BaseTest {
         body.put("status", "-1");  // 认证失败
         body.put("reason", "程序自动测试失败原因");  // 失败原因
         try {
-            res = HttpRequest.sendPut(host_crm+uri, body.toString(), crm_token, pathValue);
+            res = HttpRequest.s_SendPut(host_crm+uri, body.toString(), crm_token, pathValue);
         } catch (IOException e) {
             logger.error(e);
         }
@@ -140,7 +140,7 @@ public class RegisteredDoctor_CertifySync_V2 extends BaseTest {
         res = RegisteredDoctor_Detail.Detail(doctorId);
         is_verified = Generator.parseJson(JSONObject.fromObject(res), "data:is_verified");
         Assert.assertEquals(is_verified, "-1");
-        res = GetDoctorProfile_V1.MyProfile(tmpTokenn);
+        res = GetDoctorProfile_V1.s_MyProfile(tmpTokenn);
         checkResponse(res);
         Assert.assertEquals(Generator.parseJson(data, "doctor:reject_reason"), "程序自动测试失败原因");
     }
@@ -159,7 +159,7 @@ public class RegisteredDoctor_CertifySync_V2 extends BaseTest {
         body.put("status", "1");  // 认证成功
         body.put("reason", "程序测试认真成功原因");  // 成功原因
         try {
-            res = HttpRequest.sendPut(host_crm + uri, body.toString(), crm_token, pathValue);
+            res = HttpRequest.s_SendPut(host_crm + uri, body.toString(), crm_token, pathValue);
         } catch (IOException e) {
             logger.error(e);
         }
@@ -213,7 +213,7 @@ public class RegisteredDoctor_CertifySync_V2 extends BaseTest {
         body.put("kb_id", expertId);
         body.put("is_signed", "0");
         try {
-            res = HttpRequest.sendPut(host_crm + uri, body.toString(), crm_token, pathValue);
+            res = HttpRequest.s_SendPut(host_crm + uri, body.toString(), crm_token, pathValue);
         } catch (IOException e) {
             logger.error(e);
         }
@@ -264,7 +264,7 @@ public class RegisteredDoctor_CertifySync_V2 extends BaseTest {
         body.put("kb_id", expertId);
         body.put("is_signed", "1");
         try {
-            res = HttpRequest.sendPut(host_crm + uri, body.toString(), crm_token, pathValue);
+            res = HttpRequest.s_SendPut(host_crm + uri, body.toString(), crm_token, pathValue);
         } catch (IOException e) {
             logger.error(e);
         }
@@ -315,7 +315,7 @@ public class RegisteredDoctor_CertifySync_V2 extends BaseTest {
         body.put("status", "-1");  // 认证失败
         body.put("reason", "程序自动测试失败原因");  // 失败原因
         try {
-            res = HttpRequest.sendPut(host_crm+uri, body.toString(), crm_token, pathValue);
+            res = HttpRequest.s_SendPut(host_crm+uri, body.toString(), crm_token, pathValue);
         } catch (IOException e) {
             logger.error(e);
         }
@@ -325,7 +325,7 @@ public class RegisteredDoctor_CertifySync_V2 extends BaseTest {
         res = RegisteredDoctor_Detail.Detail(doctorId);
         is_verified = Generator.parseJson(JSONObject.fromObject(res), "data:is_verified");
         Assert.assertEquals(is_verified, "-1");
-        res = GetDoctorProfile_V1.MyProfile(tmpTokenn);
+        res = GetDoctorProfile_V1.s_MyProfile(tmpTokenn);
         checkResponse(res);
         Assert.assertEquals(Generator.parseJson(data, "doctor:reject_reason"), "程序自动测试失败原因");
     }

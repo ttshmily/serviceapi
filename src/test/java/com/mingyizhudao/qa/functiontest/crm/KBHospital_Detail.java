@@ -27,7 +27,7 @@ public class KBHospital_Detail extends BaseTest {
         HashMap<String, String> pathValue = new HashMap<>();
         pathValue.put("hospital_id", hospitalId);
         try {
-            res = HttpRequest.sendGet(host_crm+uri,"", crm_token, pathValue);
+            res = HttpRequest.s_SendGet(host_crm+uri,"", crm_token, pathValue);
             hospital = JSONObject.fromObject(res).getJSONObject("data");
         } catch (IOException e) {
             logger.error(e);
@@ -70,7 +70,7 @@ public class KBHospital_Detail extends BaseTest {
         HashMap<String, String> pathValue = new HashMap<>();
         pathValue.put("hospital_id",info.get("id"));
         try {
-            res = HttpRequest.sendGet(host_crm+uri, "", crm_token, pathValue);
+            res = HttpRequest.s_SendGet(host_crm+uri, "", crm_token, pathValue);
         } catch (IOException e) {
             logger.error(e);
         }
@@ -99,7 +99,7 @@ public class KBHospital_Detail extends BaseTest {
         HashMap<String, String> pathValue = new HashMap<>();
         pathValue.put("hospital_id", "111" + info.get("id"));
         try {
-            res = HttpRequest.sendGet(host_crm+uri, "", crm_token, pathValue);
+            res = HttpRequest.s_SendGet(host_crm+uri, "", crm_token, pathValue);
         } catch (IOException e) {
             logger.error(e);
         }

@@ -37,7 +37,7 @@ public class KBExpert_Diseases_V2 extends BaseTest {
         pathValue.put("doctor_id", expertId);
         JSONObject body = DiseaseJson(5, 4);
         try {
-            res = HttpRequest.sendPost(host_crm+uri, body.toString(), crm_token, pathValue);
+            res = HttpRequest.s_SendPost(host_crm+uri, body.toString(), crm_token, pathValue);
         } catch (IOException e) {
             logger.error(e);
         }
@@ -83,7 +83,7 @@ public class KBExpert_Diseases_V2 extends BaseTest {
 
         JSONObject body = DiseaseJson(5, 4);
         try {
-            res = HttpRequest.sendPost(host_crm+uri, body.toString(), crm_token, pathValue);
+            res = HttpRequest.s_SendPost(host_crm+uri, body.toString(), crm_token, pathValue);
         } catch (IOException e) {
             logger.error(e);
         }

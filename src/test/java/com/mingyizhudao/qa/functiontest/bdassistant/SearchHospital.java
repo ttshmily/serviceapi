@@ -26,7 +26,7 @@ public class SearchHospital extends BaseTest {
         logger.info("搜索字段：安阳医院");
         map.put("hospital_name","安阳医院");
         try {
-            res = HttpRequest.sendGet(host_bda + uri, map, "", null);
+            res = HttpRequest.s_SendGet(host_bda + uri, map, "", null);
         } catch (IOException e) {
             logger.error(e);
         }
@@ -40,7 +40,7 @@ public class SearchHospital extends BaseTest {
     public void test_02_没有hospital_name字段的请求可以获得有效信息() {
         String res = "";
         try {
-            res = HttpRequest.sendGet(host_bda + uri, "", "");
+            res = HttpRequest.s_SendGet(host_bda + uri, "", "");
         } catch (IOException e) {
             logger.error(e);
         }
@@ -54,7 +54,7 @@ public class SearchHospital extends BaseTest {
         HashMap<String, String> map = new HashMap<>();
         map.put("hospital_name","");
         try {
-            res = HttpRequest.sendGet(host_bda + uri, map, "");
+            res = HttpRequest.s_SendGet(host_bda + uri, map, "");
         } catch (IOException e) {
             logger.error(e);
         }
@@ -68,7 +68,7 @@ public class SearchHospital extends BaseTest {
         HashMap<String, String> map = new HashMap<>();
         map.put("hospital_name","人民医院");
         try {
-            res = HttpRequest.sendGet(host_bda + uri, map, "");
+            res = HttpRequest.s_SendGet(host_bda + uri, map, "");
         } catch (IOException e) {
             logger.error(e);
         }
@@ -82,7 +82,7 @@ public class SearchHospital extends BaseTest {
         HashMap<String, String> map = new HashMap<>();
         map.put("hospital_name","changzhou");
         try {
-            res = HttpRequest.sendGet(host_bda + uri, map, "");
+            res = HttpRequest.s_SendGet(host_bda + uri, map, "");
         } catch (IOException e) {
             logger.error(e);
         }
@@ -96,7 +96,7 @@ public class SearchHospital extends BaseTest {
         HashMap<String, String> map = new HashMap<>();
         map.put("hospital_name","中国changzhou");
         try {
-            res = HttpRequest.sendGet(host_bda + uri, map, "");
+            res = HttpRequest.s_SendGet(host_bda + uri, map, "");
         } catch (IOException e) {
             logger.error(e);
         }

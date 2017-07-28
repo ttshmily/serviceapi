@@ -25,7 +25,7 @@ public class Finance_PayInfo extends BaseTest {
         HashMap<String, String> pathValue = new HashMap<>();
         pathValue.put("paymentNumber", "");
         try {
-            res = HttpRequest.sendGet(host_crm+uri, "", crm_token, pathValue);
+            res = HttpRequest.s_SendGet(host_crm+uri, "", crm_token, pathValue);
         } catch (IOException e) {
             logger.error(e);
         }

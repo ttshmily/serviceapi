@@ -29,7 +29,7 @@ public class Common_SearchHospitals extends BaseTest {
         query.put("hospital_name", "安庆");
 
         try {
-            res = HttpRequest.sendGet(host_crm + uri, query, crm_token, null);
+            res = HttpRequest.s_SendGet(host_crm + uri, query, crm_token, null);
         } catch (IOException e) {
             logger.error(e);
         }
@@ -46,7 +46,7 @@ public class Common_SearchHospitals extends BaseTest {
         // 查询字符串中文
         query.put("hospital_name", "安阳");
         try {
-            res = HttpRequest.sendGet(host_crm+mock+uri, query, crm_token, null);
+            res = HttpRequest.s_SendGet(host_crm+mock+uri, query, crm_token, null);
         } catch (IOException e) {
             logger.error(e);
         }
@@ -64,7 +64,7 @@ public class Common_SearchHospitals extends BaseTest {
         // 查询字符串为拼音
         query.put("hospital_name", "anyang");
         try {
-            res = HttpRequest.sendGet(host_crm+uri, query, crm_token, null);
+            res = HttpRequest.s_SendGet(host_crm+uri, query, crm_token, null);
         } catch (IOException e) {
             logger.error(e);
         }
@@ -82,7 +82,7 @@ public class Common_SearchHospitals extends BaseTest {
         // 查询字符串为中文拼音混合
         query.put("hospital_name", "安阳yiyuan");
         try {
-            res = HttpRequest.sendGet(host_crm+mock+uri, query, crm_token, null);
+            res = HttpRequest.s_SendGet(host_crm+mock+uri, query, crm_token, null);
         } catch (IOException e) {
             logger.error(e);
         }
@@ -99,7 +99,7 @@ public class Common_SearchHospitals extends BaseTest {
 
         // 查询key不存在
         try {
-            res = HttpRequest.sendGet(host_crm+uri, "", crm_token, null);
+            res = HttpRequest.s_SendGet(host_crm+uri, "", crm_token, null);
         } catch (IOException e) {
             logger.error(e);
         }

@@ -28,7 +28,7 @@ public class KBExpert_Update extends BaseTest {
         HashMap<String, String> pathValue = new HashMap<>();
         pathValue.put("id", expertId);
         try {
-            res = HttpRequest.sendPut(host_crm+uri, ep.body.toString(), crm_token, pathValue);
+            res = HttpRequest.s_SendPut(host_crm+uri, ep.body.toString(), crm_token, pathValue);
         } catch (IOException e) {
             logger.error(e);
         }
@@ -57,7 +57,7 @@ public class KBExpert_Update extends BaseTest {
         String name = "改名了";
         epModified.body.put("name", name);
         try {
-            res = HttpRequest.sendPut(host_crm+uri, epModified.body.toString(), "", pathValue);
+            res = HttpRequest.s_SendPut(host_crm+uri, epModified.body.toString(), "", pathValue);
         } catch (IOException e) {
             logger.error(e);
         }
@@ -78,7 +78,7 @@ public class KBExpert_Update extends BaseTest {
         String name = "改名了";
         epModified.body.put("name", name);
         try {
-            res = HttpRequest.sendPut(host_crm+uri, epModified.body.toString(), crm_token, pathValue);
+            res = HttpRequest.s_SendPut(host_crm+uri, epModified.body.toString(), crm_token, pathValue);
         } catch (IOException e) {
             logger.error(e);
         }
@@ -103,7 +103,7 @@ public class KBExpert_Update extends BaseTest {
         String hospitalId = Generator.randomHospitalId();
         epModified.body.put("hospital_id", hospitalId);
         try {
-            res = HttpRequest.sendPut(host_crm+uri, epModified.body.toString(), crm_token, pathValue);
+            res = HttpRequest.s_SendPut(host_crm+uri, epModified.body.toString(), crm_token, pathValue);
         } catch (IOException e) {
             logger.error(e);
         }
@@ -136,7 +136,7 @@ public class KBExpert_Update extends BaseTest {
         String cityId = Generator.randomCityId();
         epModified.body.put("city_id", cityId);
         try {
-            res = HttpRequest.sendPut(host_crm+uri, epModified.body.toString(), crm_token, pathValue);
+            res = HttpRequest.s_SendPut(host_crm+uri, epModified.body.toString(), crm_token, pathValue);
         } catch (IOException e) {
             logger.error(e);
         }
@@ -159,7 +159,7 @@ public class KBExpert_Update extends BaseTest {
         String countryId = Generator.randomCountyId();
         epModified.body.put("county_id", countryId);
         try {
-            res = HttpRequest.sendPut(host_crm+uri, epModified.body.toString(), crm_token, pathValue);
+            res = HttpRequest.s_SendPut(host_crm+uri, epModified.body.toString(), crm_token, pathValue);
         } catch (IOException e) {
             logger.error(e);
         }
@@ -182,7 +182,7 @@ public class KBExpert_Update extends BaseTest {
         String majorId = Generator.randomMajorId();
         epModified.body.put("major_id", majorId);
         try {
-            res = HttpRequest.sendPut(host_crm+uri, epModified.body.toString(), crm_token, pathValue);
+            res = HttpRequest.s_SendPut(host_crm+uri, epModified.body.toString(), crm_token, pathValue);
             checkResponse(res);
             Assert.assertEquals(code, "1000000", "更新major_id失败");
         } catch (IOException e) {
@@ -196,7 +196,7 @@ public class KBExpert_Update extends BaseTest {
 
         epModified.body.replace("major_id", "11"+majorId);
         try {
-            res = HttpRequest.sendPut(host_crm+uri, epModified.body.toString(), crm_token, pathValue);
+            res = HttpRequest.s_SendPut(host_crm+uri, epModified.body.toString(), crm_token, pathValue);
             checkResponse(res);
             Assert.assertNotEquals(code, "1000000", "错误major_id");
         } catch (IOException e) {
@@ -223,7 +223,7 @@ public class KBExpert_Update extends BaseTest {
         epModified.body.put("medical_title_list", medical_title_list);
         epModified.body.put("academic_title_list", academic_title_list);
         try {
-            res = HttpRequest.sendPut(host_crm+uri, epModified.body.toString(), crm_token, pathValue);
+            res = HttpRequest.s_SendPut(host_crm+uri, epModified.body.toString(), crm_token, pathValue);
         } catch (IOException e) {
             logger.error(e);
         }
@@ -240,7 +240,7 @@ public class KBExpert_Update extends BaseTest {
         epModified.body.replace("medical_title_list", medical_title_list);
         epModified.body.replace("academic_title_list", academic_title_list);
         try {
-            res = HttpRequest.sendPut(host_crm+uri, epModified.body.toString(), crm_token, pathValue);
+            res = HttpRequest.s_SendPut(host_crm+uri, epModified.body.toString(), crm_token, pathValue);
         } catch (IOException e) {
             logger.error(e);
         }
@@ -269,7 +269,7 @@ public class KBExpert_Update extends BaseTest {
         epModified.body.put("honour", honour);
         epModified.body.put("description", description);
         try {
-            res = HttpRequest.sendPut(host_crm+uri, epModified.body.toString(), crm_token, pathValue);
+            res = HttpRequest.s_SendPut(host_crm+uri, epModified.body.toString(), crm_token, pathValue);
         } catch (IOException e) {
             logger.error(e);
         }
@@ -310,7 +310,7 @@ public class KBExpert_Update extends BaseTest {
         epModified.body.accumulate("avatar_url", small);
         logger.info(epModified.body.toString());
         try {
-            res = HttpRequest.sendPut(host_crm+uri, epModified.body.toString(), crm_token, pathValue);
+            res = HttpRequest.s_SendPut(host_crm+uri, epModified.body.toString(), crm_token, pathValue);
         } catch (IOException e) {
             logger.error(e);
         }
@@ -367,7 +367,7 @@ public class KBExpert_Update extends BaseTest {
         epModified.body.accumulate("avatar_url", large);
         epModified.body.accumulate("avatar_url", small);
         try {
-            res = HttpRequest.sendPut(host_crm+uri, epModified.body.toString(), crm_token, pathValue);
+            res = HttpRequest.s_SendPut(host_crm+uri, epModified.body.toString(), crm_token, pathValue);
         } catch (IOException e) {
             logger.error(e);
         }
@@ -422,7 +422,7 @@ public class KBExpert_Update extends BaseTest {
 
         epModified.body.put("signed_status", "0");
         try {
-            res = HttpRequest.sendPut(host_crm+uri, epModified.body.toString(), crm_token, pathValue);
+            res = HttpRequest.s_SendPut(host_crm+uri, epModified.body.toString(), crm_token, pathValue);
         } catch (IOException e) {
             logger.error(e);
         }
@@ -435,7 +435,7 @@ public class KBExpert_Update extends BaseTest {
 
         epModified.body.put("signed_status", "1");
         try {
-            res = HttpRequest.sendPut(host_crm+uri, epModified.body.toString(), crm_token, pathValue);
+            res = HttpRequest.s_SendPut(host_crm+uri, epModified.body.toString(), crm_token, pathValue);
         } catch (IOException e) {
             logger.error(e);
         }
@@ -468,7 +468,7 @@ public class KBExpert_Update extends BaseTest {
         ExpertProfile epModified = new ExpertProfile(false);
         epModified.body.put("signed_status", "0");
         try {
-            res = HttpRequest.sendPut(host_crm+uri, epModified.body.toString(), crm_token, pathValue);
+            res = HttpRequest.s_SendPut(host_crm+uri, epModified.body.toString(), crm_token, pathValue);
         } catch (IOException e) {
             logger.error(e);
         }
@@ -481,7 +481,7 @@ public class KBExpert_Update extends BaseTest {
 
         epModified.body.put("signed_status", "1");
         try {
-            res = HttpRequest.sendPut(host_crm+uri, epModified.body.toString(), crm_token, pathValue);
+            res = HttpRequest.s_SendPut(host_crm+uri, epModified.body.toString(), crm_token, pathValue);
         } catch (IOException e) {
             logger.error(e);
         }
