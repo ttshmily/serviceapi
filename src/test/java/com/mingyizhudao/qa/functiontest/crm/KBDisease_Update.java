@@ -1,12 +1,12 @@
 package com.mingyizhudao.qa.functiontest.crm;
 
 import com.mingyizhudao.qa.common.BaseTest;
+import com.mingyizhudao.qa.common.TestLogger;
 import com.mingyizhudao.qa.dataprofile.crm.DiseaseProfile;
 import com.mingyizhudao.qa.utilities.HttpRequest;
 import com.mingyizhudao.qa.utilities.Generator;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
-import org.apache.log4j.Logger;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
@@ -20,17 +20,22 @@ import java.util.List;
  */
 public class KBDisease_Update extends BaseTest {
 
-    public static final Logger logger = Logger.getLogger(KBDisease_Update.class);
+    public static String clazzName = new Object() {
+        public String getClassName() {
+            String clazzName = this.getClass().getName();
+            return clazzName.substring(0, clazzName.lastIndexOf('$'));
+        }
+    }.getClassName();
+    public static TestLogger logger = new TestLogger(clazzName);
     public static final String version = "/api/v1";
     public static String uri = version + "/medicallibrary/diseases/{id}";
-    public static String mock = false ? "/mockjs/1" : "";
 
-    public static HashMap<String, String> Update(String diseaseId, DiseaseProfile dp) {
+    public static HashMap<String, String> s_Update(String diseaseId, DiseaseProfile dp) {
         String res = "";
         HashMap<String, String> pathValue = new HashMap<>();
         pathValue.put("id", diseaseId);
         try {
-            res = HttpRequest.s_SendPut(host_crm+uri, dp.body.toString(), crm_token, pathValue);
+            res = HttpRequest.s_SendPut(host_crm + uri, dp.body.toString(), crm_token, pathValue);
         } catch (IOException e) {
             logger.error(e);
         }
@@ -56,7 +61,7 @@ public class KBDisease_Update extends BaseTest {
 
         String res = "";
         DiseaseProfile dp = new DiseaseProfile(true);
-        HashMap<String, String> info = KBDisease_Create.Create(dp);
+        HashMap<String, String> info = KBDisease_Create.s_Create(dp);
         if (info == null) Assert.fail("创建疾病失败，退出用例执行");
         HashMap<String, String> pathValue = new HashMap<>();
         pathValue.put("id", info.get("id"));
@@ -111,7 +116,7 @@ public class KBDisease_Update extends BaseTest {
 
         String res = "";
         DiseaseProfile dp = new DiseaseProfile(true);
-        HashMap<String, String> info = KBDisease_Create.Create(dp);
+        HashMap<String, String> info = KBDisease_Create.s_Create(dp);
         String diseaseId = info.get("id");
         if (info == null) Assert.fail("创建疾病失败，退出用例执行");
         HashMap<String, String> pathValue = new HashMap<>();
@@ -149,7 +154,7 @@ public class KBDisease_Update extends BaseTest {
         checkResponse(res);
         Assert.assertEquals(code, "1000000");
 
-        res = KBDisease_Detail.Detail(diseaseId);
+        res = KBDisease_Detail.s_Detail(diseaseId);
         checkResponse(res);
         JSONArray category_list = data.getJSONArray("category_list");
         for (int i=0; i<category_list.size(); i++) {
@@ -171,7 +176,7 @@ public class KBDisease_Update extends BaseTest {
 
         String res = "";
         DiseaseProfile dp = new DiseaseProfile(true);
-        HashMap<String, String> info = KBDisease_Create.Create(dp);
+        HashMap<String, String> info = KBDisease_Create.s_Create(dp);
         String diseaseId = info.get("id");
         if (info == null) Assert.fail("创建疾病失败，退出用例执行");
         HashMap<String, String> pathValue = new HashMap<>();
@@ -208,7 +213,7 @@ public class KBDisease_Update extends BaseTest {
         checkResponse(res);
         Assert.assertEquals(code, "1000000");
 
-        res = KBDisease_Detail.Detail(diseaseId);
+        res = KBDisease_Detail.s_Detail(diseaseId);
         checkResponse(res);
         JSONArray category_list = data.getJSONArray("category_list");
         for (int i=0; i<category_list.size(); i++) {
@@ -231,7 +236,7 @@ public class KBDisease_Update extends BaseTest {
 
         String res = "";
         DiseaseProfile dp = new DiseaseProfile(true);
-        HashMap<String, String> info = KBDisease_Create.Create(dp);
+        HashMap<String, String> info = KBDisease_Create.s_Create(dp);
         String diseaseId = info.get("id");
         if (info == null) Assert.fail("创建疾病失败，退出用例执行");
         HashMap<String, String> pathValue = new HashMap<>();
@@ -268,7 +273,7 @@ public class KBDisease_Update extends BaseTest {
         checkResponse(res);
         Assert.assertNotEquals(code, "1000000"); //抱专业错误
 
-//        res = KBDisease_Detail.Detail(diseaseId);
+//        res = KBDisease_Detail.s_Detail(diseaseId);
 //        checkResponse(res);
 //        JSONArray category_list = data.getJSONArray("category_list");
 //        for (int i=0; i<category_list.size(); i++) {

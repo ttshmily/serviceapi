@@ -2,6 +2,7 @@ package com.mingyizhudao.qa.functiontest.crm;
 
 import com.mingyizhudao.qa.common.BaseTest;
 import com.mingyizhudao.qa.common.KnowledgeBase;
+import com.mingyizhudao.qa.common.TestLogger;
 import com.mingyizhudao.qa.dataprofile.crm.ExpertProfile;
 import com.mingyizhudao.qa.utilities.HttpRequest;
 import com.mingyizhudao.qa.utilities.Generator;
@@ -18,13 +19,18 @@ import java.util.HashMap;
  */
 public class KBExpert_Create extends BaseTest {
 
-    public static final Logger logger= Logger.getLogger(KBExpert_Create.class);
+    public static String clazzName = new Object() {
+        public String getClassName() {
+            String clazzName = this.getClass().getName();
+            return clazzName.substring(0, clazzName.lastIndexOf('$'));
+        }
+    }.getClassName();
+    public static TestLogger logger = new TestLogger(clazzName);
     public static String uri = "/api/v1/medicallibrary/doctors";
-    public static String mock = false ? "/mockjs/1" : "";
-    public static String token= "";
 
-    public static HashMap<String, String> Create(ExpertProfile ep) {
+    public static HashMap<String, String> s_Create(ExpertProfile ep) {
         String res = "";
+        TestLogger logger = new TestLogger(s_JobName());
         try {
             res = HttpRequest.s_SendPost(host_crm+uri, ep.body.toString(), crm_token);
         } catch (IOException e) {

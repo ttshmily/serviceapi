@@ -9,7 +9,6 @@ import com.mingyizhudao.qa.utilities.HttpRequest;
 import com.mingyizhudao.qa.utilities.Generator;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
-import org.apache.log4j.Logger;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
@@ -29,9 +28,8 @@ public class UpdateDoctorProfile_V1 extends BaseTest {
     }.getClassName();
     public static TestLogger logger = new TestLogger(clazzName);
     public static String uri = "/api/v1/updatedoctorprofile";
-    public static String mock = false ? "/mockjs/1" : "";
 
-    public static String updateDoctorProfile(String token, DoctorProfile dp) {
+    public static String s_Update(String token, DoctorProfile dp) {
         String res = "";
         TestLogger logger = new TestLogger(s_JobName());
         try {
@@ -55,7 +53,7 @@ public class UpdateDoctorProfile_V1 extends BaseTest {
         DoctorProfile body = new DoctorProfile(false);
         body.body.getJSONObject("doctor").put("city_id", Generator.randomKey(KnowledgeBase.kb_city));
         try {
-            res = HttpRequest.s_SendPost(host_doc +mock+uri, body.body.toString(), mainToken);
+            res = HttpRequest.s_SendPost(host_doc + uri, body.body.toString(), mainToken);
         } catch (IOException e) {
             logger.error(e);
         }
@@ -69,7 +67,7 @@ public class UpdateDoctorProfile_V1 extends BaseTest {
         DoctorProfile body = new DoctorProfile(false);
         body.body.getJSONObject("doctor").put("department","尿不出来科");
         try {
-            res = HttpRequest.s_SendPost(host_doc +mock+uri, body.body.toString(), mainToken);
+            res = HttpRequest.s_SendPost(host_doc + uri, body.body.toString(), mainToken);
             checkResponse(res);
             Assert.assertEquals(code, "1000000", "我想1000000");
             res = GetDoctorProfile_V1.s_MyProfile(mainToken);
@@ -89,10 +87,10 @@ public class UpdateDoctorProfile_V1 extends BaseTest {
         DoctorProfile body = new DoctorProfile(false);
         String key = Generator.randomHospitalId();
         body.body.getJSONObject("doctor").put("hospital_id", key);
-        HashMap<String, String> hospitalInfo = KBHospital_Detail.Detail(key);
+        HashMap<String, String> hospitalInfo = KBHospital_Detail.s_Detail(key);
         String cityId = hospitalInfo.get("city_id");
         try {
-            res = HttpRequest.s_SendPost(host_doc+uri, body.body.toString(), mainToken);
+            res = HttpRequest.s_SendPost(host_doc + uri, body.body.toString(), mainToken);
             checkResponse(res);
             Assert.assertEquals(code, "1000000");
             res = GetDoctorProfile_V1.s_MyProfile(mainToken);
@@ -144,7 +142,7 @@ public class UpdateDoctorProfile_V1 extends BaseTest {
         String key = Generator.randomKey(KnowledgeBase.kb_major);
         body.body.getJSONObject("doctor").put("major_id",key);
         try {
-            res = HttpRequest.s_SendPost(host_doc+uri, body.body.toString(), mainToken);
+            res = HttpRequest.s_SendPost(host_doc + uri, body.body.toString(), mainToken);
             checkResponse(res);
             Assert.assertEquals(code, "1000000");
             res = GetDoctorProfile_V1.s_MyProfile(mainToken);
@@ -161,7 +159,7 @@ public class UpdateDoctorProfile_V1 extends BaseTest {
         String res = "";
         DoctorProfile body = new DoctorProfile(true);
         try {
-            res = HttpRequest.s_SendPost(host_doc +uri, body.body.toString(), "");
+            res = HttpRequest.s_SendPost(host_doc + uri, body.body.toString(), "");
         } catch (IOException e) {
             logger.error(e);
         }
@@ -174,7 +172,7 @@ public class UpdateDoctorProfile_V1 extends BaseTest {
         String res = "";
         DoctorProfile body = new DoctorProfile(true);
         try {
-            res = HttpRequest.s_SendPost(host_doc +mock+uri, body.body.toString(), "niyaowoa");
+            res = HttpRequest.s_SendPost(host_doc + uri, body.body.toString(), "niyaowoa");
         } catch (IOException e) {
             logger.error(e);
         }
@@ -188,7 +186,7 @@ public class UpdateDoctorProfile_V1 extends BaseTest {
         DoctorProfile body = new DoctorProfile(false);
         body.body.getJSONObject("doctor").put("city_name", "城市");
         try {
-            res = HttpRequest.s_SendPost(host_doc+uri, body.body.toString(), mainToken);
+            res = HttpRequest.s_SendPost(host_doc + uri, body.body.toString(), mainToken);
         } catch (IOException e) {
             logger.error(e);
         }
@@ -205,7 +203,7 @@ public class UpdateDoctorProfile_V1 extends BaseTest {
         DoctorProfile dp = new DoctorProfile(true);
         dp.body.getJSONObject("doctor").replace("hospital_name", "测试医院");
         try {
-            res = HttpRequest.s_SendPost(host_doc +mock+uri, dp.body.toString(), mainToken);
+            res = HttpRequest.s_SendPost(host_doc + uri, dp.body.toString(), mainToken);
         } catch (IOException e) {
             logger.error(e);
         }
@@ -219,7 +217,7 @@ public class UpdateDoctorProfile_V1 extends BaseTest {
         dp.body.getJSONObject("doctor").replace("hospital_name", "测试医院");
         dp.body.getJSONObject("doctor").replace("major_id", "8");
         try {
-            res = HttpRequest.s_SendPost(host_doc +mock+uri, dp.body.toString(), mainToken);
+            res = HttpRequest.s_SendPost(host_doc + uri, dp.body.toString(), mainToken);
         } catch (IOException e) {
             logger.error(e);
         }
@@ -234,7 +232,7 @@ public class UpdateDoctorProfile_V1 extends BaseTest {
         dp.body.getJSONObject("doctor").replace("hospital_name", "测试医院");
         dp.body.getJSONObject("doctor").replace("inviter_no", "SH0003");
         try {
-            res = HttpRequest.s_SendPost(host_doc +mock+uri, dp.body.toString(), mainToken);
+            res = HttpRequest.s_SendPost(host_doc + uri, dp.body.toString(), mainToken);
         } catch (IOException e) {
             logger.error(e);
         }
@@ -249,7 +247,7 @@ public class UpdateDoctorProfile_V1 extends BaseTest {
         dp.body.getJSONObject("doctor").replace("name","大一测试名称");
         dp.body.getJSONObject("doctor").replace("hospital_name","测试医院");
         try {
-            res = HttpRequest.s_SendPost(host_doc +mock+uri, dp.body.toString(), mainToken);
+            res = HttpRequest.s_SendPost(host_doc + uri, dp.body.toString(), mainToken);
 
         } catch (IOException e) {
             logger.error(e);
@@ -269,7 +267,7 @@ public class UpdateDoctorProfile_V1 extends BaseTest {
         DoctorProfile dp = new DoctorProfile(true);
         dp.body.getJSONObject("doctor").put("major_name", "测试专业");
         try {
-            res = HttpRequest.s_SendPost(host_doc +mock+uri, dp.body.toString(), mainToken);
+            res = HttpRequest.s_SendPost(host_doc + uri, dp.body.toString(), mainToken);
         } catch (IOException e) {
             logger.error(e);
         }
@@ -283,7 +281,7 @@ public class UpdateDoctorProfile_V1 extends BaseTest {
         dp.body.getJSONObject("doctor").replace("hospital_id","2");
         dp.body.getJSONObject("doctor").replace("major_name","test_major");
         try {
-            res = HttpRequest.s_SendPost(host_doc +mock+uri, dp.body.toString(), mainToken);
+            res = HttpRequest.s_SendPost(host_doc + uri, dp.body.toString(), mainToken);
 
         } catch (IOException e) {
             logger.error(e);
@@ -300,7 +298,7 @@ public class UpdateDoctorProfile_V1 extends BaseTest {
         dp.body.getJSONObject("doctor").replace("inviter_no","SH0002");
         dp.body.getJSONObject("doctor").replace("major_name","test_major");
         try {
-            res = HttpRequest.s_SendPost(host_doc +mock+uri, dp.body.toString(), mainToken);
+            res = HttpRequest.s_SendPost(host_doc + uri, dp.body.toString(), mainToken);
 
         } catch (IOException e) {
             logger.error(e);
@@ -317,7 +315,7 @@ public class UpdateDoctorProfile_V1 extends BaseTest {
         dp.body.getJSONObject("doctor").replace("name","大一测试名称");
         dp.body.getJSONObject("doctor").replace("major_name","test_major");
         try {
-            res = HttpRequest.s_SendPost(host_doc +mock+uri, dp.body.toString(), mainToken);
+            res = HttpRequest.s_SendPost(host_doc + uri, dp.body.toString(), mainToken);
 
         } catch (IOException e) {
             logger.error(e);
@@ -338,7 +336,7 @@ public class UpdateDoctorProfile_V1 extends BaseTest {
         DoctorProfile body = new DoctorProfile(false);
         body.body.getJSONObject("doctor").put("inviter_name", "大一");
         try {
-            res = HttpRequest.s_SendPost(host_doc +mock+uri, body.body.toString(), mainToken);
+            res = HttpRequest.s_SendPost(host_doc + uri, body.body.toString(), mainToken);
         } catch (IOException e) {
             logger.error(e);
         }
@@ -355,7 +353,7 @@ public class UpdateDoctorProfile_V1 extends BaseTest {
         DoctorProfile body = new DoctorProfile(false);
         body.body.getJSONObject("doctor").accumulate("doctor_card_pictures", JSONArray.fromObject("[{'key':'2017/05/04/1265834e-97d8-44a0-95e7-047c7facaee8/IMG_20170429_102737.jpg';'type':'3'}]"));
         try {
-            res = HttpRequest.s_SendPost(host_doc +mock+uri, body.body.toString(), mainToken);
+            res = HttpRequest.s_SendPost(host_doc + uri, body.body.toString(), mainToken);
         } catch (IOException e) {
             logger.error(e);
         }

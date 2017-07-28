@@ -1,12 +1,12 @@
 package com.mingyizhudao.qa.functiontest.crm;
 
 import com.mingyizhudao.qa.common.BaseTest;
+import com.mingyizhudao.qa.common.TestLogger;
 import com.mingyizhudao.qa.functiontest.doctor.CreateOrder;
 import com.mingyizhudao.qa.functiontest.doctor.GetOrderDetail_V1;
 import com.mingyizhudao.qa.utilities.HttpRequest;
 import com.mingyizhudao.qa.utilities.Generator;
 import net.sf.json.JSONObject;
-import org.apache.log4j.Logger;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
@@ -17,15 +17,21 @@ import java.util.HashMap;
  * Created by ttshmily on 25/4/2017.
  */
 public class Order_Reject extends BaseTest {
-// 创建支付订单前的取消
-    public static final Logger logger= Logger.getLogger(Order_Reject.class);
+
+    public static String clazzName = new Object() {
+        public String getClassName() {
+            String clazzName = this.getClass().getName();
+            return clazzName.substring(0, clazzName.lastIndexOf('$'));
+        }
+    }.getClassName();
+    public static TestLogger logger = new TestLogger(clazzName);
     public static final String version = "/api/v1";
     public static String uri = version+"/orders/{orderNumber}/rejectOrder";
-    public static String mock = false ? "/mockjs/1" : "";
 
-    public static String rejectOrder(String orderId) {
+    public static String s_RejectOrder(String orderId) {
 
         String res = "";
+        TestLogger logger = new TestLogger(s_JobName());
         HashMap<String, String> pathValue = new HashMap<>();
         pathValue.put("orderNumber", orderId);
         JSONObject body = new JSONObject();
@@ -36,18 +42,17 @@ public class Order_Reject extends BaseTest {
         } catch (IOException e) {
             logger.error(e);
         }
-        res = Order_Detail.Detail(orderId);
+        res = Order_Detail.s_Detail(orderId);
         return Generator.parseJson(JSONObject.fromObject(res), "data:status"); // 期望9000
     }
-
 
     @Test
     public void test_01_客服拒绝订单_推荐之前() {
         String res = "";
         HashMap<String, String> pathValue = new HashMap<>();
 
-        String order_number = CreateOrder.CreateOrder(mainToken); // create an order
-        if (!Order_ReceiveTask.receiveTask(order_number).equals("2000")) {
+        String order_number = CreateOrder.s_CreateOrder(mainToken); // create an order
+        if (!Order_ReceiveTask.s_ReceiveTask(order_number).equals("2000")) {
             Assert.fail("领取失败，无法进行后续操作");
         }
         pathValue.put("orderNumber", order_number);
@@ -62,12 +67,12 @@ public class Order_Reject extends BaseTest {
         }
         checkResponse(res);
         Assert.assertEquals(code, "1000000", "拒绝订单失败");
-        res = Order_Detail.Detail(order_number);
+        res = Order_Detail.s_Detail(order_number);
         checkResponse(res);
         Assert.assertEquals(Generator.parseJson(data, "major_reps_id"), "chao.fang@mingyizhudao.com");
         Assert.assertEquals(Generator.parseJson(data, "status"), "9000");
         Assert.assertEquals(Generator.parseJson(data, "order_number"), order_number);
-        res = GetOrderDetail_V1.MyInitiateOrder(mainToken, order_number);
+        res = GetOrderDetail_V1.s_MyInitiateOrder(mainToken, order_number);
         checkResponse(res);
         Assert.assertEquals(Generator.parseJson(data, "order:header_info"), "自动化推荐之前据拒订单的理由");
 //        Assert.assertEquals(UT.parseJson(data, "content"), "自动化推荐之前据拒订单的理由");
@@ -80,11 +85,11 @@ public class Order_Reject extends BaseTest {
         String res = "";
         HashMap<String, String> pathValue = new HashMap<>();
 
-        String order_number = CreateOrder.CreateOrder(mainToken); // create an order
-        if (!Order_ReceiveTask.receiveTask(order_number).equals("2000")) {
+        String order_number = CreateOrder.s_CreateOrder(mainToken); // create an order
+        if (!Order_ReceiveTask.s_ReceiveTask(order_number).equals("2000")) {
             Assert.fail("领取失败，无法进行后续操作");
         }
-        if (!Order_RecommendDoctor.recommendDoctor(order_number, mainDoctorId).equals("2020")) {
+        if (!Order_RecommendDoctor.s_RecommendDoctor(order_number, mainDoctorId).equals("2020")) {
             Assert.fail("推荐专家失败，无法进行后续操作");
         }
         pathValue.put("orderNumber", order_number);
@@ -100,7 +105,7 @@ public class Order_Reject extends BaseTest {
         checkResponse(res);
         // 没有确定三方通话失败，不能拒绝已有推荐医生的订单
         Assert.assertNotEquals(code, "1000000", "拒绝订单失败");
-        res = Order_Detail.Detail(order_number);
+        res = Order_Detail.s_Detail(order_number);
         checkResponse(res);
         Assert.assertEquals(Generator.parseJson(data, "major_reps_id"), "chao.fang@mingyizhudao.com");
         Assert.assertEquals(Generator.parseJson(data, "status"), "2020");
@@ -113,14 +118,14 @@ public class Order_Reject extends BaseTest {
         String res = "";
         HashMap<String, String> pathValue = new HashMap<>();
 
-        String order_number = CreateOrder.CreateOrder(mainToken); // create an order
-        if (!Order_ReceiveTask.receiveTask(order_number).equals("2000")) {
+        String order_number = CreateOrder.s_CreateOrder(mainToken); // create an order
+        if (!Order_ReceiveTask.s_ReceiveTask(order_number).equals("2000")) {
             Assert.fail("领取失败，无法进行后续操作");
         }
-        if (!Order_RecommendDoctor.recommendDoctor(order_number, mainDoctorId).equals("2020")) {
+        if (!Order_RecommendDoctor.s_RecommendDoctor(order_number, mainDoctorId).equals("2020")) {
             Assert.fail("推荐专家失败，无法进行后续操作");
         }
-        if (!Order_ThreewayCall.ThreewayCall(order_number, "undetermined").equals("2020")) {
+        if (!Order_ThreewayCall.s_Call(order_number, "undetermined").equals("2020")) {
             Assert.fail("三方通话待定失败，无法进行后续操作");
         }
         pathValue.put("orderNumber", order_number);
@@ -136,7 +141,7 @@ public class Order_Reject extends BaseTest {
         checkResponse(res);
         // 没有确定三方通话失败，不能拒绝已有推荐医生的订单
         Assert.assertNotEquals(code, "1000000", "拒绝订单失败");
-        res = Order_Detail.Detail(order_number);
+        res = Order_Detail.s_Detail(order_number);
         checkResponse(res);
         Assert.assertEquals(Generator.parseJson(data, "major_reps_id"), "chao.fang@mingyizhudao.com");
         Assert.assertEquals(Generator.parseJson(data, "status"), "2020");
@@ -149,8 +154,8 @@ public class Order_Reject extends BaseTest {
         String res = "";
         HashMap<String, String> pathValue = new HashMap<>();
 
-        String order_number = CreateOrder.CreateOrder(mainToken); // create an order
-        if (!Order_ReceiveTask.receiveTask(order_number).equals("2000")) {
+        String order_number = CreateOrder.s_CreateOrder(mainToken); // create an order
+        if (!Order_ReceiveTask.s_ReceiveTask(order_number).equals("2000")) {
             Assert.fail("领取失败，无法进行后续操作");
         }
         pathValue.put("orderNumber", order_number);
@@ -165,7 +170,7 @@ public class Order_Reject extends BaseTest {
         }
         checkResponse(res);
         Assert.assertNotEquals(code, "1000000", "无证");
-        res = Order_Detail.Detail(order_number);
+        res = Order_Detail.s_Detail(order_number);
         checkResponse(res);
         Assert.assertEquals(Generator.parseJson(data, "status"), "2000");
         Assert.assertEquals(Generator.parseJson(data, "order_number"), order_number);

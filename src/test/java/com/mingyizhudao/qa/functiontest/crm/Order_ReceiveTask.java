@@ -1,12 +1,12 @@
 package com.mingyizhudao.qa.functiontest.crm;
 
 import com.mingyizhudao.qa.common.BaseTest;
+import com.mingyizhudao.qa.common.TestLogger;
 import com.mingyizhudao.qa.dataprofile.doctor.DoctorProfile;
 import com.mingyizhudao.qa.functiontest.doctor.CreateOrder;
 import com.mingyizhudao.qa.utilities.HttpRequest;
 import com.mingyizhudao.qa.utilities.Generator;
 import net.sf.json.JSONObject;
-import org.apache.log4j.Logger;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
@@ -18,18 +18,23 @@ import java.util.HashMap;
  */
 public class Order_ReceiveTask extends BaseTest {
 
-    public static final Logger logger= Logger.getLogger(Order_ReceiveTask.class);
+    public static String clazzName = new Object() {
+        public String getClassName() {
+            String clazzName = this.getClass().getName();
+            return clazzName.substring(0, clazzName.lastIndexOf('$'));
+        }
+    }.getClassName();
+    public static TestLogger logger = new TestLogger(clazzName);
     public static final String version = "/api/v1";
     public static String uri = version+"/orders/{orderNumber}/receiveTask";
-    public static String mock = false ? "/mockjs/1" : "";
 
-
-    public static String receiveTask(String orderId) {
+    public static String s_ReceiveTask(String orderId) {
 
         String res = "";
+        TestLogger logger = new TestLogger(s_JobName());
         HashMap<String, String> pathValue = new HashMap<>();
         pathValue.put("orderNumber", orderId);
-        res = Order_Detail.Detail(orderId);
+        res = Order_Detail.s_Detail(orderId);
 
         if (!Generator.parseJson(JSONObject.fromObject(res), "data:status").equals("1000")) {
             logger.error("订单处于不可领取状态");
@@ -40,7 +45,7 @@ public class Order_ReceiveTask extends BaseTest {
         } catch (IOException e) {
             logger.error(e);
         }
-        res = Order_Detail.Detail(orderId);
+        res = Order_Detail.s_Detail(orderId);
         return Generator.parseJson(JSONObject.fromObject(res), "data:status"); // 期望2000
     }
 
@@ -51,7 +56,7 @@ public class Order_ReceiveTask extends BaseTest {
         String res = "";
         HashMap<String, String> pathValue = new HashMap<>();
 
-        String order_number = CreateOrder.CreateOrder(mainToken); // create an order
+        String order_number = CreateOrder.s_CreateOrder(mainToken); // create an order
         pathValue.put("orderNumber", order_number);
 
         try {
@@ -62,7 +67,7 @@ public class Order_ReceiveTask extends BaseTest {
         logger.debug(res);
         checkResponse(res);
         Assert.assertEquals(code, "1000000", "领取订单失败");
-        res = Order_Detail.Detail(order_number);
+        res = Order_Detail.s_Detail(order_number);
         checkResponse(res);
         Assert.assertEquals(Generator.parseJson(data, "major_reps_id"), "chao.fang@mingyizhudao.com");
         Assert.assertEquals(Generator.parseJson(data, "status"), "2000");
@@ -75,7 +80,7 @@ public class Order_ReceiveTask extends BaseTest {
         String res = "";
         HashMap<String, String> pathValue = new HashMap<>();
 
-        String order_number = CreateOrder.CreateOrder(mainToken); // create an order
+        String order_number = CreateOrder.s_CreateOrder(mainToken); // create an order
         pathValue.put("orderNumber", order_number);
 
         try {
@@ -85,7 +90,7 @@ public class Order_ReceiveTask extends BaseTest {
         }
         checkResponse(res);
         Assert.assertNotEquals(code, "1000000", "领取订单失败");
-        res = Order_Detail.Detail(order_number);
+        res = Order_Detail.s_Detail(order_number);
         checkResponse(res);
         Assert.assertNull(Generator.parseJson(data, "major_reps_id"));
         Assert.assertEquals(Generator.parseJson(data, "status"), "1000");
@@ -98,7 +103,7 @@ public class Order_ReceiveTask extends BaseTest {
         String res = "";
         HashMap<String, String> pathValue = new HashMap<>();
 
-        String order_number = CreateOrder.CreateOrder(mainToken); // create an order
+        String order_number = CreateOrder.s_CreateOrder(mainToken); // create an order
         pathValue.put("orderNumber", order_number);
 
         try {
@@ -108,7 +113,7 @@ public class Order_ReceiveTask extends BaseTest {
         }
         checkResponse(res);
         Assert.assertEquals(code, "1000000", "领取订单失败");
-        res = Order_Detail.Detail(order_number);
+        res = Order_Detail.s_Detail(order_number);
         checkResponse(res);
         String status = Generator.parseJson(data, "status");
         logger.debug(status);
@@ -124,7 +129,7 @@ public class Order_ReceiveTask extends BaseTest {
             logger.error(e);
         }
         Assert.assertNotEquals(code, "1000000", "领取了已经领取过的订单");
-        res = Order_Detail.Detail(order_number);
+        res = Order_Detail.s_Detail(order_number);
         checkResponse(res);
         Assert.assertEquals(Generator.parseJson(data, "major_reps_id"), "chao.fang@mingyizhudao.com", "");
 
@@ -136,7 +141,7 @@ public class Order_ReceiveTask extends BaseTest {
         }
         checkResponse(res);
         Assert.assertNotEquals(code, "1000000", "领取已经领取过的订单失败");
-        res = Order_Detail.Detail(order_number);
+        res = Order_Detail.s_Detail(order_number);
         checkResponse(res);
         Assert.assertEquals(Generator.parseJson(data, "major_reps_id"), "chao.fang@mingyizhudao.com", "");
 
@@ -150,7 +155,7 @@ public class Order_ReceiveTask extends BaseTest {
 
         HashMap<String, String> doctorInfo = CreateRegisteredDoctor(new DoctorProfile(true));// 创建一个未认证的医生
         String tmpToken = doctorInfo.get("token");
-        String order_number = CreateOrder.CreateOrder(tmpToken); // create an order
+        String order_number = CreateOrder.s_CreateOrder(tmpToken); // create an order
         pathValue.put("orderNumber", order_number);
 
         try {
@@ -164,7 +169,7 @@ public class Order_ReceiveTask extends BaseTest {
 
         doctorInfo = CreateVerifiedDoctor(new DoctorProfile(true));// 创建一个已认证未同步的医生
         tmpToken = doctorInfo.get("token");
-        order_number = CreateOrder.CreateOrder(tmpToken); // create an order
+        order_number = CreateOrder.s_CreateOrder(tmpToken); // create an order
         pathValue.put("orderNumber", order_number);
 
         try {

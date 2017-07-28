@@ -1,12 +1,12 @@
 package com.mingyizhudao.qa.functiontest.crm;
 
 import com.mingyizhudao.qa.common.BaseTest;
+import com.mingyizhudao.qa.common.TestLogger;
 import com.mingyizhudao.qa.functiontest.doctor.CreateOrder;
 import com.mingyizhudao.qa.utilities.HttpRequest;
 import com.mingyizhudao.qa.utilities.Generator;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
-import org.apache.log4j.Logger;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
@@ -18,17 +18,22 @@ import java.util.HashMap;
  */
 public class Order_Modify extends BaseTest {
 
-    public static final Logger logger= Logger.getLogger(Order_Modify.class);
+    public static String clazzName = new Object() {
+        public String getClassName() {
+            String clazzName = this.getClass().getName();
+            return clazzName.substring(0, clazzName.lastIndexOf('$'));
+        }
+    }.getClassName();
+    public static TestLogger logger = new TestLogger(clazzName);
     public static final String version = "/api/v1";
     public static String uri = version + "/orders/{orderNumber}/orderDetail";
-    public static String mock = false ? "/mockjs/1" : "";
 
     @Test
     public void test_01_修改订单_患者姓名() {
 
         String res = "";
-        String order_number = CreateOrder.CreateOrder(mainToken); // create an order
-        Order_ReceiveTask.receiveTask(order_number);
+        String order_number = CreateOrder.s_CreateOrder(mainToken); // create an order
+        Order_ReceiveTask.s_ReceiveTask(order_number);
         HashMap<String, String> pathValue = new HashMap<>();
         pathValue.put("orderNumber", order_number);
         JSONObject body = new JSONObject();
@@ -42,7 +47,7 @@ public class Order_Modify extends BaseTest {
         checkResponse(res);
         Assert.assertEquals(code, "1000000");
         Assert.assertNotNull(data, "list");
-        res = Order_Detail.Detail(order_number);
+        res = Order_Detail.s_Detail(order_number);
         checkResponse(res);
         Assert.assertEquals(Generator.parseJson(data, "patient_name"), "修改的姓名"+name);
     }
@@ -51,8 +56,8 @@ public class Order_Modify extends BaseTest {
     public void test_02_修改订单_患者年龄() {
 
         String res = "";
-        String order_number = CreateOrder.CreateOrder(mainToken); // create an order
-        Order_ReceiveTask.receiveTask(order_number);
+        String order_number = CreateOrder.s_CreateOrder(mainToken); // create an order
+        Order_ReceiveTask.s_ReceiveTask(order_number);
         HashMap<String, String> pathValue = new HashMap<>();
         pathValue.put("orderNumber", order_number);
         JSONObject body = new JSONObject();
@@ -65,7 +70,7 @@ public class Order_Modify extends BaseTest {
         checkResponse(res);
         Assert.assertEquals(code, "1000000");
         Assert.assertNotNull(data, "list");
-        res = Order_Detail.Detail(order_number);
+        res = Order_Detail.s_Detail(order_number);
         checkResponse(res);
         Assert.assertEquals(Generator.parseJson(data, "patient_age"), "44");
     }
@@ -74,8 +79,8 @@ public class Order_Modify extends BaseTest {
     public void test_03_修改订单_患者主诉疾病() {
 
         String res = "";
-        String order_number = CreateOrder.CreateOrder(mainToken); // create an order
-        Order_ReceiveTask.receiveTask(order_number);
+        String order_number = CreateOrder.s_CreateOrder(mainToken); // create an order
+        Order_ReceiveTask.s_ReceiveTask(order_number);
         HashMap<String, String> pathValue = new HashMap<>();
         pathValue.put("orderNumber", order_number);
         JSONObject body = new JSONObject();
@@ -89,7 +94,7 @@ public class Order_Modify extends BaseTest {
         checkResponse(res);
         Assert.assertEquals(code, "1000000");
         Assert.assertNotNull(data, "list");
-        res = Order_Detail.Detail(order_number);
+        res = Order_Detail.s_Detail(order_number);
         checkResponse(res);
         Assert.assertEquals(Generator.parseJson(data, "major_disease_id"), diseaseId);
         Assert.assertEquals(Generator.parseJson(data, "major_disease_name"), Generator.diseaseName(diseaseId));
@@ -99,8 +104,8 @@ public class Order_Modify extends BaseTest {
     public void test_04_修改订单_患者次诉疾病() {
 
         String res = "";
-        String order_number = CreateOrder.CreateOrder(mainToken); // create an order
-        Order_ReceiveTask.receiveTask(order_number);
+        String order_number = CreateOrder.s_CreateOrder(mainToken); // create an order
+        Order_ReceiveTask.s_ReceiveTask(order_number);
         HashMap<String, String> pathValue = new HashMap<>();
         pathValue.put("orderNumber", order_number);
         JSONObject body = new JSONObject();
@@ -114,7 +119,7 @@ public class Order_Modify extends BaseTest {
         checkResponse(res);
         Assert.assertEquals(code, "1000000");
         Assert.assertNotNull(data, "list");
-        res = Order_Detail.Detail(order_number);
+        res = Order_Detail.s_Detail(order_number);
         checkResponse(res);
         Assert.assertEquals(Generator.parseJson(data, "minor_disease_id"), diseaseId);
         Assert.assertEquals(Generator.parseJson(data, "minor_disease_name"), Generator.diseaseName(diseaseId));
@@ -124,8 +129,8 @@ public class Order_Modify extends BaseTest {
     public void test_05_修改订单_患者性别() {
 
         String res = "";
-        String order_number = CreateOrder.CreateOrder(mainToken); // create an order
-        Order_ReceiveTask.receiveTask(order_number);
+        String order_number = CreateOrder.s_CreateOrder(mainToken); // create an order
+        Order_ReceiveTask.s_ReceiveTask(order_number);
         HashMap<String, String> pathValue = new HashMap<>();
         pathValue.put("orderNumber", order_number);
         JSONObject body = new JSONObject();
@@ -138,7 +143,7 @@ public class Order_Modify extends BaseTest {
         checkResponse(res);
         Assert.assertEquals(code, "1000000");
         Assert.assertNotNull(data, "list");
-        res = Order_Detail.Detail(order_number);
+        res = Order_Detail.s_Detail(order_number);
         checkResponse(res);
         Assert.assertEquals(Generator.parseJson(data, "patient_gender"), "2");
     }
@@ -147,9 +152,9 @@ public class Order_Modify extends BaseTest {
     public void test_06_修改订单_患者手机() {
 
         String res = "";
-        String order_number = CreateOrder.CreateOrder(mainToken); // create an order
-        Order_ReceiveTask.receiveTask(order_number);
-        Order_RecommendDoctor.recommendDoctor(order_number, "666");
+        String order_number = CreateOrder.s_CreateOrder(mainToken); // create an order
+        Order_ReceiveTask.s_ReceiveTask(order_number);
+        Order_RecommendDoctor.s_RecommendDoctor(order_number, "666");
         HashMap<String, String> pathValue = new HashMap<>();
         pathValue.put("orderNumber", order_number);
         JSONObject body = new JSONObject();
@@ -162,7 +167,7 @@ public class Order_Modify extends BaseTest {
         checkResponse(res);
         Assert.assertEquals(code, "1000000");
         Assert.assertNotNull(data, "list");
-        res = Order_Detail.Detail(order_number);
+        res = Order_Detail.s_Detail(order_number);
         checkResponse(res);
         Assert.assertEquals(Generator.parseJson(data, "patient_phone"), "13799990123");
     }
@@ -170,10 +175,10 @@ public class Order_Modify extends BaseTest {
     @Test(enabled = false) // 可修改，由前端控制
     public void test_07_修改订单_待支付后不可修改() {
         String res = "";
-        String order_number = CreateOrder.CreateOrder(mainToken); // create an order
-        logger.debug(Order_ReceiveTask.receiveTask(order_number));
-        logger.debug(Order_RecommendDoctor.recommendDoctor(order_number, "666"));
-        if (!Order_ThreewayCall.ThreewayCall(order_number, "success").equals("3000")) {
+        String order_number = CreateOrder.s_CreateOrder(mainToken); // create an order
+        logger.debug(Order_ReceiveTask.s_ReceiveTask(order_number));
+        logger.debug(Order_RecommendDoctor.s_RecommendDoctor(order_number, "666"));
+        if (!Order_ThreewayCall.s_Call(order_number, "success").equals("3000")) {
             Assert.fail("未进行到支付状态，无法继续执行该用例");
         }
 
@@ -188,7 +193,7 @@ public class Order_Modify extends BaseTest {
         }
         checkResponse(res);
         Assert.assertNotEquals(code, "1000000");
-        res = Order_Detail.Detail(order_number);
+        res = Order_Detail.s_Detail(order_number);
         checkResponse(res);
         Assert.assertNotEquals(Generator.parseJson(data, "patient_mobile"), "13799990123");
     }
@@ -196,7 +201,7 @@ public class Order_Modify extends BaseTest {
     @Test(enabled = false)
     public void test_08_修改订单_未领之前不可修改() {
         String res = "";
-        String order_number = CreateOrder.CreateOrder(mainToken); // create an order
+        String order_number = CreateOrder.s_CreateOrder(mainToken); // create an order
 
         HashMap<String, String> pathValue = new HashMap<>();
         pathValue.put("orderNumber", order_number);
@@ -209,7 +214,7 @@ public class Order_Modify extends BaseTest {
         }
         checkResponse(res);
         Assert.assertNotEquals(code, "1000000");
-        res = Order_Detail.Detail(order_number);
+        res = Order_Detail.s_Detail(order_number);
         checkResponse(res);
         Assert.assertNotEquals(Generator.parseJson(data, "patient_mobile"), "13799990123");
     }
@@ -218,10 +223,10 @@ public class Order_Modify extends BaseTest {
     public void test_09_修改订单_图片资料() {
 
         String res = "";
-        String order_number = CreateOrder.CreateOrder(mainToken); // create an order
-        Order_ReceiveTask.receiveTask(order_number);
+        String order_number = CreateOrder.s_CreateOrder(mainToken); // create an order
+        Order_ReceiveTask.s_ReceiveTask(order_number);
         String expId = Generator.randomExpertId();
-        Order_RecommendDoctor.recommendDoctor(order_number, expId);
+        Order_RecommendDoctor.s_RecommendDoctor(order_number, expId);
         HashMap<String, String> pathValue = new HashMap<>();
         pathValue.put("orderNumber", order_number);
         JSONObject body = new JSONObject();
@@ -234,7 +239,7 @@ public class Order_Modify extends BaseTest {
         }
         checkResponse(res);
         Assert.assertEquals(code, "1000000");
-        res = Order_Detail.Detail(order_number);
+        res = Order_Detail.s_Detail(order_number);
         checkResponse(res);
         Assert.assertEquals(Generator.parseJson(data, "medical_record_pictures(0):key"), "2017/05/04/1265834e-97d8-44a0-95e7-047c7facaee8/IMG_20170429_102737.jpg");
         Assert.assertEquals(Generator.parseJson(data, "medical_record_pictures(0):type"), "1");
@@ -250,7 +255,7 @@ public class Order_Modify extends BaseTest {
         }
         checkResponse(res);
         Assert.assertEquals(code, "1000000");
-        res = Order_Detail.Detail(order_number);
+        res = Order_Detail.s_Detail(order_number);
         checkResponse(res);
         Assert.assertEquals(Generator.parseJson(data, "medical_record_pictures()"), "0");
     }

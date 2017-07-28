@@ -9,7 +9,6 @@ import com.mingyizhudao.qa.functiontest.login.SendVerifyCode;
 import com.mingyizhudao.qa.utilities.HttpRequest;
 import com.mingyizhudao.qa.utilities.Generator;
 import net.sf.json.JSONObject;
-import org.apache.log4j.Logger;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
@@ -29,15 +28,14 @@ public class GetOrderDetail extends BaseTest {
     }.getClassName();
     public static TestLogger logger = new TestLogger(clazzName);
     public static String uri = "/api/getorderdetail/{orderId}";
-    public static String mock = false ? "/mockjs/1" : "";
 
-    public static String getOrderDetail(String token, String orderId) {
+    public static String s_Detail(String token, String orderId) {
         String res = "";
         TestLogger logger = new TestLogger(s_JobName());
         HashMap<String, String> pathValue = new HashMap<String, String>();
         pathValue.put("orderId", orderId);
         try {
-            res = HttpRequest.s_SendGet(host_doc +mock+uri, "", token, pathValue);
+            res = HttpRequest.s_SendGet(host_doc + uri, "", token, pathValue);
         } catch (IOException e) {
             logger.error(e);
         }
@@ -49,10 +47,10 @@ public class GetOrderDetail extends BaseTest {
         String res = "";
 
         HashMap<String, String> pathValue = new HashMap<String, String>();
-        String orderId = CreateOrder.CreateOrder(mainToken);
+        String orderId = CreateOrder.s_CreateOrder(mainToken);
         pathValue.put("orderId", orderId);
         try {
-            res = HttpRequest.s_SendGet(host_doc +mock+uri,"", mainToken, pathValue);
+            res = HttpRequest.s_SendGet(host_doc + uri,"", mainToken, pathValue);
         } catch (IOException e) {
             logger.error(e);
         }
@@ -87,7 +85,7 @@ public class GetOrderDetail extends BaseTest {
         HashMap<String, String> pathValue = new HashMap<String, String>();
         pathValue.put("orderId", "20000000000");
         try {
-            res = HttpRequest.s_SendGet(host_doc +mock+uri,"", mainToken, pathValue);
+            res = HttpRequest.s_SendGet(host_doc + uri,"", mainToken, pathValue);
         } catch (IOException e) {
             logger.error(e);
         }
@@ -101,7 +99,7 @@ public class GetOrderDetail extends BaseTest {
         HashMap<String, String> pathValue = new HashMap<String, String>();
         pathValue.put("orderId", "20000asdfa000");
         try {
-            res = HttpRequest.s_SendGet(host_doc +mock+uri,"", mainToken, pathValue);
+            res = HttpRequest.s_SendGet(host_doc + uri,"", mainToken, pathValue);
         } catch (IOException e) {
             logger.error(e);
         }
@@ -115,7 +113,7 @@ public class GetOrderDetail extends BaseTest {
         String res = "";
         HashMap<String, String> pathValue = new HashMap<String, String>();
         logger.info("创建订单with mainToken");
-        String orderId = CreateOrder.CreateOrder(mainToken);
+        String orderId = CreateOrder.s_CreateOrder(mainToken);
         if (orderId.isEmpty()) {
             logger.error("创建订单with mainToken失败");
         }
@@ -123,13 +121,13 @@ public class GetOrderDetail extends BaseTest {
         SendVerifyCode.s_Send();
         String tmpToken = CheckVerifyCode.s_Check();
         DoctorProfile dp = new DoctorProfile(true);
-        UpdateDoctorProfile_V1.updateDoctorProfile(tmpToken, dp);
+        UpdateDoctorProfile_V1.s_Update(tmpToken, dp);
         res = GetDoctorProfile_V1.s_MyProfile(tmpToken);
         String docId = JSONObject.fromObject(res).getJSONObject("data").getJSONObject("doctor").getString("user_id");
-        RegisteredDoctor_Certify_V2.CertifyOnly(docId, "1");
+        RegisteredDoctor_Certify_V2.s_CertifyOnly(docId, "1");
 
         try {
-            res = HttpRequest.s_SendGet(host_doc +mock+uri,"", tmpToken, pathValue);
+            res = HttpRequest.s_SendGet(host_doc + uri,"", tmpToken, pathValue);
         } catch (IOException e) {
             logger.error(e);
         }

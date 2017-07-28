@@ -25,7 +25,6 @@ public class GetUploadToken extends BaseTest {
     }.getClassName();
     public static TestLogger logger = new TestLogger(clazzName);
     public static String uri = "/api/getuploadtoken";
-    public static String mock = false ? "/mockjs/1" : "";
 
     @Test
     public void test_01_获取type1的图片token_成功() {
@@ -35,7 +34,7 @@ public class GetUploadToken extends BaseTest {
         query.put("type", "1");
         query.put("filename", "当朝.jpg");
         try {
-            res = HttpRequest.s_SendGet(host_doc+uri, query, mainToken, null);
+            res = HttpRequest.s_SendGet(host_doc + uri, query, mainToken, null);
         } catch (IOException e) {
             logger.error(e);
         }
@@ -52,7 +51,7 @@ public class GetUploadToken extends BaseTest {
         query.put("type", "2");
         query.put("filename", "abcd!@#$%^&*().jpg");
         try {
-            res = HttpRequest.s_SendGet(host_doc +mock+uri, query, mainToken, null);
+            res = HttpRequest.s_SendGet(host_doc + uri, query, mainToken, null);
         } catch (IOException e) {
             logger.error(e);
         }
@@ -70,7 +69,7 @@ public class GetUploadToken extends BaseTest {
         query.put("type", "3");
         query.put("filename", "abcd!@#$%^&*().jpg");
         try {
-            res = HttpRequest.s_SendGet(host_doc +mock+uri, query, mainToken, null);
+            res = HttpRequest.s_SendGet(host_doc + uri, query, mainToken, null);
         } catch (IOException e) {
             logger.error(e);
         }
@@ -87,7 +86,7 @@ public class GetUploadToken extends BaseTest {
         query.put("type", "1");
         query.put("filename", "abcd.png");
         try {
-            res = HttpRequest.s_SendGet(host_doc +mock+uri, query, mainToken, null);
+            res = HttpRequest.s_SendGet(host_doc + uri, query, mainToken, null);
         } catch (IOException e) {
             logger.error(e);
         }
@@ -96,7 +95,7 @@ public class GetUploadToken extends BaseTest {
 
         query.replace("filename", "abcdefg.PNG");
         try {
-            res = HttpRequest.s_SendGet(host_doc +mock+uri, query, mainToken, null);
+            res = HttpRequest.s_SendGet(host_doc + uri, query, mainToken, null);
         } catch (IOException e) {
             logger.error(e);
         }
@@ -112,7 +111,7 @@ public class GetUploadToken extends BaseTest {
         query.put("type", "1");
         query.put("filename", "abcd.gif");
         try {
-            res = HttpRequest.s_SendGet(host_doc +mock+uri, query, mainToken, null);
+            res = HttpRequest.s_SendGet(host_doc + uri, query, mainToken, null);
         } catch (IOException e) {
             logger.error(e);
         }
@@ -121,7 +120,7 @@ public class GetUploadToken extends BaseTest {
 
         query.replace("filename", "abcd.GIF");
         try {
-            res = HttpRequest.s_SendGet(host_doc +mock+uri, query, mainToken, null);
+            res = HttpRequest.s_SendGet(host_doc + uri, query, mainToken, null);
         } catch (IOException e) {
             logger.error(e);
         }
@@ -137,7 +136,7 @@ public class GetUploadToken extends BaseTest {
         query.put("type", "1");
         query.put("filename", "abcd!@#$%^&*(~.png");
         try {
-            res = HttpRequest.s_SendGet(host_doc +mock+uri, query, mainToken, null);
+            res = HttpRequest.s_SendGet(host_doc + uri, query, mainToken, null);
         } catch (IOException e) {
             logger.error(e);
         }
@@ -146,7 +145,7 @@ public class GetUploadToken extends BaseTest {
 
         query.replace("filename", "+_)(*&^%$#@!.PNG");
         try {
-            res = HttpRequest.s_SendGet(host_doc +mock+uri, query, mainToken, null);
+            res = HttpRequest.s_SendGet(host_doc + uri, query, mainToken, null);
         } catch (IOException e) {
             logger.error(e);
         }
@@ -163,7 +162,7 @@ public class GetUploadToken extends BaseTest {
         query.put("type", "1");
         query.put("filename", "abcd!@#$%^&*(~aa");
         try {
-            res = HttpRequest.s_SendGet(host_doc +mock+uri, query, mainToken, null);
+            res = HttpRequest.s_SendGet(host_doc + uri, query, mainToken, null);
         } catch (IOException e) {
             logger.error(e);
         }

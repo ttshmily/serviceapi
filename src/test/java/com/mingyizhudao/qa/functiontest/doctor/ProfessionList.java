@@ -23,13 +23,12 @@ public class ProfessionList extends BaseTest {
     }.getClassName();
     public static TestLogger logger = new TestLogger(clazzName);
     public static String uri = "/api/professionlist";
-    public static String mock = false ? "/mockjs/1" : "";
 
     @Test
     public void test_01_有token信息的请求可以获得有效信息() {
         String res = "";
         try {
-            res = HttpRequest.s_SendGet(host_doc+uri,"", mainToken);
+            res = HttpRequest.s_SendGet(host_doc + uri,"", mainToken);
         } catch (IOException e) {
             logger.error(e);
         }
@@ -47,7 +46,7 @@ public class ProfessionList extends BaseTest {
     public void test_02_没有token信息的请求可以获得有效信息() {
         String res = "";
         try {
-            res = HttpRequest.s_SendGet(host_doc+uri,"", "");
+            res = HttpRequest.s_SendGet(host_doc + uri,"", "");
         } catch (IOException e) {
             logger.error(e);
         }

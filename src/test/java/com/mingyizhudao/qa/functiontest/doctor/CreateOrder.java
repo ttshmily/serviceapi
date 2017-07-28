@@ -7,7 +7,6 @@ import com.mingyizhudao.qa.dataprofile.doctor.OrderDetail;
 import com.mingyizhudao.qa.utilities.HttpRequest;
 import com.mingyizhudao.qa.utilities.Generator;
 import net.sf.json.JSONObject;
-import org.apache.log4j.Logger;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
@@ -29,9 +28,8 @@ public class CreateOrder extends BaseTest {
     }.getClassName();
     public static TestLogger logger = new TestLogger(clazzName);
     public static String uri = "/api/createorder";
-    public static String mock = false ? "/mockjs/1" : "";
 
-    public static String CreateOrder(String token) {
+    public static String s_CreateOrder(String token) {
         String res = "";
         TestLogger logger = new TestLogger(s_JobName());
         OrderDetail body = new OrderDetail(true);
@@ -52,12 +50,12 @@ public class CreateOrder extends BaseTest {
         }
     }
 
-    public static String CreateOrder(String token, OrderDetail mr) {
+    public static String s_CreateOrder(String token, OrderDetail mr) {
         String res = "";
         TestLogger logger = new TestLogger(s_JobName());
         mr.body.getJSONObject("order").remove("medical_record_pictures");
         try {
-            res = HttpRequest.s_SendPost(host_doc+uri, mr.body.toString(), token);
+            res = HttpRequest.s_SendPost(host_doc + uri, mr.body.toString(), token);
         } catch (IOException e) {
             logger.error(e);
         }
@@ -80,7 +78,7 @@ public class CreateOrder extends BaseTest {
         OrderDetail body = new OrderDetail(true);
 
         try {
-            res = HttpRequest.s_SendPost(host_doc+uri, body.body.toString(), mainToken);
+            res = HttpRequest.s_SendPost(host_doc + uri, body.body.toString(), mainToken);
         } catch (IOException e) {
             logger.error(e);
         }
@@ -90,7 +88,7 @@ public class CreateOrder extends BaseTest {
         Assert.assertNotEquals(orderId, "", "返回的订单ID格式有误");
 
         logger.info("查看刚刚创建的订单详情");
-        res = GetOrderDetail_V1.MyInitiateOrder(mainToken, orderId);
+        res = GetOrderDetail_V1.s_MyInitiateOrder(mainToken, orderId);
         checkResponse(res);
         Assert.assertEquals(code, "1000000");
         //TODO
@@ -133,7 +131,7 @@ public class CreateOrder extends BaseTest {
         String res = "";
         OrderDetail body = new OrderDetail(true);
         try {
-            res = HttpRequest.s_SendPost(host_doc +mock+uri, body.body.toString(), "");
+            res = HttpRequest.s_SendPost(host_doc + uri, body.body.toString(), "");
         } catch (IOException e) {
             logger.error(e);
         }
@@ -150,7 +148,7 @@ public class CreateOrder extends BaseTest {
 
         body.body.getJSONObject("order").replace("patient_name", "");
         try {
-            res = HttpRequest.s_SendPost(host_doc +mock+uri, body.body.toString(), mainToken);
+            res = HttpRequest.s_SendPost(host_doc + uri, body.body.toString(), mainToken);
         } catch (IOException e) {
             logger.error(e);
         }
@@ -159,7 +157,7 @@ public class CreateOrder extends BaseTest {
 
         body.body.getJSONObject("order").replace("patient_name", "abcdefghijklmnopqrstuvwxyz一二三四五六七八九十甲乙丙地子卯寅丑");
         try {
-            res = HttpRequest.s_SendPost(host_doc +mock+uri, body.body.toString(), mainToken);
+            res = HttpRequest.s_SendPost(host_doc + uri, body.body.toString(), mainToken);
         } catch (IOException e) {
             logger.error(e);
         }
@@ -168,7 +166,7 @@ public class CreateOrder extends BaseTest {
 
         body.body.getJSONObject("order").remove("patient_name");
         try {
-            res = HttpRequest.s_SendPost(host_doc +mock+uri, body.body.toString(), mainToken);
+            res = HttpRequest.s_SendPost(host_doc + uri, body.body.toString(), mainToken);
         } catch (IOException e) {
             logger.error(e);
         }
@@ -185,7 +183,7 @@ public class CreateOrder extends BaseTest {
 
         body.body.getJSONObject("order").replace("patient_gender", "");
         try {
-            res = HttpRequest.s_SendPost(host_doc +mock+uri, body.body.toString(), mainToken);
+            res = HttpRequest.s_SendPost(host_doc + uri, body.body.toString(), mainToken);
         } catch (IOException e) {
             logger.error(e);
         }
@@ -194,7 +192,7 @@ public class CreateOrder extends BaseTest {
 
         body.body.getJSONObject("order").replace("patient_gender", "3");
         try {
-            res = HttpRequest.s_SendPost(host_doc +mock+uri, body.body.toString(), mainToken);
+            res = HttpRequest.s_SendPost(host_doc + uri, body.body.toString(), mainToken);
         } catch (IOException e) {
             logger.error(e);
         }
@@ -203,7 +201,7 @@ public class CreateOrder extends BaseTest {
 
         body.body.getJSONObject("order").remove("patient_gender");
         try {
-            res = HttpRequest.s_SendPost(host_doc +mock+uri, body.body.toString(), mainToken);
+            res = HttpRequest.s_SendPost(host_doc + uri, body.body.toString(), mainToken);
         } catch (IOException e) {
             logger.error(e);
         }
@@ -220,7 +218,7 @@ public class CreateOrder extends BaseTest {
 
         body.body.getJSONObject("order").replace("patient_age", "");
         try {
-            res = HttpRequest.s_SendPost(host_doc +mock+uri, body.body.toString(), mainToken);
+            res = HttpRequest.s_SendPost(host_doc + uri, body.body.toString(), mainToken);
         } catch (IOException e) {
             logger.error(e);
         }
@@ -229,7 +227,7 @@ public class CreateOrder extends BaseTest {
 
         body.body.getJSONObject("order").remove("patient_age");
         try {
-            res = HttpRequest.s_SendPost(host_doc +mock+uri, body.body.toString(), mainToken);
+            res = HttpRequest.s_SendPost(host_doc + uri, body.body.toString(), mainToken);
         } catch (IOException e) {
             logger.error(e);
         }
@@ -246,7 +244,7 @@ public class CreateOrder extends BaseTest {
 
         body.body.getJSONObject("order").replace("patient_phone", "");
         try {
-            res = HttpRequest.s_SendPost(host_doc +mock+uri, body.body.toString(), mainToken);
+            res = HttpRequest.s_SendPost(host_doc + uri, body.body.toString(), mainToken);
         } catch (IOException e) {
             logger.error(e);
         }
@@ -256,7 +254,7 @@ public class CreateOrder extends BaseTest {
 
         body.body.getJSONObject("order").remove("patient_phone");
         try {
-            res = HttpRequest.s_SendPost(host_doc +mock+uri, body.body.toString(), mainToken);
+            res = HttpRequest.s_SendPost(host_doc + uri, body.body.toString(), mainToken);
         } catch (IOException e) {
             logger.error(e);
         }
@@ -273,7 +271,7 @@ public class CreateOrder extends BaseTest {
 
         order.body.getJSONObject("order").replace("major_disease_id", "");
         try {
-            res = HttpRequest.s_SendPost(host_doc +mock+uri, order.body.toString(), mainToken);
+            res = HttpRequest.s_SendPost(host_doc + uri, order.body.toString(), mainToken);
         } catch (IOException e) {
             logger.error(e);
         }
@@ -282,7 +280,7 @@ public class CreateOrder extends BaseTest {
 
         order.body.getJSONObject("order").remove("major_disease_id");
         try {
-            res = HttpRequest.s_SendPost(host_doc +mock+uri, order.body.toString(), mainToken);
+            res = HttpRequest.s_SendPost(host_doc + uri, order.body.toString(), mainToken);
         } catch (IOException e) {
             logger.error(e);
         }
@@ -299,7 +297,7 @@ public class CreateOrder extends BaseTest {
 
         order.body.getJSONObject("order").replace("minor_disease_id", "");
         try {
-            res = HttpRequest.s_SendPost(host_doc +mock+uri, order.body.toString(), mainToken);
+            res = HttpRequest.s_SendPost(host_doc + uri, order.body.toString(), mainToken);
         } catch (IOException e) {
             logger.error(e);
         }
@@ -308,7 +306,7 @@ public class CreateOrder extends BaseTest {
 
         order.body.getJSONObject("order").remove("minor_disease_id");
         try {
-            res = HttpRequest.s_SendPost(host_doc +mock+uri, order.body.toString(), mainToken);
+            res = HttpRequest.s_SendPost(host_doc + uri, order.body.toString(), mainToken);
         } catch (IOException e) {
             logger.error(e);
         }
@@ -370,7 +368,7 @@ public class CreateOrder extends BaseTest {
         logger.info("不传入期望手术医院的ID。。。");
         order.body.getJSONObject("order").replace("expected_surgery_hospital_id","");
         try {
-            res = HttpRequest.s_SendPost(host_doc+uri, order.body.toString(), mainToken);
+            res = HttpRequest.s_SendPost(host_doc + uri, order.body.toString(), mainToken);
         } catch (IOException e) {
             logger.error(e);
         }
@@ -380,7 +378,7 @@ public class CreateOrder extends BaseTest {
         Assert.assertNotEquals(orderId, "", "返回的订单ID格式有误");
 
         logger.info("查看刚刚创建的订单详情");
-        res = GetOrderDetail_V1.MyInitiateOrder(mainToken, orderId);
+        res = GetOrderDetail_V1.s_MyInitiateOrder(mainToken, orderId);
         checkResponse(res);
         Assert.assertEquals(code, "1000000");
         Assert.assertEquals(parseJson(data,"order:expected_surgery_hospital_id"), mainDoctorHospitalId);
@@ -389,7 +387,7 @@ public class CreateOrder extends BaseTest {
         logger.info("传入期望手术医院的ID=0。。。");
         order.body.getJSONObject("order").replace("expected_surgery_hospital_id","0");
         try {
-            res = HttpRequest.s_SendPost(host_doc+uri, order.body.toString(), mainToken);
+            res = HttpRequest.s_SendPost(host_doc + uri, order.body.toString(), mainToken);
         } catch (IOException e) {
             logger.error(e);
         }
@@ -399,7 +397,7 @@ public class CreateOrder extends BaseTest {
         Assert.assertNotEquals(orderId, "", "返回的订单ID格式有误");
 
         logger.info("查看刚刚创建的订单详情");
-        res = GetOrderDetail_V1.MyInitiateOrder(mainToken, orderId);
+        res = GetOrderDetail_V1.s_MyInitiateOrder(mainToken, orderId);
         checkResponse(res);
         Assert.assertEquals(code, "1000000");
         Assert.assertEquals(parseJson(data,"order:expected_surgery_hospital_id"), "0");
@@ -408,7 +406,7 @@ public class CreateOrder extends BaseTest {
         logger.info("不传入期望手术医院的key。。。");
         order.body.getJSONObject("order").remove("expected_surgery_hospital_id");
         try {
-            res = HttpRequest.s_SendPost(host_doc +mock+uri, order.body.toString(), mainToken);
+            res = HttpRequest.s_SendPost(host_doc + uri, order.body.toString(), mainToken);
         } catch (IOException e) {
             logger.error(e);
         }
@@ -418,7 +416,7 @@ public class CreateOrder extends BaseTest {
         Assert.assertNotEquals(orderId, "", "返回的订单ID格式有误");
 
         logger.info("查看刚刚创建的订单详情");
-        res = GetOrderDetail_V1.MyInitiateOrder(mainToken, orderId);
+        res = GetOrderDetail_V1.s_MyInitiateOrder(mainToken, orderId);
         checkResponse(res);
         Assert.assertEquals(code, "1000000");
         Assert.assertEquals(parseJson(data,"order:expected_surgery_hospital_id"), mainDoctorHospitalId);

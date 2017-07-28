@@ -1,12 +1,12 @@
 package com.mingyizhudao.qa.functiontest.crm;
 
 import com.mingyizhudao.qa.common.BaseTest;
+import com.mingyizhudao.qa.common.TestLogger;
 import com.mingyizhudao.qa.dataprofile.crm.ExpertProfile;
 import com.mingyizhudao.qa.dataprofile.doctor.DoctorProfile;
 import com.mingyizhudao.qa.utilities.HttpRequest;
 import com.mingyizhudao.qa.utilities.Generator;
 import net.sf.json.JSONObject;
-import org.apache.log4j.Logger;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
@@ -18,13 +18,18 @@ import java.util.HashMap;
  */
 public class KBExpert_Update extends BaseTest {
 
-    public static final Logger logger= Logger.getLogger(KBExpert_Create.class);
+    public static String clazzName = new Object() {
+        public String getClassName() {
+            String clazzName = this.getClass().getName();
+            return clazzName.substring(0, clazzName.lastIndexOf('$'));
+        }
+    }.getClassName();
+    public static TestLogger logger = new TestLogger(clazzName);
     public static String uri = "/api/v1/medicallibrary/doctors/{id}";
-    public static String mock = false ? "/mockjs/1" : "";
-    public static String token= "";
 
-    public static HashMap<String, String> Update(String expertId, ExpertProfile ep) {
+    public static HashMap<String, String> s_Update(String expertId, ExpertProfile ep) {
         String res = "";
+        TestLogger logger = new TestLogger(s_JobName());
         HashMap<String, String> pathValue = new HashMap<>();
         pathValue.put("id", expertId);
         try {
@@ -48,7 +53,7 @@ public class KBExpert_Update extends BaseTest {
     public void test_01_没有token不能操作() {
         String res = "";
         ExpertProfile ep = new ExpertProfile(true);
-        HashMap<String, String> info = KBExpert_Create.Create(ep);
+        HashMap<String, String> info = KBExpert_Create.s_Create(ep);
         if (info == null) Assert.fail("创建医库医生失败，退出用例执行");
         String expertId = info.get("id");
         HashMap<String, String> pathValue = new HashMap<>();
@@ -69,7 +74,7 @@ public class KBExpert_Update extends BaseTest {
     public void test_02_更新个人信息_name() {
         String res = "";
         ExpertProfile ep = new ExpertProfile(true);
-        HashMap<String, String> info = KBExpert_Create.Create(ep);
+        HashMap<String, String> info = KBExpert_Create.s_Create(ep);
         if (info == null) Assert.fail("创建医库医生失败，退出用例执行");
         String expertId = info.get("id");
         HashMap<String, String> pathValue = new HashMap<>();
@@ -85,7 +90,7 @@ public class KBExpert_Update extends BaseTest {
         checkResponse(res);
         Assert.assertEquals(code, "1000000", "我想1000000");
 
-        res = KBExpert_Detail.Detail(expertId);
+        res = KBExpert_Detail.s_Detail(expertId);
         checkResponse(res);
         Assert.assertEquals(Generator.parseJson(data, "name"), name, "姓名未更新");
     }
@@ -94,7 +99,7 @@ public class KBExpert_Update extends BaseTest {
     public void test_03_更新个人信息_hospital_id() {
         String res = "";
         ExpertProfile ep = new ExpertProfile(true);
-        HashMap<String, String> info = KBExpert_Create.Create(ep);
+        HashMap<String, String> info = KBExpert_Create.s_Create(ep);
         if (info == null) Assert.fail("创建医库医生失败，退出用例执行");
         String expertId = info.get("id");
         HashMap<String, String> pathValue = new HashMap<>();
@@ -110,11 +115,11 @@ public class KBExpert_Update extends BaseTest {
         checkResponse(res);
         Assert.assertEquals(code, "1000000", "我想1000000");
 
-        HashMap<String, String> hosInfo = KBHospital_Detail.Detail(hospitalId);
+        HashMap<String, String> hosInfo = KBHospital_Detail.s_Detail(hospitalId);
         String cityId = hosInfo.get("city_id");
         String countryId =  hosInfo.get("county_id");
 
-        res = KBExpert_Detail.Detail(expertId);
+        res = KBExpert_Detail.s_Detail(expertId);
         checkResponse(res);
         Assert.assertEquals(Generator.parseJson(data, "hospital_id"), hospitalId, "医生的医院ID没有更新");
         Assert.assertEquals(Generator.parseJson(data, "hospital_name"), Generator.hospitalName(hospitalId), "医生的医院名称没有更新");
@@ -127,7 +132,7 @@ public class KBExpert_Update extends BaseTest {
     public void test_04_更新个人信息_禁止更新city_id() {
         String res = "";
         ExpertProfile ep = new ExpertProfile(true);
-        HashMap<String, String> info = KBExpert_Create.Create(ep);
+        HashMap<String, String> info = KBExpert_Create.s_Create(ep);
         if (info == null) Assert.fail("创建医库医生失败，退出用例执行");
         String expertId = info.get("id");
         HashMap<String, String> pathValue = new HashMap<>();
@@ -143,14 +148,14 @@ public class KBExpert_Update extends BaseTest {
         checkResponse(res);
         Assert.assertNotEquals(code, "1000000", "禁止更新city_id");
 
-        res = KBExpert_Detail.Detail(expertId);
+        res = KBExpert_Detail.s_Detail(expertId);
     }
 
     @Test
     public void test_05_更新个人信息_禁止更新county_id() {
         String res = "";
         ExpertProfile ep = new ExpertProfile(true);
-        HashMap<String, String> info = KBExpert_Create.Create(ep);
+        HashMap<String, String> info = KBExpert_Create.s_Create(ep);
         if (info == null) Assert.fail("创建医库医生失败，退出用例执行");
         String expertId = info.get("id");
         HashMap<String, String> pathValue = new HashMap<>();
@@ -166,14 +171,14 @@ public class KBExpert_Update extends BaseTest {
         checkResponse(res);
         Assert.assertNotEquals(code, "1000000", "禁止更新country_id");
 
-        res = KBExpert_Detail.Detail(expertId);
+        res = KBExpert_Detail.s_Detail(expertId);
     }
 
     @Test
     public void test_06_更新个人信息_更新major_id() {
         String res = "";
         ExpertProfile ep = new ExpertProfile(true);
-        HashMap<String, String> info = KBExpert_Create.Create(ep);
+        HashMap<String, String> info = KBExpert_Create.s_Create(ep);
         if (info == null) Assert.fail("创建医库医生失败，退出用例执行");
         String expertId = info.get("id");
         HashMap<String, String> pathValue = new HashMap<>();
@@ -188,7 +193,7 @@ public class KBExpert_Update extends BaseTest {
         } catch (IOException e) {
             logger.error(e);
         }
-        res = KBExpert_Detail.Detail(expertId);
+        res = KBExpert_Detail.s_Detail(expertId);
         checkResponse(res);
         Assert.assertEquals(Generator.parseJson(data, "major_id"), majorId, "专业ID没有更新");
         Assert.assertEquals(Generator.parseJson(data, "major"), Generator.majorName(majorId), "专业名称没有更新");
@@ -202,7 +207,7 @@ public class KBExpert_Update extends BaseTest {
         } catch (IOException e) {
             logger.error(e);
         }
-        res = KBExpert_Detail.Detail(expertId);
+        res = KBExpert_Detail.s_Detail(expertId);
         checkResponse(res);
         Assert.assertEquals(Generator.parseJson(data, "major_id"), majorId, "专业ID没有更新");
         Assert.assertEquals(Generator.parseJson(data, "major"), Generator.majorName(majorId), "专业名称没有更新");
@@ -212,7 +217,7 @@ public class KBExpert_Update extends BaseTest {
     public void test_07_更新个人信息_更新medical_title_list和academic_title_list() {
         String res = "";
         ExpertProfile ep = new ExpertProfile(true);
-        HashMap<String, String> info = KBExpert_Create.Create(ep);
+        HashMap<String, String> info = KBExpert_Create.s_Create(ep);
         if (info == null) Assert.fail("创建医库医生失败，退出用例执行");
         String expertId = info.get("id");
         HashMap<String, String> pathValue = new HashMap<>();
@@ -230,7 +235,7 @@ public class KBExpert_Update extends BaseTest {
         checkResponse(res);
         Assert.assertEquals(code, "1000000", "更新medical_title_list失败");
 
-        res = KBExpert_Detail.Detail(expertId);
+        res = KBExpert_Detail.s_Detail(expertId);
         checkResponse(res);
         Assert.assertEquals(Generator.parseJson(data, "medical_title_list"), medical_title_list, "技术职称没有更新");
         Assert.assertEquals(Generator.parseJson(data, "academic_title_list"), academic_title_list, "学术职称没有更新");
@@ -247,7 +252,7 @@ public class KBExpert_Update extends BaseTest {
         checkResponse(res);
         Assert.assertEquals(code, "1000000", "更新medical_title_list失败");
 
-        res = KBExpert_Detail.Detail(expertId);
+        res = KBExpert_Detail.s_Detail(expertId);
         checkResponse(res);
         Assert.assertEquals(Generator.parseJson(data, "medical_title_list"), medical_title_list, "技术职称没有更新");
         Assert.assertEquals(Generator.parseJson(data, "academic_title_list"), academic_title_list, "学术职称没有更新");
@@ -257,7 +262,7 @@ public class KBExpert_Update extends BaseTest {
     public void test_08_更新个人信息_更新specialty和honour和description() {
         String res = "";
         ExpertProfile ep = new ExpertProfile(true);
-        HashMap<String, String> info = KBExpert_Create.Create(ep);
+        HashMap<String, String> info = KBExpert_Create.s_Create(ep);
         String expertId = info.get("id");
         HashMap<String, String> pathValue = new HashMap<>();
         pathValue.put("id", expertId);
@@ -276,7 +281,7 @@ public class KBExpert_Update extends BaseTest {
         checkResponse(res);
         Assert.assertEquals(code, "1000000", "更新三个说明字段失败");
 
-        res = KBExpert_Detail.Detail(expertId);
+        res = KBExpert_Detail.s_Detail(expertId);
         checkResponse(res);
         Assert.assertEquals(Generator.parseJson(data, "specialty"), specialty, "特长没有更新");
         Assert.assertEquals(Generator.parseJson(data, "honour"), honour, "荣誉没有更新");
@@ -287,7 +292,7 @@ public class KBExpert_Update extends BaseTest {
     public void test_09_更新avatar_url() {
         String res = "";
         ExpertProfile ep = new ExpertProfile(true);
-        HashMap<String, String> info = KBExpert_Create.Create(ep);
+        HashMap<String, String> info = KBExpert_Create.s_Create(ep);
         if (info == null) Assert.fail("创建医院失败，退出用例执行");
         String doctorId = info.get("id");
         HashMap<String, String> pathValue = new HashMap<>();
@@ -317,7 +322,7 @@ public class KBExpert_Update extends BaseTest {
         checkResponse(res);
         Assert.assertEquals(code, "1000000", "医院图片更新失败");
 
-        res = KBExpert_Detail.Detail(doctorId);
+        res = KBExpert_Detail.s_Detail(doctorId);
         checkResponse(res);
         Assert.assertEquals(Generator.parseJson(data, "avatar_url()"), "3", "医院图片更新失败");
         Assert.assertNotNull(Generator.parseJson(data, "avatar_url():url"), "医院图片更新失败");
@@ -327,7 +332,7 @@ public class KBExpert_Update extends BaseTest {
     public void test_10_更新个人信息_已关联医生会同步给注册用户() {
         String res = "";
         ExpertProfile ep = new ExpertProfile(true);
-        HashMap<String, String> info = KBExpert_Create.Create(ep);
+        HashMap<String, String> info = KBExpert_Create.s_Create(ep);
         if (info == null) {
             Assert.fail("创建医库医生失败，退出用例执行");
         }
@@ -338,7 +343,7 @@ public class KBExpert_Update extends BaseTest {
         if ( doctorId == null) {
             Assert.fail("创建医生失败，认证用例无法执行");
         }
-        RegisteredDoctor_CertifySync_V2.CertifyAndSync(doctorId, "1", expertId);
+        RegisteredDoctor_CertifySync_V2.s_CertifyAndSync(doctorId, "1", expertId);
 
         HashMap<String, String> pathValue = new HashMap<>();
         pathValue.put("id", expertId);
@@ -347,7 +352,7 @@ public class KBExpert_Update extends BaseTest {
         String academic_title_list = Generator.randomAcademicId();
         String majorId = Generator.randomMajorId();
         String hospitalId = Generator.randomHospitalId();
-        HashMap<String, String> hospitalInfo = KBHospital_Detail.Detail(hospitalId);
+        HashMap<String, String> hospitalInfo = KBHospital_Detail.s_Detail(hospitalId);
         String cityId = hospitalInfo.get("city_id");
         String countyId = hospitalInfo.get("county_id");
         String name = "医库中改名" + Generator.randomString(8);
@@ -374,7 +379,7 @@ public class KBExpert_Update extends BaseTest {
         checkResponse(res);
         Assert.assertEquals(code, "1000000", "更新已关联的医库医生信息失败");
 
-        res = KBExpert_Detail.Detail(expertId);
+        res = KBExpert_Detail.s_Detail(expertId);
         checkResponse(res);
         Assert.assertEquals(Generator.parseJson(data, "medical_title_list"), medical_title_list, "技术职称没有更新");
         Assert.assertEquals(Generator.parseJson(data, "academic_title_list"), academic_title_list, "学术职称没有更新");
@@ -392,7 +397,7 @@ public class KBExpert_Update extends BaseTest {
         Assert.assertEquals(Generator.parseJson(data, "avatar_url()"), "2", "医院图片更新失败");
         Assert.assertNotNull(Generator.parseJson(data, "avatar_url():url"), "医院图片更新失败");
 
-        res = RegisteredDoctor_Detail.Detail(doctorId);
+        res = RegisteredDoctor_Detail.s_Detail(doctorId);
         checkResponse(res);
         Assert.assertEquals(Generator.parseJson(data, "medical_title_list"), medical_title_list, "技术职称没有更新");
         Assert.assertEquals(Generator.parseJson(data, "academic_title_list"), academic_title_list, "学术职称没有更新");
@@ -414,7 +419,7 @@ public class KBExpert_Update extends BaseTest {
     public void test_11_更新个人信息_未关联专家更新signed_status() {
         String res = "";
         ExpertProfile ep = new ExpertProfile(true);
-        HashMap<String, String> info = KBExpert_Create.Create(ep);
+        HashMap<String, String> info = KBExpert_Create.s_Create(ep);
         String expertId = info.get("id");
         HashMap<String, String> pathValue = new HashMap<>();
         pathValue.put("id", expertId);
@@ -429,7 +434,7 @@ public class KBExpert_Update extends BaseTest {
         checkResponse(res);
         Assert.assertEquals(code, "1000000", "更新主刀专家状态字段失败");
 
-        res = KBExpert_Detail.Detail(expertId);
+        res = KBExpert_Detail.s_Detail(expertId);
         checkResponse(res);
         Assert.assertEquals(Generator.parseJson(data, "signed_status"), "NOT_SIGNED");
 
@@ -442,7 +447,7 @@ public class KBExpert_Update extends BaseTest {
         checkResponse(res);
         Assert.assertEquals(code, "1000000", "更新主刀专家状态字段失败");
 
-        res = KBExpert_Detail.Detail(expertId);
+        res = KBExpert_Detail.s_Detail(expertId);
         checkResponse(res);
         Assert.assertEquals(Generator.parseJson(data, "signed_status"), "SIGNED");
     }
@@ -451,7 +456,7 @@ public class KBExpert_Update extends BaseTest {
     public void test_12_更新个人信息_已关联医生修改专家认证字段() {
         String res = "";
         ExpertProfile ep = new ExpertProfile(true);
-        HashMap<String, String> info = KBExpert_Create.Create(ep);
+        HashMap<String, String> info = KBExpert_Create.s_Create(ep);
         if (info == null)
             Assert.fail("创建医库医生失败，退出用例执行");
         String expertId = info.get("id");
@@ -461,7 +466,7 @@ public class KBExpert_Update extends BaseTest {
         if (doctorId == null)
             Assert.fail("创建医生失败，认证用例无法执行");
 
-        RegisteredDoctor_CertifySync_V2.CertifyAndSync(doctorId, "1", expertId);
+        RegisteredDoctor_CertifySync_V2.s_CertifyAndSync(doctorId, "1", expertId);
 
         HashMap<String, String> pathValue = new HashMap<>();
         pathValue.put("id", expertId);
@@ -475,7 +480,7 @@ public class KBExpert_Update extends BaseTest {
         checkResponse(res);
         Assert.assertEquals(code, "1000000", "更新主刀专家状态字段失败");
 
-        res = RegisteredDoctor_Detail.Detail(doctorId);
+        res = RegisteredDoctor_Detail.s_Detail(doctorId);
         checkResponse(res);
         Assert.assertEquals(Generator.parseJson(data, "signed_status"), "NOT_SIGNED");
 
@@ -488,7 +493,7 @@ public class KBExpert_Update extends BaseTest {
         checkResponse(res);
         Assert.assertEquals(code, "1000000", "更新主刀专家状态字段失败");
 
-        res = RegisteredDoctor_Detail.Detail(doctorId);
+        res = RegisteredDoctor_Detail.s_Detail(doctorId);
         checkResponse(res);
         Assert.assertEquals(Generator.parseJson(data, "signed_status"), "SIGNED");
     }

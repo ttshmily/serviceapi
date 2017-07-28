@@ -1,11 +1,11 @@
 package com.mingyizhudao.qa.functiontest.crm;
 
 import com.mingyizhudao.qa.common.BaseTest;
+import com.mingyizhudao.qa.common.TestLogger;
 import com.mingyizhudao.qa.dataprofile.doctor.DoctorProfile;
 import com.mingyizhudao.qa.utilities.HttpRequest;
 import com.mingyizhudao.qa.utilities.Generator;
 import net.sf.json.JSONObject;
-import org.apache.log4j.Logger;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
@@ -17,18 +17,24 @@ import java.util.HashMap;
  */
 public class RegisteredDoctor_Certify_V2 extends BaseTest {
 
-    public static final Logger logger= Logger.getLogger(RegisteredDoctor_Certify_V2.class);
+    public static String clazzName = new Object() {
+        public String getClassName() {
+            String clazzName = this.getClass().getName();
+            return clazzName.substring(0, clazzName.lastIndexOf('$'));
+        }
+    }.getClassName();
+    public static TestLogger logger = new TestLogger(clazzName);
     public static final String version = "/api/v2";
     public static String uri = version+"/doctors/{id}/verifications";
-    public static String mock = false ? "/mockjs/1" : "";
 
-    public static String CertifyOnly(String regId, String status) {
+    public static String s_CertifyOnly(String regId, String status) {
         String res = "";
+        TestLogger logger = new TestLogger(s_JobName());
         if ( regId == null || regId.isEmpty()) {
             logger.error("医生ID不存在");
             return null;
         }
-        res = RegisteredDoctor_Detail.Detail(regId);
+        res = RegisteredDoctor_Detail.s_Detail(regId);
         logger.info(HttpRequest.unicodeString(res));
         if (Generator.parseJson(JSONObject.fromObject(res), "data:is_verified").equals("1")) return "1";
         if (Generator.parseJson(JSONObject.fromObject(res), "data:is_verified").equals("-1")) {
@@ -49,7 +55,7 @@ public class RegisteredDoctor_Certify_V2 extends BaseTest {
         } catch (IOException e) {
             logger.error(e);
         }
-        res = RegisteredDoctor_Detail.Detail(regId);
+        res = RegisteredDoctor_Detail.s_Detail(regId);
         return Generator.parseJson(JSONObject.fromObject(res), "data:is_verified");
     }
 
@@ -64,7 +70,7 @@ public class RegisteredDoctor_Certify_V2 extends BaseTest {
         String doctorId = CreateRegisteredDoctor(dp).get("id");
         if ( doctorId == null)
             Assert.fail("创建医生失败，认证用例无法执行");
-        res = RegisteredDoctor_Detail.Detail(doctorId);
+        res = RegisteredDoctor_Detail.s_Detail(doctorId);
         String is_verified = Generator.parseJson(JSONObject.fromObject(res), "data:is_verified");
         Assert.assertEquals(is_verified, "2");
 
@@ -72,14 +78,14 @@ public class RegisteredDoctor_Certify_V2 extends BaseTest {
         body.put("status", "-1");  // 认证失败
         body.put("reason", "失败原因");  // 失败原因
         try {
-            res = HttpRequest.s_SendPut(host_crm+mock+uri, body.toString(), crm_token, pathValue);
+            res = HttpRequest.s_SendPut(host_crm + uri, body.toString(), crm_token, pathValue);
         } catch (IOException e) {
             logger.error(e);
         }
         logger.info(HttpRequest.unicodeString(res));
         checkResponse(res);
         Assert.assertEquals(code, "1000000");
-        res = RegisteredDoctor_Detail.Detail(doctorId);
+        res = RegisteredDoctor_Detail.s_Detail(doctorId);
         is_verified = Generator.parseJson(JSONObject.fromObject(res), "data:is_verified");
         Assert.assertEquals(is_verified, "-1");
     }
@@ -96,7 +102,7 @@ public class RegisteredDoctor_Certify_V2 extends BaseTest {
         String doctorId = CreateRegisteredDoctor(dp).get("id");
         if (doctorId == null)
             Assert.fail("创建医生失败，认证用例无法执行");
-        res = RegisteredDoctor_Detail.Detail(doctorId);
+        res = RegisteredDoctor_Detail.s_Detail(doctorId);
         String is_verified = Generator.parseJson(JSONObject.fromObject(res), "data:is_verified");
         Assert.assertEquals(is_verified, "2");
 
@@ -104,13 +110,13 @@ public class RegisteredDoctor_Certify_V2 extends BaseTest {
         body.put("status", "1");  // 认证成功
         body.put("reason", "成功原因");  // 成功原因
         try {
-            res = HttpRequest.s_SendPut(host_crm + mock + uri, body.toString(), crm_token, pathValue);
+            res = HttpRequest.s_SendPut(host_crm + uri, body.toString(), crm_token, pathValue);
         } catch (IOException e) {
             logger.error(e);
         }
         checkResponse(res);
         Assert.assertEquals(code, "1000000");
-        res = RegisteredDoctor_Detail.Detail(doctorId);
+        res = RegisteredDoctor_Detail.s_Detail(doctorId);
         is_verified = Generator.parseJson(JSONObject.fromObject(res), "data:is_verified");
         Assert.assertEquals(is_verified, "1");
     }
@@ -126,7 +132,7 @@ public class RegisteredDoctor_Certify_V2 extends BaseTest {
         String doctorId = CreateRegisteredDoctor(dp).get("id");
         if (doctorId == null)
             Assert.fail("创建医生失败，认证用例无法执行");
-        res = RegisteredDoctor_Detail.Detail(doctorId);
+        res = RegisteredDoctor_Detail.s_Detail(doctorId);
         String is_verified = Generator.parseJson(JSONObject.fromObject(res), "data:is_verified");
         Assert.assertEquals(is_verified, "2");
 
@@ -141,7 +147,7 @@ public class RegisteredDoctor_Certify_V2 extends BaseTest {
         logger.info(HttpRequest.unicodeString(res));
         checkResponse(res);
         Assert.assertEquals(code, "1000000");
-        res = RegisteredDoctor_Detail.Detail(doctorId);
+        res = RegisteredDoctor_Detail.s_Detail(doctorId);
         is_verified = Generator.parseJson(JSONObject.fromObject(res), "data:is_verified");
         Assert.assertEquals(is_verified, "1");
     }

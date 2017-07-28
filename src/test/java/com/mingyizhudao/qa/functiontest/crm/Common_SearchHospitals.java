@@ -1,6 +1,7 @@
 package com.mingyizhudao.qa.functiontest.crm;
 
 import com.mingyizhudao.qa.common.BaseTest;
+import com.mingyizhudao.qa.common.TestLogger;
 import com.mingyizhudao.qa.utilities.HttpRequest;
 import com.mingyizhudao.qa.utilities.Generator;
 import org.apache.log4j.Logger;
@@ -15,10 +16,15 @@ import java.util.HashMap;
  */
 public class Common_SearchHospitals extends BaseTest {
 
-    public static final Logger logger= Logger.getLogger(Common_SearchHospitals.class);
+    public static String clazzName = new Object() {
+        public String getClassName() {
+            String clazzName = this.getClass().getName();
+            return clazzName.substring(0, clazzName.lastIndexOf('$'));
+        }
+    }.getClassName();
+    public static TestLogger logger = new TestLogger(clazzName);
     public static final String version = "/api/v1";
     public static String uri = version+"/hospitals/search";
-    public static String mock = false ? "/mockjs/1" : "";
 
     @Test
     public void test_01_查询默认医院列表() {
@@ -46,7 +52,7 @@ public class Common_SearchHospitals extends BaseTest {
         // 查询字符串中文
         query.put("hospital_name", "安阳");
         try {
-            res = HttpRequest.s_SendGet(host_crm+mock+uri, query, crm_token, null);
+            res = HttpRequest.s_SendGet(host_crm + uri, query, crm_token, null);
         } catch (IOException e) {
             logger.error(e);
         }
@@ -64,7 +70,7 @@ public class Common_SearchHospitals extends BaseTest {
         // 查询字符串为拼音
         query.put("hospital_name", "anyang");
         try {
-            res = HttpRequest.s_SendGet(host_crm+uri, query, crm_token, null);
+            res = HttpRequest.s_SendGet(host_crm + uri, query, crm_token, null);
         } catch (IOException e) {
             logger.error(e);
         }
@@ -82,7 +88,7 @@ public class Common_SearchHospitals extends BaseTest {
         // 查询字符串为中文拼音混合
         query.put("hospital_name", "安阳yiyuan");
         try {
-            res = HttpRequest.s_SendGet(host_crm+mock+uri, query, crm_token, null);
+            res = HttpRequest.s_SendGet(host_crm + uri, query, crm_token, null);
         } catch (IOException e) {
             logger.error(e);
         }
@@ -99,7 +105,7 @@ public class Common_SearchHospitals extends BaseTest {
 
         // 查询key不存在
         try {
-            res = HttpRequest.s_SendGet(host_crm+uri, "", crm_token, null);
+            res = HttpRequest.s_SendGet(host_crm + uri, "", crm_token, null);
         } catch (IOException e) {
             logger.error(e);
         }

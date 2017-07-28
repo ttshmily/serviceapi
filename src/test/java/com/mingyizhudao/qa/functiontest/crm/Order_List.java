@@ -1,6 +1,7 @@
 package com.mingyizhudao.qa.functiontest.crm;
 
 import com.mingyizhudao.qa.common.BaseTest;
+import com.mingyizhudao.qa.common.TestLogger;
 import com.mingyizhudao.qa.utilities.HttpRequest;
 import com.mingyizhudao.qa.utilities.Generator;
 import net.sf.json.JSONArray;
@@ -17,13 +18,20 @@ import java.util.HashMap;
  */
 public class Order_List extends BaseTest {
 
-    public static final Logger logger = Logger.getLogger(Order_List.class);
+    public static String clazzName = new Object() {
+        public String getClassName() {
+            String clazzName = this.getClass().getName();
+            return clazzName.substring(0, clazzName.lastIndexOf('$'));
+        }
+    }.getClassName();
+    public static TestLogger logger = new TestLogger(clazzName);
     public static final String version = "/api/v1";
     public static String uri = version+"/orders/orderList";
     public static String mock = false ? "/mockjs/1" : "";
 
-    public static int orderList() {
+    public static int s_OrderList() {
         String res = "";
+        TestLogger logger = new TestLogger(s_JobName());
         try {
             res = HttpRequest.s_SendGet(host_crm+uri, "", crm_token);
         } catch (IOException e) {
@@ -32,8 +40,9 @@ public class Order_List extends BaseTest {
         return Integer.parseInt(Generator.parseJson(JSONObject.fromObject(res), "data:size"));
     }
 
-    public static String SelectPaidOrder() {
+    public static String s_SelectPaidOrder() {
         String res = "";
+        TestLogger logger = new TestLogger(s_JobName());
         HashMap<String, String> query = new HashMap<>();
         query.put("status", "4000");
         query.put("searchKey", "agent_name");
@@ -41,7 +50,6 @@ public class Order_List extends BaseTest {
         query.put("page", "1");
         query.put("pageSize", "1");
         //query.put("hideTest", "true");
-
         try {
             res = HttpRequest.s_SendGet(host_crm+uri, query, crm_token);
             logger.debug(HttpRequest.unicodeString(res));
@@ -52,7 +60,7 @@ public class Order_List extends BaseTest {
         return Generator.parseJson(JSONObject.fromObject(res), "data:list(0):order_number");
     }
 
-    public static String SelectBrievedOrder() {
+    public static String s_SelectBriefedOrder() {
         String res = "";
         HashMap<String, String> query = new HashMap<>();
         query.put("status", "4010");

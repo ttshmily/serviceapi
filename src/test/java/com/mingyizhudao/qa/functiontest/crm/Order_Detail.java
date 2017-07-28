@@ -1,10 +1,10 @@
 package com.mingyizhudao.qa.functiontest.crm;
 
 import com.mingyizhudao.qa.common.BaseTest;
+import com.mingyizhudao.qa.common.TestLogger;
 import com.mingyizhudao.qa.functiontest.doctor.CreateOrder;
 import com.mingyizhudao.qa.utilities.HttpRequest;
 import com.mingyizhudao.qa.utilities.Generator;
-import org.apache.log4j.Logger;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
@@ -16,17 +16,23 @@ import java.util.HashMap;
  */
 public class Order_Detail extends BaseTest {
 
-    public static final Logger logger= Logger.getLogger(Order_Detail.class);
+    public static String clazzName = new Object() {
+        public String getClassName() {
+            String clazzName = this.getClass().getName();
+            return clazzName.substring(0, clazzName.lastIndexOf('$'));
+        }
+    }.getClassName();
+    public static TestLogger logger = new TestLogger(clazzName);
     public static final String version = "/api/v1";
     public static String uri = version + "/orders/{orderNumber}/orderDetail";
-    public static String mock = false ? "/mockjs/1" : "";
 
-    public static String Detail(String orderId) {
+    public static String s_Detail(String orderId) {
         String res = "";
+        TestLogger logger = new TestLogger(s_JobName());
         HashMap<String, String> pathValue = new HashMap<>();
         pathValue.put("orderNumber", orderId);
         try {
-            res = HttpRequest.s_SendGet(host_crm+uri, "", crm_token, pathValue);
+            res = HttpRequest.s_SendGet(host_crm + uri, "", crm_token, pathValue);
         } catch (IOException e) {
             logger.error(e);
         }
@@ -38,10 +44,10 @@ public class Order_Detail extends BaseTest {
         String res = "";
 
         HashMap<String, String> pathValue = new HashMap<>();
-        String orderId = CreateOrder.CreateOrder(mainToken);
+        String orderId = CreateOrder.s_CreateOrder(mainToken);
         pathValue.put("orderNumber", orderId);
         try {
-            res = HttpRequest.s_SendGet(host_crm+uri,"", crm_token, pathValue);
+            res = HttpRequest.s_SendGet(host_crm + uri,"", crm_token, pathValue);
         } catch (IOException e) {
             logger.error(e);
         }
@@ -80,7 +86,7 @@ public class Order_Detail extends BaseTest {
         HashMap<String, String> pathValue = new HashMap<>();
         pathValue.put("orderNumber", "2000000");
         try {
-            res = HttpRequest.s_SendGet(host_crm+uri,"", crm_token, pathValue);
+            res = HttpRequest.s_SendGet(host_crm + uri,"", crm_token, pathValue);
         } catch (IOException e) {
             logger.error(e);
         }

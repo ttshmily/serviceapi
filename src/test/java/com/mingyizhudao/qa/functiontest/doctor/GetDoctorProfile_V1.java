@@ -27,9 +27,6 @@ public class GetDoctorProfile_V1 extends BaseTest {
     }.getClassName();
     public static TestLogger logger = new TestLogger(clazzName);
     public static String uri = "/api/v1/getdoctorprofile";
-    public static String mock = false ? "/mockjs/1" : "";
-    public static String token= "";
-
 
     public static String s_MyProfile(String token) {
         String res = "";
@@ -46,7 +43,7 @@ public class GetDoctorProfile_V1 extends BaseTest {
     public void test_01_有token信息的请求可以获得有效信息() {
         String res = "";
         try {
-            res = HttpRequest.s_SendGet(host_doc +mock+uri,"", mainToken);
+            res = HttpRequest.s_SendGet(host_doc + uri,"", mainToken);
         } catch (IOException e) {
             logger.error(e);
         }
@@ -78,7 +75,7 @@ public class GetDoctorProfile_V1 extends BaseTest {
     public void test_03_错误token的请求不能获得个人信息并返回正确的错误提示() {
         String res = "";
         try {
-            res = HttpRequest.s_SendGet(host_doc +mock+uri,"", "nidawoya");
+            res = HttpRequest.s_SendGet(host_doc + uri,"", "nidawoya");
         } catch (IOException e) {
             logger.error(e);
         }
@@ -92,7 +89,7 @@ public class GetDoctorProfile_V1 extends BaseTest {
     public void test_04_测试data字段返回了足够的医生信息() {
         String res = "";
         try {
-            res = HttpRequest.s_SendGet(host_doc +mock+uri,"", mainToken);
+            res = HttpRequest.s_SendGet(host_doc + uri,"", mainToken);
         } catch (IOException e) {
             logger.error(e);
         }
@@ -110,7 +107,7 @@ public class GetDoctorProfile_V1 extends BaseTest {
     @Test
     public void test_05_测试总订单数_测试处理中订单数_CRM未领取(){
 
-        CreateOrder.CreateOrder(mainToken);
+        CreateOrder.s_CreateOrder(mainToken);
         String resOld = "";
         try {
             resOld = HttpRequest.s_SendGet(host_doc + uri,"", mainToken);
@@ -125,12 +122,12 @@ public class GetDoctorProfile_V1 extends BaseTest {
 
         int i = 1;
         while (i<3){
-            CreateOrder.CreateOrder(mainToken);
+            CreateOrder.s_CreateOrder(mainToken);
             i++;
         }
         String res = "";
         try {
-            res = HttpRequest.s_SendGet(host_doc +mock+uri,"", mainToken);
+            res = HttpRequest.s_SendGet(host_doc + uri,"", mainToken);
         } catch (IOException e) {
             logger.error(e);
         }
@@ -149,7 +146,7 @@ public class GetDoctorProfile_V1 extends BaseTest {
     public void test_06_测试总订单数_测试处理中订单数_CRM已领取(){
         String resOld = "";
         try {
-            resOld = HttpRequest.s_SendGet(host_doc +mock+uri,"", mainToken);
+            resOld = HttpRequest.s_SendGet(host_doc + uri,"", mainToken);
         } catch (IOException e) {
             logger.error(e);
         }
@@ -159,14 +156,14 @@ public class GetDoctorProfile_V1 extends BaseTest {
 
         int i = 1;
         while (i<2){
-            String orderId = CreateOrder.CreateOrder(mainToken);
-            Order_ReceiveTask.receiveTask(orderId);
+            String orderId = CreateOrder.s_CreateOrder(mainToken);
+            Order_ReceiveTask.s_ReceiveTask(orderId);
             i++;
         }
-        //CreateOrder.CreateOrder(mainToken);
+        //s_CreateOrder.s_CreateOrder(mainToken);
         String res = "";
         try {
-            res = HttpRequest.s_SendGet(host_doc +mock+uri,"", mainToken);
+            res = HttpRequest.s_SendGet(host_doc + uri,"", mainToken);
         } catch (IOException e) {
             logger.error(e);
         }
@@ -185,7 +182,7 @@ public class GetDoctorProfile_V1 extends BaseTest {
     public void test_07_测试总订单数_测试处理中订单数_推荐完医生(){
         String resOld = "";
         try {
-            resOld = HttpRequest.s_SendGet(host_doc +mock+uri,"", mainToken);
+            resOld = HttpRequest.s_SendGet(host_doc + uri,"", mainToken);
         } catch (IOException e) {
             logger.error(e);
         }
@@ -195,15 +192,15 @@ public class GetDoctorProfile_V1 extends BaseTest {
 
         int i = 1;
         while (i<3){
-            String orderId = CreateOrder.CreateOrder(mainToken);
-            Order_ReceiveTask.receiveTask(orderId);
-            Order_RecommendDoctor.recommendDoctor(orderId,"3721");
+            String orderId = CreateOrder.s_CreateOrder(mainToken);
+            Order_ReceiveTask.s_ReceiveTask(orderId);
+            Order_RecommendDoctor.s_RecommendDoctor(orderId,"3721");
             i++;
         }
-        //CreateOrder.CreateOrder(mainToken);
+        //s_CreateOrder.s_CreateOrder(mainToken);
         String res = "";
         try {
-            res = HttpRequest.s_SendGet(host_doc +mock+uri,"", mainToken);
+            res = HttpRequest.s_SendGet(host_doc + uri,"", mainToken);
         } catch (IOException e) {
             logger.error(e);
         }
@@ -222,7 +219,7 @@ public class GetDoctorProfile_V1 extends BaseTest {
     public void test_08_测试总订单数_待支付状态的订单数(){
         String resOld = "";
         try {
-            resOld = HttpRequest.s_SendGet(host_doc +mock+uri,"", mainToken);
+            resOld = HttpRequest.s_SendGet(host_doc + uri,"", mainToken);
         } catch (IOException e) {
             logger.error(e);
         }
@@ -233,15 +230,15 @@ public class GetDoctorProfile_V1 extends BaseTest {
 
         int  i= 1;
         while (i<4){
-            String orderId = CreateOrder.CreateOrder(mainToken);
-            Order_ReceiveTask.receiveTask(orderId);
-            Order_RecommendDoctor.recommendDoctor(orderId,"3721");
-            Order_ThreewayCall.ThreewayCall(orderId,"success");
+            String orderId = CreateOrder.s_CreateOrder(mainToken);
+            Order_ReceiveTask.s_ReceiveTask(orderId);
+            Order_RecommendDoctor.s_RecommendDoctor(orderId,"3721");
+            Order_ThreewayCall.s_Call(orderId,"success");
             i++;
         }
         String res = "";
         try {
-            res = HttpRequest.s_SendGet(host_doc +mock+uri,"", mainToken);
+            res = HttpRequest.s_SendGet(host_doc + uri,"", mainToken);
         } catch (IOException e) {
             logger.error(e);
         }

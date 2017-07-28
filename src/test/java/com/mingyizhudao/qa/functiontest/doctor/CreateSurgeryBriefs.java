@@ -9,7 +9,6 @@ import com.mingyizhudao.qa.functiontest.login.SendVerifyCode;
 import com.mingyizhudao.qa.utilities.HttpRequest;
 import com.mingyizhudao.qa.utilities.Generator;
 import net.sf.json.JSONObject;
-import org.apache.log4j.Logger;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
@@ -29,13 +28,12 @@ public class CreateSurgeryBriefs extends BaseTest {
     }.getClassName();
     public static TestLogger logger = new TestLogger(clazzName);
     public static String uri = "/api/createsurgeryBriefs/{orderId}";
-    public static String mock = false ? "/mockjs/1" : "";
 
-    public static String Brief(String orderId, String token) {
+    public static String s_Brief(String orderId, String token) {
 
         String res = "";
         TestLogger logger = new TestLogger(s_JobName());
-        res = Order_Detail.Detail(orderId);
+        res = Order_Detail.s_Detail(orderId);
         String status = JSONObject.fromObject(res).getJSONObject("data").getString("status");
         if (!status.equals("4000")) {
             logger.error("订单未支付，无法上传手术小结");
@@ -56,11 +54,11 @@ public class CreateSurgeryBriefs extends BaseTest {
     @Test
     public void test_01_上传手术小结() {
         String res = "";
-        String orderId = Order_List.SelectPaidOrder();
+        String orderId = Order_List.s_SelectPaidOrder();
         if (orderId == null) {
             Assert.fail("没有已支付的订单");
         }
-        String agentPhone = JSONObject.fromObject(Order_Detail.Detail(orderId)).getJSONObject("data").getString("agent_phone");
+        String agentPhone = JSONObject.fromObject(Order_Detail.s_Detail(orderId)).getJSONObject("data").getString("agent_phone");
         SendVerifyCode.s_Send(agentPhone);
         String token = CheckVerifyCode.s_Check(agentPhone);
         if (token == null) {
@@ -77,7 +75,7 @@ public class CreateSurgeryBriefs extends BaseTest {
         }
         checkResponse(res);
         Assert.assertEquals(code, "1000000");
-        res = GetOrderDetail_V1.MyInitiateOrder(token, orderId);
+        res = GetOrderDetail_V1.s_MyInitiateOrder(token, orderId);
         checkResponse(res);
         Assert.assertEquals(code, "1000000");
         JSONObject order = data.getJSONObject("order");
@@ -95,11 +93,11 @@ public class CreateSurgeryBriefs extends BaseTest {
     @Test
     public void test_02_上传手术小结_缺少字段() {
         String res = "";
-        String orderId = Order_List.SelectPaidOrder();
+        String orderId = Order_List.s_SelectPaidOrder();
         if (orderId == null) {
             Assert.fail("没有已支付的订单");
         }
-        String agentPhone = JSONObject.fromObject(Order_Detail.Detail(orderId)).getJSONObject("data").getString("agent_phone");
+        String agentPhone = JSONObject.fromObject(Order_Detail.s_Detail(orderId)).getJSONObject("data").getString("agent_phone");
         SendVerifyCode.s_Send(agentPhone);
         String token = CheckVerifyCode.s_Check(agentPhone);
         if (token == null) {

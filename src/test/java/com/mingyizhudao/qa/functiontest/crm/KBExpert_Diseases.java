@@ -1,12 +1,12 @@
 package com.mingyizhudao.qa.functiontest.crm;
 
 import com.mingyizhudao.qa.common.BaseTest;
+import com.mingyizhudao.qa.common.TestLogger;
 import com.mingyizhudao.qa.dataprofile.crm.ExpertProfile;
 import com.mingyizhudao.qa.utilities.HttpRequest;
 import com.mingyizhudao.qa.utilities.Generator;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
-import org.apache.log4j.Logger;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
@@ -19,13 +19,19 @@ import java.util.List;
  * Created by ttshmily on 31/5/2017.
  */
 public class KBExpert_Diseases extends BaseTest {
-    public static final Logger logger= Logger.getLogger(KBExpert_Diseases.class);
-    public static String uri = "/api/v1/medicallibrary/doctors/{doctor_id}/SaveDoctorRelativeDisease";
-    public static String mock = false ? "/mockjs/1" : "";
-    public static String token= "";
 
-    public static boolean Connect(String expertId, List<String> disease_ids) {
+    public static String clazzName = new Object() {
+        public String getClassName() {
+            String clazzName = this.getClass().getName();
+            return clazzName.substring(0, clazzName.lastIndexOf('$'));
+        }
+    }.getClassName();
+    public static TestLogger logger = new TestLogger(clazzName);
+    public static String uri = "/api/v1/medicallibrary/doctors/{doctor_id}/SaveDoctorRelativeDisease";
+
+    public static boolean s_Connect(String expertId, List<String> disease_ids) {
         String res = "";
+        TestLogger logger = new TestLogger(s_JobName());
         HashMap<String, String> pathValue = new HashMap<>();
         pathValue.put("doctor_id", expertId);
         JSONObject diseaseList = new JSONObject();
@@ -48,7 +54,7 @@ public class KBExpert_Diseases extends BaseTest {
     public void test_01_关联疾病() {
         String res = "";
         ExpertProfile ep = new ExpertProfile(true);
-        HashMap<String, String> info = KBExpert_Create.Create(ep);
+        HashMap<String, String> info = KBExpert_Create.s_Create(ep);
         if (info == null) Assert.fail("创建医库医生失败，退出用例执行");
         String expertId = info.get("id");
         HashMap<String, String> pathValue = new HashMap<>();
@@ -82,7 +88,7 @@ public class KBExpert_Diseases extends BaseTest {
         checkResponse(res);
         Assert.assertEquals(code, "1000000", "关联疾病失败");
 
-        res = KBExpert_Detail.Detail(expertId);
+        res = KBExpert_Detail.s_Detail(expertId);
         checkResponse(res);
         JSONArray disease_list = data.getJSONArray("disease_list");
         for (int i=0; i<disease_list.size(); i++) {
@@ -103,7 +109,7 @@ public class KBExpert_Diseases extends BaseTest {
     public void test_02_关联疾病_增加() {
         String res = "";
         ExpertProfile ep = new ExpertProfile(true);
-        HashMap<String, String> info = KBExpert_Create.Create(ep);
+        HashMap<String, String> info = KBExpert_Create.s_Create(ep);
         if (info == null) Assert.fail("创建医库医生失败，退出用例执行");
         String expertId = info.get("id");
         HashMap<String, String> pathValue = new HashMap<>();
@@ -156,7 +162,7 @@ public class KBExpert_Diseases extends BaseTest {
 
 
         List<String> outputString = new ArrayList<>();
-        res = KBExpert_Detail.Detail(expertId);
+        res = KBExpert_Detail.s_Detail(expertId);
         checkResponse(res);
         JSONArray disease_list = data.getJSONArray("disease_list");
         for (int i=0; i<disease_list.size(); i++) {
@@ -177,7 +183,7 @@ public class KBExpert_Diseases extends BaseTest {
     public void test_03_关联疾病_减少() {
         String res = "";
         ExpertProfile ep = new ExpertProfile(true);
-        HashMap<String, String> info = KBExpert_Create.Create(ep);
+        HashMap<String, String> info = KBExpert_Create.s_Create(ep);
         if (info == null) Assert.fail("创建医库医生失败，退出用例执行");
         String expertId = info.get("id");
         HashMap<String, String> pathValue = new HashMap<>();
@@ -229,7 +235,7 @@ public class KBExpert_Diseases extends BaseTest {
 
 
         List<String> outputString = new ArrayList<>();
-        res = KBExpert_Detail.Detail(expertId);
+        res = KBExpert_Detail.s_Detail(expertId);
         checkResponse(res);
         JSONArray disease_list = data.getJSONArray("disease_list");
         for (int i=0; i<disease_list.size(); i++) {
@@ -250,7 +256,7 @@ public class KBExpert_Diseases extends BaseTest {
     public void test_04_去重疾病() {
         String res = "";
         ExpertProfile ep = new ExpertProfile(true);
-        HashMap<String, String> info = KBExpert_Create.Create(ep);
+        HashMap<String, String> info = KBExpert_Create.s_Create(ep);
         if (info == null) Assert.fail("创建医库医生失败，退出用例执行");
         String expertId = info.get("id");
         HashMap<String, String> pathValue = new HashMap<>();
@@ -289,7 +295,7 @@ public class KBExpert_Diseases extends BaseTest {
         checkResponse(res);
         Assert.assertEquals(code, "1000000", "关联疾病失败");
 
-        res = KBExpert_Detail.Detail(expertId);
+        res = KBExpert_Detail.s_Detail(expertId);
         checkResponse(res);
         JSONArray disease_list = data.getJSONArray("disease_list");
         for (int i=0; i<disease_list.size(); i++) {
@@ -310,7 +316,7 @@ public class KBExpert_Diseases extends BaseTest {
     public void test_05_去除错误疾病ID() {
         String res = "";
         ExpertProfile ep = new ExpertProfile(true);
-        HashMap<String, String> info = KBExpert_Create.Create(ep);
+        HashMap<String, String> info = KBExpert_Create.s_Create(ep);
         if (info == null) Assert.fail("创建医库医生失败，退出用例执行");
         String expertId = info.get("id");
         HashMap<String, String> pathValue = new HashMap<>();
@@ -349,7 +355,7 @@ public class KBExpert_Diseases extends BaseTest {
         checkResponse(res);
         Assert.assertNotEquals(code, "1000000");
 
-//        res = KBExpert_Detail.Detail(expertId);
+//        res = KBExpert_Detail.s_Detail(expertId);
 //        checkResponse(res);
 //        JSONArray disease_list = data.getJSONArray("disease_list");
 //        for (int i=0; i<disease_list.size(); i++) {
@@ -370,7 +376,7 @@ public class KBExpert_Diseases extends BaseTest {
     public void test_06_去除所有疾病ID() {
         String res = "";
         ExpertProfile ep = new ExpertProfile(true);
-        HashMap<String, String> info = KBExpert_Create.Create(ep);
+        HashMap<String, String> info = KBExpert_Create.s_Create(ep);
         if (info == null) Assert.fail("创建医库医生失败，退出用例执行");
         String expertId = info.get("id");
         HashMap<String, String> pathValue = new HashMap<>();
@@ -413,7 +419,7 @@ public class KBExpert_Diseases extends BaseTest {
         checkResponse(res);
         Assert.assertEquals(code, "1000000");
 
-        res = KBExpert_Detail.Detail(expertId);
+        res = KBExpert_Detail.s_Detail(expertId);
         checkResponse(res);
         Assert.assertEquals(data.getJSONArray("disease_list").size(), 0);
     }

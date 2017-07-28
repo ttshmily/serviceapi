@@ -1,6 +1,7 @@
 package com.mingyizhudao.qa.functiontest.crm;
 
 import com.mingyizhudao.qa.common.BaseTest;
+import com.mingyizhudao.qa.common.TestLogger;
 import com.mingyizhudao.qa.utilities.HttpRequest;
 import com.mingyizhudao.qa.utilities.Generator;
 import net.sf.json.JSONArray;
@@ -19,13 +20,19 @@ import java.util.regex.Pattern;
  */
 public class RegisteredDoctor_List extends BaseTest{
 
-    public static final Logger logger= Logger.getLogger(RegisteredDoctor_List.class);
+    public static String clazzName = new Object() {
+        public String getClassName() {
+            String clazzName = this.getClass().getName();
+            return clazzName.substring(0, clazzName.lastIndexOf('$'));
+        }
+    }.getClassName();
+    public static TestLogger logger = new TestLogger(clazzName);
     public static final String version = "/api/v1";
     public static String uri = version+"/doctors";
-    public static String mock = false ? "/mockjs/1" : "";
 
     public static int registeredDoctorList() {
         String res = "";
+        TestLogger logger = new TestLogger(s_JobName());
         try {
             res = HttpRequest.s_SendGet(host_crm + uri, "", crm_token);
         } catch (IOException e) {
@@ -69,7 +76,7 @@ public class RegisteredDoctor_List extends BaseTest{
 
         query.put("page","2");
         try {
-            res = HttpRequest.s_SendGet(host_crm+mock+uri, query, crm_token);
+            res = HttpRequest.s_SendGet(host_crm + uri, query, crm_token);
         } catch (IOException e) {
             logger.error(e);
         }
@@ -95,7 +102,7 @@ public class RegisteredDoctor_List extends BaseTest{
         for (int i = 1; i < pageNum; i++) {
             query.replace("page",String.valueOf(i));
             try {
-                res = HttpRequest.s_SendGet(host_crm+uri, query, crm_token);
+                res = HttpRequest.s_SendGet(host_crm + uri, query, crm_token);
             } catch (IOException e) {
                 logger.error(e);
             }
@@ -143,7 +150,7 @@ public class RegisteredDoctor_List extends BaseTest{
         //以姓名进行搜索
         query.put("doctor_name",mainDoctorName);
         try {
-            res = HttpRequest.s_SendGet(host_crm+mock+uri, query, crm_token);
+            res = HttpRequest.s_SendGet(host_crm + uri, query, crm_token);
         } catch (IOException e) {
             logger.error(e);
         }
@@ -196,7 +203,7 @@ public class RegisteredDoctor_List extends BaseTest{
 
         query.replace("mobile","13817634203");
         try {
-            res = HttpRequest.s_SendGet(host_crm+mock+uri, query, crm_token);
+            res = HttpRequest.s_SendGet(host_crm + uri, query, crm_token);
         } catch (IOException e) {
             logger.error(e);
         }
@@ -228,7 +235,7 @@ public class RegisteredDoctor_List extends BaseTest{
 
         query.replace("agent","谢瑾");
         try {
-            res = HttpRequest.s_SendGet(host_crm+mock+uri, query, crm_token);
+            res = HttpRequest.s_SendGet(host_crm + uri, query, crm_token);
         } catch (IOException e) {
             logger.error(e);
         }
@@ -245,7 +252,7 @@ public class RegisteredDoctor_List extends BaseTest{
         HashMap<String, String> query = new HashMap<>();
         query.put("agent_mobile","13811112222");
         try {
-            res = HttpRequest.s_SendGet(host_crm+mock+uri, query, crm_token);
+            res = HttpRequest.s_SendGet(host_crm + uri, query, crm_token);
         } catch (IOException e) {
             logger.error(e);
         }
@@ -255,7 +262,7 @@ public class RegisteredDoctor_List extends BaseTest{
 
         query.replace("agent_mobile","138111122222");
         try {
-            res = HttpRequest.s_SendGet(host_crm+mock+uri, query, crm_token);
+            res = HttpRequest.s_SendGet(host_crm + uri, query, crm_token);
         } catch (IOException e) {
             logger.error(e);
         }
@@ -273,7 +280,7 @@ public class RegisteredDoctor_List extends BaseTest{
         query.put("doctor_name","大一");
         query.put("certified_status","2");
         try {
-            res = HttpRequest.s_SendGet(host_crm+uri, query, crm_token);
+            res = HttpRequest.s_SendGet(host_crm + uri, query, crm_token);
         } catch (IOException e) {
             logger.error(e);
         }
@@ -292,7 +299,7 @@ public class RegisteredDoctor_List extends BaseTest{
 
         query.replace("certified_status","1");
         try {
-            res = HttpRequest.s_SendGet(host_crm+mock+uri, query, crm_token);
+            res = HttpRequest.s_SendGet(host_crm + uri, query, crm_token);
         } catch (IOException e) {
             logger.error(e);
         }
@@ -309,7 +316,7 @@ public class RegisteredDoctor_List extends BaseTest{
 
         query.replace("certified_status","-1");
         try {
-            res = HttpRequest.s_SendGet(host_crm+mock+uri, query, crm_token);
+            res = HttpRequest.s_SendGet(host_crm + uri, query, crm_token);
         } catch (IOException e) {
             logger.error(e);
         }
@@ -334,7 +341,7 @@ public class RegisteredDoctor_List extends BaseTest{
         query.put("consultant_name","苏舒");
         query.put("certified_status","2");
         try {
-            res = HttpRequest.s_SendGet(host_crm+mock+uri, query, crm_token);
+            res = HttpRequest.s_SendGet(host_crm + uri, query, crm_token);
         } catch (IOException e) {
             logger.error(e);
         }
@@ -350,7 +357,7 @@ public class RegisteredDoctor_List extends BaseTest{
 
         query.replace("certified_status","1");
         try {
-            res = HttpRequest.s_SendGet(host_crm+mock+uri, query, crm_token);
+            res = HttpRequest.s_SendGet(host_crm + uri, query, crm_token);
         } catch (IOException e) {
             logger.error(e);
         }
@@ -366,7 +373,7 @@ public class RegisteredDoctor_List extends BaseTest{
 
         query.replace("certified_status","-1");
         try {
-            res = HttpRequest.s_SendGet(host_crm+mock+uri, query, crm_token);
+            res = HttpRequest.s_SendGet(host_crm + uri, query, crm_token);
         } catch (IOException e) {
             logger.error(e);
         }
@@ -390,7 +397,7 @@ public class RegisteredDoctor_List extends BaseTest{
         query.put("consultant_name","苏舒");
         query.put("academic_title","ASSOCIATE_PROFESSOR");
         try {
-            res = HttpRequest.s_SendGet(host_crm+mock+uri, query, crm_token);
+            res = HttpRequest.s_SendGet(host_crm + uri, query, crm_token);
         } catch (IOException e) {
             logger.error(e);
         }
@@ -406,7 +413,7 @@ public class RegisteredDoctor_List extends BaseTest{
 
         query.replace("academic_title","PROFESSOR");
         try {
-            res = HttpRequest.s_SendGet(host_crm+mock+uri, query, crm_token);
+            res = HttpRequest.s_SendGet(host_crm + uri, query, crm_token);
         } catch (IOException e) {
             logger.error(e);
         }
@@ -422,7 +429,7 @@ public class RegisteredDoctor_List extends BaseTest{
 
         query.replace("academic_title","-1");
         try {
-            res = HttpRequest.s_SendGet(host_crm+mock+uri, query, crm_token);
+            res = HttpRequest.s_SendGet(host_crm + uri, query, crm_token);
         } catch (IOException e) {
             logger.error(e);
         }
@@ -458,7 +465,7 @@ public class RegisteredDoctor_List extends BaseTest{
 
         query.replace("medical_title","ASSOCIATE_ARCHIATER");
         try {
-            res = HttpRequest.s_SendGet(host_crm+uri, query, crm_token, null);
+            res = HttpRequest.s_SendGet(host_crm + uri, query, crm_token, null);
         } catch (IOException e) {
             logger.error(e);
         }
@@ -474,7 +481,7 @@ public class RegisteredDoctor_List extends BaseTest{
 
         query.replace("medical_title","-1");
         try {
-            res = HttpRequest.s_SendGet(host_crm+uri, query, crm_token);
+            res = HttpRequest.s_SendGet(host_crm + uri, query, crm_token);
         } catch (IOException e) {
             logger.error(e);
         }
@@ -490,7 +497,7 @@ public class RegisteredDoctor_List extends BaseTest{
         HashMap<String, String> query = new HashMap<>();
         query.put("medical_title","ARCHIATER,ATTENDING_PHYSICIAN,CHIEF_NURSE");
         try {
-            res = HttpRequest.s_SendGet(host_crm+uri, query, crm_token);
+            res = HttpRequest.s_SendGet(host_crm + uri, query, crm_token);
         } catch (IOException e) {
             logger.error(e);
             Assert.fail("");
@@ -504,7 +511,7 @@ public class RegisteredDoctor_List extends BaseTest{
         query.remove("medical_title");
         query.put("academic_title","PROFESSOR,ASSOCIATE_PROFESSOR");
         try {
-            res = HttpRequest.s_SendGet(host_crm+uri, query, crm_token);
+            res = HttpRequest.s_SendGet(host_crm + uri, query, crm_token);
         } catch (IOException e) {
             logger.error(e);
             Assert.fail("");
@@ -519,7 +526,7 @@ public class RegisteredDoctor_List extends BaseTest{
         query.remove("academic_title");
         query.put("certified_status","-1,2");
         try {
-            res = HttpRequest.s_SendGet(host_crm+uri, query, crm_token);
+            res = HttpRequest.s_SendGet(host_crm + uri, query, crm_token);
         } catch (IOException e) {
             logger.error(e);
             Assert.fail("");
@@ -530,7 +537,7 @@ public class RegisteredDoctor_List extends BaseTest{
 
         query.put("academic_title","PROFESSOR,ASSOCIATE_PROFESSOR,LECTURER");
         try {
-            res = HttpRequest.s_SendGet(host_crm+uri, query, crm_token);
+            res = HttpRequest.s_SendGet(host_crm + uri, query, crm_token);
         } catch (IOException e) {
             logger.error(e);
             Assert.fail("");
@@ -541,7 +548,7 @@ public class RegisteredDoctor_List extends BaseTest{
 
         query.put("medical_title","ARCHIATER,ATTENDING_PHYSICIAN,CHIEF_NURSE");
         try {
-            res = HttpRequest.s_SendGet(host_crm+uri, query, crm_token);
+            res = HttpRequest.s_SendGet(host_crm + uri, query, crm_token);
         } catch (IOException e) {
             logger.error(e);
             Assert.fail("");

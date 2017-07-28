@@ -1,6 +1,7 @@
 package com.mingyizhudao.qa.functiontest.crm;
 
 import com.mingyizhudao.qa.common.BaseTest;
+import com.mingyizhudao.qa.common.TestLogger;
 import com.mingyizhudao.qa.utilities.HttpRequest;
 import com.mingyizhudao.qa.utilities.Generator;
 import net.sf.json.JSONArray;
@@ -16,10 +17,15 @@ import java.util.HashMap;
  * Created by ttshmily on 24/5/2017.
  */
 public class KBHospital_List extends BaseTest {
-    public static final Logger logger= Logger.getLogger(KBHospital_List.class);
+
+    public static String clazzName = new Object() {
+        public String getClassName() {
+            String clazzName = this.getClass().getName();
+            return clazzName.substring(0, clazzName.lastIndexOf('$'));
+        }
+    }.getClassName();
+    public static TestLogger logger = new TestLogger(clazzName);
     public static String uri = "/api/v1/medicallibrary/hospitals";
-    public static String mock = false ? "/mockjs/1" : "";
-    public static String token= "";
 
     @Test
     public void test_01_获取医库医生列表_使用默认值() {

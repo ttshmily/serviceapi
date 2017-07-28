@@ -8,7 +8,6 @@ import com.mingyizhudao.qa.functiontest.crm.Order_ThreewayCall;
 import com.mingyizhudao.qa.utilities.HttpRequest;
 import com.mingyizhudao.qa.utilities.Generator;
 import net.sf.json.JSONObject;
-import org.apache.log4j.Logger;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
@@ -27,9 +26,8 @@ public class CreatePayment extends BaseTest {
     }.getClassName();
     public static TestLogger logger = new TestLogger(clazzName);
     public static String uri = "/api/createPayment";
-    public static String mock = false ? "/mockjs/1" : "";
 
-    public static String pay(String orderId, String token) {
+    public static String s_Pay(String orderId, String token) {
 
         String res = "";
         TestLogger logger = new TestLogger(s_JobName());
@@ -55,13 +53,13 @@ public class CreatePayment extends BaseTest {
         JSONObject body = new JSONObject();
         JSONObject payment = new JSONObject();
 
-        String orderId = CreateOrder.CreateOrder(mainToken);
-        Order_ReceiveTask.receiveTask(orderId);
-        Order_RecommendDoctor.recommendDoctor(orderId, mainDoctorId);
-        if (!Order_ThreewayCall.ThreewayCall(orderId, "success").equals("3000")) {
+        String orderId = CreateOrder.s_CreateOrder(mainToken);
+        Order_ReceiveTask.s_ReceiveTask(orderId);
+        Order_RecommendDoctor.s_RecommendDoctor(orderId, mainDoctorId);
+        if (!Order_ThreewayCall.s_Call(orderId, "success").equals("3000")) {
             Assert.fail("未到支付状态，不能进行支付");
         }
-        res = GetOrderDetail_V1.MyInitiateOrder(mainToken, orderId);
+        res = GetOrderDetail_V1.s_MyInitiateOrder(mainToken, orderId);
         checkResponse(res);
         Assert.assertNotNull(Generator.parseJson(data, "order:pre_order_fee"));
 

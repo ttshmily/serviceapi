@@ -1,11 +1,11 @@
 package com.mingyizhudao.qa.functiontest.crm;
 
 import com.mingyizhudao.qa.common.BaseTest;
+import com.mingyizhudao.qa.common.TestLogger;
 import com.mingyizhudao.qa.dataprofile.crm.HospitalProfile;
 import com.mingyizhudao.qa.utilities.HttpRequest;
 import com.mingyizhudao.qa.utilities.Generator;
 import net.sf.json.JSONObject;
-import org.apache.log4j.Logger;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
@@ -16,13 +16,19 @@ import java.util.HashMap;
  * Created by ttshmily on 24/5/2017.
  */
 public class KBHospital_Detail extends BaseTest {
-    public static final Logger logger= Logger.getLogger(KBHospital_Detail.class);
-    public static String uri = "/api/v1/medicallibrary/hospitals/{hospital_id}";
-    public static String mock = false ? "/mockjs/1" : "";
-    public static String token= "";
 
-    public static HashMap<String, String> Detail(String hospitalId) {
+    public static String clazzName = new Object() {
+        public String getClassName() {
+            String clazzName = this.getClass().getName();
+            return clazzName.substring(0, clazzName.lastIndexOf('$'));
+        }
+    }.getClassName();
+    public static TestLogger logger = new TestLogger(clazzName);
+    public static String uri = "/api/v1/medicallibrary/hospitals/{hospital_id}";
+
+    public static HashMap<String, String> s_Detail(String hospitalId) {
         String res = "";
+        TestLogger logger = new TestLogger(s_JobName());
         JSONObject hospital = null;
         HashMap<String, String> pathValue = new HashMap<>();
         pathValue.put("hospital_id", hospitalId);
@@ -65,7 +71,7 @@ public class KBHospital_Detail extends BaseTest {
 
         String res = "";
         HospitalProfile hp = new HospitalProfile(true);
-        HashMap<String, String> info = KBHospital_Create.Create(hp);
+        HashMap<String, String> info = KBHospital_Create.s_Create(hp);
         if (info == null) Assert.fail("创建医院失败，退出用例执行");
         HashMap<String, String> pathValue = new HashMap<>();
         pathValue.put("hospital_id",info.get("id"));
@@ -94,7 +100,7 @@ public class KBHospital_Detail extends BaseTest {
 
         String res = "";
         HospitalProfile hp = new HospitalProfile(true);
-        HashMap<String, String> info = KBHospital_Create.Create(hp);
+        HashMap<String, String> info = KBHospital_Create.s_Create(hp);
         if (info == null) Assert.fail("创建医院失败，退出用例执行");
         HashMap<String, String> pathValue = new HashMap<>();
         pathValue.put("hospital_id", "111" + info.get("id"));

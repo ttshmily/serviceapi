@@ -7,7 +7,6 @@ import com.mingyizhudao.qa.functiontest.crm.Order_ReceiveTask;
 import com.mingyizhudao.qa.functiontest.crm.Order_RecommendDoctor;
 import com.mingyizhudao.qa.utilities.HttpRequest;
 import net.sf.json.JSONObject;
-import org.apache.log4j.Logger;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
@@ -29,15 +28,14 @@ public class DeleteOrderByAgent extends BaseTest {
     }.getClassName();
     public static TestLogger logger = new TestLogger(clazzName);
     public static String uri = "/api/orders/{orderId}";
-    public static String mock = false ? "/mockjs/1" : "";
 
     @Test
     public void test_01_删除订单_下级医生() {
         String res = "";
         DoctorProfile dp = new DoctorProfile(true);
         HashMap<String, String> doctor = CreateVerifiedDoctor(dp);
-        String orderId = CreateOrder.CreateOrder(doctor.get("token"));
-        int orderCountBefore = Integer.parseInt(GetOrderList_V1.List(doctor.get("token"), "1"));// 1 - agent
+        String orderId = CreateOrder.s_CreateOrder(doctor.get("token"));
+        int orderCountBefore = Integer.parseInt(GetOrderList_V1.s_List(doctor.get("token"), "1"));// 1 - agent
         logger.info("订单数："+orderCountBefore);
         HashMap<String,String> pathValue = new HashMap();
         pathValue.put("orderId", orderId);
@@ -50,10 +48,10 @@ public class DeleteOrderByAgent extends BaseTest {
         } catch (IOException e) {
             logger.error(e);
         }
-        int orderCountAfter = Integer.parseInt(GetOrderList_V1.List(doctor.get("token"), "1"));// 1 - agent
+        int orderCountAfter = Integer.parseInt(GetOrderList_V1.s_List(doctor.get("token"), "1"));// 1 - agent
         logger.info("订单数："+orderCountAfter);
         Assert.assertEquals(orderCountAfter, orderCountBefore-1);
-        res = GetOrderDetail_V1.MyInitiateOrder(doctor.get("token"), orderId);
+        res = GetOrderDetail_V1.s_MyInitiateOrder(doctor.get("token"), orderId);
         checkResponse(res);
         Assert.assertNotNull(parseJson(data, "order:agent_deleted_at"));
     }
@@ -63,11 +61,11 @@ public class DeleteOrderByAgent extends BaseTest {
         String res = "";
         DoctorProfile dp = new DoctorProfile(true);
         HashMap<String, String> doctor = CreateSyncedDoctor(dp);
-        String orderId = CreateOrder.CreateOrder(mainToken);
-        Order_ReceiveTask.receiveTask(orderId);
-        Order_RecommendDoctor.recommendDoctor(orderId, doctor.get("expert_id"));//推荐上级医生
+        String orderId = CreateOrder.s_CreateOrder(mainToken);
+        Order_ReceiveTask.s_ReceiveTask(orderId);
+        Order_RecommendDoctor.s_RecommendDoctor(orderId, doctor.get("expert_id"));//推荐上级医生
 
-        int orderCountBefore = Integer.parseInt(GetOrderList_V1.List(doctor.get("token"), "2"));// 2 - expert
+        int orderCountBefore = Integer.parseInt(GetOrderList_V1.s_List(doctor.get("token"), "2"));// 2 - expert
         logger.info("订单数：" + orderCountBefore);
         HashMap<String,String> pathValue = new HashMap();
         pathValue.put("orderId", orderId);
@@ -80,10 +78,10 @@ public class DeleteOrderByAgent extends BaseTest {
         } catch (IOException e) {
             logger.error(e);
         }
-        int orderCountAfter = Integer.parseInt(GetOrderList_V1.List(doctor.get("token"), "2"));// 1 - agent
+        int orderCountAfter = Integer.parseInt(GetOrderList_V1.s_List(doctor.get("token"), "2"));// 1 - agent
         logger.info("订单数：" + orderCountAfter);
         Assert.assertEquals(orderCountAfter, orderCountBefore-1);
-        res = GetOrderDetail_V1.MyReceivedOrder(doctor.get("token"), orderId);
+        res = GetOrderDetail_V1.s_MyReceivedOrder(doctor.get("token"), orderId);
         checkResponse(res);
         Assert.assertNotNull(parseJson(data, "order:surgeon_deleted_at"));
     }

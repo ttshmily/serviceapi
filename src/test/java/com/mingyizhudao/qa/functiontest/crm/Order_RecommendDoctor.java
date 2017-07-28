@@ -2,12 +2,12 @@ package com.mingyizhudao.qa.functiontest.crm;
 
 import com.mingyizhudao.qa.common.BaseTest;
 import com.mingyizhudao.qa.common.KnowledgeBase;
+import com.mingyizhudao.qa.common.TestLogger;
 import com.mingyizhudao.qa.dataprofile.doctor.DoctorProfile;
 import com.mingyizhudao.qa.functiontest.doctor.CreateOrder;
 import com.mingyizhudao.qa.utilities.HttpRequest;
 import com.mingyizhudao.qa.utilities.Generator;
 import net.sf.json.JSONObject;
-import org.apache.log4j.Logger;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
@@ -19,19 +19,23 @@ import java.util.HashMap;
  */
 public class Order_RecommendDoctor extends BaseTest {
 
-    public static final Logger logger= Logger.getLogger(Order_RecommendDoctor.class);
+    public static String clazzName = new Object() {
+        public String getClassName() {
+            String clazzName = this.getClass().getName();
+            return clazzName.substring(0, clazzName.lastIndexOf('$'));
+        }
+    }.getClassName();
+    public static TestLogger logger = new TestLogger(clazzName);
     public static final String version = "/api/v1";
     public static String uri = version+"/orders/{orderNumber}/recommends";
-    public static String mock = false ? "/mockjs/1" : "";
 
+    public static String s_RecommendDoctor(String orderId, String doctorId) {
 
-    public static String recommendDoctor(String orderId, String doctorId) {
-
-        //TODO
         String res = "";
+        TestLogger logger = new TestLogger(s_JobName());
         HashMap<String, String> pathValue = new HashMap<>();
         pathValue.put("orderNumber", orderId);
-        res = Order_Detail.Detail(orderId);
+        res = Order_Detail.s_Detail(orderId);
 
         if (!Generator.parseJson(JSONObject.fromObject(res), "data:status").equals("2000")) {
             logger.error("订单处于不可推荐状态");
@@ -45,7 +49,7 @@ public class Order_RecommendDoctor extends BaseTest {
         } catch (IOException e) {
             logger.error(e);
         }
-        res = Order_Detail.Detail(orderId);
+        res = Order_Detail.s_Detail(orderId);
         return Generator.parseJson(JSONObject.fromObject(res), "data:status"); // 期望2020
     }
 
@@ -53,8 +57,8 @@ public class Order_RecommendDoctor extends BaseTest {
     public void test_01_正常推荐() {
 
         String res = "";
-        String order_number = CreateOrder.CreateOrder(mainToken); // create an order
-        logger.debug(Order_ReceiveTask.receiveTask(order_number));
+        String order_number = CreateOrder.s_CreateOrder(mainToken); // create an order
+        logger.debug(Order_ReceiveTask.s_ReceiveTask(order_number));
 
         HashMap<String, String> pathValue = new HashMap<>();
         pathValue.put("orderNumber", order_number);
@@ -71,7 +75,7 @@ public class Order_RecommendDoctor extends BaseTest {
         }
         checkResponse(res);
         Assert.assertEquals(code, "1000000");
-        res = Order_Detail.Detail(order_number);
+        res = Order_Detail.s_Detail(order_number);
         checkResponse(res);
         Assert.assertEquals(Generator.parseJson(data, "status"), "2020");
         Assert.assertEquals(Generator.parseJson(data, "surgeon_id"), recommendedId);
@@ -96,8 +100,8 @@ public class Order_RecommendDoctor extends BaseTest {
     public void test_02_在三方通话成功前重新推荐() {
 
         String res = "";
-        String order_number = CreateOrder.CreateOrder(mainToken); // create an order
-        Order_ReceiveTask.receiveTask(order_number);
+        String order_number = CreateOrder.s_CreateOrder(mainToken); // create an order
+        Order_ReceiveTask.s_ReceiveTask(order_number);
         HashMap<String, String> pathValue = new HashMap<>();
         pathValue.put("orderNumber", order_number);
         JSONObject body = new JSONObject();
@@ -111,7 +115,7 @@ public class Order_RecommendDoctor extends BaseTest {
         }
         checkResponse(res);
         Assert.assertEquals(code, "1000000");
-        res = Order_Detail.Detail(order_number);
+        res = Order_Detail.s_Detail(order_number);
         checkResponse(res);
         Assert.assertEquals(Generator.parseJson(data, "status"), "2020");
         Assert.assertEquals(Generator.parseJson(data, "surgeon_id"), recommendedId);
@@ -128,7 +132,7 @@ public class Order_RecommendDoctor extends BaseTest {
         }
         checkResponse(res);
         Assert.assertEquals(code, "1000000");
-        res = Order_Detail.Detail(order_number);
+        res = Order_Detail.s_Detail(order_number);
         checkResponse(res);
         Assert.assertEquals(Generator.parseJson(data, "status"), "2020");
         Assert.assertEquals(Generator.parseJson(data, "surgeon_id"), recommendedId);
@@ -145,7 +149,7 @@ public class Order_RecommendDoctor extends BaseTest {
             logger.error(e);
         }
         Assert.assertNotEquals(code, "1000000");
-        res = Order_Detail.Detail(order_number);
+        res = Order_Detail.s_Detail(order_number);
         checkResponse(res);
         Assert.assertEquals(Generator.parseJson(data, "status"), "2020");
         Assert.assertEquals(Generator.parseJson(data, "surgeon_id"), recommendedId);
@@ -156,8 +160,8 @@ public class Order_RecommendDoctor extends BaseTest {
     public void test_03_推荐和下级医生相同的用户() {
 
         String res = "";
-        String order_number = CreateOrder.CreateOrder(mainToken); // create an order
-        Order_ReceiveTask.receiveTask(order_number);
+        String order_number = CreateOrder.s_CreateOrder(mainToken); // create an order
+        Order_ReceiveTask.s_ReceiveTask(order_number);
         HashMap<String, String> pathValue = new HashMap<>();
         pathValue.put("orderNumber", order_number);
         JSONObject body = new JSONObject();
@@ -170,7 +174,7 @@ public class Order_RecommendDoctor extends BaseTest {
         }
         checkResponse(res);
         Assert.assertNotEquals(code, "1000000", "不应该推荐和发起医生相同的专家医生");
-        res = Order_Detail.Detail(order_number);
+        res = Order_Detail.s_Detail(order_number);
         checkResponse(res);
         Assert.assertEquals(Generator.parseJson(data, "status"), "2000");
         Assert.assertNull(Generator.parseJson(data, "surgeon_id"));
@@ -182,8 +186,8 @@ public class Order_RecommendDoctor extends BaseTest {
     public void test_04_推荐不存在于用户表或医库中的医生() {
 
         String res = "";
-        String order_number = CreateOrder.CreateOrder(mainToken); // create an order
-        Order_ReceiveTask.receiveTask(order_number);
+        String order_number = CreateOrder.s_CreateOrder(mainToken); // create an order
+        Order_ReceiveTask.s_ReceiveTask(order_number);
         HashMap<String, String> pathValue = new HashMap<>();
         pathValue.put("orderNumber", order_number);
         JSONObject body = new JSONObject();
@@ -197,7 +201,7 @@ public class Order_RecommendDoctor extends BaseTest {
         }
         checkResponse(res);
         Assert.assertNotEquals(code, "1000000");
-        res = Order_Detail.Detail(order_number);
+        res = Order_Detail.s_Detail(order_number);
         checkResponse(res);
         Assert.assertEquals(Generator.parseJson(data, "status"), "2000");
         Assert.assertNull(Generator.parseJson(data, "surgeon_id"), "不应该出现上级医生ID");
@@ -210,8 +214,8 @@ public class Order_RecommendDoctor extends BaseTest {
     public void test_06_推荐医生_无证操作() {
 
         String res = "";
-        String order_number = CreateOrder.CreateOrder(mainToken); // create an order
-        Order_ReceiveTask.receiveTask(order_number);
+        String order_number = CreateOrder.s_CreateOrder(mainToken); // create an order
+        Order_ReceiveTask.s_ReceiveTask(order_number);
         HashMap<String, String> pathValue = new HashMap<>();
         pathValue.put("orderNumber", order_number);
         JSONObject body = new JSONObject();
@@ -225,7 +229,7 @@ public class Order_RecommendDoctor extends BaseTest {
         }
         checkResponse(res);
         Assert.assertNotEquals(code, "1000000");
-        res = Order_Detail.Detail(order_number);
+        res = Order_Detail.s_Detail(order_number);
         checkResponse(res);
         Assert.assertEquals(Generator.parseJson(data, "status"), "2000");
         Assert.assertNull(Generator.parseJson(data, "surgeon_id"));
@@ -237,8 +241,8 @@ public class Order_RecommendDoctor extends BaseTest {
     public void test_07_在三方通话成功后不可以重新推荐() {
 
         String res = "";
-        String order_number = CreateOrder.CreateOrder(mainToken); // create an order
-        Order_ReceiveTask.receiveTask(order_number);
+        String order_number = CreateOrder.s_CreateOrder(mainToken); // create an order
+        Order_ReceiveTask.s_ReceiveTask(order_number);
         HashMap<String, String> pathValue = new HashMap<>();
         pathValue.put("orderNumber", order_number);
         JSONObject body = new JSONObject();
@@ -252,13 +256,13 @@ public class Order_RecommendDoctor extends BaseTest {
         }
         checkResponse(res);
         Assert.assertEquals(code, "1000000");
-        res = Order_Detail.Detail(order_number);
+        res = Order_Detail.s_Detail(order_number);
         checkResponse(res);
         Assert.assertEquals(Generator.parseJson(data, "status"), "2020");
         Assert.assertEquals(Generator.parseJson(data, "surgeon_id"), recommendedId);
         Assert.assertEquals(Generator.parseJson(data, "surgeon_name"), KnowledgeBase.kb_doctor.get(recommendedId));
 
-        if (!Order_ThreewayCall.ThreewayCall(order_number,"success").equals("3000")) {
+        if (!Order_ThreewayCall.s_Call(order_number,"success").equals("3000")) {
             Assert.fail("三方确认失败，无法继续执行");
         }
 
@@ -273,7 +277,7 @@ public class Order_RecommendDoctor extends BaseTest {
             logger.error(e);
         }
         Assert.assertNotEquals(code, "1000000");
-        res = Order_Detail.Detail(order_number);
+        res = Order_Detail.s_Detail(order_number);
         checkResponse(res);
         Assert.assertEquals(Generator.parseJson(data, "status"), "3000");
     }

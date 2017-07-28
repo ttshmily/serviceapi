@@ -436,9 +436,9 @@ public class KnowledgeBase {
                 id_name_buffer.append(id_name_list.getKey()).append(",").append(id_name_list.getValue()).append(";").append("\r\n");
             }
             File file = new File(filePath);
-            if(!file.exists()) {
-                file.createNewFile();
-            }
+            File path = new File(file.getParent());
+            if (!path.exists()) path.mkdir();
+            if (!file.exists()) file.createNewFile();
             FileWriter fileWriter = new FileWriter(file);
             fileWriter.write(id_name_buffer.toString());
             fileWriter.close();

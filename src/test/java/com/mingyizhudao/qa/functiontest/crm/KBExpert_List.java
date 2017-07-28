@@ -1,11 +1,11 @@
 package com.mingyizhudao.qa.functiontest.crm;
 
 import com.mingyizhudao.qa.common.BaseTest;
+import com.mingyizhudao.qa.common.TestLogger;
 import com.mingyizhudao.qa.utilities.HttpRequest;
 import com.mingyizhudao.qa.utilities.Generator;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
-import org.apache.log4j.Logger;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
@@ -20,13 +20,19 @@ import java.util.regex.Pattern;
  * Created by ttshmily on 16/5/2017.
  */
 public class KBExpert_List extends BaseTest {
-    public static final Logger logger= Logger.getLogger(KBExpert_List.class);
-    public static String uri = "/api/v1/medicallibrary/doctors";
-    public static String mock = false ? "/mockjs/1" : "";
-    public static String token= "";
 
-    public static int expertList() {
+    public static String clazzName = new Object() {
+        public String getClassName() {
+            String clazzName = this.getClass().getName();
+            return clazzName.substring(0, clazzName.lastIndexOf('$'));
+        }
+    }.getClassName();
+    public static TestLogger logger = new TestLogger(clazzName);
+    public static String uri = "/api/v1/medicallibrary/doctors";
+
+    public static int s_ExpertList() {
         String res = "";
+        TestLogger logger = new TestLogger(s_JobName());
         try {
             res = HttpRequest.s_SendGet(host_crm+uri, "", crm_token);
         } catch (IOException e) {
@@ -89,7 +95,7 @@ public class KBExpert_List extends BaseTest {
         HashMap<String, String> query = new HashMap<>();
         query.put("page", "");
         query.put("pageSize", "10");
-        int total = expertList();
+        int total = s_ExpertList();
         int pageSize = 10;
         int pageNum = total / pageSize + 1;
         // 默认分页大小10
@@ -291,7 +297,7 @@ public class KBExpert_List extends BaseTest {
 
         query.replace("academic_title_list","-1");
         try {
-            res = HttpRequest.s_SendGet(host_crm+mock+uri, query, crm_token);
+            res = HttpRequest.s_SendGet(host_crm + uri, query, crm_token);
         } catch (IOException e) {
             logger.error(e);
         }

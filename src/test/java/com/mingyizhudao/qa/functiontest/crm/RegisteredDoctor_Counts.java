@@ -1,6 +1,7 @@
 package com.mingyizhudao.qa.functiontest.crm;
 
 import com.mingyizhudao.qa.common.BaseTest;
+import com.mingyizhudao.qa.common.TestLogger;
 import com.mingyizhudao.qa.utilities.HttpRequest;
 import com.mingyizhudao.qa.utilities.Generator;
 import org.apache.log4j.Logger;
@@ -14,18 +15,22 @@ import java.io.IOException;
  */
 public class RegisteredDoctor_Counts extends BaseTest {
 
-    public static final Logger logger= Logger.getLogger(RegisteredDoctor_Counts.class);
+    public static String clazzName = new Object() {
+        public String getClassName() {
+            String clazzName = this.getClass().getName();
+            return clazzName.substring(0, clazzName.lastIndexOf('$'));
+        }
+    }.getClassName();
+    public static TestLogger logger = new TestLogger(clazzName);
     public static final String version = "/api/v1";
-    public static String uri = version+"/doctors/counts";
-    public static String mock = false ? "/mockjs/1" : "";
+    public static final String uri = version+"/doctors/counts";
 
     @Test
     public void test_01_获取各种认证状态下医生数量() {
 
         String res = "";
-
         try {
-            res = HttpRequest.s_SendGet(host_crm+mock+uri, "", crm_token, null);
+            res = HttpRequest.s_SendGet(host_crm + uri, "", crm_token, null);
         } catch (IOException e) {
             logger.error(e);
         }
@@ -44,7 +49,7 @@ public class RegisteredDoctor_Counts extends BaseTest {
         String res = "";
 
         try {
-            res = HttpRequest.s_SendGet(host_crm+mock+uri, "", crm_token, null);
+            res = HttpRequest.s_SendGet(host_crm + uri, "", crm_token, null);
         } catch (IOException e) {
             logger.error(e);
         }

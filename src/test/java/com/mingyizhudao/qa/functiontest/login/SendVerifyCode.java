@@ -25,12 +25,12 @@ public class SendVerifyCode extends BaseTest{
     }.getClassName();
     public static TestLogger logger = new TestLogger(clazzName);
     public static String uri = "/api/login/sendVerifyCode";
-    public static String mock = false ? "/mockjs/1" : "";
     public static String mobile;
     public static String token;
 
     public static String s_Send() {
         String res = "";
+        TestLogger logger = new TestLogger(s_JobName());
         MobileProfile body = new MobileProfile(true);
         CheckVerifyCode.mobile = mobile;
         Refresh.mobile = mobile;
@@ -46,6 +46,7 @@ public class SendVerifyCode extends BaseTest{
 
     public static void s_Send(String phone) {
         String res = "";
+        TestLogger logger = new TestLogger(s_JobName());
         JSONObject mobile = new JSONObject();
         mobile.put("mobile", phone);
         logger.info("请求验证码到手机号" + phone + " ...") ;
@@ -63,7 +64,7 @@ public class SendVerifyCode extends BaseTest{
         MobileProfile body = new MobileProfile(false);
         body.body.replace("mobile", "");
         try {
-            res = HttpRequest.s_SendPost(host_login +mock+uri,body.body.toString(), "");
+            res = HttpRequest.s_SendPost(host_login + uri,body.body.toString(), "");
             checkResponse(res);
             Assert.fail("res should fail"); // 如果没有exception，就是fail
         } catch (IOException e) {
@@ -77,7 +78,7 @@ public class SendVerifyCode extends BaseTest{
         String res = "";
         MobileProfile body = new MobileProfile(true);
         try {
-            res = HttpRequest.s_SendPost(host_login +mock+uri,body.body.toString(), "");
+            res = HttpRequest.s_SendPost(host_login + uri,body.body.toString(), "");
         } catch (IOException e) {
             logger.error(e);
         }
@@ -91,7 +92,7 @@ public class SendVerifyCode extends BaseTest{
         MobileProfile body = new MobileProfile(false);
         body.body.replace("mobile", "1330000000");
         try {
-            res = HttpRequest.s_SendPost(host_login +mock+uri,body.body.toString(), "");
+            res = HttpRequest.s_SendPost(host_login + uri,body.body.toString(), "");
             checkResponse(res);
             Assert.fail("res should fail"); // 如果没有exception，就是fail
         } catch (IOException e) {

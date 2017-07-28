@@ -1,11 +1,11 @@
 package com.mingyizhudao.qa.functiontest.crm;
 
 import com.mingyizhudao.qa.common.BaseTest;
+import com.mingyizhudao.qa.common.TestLogger;
 import com.mingyizhudao.qa.functiontest.doctor.CreateOrder;
 import com.mingyizhudao.qa.utilities.HttpRequest;
 import com.mingyizhudao.qa.utilities.Generator;
 import net.sf.json.JSONObject;
-import org.apache.log4j.Logger;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
@@ -16,14 +16,20 @@ import java.util.HashMap;
  * Created by ttshmily on 25/4/2017.
  */
 public class Order_Rollback extends BaseTest {
-// 创建支付订单后的取消
-    public static final Logger logger= Logger.getLogger(Order_Rollback.class);
+
+    public static String clazzName = new Object() {
+        public String getClassName() {
+            String clazzName = this.getClass().getName();
+            return clazzName.substring(0, clazzName.lastIndexOf('$'));
+        }
+    }.getClassName();
+    public static TestLogger logger = new TestLogger(clazzName);
     public static final String version = "/api/v1";
     public static String uri = version+"/orders/{orderNumber}/orderRollback";
-    public static String mock = false ? "/mockjs/1" : "";
 
-    public static String Rollback(String orderId) {
+    public static String s_Rollback(String orderId) {
         String res = "";
+        TestLogger logger = new TestLogger(s_JobName());
         HashMap<String, String> pathValue = new HashMap<>();
         pathValue.put("orderNumber", orderId);
         JSONObject body = new JSONObject();
@@ -33,7 +39,7 @@ public class Order_Rollback extends BaseTest {
         } catch (IOException e) {
             logger.error(e);
         }
-        res = Order_Detail.Detail(orderId);
+        res = Order_Detail.s_Detail(orderId);
         return Generator.parseJson(JSONObject.fromObject(res), "data:status"); // 期望2000
     }
 
@@ -41,10 +47,10 @@ public class Order_Rollback extends BaseTest {
     public void test_01_回退订单_三方通话确认成功之后() {
         String res = "";
         HashMap<String, String> pathValue = new HashMap<>();
-        String order_number = CreateOrder.CreateOrder(mainToken); // create an order
-        logger.debug(Order_ReceiveTask.receiveTask(order_number));
-        logger.debug(Order_RecommendDoctor.recommendDoctor(order_number, "666"));
-        String status = Order_ThreewayCall.ThreewayCall(order_number, "success");
+        String order_number = CreateOrder.s_CreateOrder(mainToken); // create an order
+        logger.debug(Order_ReceiveTask.s_ReceiveTask(order_number));
+        logger.debug(Order_RecommendDoctor.s_RecommendDoctor(order_number, "666"));
+        String status = Order_ThreewayCall.s_Call(order_number, "success");
         if (!status.equals("3000")) {
             logger.debug(status);
             Assert.fail("未进行到支付状态，无法继续执行该用例");
@@ -60,7 +66,7 @@ public class Order_Rollback extends BaseTest {
         }
         checkResponse(res);
         Assert.assertEquals(code, "1000000");
-        res = Order_Detail.Detail(order_number);
+        res = Order_Detail.s_Detail(order_number);
         checkResponse(res);
         Assert.assertEquals(Generator.parseJson(data, "status"), "2000");
         Assert.assertNull(Generator.parseJson(data, "surgeon_id"));
@@ -77,7 +83,7 @@ public class Order_Rollback extends BaseTest {
         // 刚创建的订单
         String res = "";
         HashMap<String, String> pathValue = new HashMap<>();
-        String order_number = CreateOrder.CreateOrder(mainToken); // create an order
+        String order_number = CreateOrder.s_CreateOrder(mainToken); // create an order
 
         pathValue.put("orderNumber", order_number);
         JSONObject body = new JSONObject();
@@ -89,12 +95,12 @@ public class Order_Rollback extends BaseTest {
         }
         checkResponse(res);
         Assert.assertNotEquals(code, "1000000");
-        res = Order_Detail.Detail(order_number);
+        res = Order_Detail.s_Detail(order_number);
         checkResponse(res);
         Assert.assertEquals(Generator.parseJson(data, "status"), "1000");
 
         // 刚领取的订单
-        Order_ReceiveTask.receiveTask(order_number);
+        Order_ReceiveTask.s_ReceiveTask(order_number);
         try {
             res = HttpRequest.s_SendPost(host_crm+uri, body.toString(), crm_token, pathValue);
         } catch (IOException e) {
@@ -102,12 +108,12 @@ public class Order_Rollback extends BaseTest {
         }
         checkResponse(res);
         Assert.assertNotEquals(code, "1000000");
-        res = Order_Detail.Detail(order_number);
+        res = Order_Detail.s_Detail(order_number);
         checkResponse(res);
         Assert.assertEquals(Generator.parseJson(data, "status"), "2000");
 
         // 刚推荐的订单
-        Order_RecommendDoctor.recommendDoctor(order_number, "666");
+        Order_RecommendDoctor.s_RecommendDoctor(order_number, "666");
         try {
             res = HttpRequest.s_SendPost(host_crm+uri, body.toString(), crm_token, pathValue);
         } catch (IOException e) {
@@ -115,12 +121,12 @@ public class Order_Rollback extends BaseTest {
         }
         checkResponse(res);
         Assert.assertNotEquals(code, "1000000");
-        res = Order_Detail.Detail(order_number);
+        res = Order_Detail.s_Detail(order_number);
         checkResponse(res);
         Assert.assertEquals(Generator.parseJson(data, "status"), "2020");
 
         // 三方通话中的订单
-        Order_ThreewayCall.ThreewayCall(order_number, "undetermined");
+        Order_ThreewayCall.s_Call(order_number, "undetermined");
         try {
             res = HttpRequest.s_SendPost(host_crm+uri, body.toString(), crm_token, pathValue);
         } catch (IOException e) {
@@ -128,13 +134,13 @@ public class Order_Rollback extends BaseTest {
         }
         checkResponse(res);
         Assert.assertNotEquals(code, "1000000");
-        res = Order_Detail.Detail(order_number);
+        res = Order_Detail.s_Detail(order_number);
         checkResponse(res);
         Assert.assertEquals(Generator.parseJson(data, "status"), "2020");
 
         // 已拒绝合作的订单
-        Order_ThreewayCall.ThreewayCall(order_number, "failed");
-        Order_Reject.rejectOrder(order_number);
+        Order_ThreewayCall.s_Call(order_number, "failed");
+        Order_Reject.s_RejectOrder(order_number);
         try {
             res = HttpRequest.s_SendPost(host_crm+uri, body.toString(), crm_token, pathValue);
         } catch (IOException e) {
@@ -142,7 +148,7 @@ public class Order_Rollback extends BaseTest {
         }
         checkResponse(res);
         Assert.assertNotEquals(code, "1000000");
-        res = Order_Detail.Detail(order_number);
+        res = Order_Detail.s_Detail(order_number);
         checkResponse(res);
         Assert.assertEquals(Generator.parseJson(data, "status"), "9000");
 

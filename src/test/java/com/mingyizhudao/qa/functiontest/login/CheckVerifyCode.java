@@ -25,12 +25,12 @@ public class CheckVerifyCode extends BaseTest{
     }.getClassName();
     public static TestLogger logger = new TestLogger(clazzName);
     public static String uri = "/api/login/checkVerifyCode";
-    public static String mock = false ? "/mockjs/1" : "";
     public static String mobile;
     public static String token;
 
     public static String s_Check() {
         String res = "";
+        TestLogger logger = new TestLogger(s_JobName());
         CheckMobileProfile cmp = new CheckMobileProfile(false);
         cmp.body.replace("mobile", mobile);
         cmp.body.replace("code", "123456");
@@ -55,6 +55,7 @@ public class CheckVerifyCode extends BaseTest{
 
     public static String s_Check(String phone) {
         String res = "";
+        TestLogger logger = new TestLogger(s_JobName());
         JSONObject check = new JSONObject();
         check.put("mobile", phone);
         check.put("code", "123456");
@@ -85,7 +86,7 @@ public class CheckVerifyCode extends BaseTest{
         body.body.replace("code", "123456");
         body.body.replace("mobile", mobile);
         try {
-            res = HttpRequest.s_SendPost(host_login +mock+uri, body.body.toString(), "");
+            res = HttpRequest.s_SendPost(host_login + uri, body.body.toString(), "");
             checkResponse(res);
         } catch (IOException e) {
             logger.error(e);
@@ -132,7 +133,7 @@ public class CheckVerifyCode extends BaseTest{
         CheckMobileProfile body = new CheckMobileProfile(false);
         body.body.replace("mobile", "1380000"+"9999");
         try {
-            res = HttpRequest.s_SendPost(host_login +mock+uri, body.body.toString(), "");
+            res = HttpRequest.s_SendPost(host_login + uri, body.body.toString(), "");
             checkResponse(res);
             Assert.fail();
         } catch (IOException e) {
@@ -146,7 +147,7 @@ public class CheckVerifyCode extends BaseTest{
         CheckMobileProfile body = new CheckMobileProfile(false);
         body.body.replace("code", "123456");
         try {
-            res = HttpRequest.s_SendPost(host_login +mock+uri, body.body.toString(), "");
+            res = HttpRequest.s_SendPost(host_login + uri, body.body.toString(), "");
             checkResponse(res);
             Assert.fail();
         } catch (IOException e) {

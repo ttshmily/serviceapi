@@ -8,7 +8,6 @@ import com.mingyizhudao.qa.functiontest.crm.Order_ThreewayCall;
 import com.mingyizhudao.qa.utilities.HttpRequest;
 import com.mingyizhudao.qa.utilities.Generator;
 import net.sf.json.JSONObject;
-import org.apache.log4j.Logger;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
@@ -27,12 +26,11 @@ public class CancelOrder extends BaseTest {
     }.getClassName();
     public static TestLogger logger = new TestLogger(clazzName);
     public static String uri = "/api/cancelOrder";
-    public static String mock = false ? "/mockjs/1" : "";
 
-    public static String CancelOrder(String token, String orderId) {
+    public static String s_CancelOrder(String token, String orderId) {
         String res = "";
         TestLogger logger = new TestLogger(s_JobName());
-        res = GetOrderDetail_V1.MyInitiateOrder(token, orderId);
+        res = GetOrderDetail_V1.s_MyInitiateOrder(token, orderId);
         String status = JSONObject.fromObject(res).getJSONObject("data").getJSONObject("order").getString("status");
         if (!(Integer.parseInt(status) < 3000)) {
             logger.error("订单不可取消");
@@ -48,7 +46,7 @@ public class CancelOrder extends BaseTest {
         } catch (IOException e) {
             logger.error(e);
         }
-        res = GetOrderDetail_V1.MyInitiateOrder(token, orderId);
+        res = GetOrderDetail_V1.s_MyInitiateOrder(token, orderId);
         status = JSONObject.fromObject(res).getJSONObject("data").getJSONObject("order").getString("status");
         return status;
     }
@@ -57,13 +55,13 @@ public class CancelOrder extends BaseTest {
     public void test_01_取消订单_1000状态() {
 
         String res = "";
-        String orderId = CreateOrder.CreateOrder(mainToken);
+        String orderId = CreateOrder.s_CreateOrder(mainToken);
         JSONObject body = new JSONObject();
         JSONObject order = new JSONObject();
         order.put("orderNumber", orderId);
         body.put("order", order);
         try {
-            res = HttpRequest.s_SendPost(host_doc +mock+uri, body.toString(), mainToken);
+            res = HttpRequest.s_SendPost(host_doc + uri, body.toString(), mainToken);
         } catch (IOException e) {
             logger.error(e);
         }
@@ -78,8 +76,8 @@ public class CancelOrder extends BaseTest {
     public void test_02_取消订单_2000状态() {
 
         String res = "";
-        String orderId = CreateOrder.CreateOrder(mainToken);
-        if (!Order_ReceiveTask.receiveTask(orderId).equals("2000")) {
+        String orderId = CreateOrder.s_CreateOrder(mainToken);
+        if (!Order_ReceiveTask.s_ReceiveTask(orderId).equals("2000")) {
             logger.error("未领取成功，退出用例执行");
             Assert.fail("未领取成功，退出用例执行");
         }
@@ -88,7 +86,7 @@ public class CancelOrder extends BaseTest {
         order.put("orderNumber", orderId);
         body.put("order", order);
         try {
-            res = HttpRequest.s_SendPost(host_doc+uri, body.toString(), mainToken);
+            res = HttpRequest.s_SendPost(host_doc + uri, body.toString(), mainToken);
         } catch (IOException e) {
             logger.error(e);
         }
@@ -101,12 +99,12 @@ public class CancelOrder extends BaseTest {
     public void test_03_取消订单_2020状态() {
 
         String res = "";
-        String orderId = CreateOrder.CreateOrder(mainToken);
-        if (!Order_ReceiveTask.receiveTask(orderId).equals("2000")) {
+        String orderId = CreateOrder.s_CreateOrder(mainToken);
+        if (!Order_ReceiveTask.s_ReceiveTask(orderId).equals("2000")) {
             logger.error("未领取成功，退出用例执行");
             Assert.fail("未领取成功，退出用例执行");
         }
-        if(!Order_RecommendDoctor.recommendDoctor(orderId, "777").equals("2020")) {
+        if(!Order_RecommendDoctor.s_RecommendDoctor(orderId, "777").equals("2020")) {
             logger.error("未推荐成功，退出用例执行");
             Assert.fail("未推荐成功，退出用例执行");
         }
@@ -128,8 +126,8 @@ public class CancelOrder extends BaseTest {
     public void test_04_取消订单_无token() {
 
         String res = "";
-        String orderId = CreateOrder.CreateOrder(mainToken);
-        if (!Order_ReceiveTask.receiveTask(orderId).equals("2000")) {
+        String orderId = CreateOrder.s_CreateOrder(mainToken);
+        if (!Order_ReceiveTask.s_ReceiveTask(orderId).equals("2000")) {
             logger.error("未领取成功，退出用例执行");
             Assert.fail("未领取成功，退出用例执行");
         }
@@ -138,13 +136,13 @@ public class CancelOrder extends BaseTest {
         order.put("orderNumber", orderId);
         body.put("order", order);
         try {
-            res = HttpRequest.s_SendPost(host_doc+uri, body.toString(), "");
+            res = HttpRequest.s_SendPost(host_doc + uri, body.toString(), "");
         } catch (IOException e) {
             logger.error(e);
         }
         checkResponse(res);
         Assert.assertNotEquals(code, "1000000");
-        res = GetOrderDetail_V1.MyInitiateOrder(mainToken, orderId);
+        res = GetOrderDetail_V1.s_MyInitiateOrder(mainToken, orderId);
         checkResponse(res);
         Assert.assertEquals(Generator.parseJson(data, "order:status"), "2000");
     }
@@ -153,16 +151,16 @@ public class CancelOrder extends BaseTest {
     public void test_05_取消订单_3000状态() {
 
         String res = "";
-        String orderId = CreateOrder.CreateOrder(mainToken);
-        if (!Order_ReceiveTask.receiveTask(orderId).equals("2000")) {
+        String orderId = CreateOrder.s_CreateOrder(mainToken);
+        if (!Order_ReceiveTask.s_ReceiveTask(orderId).equals("2000")) {
             logger.error("未领取成功，退出用例执行");
             Assert.fail("未领取成功，退出用例执行");
         }
-        if(!Order_RecommendDoctor.recommendDoctor(orderId, "777").equals("2020")) {
+        if(!Order_RecommendDoctor.s_RecommendDoctor(orderId, "777").equals("2020")) {
             logger.error("未推荐成功，退出用例执行");
             Assert.fail("未推荐成功，退出用例执行");
         }
-        if(!Order_ThreewayCall.ThreewayCall(orderId, "success").equals("3000")) {
+        if(!Order_ThreewayCall.s_Call(orderId, "success").equals("3000")) {
             logger.error("三方通话未成功，退出用例执行");
             Assert.fail("三方通话未成功，退出用例执行");
         }
@@ -171,13 +169,13 @@ public class CancelOrder extends BaseTest {
         order.put("orderNumber", orderId);
         body.put("order", order);
         try {
-            res = HttpRequest.s_SendPost(host_doc+uri, body.toString(), mainToken);
+            res = HttpRequest.s_SendPost(host_doc + uri, body.toString(), mainToken);
         } catch (IOException e) {
             logger.error(e);
         }
         checkResponse(res);
         Assert.assertEquals(code, "1000000");
-        res = GetOrderDetail_V1.MyInitiateOrder(mainToken, orderId);
+        res = GetOrderDetail_V1.s_MyInitiateOrder(mainToken, orderId);
         checkResponse(res);
         Assert.assertEquals(Generator.parseJson(data, "order:status"), "9000");
     }

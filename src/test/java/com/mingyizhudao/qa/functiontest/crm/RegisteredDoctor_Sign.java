@@ -1,11 +1,11 @@
 package com.mingyizhudao.qa.functiontest.crm;
 
 import com.mingyizhudao.qa.common.BaseTest;
+import com.mingyizhudao.qa.common.TestLogger;
 import com.mingyizhudao.qa.dataprofile.doctor.DoctorProfile;
 import com.mingyizhudao.qa.utilities.HttpRequest;
 import com.mingyizhudao.qa.utilities.Generator;
 import net.sf.json.JSONObject;
-import org.apache.log4j.Logger;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
@@ -16,10 +16,16 @@ import java.util.HashMap;
  * Created by ttshmily on 2/6/2017.
  */
 public class RegisteredDoctor_Sign extends BaseTest {
-    public static final Logger logger= Logger.getLogger(RegisteredDoctor_Sign.class);
+
+    public static String clazzName = new Object() {
+        public String getClassName() {
+            String clazzName = this.getClass().getName();
+            return clazzName.substring(0, clazzName.lastIndexOf('$'));
+        }
+    }.getClassName();
+    public static TestLogger logger = new TestLogger(clazzName);
     public static final String version = "/api/v1";
     public static String uri = version+"/doctors/{id}/expert_verifications";
-    public static String mock = false ? "/mockjs/1" : "";
 
     @Test(enabled = false)
     public void test_01_通过专家认证_已认证的医生() {
@@ -42,13 +48,13 @@ public class RegisteredDoctor_Sign extends BaseTest {
         checkResponse(res);
         Assert.assertEquals(code, "1000000");
 
-        res = RegisteredDoctor_Detail.Detail(doctorId);
+        res = RegisteredDoctor_Detail.s_Detail(doctorId);
         checkResponse(res);
         Assert.assertEquals(Generator.parseJson(data, "signed_status"), "SIGNED");
 
 
 
-        res = KBExpert_Detail.Detail(expertId);
+        res = KBExpert_Detail.s_Detail(expertId);
         checkResponse(res);
         Assert.assertEquals(code, "1000000");
         Assert.assertEquals(Generator.parseJson(data, "signed_status"), "SIGNED");
@@ -72,7 +78,7 @@ public class RegisteredDoctor_Sign extends BaseTest {
         checkResponse(res);
         Assert.assertNotEquals(code, "1000000");
 
-        res = RegisteredDoctor_Detail.Detail(doctorId);
+        res = RegisteredDoctor_Detail.s_Detail(doctorId);
         checkResponse(res);
         Assert.assertEquals(Generator.parseJson(data, "signed_status"), "NOT_SIGNED");
     }

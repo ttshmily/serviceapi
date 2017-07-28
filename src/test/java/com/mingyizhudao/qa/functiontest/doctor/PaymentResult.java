@@ -7,7 +7,6 @@ import com.mingyizhudao.qa.functiontest.crm.Order_RecommendDoctor;
 import com.mingyizhudao.qa.functiontest.crm.Order_ThreewayCall;
 import com.mingyizhudao.qa.utilities.HttpRequest;
 import net.sf.json.JSONObject;
-import org.apache.log4j.Logger;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
@@ -26,9 +25,8 @@ public class PaymentResult extends BaseTest {
     }.getClassName();
     public static TestLogger logger = new TestLogger(clazzName);
     public static String uri = "/api/paymentResult";
-    public static String mock = false ? "/mockjs/1" : "";
 
-    public static String result(String orderId, String token) {
+    public static String s_Result(String orderId, String token) {
 
         String res = "";
         TestLogger logger = new TestLogger(s_JobName());
@@ -46,7 +44,7 @@ public class PaymentResult extends BaseTest {
         String ispaid = "";
         String code = JSONObject.fromObject(res).getString("code");
         if (!code.equals("1000000")) {
-            res = GetOrderDetail_V1.MyInitiateOrder(token, orderId);
+            res = GetOrderDetail_V1.s_MyInitiateOrder(token, orderId);
             status = JSONObject.fromObject(res).getJSONObject("data").getJSONObject("order").getString("status");
         } else {
             ispaid = JSONObject.fromObject(res).getJSONObject("data").getString("paid");
@@ -57,35 +55,35 @@ public class PaymentResult extends BaseTest {
     @Test
     public void test_01_接口联通性() {
 
-        String orderId = CreateOrder.CreateOrder(mainToken);
+        String orderId = CreateOrder.s_CreateOrder(mainToken);
         if (orderId.isEmpty()) Assert.fail("创建订单失败，退出用例执行");
 
-        result(orderId, mainToken);
-        Assert.assertEquals(result(orderId, mainToken),"1000");
+        s_Result(orderId, mainToken);
+        Assert.assertEquals(s_Result(orderId, mainToken),"1000");
 
-        Order_ReceiveTask.receiveTask(orderId);
-        result(orderId,mainToken);
-        Assert.assertEquals(result(orderId, mainToken),"2000");
+        Order_ReceiveTask.s_ReceiveTask(orderId);
+        s_Result(orderId,mainToken);
+        Assert.assertEquals(s_Result(orderId, mainToken),"2000");
 
-        Order_RecommendDoctor.recommendDoctor(orderId, "23");
-        result(orderId,mainToken);
-        Assert.assertEquals(result(orderId, mainToken),"2020");
+        Order_RecommendDoctor.s_RecommendDoctor(orderId, "23");
+        s_Result(orderId,mainToken);
+        Assert.assertEquals(s_Result(orderId, mainToken),"2020");
 
-        Order_RecommendDoctor.recommendDoctor(orderId, "24");
-        result(orderId,mainToken);
-        Assert.assertEquals(result(orderId, mainToken),"2020");
+        Order_RecommendDoctor.s_RecommendDoctor(orderId, "24");
+        s_Result(orderId,mainToken);
+        Assert.assertEquals(s_Result(orderId, mainToken),"2020");
 
-        Order_ThreewayCall.ThreewayCall(orderId, "failed");
-        result(orderId,mainToken);
-        Assert.assertEquals(result(orderId, mainToken),"2000");
+        Order_ThreewayCall.s_Call(orderId, "failed");
+        s_Result(orderId,mainToken);
+        Assert.assertEquals(s_Result(orderId, mainToken),"2000");
 
-        Order_RecommendDoctor.recommendDoctor(orderId, "24");
-        result(orderId,mainToken);
-        Assert.assertEquals(result(orderId, mainToken),"2020");
+        Order_RecommendDoctor.s_RecommendDoctor(orderId, "24");
+        s_Result(orderId,mainToken);
+        Assert.assertEquals(s_Result(orderId, mainToken),"2020");
 
-        Order_ThreewayCall.ThreewayCall(orderId, "success");
-        result(orderId,mainToken);
-        Assert.assertEquals(result(orderId, mainToken),"3000");
+        Order_ThreewayCall.s_Call(orderId, "success");
+        s_Result(orderId,mainToken);
+        Assert.assertEquals(s_Result(orderId, mainToken),"3000");
     }
 }
 

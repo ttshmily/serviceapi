@@ -26,7 +26,6 @@ public class Refresh extends BaseTest{
     }.getClassName();
     public static TestLogger logger = new TestLogger(clazzName);
     public static String uri = "/api/login/refresh";
-    public static String mock = false ? "/mockjs/1" : "";
     public static String mobile;
     public static String token;
 
@@ -45,7 +44,7 @@ public class Refresh extends BaseTest{
 
         RefreshProfile body = new RefreshProfile(true);
         try {
-            res = HttpRequest.s_SendPost(host_login +mock+uri,body.body.toString(), oldToken);
+            res = HttpRequest.s_SendPost(host_login + uri,body.body.toString(), oldToken);
             checkResponse(res);
         } catch (IOException e) {
 
@@ -88,7 +87,7 @@ public class Refresh extends BaseTest{
         RefreshProfile body = new RefreshProfile(false);
         body.body.replace("token", mainToken);
         try {
-            res = HttpRequest.s_SendPost(host_login +mock+uri,body.body.toString(), oldToken);
+            res = HttpRequest.s_SendPost(host_login + uri,body.body.toString(), oldToken);
             checkResponse(res);
         } catch (IOException e) {
             Assert.fail();
@@ -100,9 +99,6 @@ public class Refresh extends BaseTest{
         String r = GetDoctorProfile_V1.s_MyProfile(mainToken);
         checkResponse(r);
         Assert.assertEquals(code, "1000000");
-//        Assert.assertNotNull(parseJson(data,"token"), "token not exist");
-//        Assert.assertNotNull(parseJson(data, "expire"), "expire not exist");
-//        Assert.assertEquals(parseJson(data, "expire"), "600");
     }
 }
 

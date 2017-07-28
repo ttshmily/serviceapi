@@ -9,7 +9,6 @@ import com.mingyizhudao.qa.functiontest.login.SendVerifyCode;
 import com.mingyizhudao.qa.utilities.HttpRequest;
 import com.mingyizhudao.qa.utilities.Generator;
 import net.sf.json.JSONObject;
-import org.apache.log4j.Logger;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
@@ -28,9 +27,8 @@ public class GetOrderList extends BaseTest{
     }.getClassName();
     public static TestLogger logger = new TestLogger(clazzName);
     public static String uri = "/api/getorderlist";
-    public static String mock = false ? "/mockjs/1" : "";
 
-    public static String List(String token) {
+    public static String s_List(String token) {
         String res = "";
         TestLogger logger = new TestLogger(s_JobName());
         try {
@@ -42,19 +40,19 @@ public class GetOrderList extends BaseTest{
         }
         JSONObject orderList = JSONObject.fromObject(res).getJSONObject("data");
         return String.valueOf(orderList.getJSONArray("order").size());
-
     }
+
     @Test
     public void test_01_获取订单列表_登录用户() {
         String res = "";
         logger.info("创建订单with mainToken");
-        String orderId = CreateOrder.CreateOrder(mainToken);
+        String orderId = CreateOrder.s_CreateOrder(mainToken);
         if (orderId.isEmpty()) {
             logger.error("创建订单with mainToken失败");
             Assert.fail("创建订单with mainToken失败");
         }
         try {
-            res = HttpRequest.s_SendGet(host_doc+uri,"", mainToken);
+            res = HttpRequest.s_SendGet(host_doc + uri,"", mainToken);
         } catch (IOException e) {
             logger.error(e);
         }
@@ -82,21 +80,21 @@ public class GetOrderList extends BaseTest{
         DoctorProfile dp = new DoctorProfile(true);
         res = GetDoctorProfile_V1.s_MyProfile(tmpToken);
         String docId = JSONObject.fromObject(res).getJSONObject("data").getJSONObject("doctor").getString("user_id");
-        UpdateDoctorProfile_V1.updateDoctorProfile(tmpToken, dp);
+        UpdateDoctorProfile_V1.s_Update(tmpToken, dp);
 
-        if (!RegisteredDoctor_CertifySync_V2.CertifyAndSync(docId, "1").get("is_verified").equals("1")) {
+        if (!RegisteredDoctor_CertifySync_V2.s_CertifyAndSync(docId, "1").get("is_verified").equals("1")) {
             logger.error("认证医生失败，退出用例执行");
             Assert.fail("认证医生失败，退出用例执行");
         }
 
         logger.info("创建订单with tmpToken");
-        String orderId1 = CreateOrder.CreateOrder(tmpToken);
+        String orderId1 = CreateOrder.s_CreateOrder(tmpToken);
         if (orderId1.isEmpty()) {
             logger.error("创建订单with tmpToken失败");
             Assert.fail("创建订单with tmpToken失败");
         }
         try {
-            res = HttpRequest.s_SendGet(host_doc +mock+uri,"", tmpToken);
+            res = HttpRequest.s_SendGet(host_doc + uri,"", tmpToken);
         } catch (IOException e) {
             logger.error(e);
         }
@@ -104,13 +102,13 @@ public class GetOrderList extends BaseTest{
         Assert.assertEquals(Generator.parseJson(data, "order(0):order_number"), orderId1);
 
         logger.info("创建订单with tmpToken");
-        String orderId2 = CreateOrder.CreateOrder(tmpToken);
+        String orderId2 = CreateOrder.s_CreateOrder(tmpToken);
         if (orderId2.isEmpty()) {
             logger.error("创建订单with tmpToken失败");
             Assert.fail("创建订单with tmpToken失败");
         }
         try {
-            res = HttpRequest.s_SendGet(host_doc +mock+uri,"", tmpToken);
+            res = HttpRequest.s_SendGet(host_doc + uri,"", tmpToken);
         } catch (IOException e) {
             logger.error(e);
         }
@@ -119,13 +117,13 @@ public class GetOrderList extends BaseTest{
         Assert.assertEquals(Generator.parseJson(data, "order(1):order_number"), orderId1);
 
         logger.info("创建订单with tmpToken");
-        String orderId3 = CreateOrder.CreateOrder(tmpToken);
+        String orderId3 = CreateOrder.s_CreateOrder(tmpToken);
         if (orderId3.isEmpty()) {
             logger.error("创建订单with tmpToken失败");
             Assert.fail("创建订单with tmpToken失败");
         }
         try {
-            res = HttpRequest.s_SendGet(host_doc +mock+uri,"", tmpToken);
+            res = HttpRequest.s_SendGet(host_doc + uri,"", tmpToken);
         } catch (IOException e) {
             logger.error(e);
         }
@@ -135,13 +133,13 @@ public class GetOrderList extends BaseTest{
         Assert.assertEquals(Generator.parseJson(data, "order(2):order_number"), orderId1);
 
         logger.info("创建订单with tmpToken");
-        String orderId4 = CreateOrder.CreateOrder(tmpToken);
+        String orderId4 = CreateOrder.s_CreateOrder(tmpToken);
         if (orderId4.isEmpty()) {
             logger.error("创建订单with tmpToken失败");
             Assert.fail("创建订单with tmpToken失败");
         }
         try {
-            res = HttpRequest.s_SendGet(host_doc +mock+uri,"", tmpToken);
+            res = HttpRequest.s_SendGet(host_doc + uri,"", tmpToken);
         } catch (IOException e) {
             logger.error(e);
         }
@@ -156,7 +154,7 @@ public class GetOrderList extends BaseTest{
     public void test_03_获取订单列表_未登录用户() {
         String res = "";
         try {
-            res = HttpRequest.s_SendGet(host_doc +mock+uri,"", "");
+            res = HttpRequest.s_SendGet(host_doc + uri,"", "");
         } catch (IOException e) {
             logger.error(e);
         }
@@ -168,22 +166,22 @@ public class GetOrderList extends BaseTest{
     public void test_04_获取订单列表_推荐医生后病历不展示上级医生信息() {
         String res = "";
         logger.info("创建订单with mainToken");
-        String orderId = CreateOrder.CreateOrder(mainToken);
+        String orderId = CreateOrder.s_CreateOrder(mainToken);
         if (orderId.isEmpty()) {
             logger.error("创建订单with mainToken失败");
             Assert.fail("创建订单with mainToken失败，退出执行");
         }
-        if (!Order_ReceiveTask.receiveTask(orderId).equals("2000")) {
+        if (!Order_ReceiveTask.s_ReceiveTask(orderId).equals("2000")) {
             logger.error("领取任务失败");
             Assert.fail("领取任务失败，退出执行");
         }
         String expert_id = Generator.randomExpertId();
-        if (!Order_RecommendDoctor.recommendDoctor(orderId, expert_id).equals("2020")) {
+        if (!Order_RecommendDoctor.s_RecommendDoctor(orderId, expert_id).equals("2020")) {
             logger.error("推荐医生失败");
             Assert.fail("推荐医生失败，退出执行");
         }
         try {
-            res = HttpRequest.s_SendGet(host_doc+uri,"", mainToken);
+            res = HttpRequest.s_SendGet(host_doc + uri,"", mainToken);
         } catch (IOException e) {
             logger.error(e);
         }
@@ -203,26 +201,26 @@ public class GetOrderList extends BaseTest{
     public void test_05_获取订单列表_三方通话成功后病历上展示上级医生信息() {
         String res = "";
         logger.info("创建订单with mainToken");
-        String orderId = CreateOrder.CreateOrder(mainToken);
+        String orderId = CreateOrder.s_CreateOrder(mainToken);
         if (orderId.isEmpty()) {
             logger.error("创建订单with mainToken失败");
             Assert.fail("创建订单with mainToken失败，退出执行");
         }
-        if (!Order_ReceiveTask.receiveTask(orderId).equals("2000")) {
+        if (!Order_ReceiveTask.s_ReceiveTask(orderId).equals("2000")) {
             logger.error("领取任务失败");
             Assert.fail("领取任务失败，退出执行");
         }
         String expert_id = Generator.randomExpertId();
-        if (!Order_RecommendDoctor.recommendDoctor(orderId, expert_id).equals("2020")) {
+        if (!Order_RecommendDoctor.s_RecommendDoctor(orderId, expert_id).equals("2020")) {
             logger.error("推荐医生失败");
             Assert.fail("推荐医生失败，退出执行");
         }
-        if (!Order_ThreewayCall.ThreewayCall(orderId, "success").equals("3000")) {
+        if (!Order_ThreewayCall.s_Call(orderId, "success").equals("3000")) {
             logger.error("确定三方通话失败");
             Assert.fail("确定三方通话失败，退出执行");
         }
         try {
-            res = HttpRequest.s_SendGet(host_doc+uri,"", mainToken);
+            res = HttpRequest.s_SendGet(host_doc + uri,"", mainToken);
         } catch (IOException e) {
             logger.error(e);
         }

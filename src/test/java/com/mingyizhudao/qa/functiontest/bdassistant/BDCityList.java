@@ -14,10 +14,9 @@ import java.util.HashMap;
  * Created by dayi on 2017/6/26.
  */
 public class BDCityList extends BaseTest{
+
     public static final Logger logger= Logger.getLogger(BDCityList.class);
     public static String uri = "/api/v1/user/bdCityList";
-    public static String mock = false ? "/mockjs/1" : "";
-    public static String token= "";
 
     public void test_01_获取个人负责区域列表() {
         String res = "";

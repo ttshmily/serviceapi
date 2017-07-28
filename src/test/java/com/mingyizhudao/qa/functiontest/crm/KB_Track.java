@@ -1,6 +1,7 @@
 package com.mingyizhudao.qa.functiontest.crm;
 
 import com.mingyizhudao.qa.common.BaseTest;
+import com.mingyizhudao.qa.common.TestLogger;
 import com.mingyizhudao.qa.dataprofile.crm.DiseaseProfile;
 import com.mingyizhudao.qa.dataprofile.crm.ExpertProfile;
 import com.mingyizhudao.qa.dataprofile.crm.HospitalProfile;
@@ -8,7 +9,6 @@ import com.mingyizhudao.qa.utilities.HttpRequest;
 import com.mingyizhudao.qa.utilities.Generator;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
-import org.apache.log4j.Logger;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
@@ -21,13 +21,20 @@ import java.util.List;
  * Created by ttshmily on 1/6/2017.
  */
 public class KB_Track extends BaseTest {
-    public static final Logger logger= Logger.getLogger(KB_Track.class);
+
+    public static String clazzName = new Object() {
+        public String getClassName() {
+            String clazzName = this.getClass().getName();
+            return clazzName.substring(0, clazzName.lastIndexOf('$'));
+        }
+    }.getClassName();
+    public static TestLogger logger = new TestLogger(clazzName);
     public static final String version = "/api/v1";
     public static String uri = version + "/Common/tracks";
-    public static String mock = false ? "/mockjs/1" : "";
 
-    public static JSONArray TrackList(String type, String id) {
+    public static JSONArray s_KBTrack(String type, String id) {
         String res = "";
+        TestLogger logger = new TestLogger(s_JobName());
         HashMap<String, String> query = new HashMap<>();
         query.put("type", type);
         query.put("id", id);
@@ -113,21 +120,21 @@ public class KB_Track extends BaseTest {
         HashMap<String, String> query = new HashMap<>();
         query.put("type", "DOCTOR");
         //创建医生
-        HashMap<String,String> info = KBExpert_Create.Create(new ExpertProfile(true));
+        HashMap<String,String> info = KBExpert_Create.s_Create(new ExpertProfile(true));
         String expertId = info.get("id");
         query.put("id", expertId);
-        JSONArray trackList = TrackList("DOCTOR", expertId);
+        JSONArray trackList = s_KBTrack("DOCTOR", expertId);
         Assert.assertEquals(trackList.size(), 1);
-        KBExpert_Update.Update(expertId, new ExpertProfile(true));
-        trackList = TrackList("DOCTOR", expertId);
+        KBExpert_Update.s_Update(expertId, new ExpertProfile(true));
+        trackList = s_KBTrack("DOCTOR", expertId);
         Assert.assertEquals(trackList.size(), 2);
-        KBExpert_Update.Update(expertId, new ExpertProfile(true));
-        trackList = TrackList("DOCTOR", expertId);
+        KBExpert_Update.s_Update(expertId, new ExpertProfile(true));
+        trackList = s_KBTrack("DOCTOR", expertId);
         Assert.assertEquals(trackList.size(), 3);
         List<String> list = new ArrayList<String>();
         list.add(Generator.randomDiseaseId());
-        KBExpert_Diseases.Connect(expertId, list);
-        trackList = TrackList("DOCTOR", expertId);
+        KBExpert_Diseases.s_Connect(expertId, list);
+        trackList = s_KBTrack("DOCTOR", expertId);
         Assert.assertEquals(trackList.size(), 4);
     }
 
@@ -137,16 +144,16 @@ public class KB_Track extends BaseTest {
         HashMap<String, String> query = new HashMap<>();
         query.put("type", "HOSPITAL");
         //创建医院
-        HashMap<String,String> info = KBHospital_Create.Create(new HospitalProfile(true));
+        HashMap<String,String> info = KBHospital_Create.s_Create(new HospitalProfile(true));
         String hospitalId = info.get("id");
         query.put("id", hospitalId);
-        JSONArray trackList = TrackList("HOSPITAL", hospitalId);
+        JSONArray trackList = s_KBTrack("HOSPITAL", hospitalId);
         Assert.assertEquals(trackList.size(), 1);
-        KBHospital_Update.Update(hospitalId, new HospitalProfile(true));
-        trackList = TrackList("HOSPITAL", hospitalId);
+        KBHospital_Update.s_Update(hospitalId, new HospitalProfile(true));
+        trackList = s_KBTrack("HOSPITAL", hospitalId);
         Assert.assertEquals(trackList.size(), 2);
-        KBHospital_Update.Update(hospitalId, new HospitalProfile(true));
-        trackList = TrackList("HOSPITAL", hospitalId);
+        KBHospital_Update.s_Update(hospitalId, new HospitalProfile(true));
+        trackList = s_KBTrack("HOSPITAL", hospitalId);
         Assert.assertEquals(trackList.size(), 3);
 
     }
@@ -157,16 +164,16 @@ public class KB_Track extends BaseTest {
         HashMap<String, String> query = new HashMap<>();
         query.put("type", "DISEASE");
         //创建疾病
-        HashMap<String,String> info = KBDisease_Create.Create(new DiseaseProfile(true));
+        HashMap<String,String> info = KBDisease_Create.s_Create(new DiseaseProfile(true));
         String diseaseId = info.get("id");
         query.put("id", diseaseId);
-        JSONArray trackList = TrackList("DISEASE", diseaseId);
+        JSONArray trackList = s_KBTrack("DISEASE", diseaseId);
         Assert.assertEquals(trackList.size(), 1);
-        KBDisease_Update.Update(diseaseId, new DiseaseProfile(true));
-        trackList = TrackList("DISEASE", diseaseId);
+        KBDisease_Update.s_Update(diseaseId, new DiseaseProfile(true));
+        trackList = s_KBTrack("DISEASE", diseaseId);
         Assert.assertEquals(trackList.size(), 2);
-        KBDisease_Update.Update(diseaseId, new DiseaseProfile(true));
-        trackList = TrackList("DISEASE", diseaseId);
+        KBDisease_Update.s_Update(diseaseId, new DiseaseProfile(true));
+        trackList = s_KBTrack("DISEASE", diseaseId);
         Assert.assertEquals(trackList.size(), 3);
     }
 }

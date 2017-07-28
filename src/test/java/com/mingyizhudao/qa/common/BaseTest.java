@@ -161,7 +161,7 @@ public class BaseTest {
         logger.info("Test Cleaning...");
         logger.info("mainDoctorId为"+mainDoctorId);
         logger.info("恢复医生信息：");
-        UpdateDoctorProfile_V1.updateDoctorProfile(mainToken, mainDP);
+        UpdateDoctorProfile_V1.s_Update(mainToken, mainDP);
         logger.info("============================================================================================================= ");
         logger.info("||    TestAPI END:\t" + getClass().getSimpleName());
         logger.info("============================================================================================================= \n");
@@ -233,7 +233,7 @@ public class BaseTest {
         String token = info.get("token");
 
         logger.info("更新医生信息...");
-        UpdateDoctorProfile_V1.updateDoctorProfile(token, dp);
+        UpdateDoctorProfile_V1.s_Update(token, dp);
         String res = GetDoctorProfile_V1.s_MyProfile(token);
         String doctorHospitalId = JSONObject.fromObject(res).getJSONObject("data").getJSONObject("doctor").getString("hospital_id");
         if (doctorHospitalId == null || doctorHospitalId.isEmpty()) {
@@ -255,8 +255,8 @@ public class BaseTest {
         logger.info("认证医生...");
         String doctorId = info.get("id");
 
-        RegisteredDoctor_Certify_V2.CertifyOnly(doctorId, "1");
-        String is_verified = RegisteredDoctor_Certify_V2.CertifyOnly(doctorId, "1");
+        RegisteredDoctor_Certify_V2.s_CertifyOnly(doctorId, "1");
+        String is_verified = RegisteredDoctor_Certify_V2.s_CertifyOnly(doctorId, "1");
         if (!is_verified.equals("1")) {
             logger.error("认证失败");
             return null;
@@ -272,7 +272,7 @@ public class BaseTest {
         if (info == null) return null;
         logger.info("认证并同步医生...");
         String doctorId = info.get("id");
-        HashMap<String,String> tmp = RegisteredDoctor_CertifySync_V2.CertifyAndSync(doctorId, "1");
+        HashMap<String,String> tmp = RegisteredDoctor_CertifySync_V2.s_CertifyAndSync(doctorId, "1");
         if (!tmp.get("is_verified").equals("1") || tmp.get("kb_id") == null) {
             logger.error("认证/同步医生失败");
             return null;

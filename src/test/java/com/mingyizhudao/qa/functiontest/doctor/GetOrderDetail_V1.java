@@ -6,7 +6,6 @@ import com.mingyizhudao.qa.dataprofile.doctor.DoctorProfile;
 import com.mingyizhudao.qa.functiontest.crm.*;
 import com.mingyizhudao.qa.utilities.HttpRequest;
 import com.mingyizhudao.qa.utilities.Generator;
-import org.apache.log4j.Logger;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
@@ -26,9 +25,8 @@ public class GetOrderDetail_V1 extends BaseTest {
     }.getClassName();
     public static TestLogger logger = new TestLogger(clazzName);
     public static String uri = "/api/v1/orders/{orderId}";
-    public static String mock = false ? "/mockjs/1" : "";
 
-    public static String MyInitiateOrder(String token, String orderId) {
+    public static String s_MyInitiateOrder(String token, String orderId) {
         String res = "";
         TestLogger logger = new TestLogger(s_JobName());
         HashMap<String, String> pathValue = new HashMap<>();
@@ -43,7 +41,7 @@ public class GetOrderDetail_V1 extends BaseTest {
         return res;
     }
 
-    public static String MyReceivedOrder(String token, String orderId) {
+    public static String s_MyReceivedOrder(String token, String orderId) {
         String res = "";
         TestLogger logger = new TestLogger(s_JobName());
         HashMap<String, String> pathValue = new HashMap<>();
@@ -63,7 +61,7 @@ public class GetOrderDetail_V1 extends BaseTest {
         String res = "";
 
         HashMap<String, String> pathValue = new HashMap<>();
-        String orderId = CreateOrder.CreateOrder(mainToken);
+        String orderId = CreateOrder.s_CreateOrder(mainToken);
         pathValue.put("orderId", orderId);
         HashMap<String, String> query = new HashMap<>();
         query.put("flag", "1");
@@ -133,7 +131,7 @@ public class GetOrderDetail_V1 extends BaseTest {
         String res = "";
         HashMap<String, String> pathValue = new HashMap<String, String>();
         logger.info("创建订单with mainToken");
-        String orderId = CreateOrder.CreateOrder(mainToken);
+        String orderId = CreateOrder.s_CreateOrder(mainToken);
         if (orderId.isEmpty()) {
             logger.error("创建订单with mainToken失败");
         }
@@ -155,9 +153,9 @@ public class GetOrderDetail_V1 extends BaseTest {
     public void test_05_获取订单详情_我收到的订单_刚被推荐() {
         String res = "";
         String tmpToken = CreateSyncedDoctor(new DoctorProfile(true)).get("token");
-        String orderId = CreateOrder.CreateOrder(tmpToken);
-        Order_ReceiveTask.receiveTask(orderId);
-        Order_RecommendDoctor.recommendDoctor(orderId, mainExpertId);
+        String orderId = CreateOrder.s_CreateOrder(tmpToken);
+        Order_ReceiveTask.s_ReceiveTask(orderId);
+        Order_RecommendDoctor.s_RecommendDoctor(orderId, mainExpertId);
         HashMap<String, String> pathValue = new HashMap<>();
         pathValue.put("orderId", orderId);
         HashMap<String, String> query = new HashMap<>();
@@ -172,7 +170,7 @@ public class GetOrderDetail_V1 extends BaseTest {
         Assert.assertEquals(Generator.parseJson(data, "order:order_number"), orderId);
         Assert.assertNotNull(Generator.parseJson(data, "order:NodeList:recommend_at"));
 
-        Order_ThreewayCall_V2.CallV2(orderId, "success");
+        Order_ThreewayCall_V2.s_CallV2(orderId, "success");
         try {
             res = HttpRequest.s_SendGet(host_doc + uri, query, mainToken, pathValue);
         } catch (IOException e) {
@@ -185,7 +183,7 @@ public class GetOrderDetail_V1 extends BaseTest {
         Assert.assertNotNull(Generator.parseJson(data, "order:NodeList:called_at"));
         Assert.assertEquals(Generator.parseJson(data, "order:status"), "3000");
 
-        Order_Rollback.Rollback(orderId);
+        Order_Rollback.s_Rollback(orderId);
         try {
             res = HttpRequest.s_SendGet(host_doc + uri, query, mainToken, pathValue);
         } catch (IOException e) {

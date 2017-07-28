@@ -1,12 +1,12 @@
 package com.mingyizhudao.qa.functiontest.crm;
 
 import com.mingyizhudao.qa.common.BaseTest;
+import com.mingyizhudao.qa.common.TestLogger;
 import com.mingyizhudao.qa.dataprofile.crm.ExpertProfile;
 import com.mingyizhudao.qa.dataprofile.doctor.DoctorProfile;
 import com.mingyizhudao.qa.utilities.HttpRequest;
 import com.mingyizhudao.qa.utilities.Generator;
 import net.sf.json.JSONObject;
-import org.apache.log4j.Logger;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
@@ -18,7 +18,13 @@ import java.util.HashMap;
  */
 public class RegisteredDoctor_SyncToKB extends BaseTest {
 
-    public static final Logger logger= Logger.getLogger(RegisteredDoctor_SyncToKB.class);
+    public static String clazzName = new Object() {
+        public String getClassName() {
+            String clazzName = this.getClass().getName();
+            return clazzName.substring(0, clazzName.lastIndexOf('$'));
+        }
+    }.getClassName();
+    public static TestLogger logger = new TestLogger(clazzName);
     public static final String version = "/api/v1";
     public static String uri = version+"/doctors/{id}/synchronization";
     public static String mock = false ? "/mockjs/1" : "";
@@ -48,7 +54,7 @@ public class RegisteredDoctor_SyncToKB extends BaseTest {
         checkResponse(res);
         Assert.assertEquals(code, "1000000");
 
-        String res_Doctor = RegisteredDoctor_Detail.Detail(doctorId);
+        String res_Doctor = RegisteredDoctor_Detail.s_Detail(doctorId);
         checkResponse(res_Doctor);
         String expert_id = Generator.parseJson(data, "register_id");
         String hospitalId = Generator.parseJson(data, "hospital_id");
@@ -57,7 +63,7 @@ public class RegisteredDoctor_SyncToKB extends BaseTest {
         String academic_title_list = Generator.parseJson(data, "academic_title_list");
         String medical_title_list = Generator.parseJson(data, "medical_title_list");
 
-        res = KBExpert_Detail.Detail(expert_id);
+        res = KBExpert_Detail.s_Detail(expert_id);
         checkResponse(res);
         Assert.assertEquals(Generator.parseJson(data, "register_id"), doctorId);
         Assert.assertEquals(Generator.parseJson(data, "hospital_id"), hospitalId);
@@ -101,7 +107,7 @@ public class RegisteredDoctor_SyncToKB extends BaseTest {
         HashMap<String, String> pathValue = new HashMap<>();
         JSONObject body = new JSONObject();
 
-        String expertId = KBExpert_Create.Create(new ExpertProfile(true)).get("id");
+        String expertId = KBExpert_Create.s_Create(new ExpertProfile(true)).get("id");
         DoctorProfile dp = new DoctorProfile(true);
         HashMap<String, String> doctorInfo = CreateVerifiedDoctor(dp);
         if (doctorInfo == null) {
@@ -121,7 +127,7 @@ public class RegisteredDoctor_SyncToKB extends BaseTest {
         checkResponse(res);
         Assert.assertEquals(code, "1000000");
 
-        String res_Doctor = RegisteredDoctor_Detail.Detail(doctorId);
+        String res_Doctor = RegisteredDoctor_Detail.s_Detail(doctorId);
         checkResponse(res_Doctor);
         Assert.assertEquals(Generator.parseJson(data, "register_id"), expertId);
         Assert.assertEquals(Generator.parseJson(data, "is_verified"), "1");
@@ -132,7 +138,7 @@ public class RegisteredDoctor_SyncToKB extends BaseTest {
         String academic_title_list = Generator.parseJson(data, "academic_title_list");
         String medical_title_list = Generator.parseJson(data, "medical_title_list");
 
-        String res_Expert = KBExpert_Detail.Detail(expertId);
+        String res_Expert = KBExpert_Detail.s_Detail(expertId);
         checkResponse(res_Expert);
         Assert.assertEquals(Generator.parseJson(data, "register_id"), doctorId);
         Assert.assertEquals(Generator.parseJson(data, "hospital_id"), hospitalId);

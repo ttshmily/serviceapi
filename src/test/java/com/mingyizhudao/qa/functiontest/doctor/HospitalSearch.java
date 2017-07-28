@@ -24,24 +24,12 @@ public class HospitalSearch extends BaseTest {
     }.getClassName();
     public static TestLogger logger = new TestLogger(clazzName);
     public static String uri = "/api/hospitalsearch";
-    public static String mock = false ? "/mockjs/1" : "";
-
-    public static String hospitalSearch() {
-
-        String res="";
-        try {
-            res = HttpRequest.s_SendGet(host_doc +mock+uri,"", "");
-        } catch (IOException e) {
-            logger.error(e);
-        }
-        return res;
-    }
 
     @Test
     public void test_01_有token信息的请求可以获得有效信息() {
         String res = "";
         try {
-            res = HttpRequest.s_SendGet(host_doc+uri,"", mainToken);
+            res = HttpRequest.s_SendGet(host_doc + uri,"", mainToken);
         } catch (IOException e) {
             logger.error(e);
         }
@@ -53,7 +41,7 @@ public class HospitalSearch extends BaseTest {
     public void test_02_没有searchName字段的请求可以获得有效信息() {
         String res = "";
         try {
-            res = HttpRequest.s_SendGet(host_doc+uri, "", "");
+            res = HttpRequest.s_SendGet(host_doc + uri, "", "");
         } catch (IOException e) {
             logger.error(e);
         }
@@ -67,7 +55,7 @@ public class HospitalSearch extends BaseTest {
         HashMap<String, String> map = new HashMap<>();
         map.put("searchname","");
         try {
-            res = HttpRequest.s_SendGet(host_doc+uri, map, "");
+            res = HttpRequest.s_SendGet(host_doc + uri, map, "");
         } catch (IOException e) {
             logger.error(e);
         }
@@ -81,7 +69,7 @@ public class HospitalSearch extends BaseTest {
         HashMap<String, String> map = new HashMap<>();
         map.put("searchname","人民医院");
         try {
-            res = HttpRequest.s_SendGet(host_doc+uri, map, "");
+            res = HttpRequest.s_SendGet(host_doc + uri, map, "");
         } catch (IOException e) {
             logger.error(e);
         }
@@ -95,7 +83,7 @@ public class HospitalSearch extends BaseTest {
         HashMap<String, String> map = new HashMap<>();
         map.put("searchname","changzhou");
         try {
-            res = HttpRequest.s_SendGet(host_doc+uri, map, "");
+            res = HttpRequest.s_SendGet(host_doc + uri, map, "");
         } catch (IOException e) {
             logger.error(e);
         }
@@ -109,7 +97,7 @@ public class HospitalSearch extends BaseTest {
         HashMap<String, String> map = new HashMap<>();
         map.put("searchname","中国changzhou");
         try {
-            res = HttpRequest.s_SendGet(host_doc+uri, map, "");
+            res = HttpRequest.s_SendGet(host_doc + uri, map, "");
         } catch (IOException e) {
             logger.error(e);
         }
@@ -123,7 +111,7 @@ public class HospitalSearch extends BaseTest {
         HashMap<String, String> map = new HashMap<>();
         map.put("searchname","安阳医院");
         try {
-            res = HttpRequest.s_SendGet(host_doc+uri, map, "");
+            res = HttpRequest.s_SendGet(host_doc + uri, map, "");
         } catch (IOException e) {
             logger.error(e);
         }
@@ -144,7 +132,7 @@ public class HospitalSearch extends BaseTest {
         query.put("city_id", city_id);
         query.put("searchname","安阳医院");
         try {
-            res = HttpRequest.s_SendGet(host_doc+uri, query, "");
+            res = HttpRequest.s_SendGet(host_doc + uri, query, "");
         } catch (IOException e) {
             logger.error(e);
         }

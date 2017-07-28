@@ -2,11 +2,11 @@ package com.mingyizhudao.qa.functiontest.crm;
 
 import com.mingyizhudao.qa.common.BaseTest;
 import com.mingyizhudao.qa.common.KnowledgeBase;
+import com.mingyizhudao.qa.common.TestLogger;
 import com.mingyizhudao.qa.functiontest.doctor.CreateOrder;
 import com.mingyizhudao.qa.utilities.HttpRequest;
 import com.mingyizhudao.qa.utilities.Generator;
 import net.sf.json.JSONObject;
-import org.apache.log4j.Logger;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
@@ -19,17 +19,24 @@ import java.util.HashMap;
  * Created by ttshmily on 28/4/2017.
  */
 public class Order_ThreewayCall extends BaseTest {
-    public static final Logger logger= Logger.getLogger(Order_ThreewayCall.class);
+
+    public static String clazzName = new Object() {
+        public String getClassName() {
+            String clazzName = this.getClass().getName();
+            return clazzName.substring(0, clazzName.lastIndexOf('$'));
+        }
+    }.getClassName();
+    public static TestLogger logger = new TestLogger(clazzName);
     public static final String version = "/api/v1";
     public static String uri = version+"/orders/{orderNumber}/threeWayCalling";
-    public static String mock = false ? "/mockjs/1" : "";
 
     public static SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
 
-    public static String ThreewayCall(String orderId, String result) {//success,undetermined,failed
+    public static String s_Call(String orderId, String result) {//success,undetermined,failed
         String res = "";
+        TestLogger logger = new TestLogger(s_JobName());
         HashMap<String, String> pathValue = new HashMap<>();
-        res = Order_Detail.Detail(orderId);
+        res = Order_Detail.s_Detail(orderId);
         if (!Generator.parseJson(JSONObject.fromObject(res), "data:status").equals("2020")) {
             logger.error("当前订单状态无法进行三方通话");
             return Generator.parseJson(JSONObject.fromObject(res), "data:status");
@@ -49,7 +56,7 @@ public class Order_ThreewayCall extends BaseTest {
         } catch (IOException e) {
             logger.error(e);
         }
-        res = Order_Detail.Detail(orderId);
+        res = Order_Detail.s_Detail(orderId);
         return Generator.parseJson(JSONObject.fromObject(res), "data:status");
     }
 
@@ -58,10 +65,10 @@ public class Order_ThreewayCall extends BaseTest {
 
         String res = "";
         HashMap<String, String> pathValue = new HashMap<>();
-        String orderId = CreateOrder.CreateOrder(mainToken);
-        Order_ReceiveTask.receiveTask(orderId);
+        String orderId = CreateOrder.s_CreateOrder(mainToken);
+        Order_ReceiveTask.s_ReceiveTask(orderId);
         String rcmdDoc = Generator.randomKey(KnowledgeBase.kb_doctor);
-        if (!Order_RecommendDoctor.recommendDoctor(orderId, rcmdDoc).equals("2020")) {
+        if (!Order_RecommendDoctor.s_RecommendDoctor(orderId, rcmdDoc).equals("2020")) {
             Assert.fail("订单没有到达已推荐状态，无法进行三方通话");
         }
         pathValue.put("orderNumber", orderId);
@@ -82,7 +89,7 @@ public class Order_ThreewayCall extends BaseTest {
         }
         checkResponse(res);
         Assert.assertEquals(code, "1000000");
-        res = Order_Detail.Detail(orderId);
+        res = Order_Detail.s_Detail(orderId);
         checkResponse(res);
         Assert.assertEquals(Generator.parseJson(data, "status"), "3000");
         Assert.assertEquals(Generator.parseJson(data, "surgeon_id"), rcmdDoc);
@@ -94,10 +101,10 @@ public class Order_ThreewayCall extends BaseTest {
     public void test_02_创建三方通话_结果为待定() {
         String res = "";
         HashMap<String, String> pathValue = new HashMap<>();
-        String orderId = CreateOrder.CreateOrder(mainToken);
-        Order_ReceiveTask.receiveTask(orderId);
+        String orderId = CreateOrder.s_CreateOrder(mainToken);
+        Order_ReceiveTask.s_ReceiveTask(orderId);
         String rcmdDoc = Generator.randomKey(KnowledgeBase.kb_doctor);
-        if (!Order_RecommendDoctor.recommendDoctor(orderId, rcmdDoc).equals("2020")) {
+        if (!Order_RecommendDoctor.s_RecommendDoctor(orderId, rcmdDoc).equals("2020")) {
             Assert.fail("订单没有到达已推荐状态，无法进行三方通话");
         }
         pathValue.put("orderNumber", orderId);
@@ -118,7 +125,7 @@ public class Order_ThreewayCall extends BaseTest {
         }
         checkResponse(res);
         Assert.assertEquals(code, "1000000");
-        res = Order_Detail.Detail(orderId);
+        res = Order_Detail.s_Detail(orderId);
         checkResponse(res);
         Assert.assertEquals(Generator.parseJson(data, "status"), "2020");
         Assert.assertEquals(Generator.parseJson(data, "surgeon_id"), rcmdDoc);
@@ -130,9 +137,9 @@ public class Order_ThreewayCall extends BaseTest {
     public void test_03_创建三方通话_结果为不合作() {
         String res = "";
         HashMap<String, String> pathValue = new HashMap<>();
-        String orderId = CreateOrder.CreateOrder(mainToken);
-        Order_ReceiveTask.receiveTask(orderId);
-        if (!Order_RecommendDoctor.recommendDoctor(orderId, "555").equals("2020")) {
+        String orderId = CreateOrder.s_CreateOrder(mainToken);
+        Order_ReceiveTask.s_ReceiveTask(orderId);
+        if (!Order_RecommendDoctor.s_RecommendDoctor(orderId, "555").equals("2020")) {
             Assert.fail("订单没有到达已推荐状态，无法进行三方通话");
         }
         pathValue.put("orderNumber", orderId);
@@ -152,7 +159,7 @@ public class Order_ThreewayCall extends BaseTest {
         }
         checkResponse(res);
         Assert.assertEquals(code, "1000000");
-        res = Order_Detail.Detail(orderId);
+        res = Order_Detail.s_Detail(orderId);
         checkResponse(res);
         Assert.assertEquals(Generator.parseJson(data, "status"), "2000");
         //不合作以后，清除上级医生信息
@@ -165,9 +172,9 @@ public class Order_ThreewayCall extends BaseTest {
     public void test_04_创建三方通话_不合作原因为空() {
         String res = "";
         HashMap<String, String> pathValue = new HashMap<>();
-        String orderId = CreateOrder.CreateOrder(mainToken);
-        Order_ReceiveTask.receiveTask(orderId);
-        if (!Order_RecommendDoctor.recommendDoctor(orderId, "555").equals("2020")) {
+        String orderId = CreateOrder.s_CreateOrder(mainToken);
+        Order_ReceiveTask.s_ReceiveTask(orderId);
+        if (!Order_RecommendDoctor.s_RecommendDoctor(orderId, "555").equals("2020")) {
             Assert.fail("订单没有到达已推荐状态，无法进行三方通话");
         }
         pathValue.put("orderNumber", orderId);
@@ -186,7 +193,7 @@ public class Order_ThreewayCall extends BaseTest {
         }
         checkResponse(res);
         Assert.assertNotEquals(code, "1000000");
-        res = Order_Detail.Detail(orderId);
+        res = Order_Detail.s_Detail(orderId);
         checkResponse(res);
         Assert.assertEquals(Generator.parseJson(data, "status"), "2020");
 
@@ -199,7 +206,7 @@ public class Order_ThreewayCall extends BaseTest {
         checkResponse(res);
         Assert.assertNotEquals(code, "1000000");
 
-        res = Order_Detail.Detail(orderId);
+        res = Order_Detail.s_Detail(orderId);
         checkResponse(res);
         Assert.assertEquals(Generator.parseJson(data, "status"), "2020");
     }
@@ -208,9 +215,9 @@ public class Order_ThreewayCall extends BaseTest {
     public void test_05_创建三方通话_成功后不能再次通话() {
         String res = "";
         HashMap<String, String> pathValue = new HashMap<>();
-        String orderId = CreateOrder.CreateOrder(mainToken);
-        Order_ReceiveTask.receiveTask(orderId);
-        if (!Order_RecommendDoctor.recommendDoctor(orderId, "555").equals("2020")) {
+        String orderId = CreateOrder.s_CreateOrder(mainToken);
+        Order_ReceiveTask.s_ReceiveTask(orderId);
+        if (!Order_RecommendDoctor.s_RecommendDoctor(orderId, "555").equals("2020")) {
             Assert.fail("订单没有到达已推荐状态，无法进行三方通话");
         }
         pathValue.put("orderNumber", orderId);
@@ -230,7 +237,7 @@ public class Order_ThreewayCall extends BaseTest {
         }
         checkResponse(res);
         Assert.assertEquals(code, "1000000");
-        res = Order_Detail.Detail(orderId);
+        res = Order_Detail.s_Detail(orderId);
         checkResponse(res);
         Assert.assertEquals(Generator.parseJson(data, "status"), "3000");
 
@@ -247,9 +254,9 @@ public class Order_ThreewayCall extends BaseTest {
     public void test_06_创建三方通话_结果成功但缺少信息() {
         String res = "";
         HashMap<String, String> pathValue = new HashMap<>();
-        String orderId = CreateOrder.CreateOrder(mainToken);
-        Order_ReceiveTask.receiveTask(orderId);
-        if (!Order_RecommendDoctor.recommendDoctor(orderId, "555").equals("2020")) {
+        String orderId = CreateOrder.s_CreateOrder(mainToken);
+        Order_ReceiveTask.s_ReceiveTask(orderId);
+        if (!Order_RecommendDoctor.s_RecommendDoctor(orderId, "555").equals("2020")) {
             Assert.fail("订单没有到达已推荐状态，无法进行三方通话");
         }
         pathValue.put("orderNumber", orderId);
@@ -263,7 +270,7 @@ public class Order_ThreewayCall extends BaseTest {
         }
         checkResponse(res);
         Assert.assertNotEquals(code, "1000000");
-        res = Order_Detail.Detail(orderId);
+        res = Order_Detail.s_Detail(orderId);
         checkResponse(res);
         Assert.assertNotEquals(Generator.parseJson(data, "status"), "3000");
 
@@ -275,7 +282,7 @@ public class Order_ThreewayCall extends BaseTest {
         }
         checkResponse(res);
         Assert.assertNotEquals(code, "1000000");
-        res = Order_Detail.Detail(orderId);
+        res = Order_Detail.s_Detail(orderId);
         checkResponse(res);
         Assert.assertNotEquals(Generator.parseJson(data, "status"), "3000");
 
@@ -287,7 +294,7 @@ public class Order_ThreewayCall extends BaseTest {
         }
         checkResponse(res);
         Assert.assertNotEquals(code, "1000000");
-        res = Order_Detail.Detail(orderId);
+        res = Order_Detail.s_Detail(orderId);
         checkResponse(res);
         Assert.assertNotEquals(Generator.parseJson(data, "status"), "3000");
 
@@ -299,7 +306,7 @@ public class Order_ThreewayCall extends BaseTest {
         }
         checkResponse(res);
         Assert.assertNotEquals(code, "1000000");
-        res = Order_Detail.Detail(orderId);
+        res = Order_Detail.s_Detail(orderId);
         checkResponse(res);
         Assert.assertNotEquals(Generator.parseJson(data, "status"), "3000");
 
@@ -311,7 +318,7 @@ public class Order_ThreewayCall extends BaseTest {
         }
         checkResponse(res);
         Assert.assertNotEquals(code, "1000000");
-        res = Order_Detail.Detail(orderId);
+        res = Order_Detail.s_Detail(orderId);
         checkResponse(res);
         Assert.assertNotEquals(Generator.parseJson(data, "status"), "3000");
 
@@ -323,7 +330,7 @@ public class Order_ThreewayCall extends BaseTest {
         }
         checkResponse(res);
         Assert.assertNotEquals(code, "1000000");
-        res = Order_Detail.Detail(orderId);
+        res = Order_Detail.s_Detail(orderId);
         checkResponse(res);
         Assert.assertNotEquals(Generator.parseJson(data, "status"), "3000");
 
@@ -335,7 +342,7 @@ public class Order_ThreewayCall extends BaseTest {
         }
         checkResponse(res);
         Assert.assertEquals(code, "1000000");
-        res = Order_Detail.Detail(orderId);
+        res = Order_Detail.s_Detail(orderId);
         checkResponse(res);
         Assert.assertEquals(Generator.parseJson(data, "status"), "3000");
 
@@ -345,9 +352,9 @@ public class Order_ThreewayCall extends BaseTest {
     public void test_07_创建三方通话_结果为不合作无其他信息() {
         String res = "";
         HashMap<String, String> pathValue = new HashMap<>();
-        String orderId = CreateOrder.CreateOrder(mainToken);
-        Order_ReceiveTask.receiveTask(orderId);
-        if (!Order_RecommendDoctor.recommendDoctor(orderId, "555").equals("2020")) {
+        String orderId = CreateOrder.s_CreateOrder(mainToken);
+        Order_ReceiveTask.s_ReceiveTask(orderId);
+        if (!Order_RecommendDoctor.s_RecommendDoctor(orderId, "555").equals("2020")) {
             Assert.fail("订单没有到达已推荐状态，无法进行三方通话");
         }
         pathValue.put("orderNumber", orderId);
@@ -367,7 +374,7 @@ public class Order_ThreewayCall extends BaseTest {
         }
         checkResponse(res);
         Assert.assertEquals(code, "1000000");
-        res = Order_Detail.Detail(orderId);
+        res = Order_Detail.s_Detail(orderId);
         checkResponse(res);
         Assert.assertEquals(Generator.parseJson(data, "status"), "2000");
 //        Assert.assertEquals(parseJson(data, "surgeon_id"), "555");
@@ -379,10 +386,10 @@ public class Order_ThreewayCall extends BaseTest {
     public void test_08_创建三方通话_不合作医生信息记录在案() {
         String res = "";
         HashMap<String, String> pathValue = new HashMap<>();
-        String orderId = CreateOrder.CreateOrder(mainToken);
-        Order_ReceiveTask.receiveTask(orderId);
+        String orderId = CreateOrder.s_CreateOrder(mainToken);
+        Order_ReceiveTask.s_ReceiveTask(orderId);
         String expertId = Generator.randomExpertId();
-        if (!Order_RecommendDoctor.recommendDoctor(orderId, expertId).equals("2020")) {
+        if (!Order_RecommendDoctor.s_RecommendDoctor(orderId, expertId).equals("2020")) {
             Assert.fail("订单没有到达已推荐状态，无法进行三方通话");
         }
         pathValue.put("orderNumber", orderId);
@@ -402,7 +409,7 @@ public class Order_ThreewayCall extends BaseTest {
         }
         checkResponse(res);
         Assert.assertEquals(code, "1000000");
-        res = Order_Detail.Detail(orderId);
+        res = Order_Detail.s_Detail(orderId);
         checkResponse(res);
         Assert.assertEquals(Generator.parseJson(data, "status"), "2000");
         Assert.assertNotNull(Generator.parseJson(data, "doctorFiledList"), expertId);

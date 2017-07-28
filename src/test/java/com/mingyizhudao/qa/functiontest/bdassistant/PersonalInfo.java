@@ -84,13 +84,13 @@ public class PersonalInfo extends BaseTest {
         }
         JSONObject dp = new JSONObject();
         dp.put("inviter_no", "SH0133");
-        RegisteredDoctor_Modify.modify(doctorId, dp);
-        res = RegisteredDoctor_Detail.Detail(doctorId);
+        RegisteredDoctor_Modify.s_Modify(doctorId, dp);
+        res = RegisteredDoctor_Detail.s_Detail(doctorId);
         checkResponse(res);
         String inviter_no = Generator.parseJson(data, "inviter_no");
         if(!inviter_no.equals("SH0133")) Assert.fail("更新医生的invitor_no失败，退出用例执行");
 
-        CreateOrder.CreateOrder(info.get("token"));
+        CreateOrder.s_CreateOrder(info.get("token"));
         try {
             res = HttpRequest.s_SendGet(host_bda + uri, map, bda_token);
         } catch (IOException e) {
