@@ -10,8 +10,6 @@ import java.net.URLConnection;
 import java.net.URLEncoder;
 import java.security.KeyManagementException;
 import java.security.NoSuchAlgorithmException;
-import java.security.cert.CertificateException;
-import java.security.cert.X509Certificate;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -90,60 +88,30 @@ public class HttpRequest {
                 end = System.currentTimeMillis();
                 logger.info("等待回应: <<<<<  " + httpURLConnection.getResponseCode() + " " + httpURLConnection.getResponseMessage());
                 logger.info("响应时间: <<<<<  " + Long.toString(end-start) + " ms");
+                String line;
+                while ((line = in.readLine()) != null) {
+                    result += line;
+                }
+                in.close();
             }
             if (status == HttpURLConnection.HTTP_MOVED_TEMP || status == HttpURLConnection.HTTP_MOVED_PERM || status == HttpURLConnection.HTTP_SEE_OTHER) { // now only available for redirect on qiye wechat
                 // get redirect url from "location" header field
                 String newUrl = httpURLConnection.getHeaderField("Location");
-                // get the cookie if need, for login
-                String cookies = httpURLConnection.getHeaderField("Set-Cookie");
 
-                X509TrustManager trustManager = new X509TrustManager() {
-                    public void checkClientTrusted(X509Certificate[] chain, String authType)
-                            throws CertificateException {
-                        // Don't do anything.
-                    }
-
-                    public void checkServerTrusted(X509Certificate[] chain, String authType)
-                            throws CertificateException {
-                        // Don't do anything.
-                    }
-
-                    public X509Certificate[] getAcceptedIssuers() {
-                        // Don't do anything.
-                        return null;
-                    }
-                };
-                SSLContext sslcontext = SSLContext.getInstance("TLS");
-                sslcontext.init(null, new TrustManager[]{trustManager}, null);
-                // 从上述SSLContext对象中得到SSLSocketFactory对象
-                SSLSocketFactory ssf = sslcontext.getSocketFactory();
                 // open the new https connection
-                httpsURLConnection = (HttpsURLConnection) new URL(newUrl).openConnection();
-                httpsURLConnection.setSSLSocketFactory(ssf);
-                httpsURLConnection.setRequestProperty("Accept", "*/*");
-                httpsURLConnection.setRequestProperty("Connection", "keep-alive");
-                httpsURLConnection.setRequestProperty("User-Agent", "Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1;SV1)");
-                httpsURLConnection.setRequestProperty("Cookie", cookies);
                 logger.info("Redirect to URL : " + newUrl);
-                httpsURLConnection.connect();
-                in = new BufferedReader(new InputStreamReader(httpsURLConnection.getInputStream())); //connection
-                end = System.currentTimeMillis();
-                logger.info("等待回应: <<<<<  " + httpsURLConnection.getResponseCode() + " " + httpURLConnection.getResponseMessage());
-                logger.info("响应时间: <<<<<  " + Long.toString(end-start) + " ms");
+                result = HttpsRequest.s_DoGet(newUrl);
+//                logger.info("等待回应: <<<<<  " + httpsURLConnection.getResponseCode() + " " + httpURLConnection.getResponseMessage());
+//                logger.info("响应时间: <<<<<  " + Long.toString(end-start) + " ms");
             }
-
-			String line;
-			while ((line = in.readLine()) != null) {
-				result += line;
-			}
-			in.close();
 		} catch (IOException e) {
-		    e.printStackTrace();
 			logger.error("发送请求异常");
 		} catch (NoSuchAlgorithmException e) {
             logger.error("发送HTTPS请求异常");
         } catch (KeyManagementException e) {
             logger.error("发送HTTPS请求异常");
+        } catch (Exception e) {
+		    logger.error("发送请求异常");
         }
 		return result;
 	}

@@ -1,6 +1,5 @@
 package com.mingyizhudao.qa.utilities;
 
-import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
@@ -8,16 +7,15 @@ import org.apache.http.client.methods.HttpPost;
 import org.apache.http.conn.ClientConnectionManager;
 import org.apache.http.conn.scheme.Scheme;
 import org.apache.http.conn.scheme.SchemeRegistry;
-import org.apache.http.entity.StringEntity;
-import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.conn.ssl.X509HostnameVerifier;
 import org.apache.http.conn.ssl.SSLSocketFactory;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.entity.StringEntity;
 import org.apache.http.message.BasicHeader;
-import org.apache.http.util.EntityUtils;
 
-import javax.net.ssl.SSLContext;
-import javax.net.ssl.TrustManager;
-import javax.net.ssl.X509TrustManager;
+import javax.net.ssl.*;
 import java.io.BufferedReader;
+import java.io.IOException;
 import java.io.InputStreamReader;
 import java.security.cert.CertificateException;
 import java.security.cert.X509Certificate;
@@ -26,17 +24,19 @@ public class HttpsRequest {
 
     public static void main(String[] args) {
         try {
-            System.out.print(doGet("https://work.myzd.info/wx/internal/api/dev-tokens"));
+//            System.setProperty("javax.net.debug","ssl");
+            System.out.print(s_DoGet("https://work.myzd.info/wx/internal/api/dev-tokens"));
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
-    public static String doPost(String url,String jsonstr,String charset){
-        HttpClient httpClient = null;
-        HttpPost httpPost = null;
+    public static String s_DoPost(String url,String jsonstr,String charset) throws Exception {
+        HttpClient httpClient;
+        HttpPost httpPost;
         String result = null;
-        try{
+        BufferedReader in;
+        try {
             httpClient = new SSLClient();
             httpPost = new HttpPost(url);
             httpPost.addHeader("Content-Type", "application/json");
@@ -45,24 +45,26 @@ public class HttpsRequest {
             se.setContentEncoding(new BasicHeader("Content-Type", "application/json"));
             httpPost.setEntity(se);
             HttpResponse response = httpClient.execute(httpPost);
-            if(response != null){
-                HttpEntity resEntity = response.getEntity();
-                if(resEntity != null){
-                    result = EntityUtils.toString(resEntity,charset);
+            if(response != null && response.getEntity() != null){
+                in = new BufferedReader(new InputStreamReader(response.getEntity().getContent()));
+                String line;
+                while ((line = in.readLine()) != null) {
+                    result += line;
                 }
+                in.close();
             }
-        }catch(Exception ex){
-            ex.printStackTrace();
+        } catch(Exception ex){
+            throw ex;
         }
         return result;
     }
 
-    public static String doGet(String url) throws Exception {
-        HttpClient httpClient;
+    public static String s_DoGet(String url) throws Exception {
+        SSLClient httpClient;
         HttpGet httpGet;
-        String result = null;
+        String result = "";
         BufferedReader in;
-        try{
+        try {
             httpClient = new SSLClient();
             httpGet = new HttpGet(url);
             httpGet.addHeader("Content-Type", "application/json");
@@ -75,7 +77,7 @@ public class HttpsRequest {
                 }
                 in.close();
             }
-        }catch(Exception ex){
+        } catch(Exception ex){
             throw ex;
         }
         return result;
@@ -86,12 +88,13 @@ public class HttpsRequest {
 /**
  * 用于进行Https请求的HttpClient
  * @ClassName: SSLClient
- * @Description: TODO
- * @author Devin <xxx>
- * @date 2017年2月7日 下午1:42:07
+ * @Description:
+ * @author Dayi <xxx>
+ * @date 2017年7月30日 下午1:42:07
  *
  */
 class SSLClient extends DefaultHttpClient {
+
     public SSLClient() throws Exception{
         super();
         SSLContext ctx = SSLContext.getInstance("TLS");
@@ -110,9 +113,31 @@ class SSLClient extends DefaultHttpClient {
             }
         };
         ctx.init(null, new TrustManager[]{tm}, null);
-        SSLSocketFactory ssf = new SSLSocketFactory(ctx,SSLSocketFactory.ALLOW_ALL_HOSTNAME_VERIFIER);
+        X509HostnameVerifier hv = new X509HostnameVerifier(){
+            @Override
+            public boolean verify(String s, SSLSession sslSession) {
+                return true;
+            }
+
+            @Override
+            public void verify(String host, SSLSocket ssl) throws IOException {
+
+            }
+
+            @Override
+            public void verify(String host, X509Certificate cert) throws SSLException {
+
+            }
+
+            @Override
+            public void verify(String host, String[] cns, String[] subjectAlts) throws SSLException {
+
+            }
+        };
+        SSLSocketFactory ssf = new SSLSocketFactory(ctx, hv);
         ClientConnectionManager ccm = this.getConnectionManager();
         SchemeRegistry sr = ccm.getSchemeRegistry();
         sr.register(new Scheme("https", 443, ssf));
     }
+
 }
