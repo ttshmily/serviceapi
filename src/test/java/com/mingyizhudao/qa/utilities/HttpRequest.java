@@ -24,18 +24,18 @@ public class HttpRequest {
 
     public static void main(String[] args) {
 
-//        String url = "http://rap.mingyizhudao.com/mockjs/1/hospital/{search}";
-//        HashMap<String, String> map = new HashMap<String, String>();
-//        map.put("search", "3");
-//        map.put("search2", "4");
-//        System.out.println(restUrl(url, map));
-//        System.out.println(queryBuilder(map));
-//        try {
-//            String res = s_SendGet(url, para, "xxx");
-//            System.out.println(res);
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
+/*        String url = "http://rap.mingyizhudao.com/mockjs/1/hospital/{search}";
+        HashMap<String, String> map = new HashMap<String, String>();
+        map.put("search", "3");
+        map.put("search2", "4");
+        System.out.println(restUrl(url, map));
+        System.out.println(queryBuilder(map));
+        try {
+            String res = s_SendGet(url, para, "xxx");
+            System.out.println(res);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }*/
     }
 
     /**
@@ -74,8 +74,7 @@ public class HttpRequest {
 			// 设置通用的请求属性
 			httpURLConnection.setRequestProperty("accept", "*/*");
 			httpURLConnection.setRequestProperty("connection", "close");
-			httpURLConnection.setRequestProperty("user-agent",
-					"Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1;SV1)");
+			httpURLConnection.setRequestProperty("user-agent", "Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1;SV1)");
 			httpURLConnection.setInstanceFollowRedirects(true);
 			HttpURLConnection.setFollowRedirects(true);
             if (!authCode.isEmpty()) httpURLConnection.setRequestProperty("Authorization", "Bearer " + authCode);
@@ -132,10 +131,6 @@ public class HttpRequest {
                 logger.info("等待回应: <<<<<  " + httpsURLConnection.getResponseCode() + " " + httpURLConnection.getResponseMessage());
                 logger.info("响应时间: <<<<<  " + Long.toString(end-start) + " ms");
             }
-//            in = new BufferedReader(new InputStreamReader(httpsURLConnection.getInputStream())); //connection
-//			end = System.currentTimeMillis();
-//            logger.info("等待回应: <<<<<  " + httpURLConnection.getResponseCode() + " " + httpURLConnection.getResponseMessage());
-//            logger.info("响应时间: <<<<<  " + Long.toString(end-start) + " ms");
 
 			String line;
 			while ((line = in.readLine()) != null) {
