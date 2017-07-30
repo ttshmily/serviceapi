@@ -45,7 +45,7 @@ public class HttpsRequest {
             se.setContentEncoding(new BasicHeader("Content-Type", "application/json"));
             httpPost.setEntity(se);
             HttpResponse response = httpClient.execute(httpPost);
-            if(response != null && response.getEntity() != null){
+            if (response != null && response.getEntity() != null) {
                 in = new BufferedReader(new InputStreamReader(response.getEntity().getContent()));
                 String line;
                 while ((line = in.readLine()) != null) {
@@ -62,40 +62,37 @@ public class HttpsRequest {
     public static String s_DoGet(String url) throws Exception {
         SSLClient httpClient;
         HttpGet httpGet;
-        String result = "";
+        StringBuilder result = new StringBuilder();
         BufferedReader in;
         try {
             httpClient = new SSLClient();
             httpGet = new HttpGet(url);
             httpGet.addHeader("Content-Type", "application/json");
             HttpResponse response = httpClient.execute(httpGet);
-            if(response != null && response.getEntity() != null){
+            if (response != null && response.getEntity() != null) {
                 in = new BufferedReader(new InputStreamReader(response.getEntity().getContent()));
                 String line;
                 while ((line = in.readLine()) != null) {
-                    result += line;
+                    result.append(line);
                 }
                 in.close();
             }
         } catch(Exception ex){
             throw ex;
         }
-        return result;
+        return result.toString();
     }
 }
 
 
 /**
  * 用于进行Https请求的HttpClient
- * @ClassName: SSLClient
- * @Description:
  * @author Dayi <xxx>
- * @date 2017年7月30日 下午1:42:07
  *
  */
 class SSLClient extends DefaultHttpClient {
 
-    public SSLClient() throws Exception{
+    SSLClient() throws Exception{
         super();
         SSLContext ctx = SSLContext.getInstance("TLS");
         X509TrustManager tm = new X509TrustManager() {
