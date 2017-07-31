@@ -127,9 +127,6 @@ public class BaseTest {
         crm_token = JSONObject.fromObject(HttpRequest.s_SendGet("http://services.dev.myzd.info/crm/api/internal/devToken" , "email="+mainOperatorId, "")).getJSONObject("data").getString("token");
         bda_token = JSONObject.fromObject(HttpRequest.s_SendGet("http://work.myzd.info/wx/internal/api/dev-tokens" , "", "")).getJSONObject("data").getJSONObject("chao.fang@mingyizhudao.com").getString("token");
         bda_token_staff = JSONObject.fromObject(HttpRequest.s_SendGet("http://work.myzd.info/wx/internal/api/dev-tokens" , "", "")).getJSONObject("data").getJSONObject("lei.wang@mingyizhudao.com").getString("token");
-//        System.out.println(bda_token);
-//        System.out.println(bda_token_staff);
-//        System.exit(1);
         mainDP = new DoctorProfile(true);
         HashMap<String,String> mainDoctorInfo = s_CreateSyncedDoctor(mainDP);
         if(mainDoctorInfo == null) {
@@ -152,6 +149,8 @@ public class BaseTest {
         logger.info("mainExpertId为:\t"+mainExpertId);
         logger.info("mainOperatorId为:\t"+mainOperatorId);
         logger.info("crm_token为:\t"+crm_token);
+        logger.info("bda_token为:\t"+bda_token);
+        logger.info("bda_token_staff为:\t"+bda_token_staff);
     }
 
     @BeforeClass
