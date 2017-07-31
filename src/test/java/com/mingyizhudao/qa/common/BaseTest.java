@@ -141,6 +141,7 @@ public class BaseTest {
         mainDoctorHospitalName = Generator.hospitalName(mainDoctorHospitalId);
         mainExpertId = mainDoctorInfo.get("expert_id");
 
+        logger.info("初始化信息完成，准备执行用例");
         logger.info("mainDoctorId为:\t"+mainDoctorId);
         logger.info("mainDoctorName为:\t"+mainDoctorName);
         logger.info("mainDoctorToken为:\t"+mainToken);
@@ -175,23 +176,22 @@ public class BaseTest {
         TestLogger logger = new TestLogger(getClass().getName());
         logger.info(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> ");
         logger.info("||    TestCase START:\t" + method.getName());
-        TestDescrition(method.getName());
-        logger.info(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> \n");
     }
 
     @AfterMethod
     public void TearDownTC(Method method) throws Exception {
         TestLogger logger = new TestLogger(getClass().getName());
         logger.info("<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< ");
-        logger.info("||    TestCase END:\t" + method.getName());
+        logger.info("||\t TestCase END:\t" + method.getName());
         logger.info("<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< \n");
     }
 
-    public void TestDescrition(String testName) {
+/*    public void TestDescription(String testName) {
         TestLogger logger = new TestLogger(getClass().getName());
-        logger.info("Step 1");
-        logger.info("Step 2");
-    }
+        logger.info("||\t\t Step 1");
+        logger.info("||\t\t Step 2");
+        logger.info(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> \n");
+    }*/
 
     public void s_CheckResponse(String res) throws JSONException {
         TestLogger logger = new TestLogger(s_JobName());

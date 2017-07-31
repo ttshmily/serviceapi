@@ -30,7 +30,7 @@ public class Common_Cities extends BaseTest {
 
     @Test
     public void test_01_查询默认城市列表_默认返回热门城市() {
-
+//        TestDescription("");
         String res = "";
         HashMap<String, String> query = new HashMap<>();
         try {
