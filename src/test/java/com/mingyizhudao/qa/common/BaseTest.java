@@ -175,6 +175,7 @@ public class BaseTest {
         TestLogger logger = new TestLogger(getClass().getName());
         logger.info(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> ");
         logger.info("||    TestCase START:\t" + method.getName());
+        TestDescrition(method.getName());
         logger.info(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> \n");
     }
 
@@ -184,6 +185,12 @@ public class BaseTest {
         logger.info("<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< ");
         logger.info("||    TestCase END:\t" + method.getName());
         logger.info("<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< \n");
+    }
+
+    public void TestDescrition(String testName) {
+        TestLogger logger = new TestLogger(getClass().getName());
+        logger.info("Step 1");
+        logger.info("Step 2");
     }
 
     public void s_CheckResponse(String res) throws JSONException {

@@ -125,7 +125,6 @@ public class TestLogger
         if (dir == null) {
             throw new Exception("dir is null ");
         }
-
     }
 
 }
