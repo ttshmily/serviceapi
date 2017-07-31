@@ -70,7 +70,7 @@
                 <configuration>
                     <argLine>-Dfile.encoding=UTF-8</argLine>
                     <suiteXmlFiles>
-                        <suiteXmlFile>${basedir}/resources/config-${profiles.active}/${suiteFilename}</suiteXmlFile>
+                        <suiteXmlFile>src/test/resources/config-${profiles.active}/${suiteFilename}</suiteXmlFile>
                     </suiteXmlFiles>
                 </configuration>
             </plugin>
