@@ -2,8 +2,8 @@ package com.mingyizhudao.qa.functiontest.bdassistant;
 
 import com.mingyizhudao.qa.common.BaseTest;
 import com.mingyizhudao.qa.dataprofile.doctor.DoctorProfile;
-import com.mingyizhudao.qa.functiontest.crm.RegisteredDoctor_Detail;
-import com.mingyizhudao.qa.functiontest.crm.RegisteredDoctor_Modify;
+import com.mingyizhudao.qa.functiontest.crm.user.management.RegisteredDoctor_Detail;
+import com.mingyizhudao.qa.functiontest.crm.user.management.RegisteredDoctor_Modify;
 import com.mingyizhudao.qa.functiontest.doctor.CreateOrder;
 import com.mingyizhudao.qa.utilities.HttpRequest;
 import com.mingyizhudao.qa.utilities.Generator;

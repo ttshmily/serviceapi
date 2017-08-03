@@ -2,8 +2,8 @@ package com.mingyizhudao.qa.common;
 
 
 import com.mingyizhudao.qa.dataprofile.doctor.DoctorProfile;
-import com.mingyizhudao.qa.functiontest.crm.RegisteredDoctor_CertifySync_V2;
-import com.mingyizhudao.qa.functiontest.crm.RegisteredDoctor_Certify_V2;
+import com.mingyizhudao.qa.functiontest.crm.user.management.RegisteredDoctor_CertifySync_V2;
+import com.mingyizhudao.qa.functiontest.crm.user.management.RegisteredDoctor_Certify_V2;
 import com.mingyizhudao.qa.functiontest.doctor.*;
 import com.mingyizhudao.qa.functiontest.login.CheckVerifyCode;
 import com.mingyizhudao.qa.functiontest.login.SendVerifyCode;
@@ -12,10 +12,7 @@ import com.mingyizhudao.qa.utilities.Generator;
 import net.sf.json.JSONException;
 import net.sf.json.JSONObject;
 import org.apache.log4j.PropertyConfigurator;
-import org.testng.*;
 import org.testng.annotations.*;
-import org.testng.xml.SuiteGenerator;
-import org.testng.xml.TestNGContentHandler;
 
 import java.io.IOException;
 import java.io.InputStream;

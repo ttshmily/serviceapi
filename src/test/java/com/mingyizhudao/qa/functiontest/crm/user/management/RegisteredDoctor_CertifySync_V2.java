@@ -1,0 +1,342 @@
+package com.mingyizhudao.qa.functiontest.crm.user.management;
+
+import com.mingyizhudao.qa.common.BaseTest;
+import com.mingyizhudao.qa.common.TestLogger;
+import com.mingyizhudao.qa.dataprofile.crm.ExpertProfile;
+import com.mingyizhudao.qa.dataprofile.doctor.DoctorProfile;
+import com.mingyizhudao.qa.functiontest.crm.kb.management.KBExpert_Create;
+import com.mingyizhudao.qa.functiontest.crm.kb.management.KBExpert_Detail;
+import com.mingyizhudao.qa.functiontest.doctor.GetDoctorProfile_V1;
+import com.mingyizhudao.qa.utilities.HttpRequest;
+import com.mingyizhudao.qa.utilities.Generator;
+import net.sf.json.JSONObject;
+import org.testng.Assert;
+import org.testng.annotations.Test;
+
+import java.io.IOException;
+import java.util.HashMap;
+
+/**
+ * Created by ttshmily on 1/6/2017.
+ */
+public class RegisteredDoctor_CertifySync_V2 extends BaseTest {
+
+    public static String clazzName = new Object() {
+        public String getClassName() {
+            String clazzName = this.getClass().getName();
+            return clazzName.substring(0, clazzName.lastIndexOf('$'));
+        }
+    }.getClassName();
+    public static TestLogger logger = new TestLogger(clazzName);
+    public static final String version = "/api/v2";
+    public static String uri = version+"/doctors/{id}/verificationssynchronization";
+
+    public static HashMap<String, String> s_CertifyAndSync(String regId, String verified_status) {
+        String res = "";
+        TestLogger logger = new TestLogger(s_JobName());
+        HashMap<String, String> result = new HashMap<>();
+        if ( regId == null || regId.isEmpty()) {
+            logger.error("医生ID不存在");
+            return null;
+        }
+        res = RegisteredDoctor_Detail.s_Detail(regId);
+        logger.debug(HttpRequest.unicodeString(res));
+        if (Generator.s_ParseJson(JSONObject.fromObject(res), "data:is_verified").equals("1")) {
+            logger.info("已认证医生");
+            result.put("is_verified", "1");
+            return result;
+        }
+        if (Generator.s_ParseJson(JSONObject.fromObject(res), "data:is_verified").equals("-1")) {
+            logger.error("认证失败状态不能直接进行验证");
+            result.put("is_verified", "-1");
+            return result;
+        }
+        if (Generator.s_ParseJson(JSONObject.fromObject(res), "data:is_verified").equals("0")) {
+            logger.error("信息不完整，不能验证");
+            result.put("is_verified", "0");
+            return result;
+        }
+        HashMap<String, String> pathValue = new HashMap<>();
+        pathValue.put("id", regId);
+
+        JSONObject body = new JSONObject();
+        body.put("status", verified_status);  // 认证
+        body.put("reason", "程序认证注册医生并关联到医库");
+        body.put("is_signed", "1");
+        try {
+            res = HttpRequest.s_SendPut(host_crm+uri, body.toString(), crm_token, pathValue);
+            logger.debug(HttpRequest.unicodeString(res));
+        } catch (IOException e) {
+            logger.error(e);
+        }
+        res = RegisteredDoctor_Detail.s_Detail(regId);
+        logger.debug(HttpRequest.unicodeString(res));
+        result.put("is_verified", Generator.s_ParseJson(JSONObject.fromObject(res), "data:is_verified"));
+        result.put("kb_id", Generator.s_ParseJson(JSONObject.fromObject(res), "data:register_id"));
+        return result;
+    }
+
+    public static HashMap<String, String> s_CertifyAndSync(String regId, String verified_status, String expertId) {
+        String res = "";
+        TestLogger logger = new TestLogger(s_JobName());
+        HashMap<String, String> result = new HashMap<>();
+        if ( regId == null || regId.isEmpty()) {
+            logger.error("医生ID不存在");
+            return null;
+        }
+        res = RegisteredDoctor_Detail.s_Detail(regId);
+        logger.debug(HttpRequest.unicodeString(res));
+        if (Generator.s_ParseJson(JSONObject.fromObject(res), "data:is_verified").equals("1")) {
+            logger.info("已认证医生");
+            result.put("is_verified", "1");
+            return result;
+        }
+        if (Generator.s_ParseJson(JSONObject.fromObject(res), "data:is_verified").equals("-1")) {
+            logger.error("认证失败状态不能直接进行验证");
+            result.put("is_verified", "-1");
+            return result;
+        }
+        if (Generator.s_ParseJson(JSONObject.fromObject(res), "data:is_verified").equals("0")) {
+            logger.error("信息不完整，不能验证");
+            result.put("is_verified", "0");
+            return result;
+        }
+        HashMap<String, String> pathValue = new HashMap<>();
+        pathValue.put("id", regId);
+
+        JSONObject body = new JSONObject();
+        body.put("status", verified_status);  // 认证
+        body.put("reason", "程序认证注册医生并关联到医库");
+        body.put("kb_id", expertId);
+        body.put("is_signed", "1");
+        try {
+            HttpRequest.s_SendPut(host_crm+uri, body.toString(), crm_token, pathValue);
+        } catch (IOException e) {
+            logger.error(e);
+        }
+        res = RegisteredDoctor_Detail.s_Detail(regId);
+        result.put("is_verified", Generator.s_ParseJson(JSONObject.fromObject(res), "data:is_verified"));
+        result.put("register_id", Generator.s_ParseJson(JSONObject.fromObject(res), "data:register_id"));
+        return result;
+    }
+
+    @Test
+    public void test_01_认证医生_有效医生ID_失败() {
+
+        String res = "";
+        HashMap<String, String> pathValue = new HashMap<>();
+        JSONObject body = new JSONObject();
+        DoctorProfile dp = new DoctorProfile(true);
+        HashMap<String, String> doctorInfo = s_CreateRegisteredDoctor(dp);
+        String doctorId = doctorInfo.get("id");
+        String tmpTokenn = doctorInfo.get("token");
+        if ( doctorId == null)
+            Assert.fail("创建医生失败，认证用例无法执行");
+        res = RegisteredDoctor_Detail.s_Detail(doctorId);
+        String is_verified = Generator.s_ParseJson(JSONObject.fromObject(res), "data:is_verified");
+        Assert.assertEquals(is_verified, "2");
+
+        pathValue.put("id", doctorId);
+        body.put("status", "-1");  // 认证失败
+        body.put("reason", "程序自动测试失败原因");  // 失败原因
+        try {
+            res = HttpRequest.s_SendPut(host_crm+uri, body.toString(), crm_token, pathValue);
+        } catch (IOException e) {
+            logger.error(e);
+        }
+        logger.info(HttpRequest.unicodeString(res));
+        s_CheckResponse(res);
+        Assert.assertEquals(code, "1000000");
+        res = RegisteredDoctor_Detail.s_Detail(doctorId);
+        is_verified = Generator.s_ParseJson(JSONObject.fromObject(res), "data:is_verified");
+        Assert.assertEquals(is_verified, "-1");
+        res = GetDoctorProfile_V1.s_MyProfile(tmpTokenn);
+        s_CheckResponse(res);
+        Assert.assertEquals(Generator.s_ParseJson(data, "doctor:reject_reason"), "程序自动测试失败原因");
+    }
+
+    @Test
+    public void test_02_认证医生_有效医生ID无专家ID() {
+
+        String res = "";
+        HashMap<String, String> pathValue = new HashMap<>();
+        JSONObject body = new JSONObject();
+
+        DoctorProfile dp = new DoctorProfile(true);
+        String doctorId = s_CreateRegisteredDoctor(dp).get("id");
+        if (doctorId == null) Assert.fail("创建医生失败，认证用例无法执行");
+        pathValue.put("id", doctorId);
+        body.put("status", "1");  // 认证成功
+        body.put("reason", "程序测试认真成功原因");  // 成功原因
+        try {
+            res = HttpRequest.s_SendPut(host_crm + uri, body.toString(), crm_token, pathValue);
+        } catch (IOException e) {
+            logger.error(e);
+        }
+        s_CheckResponse(res);
+        Assert.assertEquals(code, "1000000");
+
+        String res1 = RegisteredDoctor_Detail.s_Detail(doctorId);
+        s_CheckResponse(res1);
+        Assert.assertEquals(Generator.s_ParseJson(data, "is_verified"), "1");
+        String expertId = Generator.s_ParseJson(data, "register_id");
+        Assert.assertNotNull(expertId);
+        String mobile = Generator.s_ParseJson(data, "mobile");
+        String cityId = Generator.s_ParseJson(data, "city_id");
+
+        String res2 = KBExpert_Detail.s_Detail(expertId);
+        s_CheckResponse(res2);
+        Assert.assertEquals(code, "1000000");
+        Assert.assertEquals(Generator.s_ParseJson(data, "register_id"), doctorId);
+        Assert.assertEquals(Generator.s_ParseJson(data, "certified_status"), "CERTIFIED");
+        Assert.assertEquals(Generator.s_ParseJson(data, "source_type"), "DOCTOR_SERVICE");
+
+        // TODO: 专家信息和医生信息同步
+        Assert.assertEquals(Generator.s_ParseJson(data, "name"), dp.body.getJSONObject("doctor").getString("name"));
+        Assert.assertEquals(Generator.s_ParseJson(data, "mobile"), mobile);
+        Assert.assertEquals(Generator.s_ParseJson(data, "major_id"), dp.body.getJSONObject("doctor").getString("major_id"));
+        Assert.assertEquals(Generator.s_ParseJson(data, "hospital_id"), dp.body.getJSONObject("doctor").getString("hospital_id"));
+        Assert.assertEquals(Generator.s_ParseJson(data, "academic_title_list"), dp.body.getJSONObject("doctor").getString("academic_title_list"));
+        Assert.assertEquals(Generator.s_ParseJson(data, "medical_title_list"), dp.body.getJSONObject("doctor").getString("medical_title_list"));
+        Assert.assertEquals(Generator.s_ParseJson(data, "city_id"), cityId);
+
+    }
+
+    @Test
+    public void test_03_认证医生_有效医生ID有专家ID() {
+
+        String res = "";
+        HashMap<String, String> pathValue = new HashMap<>();
+        JSONObject body = new JSONObject();
+
+        DoctorProfile dp = new DoctorProfile(true);
+        String doctorId = s_CreateRegisteredDoctor(dp).get("id");
+        if (doctorId == null) Assert.fail("创建医生失败，认证用例无法执行");
+        pathValue.put("id", doctorId);
+
+        ExpertProfile ep = new ExpertProfile(true);
+        String expertId = KBExpert_Create.s_Create(ep).get("id");
+        if (expertId == null) Assert.fail("创建专家失败，认证用例无法执行");
+
+        body.put("status", "1");  // 认证成功
+        body.put("reason", "程序测试认真成功原因");  // 成功原因
+        body.put("kb_id", expertId);
+        body.put("is_signed", "0");
+        try {
+            res = HttpRequest.s_SendPut(host_crm + uri, body.toString(), crm_token, pathValue);
+        } catch (IOException e) {
+            logger.error(e);
+        }
+        s_CheckResponse(res);
+        Assert.assertEquals(code, "1000000");
+
+        String res1 = RegisteredDoctor_Detail.s_Detail(doctorId);
+        s_CheckResponse(res1);
+        Assert.assertEquals(Generator.s_ParseJson(data, "is_verified"), "1");
+        Assert.assertEquals(Generator.s_ParseJson(data, "register_id"), expertId);
+        String mobile = Generator.s_ParseJson(data, "mobile");
+        String cityId = Generator.s_ParseJson(data, "city_id");
+
+
+        String res2 = KBExpert_Detail.s_Detail(expertId);
+        s_CheckResponse(res2);
+        Assert.assertEquals(code, "1000000");
+        Assert.assertEquals(Generator.s_ParseJson(data, "register_id"), doctorId);
+        Assert.assertEquals(Generator.s_ParseJson(data, "certified_status"), "CERTIFIED");
+
+        Assert.assertEquals(Generator.s_ParseJson(data, "name"), dp.body.getJSONObject("doctor").getString("name"));
+        Assert.assertEquals(Generator.s_ParseJson(data, "mobile"), mobile);
+        Assert.assertEquals(Generator.s_ParseJson(data, "major_id"), dp.body.getJSONObject("doctor").getString("major_id"));
+        Assert.assertEquals(Generator.s_ParseJson(data, "hospital_id"), dp.body.getJSONObject("doctor").getString("hospital_id"));
+        Assert.assertEquals(Generator.s_ParseJson(data, "academic_title_list"), dp.body.getJSONObject("doctor").getString("academic_title_list"));
+        Assert.assertEquals(Generator.s_ParseJson(data, "medical_title_list"), dp.body.getJSONObject("doctor").getString("medical_title_list"));
+        Assert.assertEquals(Generator.s_ParseJson(data, "city_id"), cityId);
+    }
+
+    @Test
+    public void test_04_认证医生_同时新增为主刀() {
+
+        String res = "";
+        HashMap<String, String> pathValue = new HashMap<>();
+        JSONObject body = new JSONObject();
+
+        DoctorProfile dp = new DoctorProfile(true);
+        String doctorId = s_CreateRegisteredDoctor(dp).get("id");
+        if (doctorId == null) Assert.fail("创建医生失败，认证用例无法执行");
+        pathValue.put("id", doctorId);
+
+        ExpertProfile ep = new ExpertProfile(true);
+        String expertId = KBExpert_Create.s_Create(ep).get("id");
+        if (expertId == null) Assert.fail("创建专家失败，认证用例无法执行");
+
+        body.put("status", "1");  // 认证成功
+        body.put("reason", "程序测试认真成功原因");  // 成功原因
+        body.put("kb_id", expertId);
+        body.put("is_signed", "1");
+        try {
+            res = HttpRequest.s_SendPut(host_crm + uri, body.toString(), crm_token, pathValue);
+        } catch (IOException e) {
+            logger.error(e);
+        }
+        s_CheckResponse(res);
+        Assert.assertEquals(code, "1000000");
+
+        String res1 = RegisteredDoctor_Detail.s_Detail(doctorId);
+        s_CheckResponse(res1);
+        Assert.assertEquals(Generator.s_ParseJson(data, "is_verified"), "1");
+        Assert.assertEquals(Generator.s_ParseJson(data, "register_id"), expertId);
+        Assert.assertEquals(Generator.s_ParseJson(data, "signed_status"), "SIGNED");
+        String mobile = Generator.s_ParseJson(data, "mobile");
+        String cityId = Generator.s_ParseJson(data, "city_id");
+
+        String res2 = KBExpert_Detail.s_Detail(expertId);
+        s_CheckResponse(res2);
+        Assert.assertEquals(code, "1000000");
+        Assert.assertEquals(Generator.s_ParseJson(data, "register_id"), doctorId);
+        Assert.assertEquals(Generator.s_ParseJson(data, "certified_status"), "CERTIFIED");
+        Assert.assertEquals(Generator.s_ParseJson(data, "signed_status"), "SIGNED");
+
+        Assert.assertEquals(Generator.s_ParseJson(data, "name"), dp.body.getJSONObject("doctor").getString("name"));
+        Assert.assertEquals(Generator.s_ParseJson(data, "mobile"), mobile);
+        Assert.assertEquals(Generator.s_ParseJson(data, "major_id"), dp.body.getJSONObject("doctor").getString("major_id"));
+        Assert.assertEquals(Generator.s_ParseJson(data, "hospital_id"), dp.body.getJSONObject("doctor").getString("hospital_id"));
+        Assert.assertEquals(Generator.s_ParseJson(data, "academic_title_list"), dp.body.getJSONObject("doctor").getString("academic_title_list"));
+        Assert.assertEquals(Generator.s_ParseJson(data, "medical_title_list"), dp.body.getJSONObject("doctor").getString("medical_title_list"));
+        Assert.assertEquals(Generator.s_ParseJson(data, "city_id"), cityId);
+    }
+
+    @Test
+    public void test_05_认证医生_认证失败原因返回() {
+
+        String res = "";
+        HashMap<String, String> pathValue = new HashMap<>();
+        JSONObject body = new JSONObject();
+        DoctorProfile dp = new DoctorProfile(true);
+        HashMap<String, String> doctorInfo = s_CreateRegisteredDoctor(dp);
+        String doctorId = doctorInfo.get("id");
+        String tmpTokenn = doctorInfo.get("token");
+        if ( doctorId == null)
+            Assert.fail("创建医生失败，认证用例无法执行");
+        res = RegisteredDoctor_Detail.s_Detail(doctorId);
+        String is_verified = Generator.s_ParseJson(JSONObject.fromObject(res), "data:is_verified");
+        Assert.assertEquals(is_verified, "2");
+
+        pathValue.put("id", doctorId);
+        body.put("status", "-1");  // 认证失败
+        body.put("reason", "程序自动测试失败原因");  // 失败原因
+        try {
+            res = HttpRequest.s_SendPut(host_crm+uri, body.toString(), crm_token, pathValue);
+        } catch (IOException e) {
+            logger.error(e);
+        }
+        logger.info(HttpRequest.unicodeString(res));
+        s_CheckResponse(res);
+        Assert.assertEquals(code, "1000000");
+        res = RegisteredDoctor_Detail.s_Detail(doctorId);
+        is_verified = Generator.s_ParseJson(JSONObject.fromObject(res), "data:is_verified");
+        Assert.assertEquals(is_verified, "-1");
+        res = GetDoctorProfile_V1.s_MyProfile(tmpTokenn);
+        s_CheckResponse(res);
+        Assert.assertEquals(Generator.s_ParseJson(data, "doctor:reject_reason"), "程序自动测试失败原因");
+    }
+}

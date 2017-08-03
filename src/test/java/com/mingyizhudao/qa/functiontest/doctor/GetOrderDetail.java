@@ -3,7 +3,7 @@ package com.mingyizhudao.qa.functiontest.doctor;
 import com.mingyizhudao.qa.common.BaseTest;
 import com.mingyizhudao.qa.common.TestLogger;
 import com.mingyizhudao.qa.dataprofile.doctor.DoctorProfile;
-import com.mingyizhudao.qa.functiontest.crm.RegisteredDoctor_Certify_V2;
+import com.mingyizhudao.qa.functiontest.crm.user.management.RegisteredDoctor_Certify_V2;
 import com.mingyizhudao.qa.functiontest.login.CheckVerifyCode;
 import com.mingyizhudao.qa.functiontest.login.SendVerifyCode;
 import com.mingyizhudao.qa.utilities.HttpRequest;
