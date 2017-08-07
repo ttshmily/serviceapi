@@ -31,11 +31,7 @@ public class RegisteredDoctor_TrackList extends BaseTest {
         TestLogger logger = new TestLogger(s_JobName());
         HashMap<String, String> pathValue = new HashMap<>();
         pathValue.put("id", doctorId);
-        try {
-            res = HttpRequest.s_SendGet(host_crm + uri, "", crm_token, pathValue);
-        } catch (IOException e) {
-            logger.error(e);
-        }
+        res = HttpRequest.s_SendGet(host_crm + uri, "", crm_token, pathValue);
         return res;
     }
 

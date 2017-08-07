@@ -43,11 +43,7 @@ public class KBExpert_Diseases_V2 extends BaseTest {
         HashMap<String, String> pathValue = new HashMap<>();
         pathValue.put("doctor_id", expertId);
         JSONObject body = DiseaseJson(5, 4);
-        try {
-            res = HttpRequest.s_SendPost(host_crm+uri, body.toString(), crm_token, pathValue);
-        } catch (IOException e) {
-            logger.error(e);
-        }
+        res = HttpRequest.s_SendPost(host_crm+uri, body.toString(), crm_token, pathValue);
         s_CheckResponse(res);
         Assert.assertEquals(code, "1000000");
         res = KBExpert_Detail.s_Detail(expertId);
@@ -89,11 +85,7 @@ public class KBExpert_Diseases_V2 extends BaseTest {
         pathValue.put("doctor_id", expertId);
 
         JSONObject body = DiseaseJson(5, 4);
-        try {
-            res = HttpRequest.s_SendPost(host_crm+uri, body.toString(), crm_token, pathValue);
-        } catch (IOException e) {
-            logger.error(e);
-        }
+        res = HttpRequest.s_SendPost(host_crm+uri, body.toString(), crm_token, pathValue);
         s_CheckResponse(res);
         Assert.assertEquals(code, "1000000");
         res = KBExpert_Detail.s_Detail(expertId);

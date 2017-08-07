@@ -34,12 +34,7 @@ public class GetEmployeeProfile extends BaseTest {
         String res = "";
         HashMap<String, String> query = new HashMap<>();
         query.put("number", Generator.randomEmployeeId());
-        try {
-            res = HttpRequest.s_SendGet(host_doc +uri,query, mainToken);
-        } catch (IOException e) {
-            logger.error(e);
-            Assert.fail();
-        }
+        res = HttpRequest.s_SendGet(host_doc +uri,query, mainToken);
         s_CheckResponse(res);
         Assert.assertEquals(code, "1000000", "错误码应该是1000000");
         Assert.assertNotNull(Helper.s_ParseJson(data, "employee:id"), "id must not be null");
@@ -52,12 +47,7 @@ public class GetEmployeeProfile extends BaseTest {
         String res = "";
         HashMap<String, String> query = new HashMap<>();
         query.put("number", Generator.randomEmployeeId());
-        try {
-            res = HttpRequest.s_SendGet(host_doc +uri, query, "");
-        } catch (IOException e) {
-            logger.error(e);
-            Assert.fail();
-        }
+        res = HttpRequest.s_SendGet(host_doc +uri, query, "");
         s_CheckResponse(res);
         Assert.assertEquals(code, "1000000");
         Assert.assertNotNull(Helper.s_ParseJson(data, "employee:id"), "id must not be null");
@@ -68,11 +58,7 @@ public class GetEmployeeProfile extends BaseTest {
     @Test
     public void test_03_员工ID无效时返回空的Employee() {
         String res = "";
-        try {
-            res = HttpRequest.s_SendGet(host_doc + uri,"number=SH0444", "");
-        } catch (IOException e) {
-            logger.error(e);
-        }
+        res = HttpRequest.s_SendGet(host_doc + uri,"number=SH0444", "");
         s_CheckResponse(res);
         Assert.assertEquals(code, "1000000");
         Assert.assertNull(Helper.s_ParseJson(data, "employee:id"));

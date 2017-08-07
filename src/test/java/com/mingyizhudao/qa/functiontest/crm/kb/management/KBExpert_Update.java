@@ -35,11 +35,7 @@ public class KBExpert_Update extends BaseTest {
         TestLogger logger = new TestLogger(s_JobName());
         HashMap<String, String> pathValue = new HashMap<>();
         pathValue.put("id", expertId);
-        try {
-            res = HttpRequest.s_SendPut(host_crm+uri, ep.body.toString(), crm_token, pathValue);
-        } catch (IOException e) {
-            logger.error(e);
-        }
+        res = HttpRequest.s_SendPut(host_crm+uri, ep.body.toString(), crm_token, pathValue);
         JSONObject node = JSONObject.fromObject(res);
         HashMap<String, String> result = new HashMap<>();
         if(!node.getString("code").equals("1000000")) return null;
@@ -64,11 +60,7 @@ public class KBExpert_Update extends BaseTest {
         ExpertProfile epModified = new ExpertProfile(false);
         String name = "改名了";
         epModified.body.put("name", name);
-        try {
-            res = HttpRequest.s_SendPut(host_crm+uri, epModified.body.toString(), "", pathValue);
-        } catch (IOException e) {
-            logger.error(e);
-        }
+        res = HttpRequest.s_SendPut(host_crm+uri, epModified.body.toString(), "", pathValue);
         s_CheckResponse(res);
         Assert.assertNotEquals(code, "1000000", "没有token不能操作");
     }
@@ -85,11 +77,7 @@ public class KBExpert_Update extends BaseTest {
         ExpertProfile epModified = new ExpertProfile(false);
         String name = "改名了";
         epModified.body.put("name", name);
-        try {
-            res = HttpRequest.s_SendPut(host_crm+uri, epModified.body.toString(), crm_token, pathValue);
-        } catch (IOException e) {
-            logger.error(e);
-        }
+        res = HttpRequest.s_SendPut(host_crm+uri, epModified.body.toString(), crm_token, pathValue);
         s_CheckResponse(res);
         Assert.assertEquals(code, "1000000", "我想1000000");
 
@@ -110,11 +98,7 @@ public class KBExpert_Update extends BaseTest {
         ExpertProfile epModified = new ExpertProfile(false);
         String hospitalId = Generator.randomHospitalId();
         epModified.body.put("hospital_id", hospitalId);
-        try {
-            res = HttpRequest.s_SendPut(host_crm+uri, epModified.body.toString(), crm_token, pathValue);
-        } catch (IOException e) {
-            logger.error(e);
-        }
+        res = HttpRequest.s_SendPut(host_crm+uri, epModified.body.toString(), crm_token, pathValue);
         s_CheckResponse(res);
         Assert.assertEquals(code, "1000000", "我想1000000");
 
@@ -143,11 +127,7 @@ public class KBExpert_Update extends BaseTest {
         ExpertProfile epModified = new ExpertProfile(false);
         String cityId = Generator.randomCityId();
         epModified.body.put("city_id", cityId);
-        try {
-            res = HttpRequest.s_SendPut(host_crm+uri, epModified.body.toString(), crm_token, pathValue);
-        } catch (IOException e) {
-            logger.error(e);
-        }
+        res = HttpRequest.s_SendPut(host_crm+uri, epModified.body.toString(), crm_token, pathValue);
         s_CheckResponse(res);
         Assert.assertNotEquals(code, "1000000", "禁止更新city_id");
 
@@ -166,11 +146,7 @@ public class KBExpert_Update extends BaseTest {
         ExpertProfile epModified = new ExpertProfile(false);
         String countryId = Generator.randomCountyId();
         epModified.body.put("county_id", countryId);
-        try {
-            res = HttpRequest.s_SendPut(host_crm+uri, epModified.body.toString(), crm_token, pathValue);
-        } catch (IOException e) {
-            logger.error(e);
-        }
+        res = HttpRequest.s_SendPut(host_crm+uri, epModified.body.toString(), crm_token, pathValue);
         s_CheckResponse(res);
         Assert.assertNotEquals(code, "1000000", "禁止更新country_id");
 
@@ -189,13 +165,9 @@ public class KBExpert_Update extends BaseTest {
         ExpertProfile epModified = new ExpertProfile(false);
         String majorId = Generator.randomMajorId();
         epModified.body.put("major_id", majorId);
-        try {
-            res = HttpRequest.s_SendPut(host_crm+uri, epModified.body.toString(), crm_token, pathValue);
-            s_CheckResponse(res);
-            Assert.assertEquals(code, "1000000", "更新major_id失败");
-        } catch (IOException e) {
-            logger.error(e);
-        }
+        res = HttpRequest.s_SendPut(host_crm+uri, epModified.body.toString(), crm_token, pathValue);
+        s_CheckResponse(res);
+        Assert.assertEquals(code, "1000000", "更新major_id失败");
         res = KBExpert_Detail.s_Detail(expertId);
         s_CheckResponse(res);
         Assert.assertEquals(Helper.s_ParseJson(data, "major_id"), majorId, "专业ID没有更新");
@@ -203,13 +175,9 @@ public class KBExpert_Update extends BaseTest {
 
 
         epModified.body.replace("major_id", "11"+majorId);
-        try {
-            res = HttpRequest.s_SendPut(host_crm+uri, epModified.body.toString(), crm_token, pathValue);
-            s_CheckResponse(res);
-            Assert.assertNotEquals(code, "1000000", "错误major_id");
-        } catch (IOException e) {
-            logger.error(e);
-        }
+        res = HttpRequest.s_SendPut(host_crm+uri, epModified.body.toString(), crm_token, pathValue);
+        s_CheckResponse(res);
+        Assert.assertNotEquals(code, "1000000", "错误major_id");
         res = KBExpert_Detail.s_Detail(expertId);
         s_CheckResponse(res);
         Assert.assertEquals(Helper.s_ParseJson(data, "major_id"), majorId, "专业ID没有更新");
@@ -230,11 +198,7 @@ public class KBExpert_Update extends BaseTest {
         String academic_title_list = Generator.randomAcademicId();
         epModified.body.put("medical_title_list", medical_title_list);
         epModified.body.put("academic_title_list", academic_title_list);
-        try {
-            res = HttpRequest.s_SendPut(host_crm+uri, epModified.body.toString(), crm_token, pathValue);
-        } catch (IOException e) {
-            logger.error(e);
-        }
+        res = HttpRequest.s_SendPut(host_crm+uri, epModified.body.toString(), crm_token, pathValue);
         s_CheckResponse(res);
         Assert.assertEquals(code, "1000000", "更新medical_title_list失败");
 
@@ -247,11 +211,7 @@ public class KBExpert_Update extends BaseTest {
         academic_title_list = Generator.randomAcademicId();
         epModified.body.replace("medical_title_list", medical_title_list);
         epModified.body.replace("academic_title_list", academic_title_list);
-        try {
-            res = HttpRequest.s_SendPut(host_crm+uri, epModified.body.toString(), crm_token, pathValue);
-        } catch (IOException e) {
-            logger.error(e);
-        }
+        res = HttpRequest.s_SendPut(host_crm+uri, epModified.body.toString(), crm_token, pathValue);
         s_CheckResponse(res);
         Assert.assertEquals(code, "1000000", "更新medical_title_list失败");
 
@@ -276,11 +236,7 @@ public class KBExpert_Update extends BaseTest {
         epModified.body.put("specialty", specialty);
         epModified.body.put("honour", honour);
         epModified.body.put("description", description);
-        try {
-            res = HttpRequest.s_SendPut(host_crm+uri, epModified.body.toString(), crm_token, pathValue);
-        } catch (IOException e) {
-            logger.error(e);
-        }
+        res = HttpRequest.s_SendPut(host_crm+uri, epModified.body.toString(), crm_token, pathValue);
         s_CheckResponse(res);
         Assert.assertEquals(code, "1000000", "更新三个说明字段失败");
 
@@ -317,11 +273,7 @@ public class KBExpert_Update extends BaseTest {
         epModified.body.accumulate("avatar_url", medium);
         epModified.body.accumulate("avatar_url", small);
         logger.info(epModified.body.toString());
-        try {
-            res = HttpRequest.s_SendPut(host_crm+uri, epModified.body.toString(), crm_token, pathValue);
-        } catch (IOException e) {
-            logger.error(e);
-        }
+        res = HttpRequest.s_SendPut(host_crm+uri, epModified.body.toString(), crm_token, pathValue);
         s_CheckResponse(res);
         Assert.assertEquals(code, "1000000", "医院图片更新失败");
 
@@ -374,11 +326,7 @@ public class KBExpert_Update extends BaseTest {
         large.put("type", "5");
         epModified.body.accumulate("avatar_url", large);
         epModified.body.accumulate("avatar_url", small);
-        try {
-            res = HttpRequest.s_SendPut(host_crm+uri, epModified.body.toString(), crm_token, pathValue);
-        } catch (IOException e) {
-            logger.error(e);
-        }
+        res = HttpRequest.s_SendPut(host_crm+uri, epModified.body.toString(), crm_token, pathValue);
         s_CheckResponse(res);
         Assert.assertEquals(code, "1000000", "更新已关联的医库医生信息失败");
 
@@ -429,11 +377,7 @@ public class KBExpert_Update extends BaseTest {
         ExpertProfile epModified = new ExpertProfile(false);
 
         epModified.body.put("signed_status", "0");
-        try {
-            res = HttpRequest.s_SendPut(host_crm+uri, epModified.body.toString(), crm_token, pathValue);
-        } catch (IOException e) {
-            logger.error(e);
-        }
+        res = HttpRequest.s_SendPut(host_crm+uri, epModified.body.toString(), crm_token, pathValue);
         s_CheckResponse(res);
         Assert.assertEquals(code, "1000000", "更新主刀专家状态字段失败");
 
@@ -442,11 +386,7 @@ public class KBExpert_Update extends BaseTest {
         Assert.assertEquals(Helper.s_ParseJson(data, "signed_status"), "NOT_SIGNED");
 
         epModified.body.put("signed_status", "1");
-        try {
-            res = HttpRequest.s_SendPut(host_crm+uri, epModified.body.toString(), crm_token, pathValue);
-        } catch (IOException e) {
-            logger.error(e);
-        }
+        res = HttpRequest.s_SendPut(host_crm+uri, epModified.body.toString(), crm_token, pathValue);
         s_CheckResponse(res);
         Assert.assertEquals(code, "1000000", "更新主刀专家状态字段失败");
 
@@ -475,11 +415,7 @@ public class KBExpert_Update extends BaseTest {
         pathValue.put("id", expertId);
         ExpertProfile epModified = new ExpertProfile(false);
         epModified.body.put("signed_status", "0");
-        try {
-            res = HttpRequest.s_SendPut(host_crm+uri, epModified.body.toString(), crm_token, pathValue);
-        } catch (IOException e) {
-            logger.error(e);
-        }
+        res = HttpRequest.s_SendPut(host_crm+uri, epModified.body.toString(), crm_token, pathValue);
         s_CheckResponse(res);
         Assert.assertEquals(code, "1000000", "更新主刀专家状态字段失败");
 
@@ -488,11 +424,7 @@ public class KBExpert_Update extends BaseTest {
         Assert.assertEquals(Helper.s_ParseJson(data, "signed_status"), "NOT_SIGNED");
 
         epModified.body.put("signed_status", "1");
-        try {
-            res = HttpRequest.s_SendPut(host_crm+uri, epModified.body.toString(), crm_token, pathValue);
-        } catch (IOException e) {
-            logger.error(e);
-        }
+        res = HttpRequest.s_SendPut(host_crm+uri, epModified.body.toString(), crm_token, pathValue);
         s_CheckResponse(res);
         Assert.assertEquals(code, "1000000", "更新主刀专家状态字段失败");
 

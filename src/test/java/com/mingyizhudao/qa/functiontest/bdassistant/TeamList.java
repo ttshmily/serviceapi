@@ -23,11 +23,7 @@ public class TeamList extends BaseTest {
 
         String res = "";
         HashMap<String, String> map = new HashMap<>();
-        try {
-            res = HttpRequest.s_SendGet(host_bda + uri, map, "", null);
-        } catch (IOException e) {
-            logger.error(e);
-        }
+        res = HttpRequest.s_SendGet(host_bda + uri, map, "", null);
         s_CheckResponse(res);
         Assert.assertNotEquals(code, "1000000", "没有token不应该调用成功");
     }
@@ -37,11 +33,7 @@ public class TeamList extends BaseTest {
 
         String res = "";
         HashMap<String, String> map = new HashMap<>();
-        try {
-            res = HttpRequest.s_SendGet(host_bda + uri, map, bda_token_staff);
-        } catch (IOException e) {
-            logger.error(e);
-        }
+        res = HttpRequest.s_SendGet(host_bda + uri, map, bda_token_staff);
         s_CheckResponse(res);
         Assert.assertNotEquals(code, "1000000", "非主管用户能调用teamList接口");
     }
@@ -51,11 +43,7 @@ public class TeamList extends BaseTest {
 
         String res = "";
         HashMap<String, String> map = new HashMap<>();
-        try {
-            res = HttpRequest.s_SendGet(host_bda + uri, map, bda_token);
-        } catch (IOException e) {
-            logger.error(e);
-        }
+        res = HttpRequest.s_SendGet(host_bda + uri, map, bda_token);
         s_CheckResponse(res);
         Assert.assertEquals(code, "1000000", "主管用户不能调用teamList接口");
     }

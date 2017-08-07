@@ -35,11 +35,7 @@ public class Common_Counties extends BaseTest {
         for (int i=0; i<10; i++) {
             String cityId = Generator.randomCityId();
             query.replace("id", cityId);
-            try {
-                res = HttpRequest.s_SendGet(host_crm + uri, query, crm_token);
-            } catch (IOException e) {
-                logger.error(e);
-            }
+            res = HttpRequest.s_SendGet(host_crm + uri, query, crm_token);
             s_CheckResponse(res);
             Assert.assertEquals(code, "1000000");
             //TODO
@@ -57,11 +53,7 @@ public class Common_Counties extends BaseTest {
 
         String res = "";
         HashMap<String, String> query = new HashMap<>();
-        try {
-            res = HttpRequest.s_SendGet(host_crm+uri, query, crm_token);
-        } catch (IOException e) {
-            logger.error(e);
-        }
+        res = HttpRequest.s_SendGet(host_crm+uri, query, crm_token);
         s_CheckResponse(res);
         Assert.assertNotEquals(code, "1000000");
 

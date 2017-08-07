@@ -36,11 +36,7 @@ public class Common_SearchDiseases extends BaseTest {
         query.put("sub_cat_id", "5");
         query.put("name", "肿瘤");
 
-        try {
-            res = HttpRequest.s_SendGet(host_crm + uri, query, crm_token, null);
-        } catch (IOException e) {
-            logger.error(e);
-        }
+        res = HttpRequest.s_SendGet(host_crm + uri, query, crm_token);
         s_CheckResponse(res);
         Assert.assertEquals(code, "1000000");
 
@@ -56,11 +52,7 @@ public class Common_SearchDiseases extends BaseTest {
         query.put("cat_id", "1");
         query.put("sub_cat_id", "6");
         query.put("name", "肿瘤");
-        try {
-            res = HttpRequest.s_SendGet(host_crm + uri, query, crm_token, null);
-        } catch (IOException e) {
-            logger.error(e);
-        }
+        res = HttpRequest.s_SendGet(host_crm + uri, query, crm_token);
         s_CheckResponse(res);
         Assert.assertEquals(code, "1000000");
     }

@@ -36,11 +36,7 @@ public class GetOrderDetail_V1 extends BaseTest {
         pathValue.put("orderId", orderId);
         HashMap<String, String> query = new HashMap<>();
         query.put("flag", "1");
-        try {
-            res = HttpRequest.s_SendGet(host_doc +uri, query, token, pathValue);
-        } catch (IOException e) {
-            logger.error(e);
-        }
+        res = HttpRequest.s_SendGet(host_doc +uri, query, token, pathValue);
         return res;
     }
 
@@ -51,11 +47,7 @@ public class GetOrderDetail_V1 extends BaseTest {
         pathValue.put("orderId", orderId);
         HashMap<String, String> query = new HashMap<>();
         query.put("flag", "2");
-        try {
-            res = HttpRequest.s_SendGet(host_doc + uri, query, token, pathValue);
-        } catch (IOException e) {
-            logger.error(e);
-        }
+        res = HttpRequest.s_SendGet(host_doc + uri, query, token, pathValue);
         return res;
     }
 
@@ -68,11 +60,7 @@ public class GetOrderDetail_V1 extends BaseTest {
         pathValue.put("orderId", orderId);
         HashMap<String, String> query = new HashMap<>();
         query.put("flag", "1");
-        try {
-            res = HttpRequest.s_SendGet(host_doc +uri,query, mainToken, pathValue);
-        } catch (IOException e) {
-            logger.error(e);
-        }
+        res = HttpRequest.s_SendGet(host_doc +uri,query, mainToken, pathValue);
         s_CheckResponse(res);
         Assert.assertNotEquals(Helper.s_ParseJson(data,"order:patient_name"), "", "患者姓名字段缺失");
         Assert.assertNotEquals(Helper.s_ParseJson(data,"order:patient_gender"), "", "患者性别字段缺失");
@@ -103,11 +91,7 @@ public class GetOrderDetail_V1 extends BaseTest {
         pathValue.put("orderId", "20000000000");
         HashMap<String, String> query = new HashMap<>();
         query.put("flag", "1");
-        try {
-            res = HttpRequest.s_SendGet(host_doc + uri,query, mainToken, pathValue);
-        } catch (IOException e) {
-            logger.error(e);
-        }
+        res = HttpRequest.s_SendGet(host_doc + uri,query, mainToken, pathValue);
         s_CheckResponse(res);
         Assert.assertEquals(code, "2210430");
     }
@@ -119,11 +103,7 @@ public class GetOrderDetail_V1 extends BaseTest {
         pathValue.put("orderId", "20000asdfa000");
         HashMap<String, String> query = new HashMap<>();
         query.put("flag", "1");
-        try {
-            res = HttpRequest.s_SendGet(host_doc + uri,query, mainToken, pathValue);
-        } catch (IOException e) {
-            logger.error(e);
-        }
+        res = HttpRequest.s_SendGet(host_doc + uri,query, mainToken, pathValue);
         s_CheckResponse(res);
         Assert.assertEquals(code, "2210430");
 
@@ -143,11 +123,7 @@ public class GetOrderDetail_V1 extends BaseTest {
         String tmpToken = doctorInfo.get("token");
         HashMap<String, String> query = new HashMap<>();
         query.put("flag", "1");
-        try {
-            res = HttpRequest.s_SendGet(host_doc + uri, query, tmpToken, pathValue);
-        } catch (IOException e) {
-            logger.error(e);
-        }
+        res = HttpRequest.s_SendGet(host_doc + uri, query, tmpToken, pathValue);
         s_CheckResponse(res);
         Assert.assertNotEquals(code, "1000000");
     }
@@ -163,22 +139,14 @@ public class GetOrderDetail_V1 extends BaseTest {
         pathValue.put("orderId", orderId);
         HashMap<String, String> query = new HashMap<>();
         query.put("flag", "2");
-        try {
-            res = HttpRequest.s_SendGet(host_doc + uri, query, mainToken, pathValue);
-        } catch (IOException e) {
-            logger.error(e);
-        }
+        res = HttpRequest.s_SendGet(host_doc + uri, query, mainToken, pathValue);
         s_CheckResponse(res);
         Assert.assertEquals(code, "1000000");
         Assert.assertEquals(Helper.s_ParseJson(data, "order:order_number"), orderId);
         Assert.assertNotNull(Helper.s_ParseJson(data, "order:NodeList:recommend_at"));
 
         Order_ThreewayCall_V2.s_CallV2(orderId, "success");
-        try {
-            res = HttpRequest.s_SendGet(host_doc + uri, query, mainToken, pathValue);
-        } catch (IOException e) {
-            logger.error(e);
-        }
+        res = HttpRequest.s_SendGet(host_doc + uri, query, mainToken, pathValue);
         s_CheckResponse(res);
         Assert.assertEquals(code, "1000000");
         Assert.assertEquals(Helper.s_ParseJson(data, "order:order_number"), orderId);
@@ -187,11 +155,7 @@ public class GetOrderDetail_V1 extends BaseTest {
         Assert.assertEquals(Helper.s_ParseJson(data, "order:status"), "3000");
 
         Order_Rollback.s_Rollback(orderId);
-        try {
-            res = HttpRequest.s_SendGet(host_doc + uri, query, mainToken, pathValue);
-        } catch (IOException e) {
-            logger.error(e);
-        }
+        res = HttpRequest.s_SendGet(host_doc + uri, query, mainToken, pathValue);
         s_CheckResponse(res);
         Assert.assertEquals(code, "1000000");
         Assert.assertEquals(Helper.s_ParseJson(data, "order:order_number"), orderId);

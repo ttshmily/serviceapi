@@ -31,11 +31,7 @@ public class Order_List extends BaseTest {
     public static int s_OrderList() {
         String res = "";
         TestLogger logger = new TestLogger(s_JobName());
-        try {
-            res = HttpRequest.s_SendGet(host_crm+uri, "", crm_token);
-        } catch (IOException e) {
-            logger.error(e);
-        }
+        res = HttpRequest.s_SendGet(host_crm+uri, "", crm_token);
         return Integer.parseInt(Helper.s_ParseJson(JSONObject.fromObject(res), "data:size"));
     }
 
@@ -49,12 +45,7 @@ public class Order_List extends BaseTest {
         query.put("page", "1");
         query.put("pageSize", "1");
         //query.put("hideTest", "true");
-        try {
-            res = HttpRequest.s_SendGet(host_crm+uri, query, crm_token);
-            logger.debug(Helper.unicodeString(res));
-        } catch (IOException e) {
-            logger.error(e);
-        }
+        res = HttpRequest.s_SendGet(host_crm+uri, query, crm_token);
         if (Helper.s_ParseJson(JSONObject.fromObject(res), "data:size") == "0") return null;
         return Helper.s_ParseJson(JSONObject.fromObject(res), "data:list(0):order_number");
     }
@@ -67,11 +58,7 @@ public class Order_List extends BaseTest {
         query.put("pageSize", "1");
 //        query.put("hideTest", "true");
 
-        try {
-            res = HttpRequest.s_SendGet(host_crm+uri, query, crm_token);
-        } catch (IOException e) {
-            logger.error(e);
-        }
+        res = HttpRequest.s_SendGet(host_crm+uri, query, crm_token);
         if (Helper.s_ParseJson(JSONObject.fromObject(res), "data:size") == "0") return null;
         return Helper.s_ParseJson(JSONObject.fromObject(res), "data:list(0):order_number");
     }
@@ -83,11 +70,7 @@ public class Order_List extends BaseTest {
         HashMap<String, String> query = new HashMap<>();
         query.put("page", "1");
         query.put("pageSize", "10");
-        try {
-            res = HttpRequest.s_SendGet(host_crm+uri, "", crm_token);
-        } catch (IOException e) {
-            logger.error(e);
-        }
+        res = HttpRequest.s_SendGet(host_crm+uri, "", crm_token);
         s_CheckResponse(res);
         Assert.assertEquals(code, "1000000");
         Assert.assertEquals(Helper.s_ParseJson(data, "list()"), "10");
@@ -101,11 +84,7 @@ public class Order_List extends BaseTest {
         HashMap<String, String> query = new HashMap<>();
         query.put("page", "1");
         query.put("pageSize", "100");
-        try {
-            res = HttpRequest.s_SendGet(host_crm+uri, query, crm_token);
-        } catch (IOException e) {
-            logger.error(e);
-        }
+        res = HttpRequest.s_SendGet(host_crm+uri, query, crm_token);
         s_CheckResponse(res);
         Assert.assertEquals(code, "1000000");
         Assert.assertEquals(Helper.s_ParseJson(data, "list()"), "100");
@@ -114,21 +93,13 @@ public class Order_List extends BaseTest {
         int total = size/100;
         for (int i=1; i<=total; i++) {
             query.replace("page", String.valueOf(i));
-            try {
-                res = HttpRequest.s_SendGet(host_crm+uri, query, crm_token);
-            } catch (IOException e) {
-                logger.error(e);
-            }
+            res = HttpRequest.s_SendGet(host_crm+uri, query, crm_token);
             s_CheckResponse(res);
             Assert.assertEquals(code, "1000000");
             Assert.assertEquals(Helper.s_ParseJson(data, "list()"), "100");
         }
         query.replace("page", String.valueOf(total+1));
-        try {
-            res = HttpRequest.s_SendGet(host_crm+uri, query, crm_token);
-        } catch (IOException e) {
-            logger.error(e);
-        }
+        res = HttpRequest.s_SendGet(host_crm+uri, query, crm_token);
         s_CheckResponse(res);
         Assert.assertEquals(code, "1000000");
         Assert.assertEquals(Helper.s_ParseJson(data, "list()"), String.valueOf(size-100*total));
@@ -142,11 +113,7 @@ public class Order_List extends BaseTest {
         query.put("page", "1");
         query.put("pageSize", "500");
         query.put("isRecommended", "true");
-        try {
-            res = HttpRequest.s_SendGet(host_crm+uri, query, crm_token);
-        } catch (IOException e) {
-            logger.error(e);
-        }
+        res = HttpRequest.s_SendGet(host_crm+uri, query, crm_token);
         s_CheckResponse(res);
         Assert.assertEquals(code, "1000000");
         JSONArray orderList = data.getJSONArray("list");
@@ -165,11 +132,7 @@ public class Order_List extends BaseTest {
         query.put("pageSize", "500");
 
         query.put("status", "4000");
-        try {
-            res = HttpRequest.s_SendGet(host_crm+uri, query, crm_token);
-        } catch (IOException e) {
-            logger.error(e);
-        }
+        res = HttpRequest.s_SendGet(host_crm+uri, query, crm_token);
         s_CheckResponse(res);
         Assert.assertEquals(code, "1000000");
         JSONArray orderList = data.getJSONArray("list");
@@ -179,11 +142,7 @@ public class Order_List extends BaseTest {
         }
 
         query.replace("status", "5000");
-        try {
-            res = HttpRequest.s_SendGet(host_crm+uri, query, crm_token);
-        } catch (IOException e) {
-            logger.error(e);
-        }
+        res = HttpRequest.s_SendGet(host_crm+uri, query, crm_token);
         s_CheckResponse(res);
         Assert.assertEquals(code, "1000000");
         orderList = data.getJSONArray("list");
@@ -193,11 +152,7 @@ public class Order_List extends BaseTest {
         }
 
         query.replace("status", "4020");
-        try {
-            res = HttpRequest.s_SendGet(host_crm+uri, query, crm_token);
-        } catch (IOException e) {
-            logger.error(e);
-        }
+        res = HttpRequest.s_SendGet(host_crm+uri, query, crm_token);
         s_CheckResponse(res);
         Assert.assertEquals(code, "1000000");
         orderList = data.getJSONArray("list");
@@ -217,11 +172,7 @@ public class Order_List extends BaseTest {
 
         query.put("searchKey", "agent_name");
         query.put("searchValue", "庄恕");
-        try {
-            res = HttpRequest.s_SendGet(host_crm+uri, query, crm_token);
-        } catch (IOException e) {
-            logger.error(e);
-        }
+        res = HttpRequest.s_SendGet(host_crm+uri, query, crm_token);
         s_CheckResponse(res);
         Assert.assertEquals(code, "1000000");
         JSONArray orderList = data.getJSONArray("list");

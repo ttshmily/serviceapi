@@ -28,11 +28,7 @@ public class RegisteredDoctor_Counts extends BaseTest {
     public void test_01_获取各种认证状态下医生数量() {
 
         String res = "";
-        try {
-            res = HttpRequest.s_SendGet(host_crm + uri, "", crm_token, null);
-        } catch (IOException e) {
-            logger.error(e);
-        }
+        res = HttpRequest.s_SendGet(host_crm + uri, "", crm_token, null);
         s_CheckResponse(res);
         Assert.assertEquals(code, "1000000");
         Assert.assertEquals(Helper.s_ParseJson(data, "list()"), "4"); // 4种状态
@@ -46,12 +42,7 @@ public class RegisteredDoctor_Counts extends BaseTest {
     public void test_02_获取各种认证状态下医生数量_校验数据正确性() {
 
         String res = "";
-
-        try {
-            res = HttpRequest.s_SendGet(host_crm + uri, "", crm_token, null);
-        } catch (IOException e) {
-            logger.error(e);
-        }
+        res = HttpRequest.s_SendGet(host_crm + uri, "", crm_token, null);
         s_CheckResponse(res);
         Assert.assertEquals(code, "1000000");
         Assert.assertEquals(Helper.s_ParseJson(data, "list()"), "4"); // 4种状态

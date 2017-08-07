@@ -28,11 +28,7 @@ public class TeamListV2 extends BaseTest {
     public void test_01_没有token调用应该失败() {
         String res = "";
         HashMap<String, String> query = new HashMap<>();
-        try {
-            res = HttpRequest.s_SendGet(host_bda + uri, query, "");
-        } catch (IOException e) {
-            logger.error(e);
-        }
+        res = HttpRequest.s_SendGet(host_bda + uri, query, "");
         s_CheckResponse(res);
         Assert.assertNotEquals(code, "1000000", "没有token不应该调用成功");
     }
@@ -40,11 +36,7 @@ public class TeamListV2 extends BaseTest {
     public void test_02_token错误应该返回错误() {
         String res = "";
         HashMap<String, String> query = new HashMap<>();
-        try {
-            res = HttpRequest.s_SendGet(host_bda + uri, query, "aaaaaaa");
-        } catch (IOException e) {
-            logger.error(e);
-        }
+        res = HttpRequest.s_SendGet(host_bda + uri, query, "aaaaaaa");
         s_CheckResponse(res);
         Assert.assertNotEquals(code, "1000000", "错误token不应该调用成功");
     }
@@ -52,11 +44,7 @@ public class TeamListV2 extends BaseTest {
     public void test_03_非主管token应该返回错误() {
         String res = "";
         HashMap<String, String> query = new HashMap<>();
-        try {
-            res = HttpRequest.s_SendGet(host_bda + uri, query, bda_token_staff);
-        } catch (IOException e) {
-            logger.error(e);
-        }
+        res = HttpRequest.s_SendGet(host_bda + uri, query, bda_token_staff);
         s_CheckResponse(res);
         Assert.assertNotEquals(code, "1000000", "非主管token不应该调用成功");
     }
@@ -66,11 +54,7 @@ public class TeamListV2 extends BaseTest {
         HashMap<String, String> query = new HashMap<>();
         query.put("sortKey", "orderCounts");
         query.put("sortValue", "asc");
-        try {
-            res = HttpRequest.s_SendGet(host_bda + uri, query, bda_token);
-        } catch (IOException e) {
-            logger.error(e);
-        }
+        res = HttpRequest.s_SendGet(host_bda + uri, query, bda_token);
         s_CheckResponse(res);
         Assert.assertEquals(code, "1000000");
         JSONArray bd_list = data.getJSONArray("list");
@@ -86,11 +70,7 @@ public class TeamListV2 extends BaseTest {
 
         query.replace("sortKey", "orderCounts");
         query.replace("sortValue", "desc");
-        try {
-            res = HttpRequest.s_SendGet(host_bda + uri, query, bda_token);
-        } catch (IOException e) {
-            logger.error(e);
-        }
+        res = HttpRequest.s_SendGet(host_bda + uri, query, bda_token);
         s_CheckResponse(res);
         Assert.assertEquals(code, "1000000");
         bd_list = data.getJSONArray("list");
@@ -107,11 +87,7 @@ public class TeamListV2 extends BaseTest {
         HashMap<String, String> query = new HashMap<>();
         query.put("sortKey", "disActivationDoctorCount");
         query.put("sortValue", "asc");
-        try {
-            res = HttpRequest.s_SendGet(host_bda + uri, query, bda_token);
-        } catch (IOException e) {
-            logger.error(e);
-        }
+        res = HttpRequest.s_SendGet(host_bda + uri, query, bda_token);
         s_CheckResponse(res);
         Assert.assertEquals(code, "1000000");
         JSONArray bd_list = data.getJSONArray("list");
@@ -127,11 +103,7 @@ public class TeamListV2 extends BaseTest {
 
         query.replace("sortKey", "disActivationDoctorCount");
         query.replace("sortValue", "desc");
-        try {
-            res = HttpRequest.s_SendGet(host_bda + uri, query, bda_token);
-        } catch (IOException e) {
-            logger.error(e);
-        }
+        res = HttpRequest.s_SendGet(host_bda + uri, query, bda_token);
         s_CheckResponse(res);
         Assert.assertEquals(code, "1000000");
         bd_list = data.getJSONArray("list");
@@ -148,11 +120,7 @@ public class TeamListV2 extends BaseTest {
         HashMap<String, String> query = new HashMap<>();
         query.put("sortKey", "doctorCounts");
         query.put("sortValue", "asc");
-        try {
-            res = HttpRequest.s_SendGet(host_bda + uri, query, bda_token);
-        } catch (IOException e) {
-            logger.error(e);
-        }
+        res = HttpRequest.s_SendGet(host_bda + uri, query, bda_token);
         s_CheckResponse(res);
         Assert.assertEquals(code, "1000000");
         JSONArray bd_list = data.getJSONArray("list");
@@ -168,11 +136,7 @@ public class TeamListV2 extends BaseTest {
 
         query.replace("sortKey", "doctorCounts");
         query.replace("sortValue", "desc");
-        try {
-            res = HttpRequest.s_SendGet(host_bda + uri, query, bda_token);
-        } catch (IOException e) {
-            logger.error(e);
-        }
+        res = HttpRequest.s_SendGet(host_bda + uri, query, bda_token);
         s_CheckResponse(res);
         Assert.assertEquals(code, "1000000");
         bd_list = data.getJSONArray("list");
@@ -187,11 +151,7 @@ public class TeamListV2 extends BaseTest {
     public void test_07_默认情况下分页数据() {
         String res = "";
         HashMap<String, String> query = new HashMap<>();
-        try {
-            res = HttpRequest.s_SendGet(host_bda + uri, query, bda_token);
-        } catch (IOException e) {
-            logger.error(e);
-        }
+        res = HttpRequest.s_SendGet(host_bda + uri, query, bda_token);
         s_CheckResponse(res);
         Assert.assertEquals(code, "1000000");
         Assert.assertNotNull(Helper.s_ParseJson(data, "list()"), "地推人员列表字段不能缺失");
@@ -206,11 +166,7 @@ public class TeamListV2 extends BaseTest {
         HashMap<String, String> query = new HashMap<>();
         String city = Generator.randomCityId();
         query.put("city_id", city);
-        try {
-            res = HttpRequest.s_SendGet(host_bda + uri, query, bda_token);
-        } catch (IOException e) {
-            logger.error(e);
-        }
+        res = HttpRequest.s_SendGet(host_bda + uri, query, bda_token);
         s_CheckResponse(res);
         Assert.assertEquals(code, "1000000");
         JSONArray bd_list = data.getJSONArray("list");

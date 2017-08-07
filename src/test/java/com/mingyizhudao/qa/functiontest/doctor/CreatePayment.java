@@ -37,11 +37,7 @@ public class CreatePayment extends BaseTest {
         payment.put("returnUrl", "http://www.mingyizhudao.com");
         body.put("payment", payment);
 
-        try {
-            res = HttpRequest.s_SendPost(host_doc + uri, body.toString(), token);
-        } catch (IOException e) {
-            logger.error(e);
-        }
+        res = HttpRequest.s_SendPost(host_doc + uri, body.toString(), token);
         // TODO: JSONObject.fromObject(res).getJSONObject()
         return "TODO";
     }
@@ -67,13 +63,9 @@ public class CreatePayment extends BaseTest {
         payment.put("returnUrl", "http://www.mingyizhudao.com");
         body.put("payment", payment);
 
-        try {
-            res = HttpRequest.s_SendPost(host_doc + uri, body.toString(), mainToken);
-            s_CheckResponse(res);
-            Assert.assertEquals(code, "1000000", "支付调用失败");
-            Assert.assertNotNull(Helper.s_ParseJson(data, "payment:url"), "返回的订单ID格式有误");
-        } catch (IOException e) {
-            logger.error(e);
-        }
+        res = HttpRequest.s_SendPost(host_doc + uri, body.toString(), mainToken);
+        s_CheckResponse(res);
+        Assert.assertEquals(code, "1000000", "支付调用失败");
+        Assert.assertNotNull(Helper.s_ParseJson(data, "payment:url"), "返回的订单ID格式有误");
     }
 }

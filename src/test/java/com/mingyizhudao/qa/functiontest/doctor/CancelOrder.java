@@ -40,12 +40,7 @@ public class CancelOrder extends BaseTest {
         JSONObject order = new JSONObject();
         order.put("orderNumber", orderId);
         body.put("order", order);
-
-        try {
-            res = HttpRequest.s_SendPost(host_doc + uri, body.toString(), token, null);
-        } catch (IOException e) {
-            logger.error(e);
-        }
+        HttpRequest.s_SendPost(host_doc + uri, body.toString(), token, null);
         res = GetOrderDetail_V1.s_MyInitiateOrder(token, orderId);
         status = JSONObject.fromObject(res).getJSONObject("data").getJSONObject("order").getString("status");
         return status;
@@ -60,11 +55,7 @@ public class CancelOrder extends BaseTest {
         JSONObject order = new JSONObject();
         order.put("orderNumber", orderId);
         body.put("order", order);
-        try {
-            res = HttpRequest.s_SendPost(host_doc + uri, body.toString(), mainToken);
-        } catch (IOException e) {
-            logger.error(e);
-        }
+        res = HttpRequest.s_SendPost(host_doc + uri, body.toString(), mainToken);
         s_CheckResponse(res);
         Assert.assertEquals(code, "1000000");
         Assert.assertEquals(Helper.s_ParseJson(data, "status"), "9000");
@@ -85,11 +76,7 @@ public class CancelOrder extends BaseTest {
         JSONObject order = new JSONObject();
         order.put("orderNumber", orderId);
         body.put("order", order);
-        try {
-            res = HttpRequest.s_SendPost(host_doc + uri, body.toString(), mainToken);
-        } catch (IOException e) {
-            logger.error(e);
-        }
+        res = HttpRequest.s_SendPost(host_doc + uri, body.toString(), mainToken);
         s_CheckResponse(res);
         Assert.assertEquals(code, "1000000");
         Assert.assertEquals(Helper.s_ParseJson(data, "status"), "9000");
@@ -112,11 +99,7 @@ public class CancelOrder extends BaseTest {
         JSONObject order = new JSONObject();
         order.put("orderNumber", orderId);
         body.put("order", order);
-        try {
-            res = HttpRequest.s_SendPost(host_doc+uri, body.toString(), mainToken);
-        } catch (IOException e) {
-            logger.error(e);
-        }
+        res = HttpRequest.s_SendPost(host_doc+uri, body.toString(), mainToken);
         s_CheckResponse(res);
         Assert.assertEquals(code, "1000000");
         Assert.assertEquals(Helper.s_ParseJson(data, "status"), "9000");
@@ -135,11 +118,7 @@ public class CancelOrder extends BaseTest {
         JSONObject order = new JSONObject();
         order.put("orderNumber", orderId);
         body.put("order", order);
-        try {
-            res = HttpRequest.s_SendPost(host_doc + uri, body.toString(), "");
-        } catch (IOException e) {
-            logger.error(e);
-        }
+        res = HttpRequest.s_SendPost(host_doc + uri, body.toString(), "");
         s_CheckResponse(res);
         Assert.assertNotEquals(code, "1000000");
         res = GetOrderDetail_V1.s_MyInitiateOrder(mainToken, orderId);
@@ -168,11 +147,7 @@ public class CancelOrder extends BaseTest {
         JSONObject order = new JSONObject();
         order.put("orderNumber", orderId);
         body.put("order", order);
-        try {
-            res = HttpRequest.s_SendPost(host_doc + uri, body.toString(), mainToken);
-        } catch (IOException e) {
-            logger.error(e);
-        }
+        res = HttpRequest.s_SendPost(host_doc + uri, body.toString(), mainToken);
         s_CheckResponse(res);
         Assert.assertEquals(code, "1000000");
         res = GetOrderDetail_V1.s_MyInitiateOrder(mainToken, orderId);

@@ -32,11 +32,7 @@ public class KBExpert_Detail extends BaseTest {
         if (expertId == null) return null;
         HashMap<String, String> pathValue = new HashMap<>();
         pathValue.put("id",expertId);
-        try {
-            res = HttpRequest.s_SendGet(host_crm+uri,"", crm_token, pathValue);
-        } catch (IOException e) {
-            logger.error(e);
-        }
+        res = HttpRequest.s_SendGet(host_crm+uri,"", crm_token, pathValue);
         return res;
     }
 
@@ -49,11 +45,7 @@ public class KBExpert_Detail extends BaseTest {
         if (info == null) Assert.fail("创建医库医生失败，退出用例执行");
         HashMap<String, String> pathValue = new HashMap<>();
         pathValue.put("id",info.get("id"));
-        try {
-            res = HttpRequest.s_SendGet(host_crm+uri, "", crm_token, pathValue);
-        } catch (IOException e) {
-            logger.error(e);
-        }
+        res = HttpRequest.s_SendGet(host_crm+uri, "", crm_token, pathValue);
         s_CheckResponse(res);
         Assert.assertEquals(code, "1000000");
         Assert.assertEquals(Helper.s_ParseJson(data, "medical_title_list"), ep.body.getString("medical_title_list"));
@@ -83,11 +75,7 @@ public class KBExpert_Detail extends BaseTest {
         HashMap<String, String> info = KBExpert_Create.s_Create(new ExpertProfile(true));
         HashMap<String, String> pathValue = new HashMap<>();
         pathValue.put("id", "111"+info.get("id"));
-        try {
-            res = HttpRequest.s_SendGet(host_crm+uri, "", crm_token, pathValue);
-        } catch (IOException e) {
-            logger.error(e);
-        }
+        res = HttpRequest.s_SendGet(host_crm+uri, "", crm_token, pathValue);
         s_CheckResponse(res);
         Assert.assertNotEquals(code, "1000000");
     }

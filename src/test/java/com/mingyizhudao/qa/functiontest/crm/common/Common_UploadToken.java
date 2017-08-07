@@ -35,13 +35,9 @@ public class Common_UploadToken extends BaseTest {
         query.put("fileName", "test.jpg");
         query.put("fileSize", "15869");
         query.put("MIME", "JPG");
-        try {
-            res = HttpRequest.s_SendGet(host_crm + uri, query, crm_token);
-            s_CheckResponse(res);
-            Assert.assertEquals(code, "1000000");
-        } catch (IOException e) {
-            logger.error(e);
-        }
+        res = HttpRequest.s_SendGet(host_crm + uri, query, crm_token);
+        s_CheckResponse(res);
+        Assert.assertEquals(code, "1000000");
         Assert.assertNotNull(Helper.s_ParseJson(data, "key"));
         Assert.assertNotNull(Helper.s_ParseJson(data, "token"));
         Assert.assertNotNull(Helper.s_ParseJson(data, "thumbnailUrl"));
@@ -57,13 +53,9 @@ public class Common_UploadToken extends BaseTest {
         query.put("fileName", "test.jpg");
         query.put("fileSize", "1356949");
         query.put("MIME", "JPG");
-        try {
-            res = HttpRequest.s_SendGet(host_crm + uri, query, crm_token);
-            s_CheckResponse(res);
-            Assert.assertEquals(code, "1000000");
-        } catch (IOException e) {
-            logger.error(e);
-        }
+        res = HttpRequest.s_SendGet(host_crm + uri, query, crm_token);
+        s_CheckResponse(res);
+        Assert.assertEquals(code, "1000000");
         Assert.assertNotNull(Helper.s_ParseJson(data, "key"));
         Assert.assertNotNull(Helper.s_ParseJson(data, "token"));
         Assert.assertNotNull(Helper.s_ParseJson(data, "thumbnailUrl"));

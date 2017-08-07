@@ -35,13 +35,9 @@ public class Common_Provinces extends BaseTest {
         for (int i=0; i<10; i++) {
             String initial = Generator.randomString(1).toUpperCase();
             query.replace("initial", initial);
-            try {
-                res = HttpRequest.s_SendGet(host_crm + uri, query, crm_token);
-                s_CheckResponse(res);
-                Assert.assertEquals(code, "1000000");
-            } catch (IOException e) {
-                logger.error(e);
-            }
+            res = HttpRequest.s_SendGet(host_crm + uri, query, crm_token);
+            s_CheckResponse(res);
+            Assert.assertEquals(code, "1000000");
 
             JSONArray provinceList = data.getJSONArray("list");
             for (int j=0; j<provinceList.size(); j++) {
@@ -57,13 +53,9 @@ public class Common_Provinces extends BaseTest {
 
         String res = "";
         HashMap<String, String> query = new HashMap<>();
-        try {
-            res = HttpRequest.s_SendGet(host_crm+uri, query, crm_token);
-            s_CheckResponse(res);
-            Assert.assertEquals(code, "1000000");
-        } catch (IOException e) {
-            logger.error(e);
-        }
+        res = HttpRequest.s_SendGet(host_crm+uri, query, crm_token);
+        s_CheckResponse(res);
+        Assert.assertEquals(code, "1000000");
 
         JSONArray provinceList = data.getJSONArray("list");
         logger.info("省的个数为："+provinceList.size());

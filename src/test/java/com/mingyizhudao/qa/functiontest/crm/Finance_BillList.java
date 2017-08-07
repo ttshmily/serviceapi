@@ -29,11 +29,7 @@ public class Finance_BillList extends BaseTest{
     public void test_01_获取支付订单列表() {
         String res = "";
         HashMap<String, String> query = new HashMap<>();
-        try {
-            res = HttpRequest.s_SendGet(host_crm+uri, "", crm_token);
-        } catch (IOException e) {
-            logger.error(e);
-        }
+        res = HttpRequest.s_SendGet(host_crm+uri, "", crm_token);
         s_CheckResponse(res);
         Assert.assertEquals(code, "1000000");
         //TODO
@@ -50,11 +46,7 @@ public class Finance_BillList extends BaseTest{
         query.put("pageSize", "0");
         for (int i = 1; i < 10; i++) {
             query.replace("pageSize", String.valueOf(i));
-            try {
-                res = HttpRequest.s_SendGet(host_crm + uri, query, crm_token);
-            } catch (IOException e) {
-                logger.error(e);
-            }
+            res = HttpRequest.s_SendGet(host_crm + uri, query, crm_token);
             s_CheckResponse(res);
             Assert.assertEquals(code, "1000000");
             Assert.assertEquals(Helper.s_ParseJson(data, "list()"), String.valueOf(i));

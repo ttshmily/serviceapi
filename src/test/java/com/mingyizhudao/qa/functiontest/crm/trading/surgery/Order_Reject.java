@@ -37,11 +37,7 @@ public class Order_Reject extends BaseTest {
         JSONObject body = new JSONObject();
         body.put("content", "选择内容");
         body.put("reps_content", "自动化推荐之前据拒订单的客服理由");
-        try {
-            res = HttpRequest.s_SendPost(host_crm + uri, body.toString(), crm_token, pathValue);
-        } catch (IOException e) {
-            logger.error(e);
-        }
+        HttpRequest.s_SendPost(host_crm + uri, body.toString(), crm_token, pathValue);
         res = Order_Detail.s_Detail(orderId);
         return Helper.s_ParseJson(JSONObject.fromObject(res), "data:status"); // 期望9000
     }
@@ -60,11 +56,7 @@ public class Order_Reject extends BaseTest {
         JSONObject body = new JSONObject();
         body.put("content", "自动化推荐之前据拒订单的理由");
         body.put("reps_content", "自动化推荐之前据拒订单的客服理由");
-        try {
-            res = HttpRequest.s_SendPost(host_crm + uri, body.toString(), crm_token, pathValue);
-        } catch (IOException e) {
-            logger.error(e);
-        }
+        res = HttpRequest.s_SendPost(host_crm + uri, body.toString(), crm_token, pathValue);
         s_CheckResponse(res);
         Assert.assertEquals(code, "1000000", "拒绝订单失败");
         res = Order_Detail.s_Detail(order_number);
@@ -97,11 +89,7 @@ public class Order_Reject extends BaseTest {
         JSONObject body = new JSONObject();
         body.put("content", "自动化推荐之前据拒订单的理由");
         body.put("reps_content", "自动化推荐之前据拒订单的客服理由");
-        try {
-            res = HttpRequest.s_SendPost(host_crm + uri, body.toString(), crm_token, pathValue);
-        } catch (IOException e) {
-            logger.error(e);
-        }
+        res = HttpRequest.s_SendPost(host_crm + uri, body.toString(), crm_token, pathValue);
         s_CheckResponse(res);
         // 没有确定三方通话失败，不能拒绝已有推荐医生的订单
         Assert.assertNotEquals(code, "1000000", "拒绝订单失败");
@@ -133,11 +121,7 @@ public class Order_Reject extends BaseTest {
         JSONObject body = new JSONObject();
         body.put("content", "自动化三方通话后拒绝订单");
         body.put("reps_content", "自动化推荐之前据拒订单的客服理由");
-        try {
-            res = HttpRequest.s_SendPost(host_crm + uri, body.toString(), crm_token, pathValue);
-        } catch (IOException e) {
-            logger.error(e);
-        }
+        res = HttpRequest.s_SendPost(host_crm + uri, body.toString(), crm_token, pathValue);
         s_CheckResponse(res);
         // 没有确定三方通话失败，不能拒绝已有推荐医生的订单
         Assert.assertNotEquals(code, "1000000", "拒绝订单失败");
@@ -163,11 +147,7 @@ public class Order_Reject extends BaseTest {
         JSONObject body = new JSONObject();
         body.put("content", "自动化推荐之前据拒订单的理由");
         body.put("reps_content", "自动化推荐之前据拒订单的客服理由");
-        try {
-            res = HttpRequest.s_SendPost(host_crm + uri, body.toString(), "", pathValue);
-        } catch (IOException e) {
-            logger.error(e);
-        }
+        res = HttpRequest.s_SendPost(host_crm + uri, body.toString(), "", pathValue);
         s_CheckResponse(res);
         Assert.assertNotEquals(code, "1000000", "无证");
         res = Order_Detail.s_Detail(order_number);

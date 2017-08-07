@@ -66,11 +66,13 @@ public class TestLogger
         l.debug(message);
         Reporter.log("[DEBUG] "+message); // also log to TestNG report
     }
+
     public synchronized void debug(String message) {
         Logger l = getTestLogger(jobName);
         l.debug(message);
         Reporter.log("[DEBUG] "+message); // also log to TestNG report
     }
+
     public synchronized void debug(Object message) {
         Logger l = getTestLogger(jobName);
         l.error(message.toString());

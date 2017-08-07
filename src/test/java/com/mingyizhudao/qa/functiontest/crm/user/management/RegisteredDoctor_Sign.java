@@ -41,11 +41,7 @@ public class RegisteredDoctor_Sign extends BaseTest {
         pathValue.put("id", doctorId);
         JSONObject body = new JSONObject();
         body.put("status", "SIGNED");
-        try {
-            res = HttpRequest.s_SendPut(host_crm + uri, body.toString(), crm_token, pathValue);
-        } catch (IOException e) {
-            logger.error(e);
-        }
+        res = HttpRequest.s_SendPut(host_crm + uri, body.toString(), crm_token, pathValue);
         s_CheckResponse(res);
         Assert.assertEquals(code, "1000000");
 
@@ -71,11 +67,7 @@ public class RegisteredDoctor_Sign extends BaseTest {
         pathValue.put("id", doctorId);
         JSONObject body = new JSONObject();
         body.put("status", "SIGNED");
-        try {
-            res = HttpRequest.s_SendPut(host_crm + uri, body.toString(), crm_token, pathValue);
-        } catch (IOException e) {
-            logger.error(e);
-        }
+        res = HttpRequest.s_SendPut(host_crm + uri, body.toString(), crm_token, pathValue);
         s_CheckResponse(res);
         Assert.assertNotEquals(code, "1000000");
 
