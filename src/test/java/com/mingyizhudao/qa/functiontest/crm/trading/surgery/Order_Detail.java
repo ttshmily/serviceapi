@@ -31,11 +31,7 @@ public class Order_Detail extends BaseTest {
         TestLogger logger = new TestLogger(s_JobName());
         HashMap<String, String> pathValue = new HashMap<>();
         pathValue.put("orderNumber", orderId);
-        try {
-            res = HttpRequest.s_SendGet(host_crm + uri, "", crm_token, pathValue);
-        } catch (IOException e) {
-            logger.error(e);
-        }
+        res = HttpRequest.s_SendGet(host_crm + uri, "", crm_token, pathValue);
         return res;
     }
 
@@ -46,11 +42,7 @@ public class Order_Detail extends BaseTest {
         HashMap<String, String> pathValue = new HashMap<>();
         String orderId = CreateOrder.s_CreateOrder(mainToken);
         pathValue.put("orderNumber", orderId);
-        try {
-            res = HttpRequest.s_SendGet(host_crm + uri,"", crm_token, pathValue);
-        } catch (IOException e) {
-            logger.error(e);
-        }
+        res = HttpRequest.s_SendGet(host_crm + uri,"", crm_token, pathValue);
         s_CheckResponse(res);
         Assert.assertNotEquals(Helper.s_ParseJson(data,"patient_name"), "", "患者姓名字段缺失");
         Assert.assertNotEquals(Helper.s_ParseJson(data,"patient_gender"), "", "患者性别字段缺失");
@@ -85,11 +77,7 @@ public class Order_Detail extends BaseTest {
         String res = "";
         HashMap<String, String> pathValue = new HashMap<>();
         pathValue.put("orderNumber", "2000000");
-        try {
-            res = HttpRequest.s_SendGet(host_crm + uri,"", crm_token, pathValue);
-        } catch (IOException e) {
-            logger.error(e);
-        }
+        res = HttpRequest.s_SendGet(host_crm + uri,"", crm_token, pathValue);
         s_CheckResponse(res);
         Assert.assertEquals(code, "1000000");
         Assert.assertNull(Helper.s_ParseJson(data, "orderNumber"), "订单ID错误，不应该有数据返回");
@@ -100,12 +88,7 @@ public class Order_Detail extends BaseTest {
         String res = "";
         HashMap<String, String> pathValue = new HashMap<>();
         pathValue.put("orderNumber", "20000asdfa000");
-        try {
-            res = HttpRequest.s_SendGet(host_crm + uri,"", crm_token, pathValue);
-        } catch (IOException e) {
-            logger.error(e);
-            return;
-        }
+        res = HttpRequest.s_SendGet(host_crm + uri,"", crm_token, pathValue);
         s_CheckResponse(res);
         Assert.assertEquals(code, "2210430");
 

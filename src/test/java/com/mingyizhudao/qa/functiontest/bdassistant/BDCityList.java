@@ -21,11 +21,7 @@ public class BDCityList extends BaseTest{
     public void test_01_获取个人负责区域列表() {
         String res = "";
         HashMap<String, String> query = new HashMap<>();
-        try {
-            res = HttpRequest.s_SendGet(host_bda + uri, query, bda_token_staff);
-        } catch (IOException e) {
-            logger.error(e);
-        }
+        res = HttpRequest.s_SendGet(host_bda + uri, query, bda_token_staff);
         s_CheckResponse(res);
         Assert.assertEquals(code, "1000000", "");
         Assert.assertNotNull(Helper.s_ParseJson(data, ""));

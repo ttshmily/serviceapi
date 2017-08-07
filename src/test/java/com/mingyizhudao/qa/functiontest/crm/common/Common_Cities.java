@@ -33,11 +33,7 @@ public class Common_Cities extends BaseTest {
 //        TestDescription("");
         String res = "";
         HashMap<String, String> query = new HashMap<>();
-        try {
-            res = HttpRequest.s_SendGet(host_crm+uri, "", crm_token, null);
-        } catch (IOException e) {
-            logger.error(e);
-        }
+        res = HttpRequest.s_SendGet(host_crm+uri, "", crm_token, null);
         s_CheckResponse(res);
         Assert.assertEquals(code, "1000000");
         //TODO
@@ -53,11 +49,7 @@ public class Common_Cities extends BaseTest {
         logger.info("在安徽省搜索城市关键字：安庆");
         query.put("province_id", "340000"); // 安徽
         query.put("city_name", "安庆");
-        try {
-            res = HttpRequest.s_SendGet(host_crm + uri, query, crm_token, null);
-        } catch (IOException e) {
-            logger.error(e);
-        }
+        res = HttpRequest.s_SendGet(host_crm + uri, query, crm_token, null);
         s_CheckResponse(res);
         Assert.assertEquals(code, "1000000");
 
@@ -65,11 +57,7 @@ public class Common_Cities extends BaseTest {
         query.replace("province_id", "330000");
         query.replace("city_name", "安庆");
         logger.info("在非安徽省搜索城市关键字：安庆");
-        try {
-            res = HttpRequest.s_SendGet(host_crm + uri, query, crm_token, null);
-        } catch (IOException e) {
-            logger.error(e);
-        }
+        res = HttpRequest.s_SendGet(host_crm + uri, query, crm_token, null);
         s_CheckResponse(res);
         Assert.assertEquals(code, "1000000");
     }
@@ -83,11 +71,7 @@ public class Common_Cities extends BaseTest {
         String exp = "安庆";
         logger.info("搜索城市关键字："+exp);
         query.put("city_name", exp);
-        try {
-            res = HttpRequest.s_SendGet(host_crm + uri, query, crm_token);
-        } catch (IOException e) {
-            logger.error(e);
-        }
+        res = HttpRequest.s_SendGet(host_crm + uri, query, crm_token);
         s_CheckResponse(res);
         Assert.assertEquals(code, "1000000");
 
@@ -101,11 +85,7 @@ public class Common_Cities extends BaseTest {
         exp = "宝";
         logger.info("搜索城市关键字："+exp);
         query.replace("city_name", exp);
-        try {
-            res = HttpRequest.s_SendGet(host_crm + uri, query, crm_token);
-        } catch (IOException e) {
-            logger.error(e);
-        }
+        res = HttpRequest.s_SendGet(host_crm + uri, query, crm_token);
         s_CheckResponse(res);
         Assert.assertEquals(code, "1000000");
         p = Pattern.compile(exp);
@@ -120,23 +100,17 @@ public class Common_Cities extends BaseTest {
         exp = "上";
         logger.info("搜索城市关键字："+exp);
         query.replace("city_name", exp);
-        try {
-            res = HttpRequest.s_SendGet(host_crm + uri, query, crm_token);
-        } catch (IOException e) {
-            logger.error(e);
-        }
+        res = HttpRequest.s_SendGet(host_crm + uri, query, crm_token);
         s_CheckResponse(res);
         Assert.assertEquals(code, "1000000");
         p = Pattern.compile(exp);
         cityList = data.getJSONArray("list");
 //        for(int i=0; i<cityList.size(); i++) {
         for(int i=0; i<1; i++) { // 至少第一个有
-                cityName = cityList.getJSONObject(i).getString("name");
-                m = p.matcher(cityName);
-                Assert.assertTrue(m.find());
+            cityName = cityList.getJSONObject(i).getString("name");
+            m = p.matcher(cityName);
+            Assert.assertTrue(m.find());
         }
-
-
     }
 
 }

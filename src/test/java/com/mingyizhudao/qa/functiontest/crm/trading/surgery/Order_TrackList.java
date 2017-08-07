@@ -37,11 +37,7 @@ public class Order_TrackList extends BaseTest {
         } else {
             query = null;
         }
-        try {
-            res = HttpRequest.s_SendGet(host_crm+uri, query, crm_token, pathValue);
-        } catch (IOException e) {
-            logger.error(e);
-        }
+        res = HttpRequest.s_SendGet(host_crm+uri, query, crm_token, pathValue);
         return res;
     }
 

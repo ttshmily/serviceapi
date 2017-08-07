@@ -39,11 +39,7 @@ public class KB_Track extends BaseTest {
         HashMap<String, String> query = new HashMap<>();
         query.put("type", type);
         query.put("id", id);
-        try {
-            res = HttpRequest.s_SendGet(host_crm + uri, query, crm_token);
-        } catch (IOException e) {
-            logger.error(e);
-        }
+        res = HttpRequest.s_SendGet(host_crm + uri, query, crm_token);
         JSONObject node = JSONObject.fromObject(res);
         String code = node.getString("code");
         if (!code.equals("1000000")) return null;
@@ -59,13 +55,9 @@ public class KB_Track extends BaseTest {
         for (String type:typeArray) {
 //            logger.debug(type);
             query.put("type", type);
-            try {
-                res = HttpRequest.s_SendGet(host_crm + uri, query, crm_token);
-                s_CheckResponse(res);
-                Assert.assertEquals(code, "1000000");
-            } catch (IOException e) {
-                logger.error(e);
-            }
+            res = HttpRequest.s_SendGet(host_crm + uri, query, crm_token);
+            s_CheckResponse(res);
+            Assert.assertEquals(code, "1000000");
             Assert.assertNotNull(Helper.s_ParseJson(data, "list():id"));
             Assert.assertNotNull(Helper.s_ParseJson(data, "list():operate_object_id"));
             Assert.assertNotNull(Helper.s_ParseJson(data, "list():operate_type"));
@@ -98,12 +90,7 @@ public class KB_Track extends BaseTest {
             }
             query.put("type", type);
             query.put("id", id);
-            try {
-                res = HttpRequest.s_SendGet(host_crm + uri, query, crm_token);
-
-            } catch (IOException e) {
-                logger.error(e);
-            }
+            res = HttpRequest.s_SendGet(host_crm + uri, query, crm_token);
             s_CheckResponse(res);
             Assert.assertEquals(code, "1000000");
             JSONArray trackList = data.getJSONArray("list");

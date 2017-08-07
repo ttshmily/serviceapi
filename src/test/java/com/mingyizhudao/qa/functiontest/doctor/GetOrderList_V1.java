@@ -34,13 +34,7 @@ public class GetOrderList_V1 extends BaseTest {
         TestLogger logger = new TestLogger(s_JobName());
         HashMap<String, String> query = new HashMap<>();
         query.put("flag", flag);
-        try {
-            res = HttpRequest.s_SendGet(host_doc+uri, query, token);
-        } catch (IOException e) {
-            logger.debug(Helper.unicodeString(res));
-            logger.error(e);
-            return null;
-        }
+        res = HttpRequest.s_SendGet(host_doc+uri, query, token);
         JSONObject orderList = JSONObject.fromObject(res).getJSONObject("data");
         return String.valueOf(orderList.getJSONArray("order").size());
     }
@@ -54,11 +48,7 @@ public class GetOrderList_V1 extends BaseTest {
         query.put("status", "9000");
         query.put("page", "1");
         query.put("pageSize", "1");
-        try {
-            res = HttpRequest.s_SendGet(host_doc+uri, query, token);
-        } catch (IOException e) {
-            logger.error(e);
-        }
+        res = HttpRequest.s_SendGet(host_doc+uri, query, token);
         if (Helper.s_ParseJson(JSONObject.fromObject(res), "data:size") == "0") return null;
         return Helper.s_ParseJson(JSONObject.fromObject(res), "data:order(0):order_number");
     }
@@ -81,11 +71,7 @@ public class GetOrderList_V1 extends BaseTest {
             Assert.fail("创建订单with tmpToken失败");
         }
 
-        try {
-            res = HttpRequest.s_SendGet(host_doc + uri, query, tmpToken);
-        } catch (IOException e) {
-            logger.error(e);
-        }
+        res = HttpRequest.s_SendGet(host_doc + uri, query, tmpToken);
         s_CheckResponse(res);
         Assert.assertEquals(Helper.s_ParseJson(data, "order()"), "1");
         Assert.assertEquals(Helper.s_ParseJson(data, "order(0):order_number"), orderId1);
@@ -96,11 +82,7 @@ public class GetOrderList_V1 extends BaseTest {
             logger.error("创建订单with tmpToken失败");
             Assert.fail("创建订单with tmpToken失败");
         }
-        try {
-            res = HttpRequest.s_SendGet(host_doc +uri, query, tmpToken);
-        } catch (IOException e) {
-            logger.error(e);
-        }
+        res = HttpRequest.s_SendGet(host_doc +uri, query, tmpToken);
         s_CheckResponse(res);
         Assert.assertEquals(Helper.s_ParseJson(data, "order()"), "2");
         Assert.assertEquals(Helper.s_ParseJson(data, "order(0):order_number"), orderId2);
@@ -112,11 +94,7 @@ public class GetOrderList_V1 extends BaseTest {
             logger.error("创建订单with tmpToken失败");
             Assert.fail("创建订单with tmpToken失败");
         }
-        try {
-            res = HttpRequest.s_SendGet(host_doc + uri, query, tmpToken);
-        } catch (IOException e) {
-            logger.error(e);
-        }
+        res = HttpRequest.s_SendGet(host_doc + uri, query, tmpToken);
         s_CheckResponse(res);
         Assert.assertEquals(Helper.s_ParseJson(data, "order()"), "3");
         Assert.assertEquals(Helper.s_ParseJson(data, "order(0):order_number"), orderId3);
@@ -129,11 +107,7 @@ public class GetOrderList_V1 extends BaseTest {
             logger.error("创建订单with tmpToken失败");
             Assert.fail("创建订单with tmpToken失败");
         }
-        try {
-            res = HttpRequest.s_SendGet(host_doc + uri, query, tmpToken);
-        } catch (IOException e) {
-            logger.error(e);
-        }
+        res = HttpRequest.s_SendGet(host_doc + uri, query, tmpToken);
         s_CheckResponse(res);
         Assert.assertEquals(Helper.s_ParseJson(data, "order()"), "4");
         Assert.assertEquals(Helper.s_ParseJson(data, "order(0):order_number"), orderId4);
@@ -147,11 +121,7 @@ public class GetOrderList_V1 extends BaseTest {
         if(!status.equals("9000")) {
             Assert.fail("拒绝订单失败");
         }
-        try {
-            res = HttpRequest.s_SendGet(host_doc + uri, query, tmpToken);
-        } catch (IOException e) {
-            logger.error(e);
-        }
+        res = HttpRequest.s_SendGet(host_doc + uri, query, tmpToken);
         s_CheckResponse(res);
         Assert.assertEquals(Helper.s_ParseJson(data, "order()"), "4");
         Assert.assertEquals(Helper.s_ParseJson(data, "order(0):order_number"), orderId3);
@@ -165,11 +135,7 @@ public class GetOrderList_V1 extends BaseTest {
         if(!status.equals("2020")) {
             Assert.fail("推荐专家失败");
         }
-        try {
-            res = HttpRequest.s_SendGet(host_doc + uri, query, tmpToken);
-        } catch (IOException e) {
-            logger.error(e);
-        }
+        res = HttpRequest.s_SendGet(host_doc + uri, query, tmpToken);
         s_CheckResponse(res);
         Assert.assertEquals(Helper.s_ParseJson(data, "order()"), "4");
         Assert.assertEquals(Helper.s_ParseJson(data, "order(0):order_number"), orderId3);
@@ -184,11 +150,7 @@ public class GetOrderList_V1 extends BaseTest {
         if(!status.equals("3000")) {
             Assert.fail("三方通话调用失败");
         }
-        try {
-            res = HttpRequest.s_SendGet(host_doc + uri, query, tmpToken);
-        } catch (IOException e) {
-            logger.error(e);
-        }
+        res = HttpRequest.s_SendGet(host_doc + uri, query, tmpToken);
         s_CheckResponse(res);
         Assert.assertEquals(Helper.s_ParseJson(data, "order()"), "4");
         Assert.assertEquals(Helper.s_ParseJson(data, "order(0):order_number"), orderId3);
@@ -219,11 +181,7 @@ public class GetOrderList_V1 extends BaseTest {
             Assert.fail("创建订单测试订单失败");
         }
 
-        try {
-            res = HttpRequest.s_SendGet(host_doc + uri, query, tmpToken);
-        } catch (IOException e) {
-            logger.error(e);
-        }
+        res = HttpRequest.s_SendGet(host_doc + uri, query, tmpToken);
         s_CheckResponse(res);
         Assert.assertEquals(Helper.s_ParseJson(data, "order()"), "0");
         logger.info("测试医生收到"+ Helper.s_ParseJson(data, "order()")+"条订单");
@@ -269,11 +227,7 @@ public class GetOrderList_V1 extends BaseTest {
             Assert.fail("推荐专家失败");
         }
 
-        try {
-            res = HttpRequest.s_SendGet(host_doc + uri, query, tmpToken);
-        } catch (IOException e) {
-            logger.error(e);
-        }
+        res = HttpRequest.s_SendGet(host_doc + uri, query, tmpToken);
         s_CheckResponse(res);
         Assert.assertEquals(Helper.s_ParseJson(data, "order()"), "4");
         Assert.assertEquals(Helper.s_ParseJson(data, "order(0):order_number"), orderId4);
@@ -288,11 +242,7 @@ public class GetOrderList_V1 extends BaseTest {
             logger.debug(status);
             Assert.fail("回退订单调用失败"+orderId3);
         }
-        try {
-            res = HttpRequest.s_SendGet(host_doc + uri, query, tmpToken);
-        } catch (IOException e) {
-            logger.error(e);
-        }
+        res = HttpRequest.s_SendGet(host_doc + uri, query, tmpToken);
         s_CheckResponse(res);
         Assert.assertEquals(Helper.s_ParseJson(data, "order()"), "4");
         Assert.assertEquals(Helper.s_ParseJson(data, "order(0):order_number"), orderId4);
@@ -306,11 +256,7 @@ public class GetOrderList_V1 extends BaseTest {
             logger.debug(status);
             Assert.fail("回退订单调用失败"+orderId4);
         }
-        try {
-            res = HttpRequest.s_SendGet(host_doc + uri, query, tmpToken);
-        } catch (IOException e) {
-            logger.error(e);
-        }
+        res = HttpRequest.s_SendGet(host_doc + uri, query, tmpToken);
         s_CheckResponse(res);
         Assert.assertEquals(Helper.s_ParseJson(data, "order()"), "4");
         Assert.assertEquals(Helper.s_ParseJson(data, "order(0):order_number"), orderId2);
@@ -329,11 +275,7 @@ public class GetOrderList_V1 extends BaseTest {
             logger.debug(status);
             Assert.fail("三方通话调用失败"+orderId2);
         }
-        try {
-            res = HttpRequest.s_SendGet(host_doc + uri, query, tmpToken);
-        } catch (IOException e) {
-            logger.error(e);
-        }
+        res = HttpRequest.s_SendGet(host_doc + uri, query, tmpToken);
         s_CheckResponse(res);
         Assert.assertEquals(Helper.s_ParseJson(data, "order()"), "4");
         Assert.assertEquals(Helper.s_ParseJson(data, "order(0):order_number"), orderId1);
@@ -366,11 +308,7 @@ public class GetOrderList_V1 extends BaseTest {
             Assert.fail("创建订单测试订单失败");
         }
 
-        try {
-            res = HttpRequest.s_SendGet(host_doc + uri, query, tmpToken);
-        } catch (IOException e) {
-            logger.error(e);
-        }
+        res = HttpRequest.s_SendGet(host_doc + uri, query, tmpToken);
         s_CheckResponse(res);
         Assert.assertEquals(Helper.s_ParseJson(data, "order()"), "0");
         logger.info("测试医生收到"+ Helper.s_ParseJson(data, "order()")+"条订单");
@@ -416,11 +354,7 @@ public class GetOrderList_V1 extends BaseTest {
             Assert.fail("推荐专家失败");
         }
 
-        try {
-            res = HttpRequest.s_SendGet(host_doc + uri, query, tmpToken);
-        } catch (IOException e) {
-            logger.error(e);
-        }
+        res = HttpRequest.s_SendGet(host_doc + uri, query, tmpToken);
         s_CheckResponse(res);
         Assert.assertEquals(Helper.s_ParseJson(data, "order()"), "4");
         Assert.assertEquals(Helper.s_ParseJson(data, "order(0):order_number"), orderId4);
@@ -435,11 +369,7 @@ public class GetOrderList_V1 extends BaseTest {
             logger.debug(status);
             Assert.fail("回退订单调用失败"+orderId3);
         }
-        try {
-            res = HttpRequest.s_SendGet(host_doc + uri, query, tmpToken);
-        } catch (IOException e) {
-            logger.error(e);
-        }
+        res = HttpRequest.s_SendGet(host_doc + uri, query, tmpToken);
         s_CheckResponse(res);
         Assert.assertEquals(Helper.s_ParseJson(data, "order()"), "4");
         Assert.assertEquals(Helper.s_ParseJson(data, "order(0):order_number"), orderId4);
@@ -453,11 +383,7 @@ public class GetOrderList_V1 extends BaseTest {
             logger.debug(status);
             Assert.fail("回退订单调用失败"+orderId4);
         }
-        try {
-            res = HttpRequest.s_SendGet(host_doc + uri, query, tmpToken);
-        } catch (IOException e) {
-            logger.error(e);
-        }
+        res = HttpRequest.s_SendGet(host_doc + uri, query, tmpToken);
         s_CheckResponse(res);
         Assert.assertEquals(Helper.s_ParseJson(data, "order()"), "4");
         Assert.assertEquals(Helper.s_ParseJson(data, "order(0):order_number"), orderId4);
@@ -490,11 +416,7 @@ public class GetOrderList_V1 extends BaseTest {
             Assert.fail("创建订单测试订单失败");
         }
 
-        try {
-            res = HttpRequest.s_SendGet(host_doc + uri, query, tmpToken);
-        } catch (IOException e) {
-            logger.error(e);
-        }
+        res = HttpRequest.s_SendGet(host_doc + uri, query, tmpToken);
         s_CheckResponse(res);
         Assert.assertEquals(Helper.s_ParseJson(data, "order()"), "0");
         logger.info("测试医生收到"+ Helper.s_ParseJson(data, "order()")+"条订单");
@@ -555,11 +477,7 @@ public class GetOrderList_V1 extends BaseTest {
 
         logger.info("筛选已取消状态（4030,9000）");
         query.put("status","4030,9000");
-        try {
-            res = HttpRequest.s_SendGet(host_doc + uri, query, tmpToken);
-        } catch (IOException e) {
-            logger.error(e);
-        }
+        res = HttpRequest.s_SendGet(host_doc + uri, query, tmpToken);
         s_CheckResponse(res);
         Assert.assertEquals(Helper.s_ParseJson(data, "order()"), "2");
         Assert.assertEquals(Helper.s_ParseJson(data, "order(0):order_number"), orderId4);
@@ -567,11 +485,7 @@ public class GetOrderList_V1 extends BaseTest {
 
         logger.info("筛选处理中状态（2020,3000,4000,4010）");
         query.replace("status","2020,3000,4000,4010");
-        try {
-            res = HttpRequest.s_SendGet(host_doc + uri, query, tmpToken);
-        } catch (IOException e) {
-            logger.error(e);
-        }
+        res = HttpRequest.s_SendGet(host_doc + uri, query, tmpToken);
         s_CheckResponse(res);
         Assert.assertEquals(Helper.s_ParseJson(data, "order()"), "2");
         Assert.assertEquals(Helper.s_ParseJson(data, "order(0):order_number"), orderId2);
@@ -579,11 +493,7 @@ public class GetOrderList_V1 extends BaseTest {
 
         logger.info("筛选已完成状态（4020, 5000）");
         query.replace("status","4020, 5000");
-        try {
-            res = HttpRequest.s_SendGet(host_doc + uri, query, tmpToken);
-        } catch (IOException e) {
-            logger.error(e);
-        }
+        res = HttpRequest.s_SendGet(host_doc + uri, query, tmpToken);
         s_CheckResponse(res);
 //        Assert.assertEquals(UT.s_ParseJson(data, "order()"), "2");
 //        Assert.assertEquals(UT.s_ParseJson(data, "order(0):order_number"), orderId4);
@@ -611,12 +521,7 @@ public class GetOrderList_V1 extends BaseTest {
         if (orderId1.isEmpty()||orderId2.isEmpty()) {
             Assert.fail("创建订单测试订单失败");
         }
-
-        try {
-            res = HttpRequest.s_SendGet(host_doc + uri, query, tmpToken);
-        } catch (IOException e) {
-            logger.error(e);
-        }
+        res = HttpRequest.s_SendGet(host_doc + uri, query, tmpToken);
         s_CheckResponse(res);
         Assert.assertEquals(Helper.s_ParseJson(data, "order()"), "0");
         logger.info("测试医生收到"+ Helper.s_ParseJson(data, "order()")+"条订单");
@@ -649,11 +554,7 @@ public class GetOrderList_V1 extends BaseTest {
 
         logger.info("筛选已取消状态（4030,9000）");
         query.put("status","4030,9000");
-        try {
-            res = HttpRequest.s_SendGet(host_doc + uri, query, tmpToken);
-        } catch (IOException e) {
-            logger.error(e);
-        }
+        res = HttpRequest.s_SendGet(host_doc + uri, query, tmpToken);
         s_CheckResponse(res);
         Assert.assertEquals(Helper.s_ParseJson(data, "order()"), "1");
         Assert.assertEquals(Helper.s_ParseJson(data, "order(0):order_number"), orderId1);
@@ -665,23 +566,14 @@ public class GetOrderList_V1 extends BaseTest {
             Assert.fail("推荐专家失败");
         }
 
-        try {
-            res = HttpRequest.s_SendGet(host_doc + uri, query, tmpToken);
-        } catch (IOException e) {
-            logger.error(e);
-        }
+        res = HttpRequest.s_SendGet(host_doc + uri, query, tmpToken);
         s_CheckResponse(res);
         Assert.assertEquals(Helper.s_ParseJson(data, "order()"), "0", "订单order1应当不在已取消状态");
 
         logger.info("筛选已取消状态（2020,3000,4000,4010）");
         query.replace("status","2020,3000,4000,4010");
-        try {
-            res = HttpRequest.s_SendGet(host_doc + uri, query, tmpToken);
-        } catch (IOException e) {
-            logger.error(e);
-        }
+        res = HttpRequest.s_SendGet(host_doc + uri, query, tmpToken);
         s_CheckResponse(res);
         Assert.assertEquals(Helper.s_ParseJson(data, "order()"), "2","订单order1应当恢复到处理中");
-
     }
 }

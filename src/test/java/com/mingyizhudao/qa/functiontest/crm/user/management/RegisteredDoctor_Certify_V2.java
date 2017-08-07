@@ -50,11 +50,7 @@ public class RegisteredDoctor_Certify_V2 extends BaseTest {
         pathValue.put("id", regId);
         body.put("status", status);  // 认证
         body.put("reason", "原因");
-        try {
-            res = HttpRequest.s_SendPut(host_crm+uri, body.toString(), crm_token, pathValue);
-        } catch (IOException e) {
-            logger.error(e);
-        }
+        HttpRequest.s_SendPut(host_crm+uri, body.toString(), crm_token, pathValue);
         res = RegisteredDoctor_Detail.s_Detail(regId);
         return Helper.s_ParseJson(JSONObject.fromObject(res), "data:is_verified");
     }
@@ -77,11 +73,7 @@ public class RegisteredDoctor_Certify_V2 extends BaseTest {
         pathValue.put("id", doctorId);
         body.put("status", "-1");  // 认证失败
         body.put("reason", "失败原因");  // 失败原因
-        try {
-            res = HttpRequest.s_SendPut(host_crm + uri, body.toString(), crm_token, pathValue);
-        } catch (IOException e) {
-            logger.error(e);
-        }
+        res = HttpRequest.s_SendPut(host_crm + uri, body.toString(), crm_token, pathValue);
         logger.info(Helper.unicodeString(res));
         s_CheckResponse(res);
         Assert.assertEquals(code, "1000000");
@@ -109,11 +101,7 @@ public class RegisteredDoctor_Certify_V2 extends BaseTest {
         pathValue.put("id", doctorId);
         body.put("status", "1");  // 认证成功
         body.put("reason", "成功原因");  // 成功原因
-        try {
-            res = HttpRequest.s_SendPut(host_crm + uri, body.toString(), crm_token, pathValue);
-        } catch (IOException e) {
-            logger.error(e);
-        }
+        res = HttpRequest.s_SendPut(host_crm + uri, body.toString(), crm_token, pathValue);
         s_CheckResponse(res);
         Assert.assertEquals(code, "1000000");
         res = RegisteredDoctor_Detail.s_Detail(doctorId);
@@ -139,11 +127,7 @@ public class RegisteredDoctor_Certify_V2 extends BaseTest {
         pathValue.put("id", doctorId);
         body.put("status", "1");  // 认证成功
         body.put("reason", "");  // 成功原因
-        try {
-            res = HttpRequest.s_SendPut(host_crm + uri, body.toString(), crm_token, pathValue);
-        } catch (IOException e) {
-            logger.error(e);
-        }
+        res = HttpRequest.s_SendPut(host_crm + uri, body.toString(), crm_token, pathValue);
         logger.info(Helper.unicodeString(res));
         s_CheckResponse(res);
         Assert.assertEquals(code, "1000000");
@@ -167,11 +151,7 @@ public class RegisteredDoctor_Certify_V2 extends BaseTest {
         pathValue.put("id", "1"+doctorId);
         body.put("status", "-1");  // 认证失败
         body.put("reason", "失败原因");  // 失败原因
-        try {
-            res = HttpRequest.s_SendPut(host_crm+uri, body.toString(), crm_token, pathValue);
-        } catch (IOException e) {
-            logger.error(e);
-        }
+        res = HttpRequest.s_SendPut(host_crm+uri, body.toString(), crm_token, pathValue);
         s_CheckResponse(res);
         Assert.assertNotEquals(code, "1000000");
 
@@ -192,21 +172,13 @@ public class RegisteredDoctor_Certify_V2 extends BaseTest {
         pathValue.put("id", doctorId);
         body.put("status", "-1");  // 认证失败
         body.put("reason", "先让你认证不通过");  // 失败原因
-        try {
-            res = HttpRequest.s_SendPut(host_crm+uri, body.toString(), crm_token, pathValue);
-        } catch (IOException e) {
-            logger.error(e);
-        }
+        res = HttpRequest.s_SendPut(host_crm+uri, body.toString(), crm_token, pathValue);
         s_CheckResponse(res);
         Assert.assertEquals(code, "1000000");
 
         body.replace("status", "1");
         body.replace("reason", "再试图让你认证通过");  // 成功原因
-        try {
-            res = HttpRequest.s_SendPut(host_crm+uri, body.toString(), crm_token, pathValue);
-        } catch (IOException e) {
-            logger.error(e);
-        }
+        res = HttpRequest.s_SendPut(host_crm+uri, body.toString(), crm_token, pathValue);
         s_CheckResponse(res);
         Assert.assertNotEquals(code, "1000000", "原先认证失败的医生不应该直接通过认证");
     }
@@ -225,11 +197,7 @@ public class RegisteredDoctor_Certify_V2 extends BaseTest {
 
         body.put("status", "1");
         body.put("reason", "试图让你认证通过");  // 成功原因
-        try {
-            res = HttpRequest.s_SendPut(host_crm+uri, body.toString(), crm_token, pathValue);
-        } catch (IOException e) {
-            logger.error(e);
-        }
+        res = HttpRequest.s_SendPut(host_crm+uri, body.toString(), crm_token, pathValue);
         logger.info(Helper.unicodeString(res));
         s_CheckResponse(res);
         Assert.assertNotEquals(code, "1000000", "信息不全的医生不应该直接通过认证");

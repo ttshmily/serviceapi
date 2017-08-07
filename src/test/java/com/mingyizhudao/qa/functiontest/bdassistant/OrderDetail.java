@@ -23,19 +23,11 @@ public class OrderDetail extends BaseTest{
     public void test_01_没有token或token错误无权限使用接口() {
         String res = "";
         HashMap<String, String> query = new HashMap<>();
-        try {
-            res = HttpRequest.s_SendGet(host_bda + uri, query, "",null);
-        } catch (IOException e) {
-            logger.error(e);
-        }
+        res = HttpRequest.s_SendGet(host_bda + uri, query, "");
         s_CheckResponse(res);
         Assert.assertNotEquals(code, "1000000", "没有token不应该调用成功");
 
-        try {
-            res = HttpRequest.s_SendGet(host_bda + uri, query, "aaa",null);
-        } catch (IOException e) {
-            logger.error(e);
-        }
+        res = HttpRequest.s_SendGet(host_bda + uri, query, "aaa");
         s_CheckResponse(res);
         Assert.assertNotEquals(code, "1000000", "token错误不应该调用成功");
     }
@@ -44,11 +36,7 @@ public class OrderDetail extends BaseTest{
     public void test_02_登录用户_不传入订单编号获取订单详情(){
         String res = "";
         HashMap<String, String> query = new HashMap<>();
-        try {
-            res = HttpRequest.s_SendGet(host_bda + uri, query, bda_token, null);
-        } catch (IOException e) {
-            logger.error(e);
-        }
+        res = HttpRequest.s_SendGet(host_bda + uri, query, bda_token);
         s_CheckResponse(res);
         Assert.assertEquals(code, "1411002", "订单编号不能为空");
 
@@ -59,11 +47,7 @@ public class OrderDetail extends BaseTest{
         String res = "";
         HashMap<String, String> query = new HashMap<>();
         query.put("orderNumber", "1017690178");
-        try {
-            res = HttpRequest.s_SendGet(host_bda + uri, query, bda_token, null);
-        } catch (IOException e) {
-            logger.error(e);
-        }
+        res = HttpRequest.s_SendGet(host_bda + uri, query, bda_token);
         s_CheckResponse(res);
         Assert.assertEquals(code, "1000000", "有token应该调用成功");
         //String orderDetail = data.getString("list");
@@ -88,11 +72,7 @@ public class OrderDetail extends BaseTest{
             String res = "";
             HashMap<String, String> query = new HashMap<>();
             query.put("orderNumber", "0000000000");
-            try {
-                res = HttpRequest.s_SendGet(host_bda + uri, query, bda_token, null);
-            } catch (IOException e) {
-                logger.error(e);
-            }
+            res = HttpRequest.s_SendGet(host_bda + uri, query, bda_token);
             s_CheckResponse(res);
             Assert.assertNotEquals(code, "1000000", "传入不存在的订单编号应返回订单号不存在");
         }

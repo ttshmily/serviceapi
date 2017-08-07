@@ -48,11 +48,7 @@ public class RegisteredDoctor_SyncToKB extends BaseTest {
 
         body.put("status", "1");
         body.put("reason", "单独同步");
-        try {
-            res = HttpRequest.s_SendPut(host_crm+uri, body.toString(), crm_token, pathValue);
-        } catch (IOException e) {
-            logger.error(e);
-        }
+        res = HttpRequest.s_SendPut(host_crm+uri, body.toString(), crm_token, pathValue);
         s_CheckResponse(res);
         Assert.assertEquals(code, "1000000");
 
@@ -93,11 +89,7 @@ public class RegisteredDoctor_SyncToKB extends BaseTest {
 
         body.put("status", "1");
         body.put("reason", "单独同步");
-        try {
-            res = HttpRequest.s_SendPut(host_crm+uri, body.toString(), crm_token, pathValue);
-        } catch (IOException e) {
-            logger.error(e);
-        }
+        res = HttpRequest.s_SendPut(host_crm+uri, body.toString(), crm_token, pathValue);
         s_CheckResponse(res);
         Assert.assertNotEquals(code, "1000000");
     }
@@ -121,11 +113,7 @@ public class RegisteredDoctor_SyncToKB extends BaseTest {
         body.put("status", "1");
 //        body.put("reason", "单独同步");
         body.put("expert_id", expertId);
-        try {
-            res = HttpRequest.s_SendPut(host_crm+uri, body.toString(), crm_token, pathValue);
-        } catch (IOException e) {
-            logger.error(e);
-        }
+        res = HttpRequest.s_SendPut(host_crm+uri, body.toString(), crm_token, pathValue);
         s_CheckResponse(res);
         Assert.assertEquals(code, "1000000");
 

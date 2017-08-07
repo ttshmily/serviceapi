@@ -54,11 +54,7 @@ public class Order_ThreewayCall_V2 extends BaseTest {
         body.put("reject_reason", "http://www.automation.com");
         body.put("platform_proportion", "5");
         body.put("agent_proportion", "15");
-        try {
-            res = HttpRequest.s_SendPost(host_crm+uri, body.toString(), crm_token, pathValue);
-        } catch (IOException e) {
-            logger.error(e);
-        }
+        res = HttpRequest.s_SendPost(host_crm+uri, body.toString(), crm_token, pathValue);
         res = Order_Detail.s_Detail(orderId);
         return Helper.s_ParseJson(JSONObject.fromObject(res), "data:status");
     }
@@ -90,11 +86,7 @@ public class Order_ThreewayCall_V2 extends BaseTest {
         long agent_p = Generator.randomInt(20);
         body.put("platform_proportion", String.valueOf(platform_p)); //百分比
         body.put("agent_proportion", String.valueOf(agent_p)); //百分比
-        try {
-            res = HttpRequest.s_SendPost(host_crm+uri, body.toString(), crm_token, pathValue);
-        } catch (IOException e) {
-            logger.error(e);
-        }
+        res = HttpRequest.s_SendPost(host_crm+uri, body.toString(), crm_token, pathValue);
         s_CheckResponse(res);
         Assert.assertEquals(code, "1000000");
         res = Order_Detail.s_Detail(orderId);
@@ -139,11 +131,7 @@ public class Order_ThreewayCall_V2 extends BaseTest {
         body.put("reject_reason", "http://www.automation.com");
         body.put("platform_proportion", "5");
         body.put("agent_proportion", "15");
-        try {
-            res = HttpRequest.s_SendPost(host_crm+uri, body.toString(), crm_token, pathValue);
-        } catch (IOException e) {
-            logger.error(e);
-        }
+        res = HttpRequest.s_SendPost(host_crm+uri, body.toString(), crm_token, pathValue);
         s_CheckResponse(res);
         Assert.assertEquals(code, "1000000");
         res = Order_Detail.s_Detail(orderId);

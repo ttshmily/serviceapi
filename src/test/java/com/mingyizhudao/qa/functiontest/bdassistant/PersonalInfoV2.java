@@ -24,11 +24,7 @@ public class PersonalInfoV2 extends BaseTest {
 
     public static HashMap<String, List<String>> BDInfo(String token) {
         String res = "";
-        try {
-            res = HttpRequest.s_SendGet(host_bda + uri, "", token);
-        } catch (IOException e) {
-            logger.error(e);
-        }
+        res = HttpRequest.s_SendGet(host_bda + uri, "", token);
         HashMap<String, List<String>> result = new HashMap<>();
         JSONArray bd_city_list = JSONObject.fromObject(res).getJSONObject("data").getJSONArray("city");
         List<String> cities = new ArrayList<>();
@@ -43,20 +39,12 @@ public class PersonalInfoV2 extends BaseTest {
     public void test_01_没有token或token错误返回错误码(){
         String res = "";
         HashMap<String, String> query = new HashMap<>();
-        try {
-            res = HttpRequest.s_SendGet(host_bda + uri, query, "");
-        } catch (IOException e) {
-            logger.error(e);
-        }
+        res = HttpRequest.s_SendGet(host_bda + uri, query, "");
         s_CheckResponse(res);
         Assert.assertNotEquals(code, "1000000", "没有token不应该调用成功");
 
         //错误的无效token
-        try {
-            res = HttpRequest.s_SendGet(host_bda + uri, query, "aaa");
-        } catch (IOException e) {
-            logger.error(e);
-        }
+        res = HttpRequest.s_SendGet(host_bda + uri, query, "aaa");
         s_CheckResponse(res);
         Assert.assertNotEquals(code, "1000000", "没有token不应该调用成功");
     }
@@ -65,11 +53,7 @@ public class PersonalInfoV2 extends BaseTest {
     public void test_02_下属员工返回基本信息(){
         String res = "";
         HashMap<String, String> query = new HashMap<>();
-        try {
-            res = HttpRequest.s_SendGet(host_bda + uri, query, bda_token_staff);
-        } catch (IOException e) {
-            logger.error(e);
-        }
+        res = HttpRequest.s_SendGet(host_bda + uri, query, bda_token_staff);
         s_CheckResponse(res);
         Assert.assertEquals(code, "1000000", "有token应该调用成功");
         Assert.assertNotNull(Helper.s_ParseJson(data, "doctorCounts"), "doctorCounts字段缺失");
@@ -82,11 +66,7 @@ public class PersonalInfoV2 extends BaseTest {
     public void test_03_员工主管返回基本信息和团队信息(){
         String res = "";
         HashMap<String, String> query = new HashMap<>();
-        try {
-            res = HttpRequest.s_SendGet(host_bda + uri, query, bda_token);
-        } catch (IOException e) {
-            logger.error(e);
-        }
+        res = HttpRequest.s_SendGet(host_bda + uri, query, bda_token);
         s_CheckResponse(res);
         Assert.assertEquals(code, "1000000", "有token应该调用成功");
         Assert.assertNotNull(Helper.s_ParseJson(data, "doctorCounts"), "doctorCounts字段缺失");
@@ -99,11 +79,7 @@ public class PersonalInfoV2 extends BaseTest {
     public void test_04_个人基本信息校验(){
         String res = "";
         HashMap<String, String> query = new HashMap<>();
-        try {
-            res = HttpRequest.s_SendGet(host_bda + uri, query, bda_token_staff);
-        } catch (IOException e) {
-            logger.error(e);
-        }
+        res = HttpRequest.s_SendGet(host_bda + uri, query, bda_token_staff);
         s_CheckResponse(res);
         Assert.assertEquals(code, "1000000", "有token应该调用成功");
         Assert.assertNotNull(Helper.s_ParseJson(data, "user"), "user字段缺失");
@@ -117,11 +93,7 @@ public class PersonalInfoV2 extends BaseTest {
     public void test_05_个人负责城市信息的校验(){
         String res = "";
         HashMap<String, String> query = new HashMap<>();
-        try {
-            res = HttpRequest.s_SendGet(host_bda + uri, query, bda_token_staff);
-        } catch (IOException e) {
-            logger.error(e);
-        }
+        res = HttpRequest.s_SendGet(host_bda + uri, query, bda_token_staff);
         s_CheckResponse(res);
         Assert.assertEquals(code, "1000000", "有token应该调用成功");
         Assert.assertNotNull(Helper.s_ParseJson(data, "city()"), "分配城市字段");

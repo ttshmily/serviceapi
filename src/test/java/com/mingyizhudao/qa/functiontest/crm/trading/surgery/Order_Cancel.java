@@ -51,11 +51,7 @@ public class Order_Cancel extends BaseTest {
         body.put("reason", "小节审核不通过的列表选择原因");
         body.put("responsible", "责任方：下级医生原因");
 
-        try {
-            res = HttpRequest.s_SendPost(host_crm + uri, body.toString(), crm_token, pathValue);
-        } catch (IOException e) {
-            logger.error(e);
-        }
+        res = HttpRequest.s_SendPost(host_crm + uri, body.toString(), crm_token, pathValue);
         s_CheckResponse(res);
         Assert.assertEquals(code, "1000000", "取消订单接口失败");
         Assert.assertEquals(Helper.s_ParseJson(data, "status"), "4030");

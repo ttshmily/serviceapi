@@ -35,12 +35,8 @@ public class CheckVerifyCode extends BaseTest{
         cmp.body.replace("code", "123456");
         logger.info("发送短信验证码到服务器进行验证...");
         String tmpToken = "";
-        try {
-            res = HttpRequest.s_SendPost(host_login +uri,cmp.body.toString(), "");
-            tmpToken = Helper.s_ParseJson(JSONObject.fromObject(res), "data:token");
-        } catch (IOException e) {
-            logger.error(e);
-        }
+        res = HttpRequest.s_SendPost(host_login +uri,cmp.body.toString(), "");
+        tmpToken = Helper.s_ParseJson(JSONObject.fromObject(res), "data:token");
 
         if (null != tmpToken  && !tmpToken.isEmpty()) {
             logger.info("token是: " + tmpToken);
@@ -60,12 +56,8 @@ public class CheckVerifyCode extends BaseTest{
         check.put("code", "123456");
         logger.info("发送短信验证码到服务器进行验证...");
         String tmpToken = "";
-        try {
-            res = HttpRequest.s_SendPost(host_login +uri, check.toString(), "");
-            tmpToken = Helper.s_ParseJson(JSONObject.fromObject(res), "data:token");
-        } catch (IOException e) {
-            logger.error(e);
-        }
+        res = HttpRequest.s_SendPost(host_login +uri, check.toString(), "");
+        tmpToken = Helper.s_ParseJson(JSONObject.fromObject(res), "data:token");
 
         if (null != tmpToken  && !tmpToken.isEmpty()) {
             logger.info("token是: " + tmpToken);
@@ -84,13 +76,8 @@ public class CheckVerifyCode extends BaseTest{
         SendVerifyCode.s_Send();
         body.body.replace("code", "123456");
         body.body.replace("mobile", mobile);
-        try {
-            res = HttpRequest.s_SendPost(host_login + uri, body.body.toString(), "");
-            s_CheckResponse(res);
-        } catch (IOException e) {
-            logger.error(e);
-            Assert.fail("http request returns an error");
-        }
+        res = HttpRequest.s_SendPost(host_login + uri, body.body.toString(), "");
+        s_CheckResponse(res);
         Assert.assertNotNull(Helper.s_ParseJson(data, "token"), "token不应该为空");
         Assert.assertNotEquals(Helper.s_ParseJson(data, "token"), "", "code不应该为1000000");
         Assert.assertEquals(code, "1000000", "code不应该为1000000");
@@ -100,12 +87,7 @@ public class CheckVerifyCode extends BaseTest{
     public void 手机号未发送过请求但直接进行验证应该返回错误() {
         String res = "";
         CheckMobileProfile body = new CheckMobileProfile(true);
-        try {
-            res = HttpRequest.s_SendPost(host_login +uri, body.body.toString(), "");
-        } catch (IOException e) {
-            logger.error(e);
-            Assert.fail("http request returns an error");
-        }
+        res = HttpRequest.s_SendPost(host_login +uri, body.body.toString(), "");
         s_CheckResponse(res);
         Assert.assertNotEquals(code, "1000000", "code不应该为1000000");
     }
@@ -116,12 +98,7 @@ public class CheckVerifyCode extends BaseTest{
         CheckMobileProfile body = new CheckMobileProfile(false);
         body.body.replace("code", "123456");
         body.body.replace("mobile", "13800000001");
-        try {
-            res = HttpRequest.s_SendPost(host_login + uri, body.body.toString(), "");
-        } catch (IOException e) {
-            logger.error(e);
-            Assert.fail("http request returns an error");
-        }
+        res = HttpRequest.s_SendPost(host_login + uri, body.body.toString(), "");
         s_CheckResponse(res);
         Assert.assertNotEquals(code, "1000000", "code不应该为1000000");
     }
@@ -131,13 +108,10 @@ public class CheckVerifyCode extends BaseTest{
         String res = "";
         CheckMobileProfile body = new CheckMobileProfile(false);
         body.body.replace("mobile", "1380000"+"9999");
-        try {
-            res = HttpRequest.s_SendPost(host_login + uri, body.body.toString(), "");
-            s_CheckResponse(res);
-            Assert.fail();
-        } catch (IOException e) {
-            logger.info("res returns error because of malformed input");
-        }
+        res = HttpRequest.s_SendPost(host_login + uri, body.body.toString(), "");
+        s_CheckResponse(res);
+        Assert.assertNotEquals(code, "1000000");
+
     }
 
     @Test
@@ -145,13 +119,9 @@ public class CheckVerifyCode extends BaseTest{
         String res = "";
         CheckMobileProfile body = new CheckMobileProfile(false);
         body.body.replace("code", "123456");
-        try {
-            res = HttpRequest.s_SendPost(host_login + uri, body.body.toString(), "");
-            s_CheckResponse(res);
-            Assert.fail();
-        } catch (IOException e) {
-            logger.info("res returns error because of malformed input");
-        }
+        res = HttpRequest.s_SendPost(host_login + uri, body.body.toString(), "");
+        s_CheckResponse(res);
+        Assert.assertNotEquals(code, "1000000");
     }
 
 }

@@ -32,11 +32,7 @@ public class KBHospital_List extends BaseTest {
 
         String res = "";
         HashMap<String, String> query = new HashMap<>();
-        try {
-            res = HttpRequest.s_SendGet(host_crm + uri, "", crm_token);
-        } catch (IOException e) {
-            logger.error(e);
-        }
+        res = HttpRequest.s_SendGet(host_crm + uri, "", crm_token);
         s_CheckResponse(res);
         Assert.assertEquals(code, "1000000");
         Assert.assertNotNull(Helper.s_ParseJson(data, "list()"), "医院列表为空");
@@ -55,11 +51,7 @@ public class KBHospital_List extends BaseTest {
         Integer id3 = Integer.parseInt(Helper.s_ParseJson(data, "list(9):id"));
 
         query.put("page","2");
-        try {
-            res = HttpRequest.s_SendGet(host_crm + uri, query, crm_token, null);
-        } catch (IOException e) {
-            logger.error(e);
-        }
+        res = HttpRequest.s_SendGet(host_crm + uri, query, crm_token, null);
         s_CheckResponse(res);
         Assert.assertEquals(code, "1000000");
         Integer id4 = Integer.parseInt(Helper.s_ParseJson(data, "list(0):id"));
@@ -74,11 +66,7 @@ public class KBHospital_List extends BaseTest {
         HashMap<String, String> query = new HashMap<>();
         String hospitalClass = Generator.randomHospitalClass();
         query.put("hospitalClass", hospitalClass);
-        try {
-            res = HttpRequest.s_SendGet(host_crm+uri, query, crm_token);
-        } catch (IOException e) {
-            logger.error(e);
-        }
+        res = HttpRequest.s_SendGet(host_crm+uri, query, crm_token);
         s_CheckResponse(res);
         Assert.assertEquals(code, "1000000");
         //TODO
@@ -90,11 +78,7 @@ public class KBHospital_List extends BaseTest {
 
         hospitalClass = Generator.randomHospitalClass().concat(",").concat(Generator.randomHospitalClass());
         query.replace("hospitalClass",hospitalClass);
-        try {
-            res = HttpRequest.s_SendGet(host_crm+uri, query, crm_token);
-        } catch (IOException e) {
-            logger.error(e);
-        }
+        res = HttpRequest.s_SendGet(host_crm+uri, query, crm_token);
         s_CheckResponse(res);
         Assert.assertEquals(code, "1000000");
         //TODO
@@ -106,11 +90,7 @@ public class KBHospital_List extends BaseTest {
         }
 
         query.replace("hospitalClass","-1");
-        try {
-            res = HttpRequest.s_SendGet(host_crm+uri, query, crm_token);
-        } catch (IOException e) {
-            logger.error(e);
-        }
+        res = HttpRequest.s_SendGet(host_crm+uri, query, crm_token);
         s_CheckResponse(res);
         Assert.assertNotEquals(code, "1000000");
         //TODO
@@ -123,11 +103,7 @@ public class KBHospital_List extends BaseTest {
         HashMap<String, String> query = new HashMap<>();
         String type = Generator.randomHospitalType();
         query.put("type", type);
-        try {
-            res = HttpRequest.s_SendGet(host_crm+uri, query, crm_token);
-        } catch (IOException e) {
-            logger.error(e);
-        }
+        res = HttpRequest.s_SendGet(host_crm+uri, query, crm_token);
         s_CheckResponse(res);
         Assert.assertEquals(code, "1000000");
         //TODO
@@ -139,11 +115,7 @@ public class KBHospital_List extends BaseTest {
 
         type = Generator.randomHospitalType().concat(",").concat(Generator.randomHospitalType());
         query.replace("type",type);
-        try {
-            res = HttpRequest.s_SendGet(host_crm+uri, query, crm_token);
-        } catch (IOException e) {
-            logger.error(e);
-        }
+        res = HttpRequest.s_SendGet(host_crm+uri, query, crm_token);
         s_CheckResponse(res);
         Assert.assertEquals(code, "1000000");
         //TODO
@@ -155,11 +127,7 @@ public class KBHospital_List extends BaseTest {
         }
 
         query.replace("type","-1");
-        try {
-            res = HttpRequest.s_SendGet(host_crm+uri, query, crm_token);
-        } catch (IOException e) {
-            logger.error(e);
-        }
+        res = HttpRequest.s_SendGet(host_crm+uri, query, crm_token);
         s_CheckResponse(res);
         Assert.assertNotEquals(code, "1000000");
         //TODO
@@ -172,11 +140,7 @@ public class KBHospital_List extends BaseTest {
         HashMap<String, String> query = new HashMap<>();
         String provinceId = Generator.randomProvinceId();
         query.put("province", provinceId);
-        try {
-            res = HttpRequest.s_SendGet(host_crm+uri, query, crm_token);
-        } catch (IOException e) {
-            logger.error(e);
-        }
+        res = HttpRequest.s_SendGet(host_crm+uri, query, crm_token);
         s_CheckResponse(res);
         Assert.assertEquals(code, "1000000");
         //TODO
@@ -188,11 +152,7 @@ public class KBHospital_List extends BaseTest {
 
         provinceId = Generator.randomProvinceId().concat(",").concat(Generator.randomProvinceId()).concat(",").concat(Generator.randomProvinceId()).concat(",").concat(Generator.randomProvinceId()).concat(",").concat(Generator.randomProvinceId()).concat(",").concat(Generator.randomProvinceId()).concat(",").concat(Generator.randomProvinceId());
         query.replace("province",provinceId);
-        try {
-            res = HttpRequest.s_SendGet(host_crm+uri, query, crm_token);
-        } catch (IOException e) {
-            logger.error(e);
-        }
+        res = HttpRequest.s_SendGet(host_crm+uri, query, crm_token);
         s_CheckResponse(res);
         Assert.assertEquals(code, "1000000");
         //TODO

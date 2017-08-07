@@ -32,11 +32,7 @@ public class GetUploadToken extends BaseTest {
         HashMap<String, String> query = new HashMap<>();
         query.put("type", "1");
         query.put("filename", "当朝.jpg");
-        try {
-            res = HttpRequest.s_SendGet(host_doc + uri, query, mainToken, null);
-        } catch (IOException e) {
-            logger.error(e);
-        }
+        res = HttpRequest.s_SendGet(host_doc + uri, query, mainToken, null);
         s_CheckResponse(res);
         Assert.assertNotNull(Helper.s_ParseJson(data, "token"));
         Assert.assertEquals(code, "1000000");
@@ -49,11 +45,7 @@ public class GetUploadToken extends BaseTest {
         HashMap<String, String> query = new HashMap<>();
         query.put("type", "2");
         query.put("filename", "abcd!@#$%^&*().jpg");
-        try {
-            res = HttpRequest.s_SendGet(host_doc + uri, query, mainToken, null);
-        } catch (IOException e) {
-            logger.error(e);
-        }
+        res = HttpRequest.s_SendGet(host_doc + uri, query, mainToken, null);
         s_CheckResponse(res);
         Assert.assertNotNull(Helper.s_ParseJson(data, "token"));
         Assert.assertEquals(code, "1000000");
@@ -67,11 +59,7 @@ public class GetUploadToken extends BaseTest {
         HashMap<String, String> query = new HashMap<>();
         query.put("type", "3");
         query.put("filename", "abcd!@#$%^&*().jpg");
-        try {
-            res = HttpRequest.s_SendGet(host_doc + uri, query, mainToken, null);
-        } catch (IOException e) {
-            logger.error(e);
-        }
+        res = HttpRequest.s_SendGet(host_doc + uri, query, mainToken, null);
         s_CheckResponse(res);
         Assert.assertNotNull(Helper.s_ParseJson(data, "token"));
         Assert.assertEquals(code, "1000000");
@@ -84,20 +72,12 @@ public class GetUploadToken extends BaseTest {
         HashMap<String, String> query = new HashMap<>();
         query.put("type", "1");
         query.put("filename", "abcd.png");
-        try {
-            res = HttpRequest.s_SendGet(host_doc + uri, query, mainToken, null);
-        } catch (IOException e) {
-            logger.error(e);
-        }
+        res = HttpRequest.s_SendGet(host_doc + uri, query, mainToken, null);
         s_CheckResponse(res);
         Assert.assertEquals(code, "1000000");
 
         query.replace("filename", "abcdefg.PNG");
-        try {
-            res = HttpRequest.s_SendGet(host_doc + uri, query, mainToken, null);
-        } catch (IOException e) {
-            logger.error(e);
-        }
+        res = HttpRequest.s_SendGet(host_doc + uri, query, mainToken, null);
         s_CheckResponse(res);
         Assert.assertEquals(code, "1000000");
     }
@@ -109,20 +89,12 @@ public class GetUploadToken extends BaseTest {
         HashMap<String, String> query = new HashMap<>();
         query.put("type", "1");
         query.put("filename", "abcd.gif");
-        try {
-            res = HttpRequest.s_SendGet(host_doc + uri, query, mainToken, null);
-        } catch (IOException e) {
-            logger.error(e);
-        }
+        res = HttpRequest.s_SendGet(host_doc + uri, query, mainToken, null);
         s_CheckResponse(res);
         Assert.assertEquals(code, "1000000");
 
         query.replace("filename", "abcd.GIF");
-        try {
-            res = HttpRequest.s_SendGet(host_doc + uri, query, mainToken, null);
-        } catch (IOException e) {
-            logger.error(e);
-        }
+        res = HttpRequest.s_SendGet(host_doc + uri, query, mainToken, null);
         s_CheckResponse(res);
         Assert.assertEquals(code, "1000000");
     }
@@ -134,20 +106,12 @@ public class GetUploadToken extends BaseTest {
         HashMap<String, String> query = new HashMap<>();
         query.put("type", "1");
         query.put("filename", "abcd!@#$%^&*(~.png");
-        try {
-            res = HttpRequest.s_SendGet(host_doc + uri, query, mainToken, null);
-        } catch (IOException e) {
-            logger.error(e);
-        }
+        res = HttpRequest.s_SendGet(host_doc + uri, query, mainToken, null);
         s_CheckResponse(res);
         Assert.assertEquals(code, "1000000");
 
         query.replace("filename", "+_)(*&^%$#@!.PNG");
-        try {
-            res = HttpRequest.s_SendGet(host_doc + uri, query, mainToken, null);
-        } catch (IOException e) {
-            logger.error(e);
-        }
+        res = HttpRequest.s_SendGet(host_doc + uri, query, mainToken, null);
         s_CheckResponse(res);
         Assert.assertEquals(code, "1000000");
     }
@@ -160,11 +124,7 @@ public class GetUploadToken extends BaseTest {
         HashMap<String, String> query = new HashMap<>();
         query.put("type", "1");
         query.put("filename", "abcd!@#$%^&*(~aa");
-        try {
-            res = HttpRequest.s_SendGet(host_doc + uri, query, mainToken, null);
-        } catch (IOException e) {
-            logger.error(e);
-        }
+        res = HttpRequest.s_SendGet(host_doc + uri, query, mainToken, null);
         s_CheckResponse(res);
         Assert.assertNotEquals(code, "1000000");
     }

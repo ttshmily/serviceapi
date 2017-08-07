@@ -193,9 +193,19 @@ public class BaseTest {
         logger.info(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> \n");
     }*/
 
-    public void s_CheckResponse(String res) throws JSONException {
+    public void s_CheckResponse(String res) {
         TestLogger logger = new TestLogger(s_JobName());
-        JSONObject json = JSONObject.fromObject(res);
+        JSONObject json = null;
+        try {
+            json = JSONObject.fromObject(res);
+        } catch (JSONException e) {
+            logger.error("res is NOT a JSON");
+            logger.error(res);
+            this.code = null;
+            this.data = null;
+            this.message = null;
+            return;
+        }
         this.code = json.getString("code");
         this.message = json.getString("message");
         if (json.containsKey("data")) {

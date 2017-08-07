@@ -40,11 +40,7 @@ public class Order_Modify extends BaseTest {
         JSONObject body = new JSONObject();
         String name = Generator.randomString(4);
         body.put("patient_name","修改的姓名"+name);
-        try {
-            res = HttpRequest.s_SendPut(host_crm+uri, body.toString(), crm_token, pathValue);
-        } catch (IOException e) {
-            logger.error(e);
-        }
+        res = HttpRequest.s_SendPut(host_crm+uri, body.toString(), crm_token, pathValue);
         s_CheckResponse(res);
         Assert.assertEquals(code, "1000000");
         Assert.assertNotNull(data, "list");
@@ -63,11 +59,7 @@ public class Order_Modify extends BaseTest {
         pathValue.put("orderNumber", order_number);
         JSONObject body = new JSONObject();
         body.put("patient_age","44");
-        try {
-            res = HttpRequest.s_SendPut(host_crm+uri, body.toString(), crm_token, pathValue);
-        } catch (IOException e) {
-            logger.error(e);
-        }
+        res = HttpRequest.s_SendPut(host_crm+uri, body.toString(), crm_token, pathValue);
         s_CheckResponse(res);
         Assert.assertEquals(code, "1000000");
         Assert.assertNotNull(data, "list");
@@ -87,11 +79,7 @@ public class Order_Modify extends BaseTest {
         JSONObject body = new JSONObject();
         String diseaseId = Generator.randomDiseaseId();
         body.put("major_disease_id", diseaseId);
-        try {
-            res = HttpRequest.s_SendPut(host_crm+uri, body.toString(), crm_token, pathValue);
-        } catch (IOException e) {
-            logger.error(e);
-        }
+        res = HttpRequest.s_SendPut(host_crm+uri, body.toString(), crm_token, pathValue);
         s_CheckResponse(res);
         Assert.assertEquals(code, "1000000");
         Assert.assertNotNull(data, "list");
@@ -112,11 +100,7 @@ public class Order_Modify extends BaseTest {
         JSONObject body = new JSONObject();
         String diseaseId = Generator.randomDiseaseId();
         body.put("minor_disease_id",diseaseId);
-        try {
-            res = HttpRequest.s_SendPut(host_crm+uri, body.toString(), crm_token, pathValue);
-        } catch (IOException e) {
-            logger.error(e);
-        }
+        res = HttpRequest.s_SendPut(host_crm+uri, body.toString(), crm_token, pathValue);
         s_CheckResponse(res);
         Assert.assertEquals(code, "1000000");
         Assert.assertNotNull(data, "list");
@@ -136,11 +120,7 @@ public class Order_Modify extends BaseTest {
         pathValue.put("orderNumber", order_number);
         JSONObject body = new JSONObject();
         body.put("patient_gender","2");
-        try {
-            res = HttpRequest.s_SendPut(host_crm+uri, body.toString(), crm_token, pathValue);
-        } catch (IOException e) {
-            logger.error(e);
-        }
+        res = HttpRequest.s_SendPut(host_crm+uri, body.toString(), crm_token, pathValue);
         s_CheckResponse(res);
         Assert.assertEquals(code, "1000000");
         Assert.assertNotNull(data, "list");
@@ -160,11 +140,7 @@ public class Order_Modify extends BaseTest {
         pathValue.put("orderNumber", order_number);
         JSONObject body = new JSONObject();
         body.put("patient_phone","13799990123");
-        try {
-            res = HttpRequest.s_SendPut(host_crm+uri, body.toString(), crm_token, pathValue);
-        } catch (IOException e) {
-            logger.error(e);
-        }
+        res = HttpRequest.s_SendPut(host_crm+uri, body.toString(), crm_token, pathValue);
         s_CheckResponse(res);
         Assert.assertEquals(code, "1000000");
         Assert.assertNotNull(data, "list");
@@ -187,11 +163,7 @@ public class Order_Modify extends BaseTest {
         pathValue.put("orderNumber", order_number);
         JSONObject body = new JSONObject();
         body.put("patient_phone","13799990123");
-        try {
-            res = HttpRequest.s_SendPut(host_crm+uri, body.toString(), crm_token, pathValue);
-        } catch (IOException e) {
-            logger.error(e);
-        }
+        res = HttpRequest.s_SendPut(host_crm+uri, body.toString(), crm_token, pathValue);
         s_CheckResponse(res);
         Assert.assertNotEquals(code, "1000000");
         res = Order_Detail.s_Detail(order_number);
@@ -208,11 +180,7 @@ public class Order_Modify extends BaseTest {
         pathValue.put("orderNumber", order_number);
         JSONObject body = new JSONObject();
         body.put("patient_phone","13799990123");
-        try {
-            res = HttpRequest.s_SendPut(host_crm+uri, body.toString(), crm_token, pathValue);
-        } catch (IOException e) {
-            logger.error(e);
-        }
+        res = HttpRequest.s_SendPut(host_crm+uri, body.toString(), crm_token, pathValue);
         s_CheckResponse(res);
         Assert.assertNotEquals(code, "1000000");
         res = Order_Detail.s_Detail(order_number);
@@ -233,11 +201,7 @@ public class Order_Modify extends BaseTest {
         JSONObject body = new JSONObject();
         JSONArray pics = JSONArray.fromObject("[{'key':'2017/05/04/1265834e-97d8-44a0-95e7-047c7facaee8/IMG_20170429_102737.jpg';'type':'1'},{'key':'2017/05/04/1265834e-97d8-44a0-95e7-047c7facaee8/IMG_20170429_102738.jpg';'type':'1'},{'key':'2017/05/04/1265834e-97d8-44a0-95e7-047c7facaee8/IMG_20170429_102739.jpg';'type':'1'}]");
         body.put("medical_record_pictures",pics);
-        try {
-            res = HttpRequest.s_SendPut(host_crm+uri, body.toString(), crm_token, pathValue);
-        } catch (IOException e) {
-            logger.error(e);
-        }
+        res = HttpRequest.s_SendPut(host_crm+uri, body.toString(), crm_token, pathValue);
         s_CheckResponse(res);
         Assert.assertEquals(code, "1000000");
         res = Order_Detail.s_Detail(order_number);
@@ -249,11 +213,7 @@ public class Order_Modify extends BaseTest {
 
         pics = JSONArray.fromObject("[]");
         body.replace("medical_record_pictures",pics);
-        try {
-            res = HttpRequest.s_SendPut(host_crm+uri, body.toString(), crm_token, pathValue);
-        } catch (IOException e) {
-            logger.error(e);
-        }
+        res = HttpRequest.s_SendPut(host_crm+uri, body.toString(), crm_token, pathValue);
         s_CheckResponse(res);
         Assert.assertEquals(code, "1000000");
         res = Order_Detail.s_Detail(order_number);

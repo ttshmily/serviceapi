@@ -35,12 +35,7 @@ public class PaymentResult extends BaseTest {
         JSONObject order = new JSONObject();
         order.put("orderNumber", orderId);
         body.put("payment", order);
-        try {
-            res = HttpRequest.s_SendPost(host_doc + uri, body.toString(), token, null);
-//            logger.debug(res);
-        } catch (IOException e) {
-            logger.error(e);
-        }
+        res = HttpRequest.s_SendPost(host_doc + uri, body.toString(), token, null);
         String status = "";
         String ispaid = "";
         String code = JSONObject.fromObject(res).getString("code");

@@ -63,12 +63,8 @@ public class RegisteredDoctor_CertifySync_V2 extends BaseTest {
         body.put("status", verified_status);  // 认证
         body.put("reason", "程序认证注册医生并关联到医库");
         body.put("is_signed", "1");
-        try {
-            res = HttpRequest.s_SendPut(host_crm+uri, body.toString(), crm_token, pathValue);
-            logger.debug(Helper.unicodeString(res));
-        } catch (IOException e) {
-            logger.error(e);
-        }
+        res = HttpRequest.s_SendPut(host_crm+uri, body.toString(), crm_token, pathValue);
+        logger.debug(Helper.unicodeString(res));
         res = RegisteredDoctor_Detail.s_Detail(regId);
         logger.debug(Helper.unicodeString(res));
         result.put("is_verified", Helper.s_ParseJson(JSONObject.fromObject(res), "data:is_verified"));
@@ -109,11 +105,7 @@ public class RegisteredDoctor_CertifySync_V2 extends BaseTest {
         body.put("reason", "程序认证注册医生并关联到医库");
         body.put("kb_id", expertId);
         body.put("is_signed", "1");
-        try {
-            HttpRequest.s_SendPut(host_crm+uri, body.toString(), crm_token, pathValue);
-        } catch (IOException e) {
-            logger.error(e);
-        }
+        HttpRequest.s_SendPut(host_crm+uri, body.toString(), crm_token, pathValue);
         res = RegisteredDoctor_Detail.s_Detail(regId);
         result.put("is_verified", Helper.s_ParseJson(JSONObject.fromObject(res), "data:is_verified"));
         result.put("register_id", Helper.s_ParseJson(JSONObject.fromObject(res), "data:register_id"));
@@ -139,11 +131,7 @@ public class RegisteredDoctor_CertifySync_V2 extends BaseTest {
         pathValue.put("id", doctorId);
         body.put("status", "-1");  // 认证失败
         body.put("reason", "程序自动测试失败原因");  // 失败原因
-        try {
-            res = HttpRequest.s_SendPut(host_crm+uri, body.toString(), crm_token, pathValue);
-        } catch (IOException e) {
-            logger.error(e);
-        }
+        res = HttpRequest.s_SendPut(host_crm+uri, body.toString(), crm_token, pathValue);
         logger.info(Helper.unicodeString(res));
         s_CheckResponse(res);
         Assert.assertEquals(code, "1000000");
@@ -168,11 +156,7 @@ public class RegisteredDoctor_CertifySync_V2 extends BaseTest {
         pathValue.put("id", doctorId);
         body.put("status", "1");  // 认证成功
         body.put("reason", "程序测试认真成功原因");  // 成功原因
-        try {
-            res = HttpRequest.s_SendPut(host_crm + uri, body.toString(), crm_token, pathValue);
-        } catch (IOException e) {
-            logger.error(e);
-        }
+        res = HttpRequest.s_SendPut(host_crm + uri, body.toString(), crm_token, pathValue);
         s_CheckResponse(res);
         Assert.assertEquals(code, "1000000");
 
@@ -222,11 +206,7 @@ public class RegisteredDoctor_CertifySync_V2 extends BaseTest {
         body.put("reason", "程序测试认真成功原因");  // 成功原因
         body.put("kb_id", expertId);
         body.put("is_signed", "0");
-        try {
-            res = HttpRequest.s_SendPut(host_crm + uri, body.toString(), crm_token, pathValue);
-        } catch (IOException e) {
-            logger.error(e);
-        }
+        res = HttpRequest.s_SendPut(host_crm + uri, body.toString(), crm_token, pathValue);
         s_CheckResponse(res);
         Assert.assertEquals(code, "1000000");
 
@@ -273,11 +253,7 @@ public class RegisteredDoctor_CertifySync_V2 extends BaseTest {
         body.put("reason", "程序测试认真成功原因");  // 成功原因
         body.put("kb_id", expertId);
         body.put("is_signed", "1");
-        try {
-            res = HttpRequest.s_SendPut(host_crm + uri, body.toString(), crm_token, pathValue);
-        } catch (IOException e) {
-            logger.error(e);
-        }
+        res = HttpRequest.s_SendPut(host_crm + uri, body.toString(), crm_token, pathValue);
         s_CheckResponse(res);
         Assert.assertEquals(code, "1000000");
 
@@ -324,11 +300,7 @@ public class RegisteredDoctor_CertifySync_V2 extends BaseTest {
         pathValue.put("id", doctorId);
         body.put("status", "-1");  // 认证失败
         body.put("reason", "程序自动测试失败原因");  // 失败原因
-        try {
-            res = HttpRequest.s_SendPut(host_crm+uri, body.toString(), crm_token, pathValue);
-        } catch (IOException e) {
-            logger.error(e);
-        }
+        res = HttpRequest.s_SendPut(host_crm+uri, body.toString(), crm_token, pathValue);
         logger.info(Helper.unicodeString(res));
         s_CheckResponse(res);
         Assert.assertEquals(code, "1000000");

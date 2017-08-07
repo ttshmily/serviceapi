@@ -30,11 +30,7 @@ public class GetDiseasesInCategory extends BaseTest {
 
         HashMap<String, String> query = new HashMap<>();
         query.put("id", "6");
-        try {
-            res = HttpRequest.s_SendGet(host_doc + uri, query, mainToken, null);
-        } catch (IOException e) {
-            logger.error(e);
-        }
+        res = HttpRequest.s_SendGet(host_doc + uri, query, mainToken, null);
         s_CheckResponse(res);
         Assert.assertNotNull(Helper.s_ParseJson(data, "diseases()"));
         Assert.assertNotEquals(Helper.s_ParseJson(data, "diseases():id"), "");
@@ -48,11 +44,7 @@ public class GetDiseasesInCategory extends BaseTest {
 
         HashMap<String, String> query = new HashMap<String, String>();
         query.put("id", "600000");
-        try {
-            res = HttpRequest.s_SendGet(host_doc + uri, query, mainToken, null);
-        } catch (IOException e) {
-            logger.error(e);
-        }
+        res = HttpRequest.s_SendGet(host_doc + uri, query, mainToken, null);
         s_CheckResponse(res);
         Assert.assertEquals(code, "1000000");
         Assert.assertNotNull(Helper.s_ParseJson(data, "diseases()"));
@@ -65,31 +57,19 @@ public class GetDiseasesInCategory extends BaseTest {
         logger.info("case1: categoryId = abc");
         HashMap<String, String> query = new HashMap<String, String>();
         query.put("id", "abc");
-        try {
-            res = HttpRequest.s_SendGet(host_doc + uri, query, mainToken, null);
-        } catch (IOException e) {
-            logger.error(e);
-        }
+        res = HttpRequest.s_SendGet(host_doc + uri, query, mainToken);
         s_CheckResponse(res);
         Assert.assertEquals(code, "2210423");
 
         logger.info("case2: categoryId = abc12");
         query.replace("id", "abc12");
-        try {
-            res = HttpRequest.s_SendGet(host_doc + uri, query, mainToken, null);
-        } catch (IOException e) {
-            logger.error(e);
-        }
+        res = HttpRequest.s_SendGet(host_doc + uri, query, mainToken);
         s_CheckResponse(res);
         Assert.assertEquals(code, "2210423");
 
         logger.info("case3: categoryId = -1");
         query.replace("id", "-1");
-        try {
-            res = HttpRequest.s_SendGet(host_doc + uri, query, mainToken, null);
-        } catch (IOException e) {
-            logger.error(e);
-        }
+        res = HttpRequest.s_SendGet(host_doc + uri, query, mainToken);
         s_CheckResponse(res);
         Assert.assertEquals(code, "2210423");
     }

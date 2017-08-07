@@ -33,11 +33,7 @@ public class RegisteredDoctor_List extends BaseTest{
     public static int registeredDoctorList() {
         String res = "";
         TestLogger logger = new TestLogger(s_JobName());
-        try {
-            res = HttpRequest.s_SendGet(host_crm + uri, "", crm_token);
-        } catch (IOException e) {
-            logger.error(e);
-        }
+        res = HttpRequest.s_SendGet(host_crm + uri, "", crm_token);
         return Integer.parseInt(Helper.s_ParseJson(JSONObject.fromObject(res), "data:size"));
 
     }
@@ -46,11 +42,7 @@ public class RegisteredDoctor_List extends BaseTest{
 
         String res = "";
         HashMap<String, String> query = new HashMap<>();
-        try {
-            res = HttpRequest.s_SendGet(host_crm+uri, "", crm_token);
-        } catch (IOException e) {
-            logger.error(e);
-        }
+        res = HttpRequest.s_SendGet(host_crm+uri, "", crm_token);
         s_CheckResponse(res);
         Assert.assertEquals(code, "1000000");
         Assert.assertNotNull(Helper.s_ParseJson(data, "list()"), "医生列表为空");
@@ -75,11 +67,7 @@ public class RegisteredDoctor_List extends BaseTest{
         Integer id3 = Integer.parseInt(Helper.s_ParseJson(data, "list(9):user_id"));
 
         query.put("page","2");
-        try {
-            res = HttpRequest.s_SendGet(host_crm + uri, query, crm_token);
-        } catch (IOException e) {
-            logger.error(e);
-        }
+        res = HttpRequest.s_SendGet(host_crm + uri, query, crm_token);
         s_CheckResponse(res);
         Assert.assertEquals(code, "1000000");
         Integer id4 = Integer.parseInt(Helper.s_ParseJson(data, "list(0):user_id"));
@@ -101,11 +89,7 @@ public class RegisteredDoctor_List extends BaseTest{
         // 默认分页大小10
         for (int i = 1; i < pageNum; i++) {
             query.replace("page",String.valueOf(i));
-            try {
-                res = HttpRequest.s_SendGet(host_crm + uri, query, crm_token);
-            } catch (IOException e) {
-                logger.error(e);
-            }
+            res = HttpRequest.s_SendGet(host_crm + uri, query, crm_token);
             s_CheckResponse(res);
             Assert.assertEquals(code, "1000000");
             Assert.assertEquals(Helper.s_ParseJson(data, "list()"), "10", "分页的默认值不为10");
@@ -118,22 +102,14 @@ public class RegisteredDoctor_List extends BaseTest{
             query.replace("page", "1");
             int page_size = (int) Generator.randomInt(total);
             query.replace("page_size", String.valueOf(page_size));
-            try {
-                res = HttpRequest.s_SendGet(host_crm + uri, query, crm_token);
-            } catch (IOException e) {
-                logger.error(e);
-            }
+            res = HttpRequest.s_SendGet(host_crm + uri, query, crm_token);
             s_CheckResponse(res);
             Assert.assertEquals(code, "1000000");
             Assert.assertEquals(Helper.s_ParseJson(data, "list()"), String.valueOf(page_size), "分页值不正确");
             // 设置页数超出总量时，返回列表为空
             int page = total/page_size + 1;
             query.replace("page", String.valueOf(page+1));
-            try {
-                res = HttpRequest.s_SendGet(host_crm+uri, query, crm_token);
-            } catch (IOException e) {
-                logger.error(e);
-            }
+            res = HttpRequest.s_SendGet(host_crm+uri, query, crm_token);
             s_CheckResponse(res);
             Assert.assertEquals(code, "1000000");
             Assert.assertEquals(Helper.s_ParseJson(data, "list()"), "0", "页码超出总数时，应当返回空列表");
@@ -149,11 +125,7 @@ public class RegisteredDoctor_List extends BaseTest{
 
         //以姓名进行搜索
         query.put("doctor_name",mainDoctorName);
-        try {
-            res = HttpRequest.s_SendGet(host_crm + uri, query, crm_token);
-        } catch (IOException e) {
-            logger.error(e);
-        }
+        res = HttpRequest.s_SendGet(host_crm + uri, query, crm_token);
         s_CheckResponse(res);
         Assert.assertEquals(code, "1000000");
         //TODO
@@ -165,11 +137,7 @@ public class RegisteredDoctor_List extends BaseTest{
 
         //更换搜索的姓名，确认搜索结果正确性
         query.replace("doctor_name","大二");
-        try {
-            res = HttpRequest.s_SendGet(host_crm+uri, query, crm_token);
-        } catch (IOException e) {
-            logger.error(e);
-        }
+        res = HttpRequest.s_SendGet(host_crm+uri, query, crm_token);
         s_CheckResponse(res);
         Assert.assertEquals(code, "1000000");
         //TODO
@@ -187,11 +155,7 @@ public class RegisteredDoctor_List extends BaseTest{
         String res = "";
         HashMap<String, String> query = new HashMap<>();
         query.put("mobile",mainMobile);
-        try {
-            res = HttpRequest.s_SendGet(host_crm+uri, query, crm_token);
-        } catch (IOException e) {
-            logger.error(e);
-        }
+        res = HttpRequest.s_SendGet(host_crm+uri, query, crm_token);
         s_CheckResponse(res);
         Assert.assertEquals(code, "1000000");
         //TODO
@@ -202,11 +166,7 @@ public class RegisteredDoctor_List extends BaseTest{
         }
 
         query.replace("mobile","13817634203");
-        try {
-            res = HttpRequest.s_SendGet(host_crm + uri, query, crm_token);
-        } catch (IOException e) {
-            logger.error(e);
-        }
+        res = HttpRequest.s_SendGet(host_crm + uri, query, crm_token);
         s_CheckResponse(res);
         Assert.assertEquals(code, "1000000");
         //TODO
@@ -224,21 +184,13 @@ public class RegisteredDoctor_List extends BaseTest{
         String res = "";
         HashMap<String, String> query = new HashMap<>();
         query.put("agent","苏舒");
-        try {
-            res = HttpRequest.s_SendGet(host_crm+uri, query, crm_token);
-        } catch (IOException e) {
-            logger.error(e);
-        }
+        res = HttpRequest.s_SendGet(host_crm+uri, query, crm_token);
         s_CheckResponse(res);
         Assert.assertEquals(code, "1000000");
         //TODO
 
         query.replace("agent","谢瑾");
-        try {
-            res = HttpRequest.s_SendGet(host_crm + uri, query, crm_token);
-        } catch (IOException e) {
-            logger.error(e);
-        }
+        res = HttpRequest.s_SendGet(host_crm + uri, query, crm_token);
         s_CheckResponse(res);
         Assert.assertEquals(code, "1000000");
         //TODO
@@ -251,21 +203,13 @@ public class RegisteredDoctor_List extends BaseTest{
         String res = "";
         HashMap<String, String> query = new HashMap<>();
         query.put("agent_mobile","13811112222");
-        try {
-            res = HttpRequest.s_SendGet(host_crm + uri, query, crm_token);
-        } catch (IOException e) {
-            logger.error(e);
-        }
+        res = HttpRequest.s_SendGet(host_crm + uri, query, crm_token);
         s_CheckResponse(res);
         Assert.assertEquals(code, "1000000");
         //TODO
 
         query.replace("agent_mobile","138111122222");
-        try {
-            res = HttpRequest.s_SendGet(host_crm + uri, query, crm_token);
-        } catch (IOException e) {
-            logger.error(e);
-        }
+        res = HttpRequest.s_SendGet(host_crm + uri, query, crm_token);
         s_CheckResponse(res);
         Assert.assertEquals(code, "1000000");
         //TODO
@@ -279,11 +223,7 @@ public class RegisteredDoctor_List extends BaseTest{
         HashMap<String, String> query = new HashMap<>();
         query.put("doctor_name","大一");
         query.put("certified_status","2");
-        try {
-            res = HttpRequest.s_SendGet(host_crm + uri, query, crm_token);
-        } catch (IOException e) {
-            logger.error(e);
-        }
+        res = HttpRequest.s_SendGet(host_crm + uri, query, crm_token);
         s_CheckResponse(res);
         Assert.assertEquals(code, "1000000");
         //TODO
@@ -298,11 +238,7 @@ public class RegisteredDoctor_List extends BaseTest{
         }
 
         query.replace("certified_status","1");
-        try {
-            res = HttpRequest.s_SendGet(host_crm + uri, query, crm_token);
-        } catch (IOException e) {
-            logger.error(e);
-        }
+        res = HttpRequest.s_SendGet(host_crm + uri, query, crm_token);
         s_CheckResponse(res);
         Assert.assertEquals(code, "1000000");
         //TODO
@@ -315,11 +251,7 @@ public class RegisteredDoctor_List extends BaseTest{
         }
 
         query.replace("certified_status","-1");
-        try {
-            res = HttpRequest.s_SendGet(host_crm + uri, query, crm_token);
-        } catch (IOException e) {
-            logger.error(e);
-        }
+        res = HttpRequest.s_SendGet(host_crm + uri, query, crm_token);
         s_CheckResponse(res);
         Assert.assertEquals(code, "1000000");
         //TODO
@@ -340,11 +272,7 @@ public class RegisteredDoctor_List extends BaseTest{
         HashMap<String, String> query = new HashMap<>();
         query.put("consultant_name","苏舒");
         query.put("certified_status","2");
-        try {
-            res = HttpRequest.s_SendGet(host_crm + uri, query, crm_token);
-        } catch (IOException e) {
-            logger.error(e);
-        }
+        res = HttpRequest.s_SendGet(host_crm + uri, query, crm_token);
         s_CheckResponse(res);
         Assert.assertEquals(code, "1000000");
         //TODO
@@ -356,11 +284,7 @@ public class RegisteredDoctor_List extends BaseTest{
         }
 
         query.replace("certified_status","1");
-        try {
-            res = HttpRequest.s_SendGet(host_crm + uri, query, crm_token);
-        } catch (IOException e) {
-            logger.error(e);
-        }
+        res = HttpRequest.s_SendGet(host_crm + uri, query, crm_token);
         s_CheckResponse(res);
         Assert.assertEquals(code, "1000000");
         //TODO
@@ -372,11 +296,7 @@ public class RegisteredDoctor_List extends BaseTest{
         }
 
         query.replace("certified_status","-1");
-        try {
-            res = HttpRequest.s_SendGet(host_crm + uri, query, crm_token);
-        } catch (IOException e) {
-            logger.error(e);
-        }
+        res = HttpRequest.s_SendGet(host_crm + uri, query, crm_token);
         s_CheckResponse(res);
         Assert.assertEquals(code, "1000000");
         //TODO
@@ -396,11 +316,7 @@ public class RegisteredDoctor_List extends BaseTest{
         HashMap<String, String> query = new HashMap<>();
         query.put("consultant_name","苏舒");
         query.put("academic_title","ASSOCIATE_PROFESSOR");
-        try {
-            res = HttpRequest.s_SendGet(host_crm + uri, query, crm_token);
-        } catch (IOException e) {
-            logger.error(e);
-        }
+        res = HttpRequest.s_SendGet(host_crm + uri, query, crm_token);
         s_CheckResponse(res);
         Assert.assertEquals(code, "1000000");
         //TODO
@@ -412,11 +328,7 @@ public class RegisteredDoctor_List extends BaseTest{
         }
 
         query.replace("academic_title","PROFESSOR");
-        try {
-            res = HttpRequest.s_SendGet(host_crm + uri, query, crm_token);
-        } catch (IOException e) {
-            logger.error(e);
-        }
+        res = HttpRequest.s_SendGet(host_crm + uri, query, crm_token);
         s_CheckResponse(res);
         Assert.assertEquals(code, "1000000");
         //TODO
@@ -428,11 +340,7 @@ public class RegisteredDoctor_List extends BaseTest{
         }
 
         query.replace("academic_title","-1");
-        try {
-            res = HttpRequest.s_SendGet(host_crm + uri, query, crm_token);
-        } catch (IOException e) {
-            logger.error(e);
-        }
+        res = HttpRequest.s_SendGet(host_crm + uri, query, crm_token);
         s_CheckResponse(res);
         Assert.assertNotEquals(code, "1000000");
         //TODO
@@ -448,11 +356,7 @@ public class RegisteredDoctor_List extends BaseTest{
         query.put("consultant_name","苏舒");
 
         query.put("medical_title","ARCHIATER");
-        try {
-            res = HttpRequest.s_SendGet(host_crm+uri, query, crm_token);
-        } catch (IOException e) {
-            logger.error(e);
-        }
+        res = HttpRequest.s_SendGet(host_crm+uri, query, crm_token);
         s_CheckResponse(res);
         Assert.assertEquals(code, "1000000");
         //TODO
@@ -464,11 +368,7 @@ public class RegisteredDoctor_List extends BaseTest{
         }
 
         query.replace("medical_title","ASSOCIATE_ARCHIATER");
-        try {
-            res = HttpRequest.s_SendGet(host_crm + uri, query, crm_token, null);
-        } catch (IOException e) {
-            logger.error(e);
-        }
+        res = HttpRequest.s_SendGet(host_crm + uri, query, crm_token, null);
         s_CheckResponse(res);
         Assert.assertEquals(code, "1000000");
         //TODO
@@ -480,11 +380,7 @@ public class RegisteredDoctor_List extends BaseTest{
         }
 
         query.replace("medical_title","-1");
-        try {
-            res = HttpRequest.s_SendGet(host_crm + uri, query, crm_token);
-        } catch (IOException e) {
-            logger.error(e);
-        }
+        res = HttpRequest.s_SendGet(host_crm + uri, query, crm_token);
         s_CheckResponse(res);
         Assert.assertNotEquals(code, "1000000");
         //TODO
@@ -496,12 +392,7 @@ public class RegisteredDoctor_List extends BaseTest{
         String res = "";
         HashMap<String, String> query = new HashMap<>();
         query.put("medical_title","ARCHIATER,ATTENDING_PHYSICIAN,CHIEF_NURSE");
-        try {
-            res = HttpRequest.s_SendGet(host_crm + uri, query, crm_token);
-        } catch (IOException e) {
-            logger.error(e);
-            Assert.fail("");
-        }
+        res = HttpRequest.s_SendGet(host_crm + uri, query, crm_token);
         s_CheckResponse(res);
         Assert.assertEquals(code, "1000000");
         Assert.assertNotEquals(Helper.s_ParseJson(data, "list()"), "0");
@@ -510,12 +401,7 @@ public class RegisteredDoctor_List extends BaseTest{
 
         query.remove("medical_title");
         query.put("academic_title","PROFESSOR,ASSOCIATE_PROFESSOR");
-        try {
-            res = HttpRequest.s_SendGet(host_crm + uri, query, crm_token);
-        } catch (IOException e) {
-            logger.error(e);
-            Assert.fail("");
-        }
+        res = HttpRequest.s_SendGet(host_crm + uri, query, crm_token);
         s_CheckResponse(res);
         logger.info(Helper.unicodeString(res));
         Assert.assertEquals(code, "1000000");
@@ -525,38 +411,22 @@ public class RegisteredDoctor_List extends BaseTest{
 
         query.remove("academic_title");
         query.put("certified_status","-1,2");
-        try {
-            res = HttpRequest.s_SendGet(host_crm + uri, query, crm_token);
-        } catch (IOException e) {
-            logger.error(e);
-            Assert.fail("");
-        }
+        res = HttpRequest.s_SendGet(host_crm + uri, query, crm_token);
         s_CheckResponse(res);
         Assert.assertEquals(code, "1000000");
         //TODO
 
         query.put("academic_title","PROFESSOR,ASSOCIATE_PROFESSOR,LECTURER");
-        try {
-            res = HttpRequest.s_SendGet(host_crm + uri, query, crm_token);
-        } catch (IOException e) {
-            logger.error(e);
-            Assert.fail("");
-        }
+        res = HttpRequest.s_SendGet(host_crm + uri, query, crm_token);
         s_CheckResponse(res);
         Assert.assertEquals(code, "1000000");
         //TODO
 
         query.put("medical_title","ARCHIATER,ATTENDING_PHYSICIAN,CHIEF_NURSE");
-        try {
-            res = HttpRequest.s_SendGet(host_crm + uri, query, crm_token);
-        } catch (IOException e) {
-            logger.error(e);
-            Assert.fail("");
-        }
+        res = HttpRequest.s_SendGet(host_crm + uri, query, crm_token);
         s_CheckResponse(res);
         Assert.assertEquals(code, "1000000");
         //TODO
-
     }
 
 }

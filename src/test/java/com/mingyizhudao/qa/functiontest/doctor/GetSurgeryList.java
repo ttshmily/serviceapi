@@ -30,11 +30,7 @@ public class GetSurgeryList extends BaseTest {
 
         HashMap<String, String> query = new HashMap<>();
         query.put("id", "6");
-        try {
-            res = HttpRequest.s_SendGet(host_doc+uri, query, mainToken, null);
-        } catch (IOException e) {
-            logger.error(e);
-        }
+        res = HttpRequest.s_SendGet(host_doc+uri, query, mainToken);
         s_CheckResponse(res);
         Assert.assertNotNull(Helper.s_ParseJson(data, "surgeryCategories()"));
         Assert.assertNotEquals(Helper.s_ParseJson(data, "surgeryCategories():id"), "");
@@ -48,11 +44,7 @@ public class GetSurgeryList extends BaseTest {
 
         HashMap<String, String> query = new HashMap<String, String>();
         query.put("id", "600000");
-        try {
-            res = HttpRequest.s_SendGet(host_doc +uri, query, mainToken, null);
-        } catch (IOException e) {
-            logger.error(e);
-        }
+        res = HttpRequest.s_SendGet(host_doc +uri, query, mainToken);
         s_CheckResponse(res);
         Assert.assertEquals(code, "1000000");
         Assert.assertNotNull(Helper.s_ParseJson(data, "surgeryCategories()"));
@@ -65,31 +57,19 @@ public class GetSurgeryList extends BaseTest {
         logger.info("case1: Id = abc");
         HashMap<String, String> query = new HashMap<String, String>();
         query.put("id", "abc");
-        try {
-            res = HttpRequest.s_SendGet(host_doc +uri, query, mainToken, null);
-        } catch (IOException e) {
-            logger.error(e);
-        }
+        res = HttpRequest.s_SendGet(host_doc +uri, query, mainToken);
         s_CheckResponse(res);
         Assert.assertEquals(code, "2210621");
 
         logger.info("case2: Id = abc12");
         query.replace("id", "abc12");
-        try {
-            res = HttpRequest.s_SendGet(host_doc +uri, query, mainToken, null);
-        } catch (IOException e) {
-            logger.error(e);
-        }
+        res = HttpRequest.s_SendGet(host_doc +uri, query, mainToken);
         s_CheckResponse(res);
         Assert.assertEquals(code, "2210621");
 
         logger.info("case3: Id = -1");
         query.replace("id", "-1");
-        try {
-            res = HttpRequest.s_SendGet(host_doc +uri, query, mainToken, null);
-        } catch (IOException e) {
-            logger.error(e);
-        }
+        res = HttpRequest.s_SendGet(host_doc +uri, query, mainToken);
         s_CheckResponse(res);
         Assert.assertEquals(code, "2210621");
     }
