@@ -4,12 +4,55 @@
 
     <test name="test1" >
         <classes>
-            <class name="com.mingyizhudao.qa.functiontest.doctor.GetDoctorProfile_V1"  >
-                <!--<methods>-->
-                    <!--<include name="test_09_测试返回的地区服务专员" />-->
-                <!--</methods>-->
-            </class>
+            <class name="com.mingyizhudao.qa.functiontest.crm.Common_Cities"/>
+            <class name="com.mingyizhudao.qa.functiontest.crm.Common_Counties"/>
+            <class name="com.mingyizhudao.qa.functiontest.crm.Common_GetTitles"/>
+            <class name="com.mingyizhudao.qa.functiontest.crm.Common_Provinces"/>
+            <class name="com.mingyizhudao.qa.functiontest.crm.Common_SearchDiseases"/>
+            <class name="com.mingyizhudao.qa.functiontest.crm.Common_SearchHospitals"/>
+            <class name="com.mingyizhudao.qa.functiontest.crm.Finance_BillList"/>
+            <class name="com.mingyizhudao.qa.functiontest.crm.Finance_PayBill"/>
+            <class name="com.mingyizhudao.qa.functiontest.crm.Finance_PayInfo"/>
+            <class name="com.mingyizhudao.qa.functiontest.crm.KB_Track"/>
+            <class name="com.mingyizhudao.qa.functiontest.crm.KBDisease_Create"/>
+            <class name="com.mingyizhudao.qa.functiontest.crm.KBDisease_Delete"/>
+            <class name="com.mingyizhudao.qa.functiontest.crm.KBDisease_Detail"/>
+            <class name="com.mingyizhudao.qa.functiontest.crm.KBDisease_List"/>
+            <class name="com.mingyizhudao.qa.functiontest.crm.KBDisease_Update"/>
+            <class name="com.mingyizhudao.qa.functiontest.crm.KBExpert_Create"/>
+            <class name="com.mingyizhudao.qa.functiontest.crm.KBExpert_Detail"/>
+            <class name="com.mingyizhudao.qa.functiontest.crm.KBExpert_Diseases"/>
+            <class name="com.mingyizhudao.qa.functiontest.crm.KBExpert_Diseases_V2"/>
+            <class name="com.mingyizhudao.qa.functiontest.crm.KBExpert_List"/>
+            <class name="com.mingyizhudao.qa.functiontest.crm.KBExpert_Update"/>
+            <class name="com.mingyizhudao.qa.functiontest.crm.KBHospital_Create"/>
+            <class name="com.mingyizhudao.qa.functiontest.crm.KBHospital_Detail"/>
+            <class name="com.mingyizhudao.qa.functiontest.crm.KBHospital_List"/>
+            <class name="com.mingyizhudao.qa.functiontest.crm.KBHospital_Update"/>
+            <class name="com.mingyizhudao.qa.functiontest.crm.Order_Cancel"/>
+            <class name="com.mingyizhudao.qa.functiontest.crm.Order_Counts"/>
+            <class name="com.mingyizhudao.qa.functiontest.crm.Order_Detail"/>
+            <class name="com.mingyizhudao.qa.functiontest.crm.Order_List"/>
+            <class name="com.mingyizhudao.qa.functiontest.crm.Order_Modify"/>
+            <class name="com.mingyizhudao.qa.functiontest.crm.Order_ModifyBrief"/>
+            <class name="com.mingyizhudao.qa.functiontest.crm.Order_ReceiveTask"/>
+            <class name="com.mingyizhudao.qa.functiontest.crm.Order_RecommendDoctor"/>
+            <class name="com.mingyizhudao.qa.functiontest.crm.Order_Reject"/>
+            <class name="com.mingyizhudao.qa.functiontest.crm.Order_Review"/>
+            <class name="com.mingyizhudao.qa.functiontest.crm.Order_Rollback"/>
+            <class name="com.mingyizhudao.qa.functiontest.crm.Order_ThreewayCall"/>
+            <class name="com.mingyizhudao.qa.functiontest.crm.Order_ThreewayCall_V2"/>
+            <class name="com.mingyizhudao.qa.functiontest.crm.Order_TrackList"/>
+            <class name="com.mingyizhudao.qa.functiontest.crm.RegisteredDoctor_Certify_V2"/>
+            <class name="com.mingyizhudao.qa.functiontest.crm.RegisteredDoctor_CertifySync_V2"/>
+            <class name="com.mingyizhudao.qa.functiontest.crm.RegisteredDoctor_Counts"/>
+            <class name="com.mingyizhudao.qa.functiontest.crm.RegisteredDoctor_Detail"/>
+            <class name="com.mingyizhudao.qa.functiontest.crm.RegisteredDoctor_List"/>
+            <class name="com.mingyizhudao.qa.functiontest.crm.RegisteredDoctor_Modify"/>
+            <class name="com.mingyizhudao.qa.functiontest.crm.RegisteredDoctor_PictureList"/>
+            <class name="com.mingyizhudao.qa.functiontest.crm.RegisteredDoctor_Sign"/>
+            <class name="com.mingyizhudao.qa.functiontest.crm.RegisteredDoctor_SyncToKB"/>
+            <class name="com.mingyizhudao.qa.functiontest.crm.RegisteredDoctor_TrackList"/>
         </classes>
     </test>
-
 </suite> 
