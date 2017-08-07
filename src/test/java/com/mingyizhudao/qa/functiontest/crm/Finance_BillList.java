@@ -2,18 +2,17 @@ package com.mingyizhudao.qa.functiontest.crm;
 
 import com.mingyizhudao.qa.common.BaseTest;
 import com.mingyizhudao.qa.common.TestLogger;
-import com.mingyizhudao.qa.utilities.Helper;
 import com.mingyizhudao.qa.utilities.HttpRequest;
+import com.mingyizhudao.qa.utilities.Helper;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
-import java.io.IOException;
 import java.util.HashMap;
 
 /**
  * Created by dayi on 2017/7/3.
  */
-public class Finance_BillList extends BaseTest{
+public class Finance_BillList extends BaseTest {
 
     public static String clazzName = new Object() {
         public String getClassName() {

@@ -2,13 +2,12 @@ package com.mingyizhudao.qa.functiontest.doctor;
 
 import com.mingyizhudao.qa.common.BaseTest;
 import com.mingyizhudao.qa.common.TestLogger;
-import com.mingyizhudao.qa.utilities.Helper;
-import com.mingyizhudao.qa.utilities.HttpRequest;
 import com.mingyizhudao.qa.utilities.Generator;
+import com.mingyizhudao.qa.utilities.HttpRequest;
+import com.mingyizhudao.qa.utilities.Helper;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
-import java.io.IOException;
 import java.util.HashMap;
 
 /**

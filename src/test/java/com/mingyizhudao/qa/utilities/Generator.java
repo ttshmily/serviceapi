@@ -2,7 +2,6 @@ package com.mingyizhudao.qa.utilities;
 
 import com.mingyizhudao.qa.common.KnowledgeBase;
 
-import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;

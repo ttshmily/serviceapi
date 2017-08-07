@@ -2,12 +2,10 @@ package com.mingyizhudao.qa.functiontest.crm.user.management;
 
 import com.mingyizhudao.qa.common.BaseTest;
 import com.mingyizhudao.qa.common.TestLogger;
-import com.mingyizhudao.qa.utilities.Helper;
 import com.mingyizhudao.qa.utilities.HttpRequest;
+import com.mingyizhudao.qa.utilities.Helper;
 import org.testng.Assert;
 import org.testng.annotations.Test;
-
-import java.io.IOException;
 
 /**
  * Created by ttshmily on 25/4/2017.

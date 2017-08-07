@@ -2,15 +2,14 @@ package com.mingyizhudao.qa.functiontest.crm.user.management;
 
 import com.mingyizhudao.qa.common.BaseTest;
 import com.mingyizhudao.qa.common.TestLogger;
-import com.mingyizhudao.qa.utilities.Helper;
-import com.mingyizhudao.qa.utilities.HttpRequest;
 import com.mingyizhudao.qa.utilities.Generator;
+import com.mingyizhudao.qa.utilities.HttpRequest;
+import com.mingyizhudao.qa.utilities.Helper;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
-import java.io.IOException;
 import java.util.HashMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -18,7 +17,7 @@ import java.util.regex.Pattern;
 /**
  * Created by ttshmily on 25/4/2017.
  */
-public class RegisteredDoctor_List extends BaseTest{
+public class RegisteredDoctor_List extends BaseTest {
 
     public static String clazzName = new Object() {
         public String getClassName() {

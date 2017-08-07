@@ -1,16 +1,15 @@
 package com.mingyizhudao.qa.functiontest.crm.kb.management;
 
 import com.mingyizhudao.qa.common.BaseTest;
-import com.mingyizhudao.qa.common.TestLogger;
 import com.mingyizhudao.qa.dataprofile.crm.ExpertProfile;
-import com.mingyizhudao.qa.utilities.HttpRequest;
+import com.mingyizhudao.qa.common.TestLogger;
 import com.mingyizhudao.qa.utilities.Generator;
+import com.mingyizhudao.qa.utilities.HttpRequest;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;

@@ -2,7 +2,6 @@ package com.mingyizhudao.qa.utilities;
 
 import com.mingyizhudao.qa.common.TestLogger;
 
-import javax.net.ssl.*;
 import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.URL;
@@ -10,9 +9,7 @@ import java.net.URLConnection;
 import java.net.URLEncoder;
 import java.security.KeyManagementException;
 import java.security.NoSuchAlgorithmException;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 

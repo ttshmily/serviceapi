@@ -1,15 +1,12 @@
 package com.mingyizhudao.qa.dataprofile.crm;
 
+import com.mingyizhudao.qa.utilities.Generator;
 import lombok.Data;
-import lombok.Getter;
-import lombok.Setter;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
-
-import static com.mingyizhudao.qa.utilities.Generator.*;
 
 @Data
 public class Appointment {
@@ -37,35 +34,35 @@ public class Appointment {
     String source_type;
 
     public Appointment() {
-        this.patient_name = "面诊病人"+randomString(4);
-        this.patient_age = (int)randomInt(90);
-        this.patient_gender = (int)randomInt(2);
-        this.patient_phone = randomPhone();
+        this.patient_name = "面诊病人"+ Generator.randomString(4);
+        this.patient_age = (int) Generator.randomInt(100);
+        this.patient_gender = (int) Generator.randomInt(2);
+        this.patient_phone = Generator.randomPhone();
 
         SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
-        this.expected_appointment_start_date = randomDateFromNow(2,3, df);
-        this.expected_appointment_due_date = randomDateFromNow(3,8, df);
+        this.expected_appointment_start_date = Generator.randomDateFromNow(2,3, df);
+        this.expected_appointment_due_date = Generator.randomDateFromNow(3,8, df);
 
-        String tmp = randomDiseaseId();
+        String tmp = Generator.randomDiseaseId();
         this.major_disease_id = tmp;
-        this.major_disease_name = diseaseName(tmp);
-        this.disease_description = randomString(300);
+        this.major_disease_name = Generator.diseaseName(tmp);
+        this.disease_description = Generator.randomString(300);
 
-        tmp = randomProvinceId();
+        tmp = Generator.randomProvinceId();
         this.expected_province_id = tmp;
-        this.expected_province_name = provinceName(tmp);
+        this.expected_province_name = Generator.provinceName(tmp);
 
-        tmp = randomCityIdUnder(tmp);
+        tmp = Generator.randomCityIdUnder(tmp);
         this.expected_city_id = tmp;
-        this.expected_city_name = cityName(tmp);
+        this.expected_city_name = Generator.cityName(tmp);
 
-        tmp = randomExpertId();
+        tmp = Generator.randomExpertId();
         this.expected_doctor_id = tmp;
-        this.expected_doctor_name = expertName(tmp);
+        this.expected_doctor_name = Generator.expertName(tmp);
 
-        tmp = randomHospitalId();
+        tmp = Generator.randomHospitalId();
         this.expected_appointment_hospital_id = tmp;
-        this.expected_appointment_hospital_name = hospitalName(tmp);
+        this.expected_appointment_hospital_name = Generator.hospitalName(tmp);
 
         this.medical_record_pictures = new ArrayList<Picture>(){{add(new Picture("123.jpb", "7")); add(new Picture("123.jpb", "7"));}};
 

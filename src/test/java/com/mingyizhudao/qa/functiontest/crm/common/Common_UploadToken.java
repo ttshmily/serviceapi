@@ -7,7 +7,6 @@ import com.mingyizhudao.qa.utilities.HttpRequest;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
-import java.io.IOException;
 import java.util.HashMap;
 
 /**

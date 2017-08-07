@@ -1,11 +1,12 @@
 package com.mingyizhudao.qa.functiontest.crm.trading.appointment;
 
 import com.mingyizhudao.qa.common.BaseTest;
-import com.mingyizhudao.qa.common.TestLogger;
 import com.mingyizhudao.qa.dataprofile.crm.Appointment;
-import static com.mingyizhudao.qa.utilities.HttpRequest.*;
+import com.mingyizhudao.qa.common.TestLogger;
+
 import static com.mingyizhudao.qa.utilities.Helper.*;
 
+import com.mingyizhudao.qa.utilities.HttpRequest;
 import net.sf.json.JSONObject;
 import org.testng.Assert;
 import org.testng.annotations.Test;
@@ -26,7 +27,7 @@ public class Ap_Create extends BaseTest {
     public static String uri = version+"/appointments";
 
     public static String s_Create(Appointment ap) {
-        String res = s_SendPost(host_appointment+uri, JSONObject.fromObject(ap).toString(), crm_token);
+        String res = HttpRequest.s_SendPost(host_appointment+uri, JSONObject.fromObject(ap).toString(), crm_token);
         return JSONObject.fromObject(res).getJSONObject("data").getString("order_number");
     }
 
@@ -34,7 +35,7 @@ public class Ap_Create extends BaseTest {
     public void test_01_创建订单信息保存() {
         String res = "";
         Appointment ap = new Appointment();
-        res = s_SendPost(host_appointment+uri, JSONObject.fromObject(ap).toString(), crm_token);
+        res = HttpRequest.s_SendPost(host_appointment+uri, JSONObject.fromObject(ap).toString(), crm_token);
         s_CheckResponse(res);
         Assert.assertEquals(code, "1000000");
         Assert.assertNotNull(s_ParseJson(data, "order_number"));
@@ -72,7 +73,7 @@ public class Ap_Create extends BaseTest {
         } catch (Exception e) {
             logger.error(e);
         }
-        res = s_SendPost(host_appointment+uri, JSONObject.fromObject(ap).toString(), crm_token);
+        res = HttpRequest.s_SendPost(host_appointment+uri, JSONObject.fromObject(ap).toString(), crm_token);
         s_CheckResponse(res);
         Assert.assertEquals(code, "1000000");
         Assert.assertNotNull(s_ParseJson(data, "order_number"));

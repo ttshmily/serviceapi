@@ -2,7 +2,6 @@ package com.mingyizhudao.qa.functiontest.crm.kb.management;
 
 import com.mingyizhudao.qa.common.BaseTest;
 import com.mingyizhudao.qa.common.TestLogger;
-import org.apache.log4j.Logger;
 
 /**
  * Created by ttshmily on 1/6/2017.

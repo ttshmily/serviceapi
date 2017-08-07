@@ -1,27 +1,25 @@
 package com.mingyizhudao.qa.functiontest.doctor;
 
 import com.mingyizhudao.qa.common.BaseTest;
-import com.mingyizhudao.qa.common.TestLogger;
 import com.mingyizhudao.qa.dataprofile.doctor.DoctorProfile;
-import com.mingyizhudao.qa.functiontest.login.CheckVerifyCode;
-import com.mingyizhudao.qa.functiontest.login.SendVerifyCode;
 import com.mingyizhudao.qa.functiontest.crm.trading.surgery.Order_ReceiveTask;
 import com.mingyizhudao.qa.functiontest.crm.trading.surgery.Order_RecommendDoctor;
 import com.mingyizhudao.qa.functiontest.crm.trading.surgery.Order_ThreewayCall_V2;
+import com.mingyizhudao.qa.functiontest.login.CheckVerifyCode;
+import com.mingyizhudao.qa.functiontest.login.SendVerifyCode;
+import com.mingyizhudao.qa.common.TestLogger;
 import com.mingyizhudao.qa.functiontest.crm.user.management.RegisteredDoctor_CertifySync_V2;
-import com.mingyizhudao.qa.utilities.Helper;
-import com.mingyizhudao.qa.utilities.HttpRequest;
 import com.mingyizhudao.qa.utilities.Generator;
+import com.mingyizhudao.qa.utilities.HttpRequest;
+import com.mingyizhudao.qa.utilities.Helper;
 import net.sf.json.JSONObject;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
-import java.io.IOException;
-
 /**
  * Created by ttshmily on 7/4/2017.
  */
-public class GetOrderList extends BaseTest{
+public class GetOrderList extends BaseTest {
 
     public static String clazzName = new Object() {
         public String getClassName() {

@@ -10,8 +10,6 @@ import org.testng.Assert;
 import org.testng.Reporter;
 import org.testng.annotations.Test;
 
-import java.io.IOException;
-
 import static com.mingyizhudao.qa.utilities.Helper.s_ParseJson;
 
 /**

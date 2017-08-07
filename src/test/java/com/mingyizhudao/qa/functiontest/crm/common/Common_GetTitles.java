@@ -7,8 +7,6 @@ import com.mingyizhudao.qa.utilities.HttpRequest;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
-import java.io.IOException;
-
 /**
  * Created by ttshmily on 25/4/2017.
  */

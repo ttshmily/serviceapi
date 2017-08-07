@@ -1,18 +1,17 @@
 package com.mingyizhudao.qa.functiontest.crm.user.management;
 
-import com.mingyizhudao.qa.common.BaseTest;
-import com.mingyizhudao.qa.common.TestLogger;
 import com.mingyizhudao.qa.dataprofile.crm.ExpertProfile;
 import com.mingyizhudao.qa.dataprofile.doctor.DoctorProfile;
-import com.mingyizhudao.qa.functiontest.crm.kb.management.KBExpert_Create;
 import com.mingyizhudao.qa.functiontest.crm.kb.management.KBExpert_Detail;
-import com.mingyizhudao.qa.utilities.Helper;
+import com.mingyizhudao.qa.common.BaseTest;
+import com.mingyizhudao.qa.common.TestLogger;
+import com.mingyizhudao.qa.functiontest.crm.kb.management.KBExpert_Create;
 import com.mingyizhudao.qa.utilities.HttpRequest;
+import com.mingyizhudao.qa.utilities.Helper;
 import net.sf.json.JSONObject;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
-import java.io.IOException;
 import java.util.HashMap;
 
 /**

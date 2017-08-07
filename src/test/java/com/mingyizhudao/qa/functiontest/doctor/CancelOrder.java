@@ -11,8 +11,6 @@ import net.sf.json.JSONObject;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
-import java.io.IOException;
-
 /**
  * Created by ttshmily on 2/5/2017.
  */
