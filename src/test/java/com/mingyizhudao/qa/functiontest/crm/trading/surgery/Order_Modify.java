@@ -3,6 +3,7 @@ package com.mingyizhudao.qa.functiontest.crm.trading.surgery;
 import com.mingyizhudao.qa.common.BaseTest;
 import com.mingyizhudao.qa.common.TestLogger;
 import com.mingyizhudao.qa.functiontest.doctor.CreateOrder;
+import com.mingyizhudao.qa.utilities.Helper;
 import com.mingyizhudao.qa.utilities.HttpRequest;
 import com.mingyizhudao.qa.utilities.Generator;
 import net.sf.json.JSONArray;
@@ -49,7 +50,7 @@ public class Order_Modify extends BaseTest {
         Assert.assertNotNull(data, "list");
         res = Order_Detail.s_Detail(order_number);
         s_CheckResponse(res);
-        Assert.assertEquals(Generator.s_ParseJson(data, "patient_name"), "修改的姓名"+name);
+        Assert.assertEquals(Helper.s_ParseJson(data, "patient_name"), "修改的姓名"+name);
     }
 
     @Test
@@ -72,7 +73,7 @@ public class Order_Modify extends BaseTest {
         Assert.assertNotNull(data, "list");
         res = Order_Detail.s_Detail(order_number);
         s_CheckResponse(res);
-        Assert.assertEquals(Generator.s_ParseJson(data, "patient_age"), "44");
+        Assert.assertEquals(Helper.s_ParseJson(data, "patient_age"), "44");
     }
 
     @Test
@@ -96,8 +97,8 @@ public class Order_Modify extends BaseTest {
         Assert.assertNotNull(data, "list");
         res = Order_Detail.s_Detail(order_number);
         s_CheckResponse(res);
-        Assert.assertEquals(Generator.s_ParseJson(data, "major_disease_id"), diseaseId);
-        Assert.assertEquals(Generator.s_ParseJson(data, "major_disease_name"), Generator.diseaseName(diseaseId));
+        Assert.assertEquals(Helper.s_ParseJson(data, "major_disease_id"), diseaseId);
+        Assert.assertEquals(Helper.s_ParseJson(data, "major_disease_name"), Generator.diseaseName(diseaseId));
     }
 
     @Test
@@ -121,8 +122,8 @@ public class Order_Modify extends BaseTest {
         Assert.assertNotNull(data, "list");
         res = Order_Detail.s_Detail(order_number);
         s_CheckResponse(res);
-        Assert.assertEquals(Generator.s_ParseJson(data, "minor_disease_id"), diseaseId);
-        Assert.assertEquals(Generator.s_ParseJson(data, "minor_disease_name"), Generator.diseaseName(diseaseId));
+        Assert.assertEquals(Helper.s_ParseJson(data, "minor_disease_id"), diseaseId);
+        Assert.assertEquals(Helper.s_ParseJson(data, "minor_disease_name"), Generator.diseaseName(diseaseId));
     }
 
     @Test
@@ -145,7 +146,7 @@ public class Order_Modify extends BaseTest {
         Assert.assertNotNull(data, "list");
         res = Order_Detail.s_Detail(order_number);
         s_CheckResponse(res);
-        Assert.assertEquals(Generator.s_ParseJson(data, "patient_gender"), "2");
+        Assert.assertEquals(Helper.s_ParseJson(data, "patient_gender"), "2");
     }
 
     @Test
@@ -169,7 +170,7 @@ public class Order_Modify extends BaseTest {
         Assert.assertNotNull(data, "list");
         res = Order_Detail.s_Detail(order_number);
         s_CheckResponse(res);
-        Assert.assertEquals(Generator.s_ParseJson(data, "patient_phone"), "13799990123");
+        Assert.assertEquals(Helper.s_ParseJson(data, "patient_phone"), "13799990123");
     }
 
     @Test(enabled = false) // 可修改，由前端控制
@@ -195,7 +196,7 @@ public class Order_Modify extends BaseTest {
         Assert.assertNotEquals(code, "1000000");
         res = Order_Detail.s_Detail(order_number);
         s_CheckResponse(res);
-        Assert.assertNotEquals(Generator.s_ParseJson(data, "patient_mobile"), "13799990123");
+        Assert.assertNotEquals(Helper.s_ParseJson(data, "patient_mobile"), "13799990123");
     }
 
     @Test(enabled = false)
@@ -216,7 +217,7 @@ public class Order_Modify extends BaseTest {
         Assert.assertNotEquals(code, "1000000");
         res = Order_Detail.s_Detail(order_number);
         s_CheckResponse(res);
-        Assert.assertNotEquals(Generator.s_ParseJson(data, "patient_mobile"), "13799990123");
+        Assert.assertNotEquals(Helper.s_ParseJson(data, "patient_mobile"), "13799990123");
     }
 
     @Test
@@ -241,10 +242,10 @@ public class Order_Modify extends BaseTest {
         Assert.assertEquals(code, "1000000");
         res = Order_Detail.s_Detail(order_number);
         s_CheckResponse(res);
-        Assert.assertEquals(Generator.s_ParseJson(data, "medical_record_pictures(0):key"), "2017/05/04/1265834e-97d8-44a0-95e7-047c7facaee8/IMG_20170429_102737.jpg");
-        Assert.assertEquals(Generator.s_ParseJson(data, "medical_record_pictures(0):type"), "1");
-        Assert.assertNotNull(Generator.s_ParseJson(data, "medical_record_pictures(0):thumbnailPicture"), "缺少缩略图");
-        Assert.assertNotNull(Generator.s_ParseJson(data, "medical_record_pictures(0):largePicture"), "缺少大图");
+        Assert.assertEquals(Helper.s_ParseJson(data, "medical_record_pictures(0):key"), "2017/05/04/1265834e-97d8-44a0-95e7-047c7facaee8/IMG_20170429_102737.jpg");
+        Assert.assertEquals(Helper.s_ParseJson(data, "medical_record_pictures(0):type"), "1");
+        Assert.assertNotNull(Helper.s_ParseJson(data, "medical_record_pictures(0):thumbnailPicture"), "缺少缩略图");
+        Assert.assertNotNull(Helper.s_ParseJson(data, "medical_record_pictures(0):largePicture"), "缺少大图");
 
         pics = JSONArray.fromObject("[]");
         body.replace("medical_record_pictures",pics);
@@ -257,6 +258,6 @@ public class Order_Modify extends BaseTest {
         Assert.assertEquals(code, "1000000");
         res = Order_Detail.s_Detail(order_number);
         s_CheckResponse(res);
-        Assert.assertEquals(Generator.s_ParseJson(data, "medical_record_pictures()"), "0");
+        Assert.assertEquals(Helper.s_ParseJson(data, "medical_record_pictures()"), "0");
     }
 }

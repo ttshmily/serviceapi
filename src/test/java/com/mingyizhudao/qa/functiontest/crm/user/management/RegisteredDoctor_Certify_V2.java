@@ -3,8 +3,8 @@ package com.mingyizhudao.qa.functiontest.crm.user.management;
 import com.mingyizhudao.qa.common.BaseTest;
 import com.mingyizhudao.qa.common.TestLogger;
 import com.mingyizhudao.qa.dataprofile.doctor.DoctorProfile;
+import com.mingyizhudao.qa.utilities.Helper;
 import com.mingyizhudao.qa.utilities.HttpRequest;
-import com.mingyizhudao.qa.utilities.Generator;
 import net.sf.json.JSONObject;
 import org.testng.Assert;
 import org.testng.annotations.Test;
@@ -35,13 +35,13 @@ public class RegisteredDoctor_Certify_V2 extends BaseTest {
             return null;
         }
         res = RegisteredDoctor_Detail.s_Detail(regId);
-        logger.info(HttpRequest.unicodeString(res));
-        if (Generator.s_ParseJson(JSONObject.fromObject(res), "data:is_verified").equals("1")) return "1";
-        if (Generator.s_ParseJson(JSONObject.fromObject(res), "data:is_verified").equals("-1")) {
+        logger.info(Helper.unicodeString(res));
+        if (Helper.s_ParseJson(JSONObject.fromObject(res), "data:is_verified").equals("1")) return "1";
+        if (Helper.s_ParseJson(JSONObject.fromObject(res), "data:is_verified").equals("-1")) {
             logger.error("认证失败状态不能直接进行验证");
             return "-1";
         }
-        if (Generator.s_ParseJson(JSONObject.fromObject(res), "data:is_verified").equals("0")) {
+        if (Helper.s_ParseJson(JSONObject.fromObject(res), "data:is_verified").equals("0")) {
             logger.error("信息不完整，不能验证");
             return "0";
         }
@@ -56,7 +56,7 @@ public class RegisteredDoctor_Certify_V2 extends BaseTest {
             logger.error(e);
         }
         res = RegisteredDoctor_Detail.s_Detail(regId);
-        return Generator.s_ParseJson(JSONObject.fromObject(res), "data:is_verified");
+        return Helper.s_ParseJson(JSONObject.fromObject(res), "data:is_verified");
     }
 
     @Test
@@ -71,7 +71,7 @@ public class RegisteredDoctor_Certify_V2 extends BaseTest {
         if ( doctorId == null)
             Assert.fail("创建医生失败，认证用例无法执行");
         res = RegisteredDoctor_Detail.s_Detail(doctorId);
-        String is_verified = Generator.s_ParseJson(JSONObject.fromObject(res), "data:is_verified");
+        String is_verified = Helper.s_ParseJson(JSONObject.fromObject(res), "data:is_verified");
         Assert.assertEquals(is_verified, "2");
 
         pathValue.put("id", doctorId);
@@ -82,11 +82,11 @@ public class RegisteredDoctor_Certify_V2 extends BaseTest {
         } catch (IOException e) {
             logger.error(e);
         }
-        logger.info(HttpRequest.unicodeString(res));
+        logger.info(Helper.unicodeString(res));
         s_CheckResponse(res);
         Assert.assertEquals(code, "1000000");
         res = RegisteredDoctor_Detail.s_Detail(doctorId);
-        is_verified = Generator.s_ParseJson(JSONObject.fromObject(res), "data:is_verified");
+        is_verified = Helper.s_ParseJson(JSONObject.fromObject(res), "data:is_verified");
         Assert.assertEquals(is_verified, "-1");
     }
 
@@ -103,7 +103,7 @@ public class RegisteredDoctor_Certify_V2 extends BaseTest {
         if (doctorId == null)
             Assert.fail("创建医生失败，认证用例无法执行");
         res = RegisteredDoctor_Detail.s_Detail(doctorId);
-        String is_verified = Generator.s_ParseJson(JSONObject.fromObject(res), "data:is_verified");
+        String is_verified = Helper.s_ParseJson(JSONObject.fromObject(res), "data:is_verified");
         Assert.assertEquals(is_verified, "2");
 
         pathValue.put("id", doctorId);
@@ -117,7 +117,7 @@ public class RegisteredDoctor_Certify_V2 extends BaseTest {
         s_CheckResponse(res);
         Assert.assertEquals(code, "1000000");
         res = RegisteredDoctor_Detail.s_Detail(doctorId);
-        is_verified = Generator.s_ParseJson(JSONObject.fromObject(res), "data:is_verified");
+        is_verified = Helper.s_ParseJson(JSONObject.fromObject(res), "data:is_verified");
         Assert.assertEquals(is_verified, "1");
     }
 
@@ -133,7 +133,7 @@ public class RegisteredDoctor_Certify_V2 extends BaseTest {
         if (doctorId == null)
             Assert.fail("创建医生失败，认证用例无法执行");
         res = RegisteredDoctor_Detail.s_Detail(doctorId);
-        String is_verified = Generator.s_ParseJson(JSONObject.fromObject(res), "data:is_verified");
+        String is_verified = Helper.s_ParseJson(JSONObject.fromObject(res), "data:is_verified");
         Assert.assertEquals(is_verified, "2");
 
         pathValue.put("id", doctorId);
@@ -144,11 +144,11 @@ public class RegisteredDoctor_Certify_V2 extends BaseTest {
         } catch (IOException e) {
             logger.error(e);
         }
-        logger.info(HttpRequest.unicodeString(res));
+        logger.info(Helper.unicodeString(res));
         s_CheckResponse(res);
         Assert.assertEquals(code, "1000000");
         res = RegisteredDoctor_Detail.s_Detail(doctorId);
-        is_verified = Generator.s_ParseJson(JSONObject.fromObject(res), "data:is_verified");
+        is_verified = Helper.s_ParseJson(JSONObject.fromObject(res), "data:is_verified");
         Assert.assertEquals(is_verified, "1");
     }
 
@@ -230,7 +230,7 @@ public class RegisteredDoctor_Certify_V2 extends BaseTest {
         } catch (IOException e) {
             logger.error(e);
         }
-        logger.info(HttpRequest.unicodeString(res));
+        logger.info(Helper.unicodeString(res));
         s_CheckResponse(res);
         Assert.assertNotEquals(code, "1000000", "信息不全的医生不应该直接通过认证");
     }

@@ -5,8 +5,8 @@ import com.mingyizhudao.qa.dataprofile.doctor.DoctorProfile;
 import com.mingyizhudao.qa.functiontest.crm.user.management.RegisteredDoctor_Detail;
 import com.mingyizhudao.qa.functiontest.crm.user.management.RegisteredDoctor_Modify;
 import com.mingyizhudao.qa.functiontest.doctor.CreateOrder;
+import com.mingyizhudao.qa.utilities.Helper;
 import com.mingyizhudao.qa.utilities.HttpRequest;
-import com.mingyizhudao.qa.utilities.Generator;
 import net.sf.json.JSONObject;
 import org.apache.log4j.Logger;
 import org.testng.Assert;
@@ -52,11 +52,11 @@ public class PersonalInfo extends BaseTest {
         }
         s_CheckResponse(res);
         Assert.assertEquals(code, "1000000", "有token应该调用成功");
-        Assert.assertNotNull(Generator.s_ParseJson(data, "doctorCounts"), "doctorCounts字段缺失");
-        Assert.assertNotNull(Generator.s_ParseJson(data, "orderCounts"), "orderCounts字段缺失");
-        Assert.assertNotNull(Generator.s_ParseJson(data, "teamMemberCounts"), "teamMemberCounts字段缺失");
-        Assert.assertEquals(Generator.s_ParseJson(data, "teamMemberCounts"), "6","teamMemberCounts字段值不正确");
-        Assert.assertEquals(Generator.s_ParseJson(data, "role"), "2"); // 2 表示主管
+        Assert.assertNotNull(Helper.s_ParseJson(data, "doctorCounts"), "doctorCounts字段缺失");
+        Assert.assertNotNull(Helper.s_ParseJson(data, "orderCounts"), "orderCounts字段缺失");
+        Assert.assertNotNull(Helper.s_ParseJson(data, "teamMemberCounts"), "teamMemberCounts字段缺失");
+        Assert.assertEquals(Helper.s_ParseJson(data, "teamMemberCounts"), "6","teamMemberCounts字段值不正确");
+        Assert.assertEquals(Helper.s_ParseJson(data, "role"), "2"); // 2 表示主管
 
     }
 
@@ -73,8 +73,8 @@ public class PersonalInfo extends BaseTest {
         }
         s_CheckResponse(res);
         Assert.assertEquals(code, "1000000");
-        int doctorCountsBefore = Integer.parseInt(Generator.s_ParseJson(data, "doctorCounts"));
-        int orderCountsBefore = Integer.parseInt(Generator.s_ParseJson(data, "orderCounts"));
+        int doctorCountsBefore = Integer.parseInt(Helper.s_ParseJson(data, "doctorCounts"));
+        int orderCountsBefore = Integer.parseInt(Helper.s_ParseJson(data, "orderCounts"));
 
         DoctorProfile dop = new DoctorProfile(true);
         HashMap<String, String> info = s_CreateVerifiedDoctor(dop);
@@ -87,7 +87,7 @@ public class PersonalInfo extends BaseTest {
         RegisteredDoctor_Modify.s_Modify(doctorId, dp);
         res = RegisteredDoctor_Detail.s_Detail(doctorId);
         s_CheckResponse(res);
-        String inviter_no = Generator.s_ParseJson(data, "inviter_no");
+        String inviter_no = Helper.s_ParseJson(data, "inviter_no");
         if(!inviter_no.equals("SH0133")) Assert.fail("更新医生的invitor_no失败，退出用例执行");
 
         CreateOrder.s_CreateOrder(info.get("token"));
@@ -98,8 +98,8 @@ public class PersonalInfo extends BaseTest {
         }
         s_CheckResponse(res);
         Assert.assertEquals(code, "1000000");
-        int doctorCountsAfter = Integer.parseInt(Generator.s_ParseJson(data, "doctorCounts"));
-        int orderCountsAfter = Integer.parseInt(Generator.s_ParseJson(data, "orderCounts"));
+        int doctorCountsAfter = Integer.parseInt(Helper.s_ParseJson(data, "doctorCounts"));
+        int orderCountsAfter = Integer.parseInt(Helper.s_ParseJson(data, "orderCounts"));
 
         Assert.assertEquals(doctorCountsAfter, doctorCountsBefore + 1);
         Assert.assertEquals(orderCountsAfter, orderCountsBefore + 1);

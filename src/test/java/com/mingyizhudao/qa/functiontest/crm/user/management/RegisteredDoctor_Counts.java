@@ -2,8 +2,8 @@ package com.mingyizhudao.qa.functiontest.crm.user.management;
 
 import com.mingyizhudao.qa.common.BaseTest;
 import com.mingyizhudao.qa.common.TestLogger;
+import com.mingyizhudao.qa.utilities.Helper;
 import com.mingyizhudao.qa.utilities.HttpRequest;
-import com.mingyizhudao.qa.utilities.Generator;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
@@ -35,11 +35,11 @@ public class RegisteredDoctor_Counts extends BaseTest {
         }
         s_CheckResponse(res);
         Assert.assertEquals(code, "1000000");
-        Assert.assertEquals(Generator.s_ParseJson(data, "list()"), "4"); // 4种状态
-        Assert.assertNotNull(Generator.s_ParseJson(data, "list(0):is_verified"));
-        Assert.assertNotNull(Generator.s_ParseJson(data, "list(0):count"));
-        Assert.assertNotNull(Generator.s_ParseJson(data, "list(1):is_verified"));
-        Assert.assertNotNull(Generator.s_ParseJson(data, "list(1):count"));
+        Assert.assertEquals(Helper.s_ParseJson(data, "list()"), "4"); // 4种状态
+        Assert.assertNotNull(Helper.s_ParseJson(data, "list(0):is_verified"));
+        Assert.assertNotNull(Helper.s_ParseJson(data, "list(0):count"));
+        Assert.assertNotNull(Helper.s_ParseJson(data, "list(1):is_verified"));
+        Assert.assertNotNull(Helper.s_ParseJson(data, "list(1):count"));
     }
 
     @Test
@@ -54,11 +54,11 @@ public class RegisteredDoctor_Counts extends BaseTest {
         }
         s_CheckResponse(res);
         Assert.assertEquals(code, "1000000");
-        Assert.assertEquals(Generator.s_ParseJson(data, "list()"), "4"); // 4种状态
+        Assert.assertEquals(Helper.s_ParseJson(data, "list()"), "4"); // 4种状态
 
-        Assert.assertEquals(Integer.parseInt(Generator.s_ParseJson(data, "list(0):count")) +
-                Integer.parseInt(Generator.s_ParseJson(data, "list(1):count")) +
-                Integer.parseInt(Generator.s_ParseJson(data, "list(2):count")) +
-                Integer.parseInt(Generator.s_ParseJson(data, "list(3):count")) , RegisteredDoctor_List.registeredDoctorList());
+        Assert.assertEquals(Integer.parseInt(Helper.s_ParseJson(data, "list(0):count")) +
+                Integer.parseInt(Helper.s_ParseJson(data, "list(1):count")) +
+                Integer.parseInt(Helper.s_ParseJson(data, "list(2):count")) +
+                Integer.parseInt(Helper.s_ParseJson(data, "list(3):count")) , RegisteredDoctor_List.registeredDoctorList());
     }
 }

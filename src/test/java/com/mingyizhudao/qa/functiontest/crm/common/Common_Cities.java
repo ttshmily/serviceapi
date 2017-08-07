@@ -2,8 +2,8 @@ package com.mingyizhudao.qa.functiontest.crm.common;
 
 import com.mingyizhudao.qa.common.BaseTest;
 import com.mingyizhudao.qa.common.TestLogger;
+import com.mingyizhudao.qa.utilities.Helper;
 import com.mingyizhudao.qa.utilities.HttpRequest;
-import com.mingyizhudao.qa.utilities.Generator;
 import net.sf.json.JSONArray;
 import org.testng.Assert;
 import org.testng.annotations.Test;
@@ -41,7 +41,7 @@ public class Common_Cities extends BaseTest {
         s_CheckResponse(res);
         Assert.assertEquals(code, "1000000");
         //TODO
-        Assert.assertNotNull(Generator.s_ParseJson(data, "list()"));
+        Assert.assertNotNull(Helper.s_ParseJson(data, "list()"));
     }
 
     @Test

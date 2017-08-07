@@ -4,6 +4,7 @@ import com.mingyizhudao.qa.common.BaseTest;
 import com.mingyizhudao.qa.common.KnowledgeBase;
 import com.mingyizhudao.qa.common.TestLogger;
 import com.mingyizhudao.qa.functiontest.doctor.CreateOrder;
+import com.mingyizhudao.qa.utilities.Helper;
 import com.mingyizhudao.qa.utilities.HttpRequest;
 import com.mingyizhudao.qa.utilities.Generator;
 import net.sf.json.JSONObject;
@@ -37,9 +38,9 @@ public class Order_ThreewayCall_V2 extends BaseTest {
         TestLogger logger = new TestLogger(s_JobName());
         HashMap<String, String> pathValue = new HashMap<>();
         res = Order_Detail.s_Detail(orderId);
-        if (!Generator.s_ParseJson(JSONObject.fromObject(res), "data:status").equals("2020")) {
+        if (!Helper.s_ParseJson(JSONObject.fromObject(res), "data:status").equals("2020")) {
             logger.error("当前订单状态无法进行三方通话");
-            return Generator.s_ParseJson(JSONObject.fromObject(res), "data:status");
+            return Helper.s_ParseJson(JSONObject.fromObject(res), "data:status");
         }
         pathValue.put("orderNumber", orderId);
         JSONObject body = new JSONObject();
@@ -59,7 +60,7 @@ public class Order_ThreewayCall_V2 extends BaseTest {
             logger.error(e);
         }
         res = Order_Detail.s_Detail(orderId);
-        return Generator.s_ParseJson(JSONObject.fromObject(res), "data:status");
+        return Helper.s_ParseJson(JSONObject.fromObject(res), "data:status");
     }
 
     @Test
@@ -98,19 +99,19 @@ public class Order_ThreewayCall_V2 extends BaseTest {
         Assert.assertEquals(code, "1000000");
         res = Order_Detail.s_Detail(orderId);
         s_CheckResponse(res);
-        Assert.assertEquals(Generator.s_ParseJson(data, "status"), "3000");
-        Assert.assertEquals(Generator.s_ParseJson(data, "surgeon_id"), rcmdDoc);
-        Assert.assertEquals(Generator.s_ParseJson(data, "surgeon_name"), Generator.expertName(rcmdDoc));
-        Assert.assertEquals(Generator.s_ParseJson(data, "surgeon_fee"), String.valueOf(fee));
-        Assert.assertEquals(Generator.s_ParseJson(data, "conference_call_major_disease_id"), majorDiseaseId);
-        Assert.assertEquals(Generator.s_ParseJson(data, "conference_call_minor_disease_id"), minorDiseaseId);
+        Assert.assertEquals(Helper.s_ParseJson(data, "status"), "3000");
+        Assert.assertEquals(Helper.s_ParseJson(data, "surgeon_id"), rcmdDoc);
+        Assert.assertEquals(Helper.s_ParseJson(data, "surgeon_name"), Generator.expertName(rcmdDoc));
+        Assert.assertEquals(Helper.s_ParseJson(data, "surgeon_fee"), String.valueOf(fee));
+        Assert.assertEquals(Helper.s_ParseJson(data, "conference_call_major_disease_id"), majorDiseaseId);
+        Assert.assertEquals(Helper.s_ParseJson(data, "conference_call_minor_disease_id"), minorDiseaseId);
 //        Assert.assertEquals(UT.s_ParseJson(data, "major_disease_id"), majorDiseaseId);
 //        Assert.assertEquals(UT.s_ParseJson(data, "minor_disease_id"), minorDiseaseId);
 //        Assert.assertEquals(UT.s_ParseJson(data, "major_disease_name"), UT.diseaseName(majorDiseaseId));
 //        Assert.assertEquals(UT.s_ParseJson(data, "minor_disease_name"), UT.diseaseName(minorDiseaseId));
-        Assert.assertEquals(Generator.s_ParseJson(data, "agent_fee"), String.valueOf(fee*agent_p/100));
-        Assert.assertEquals(Generator.s_ParseJson(data, "platform_fee"), String.valueOf(fee*platform_p/100));
-        Assert.assertEquals(Generator.s_ParseJson(data, "pre_order_fee"), String.valueOf(fee*(agent_p+platform_p)/100));
+        Assert.assertEquals(Helper.s_ParseJson(data, "agent_fee"), String.valueOf(fee*agent_p/100));
+        Assert.assertEquals(Helper.s_ParseJson(data, "platform_fee"), String.valueOf(fee*platform_p/100));
+        Assert.assertEquals(Helper.s_ParseJson(data, "pre_order_fee"), String.valueOf(fee*(agent_p+platform_p)/100));
     }
 
     @Test
@@ -147,10 +148,10 @@ public class Order_ThreewayCall_V2 extends BaseTest {
         Assert.assertEquals(code, "1000000");
         res = Order_Detail.s_Detail(orderId);
         s_CheckResponse(res);
-        Assert.assertEquals(Generator.s_ParseJson(data, "status"), "2020");
-        Assert.assertEquals(Generator.s_ParseJson(data, "surgeon_id"), rcmdDoc);
-        Assert.assertEquals(Generator.s_ParseJson(data, "surgeon_name"), Generator.expertName(rcmdDoc));
-        Assert.assertEquals(Generator.s_ParseJson(data, "conference_call_major_disease_id"), majorDiseaseId);
-        Assert.assertEquals(Generator.s_ParseJson(data, "conference_call_minor_disease_id"), minorDiseaseId);
+        Assert.assertEquals(Helper.s_ParseJson(data, "status"), "2020");
+        Assert.assertEquals(Helper.s_ParseJson(data, "surgeon_id"), rcmdDoc);
+        Assert.assertEquals(Helper.s_ParseJson(data, "surgeon_name"), Generator.expertName(rcmdDoc));
+        Assert.assertEquals(Helper.s_ParseJson(data, "conference_call_major_disease_id"), majorDiseaseId);
+        Assert.assertEquals(Helper.s_ParseJson(data, "conference_call_minor_disease_id"), minorDiseaseId);
     }
 }

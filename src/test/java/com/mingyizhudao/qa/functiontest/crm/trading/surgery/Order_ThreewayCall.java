@@ -4,6 +4,7 @@ import com.mingyizhudao.qa.common.BaseTest;
 import com.mingyizhudao.qa.common.KnowledgeBase;
 import com.mingyizhudao.qa.common.TestLogger;
 import com.mingyizhudao.qa.functiontest.doctor.CreateOrder;
+import com.mingyizhudao.qa.utilities.Helper;
 import com.mingyizhudao.qa.utilities.HttpRequest;
 import com.mingyizhudao.qa.utilities.Generator;
 import net.sf.json.JSONObject;
@@ -37,9 +38,9 @@ public class Order_ThreewayCall extends BaseTest {
         TestLogger logger = new TestLogger(s_JobName());
         HashMap<String, String> pathValue = new HashMap<>();
         res = Order_Detail.s_Detail(orderId);
-        if (!Generator.s_ParseJson(JSONObject.fromObject(res), "data:status").equals("2020")) {
+        if (!Helper.s_ParseJson(JSONObject.fromObject(res), "data:status").equals("2020")) {
             logger.error("当前订单状态无法进行三方通话");
-            return Generator.s_ParseJson(JSONObject.fromObject(res), "data:status");
+            return Helper.s_ParseJson(JSONObject.fromObject(res), "data:status");
         }
         pathValue.put("orderNumber", orderId);
         JSONObject body = new JSONObject();
@@ -57,7 +58,7 @@ public class Order_ThreewayCall extends BaseTest {
             logger.error(e);
         }
         res = Order_Detail.s_Detail(orderId);
-        return Generator.s_ParseJson(JSONObject.fromObject(res), "data:status");
+        return Helper.s_ParseJson(JSONObject.fromObject(res), "data:status");
     }
 
     @Test
@@ -91,10 +92,10 @@ public class Order_ThreewayCall extends BaseTest {
         Assert.assertEquals(code, "1000000");
         res = Order_Detail.s_Detail(orderId);
         s_CheckResponse(res);
-        Assert.assertEquals(Generator.s_ParseJson(data, "status"), "3000");
-        Assert.assertEquals(Generator.s_ParseJson(data, "surgeon_id"), rcmdDoc);
-        Assert.assertEquals(Generator.s_ParseJson(data, "surgeon_name"), KnowledgeBase.kb_doctor.get(rcmdDoc));
-        Assert.assertEquals(Generator.s_ParseJson(data, "surgeon_fee"), fee);
+        Assert.assertEquals(Helper.s_ParseJson(data, "status"), "3000");
+        Assert.assertEquals(Helper.s_ParseJson(data, "surgeon_id"), rcmdDoc);
+        Assert.assertEquals(Helper.s_ParseJson(data, "surgeon_name"), KnowledgeBase.kb_doctor.get(rcmdDoc));
+        Assert.assertEquals(Helper.s_ParseJson(data, "surgeon_fee"), fee);
     }
 
     @Test
@@ -127,9 +128,9 @@ public class Order_ThreewayCall extends BaseTest {
         Assert.assertEquals(code, "1000000");
         res = Order_Detail.s_Detail(orderId);
         s_CheckResponse(res);
-        Assert.assertEquals(Generator.s_ParseJson(data, "status"), "2020");
-        Assert.assertEquals(Generator.s_ParseJson(data, "surgeon_id"), rcmdDoc);
-        Assert.assertEquals(Generator.s_ParseJson(data, "surgeon_name"), KnowledgeBase.kb_doctor.get(rcmdDoc));
+        Assert.assertEquals(Helper.s_ParseJson(data, "status"), "2020");
+        Assert.assertEquals(Helper.s_ParseJson(data, "surgeon_id"), rcmdDoc);
+        Assert.assertEquals(Helper.s_ParseJson(data, "surgeon_name"), KnowledgeBase.kb_doctor.get(rcmdDoc));
 //        Assert.assertEquals(s_ParseJson(data, "surgeon_fee"), fee);
     }
 
@@ -161,7 +162,7 @@ public class Order_ThreewayCall extends BaseTest {
         Assert.assertEquals(code, "1000000");
         res = Order_Detail.s_Detail(orderId);
         s_CheckResponse(res);
-        Assert.assertEquals(Generator.s_ParseJson(data, "status"), "2000");
+        Assert.assertEquals(Helper.s_ParseJson(data, "status"), "2000");
         //不合作以后，清除上级医生信息
 //        Assert.assertEquals(UT.s_ParseJson(data, "surgeon_id"), "555");
 //        Assert.assertEquals(UT.s_ParseJson(data, "surgeon_name"), KB.kb_doctor.get("555"));
@@ -195,7 +196,7 @@ public class Order_ThreewayCall extends BaseTest {
         Assert.assertNotEquals(code, "1000000");
         res = Order_Detail.s_Detail(orderId);
         s_CheckResponse(res);
-        Assert.assertEquals(Generator.s_ParseJson(data, "status"), "2020");
+        Assert.assertEquals(Helper.s_ParseJson(data, "status"), "2020");
 
         body.put("reject_reason", "");
         try {
@@ -208,7 +209,7 @@ public class Order_ThreewayCall extends BaseTest {
 
         res = Order_Detail.s_Detail(orderId);
         s_CheckResponse(res);
-        Assert.assertEquals(Generator.s_ParseJson(data, "status"), "2020");
+        Assert.assertEquals(Helper.s_ParseJson(data, "status"), "2020");
     }
 
     @Test
@@ -239,7 +240,7 @@ public class Order_ThreewayCall extends BaseTest {
         Assert.assertEquals(code, "1000000");
         res = Order_Detail.s_Detail(orderId);
         s_CheckResponse(res);
-        Assert.assertEquals(Generator.s_ParseJson(data, "status"), "3000");
+        Assert.assertEquals(Helper.s_ParseJson(data, "status"), "3000");
 
         try {
             res = HttpRequest.s_SendPost(host_crm+uri, body.toString(), crm_token, pathValue);
@@ -272,7 +273,7 @@ public class Order_ThreewayCall extends BaseTest {
         Assert.assertNotEquals(code, "1000000");
         res = Order_Detail.s_Detail(orderId);
         s_CheckResponse(res);
-        Assert.assertNotEquals(Generator.s_ParseJson(data, "status"), "3000");
+        Assert.assertNotEquals(Helper.s_ParseJson(data, "status"), "3000");
 
         body.put("calling_time", df.format(new Date()));
         try {
@@ -284,7 +285,7 @@ public class Order_ThreewayCall extends BaseTest {
         Assert.assertNotEquals(code, "1000000");
         res = Order_Detail.s_Detail(orderId);
         s_CheckResponse(res);
-        Assert.assertNotEquals(Generator.s_ParseJson(data, "status"), "3000");
+        Assert.assertNotEquals(Helper.s_ParseJson(data, "status"), "3000");
 
         body.put("major_disease_id", "55");
         try {
@@ -296,7 +297,7 @@ public class Order_ThreewayCall extends BaseTest {
         Assert.assertNotEquals(code, "1000000");
         res = Order_Detail.s_Detail(orderId);
         s_CheckResponse(res);
-        Assert.assertNotEquals(Generator.s_ParseJson(data, "status"), "3000");
+        Assert.assertNotEquals(Helper.s_ParseJson(data, "status"), "3000");
 
         body.put("minor_disease_id", "66");
         try {
@@ -308,7 +309,7 @@ public class Order_ThreewayCall extends BaseTest {
         Assert.assertNotEquals(code, "1000000");
         res = Order_Detail.s_Detail(orderId);
         s_CheckResponse(res);
-        Assert.assertNotEquals(Generator.s_ParseJson(data, "status"), "3000");
+        Assert.assertNotEquals(Helper.s_ParseJson(data, "status"), "3000");
 
         body.put("content", "自动创建的通话记录");
         try {
@@ -320,7 +321,7 @@ public class Order_ThreewayCall extends BaseTest {
         Assert.assertNotEquals(code, "1000000");
         res = Order_Detail.s_Detail(orderId);
         s_CheckResponse(res);
-        Assert.assertNotEquals(Generator.s_ParseJson(data, "status"), "3000");
+        Assert.assertNotEquals(Helper.s_ParseJson(data, "status"), "3000");
 
         body.put("audio_file", "http://www.automation.com");
         try {
@@ -332,7 +333,7 @@ public class Order_ThreewayCall extends BaseTest {
         Assert.assertNotEquals(code, "1000000");
         res = Order_Detail.s_Detail(orderId);
         s_CheckResponse(res);
-        Assert.assertNotEquals(Generator.s_ParseJson(data, "status"), "3000");
+        Assert.assertNotEquals(Helper.s_ParseJson(data, "status"), "3000");
 
         body.put("record_type", "success");
         try {
@@ -344,7 +345,7 @@ public class Order_ThreewayCall extends BaseTest {
         Assert.assertEquals(code, "1000000");
         res = Order_Detail.s_Detail(orderId);
         s_CheckResponse(res);
-        Assert.assertEquals(Generator.s_ParseJson(data, "status"), "3000");
+        Assert.assertEquals(Helper.s_ParseJson(data, "status"), "3000");
 
     }
 
@@ -376,7 +377,7 @@ public class Order_ThreewayCall extends BaseTest {
         Assert.assertEquals(code, "1000000");
         res = Order_Detail.s_Detail(orderId);
         s_CheckResponse(res);
-        Assert.assertEquals(Generator.s_ParseJson(data, "status"), "2000");
+        Assert.assertEquals(Helper.s_ParseJson(data, "status"), "2000");
 //        Assert.assertEquals(s_ParseJson(data, "surgeon_id"), "555");
 //        Assert.assertEquals(s_ParseJson(data, "surgeon_name"), KB.kb_doctor.get("555"));
 //        Assert.assertEquals(s_ParseJson(data, "surgeon_fee"), "10000");
@@ -411,8 +412,8 @@ public class Order_ThreewayCall extends BaseTest {
         Assert.assertEquals(code, "1000000");
         res = Order_Detail.s_Detail(orderId);
         s_CheckResponse(res);
-        Assert.assertEquals(Generator.s_ParseJson(data, "status"), "2000");
-        Assert.assertNotNull(Generator.s_ParseJson(data, "doctorFiledList"), expertId);
-        Assert.assertEquals(Generator.s_ParseJson(data, "doctorFiledList():surgeon_id"), expertId);
+        Assert.assertEquals(Helper.s_ParseJson(data, "status"), "2000");
+        Assert.assertNotNull(Helper.s_ParseJson(data, "doctorFiledList"), expertId);
+        Assert.assertEquals(Helper.s_ParseJson(data, "doctorFiledList():surgeon_id"), expertId);
     }
 }

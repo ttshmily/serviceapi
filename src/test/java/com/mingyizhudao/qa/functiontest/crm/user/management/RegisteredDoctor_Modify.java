@@ -4,6 +4,7 @@ import com.mingyizhudao.qa.common.BaseTest;
 import com.mingyizhudao.qa.common.KnowledgeBase;
 import com.mingyizhudao.qa.common.TestLogger;
 import com.mingyizhudao.qa.functiontest.crm.kb.management.KBHospital_Detail;
+import com.mingyizhudao.qa.utilities.Helper;
 import com.mingyizhudao.qa.utilities.HttpRequest;
 import com.mingyizhudao.qa.utilities.Generator;
 import net.sf.json.JSONObject;
@@ -73,16 +74,16 @@ public class RegisteredDoctor_Modify extends BaseTest {
         } catch (IOException e) {
             logger.error(e);
         }
-        logger.info(HttpRequest.unicodeString(res));
+        logger.info(Helper.unicodeString(res));
         s_CheckResponse(res);
         res = RegisteredDoctor_Detail.s_Detail(mainDoctorId);
         s_CheckResponse(res);
 //        Assert.assertEquals(s_ParseJson(data, "department"), "科室综合");
-        Assert.assertEquals(Generator.s_ParseJson(data, "hospital_id"), hospital);
-        Assert.assertEquals(Generator.s_ParseJson(data, "city_id"), another_city);
-        Assert.assertEquals(Generator.s_ParseJson(data, "major_id"), major);
-        Assert.assertEquals(Generator.s_ParseJson(data, "academic_title_list"), academic);
-        Assert.assertEquals(Generator.s_ParseJson(data, "medical_title_list"), medical);
+        Assert.assertEquals(Helper.s_ParseJson(data, "hospital_id"), hospital);
+        Assert.assertEquals(Helper.s_ParseJson(data, "city_id"), another_city);
+        Assert.assertEquals(Helper.s_ParseJson(data, "major_id"), major);
+        Assert.assertEquals(Helper.s_ParseJson(data, "academic_title_list"), academic);
+        Assert.assertEquals(Helper.s_ParseJson(data, "medical_title_list"), medical);
 
         // 错误的医生ID，应该更新失败
         pathValue.replace("id", mainDoctorId+"11111");
@@ -115,7 +116,7 @@ public class RegisteredDoctor_Modify extends BaseTest {
         }
         res = RegisteredDoctor_Detail.s_Detail(mainDoctorId);
         s_CheckResponse(res);
-        Assert.assertEquals(Generator.s_ParseJson(data, "name"), "美女医生");
+        Assert.assertEquals(Helper.s_ParseJson(data, "name"), "美女医生");
     }
 
     @Test
@@ -143,10 +144,10 @@ public class RegisteredDoctor_Modify extends BaseTest {
         }
         res = RegisteredDoctor_Detail.s_Detail(mainDoctorId);
         s_CheckResponse(res);
-        Assert.assertEquals(Generator.s_ParseJson(data, "hospital_id"), hospitalId);
-        Assert.assertEquals(Generator.s_ParseJson(data, "hospital_name"), Generator.hospitalName(hospitalId));
-        Assert.assertEquals(Generator.s_ParseJson(data, "city_id"), another_city);
-        Assert.assertEquals(Generator.s_ParseJson(data, "city"), Generator.cityName(another_city));
+        Assert.assertEquals(Helper.s_ParseJson(data, "hospital_id"), hospitalId);
+        Assert.assertEquals(Helper.s_ParseJson(data, "hospital_name"), Generator.hospitalName(hospitalId));
+        Assert.assertEquals(Helper.s_ParseJson(data, "city_id"), another_city);
+        Assert.assertEquals(Helper.s_ParseJson(data, "city"), Generator.cityName(another_city));
 
         // 更新hospital_id和hospital_name，应当以hospital_id为准。
         hospitalId = Generator.randomHospitalId();
@@ -161,8 +162,8 @@ public class RegisteredDoctor_Modify extends BaseTest {
         }
         res = RegisteredDoctor_Detail.s_Detail(mainDoctorId);
         s_CheckResponse(res);
-        Assert.assertEquals(Generator.s_ParseJson(data, "hospital_id"), hospitalId);
-        Assert.assertEquals(Generator.s_ParseJson(data, "hospital_name"), Generator.hospitalName(hospitalId));
+        Assert.assertEquals(Helper.s_ParseJson(data, "hospital_id"), hospitalId);
+        Assert.assertEquals(Helper.s_ParseJson(data, "hospital_name"), Generator.hospitalName(hospitalId));
     }
 
     @Test
@@ -187,8 +188,8 @@ public class RegisteredDoctor_Modify extends BaseTest {
         //TODO
         res = RegisteredDoctor_Detail.s_Detail(mainDoctorId);
         s_CheckResponse(res);
-        Assert.assertEquals(Generator.s_ParseJson(data, "academic_title_list"), academic);
-        Assert.assertEquals(Generator.s_ParseJson(data, "academic_title"), KnowledgeBase.kb_academic_title.get(academic));
+        Assert.assertEquals(Helper.s_ParseJson(data, "academic_title_list"), academic);
+        Assert.assertEquals(Helper.s_ParseJson(data, "academic_title"), KnowledgeBase.kb_academic_title.get(academic));
 
         // 更新错误的academic_title，应当不成功
         body.replace("academic_title", "ASSOCIATE_PROFESSOR_WRONG");
@@ -202,7 +203,7 @@ public class RegisteredDoctor_Modify extends BaseTest {
         //TODO
         res = RegisteredDoctor_Detail.s_Detail(mainDoctorId);
         s_CheckResponse(res);
-        Assert.assertEquals(Generator.s_ParseJson(data, "academic_title_list"), academic);
+        Assert.assertEquals(Helper.s_ParseJson(data, "academic_title_list"), academic);
 
     }
 
@@ -227,8 +228,8 @@ public class RegisteredDoctor_Modify extends BaseTest {
         Assert.assertEquals(code, "1000000");
         res = RegisteredDoctor_Detail.s_Detail(mainDoctorId);
         s_CheckResponse(res);
-        Assert.assertEquals(Generator.s_ParseJson(data, "medical_title_list"), medical);
-        Assert.assertEquals(Generator.s_ParseJson(data, "medical_title"), KnowledgeBase.kb_medical_title.get(medical));
+        Assert.assertEquals(Helper.s_ParseJson(data, "medical_title_list"), medical);
+        Assert.assertEquals(Helper.s_ParseJson(data, "medical_title"), KnowledgeBase.kb_medical_title.get(medical));
 
         // 更新错误的medical_title，应当不成功
         body.replace("medical_title", "ARCHIATER_WRONG");
@@ -241,8 +242,8 @@ public class RegisteredDoctor_Modify extends BaseTest {
         Assert.assertNotEquals(code, "1000000");
         res = RegisteredDoctor_Detail.s_Detail(mainDoctorId);
         s_CheckResponse(res);
-        Assert.assertEquals(Generator.s_ParseJson(data, "medical_title_list"), medical);
-        Assert.assertEquals(Generator.s_ParseJson(data, "medical_title"), KnowledgeBase.kb_medical_title.get(medical));
+        Assert.assertEquals(Helper.s_ParseJson(data, "medical_title_list"), medical);
+        Assert.assertEquals(Helper.s_ParseJson(data, "medical_title"), KnowledgeBase.kb_medical_title.get(medical));
     }
 
     @Test
@@ -266,8 +267,8 @@ public class RegisteredDoctor_Modify extends BaseTest {
         Assert.assertEquals(code, "1000000");
         res = RegisteredDoctor_Detail.s_Detail(mainDoctorId);
         s_CheckResponse(res);
-        Assert.assertEquals(Generator.s_ParseJson(data, "major_id"), majorId);
-        Assert.assertEquals(Generator.s_ParseJson(data, "major_name"), KnowledgeBase.kb_major.get(majorId));
+        Assert.assertEquals(Helper.s_ParseJson(data, "major_id"), majorId);
+        Assert.assertEquals(Helper.s_ParseJson(data, "major_name"), KnowledgeBase.kb_major.get(majorId));
 
         // 更新错误的major_id，应当不成功
         body.replace("major_id", "1000000");
@@ -280,8 +281,8 @@ public class RegisteredDoctor_Modify extends BaseTest {
         Assert.assertNotEquals(code, "1000000");
         res = RegisteredDoctor_Detail.s_Detail(mainDoctorId);
         s_CheckResponse(res);
-        Assert.assertEquals(Generator.s_ParseJson(data, "major_id"), majorId);
-        Assert.assertEquals(Generator.s_ParseJson(data, "major_name"), KnowledgeBase.kb_major.get(majorId));
+        Assert.assertEquals(Helper.s_ParseJson(data, "major_id"), majorId);
+        Assert.assertEquals(Helper.s_ParseJson(data, "major_name"), KnowledgeBase.kb_major.get(majorId));
 
     }
 
@@ -307,7 +308,7 @@ public class RegisteredDoctor_Modify extends BaseTest {
         //TODO
         res = RegisteredDoctor_Detail.s_Detail(mainDoctorId);
         s_CheckResponse(res);
-        Assert.assertEquals(Generator.s_ParseJson(data, "mobile"), phone);
+        Assert.assertEquals(Helper.s_ParseJson(data, "mobile"), phone);
 
     }
 
@@ -334,11 +335,11 @@ public class RegisteredDoctor_Modify extends BaseTest {
 
         res = RegisteredDoctor_Detail.s_Detail(mainDoctorId);
         s_CheckResponse(res);
-        Assert.assertNotNull(Generator.s_ParseJson(data, "doctor_card_pictures"));
-        int actual_size = Integer.parseInt(Generator.s_ParseJson(data, "doctor_card_pictures()"));
+        Assert.assertNotNull(Helper.s_ParseJson(data, "doctor_card_pictures"));
+        int actual_size = Integer.parseInt(Helper.s_ParseJson(data, "doctor_card_pictures()"));
         Assert.assertEquals(actual_size, body.getJSONArray("doctor_card_pictures").size());
         for (int i=0; i<actual_size; i++) {
-            Assert.assertEquals(Generator.s_ParseJson(data, "doctor_card_pictures("+i+"):key"), body.getJSONArray("doctor_card_pictures").getJSONObject(i).getString("key"));
+            Assert.assertEquals(Helper.s_ParseJson(data, "doctor_card_pictures("+i+"):key"), body.getJSONArray("doctor_card_pictures").getJSONObject(i).getString("key"));
         }
 
 
@@ -354,11 +355,11 @@ public class RegisteredDoctor_Modify extends BaseTest {
 
         res = RegisteredDoctor_Detail.s_Detail(mainDoctorId);
         s_CheckResponse(res);
-        Assert.assertNotNull(Generator.s_ParseJson(data, "doctor_card_pictures"));
-        actual_size = Integer.parseInt(Generator.s_ParseJson(data, "doctor_card_pictures()"));
+        Assert.assertNotNull(Helper.s_ParseJson(data, "doctor_card_pictures"));
+        actual_size = Integer.parseInt(Helper.s_ParseJson(data, "doctor_card_pictures()"));
         Assert.assertEquals(actual_size, body.getJSONArray("doctor_card_pictures").size());
         for (int i=0; i<actual_size; i++) {
-            Assert.assertEquals(Generator.s_ParseJson(data, "doctor_card_pictures("+i+"):key"), body.getJSONArray("doctor_card_pictures").getJSONObject(i).getString("key"));
+            Assert.assertEquals(Helper.s_ParseJson(data, "doctor_card_pictures("+i+"):key"), body.getJSONArray("doctor_card_pictures").getJSONObject(i).getString("key"));
         }
 
         body.accumulate("doctor_card_pictures", JSONObject.fromObject("{'key':'2017/05/04/1265834e-97d8-44a0-95e7-047c7facaee8/IMG_20170429_102741.jpg';'type':'3'}").toString());
@@ -372,11 +373,11 @@ public class RegisteredDoctor_Modify extends BaseTest {
 
         res = RegisteredDoctor_Detail.s_Detail(mainDoctorId);
         s_CheckResponse(res);
-        Assert.assertNotNull(Generator.s_ParseJson(data, "doctor_card_pictures"));
-        actual_size = Integer.parseInt(Generator.s_ParseJson(data, "doctor_card_pictures()"));
+        Assert.assertNotNull(Helper.s_ParseJson(data, "doctor_card_pictures"));
+        actual_size = Integer.parseInt(Helper.s_ParseJson(data, "doctor_card_pictures()"));
         Assert.assertEquals(actual_size, body.getJSONArray("doctor_card_pictures").size());
         for (int i=0; i<actual_size; i++) {
-            Assert.assertEquals(Generator.s_ParseJson(data, "doctor_card_pictures("+i+"):key"), body.getJSONArray("doctor_card_pictures").getJSONObject(i).getString("key"));
+            Assert.assertEquals(Helper.s_ParseJson(data, "doctor_card_pictures("+i+"):key"), body.getJSONArray("doctor_card_pictures").getJSONObject(i).getString("key"));
         }
 // 删除所有图片
         body.replace("doctor_card_pictures", "[]");
@@ -390,7 +391,7 @@ public class RegisteredDoctor_Modify extends BaseTest {
 
         res = RegisteredDoctor_Detail.s_Detail(mainDoctorId);
         s_CheckResponse(res);
-        Assert.assertNotNull(Generator.s_ParseJson(data, "doctor_card_pictures_deleted"));
+        Assert.assertNotNull(Helper.s_ParseJson(data, "doctor_card_pictures_deleted"));
         Assert.assertEquals(body.getJSONArray("doctor_card_pictures").size(),0);
 //        for (int i=0; i<actual_size; i++) {
 //            Assert.assertEquals(UT.s_ParseJson(data, "doctor_card_pictures_deleted("+i+"):key"), body.getJSONArray("doctor_card_pictures_deleted").getJSONObject(i).getString("key"));

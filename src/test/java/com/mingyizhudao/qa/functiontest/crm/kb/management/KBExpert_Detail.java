@@ -4,8 +4,8 @@ import com.mingyizhudao.qa.common.BaseTest;
 import com.mingyizhudao.qa.common.KnowledgeBase;
 import com.mingyizhudao.qa.common.TestLogger;
 import com.mingyizhudao.qa.dataprofile.crm.ExpertProfile;
+import com.mingyizhudao.qa.utilities.Helper;
 import com.mingyizhudao.qa.utilities.HttpRequest;
-import com.mingyizhudao.qa.utilities.Generator;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
@@ -56,24 +56,24 @@ public class KBExpert_Detail extends BaseTest {
         }
         s_CheckResponse(res);
         Assert.assertEquals(code, "1000000");
-        Assert.assertEquals(Generator.s_ParseJson(data, "medical_title_list"), ep.body.getString("medical_title_list"));
-        Assert.assertEquals(Generator.s_ParseJson(data, "academic_title_list"), ep.body.getString("academic_title_list"));
-        Assert.assertEquals(Generator.s_ParseJson(data, "gender"), ep.body.getString("gender"));
-        Assert.assertEquals(Generator.s_ParseJson(data, "name"), ep.body.getString("name"));
-        Assert.assertEquals(Generator.s_ParseJson(data, "birthday"), ep.body.getString("birthday").replace('/', '-'));
-        Assert.assertEquals(Generator.s_ParseJson(data, "major_id"), ep.body.getString("major_id"));
-        Assert.assertEquals(Generator.s_ParseJson(data, "hospital_name"), KnowledgeBase.kb_hospital.get(ep.body.getString("hospital_id")));
-        Assert.assertEquals(Generator.s_ParseJson(data, "honour"), ep.body.getString("honour"));
-        String expert_city_id = Generator.s_ParseJson(data, "city_id");
+        Assert.assertEquals(Helper.s_ParseJson(data, "medical_title_list"), ep.body.getString("medical_title_list"));
+        Assert.assertEquals(Helper.s_ParseJson(data, "academic_title_list"), ep.body.getString("academic_title_list"));
+        Assert.assertEquals(Helper.s_ParseJson(data, "gender"), ep.body.getString("gender"));
+        Assert.assertEquals(Helper.s_ParseJson(data, "name"), ep.body.getString("name"));
+        Assert.assertEquals(Helper.s_ParseJson(data, "birthday"), ep.body.getString("birthday").replace('/', '-'));
+        Assert.assertEquals(Helper.s_ParseJson(data, "major_id"), ep.body.getString("major_id"));
+        Assert.assertEquals(Helper.s_ParseJson(data, "hospital_name"), KnowledgeBase.kb_hospital.get(ep.body.getString("hospital_id")));
+        Assert.assertEquals(Helper.s_ParseJson(data, "honour"), ep.body.getString("honour"));
+        String expert_city_id = Helper.s_ParseJson(data, "city_id");
         HashMap<String, String> hospitalInfo = KBHospital_Detail.s_Detail(ep.body.getString("hospital_id"));
 
         String hospital_city_id = hospitalInfo.get("city_id");
         Assert.assertEquals(hospital_city_id, expert_city_id);
 
-        Assert.assertEquals(Generator.s_ParseJson(data, "certified_status"), "NOT_CERTIFIED");
-        Assert.assertEquals(Generator.s_ParseJson(data, "signed_status"), "NOT_SIGNED");
-        Assert.assertEquals(Generator.s_ParseJson(data, "medical_title_list"), ep.body.getString("medical_title_list"));
-        Assert.assertEquals(Generator.s_ParseJson(data, "medical_title_list"), ep.body.getString("medical_title_list"));
+        Assert.assertEquals(Helper.s_ParseJson(data, "certified_status"), "NOT_CERTIFIED");
+        Assert.assertEquals(Helper.s_ParseJson(data, "signed_status"), "NOT_SIGNED");
+        Assert.assertEquals(Helper.s_ParseJson(data, "medical_title_list"), ep.body.getString("medical_title_list"));
+        Assert.assertEquals(Helper.s_ParseJson(data, "medical_title_list"), ep.body.getString("medical_title_list"));
     }
 
     @Test

@@ -2,8 +2,8 @@ package com.mingyizhudao.qa.functiontest.doctor;
 
 import com.mingyizhudao.qa.common.BaseTest;
 import com.mingyizhudao.qa.common.TestLogger;
+import com.mingyizhudao.qa.utilities.Helper;
 import com.mingyizhudao.qa.utilities.HttpRequest;
-import com.mingyizhudao.qa.utilities.Generator;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
@@ -36,10 +36,10 @@ public class GetDiseasesInCategory extends BaseTest {
             logger.error(e);
         }
         s_CheckResponse(res);
-        Assert.assertNotNull(Generator.s_ParseJson(data, "diseases()"));
-        Assert.assertNotEquals(Generator.s_ParseJson(data, "diseases():id"), "");
+        Assert.assertNotNull(Helper.s_ParseJson(data, "diseases()"));
+        Assert.assertNotEquals(Helper.s_ParseJson(data, "diseases():id"), "");
 //        Assert.assertEquals(s_ParseJson(data, "diseases():disease_category_id"), "6");
-        Assert.assertNotEquals(Generator.s_ParseJson(data, "diseases():name"), "");
+        Assert.assertNotEquals(Helper.s_ParseJson(data, "diseases():name"), "");
     }
 
     @Test
@@ -55,7 +55,7 @@ public class GetDiseasesInCategory extends BaseTest {
         }
         s_CheckResponse(res);
         Assert.assertEquals(code, "1000000");
-        Assert.assertNotNull(Generator.s_ParseJson(data, "diseases()"));
+        Assert.assertNotNull(Helper.s_ParseJson(data, "diseases()"));
     }
 
     @Test

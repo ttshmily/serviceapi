@@ -2,8 +2,8 @@ package com.mingyizhudao.qa.functiontest.crm.trading.surgery;
 
 import com.mingyizhudao.qa.common.BaseTest;
 import com.mingyizhudao.qa.common.TestLogger;
+import com.mingyizhudao.qa.utilities.Helper;
 import com.mingyizhudao.qa.utilities.HttpRequest;
-import com.mingyizhudao.qa.utilities.Generator;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
@@ -36,11 +36,11 @@ public class Order_Counts extends BaseTest {
         }
         s_CheckResponse(res);
         Assert.assertEquals(code, "1000000");
-        Assert.assertNotNull(Generator.s_ParseJson(data, "load_take"));
-        Assert.assertNotNull(Generator.s_ParseJson(data, "handling"));
-        Assert.assertNotNull(Generator.s_ParseJson(data, "wait_pay"));
-        Assert.assertNotNull(Generator.s_ParseJson(data, "wait_upload_summary"));
-        Assert.assertNotNull(Generator.s_ParseJson(data, "wait_verify_summary"));
+        Assert.assertNotNull(Helper.s_ParseJson(data, "load_take"));
+        Assert.assertNotNull(Helper.s_ParseJson(data, "handling"));
+        Assert.assertNotNull(Helper.s_ParseJson(data, "wait_pay"));
+        Assert.assertNotNull(Helper.s_ParseJson(data, "wait_upload_summary"));
+        Assert.assertNotNull(Helper.s_ParseJson(data, "wait_verify_summary"));
     }
 
     @Test
@@ -56,14 +56,14 @@ public class Order_Counts extends BaseTest {
         s_CheckResponse(res);
         Assert.assertEquals(code, "1000000");
 
-        Assert.assertEquals(Integer.parseInt(Generator.s_ParseJson(data, "load_take")) +
-                Integer.parseInt(Generator.s_ParseJson(data, "handling")) +
-                Integer.parseInt(Generator.s_ParseJson(data, "wait_pay")) +
-                Integer.parseInt(Generator.s_ParseJson(data, "wait_upload_summary")) +
-                Integer.parseInt(Generator.s_ParseJson(data, "wait_verify_summary")) +
-                Integer.parseInt(Generator.s_ParseJson(data, "finish")) +
-                Integer.parseInt(Generator.s_ParseJson(data, "cancel")) +
-                Integer.parseInt(Generator.s_ParseJson(data, "other")), Order_List.s_OrderList());
+        Assert.assertEquals(Integer.parseInt(Helper.s_ParseJson(data, "load_take")) +
+                Integer.parseInt(Helper.s_ParseJson(data, "handling")) +
+                Integer.parseInt(Helper.s_ParseJson(data, "wait_pay")) +
+                Integer.parseInt(Helper.s_ParseJson(data, "wait_upload_summary")) +
+                Integer.parseInt(Helper.s_ParseJson(data, "wait_verify_summary")) +
+                Integer.parseInt(Helper.s_ParseJson(data, "finish")) +
+                Integer.parseInt(Helper.s_ParseJson(data, "cancel")) +
+                Integer.parseInt(Helper.s_ParseJson(data, "other")), Order_List.s_OrderList());
     }
 
 }

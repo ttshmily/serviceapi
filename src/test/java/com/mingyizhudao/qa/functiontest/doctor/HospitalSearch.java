@@ -2,6 +2,7 @@ package com.mingyizhudao.qa.functiontest.doctor;
 
 import com.mingyizhudao.qa.common.BaseTest;
 import com.mingyizhudao.qa.common.TestLogger;
+import com.mingyizhudao.qa.utilities.Helper;
 import com.mingyizhudao.qa.utilities.HttpRequest;
 import com.mingyizhudao.qa.utilities.Generator;
 import org.testng.Assert;
@@ -33,7 +34,7 @@ public class HospitalSearch extends BaseTest {
             logger.error(e);
         }
         s_CheckResponse(res);
-        Assert.assertNotNull(Generator.s_ParseJson(data, "hospital()"));
+        Assert.assertNotNull(Helper.s_ParseJson(data, "hospital()"));
     }
 
     @Test
@@ -45,7 +46,7 @@ public class HospitalSearch extends BaseTest {
             logger.error(e);
         }
         s_CheckResponse(res);
-        Assert.assertNotNull(Generator.s_ParseJson(data, "hospital()"));
+        Assert.assertNotNull(Helper.s_ParseJson(data, "hospital()"));
     }
 
     @Test
@@ -59,7 +60,7 @@ public class HospitalSearch extends BaseTest {
             logger.error(e);
         }
         s_CheckResponse(res);
-        Assert.assertNotNull(Generator.s_ParseJson(data, "hospital()"));
+        Assert.assertNotNull(Helper.s_ParseJson(data, "hospital()"));
     }
 
     @Test
@@ -73,7 +74,7 @@ public class HospitalSearch extends BaseTest {
             logger.error(e);
         }
         s_CheckResponse(res);
-        Assert.assertNotNull(Generator.s_ParseJson(data, "hospital()"));
+        Assert.assertNotNull(Helper.s_ParseJson(data, "hospital()"));
     }
 
     @Test
@@ -87,7 +88,7 @@ public class HospitalSearch extends BaseTest {
             logger.error(e);
         }
         s_CheckResponse(res);
-        Assert.assertNotNull(Generator.s_ParseJson(data, "hospital()"));
+        Assert.assertNotNull(Helper.s_ParseJson(data, "hospital()"));
     }
 
     @Test
@@ -101,7 +102,7 @@ public class HospitalSearch extends BaseTest {
             logger.error(e);
         }
         s_CheckResponse(res);
-        Assert.assertNotEquals(Generator.s_ParseJson(data, "hospital()"), "0");
+        Assert.assertNotEquals(Helper.s_ParseJson(data, "hospital()"), "0");
     }
 
     @Test
@@ -115,9 +116,9 @@ public class HospitalSearch extends BaseTest {
             logger.error(e);
         }
         s_CheckResponse(res);
-        Assert.assertNotNull(Generator.s_ParseJson(data, "hospital()"), "hospital字段缺失");
-        Assert.assertNotNull(Generator.s_ParseJson(data, "hospital():name"), "hospital的name字段缺失");
-        Assert.assertNotNull(Generator.s_ParseJson(data, "hospital():id"), "hospital的id字段缺失");
+        Assert.assertNotNull(Helper.s_ParseJson(data, "hospital()"), "hospital字段缺失");
+        Assert.assertNotNull(Helper.s_ParseJson(data, "hospital():name"), "hospital的name字段缺失");
+        Assert.assertNotNull(Helper.s_ParseJson(data, "hospital():id"), "hospital的id字段缺失");
 //        Assert.assertNotNull(s_ParseJson(data, "hospital():city"), "hospital的city字段缺失");
 //        Assert.assertNotNull(s_ParseJson(data, "hospital():ext"), "hospital的ext字段缺失");
 //        Assert.assertNotNull(s_ParseJson(data, "hospital():ext:surgery_list()"), "hospital的surgery字段为空");
@@ -136,11 +137,11 @@ public class HospitalSearch extends BaseTest {
             logger.error(e);
         }
         s_CheckResponse(res);
-        Assert.assertNotNull(Generator.s_ParseJson(data, "hospital()"), "hospital字段缺失");
-        Assert.assertNotNull(Generator.s_ParseJson(data, "hospital():name"), "hospital的name字段缺失");
-        Assert.assertNotNull(Generator.s_ParseJson(data, "hospital():id"), "hospital的id字段缺失");
-        Assert.assertEquals(Generator.s_ParseJson(data, "hospital():city_id"), city_id,"hospital的city字段缺失");
-        Assert.assertEquals(Generator.s_ParseJson(data, "hospital():city_name"), Generator.cityName(city_id), "hospital的city字段缺失");
+        Assert.assertNotNull(Helper.s_ParseJson(data, "hospital()"), "hospital字段缺失");
+        Assert.assertNotNull(Helper.s_ParseJson(data, "hospital():name"), "hospital的name字段缺失");
+        Assert.assertNotNull(Helper.s_ParseJson(data, "hospital():id"), "hospital的id字段缺失");
+        Assert.assertEquals(Helper.s_ParseJson(data, "hospital():city_id"), city_id,"hospital的city字段缺失");
+        Assert.assertEquals(Helper.s_ParseJson(data, "hospital():city_name"), Generator.cityName(city_id), "hospital的city字段缺失");
 
     }
 

@@ -2,8 +2,8 @@ package com.mingyizhudao.qa.functiontest.bdassistant;
 
 import com.mingyizhudao.qa.common.BaseTest;
 
+import com.mingyizhudao.qa.utilities.Helper;
 import com.mingyizhudao.qa.utilities.HttpRequest;
-import com.mingyizhudao.qa.utilities.Generator;
 import org.apache.log4j.Logger;
 import org.testng.Assert;
 
@@ -28,7 +28,7 @@ public class BDCityList extends BaseTest{
         }
         s_CheckResponse(res);
         Assert.assertEquals(code, "1000000", "");
-        Assert.assertNotNull(Generator.s_ParseJson(data, ""));
+        Assert.assertNotNull(Helper.s_ParseJson(data, ""));
     }
 
     public void test_02_获取多人负责区域列表() {

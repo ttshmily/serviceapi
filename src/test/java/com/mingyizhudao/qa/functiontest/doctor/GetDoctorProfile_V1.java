@@ -12,7 +12,7 @@ import org.testng.annotations.Test;
 
 import java.io.IOException;
 
-import static com.mingyizhudao.qa.utilities.Generator.s_ParseJson;
+import static com.mingyizhudao.qa.utilities.Helper.s_ParseJson;
 
 /**
  * Created by ttshmily on 20/3/2017.

@@ -4,8 +4,8 @@ import com.mingyizhudao.qa.common.BaseTest;
 import com.mingyizhudao.qa.common.TestLogger;
 import com.mingyizhudao.qa.dataprofile.doctor.DoctorProfile;
 import com.mingyizhudao.qa.functiontest.crm.kb.management.KBExpert_Detail;
+import com.mingyizhudao.qa.utilities.Helper;
 import com.mingyizhudao.qa.utilities.HttpRequest;
-import com.mingyizhudao.qa.utilities.Generator;
 import net.sf.json.JSONObject;
 import org.testng.Assert;
 import org.testng.annotations.Test;
@@ -51,14 +51,14 @@ public class RegisteredDoctor_Sign extends BaseTest {
 
         res = RegisteredDoctor_Detail.s_Detail(doctorId);
         s_CheckResponse(res);
-        Assert.assertEquals(Generator.s_ParseJson(data, "signed_status"), "SIGNED");
+        Assert.assertEquals(Helper.s_ParseJson(data, "signed_status"), "SIGNED");
 
 
 
         res = KBExpert_Detail.s_Detail(expertId);
         s_CheckResponse(res);
         Assert.assertEquals(code, "1000000");
-        Assert.assertEquals(Generator.s_ParseJson(data, "signed_status"), "SIGNED");
+        Assert.assertEquals(Helper.s_ParseJson(data, "signed_status"), "SIGNED");
     }
 
     @Test(enabled = false)
@@ -81,6 +81,6 @@ public class RegisteredDoctor_Sign extends BaseTest {
 
         res = RegisteredDoctor_Detail.s_Detail(doctorId);
         s_CheckResponse(res);
-        Assert.assertEquals(Generator.s_ParseJson(data, "signed_status"), "NOT_SIGNED");
+        Assert.assertEquals(Helper.s_ParseJson(data, "signed_status"), "NOT_SIGNED");
     }
 }

@@ -2,8 +2,8 @@ package com.mingyizhudao.qa.functiontest.crm.trading.surgery;
 
 import com.mingyizhudao.qa.common.BaseTest;
 import com.mingyizhudao.qa.common.TestLogger;
+import com.mingyizhudao.qa.utilities.Helper;
 import com.mingyizhudao.qa.utilities.HttpRequest;
-import com.mingyizhudao.qa.utilities.Generator;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 import org.testng.Assert;
@@ -36,7 +36,7 @@ public class Order_List extends BaseTest {
         } catch (IOException e) {
             logger.error(e);
         }
-        return Integer.parseInt(Generator.s_ParseJson(JSONObject.fromObject(res), "data:size"));
+        return Integer.parseInt(Helper.s_ParseJson(JSONObject.fromObject(res), "data:size"));
     }
 
     public static String s_SelectPaidOrder() {
@@ -51,12 +51,12 @@ public class Order_List extends BaseTest {
         //query.put("hideTest", "true");
         try {
             res = HttpRequest.s_SendGet(host_crm+uri, query, crm_token);
-            logger.debug(HttpRequest.unicodeString(res));
+            logger.debug(Helper.unicodeString(res));
         } catch (IOException e) {
             logger.error(e);
         }
-        if (Generator.s_ParseJson(JSONObject.fromObject(res), "data:size") == "0") return null;
-        return Generator.s_ParseJson(JSONObject.fromObject(res), "data:list(0):order_number");
+        if (Helper.s_ParseJson(JSONObject.fromObject(res), "data:size") == "0") return null;
+        return Helper.s_ParseJson(JSONObject.fromObject(res), "data:list(0):order_number");
     }
 
     public static String s_SelectBriefedOrder() {
@@ -72,8 +72,8 @@ public class Order_List extends BaseTest {
         } catch (IOException e) {
             logger.error(e);
         }
-        if (Generator.s_ParseJson(JSONObject.fromObject(res), "data:size") == "0") return null;
-        return Generator.s_ParseJson(JSONObject.fromObject(res), "data:list(0):order_number");
+        if (Helper.s_ParseJson(JSONObject.fromObject(res), "data:size") == "0") return null;
+        return Helper.s_ParseJson(JSONObject.fromObject(res), "data:list(0):order_number");
     }
 
     @Test
@@ -90,8 +90,8 @@ public class Order_List extends BaseTest {
         }
         s_CheckResponse(res);
         Assert.assertEquals(code, "1000000");
-        Assert.assertEquals(Generator.s_ParseJson(data, "list()"), "10");
-        Assert.assertEquals(Generator.s_ParseJson(data, "page"), "1");
+        Assert.assertEquals(Helper.s_ParseJson(data, "list()"), "10");
+        Assert.assertEquals(Helper.s_ParseJson(data, "page"), "1");
     }
 
     @Test
@@ -108,9 +108,9 @@ public class Order_List extends BaseTest {
         }
         s_CheckResponse(res);
         Assert.assertEquals(code, "1000000");
-        Assert.assertEquals(Generator.s_ParseJson(data, "list()"), "100");
-        Assert.assertEquals(Generator.s_ParseJson(data, "page"), "1");
-        int size = Integer.parseInt(Generator.s_ParseJson(data, "size"));
+        Assert.assertEquals(Helper.s_ParseJson(data, "list()"), "100");
+        Assert.assertEquals(Helper.s_ParseJson(data, "page"), "1");
+        int size = Integer.parseInt(Helper.s_ParseJson(data, "size"));
         int total = size/100;
         for (int i=1; i<=total; i++) {
             query.replace("page", String.valueOf(i));
@@ -121,7 +121,7 @@ public class Order_List extends BaseTest {
             }
             s_CheckResponse(res);
             Assert.assertEquals(code, "1000000");
-            Assert.assertEquals(Generator.s_ParseJson(data, "list()"), "100");
+            Assert.assertEquals(Helper.s_ParseJson(data, "list()"), "100");
         }
         query.replace("page", String.valueOf(total+1));
         try {
@@ -131,7 +131,7 @@ public class Order_List extends BaseTest {
         }
         s_CheckResponse(res);
         Assert.assertEquals(code, "1000000");
-        Assert.assertEquals(Generator.s_ParseJson(data, "list()"), String.valueOf(size-100*total));
+        Assert.assertEquals(Helper.s_ParseJson(data, "list()"), String.valueOf(size-100*total));
     }
 
     @Test
@@ -152,7 +152,7 @@ public class Order_List extends BaseTest {
         JSONArray orderList = data.getJSONArray("list");
         for (int i=0; i<orderList.size(); i++) {
             JSONObject order = orderList.getJSONObject(i);
-            Assert.assertTrue(Integer.parseInt(Generator.s_ParseJson(order, "status"))>2000); // 状态码2000以上的推荐过
+            Assert.assertTrue(Integer.parseInt(Helper.s_ParseJson(order, "status"))>2000); // 状态码2000以上的推荐过
         }
     }
 
@@ -175,7 +175,7 @@ public class Order_List extends BaseTest {
         JSONArray orderList = data.getJSONArray("list");
         for (int i=0; i<orderList.size(); i++) {
             JSONObject order = orderList.getJSONObject(i);
-            Assert.assertEquals(Generator.s_ParseJson(order, "status"), "4000");
+            Assert.assertEquals(Helper.s_ParseJson(order, "status"), "4000");
         }
 
         query.replace("status", "5000");
@@ -189,7 +189,7 @@ public class Order_List extends BaseTest {
         orderList = data.getJSONArray("list");
         for (int i=0; i<orderList.size(); i++) {
             JSONObject order = orderList.getJSONObject(i);
-            Assert.assertEquals(Generator.s_ParseJson(order, "status"), "5000");
+            Assert.assertEquals(Helper.s_ParseJson(order, "status"), "5000");
         }
 
         query.replace("status", "4020");
@@ -203,7 +203,7 @@ public class Order_List extends BaseTest {
         orderList = data.getJSONArray("list");
         for (int i=0; i<orderList.size(); i++) {
             JSONObject order = orderList.getJSONObject(i);
-            Assert.assertEquals(Generator.s_ParseJson(order, "status"), "4020");
+            Assert.assertEquals(Helper.s_ParseJson(order, "status"), "4020");
         }
     }
 
@@ -227,7 +227,7 @@ public class Order_List extends BaseTest {
         JSONArray orderList = data.getJSONArray("list");
         for (int i=0; i<orderList.size(); i++) {
             JSONObject order = orderList.getJSONObject(i);
-            Assert.assertTrue(Generator.s_ParseJson(order, "agent_name").contains("庄恕"));
+            Assert.assertTrue(Helper.s_ParseJson(order, "agent_name").contains("庄恕"));
         }
     }
 }

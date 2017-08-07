@@ -5,8 +5,8 @@ import com.mingyizhudao.qa.common.TestLogger;
 import com.mingyizhudao.qa.functiontest.doctor.GetOrderDetail_V1;
 import com.mingyizhudao.qa.functiontest.login.CheckVerifyCode;
 import com.mingyizhudao.qa.functiontest.login.SendVerifyCode;
+import com.mingyizhudao.qa.utilities.Helper;
 import com.mingyizhudao.qa.utilities.HttpRequest;
-import com.mingyizhudao.qa.utilities.Generator;
 import net.sf.json.JSONObject;
 import org.testng.Assert;
 import org.testng.annotations.Test;
@@ -58,9 +58,9 @@ public class Order_Cancel extends BaseTest {
         }
         s_CheckResponse(res);
         Assert.assertEquals(code, "1000000", "取消订单接口失败");
-        Assert.assertEquals(Generator.s_ParseJson(data, "status"), "4030");
+        Assert.assertEquals(Helper.s_ParseJson(data, "status"), "4030");
         res = GetOrderDetail_V1.s_MyInitiateOrder(token, orderId);
         s_CheckResponse(res);
-        Assert.assertEquals(Generator.s_ParseJson(data, "order:header_info"), "责任方：下级医生原因");
+        Assert.assertEquals(Helper.s_ParseJson(data, "order:header_info"), "责任方：下级医生原因");
     }
 }

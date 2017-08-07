@@ -2,8 +2,8 @@ package com.mingyizhudao.qa.functiontest.crm.common;
 
 import com.mingyizhudao.qa.common.BaseTest;
 import com.mingyizhudao.qa.common.TestLogger;
+import com.mingyizhudao.qa.utilities.Helper;
 import com.mingyizhudao.qa.utilities.HttpRequest;
-import com.mingyizhudao.qa.utilities.Generator;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
@@ -57,7 +57,7 @@ public class Common_SearchHospitals extends BaseTest {
         }
         s_CheckResponse(res);
         Assert.assertEquals(code, "1000000"); // 必须要有输入
-        Assert.assertNotEquals(Generator.s_ParseJson(data,"list()"), "0");
+        Assert.assertNotEquals(Helper.s_ParseJson(data,"list()"), "0");
     }
 
     @Test
@@ -75,7 +75,7 @@ public class Common_SearchHospitals extends BaseTest {
         }
         s_CheckResponse(res);
         Assert.assertEquals(code, "1000000");
-        Assert.assertNotEquals(Generator.s_ParseJson(data,"list()"), "0");
+        Assert.assertNotEquals(Helper.s_ParseJson(data,"list()"), "0");
     }
 
     @Test
@@ -93,7 +93,7 @@ public class Common_SearchHospitals extends BaseTest {
         }
         s_CheckResponse(res);
         Assert.assertEquals(code, "1000000");
-        Assert.assertNotEquals(Generator.s_ParseJson(data, "list()"), "0", "搜索结果不应该为0");
+        Assert.assertNotEquals(Helper.s_ParseJson(data, "list()"), "0", "搜索结果不应该为0");
     }
 
     @Test(enabled = false)

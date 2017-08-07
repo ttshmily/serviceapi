@@ -4,6 +4,7 @@ import com.mingyizhudao.qa.common.BaseTest;
 import com.mingyizhudao.qa.common.TestLogger;
 import com.mingyizhudao.qa.dataprofile.doctor.DoctorProfile;
 import com.mingyizhudao.qa.dataprofile.doctor.OrderDetail;
+import com.mingyizhudao.qa.utilities.Helper;
 import com.mingyizhudao.qa.utilities.HttpRequest;
 import com.mingyizhudao.qa.utilities.Generator;
 import net.sf.json.JSONObject;
@@ -13,7 +14,7 @@ import org.testng.annotations.Test;
 import java.io.IOException;
 import java.util.HashMap;
 
-import static com.mingyizhudao.qa.utilities.Generator.s_ParseJson;
+import static com.mingyizhudao.qa.utilities.Helper.s_ParseJson;
 
 /**
  * Created by ttshmily on 7/4/2017.
@@ -44,7 +45,7 @@ public class CreateOrder extends BaseTest {
             logger.info("orderid是: " + tmpOrderId);
             return tmpOrderId;
         } else {
-            logger.debug(HttpRequest.unicodeString(res));
+            logger.debug(Helper.unicodeString(res));
             logger.error("获取orderId失败");
             return "";
         }
@@ -65,7 +66,7 @@ public class CreateOrder extends BaseTest {
             logger.info("orderid是: " + tmpOrderId);
             return tmpOrderId;
         } else {
-            logger.debug(HttpRequest.unicodeString(res));
+            logger.debug(Helper.unicodeString(res));
             logger.error("获取orderId失败");
             return "";
         }

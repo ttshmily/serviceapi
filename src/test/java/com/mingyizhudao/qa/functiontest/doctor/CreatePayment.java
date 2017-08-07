@@ -5,8 +5,8 @@ import com.mingyizhudao.qa.common.TestLogger;
 import com.mingyizhudao.qa.functiontest.crm.trading.surgery.Order_ReceiveTask;
 import com.mingyizhudao.qa.functiontest.crm.trading.surgery.Order_RecommendDoctor;
 import com.mingyizhudao.qa.functiontest.crm.trading.surgery.Order_ThreewayCall_V2;
+import com.mingyizhudao.qa.utilities.Helper;
 import com.mingyizhudao.qa.utilities.HttpRequest;
-import com.mingyizhudao.qa.utilities.Generator;
 import net.sf.json.JSONObject;
 import org.testng.Assert;
 import org.testng.annotations.Test;
@@ -61,7 +61,7 @@ public class CreatePayment extends BaseTest {
         }
         res = GetOrderDetail_V1.s_MyInitiateOrder(mainToken, orderId);
         s_CheckResponse(res);
-        Assert.assertNotNull(Generator.s_ParseJson(data, "order:pre_order_fee"));
+        Assert.assertNotNull(Helper.s_ParseJson(data, "order:pre_order_fee"));
 
         payment.put("orderNumber", orderId);
         payment.put("returnUrl", "http://www.mingyizhudao.com");
@@ -71,7 +71,7 @@ public class CreatePayment extends BaseTest {
             res = HttpRequest.s_SendPost(host_doc + uri, body.toString(), mainToken);
             s_CheckResponse(res);
             Assert.assertEquals(code, "1000000", "支付调用失败");
-            Assert.assertNotNull(Generator.s_ParseJson(data, "payment:url"), "返回的订单ID格式有误");
+            Assert.assertNotNull(Helper.s_ParseJson(data, "payment:url"), "返回的订单ID格式有误");
         } catch (IOException e) {
             logger.error(e);
         }

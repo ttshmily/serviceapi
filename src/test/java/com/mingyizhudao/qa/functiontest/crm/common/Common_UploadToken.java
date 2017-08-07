@@ -2,8 +2,8 @@ package com.mingyizhudao.qa.functiontest.crm.common;
 
 import com.mingyizhudao.qa.common.BaseTest;
 import com.mingyizhudao.qa.common.TestLogger;
+import com.mingyizhudao.qa.utilities.Helper;
 import com.mingyizhudao.qa.utilities.HttpRequest;
-import com.mingyizhudao.qa.utilities.Generator;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
@@ -42,9 +42,9 @@ public class Common_UploadToken extends BaseTest {
         } catch (IOException e) {
             logger.error(e);
         }
-        Assert.assertNotNull(Generator.s_ParseJson(data, "key"));
-        Assert.assertNotNull(Generator.s_ParseJson(data, "token"));
-        Assert.assertNotNull(Generator.s_ParseJson(data, "thumbnailUrl"));
+        Assert.assertNotNull(Helper.s_ParseJson(data, "key"));
+        Assert.assertNotNull(Helper.s_ParseJson(data, "token"));
+        Assert.assertNotNull(Helper.s_ParseJson(data, "thumbnailUrl"));
     }
 
     @Test
@@ -64,8 +64,8 @@ public class Common_UploadToken extends BaseTest {
         } catch (IOException e) {
             logger.error(e);
         }
-        Assert.assertNotNull(Generator.s_ParseJson(data, "key"));
-        Assert.assertNotNull(Generator.s_ParseJson(data, "token"));
-        Assert.assertNotNull(Generator.s_ParseJson(data, "thumbnailUrl"));
+        Assert.assertNotNull(Helper.s_ParseJson(data, "key"));
+        Assert.assertNotNull(Helper.s_ParseJson(data, "token"));
+        Assert.assertNotNull(Helper.s_ParseJson(data, "thumbnailUrl"));
     }
 }

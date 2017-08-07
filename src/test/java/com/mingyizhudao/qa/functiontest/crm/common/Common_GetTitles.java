@@ -2,8 +2,8 @@ package com.mingyizhudao.qa.functiontest.crm.common;
 
 import com.mingyizhudao.qa.common.BaseTest;
 import com.mingyizhudao.qa.common.TestLogger;
+import com.mingyizhudao.qa.utilities.Helper;
 import com.mingyizhudao.qa.utilities.HttpRequest;
-import com.mingyizhudao.qa.utilities.Generator;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
@@ -33,8 +33,8 @@ public class Common_GetTitles extends BaseTest {
             res = HttpRequest.s_SendGet(host_crm + uri, "", crm_token, null);
             s_CheckResponse(res);
             Assert.assertEquals(code, "1000000");
-            int academicLen = Integer.parseInt(Generator.s_ParseJson(data, "list:academic()"));
-            int medicalLen = Integer.parseInt(Generator.s_ParseJson(data, "list:medical()"));
+            int academicLen = Integer.parseInt(Helper.s_ParseJson(data, "list:academic()"));
+            int medicalLen = Integer.parseInt(Helper.s_ParseJson(data, "list:medical()"));
             Assert.assertEquals(academicLen, 4);
             Assert.assertEquals(medicalLen, 12);
 

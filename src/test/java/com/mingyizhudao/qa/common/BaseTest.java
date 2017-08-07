@@ -37,6 +37,7 @@ public class BaseTest {
     public static String host_login = "";
     public static String host_kb = "";
     public static String host_bda = "";
+    public static String host_appointment = "";
     public static String crm_token = "";
     public static String bda_token = "";
     public static String bda_token_staff = "";
@@ -86,6 +87,7 @@ public class BaseTest {
             host_bda = prop.getProperty("host_bda", "services.dev.myzd.info/bd-assistant");
             host_login = prop.getProperty("host_login", "login.dev.myzd.info");
             host_kb = prop.getProperty("host_kb", "192.168.33.1");
+            host_appointment = prop.getProperty("host_appointment", "services.dev.myzd.info/ims");
             mainOperatorId = prop.getProperty("mainOperatorId", "chao.fang@mingyizhudao.com");
             mainOperatorName = prop.getProperty("mainOperatorName");
 
@@ -100,6 +102,7 @@ public class BaseTest {
             host_login = protocol.concat("://").concat(host_login);
             host_kb = protocol.concat("://").concat(host_kb);
             host_bda = protocol.concat("://").concat(host_bda);
+            host_appointment = protocol.concat("://").concat(host_appointment);
         }
     }
 
@@ -121,7 +124,7 @@ public class BaseTest {
     @BeforeSuite
     public void SetUpSuite() throws Exception {
         KnowledgeBase.s_Init();
-        crm_token = JSONObject.fromObject(HttpRequest.s_SendGet("http://services.dev.myzd.info/crm/api/internal/devToken" , "email="+mainOperatorId, "")).getJSONObject("data").getString("token");
+        crm_token = JSONObject.fromObject(HttpRequest.s_SendGet("http://services.dev.myzd.info/crm/api/internal/devToken" , "email="+mainOperatorId+"&name=test", "")).getJSONObject("data").getString("token");
         bda_token = JSONObject.fromObject(HttpRequest.s_SendGet("http://work.myzd.info/wx/internal/api/dev-tokens" , "", "")).getJSONObject("data").getJSONObject("chao.fang@mingyizhudao.com").getString("token");
         bda_token_staff = JSONObject.fromObject(HttpRequest.s_SendGet("http://work.myzd.info/wx/internal/api/dev-tokens" , "", "")).getJSONObject("data").getJSONObject("lei.wang@mingyizhudao.com").getString("token");
         mainDP = new DoctorProfile(true);

@@ -4,8 +4,8 @@ import com.mingyizhudao.qa.common.BaseTest;
 import com.mingyizhudao.qa.common.TestLogger;
 import com.mingyizhudao.qa.dataprofile.doctor.DoctorProfile;
 import com.mingyizhudao.qa.functiontest.doctor.CreateOrder;
+import com.mingyizhudao.qa.utilities.Helper;
 import com.mingyizhudao.qa.utilities.HttpRequest;
-import com.mingyizhudao.qa.utilities.Generator;
 import net.sf.json.JSONObject;
 import org.testng.Assert;
 import org.testng.annotations.Test;
@@ -36,9 +36,9 @@ public class Order_ReceiveTask extends BaseTest {
         pathValue.put("orderNumber", orderId);
         res = Order_Detail.s_Detail(orderId);
 
-        if (!Generator.s_ParseJson(JSONObject.fromObject(res), "data:status").equals("1000")) {
+        if (!Helper.s_ParseJson(JSONObject.fromObject(res), "data:status").equals("1000")) {
             logger.error("订单处于不可领取状态");
-            return Generator.s_ParseJson(JSONObject.fromObject(res), "data:status");
+            return Helper.s_ParseJson(JSONObject.fromObject(res), "data:status");
         }
         try {
             res = HttpRequest.s_SendPost(host_crm + uri, "", crm_token, pathValue);
@@ -46,7 +46,7 @@ public class Order_ReceiveTask extends BaseTest {
             logger.error(e);
         }
         res = Order_Detail.s_Detail(orderId);
-        return Generator.s_ParseJson(JSONObject.fromObject(res), "data:status"); // 期望2000
+        return Helper.s_ParseJson(JSONObject.fromObject(res), "data:status"); // 期望2000
     }
 
 
@@ -69,9 +69,9 @@ public class Order_ReceiveTask extends BaseTest {
         Assert.assertEquals(code, "1000000", "领取订单失败");
         res = Order_Detail.s_Detail(order_number);
         s_CheckResponse(res);
-        Assert.assertEquals(Generator.s_ParseJson(data, "major_reps_id"), "chao.fang@mingyizhudao.com");
-        Assert.assertEquals(Generator.s_ParseJson(data, "status"), "2000");
-        Assert.assertEquals(Generator.s_ParseJson(data, "order_number"), order_number);
+        Assert.assertEquals(Helper.s_ParseJson(data, "major_reps_id"), "chao.fang@mingyizhudao.com");
+        Assert.assertEquals(Helper.s_ParseJson(data, "status"), "2000");
+        Assert.assertEquals(Helper.s_ParseJson(data, "order_number"), order_number);
     }
 
     @Test
@@ -92,9 +92,9 @@ public class Order_ReceiveTask extends BaseTest {
         Assert.assertNotEquals(code, "1000000", "领取订单失败");
         res = Order_Detail.s_Detail(order_number);
         s_CheckResponse(res);
-        Assert.assertNull(Generator.s_ParseJson(data, "major_reps_id"));
-        Assert.assertEquals(Generator.s_ParseJson(data, "status"), "1000");
-        Assert.assertEquals(Generator.s_ParseJson(data, "order_number"), order_number);
+        Assert.assertNull(Helper.s_ParseJson(data, "major_reps_id"));
+        Assert.assertEquals(Helper.s_ParseJson(data, "status"), "1000");
+        Assert.assertEquals(Helper.s_ParseJson(data, "order_number"), order_number);
     }
 
     @Test
@@ -115,11 +115,11 @@ public class Order_ReceiveTask extends BaseTest {
         Assert.assertEquals(code, "1000000", "领取订单失败");
         res = Order_Detail.s_Detail(order_number);
         s_CheckResponse(res);
-        String status = Generator.s_ParseJson(data, "status");
+        String status = Helper.s_ParseJson(data, "status");
         logger.debug(status);
-        Assert.assertEquals(Generator.s_ParseJson(data, "major_reps_id"), "chao.fang@mingyizhudao.com");
+        Assert.assertEquals(Helper.s_ParseJson(data, "major_reps_id"), "chao.fang@mingyizhudao.com");
         Assert.assertEquals(status, "2000");
-        Assert.assertEquals(Generator.s_ParseJson(data, "order_number"), order_number);
+        Assert.assertEquals(Helper.s_ParseJson(data, "order_number"), order_number);
 
         // do it again
         try {
@@ -131,7 +131,7 @@ public class Order_ReceiveTask extends BaseTest {
         Assert.assertNotEquals(code, "1000000", "领取了已经领取过的订单");
         res = Order_Detail.s_Detail(order_number);
         s_CheckResponse(res);
-        Assert.assertEquals(Generator.s_ParseJson(data, "major_reps_id"), "chao.fang@mingyizhudao.com", "");
+        Assert.assertEquals(Helper.s_ParseJson(data, "major_reps_id"), "chao.fang@mingyizhudao.com", "");
 
         // do it again
         try {
@@ -143,7 +143,7 @@ public class Order_ReceiveTask extends BaseTest {
         Assert.assertNotEquals(code, "1000000", "领取已经领取过的订单失败");
         res = Order_Detail.s_Detail(order_number);
         s_CheckResponse(res);
-        Assert.assertEquals(Generator.s_ParseJson(data, "major_reps_id"), "chao.fang@mingyizhudao.com", "");
+        Assert.assertEquals(Helper.s_ParseJson(data, "major_reps_id"), "chao.fang@mingyizhudao.com", "");
 
     }
 

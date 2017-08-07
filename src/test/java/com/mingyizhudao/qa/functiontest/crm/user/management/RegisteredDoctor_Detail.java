@@ -2,8 +2,8 @@ package com.mingyizhudao.qa.functiontest.crm.user.management;
 
 import com.mingyizhudao.qa.common.BaseTest;
 import com.mingyizhudao.qa.common.TestLogger;
+import com.mingyizhudao.qa.utilities.Helper;
 import com.mingyizhudao.qa.utilities.HttpRequest;
-import com.mingyizhudao.qa.utilities.Generator;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
@@ -50,14 +50,14 @@ public class RegisteredDoctor_Detail extends BaseTest {
         }
         s_CheckResponse(res);
         Assert.assertEquals(code, "1000000");
-        Assert.assertNotNull(Generator.s_ParseJson(data, "medical_title_list"));
-        Assert.assertNotNull(Generator.s_ParseJson(data, "academic_title_list"));
-        Assert.assertNotNull(Generator.s_ParseJson(data, "inviter_name"));
-        Assert.assertNotNull(Generator.s_ParseJson(data, "hospital_name"));
-        Assert.assertNotNull(Generator.s_ParseJson(data, "icon"));
-        Assert.assertNotNull(Generator.s_ParseJson(data, "audit_state"));
-        Assert.assertNotNull(Generator.s_ParseJson(data, "staff_id"));
-        Assert.assertNotNull(Generator.s_ParseJson(data, "staff_name"));
+        Assert.assertNotNull(Helper.s_ParseJson(data, "medical_title_list"));
+        Assert.assertNotNull(Helper.s_ParseJson(data, "academic_title_list"));
+        Assert.assertNotNull(Helper.s_ParseJson(data, "inviter_name"));
+        Assert.assertNotNull(Helper.s_ParseJson(data, "hospital_name"));
+        Assert.assertNotNull(Helper.s_ParseJson(data, "icon"));
+        Assert.assertNotNull(Helper.s_ParseJson(data, "audit_state"));
+        Assert.assertNotNull(Helper.s_ParseJson(data, "staff_id"));
+        Assert.assertNotNull(Helper.s_ParseJson(data, "staff_name"));
     }
 
     @Test

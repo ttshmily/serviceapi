@@ -5,6 +5,7 @@ import com.mingyizhudao.qa.common.TestLogger;
 import com.mingyizhudao.qa.dataprofile.crm.ExpertProfile;
 import com.mingyizhudao.qa.dataprofile.doctor.DoctorProfile;
 import com.mingyizhudao.qa.functiontest.crm.user.management.RegisteredDoctor_Detail;
+import com.mingyizhudao.qa.utilities.Helper;
 import com.mingyizhudao.qa.utilities.HttpRequest;
 import com.mingyizhudao.qa.utilities.Generator;
 import net.sf.json.JSONArray;
@@ -51,10 +52,10 @@ public class KBExpert_Diseases_V2 extends BaseTest {
         Assert.assertEquals(code, "1000000");
         res = KBExpert_Detail.s_Detail(expertId);
         s_CheckResponse(res);
-        Assert.assertEquals(Generator.s_ParseJson(data, "specialty_list()"), "5");
+        Assert.assertEquals(Helper.s_ParseJson(data, "specialty_list()"), "5");
         res = RegisteredDoctor_Detail.s_Detail(doctorId);
         s_CheckResponse(res);
-        Assert.assertEquals(Generator.s_ParseJson(data, "exp_list()"), "5");
+        Assert.assertEquals(Helper.s_ParseJson(data, "exp_list()"), "5");
     }
 
     @Test
@@ -97,7 +98,7 @@ public class KBExpert_Diseases_V2 extends BaseTest {
         Assert.assertEquals(code, "1000000");
         res = KBExpert_Detail.s_Detail(expertId);
         s_CheckResponse(res);
-        Assert.assertEquals(Generator.s_ParseJson(data, "specialty_list()"), "5");
+        Assert.assertEquals(Helper.s_ParseJson(data, "specialty_list()"), "5");
     }
 
     public JSONObject DiseaseJson(int cat_count, int dis_count) {

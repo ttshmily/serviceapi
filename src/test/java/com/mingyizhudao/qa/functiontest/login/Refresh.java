@@ -4,8 +4,8 @@ import com.mingyizhudao.qa.common.BaseTest;
 import com.mingyizhudao.qa.common.TestLogger;
 import com.mingyizhudao.qa.dataprofile.login.RefreshProfile;
 import com.mingyizhudao.qa.functiontest.doctor.GetDoctorProfile_V1;
+import com.mingyizhudao.qa.utilities.Helper;
 import com.mingyizhudao.qa.utilities.HttpRequest;
-import com.mingyizhudao.qa.utilities.Generator;
 import net.sf.json.JSONException;
 import org.testng.Assert;
 import org.testng.annotations.Test;
@@ -50,25 +50,25 @@ public class Refresh extends BaseTest{
         } catch (JSONException e) {
         }
         Assert.assertEquals(code, "1000000");
-        Assert.assertNotNull(Generator.s_ParseJson(data,"token"), "token not exist");
-        Assert.assertNotNull(Generator.s_ParseJson(data, "expire"), "expire not exist");
-        Assert.assertEquals(Generator.s_ParseJson(data, "expire"), "7200");
+        Assert.assertNotNull(Helper.s_ParseJson(data,"token"), "token not exist");
+        Assert.assertNotNull(Helper.s_ParseJson(data, "expire"), "expire not exist");
+        Assert.assertEquals(Helper.s_ParseJson(data, "expire"), "7200");
         // update token if succeed
-        token = Generator.s_ParseJson(data, "token");
+        token = Helper.s_ParseJson(data, "token");
         CheckVerifyCode.token = token;
 
         // s_Check old token still effective
         String r = GetDoctorProfile_V1.s_MyProfile(oldToken);
         s_CheckResponse(r);
         Assert.assertEquals(code, "1000000", "old Token expired");
-        String oldProfile = Generator.s_ParseJson(data, "doctor");
+        String oldProfile = Helper.s_ParseJson(data, "doctor");
         logger.debug(oldProfile);
 
         // s_Check new token taking effect
         String s = GetDoctorProfile_V1.s_MyProfile(token);
         s_CheckResponse(s);
         Assert.assertEquals(code, "1000000");
-        String newProfile = Generator.s_ParseJson(data, "doctor");
+        String newProfile = Helper.s_ParseJson(data, "doctor");
         logger.debug(newProfile);
 
         Assert.assertEquals(oldProfile, newProfile, "both token get the same profile");

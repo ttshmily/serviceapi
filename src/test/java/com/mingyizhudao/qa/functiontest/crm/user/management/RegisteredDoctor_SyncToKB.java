@@ -6,8 +6,8 @@ import com.mingyizhudao.qa.dataprofile.crm.ExpertProfile;
 import com.mingyizhudao.qa.dataprofile.doctor.DoctorProfile;
 import com.mingyizhudao.qa.functiontest.crm.kb.management.KBExpert_Create;
 import com.mingyizhudao.qa.functiontest.crm.kb.management.KBExpert_Detail;
+import com.mingyizhudao.qa.utilities.Helper;
 import com.mingyizhudao.qa.utilities.HttpRequest;
-import com.mingyizhudao.qa.utilities.Generator;
 import net.sf.json.JSONObject;
 import org.testng.Assert;
 import org.testng.annotations.Test;
@@ -58,22 +58,22 @@ public class RegisteredDoctor_SyncToKB extends BaseTest {
 
         String res_Doctor = RegisteredDoctor_Detail.s_Detail(doctorId);
         s_CheckResponse(res_Doctor);
-        String expert_id = Generator.s_ParseJson(data, "register_id");
-        String hospitalId = Generator.s_ParseJson(data, "hospital_id");
-        String name = Generator.s_ParseJson(data, "name");
-        String mobile = Generator.s_ParseJson(data, "mobile");
-        String academic_title_list = Generator.s_ParseJson(data, "academic_title_list");
-        String medical_title_list = Generator.s_ParseJson(data, "medical_title_list");
+        String expert_id = Helper.s_ParseJson(data, "register_id");
+        String hospitalId = Helper.s_ParseJson(data, "hospital_id");
+        String name = Helper.s_ParseJson(data, "name");
+        String mobile = Helper.s_ParseJson(data, "mobile");
+        String academic_title_list = Helper.s_ParseJson(data, "academic_title_list");
+        String medical_title_list = Helper.s_ParseJson(data, "medical_title_list");
 
         res = KBExpert_Detail.s_Detail(expert_id);
         s_CheckResponse(res);
-        Assert.assertEquals(Generator.s_ParseJson(data, "register_id"), doctorId);
-        Assert.assertEquals(Generator.s_ParseJson(data, "hospital_id"), hospitalId);
-        Assert.assertEquals(Generator.s_ParseJson(data, "certified_status"), "CERTIFIED");
-        Assert.assertEquals(Generator.s_ParseJson(data, "name"), name);
-        Assert.assertEquals(Generator.s_ParseJson(data, "mobile"), mobile);
-        Assert.assertEquals(Generator.s_ParseJson(data, "academic_title_list"), academic_title_list);
-        Assert.assertEquals(Generator.s_ParseJson(data, "medical_title_list"), medical_title_list);
+        Assert.assertEquals(Helper.s_ParseJson(data, "register_id"), doctorId);
+        Assert.assertEquals(Helper.s_ParseJson(data, "hospital_id"), hospitalId);
+        Assert.assertEquals(Helper.s_ParseJson(data, "certified_status"), "CERTIFIED");
+        Assert.assertEquals(Helper.s_ParseJson(data, "name"), name);
+        Assert.assertEquals(Helper.s_ParseJson(data, "mobile"), mobile);
+        Assert.assertEquals(Helper.s_ParseJson(data, "academic_title_list"), academic_title_list);
+        Assert.assertEquals(Helper.s_ParseJson(data, "medical_title_list"), medical_title_list);
     }
 
     @Test
@@ -131,23 +131,23 @@ public class RegisteredDoctor_SyncToKB extends BaseTest {
 
         String res_Doctor = RegisteredDoctor_Detail.s_Detail(doctorId);
         s_CheckResponse(res_Doctor);
-        Assert.assertEquals(Generator.s_ParseJson(data, "register_id"), expertId);
-        Assert.assertEquals(Generator.s_ParseJson(data, "is_verified"), "1");
-        Assert.assertEquals(Generator.s_ParseJson(data, "audit_state"), "AUDIT_PASS");
-        String hospitalId = Generator.s_ParseJson(data, "hospital_id");
-        String name = Generator.s_ParseJson(data, "name");
-        String mobile = Generator.s_ParseJson(data, "mobile");
-        String academic_title_list = Generator.s_ParseJson(data, "academic_title_list");
-        String medical_title_list = Generator.s_ParseJson(data, "medical_title_list");
+        Assert.assertEquals(Helper.s_ParseJson(data, "register_id"), expertId);
+        Assert.assertEquals(Helper.s_ParseJson(data, "is_verified"), "1");
+        Assert.assertEquals(Helper.s_ParseJson(data, "audit_state"), "AUDIT_PASS");
+        String hospitalId = Helper.s_ParseJson(data, "hospital_id");
+        String name = Helper.s_ParseJson(data, "name");
+        String mobile = Helper.s_ParseJson(data, "mobile");
+        String academic_title_list = Helper.s_ParseJson(data, "academic_title_list");
+        String medical_title_list = Helper.s_ParseJson(data, "medical_title_list");
 
         String res_Expert = KBExpert_Detail.s_Detail(expertId);
         s_CheckResponse(res_Expert);
-        Assert.assertEquals(Generator.s_ParseJson(data, "register_id"), doctorId);
-        Assert.assertEquals(Generator.s_ParseJson(data, "hospital_id"), hospitalId);
-        Assert.assertEquals(Generator.s_ParseJson(data, "certified_status"), "CERTIFIED");
-        Assert.assertEquals(Generator.s_ParseJson(data, "name"), name);
-        Assert.assertEquals(Generator.s_ParseJson(data, "mobile"), mobile);
-        Assert.assertEquals(Generator.s_ParseJson(data, "academic_title_list"), academic_title_list);
-        Assert.assertEquals(Generator.s_ParseJson(data, "medical_title_list"), medical_title_list);
+        Assert.assertEquals(Helper.s_ParseJson(data, "register_id"), doctorId);
+        Assert.assertEquals(Helper.s_ParseJson(data, "hospital_id"), hospitalId);
+        Assert.assertEquals(Helper.s_ParseJson(data, "certified_status"), "CERTIFIED");
+        Assert.assertEquals(Helper.s_ParseJson(data, "name"), name);
+        Assert.assertEquals(Helper.s_ParseJson(data, "mobile"), mobile);
+        Assert.assertEquals(Helper.s_ParseJson(data, "academic_title_list"), academic_title_list);
+        Assert.assertEquals(Helper.s_ParseJson(data, "medical_title_list"), medical_title_list);
     }
 }

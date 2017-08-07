@@ -6,6 +6,7 @@ import com.mingyizhudao.qa.dataprofile.crm.ExpertProfile;
 import com.mingyizhudao.qa.dataprofile.doctor.DoctorProfile;
 import com.mingyizhudao.qa.functiontest.crm.user.management.RegisteredDoctor_CertifySync_V2;
 import com.mingyizhudao.qa.functiontest.crm.user.management.RegisteredDoctor_Detail;
+import com.mingyizhudao.qa.utilities.Helper;
 import com.mingyizhudao.qa.utilities.HttpRequest;
 import com.mingyizhudao.qa.utilities.Generator;
 import net.sf.json.JSONObject;
@@ -94,7 +95,7 @@ public class KBExpert_Update extends BaseTest {
 
         res = KBExpert_Detail.s_Detail(expertId);
         s_CheckResponse(res);
-        Assert.assertEquals(Generator.s_ParseJson(data, "name"), name, "姓名未更新");
+        Assert.assertEquals(Helper.s_ParseJson(data, "name"), name, "姓名未更新");
     }
 
     @Test
@@ -123,10 +124,10 @@ public class KBExpert_Update extends BaseTest {
 
         res = KBExpert_Detail.s_Detail(expertId);
         s_CheckResponse(res);
-        Assert.assertEquals(Generator.s_ParseJson(data, "hospital_id"), hospitalId, "医生的医院ID没有更新");
-        Assert.assertEquals(Generator.s_ParseJson(data, "hospital_name"), Generator.hospitalName(hospitalId), "医生的医院名称没有更新");
-        Assert.assertEquals(Generator.s_ParseJson(data, "city_id"), cityId, "医生的城市没有更新");
-        Assert.assertEquals(Generator.s_ParseJson(data, "county_id"), countryId, "医生的地区名称没有更新");
+        Assert.assertEquals(Helper.s_ParseJson(data, "hospital_id"), hospitalId, "医生的医院ID没有更新");
+        Assert.assertEquals(Helper.s_ParseJson(data, "hospital_name"), Generator.hospitalName(hospitalId), "医生的医院名称没有更新");
+        Assert.assertEquals(Helper.s_ParseJson(data, "city_id"), cityId, "医生的城市没有更新");
+        Assert.assertEquals(Helper.s_ParseJson(data, "county_id"), countryId, "医生的地区名称没有更新");
 
     }
 
@@ -197,8 +198,8 @@ public class KBExpert_Update extends BaseTest {
         }
         res = KBExpert_Detail.s_Detail(expertId);
         s_CheckResponse(res);
-        Assert.assertEquals(Generator.s_ParseJson(data, "major_id"), majorId, "专业ID没有更新");
-        Assert.assertEquals(Generator.s_ParseJson(data, "major"), Generator.majorName(majorId), "专业名称没有更新");
+        Assert.assertEquals(Helper.s_ParseJson(data, "major_id"), majorId, "专业ID没有更新");
+        Assert.assertEquals(Helper.s_ParseJson(data, "major"), Generator.majorName(majorId), "专业名称没有更新");
 
 
         epModified.body.replace("major_id", "11"+majorId);
@@ -211,8 +212,8 @@ public class KBExpert_Update extends BaseTest {
         }
         res = KBExpert_Detail.s_Detail(expertId);
         s_CheckResponse(res);
-        Assert.assertEquals(Generator.s_ParseJson(data, "major_id"), majorId, "专业ID没有更新");
-        Assert.assertEquals(Generator.s_ParseJson(data, "major"), Generator.majorName(majorId), "专业名称没有更新");
+        Assert.assertEquals(Helper.s_ParseJson(data, "major_id"), majorId, "专业ID没有更新");
+        Assert.assertEquals(Helper.s_ParseJson(data, "major"), Generator.majorName(majorId), "专业名称没有更新");
     }
 
     @Test
@@ -239,8 +240,8 @@ public class KBExpert_Update extends BaseTest {
 
         res = KBExpert_Detail.s_Detail(expertId);
         s_CheckResponse(res);
-        Assert.assertEquals(Generator.s_ParseJson(data, "medical_title_list"), medical_title_list, "技术职称没有更新");
-        Assert.assertEquals(Generator.s_ParseJson(data, "academic_title_list"), academic_title_list, "学术职称没有更新");
+        Assert.assertEquals(Helper.s_ParseJson(data, "medical_title_list"), medical_title_list, "技术职称没有更新");
+        Assert.assertEquals(Helper.s_ParseJson(data, "academic_title_list"), academic_title_list, "学术职称没有更新");
 
         medical_title_list = Generator.randomMedicalId();
         academic_title_list = Generator.randomAcademicId();
@@ -256,8 +257,8 @@ public class KBExpert_Update extends BaseTest {
 
         res = KBExpert_Detail.s_Detail(expertId);
         s_CheckResponse(res);
-        Assert.assertEquals(Generator.s_ParseJson(data, "medical_title_list"), medical_title_list, "技术职称没有更新");
-        Assert.assertEquals(Generator.s_ParseJson(data, "academic_title_list"), academic_title_list, "学术职称没有更新");
+        Assert.assertEquals(Helper.s_ParseJson(data, "medical_title_list"), medical_title_list, "技术职称没有更新");
+        Assert.assertEquals(Helper.s_ParseJson(data, "academic_title_list"), academic_title_list, "学术职称没有更新");
     }
 
     @Test
@@ -285,9 +286,9 @@ public class KBExpert_Update extends BaseTest {
 
         res = KBExpert_Detail.s_Detail(expertId);
         s_CheckResponse(res);
-        Assert.assertEquals(Generator.s_ParseJson(data, "specialty"), specialty, "特长没有更新");
-        Assert.assertEquals(Generator.s_ParseJson(data, "honour"), honour, "荣誉没有更新");
-        Assert.assertEquals(Generator.s_ParseJson(data, "description"), description, "简介没有更新");
+        Assert.assertEquals(Helper.s_ParseJson(data, "specialty"), specialty, "特长没有更新");
+        Assert.assertEquals(Helper.s_ParseJson(data, "honour"), honour, "荣誉没有更新");
+        Assert.assertEquals(Helper.s_ParseJson(data, "description"), description, "简介没有更新");
     }
 
     @Test(enabled = true)
@@ -326,8 +327,8 @@ public class KBExpert_Update extends BaseTest {
 
         res = KBExpert_Detail.s_Detail(doctorId);
         s_CheckResponse(res);
-        Assert.assertEquals(Generator.s_ParseJson(data, "avatar_url()"), "3", "医院图片更新失败");
-        Assert.assertNotNull(Generator.s_ParseJson(data, "avatar_url():url"), "医院图片更新失败");
+        Assert.assertEquals(Helper.s_ParseJson(data, "avatar_url()"), "3", "医院图片更新失败");
+        Assert.assertNotNull(Helper.s_ParseJson(data, "avatar_url():url"), "医院图片更新失败");
     }
 
     @Test
@@ -383,38 +384,38 @@ public class KBExpert_Update extends BaseTest {
 
         res = KBExpert_Detail.s_Detail(expertId);
         s_CheckResponse(res);
-        Assert.assertEquals(Generator.s_ParseJson(data, "medical_title_list"), medical_title_list, "技术职称没有更新");
-        Assert.assertEquals(Generator.s_ParseJson(data, "academic_title_list"), academic_title_list, "学术职称没有更新");
-        Assert.assertEquals(Generator.s_ParseJson(data, "name"), name, "姓名没有更新");
-        Assert.assertEquals(Generator.s_ParseJson(data, "major_id"), majorId, "专业没有更新");
-        Assert.assertEquals(Generator.s_ParseJson(data, "major"), Generator.majorName(majorId), "专业没有更新");
-        Assert.assertEquals(Generator.s_ParseJson(data, "hospital_id"), hospitalId, "医院ID没有更新");
-        Assert.assertEquals(Generator.s_ParseJson(data, "hospital_name"), Generator.hospitalName(hospitalId), "医院名称没有更新");
-        Assert.assertEquals(Generator.s_ParseJson(data, "city_id"), cityId, "城市ID没有更新");
-        Assert.assertEquals(Generator.s_ParseJson(data, "city_name"), Generator.cityName(cityId), "城市名称没有更新");
-        Assert.assertEquals(Generator.s_ParseJson(data, "county_id"), countyId, "区县ID没有更新");
-        Assert.assertEquals(Generator.s_ParseJson(data, "county_name"), Generator.countyName(countyId), "区县名称没有更新");
-        Assert.assertEquals(Generator.s_ParseJson(data, "signed_status"), "SIGNED", "主刀专家状态没有更新");
-        Assert.assertEquals(Generator.s_ParseJson(data, "start_year"), "2007", "专家从业时间没有更新");
-        Assert.assertEquals(Generator.s_ParseJson(data, "avatar_url()"), "2", "医院图片更新失败");
-        Assert.assertNotNull(Generator.s_ParseJson(data, "avatar_url():url"), "医院图片更新失败");
+        Assert.assertEquals(Helper.s_ParseJson(data, "medical_title_list"), medical_title_list, "技术职称没有更新");
+        Assert.assertEquals(Helper.s_ParseJson(data, "academic_title_list"), academic_title_list, "学术职称没有更新");
+        Assert.assertEquals(Helper.s_ParseJson(data, "name"), name, "姓名没有更新");
+        Assert.assertEquals(Helper.s_ParseJson(data, "major_id"), majorId, "专业没有更新");
+        Assert.assertEquals(Helper.s_ParseJson(data, "major"), Generator.majorName(majorId), "专业没有更新");
+        Assert.assertEquals(Helper.s_ParseJson(data, "hospital_id"), hospitalId, "医院ID没有更新");
+        Assert.assertEquals(Helper.s_ParseJson(data, "hospital_name"), Generator.hospitalName(hospitalId), "医院名称没有更新");
+        Assert.assertEquals(Helper.s_ParseJson(data, "city_id"), cityId, "城市ID没有更新");
+        Assert.assertEquals(Helper.s_ParseJson(data, "city_name"), Generator.cityName(cityId), "城市名称没有更新");
+        Assert.assertEquals(Helper.s_ParseJson(data, "county_id"), countyId, "区县ID没有更新");
+        Assert.assertEquals(Helper.s_ParseJson(data, "county_name"), Generator.countyName(countyId), "区县名称没有更新");
+        Assert.assertEquals(Helper.s_ParseJson(data, "signed_status"), "SIGNED", "主刀专家状态没有更新");
+        Assert.assertEquals(Helper.s_ParseJson(data, "start_year"), "2007", "专家从业时间没有更新");
+        Assert.assertEquals(Helper.s_ParseJson(data, "avatar_url()"), "2", "医院图片更新失败");
+        Assert.assertNotNull(Helper.s_ParseJson(data, "avatar_url():url"), "医院图片更新失败");
 
         res = RegisteredDoctor_Detail.s_Detail(doctorId);
         s_CheckResponse(res);
-        Assert.assertEquals(Generator.s_ParseJson(data, "medical_title_list"), medical_title_list, "技术职称没有更新");
-        Assert.assertEquals(Generator.s_ParseJson(data, "academic_title_list"), academic_title_list, "学术职称没有更新");
-        Assert.assertEquals(Generator.s_ParseJson(data, "name"), name, "姓名没有更新");
-        Assert.assertEquals(Generator.s_ParseJson(data, "major_id"), majorId, "专业没有更新");
-        Assert.assertEquals(Generator.s_ParseJson(data, "major_name"), Generator.majorName(majorId), "专业没有更新");
-        Assert.assertEquals(Generator.s_ParseJson(data, "hospital_id"), hospitalId, "医院ID没有更新");
-        Assert.assertEquals(Generator.s_ParseJson(data, "hospital_name"), Generator.hospitalName(hospitalId), "医院名称没有更新");
-        Assert.assertEquals(Generator.s_ParseJson(data, "city_id"), cityId, "城市ID没有更新");
-        Assert.assertEquals(Generator.s_ParseJson(data, "city"), Generator.cityName(cityId), "城市名称没有更新");
+        Assert.assertEquals(Helper.s_ParseJson(data, "medical_title_list"), medical_title_list, "技术职称没有更新");
+        Assert.assertEquals(Helper.s_ParseJson(data, "academic_title_list"), academic_title_list, "学术职称没有更新");
+        Assert.assertEquals(Helper.s_ParseJson(data, "name"), name, "姓名没有更新");
+        Assert.assertEquals(Helper.s_ParseJson(data, "major_id"), majorId, "专业没有更新");
+        Assert.assertEquals(Helper.s_ParseJson(data, "major_name"), Generator.majorName(majorId), "专业没有更新");
+        Assert.assertEquals(Helper.s_ParseJson(data, "hospital_id"), hospitalId, "医院ID没有更新");
+        Assert.assertEquals(Helper.s_ParseJson(data, "hospital_name"), Generator.hospitalName(hospitalId), "医院名称没有更新");
+        Assert.assertEquals(Helper.s_ParseJson(data, "city_id"), cityId, "城市ID没有更新");
+        Assert.assertEquals(Helper.s_ParseJson(data, "city"), Generator.cityName(cityId), "城市名称没有更新");
 //        Assert.assertEquals(s_ParseJson(data, "county_id"), cityId, "区县ID没有更新");
 //        Assert.assertEquals(s_ParseJson(data, "county_name"), UT.countyName(countyId), "区县名称没有更新");
-        Assert.assertEquals(Generator.s_ParseJson(data, "signed_status"), "SIGNED", "主刀专家状态没有更新");
-        Assert.assertEquals(Generator.s_ParseJson(data, "icon()"), "2", "医院图片更新失败");
-        Assert.assertNotNull(Generator.s_ParseJson(data, "icon():largePicture"), "医院图片更新失败");
+        Assert.assertEquals(Helper.s_ParseJson(data, "signed_status"), "SIGNED", "主刀专家状态没有更新");
+        Assert.assertEquals(Helper.s_ParseJson(data, "icon()"), "2", "医院图片更新失败");
+        Assert.assertNotNull(Helper.s_ParseJson(data, "icon():largePicture"), "医院图片更新失败");
     }
 
     @Test
@@ -438,7 +439,7 @@ public class KBExpert_Update extends BaseTest {
 
         res = KBExpert_Detail.s_Detail(expertId);
         s_CheckResponse(res);
-        Assert.assertEquals(Generator.s_ParseJson(data, "signed_status"), "NOT_SIGNED");
+        Assert.assertEquals(Helper.s_ParseJson(data, "signed_status"), "NOT_SIGNED");
 
         epModified.body.put("signed_status", "1");
         try {
@@ -451,7 +452,7 @@ public class KBExpert_Update extends BaseTest {
 
         res = KBExpert_Detail.s_Detail(expertId);
         s_CheckResponse(res);
-        Assert.assertEquals(Generator.s_ParseJson(data, "signed_status"), "SIGNED");
+        Assert.assertEquals(Helper.s_ParseJson(data, "signed_status"), "SIGNED");
     }
 
     @Test
@@ -484,7 +485,7 @@ public class KBExpert_Update extends BaseTest {
 
         res = RegisteredDoctor_Detail.s_Detail(doctorId);
         s_CheckResponse(res);
-        Assert.assertEquals(Generator.s_ParseJson(data, "signed_status"), "NOT_SIGNED");
+        Assert.assertEquals(Helper.s_ParseJson(data, "signed_status"), "NOT_SIGNED");
 
         epModified.body.put("signed_status", "1");
         try {
@@ -497,7 +498,7 @@ public class KBExpert_Update extends BaseTest {
 
         res = RegisteredDoctor_Detail.s_Detail(doctorId);
         s_CheckResponse(res);
-        Assert.assertEquals(Generator.s_ParseJson(data, "signed_status"), "SIGNED");
+        Assert.assertEquals(Helper.s_ParseJson(data, "signed_status"), "SIGNED");
     }
 
 }

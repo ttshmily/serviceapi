@@ -2,8 +2,8 @@ package com.mingyizhudao.qa.functiontest.doctor;
 
 import com.mingyizhudao.qa.common.BaseTest;
 import com.mingyizhudao.qa.common.TestLogger;
+import com.mingyizhudao.qa.utilities.Helper;
 import com.mingyizhudao.qa.utilities.HttpRequest;
-import com.mingyizhudao.qa.utilities.Generator;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
@@ -32,13 +32,13 @@ public class GetSurgeryCategory extends BaseTest {
             logger.error(e);
         }
         s_CheckResponse(res);
-        Assert.assertNotNull(Generator.s_ParseJson(data, "surgeryCategories()"));
-        Assert.assertNotNull(Generator.s_ParseJson(data, "surgeryCategories():root_id"));
-        Assert.assertNotNull(Generator.s_ParseJson(data, "surgeryCategories():root"));
-        Assert.assertNotNull(Generator.s_ParseJson(data, "surgeryCategories():branch()"));
-        Assert.assertNotNull(Generator.s_ParseJson(data, "surgeryCategories():branch():id"));
-        Assert.assertNotNull(Generator.s_ParseJson(data, "surgeryCategories():branch():parent_category_id"));
-        Assert.assertNotNull(Generator.s_ParseJson(data, "surgeryCategories():branch():name"));
+        Assert.assertNotNull(Helper.s_ParseJson(data, "surgeryCategories()"));
+        Assert.assertNotNull(Helper.s_ParseJson(data, "surgeryCategories():root_id"));
+        Assert.assertNotNull(Helper.s_ParseJson(data, "surgeryCategories():root"));
+        Assert.assertNotNull(Helper.s_ParseJson(data, "surgeryCategories():branch()"));
+        Assert.assertNotNull(Helper.s_ParseJson(data, "surgeryCategories():branch():id"));
+        Assert.assertNotNull(Helper.s_ParseJson(data, "surgeryCategories():branch():parent_category_id"));
+        Assert.assertNotNull(Helper.s_ParseJson(data, "surgeryCategories():branch():name"));
     }
 
     @Test
@@ -50,12 +50,12 @@ public class GetSurgeryCategory extends BaseTest {
             logger.error(e);
         }
         s_CheckResponse(res);
-        Assert.assertNotNull(Generator.s_ParseJson(data, "surgeryCategories()"));
-        Assert.assertNotNull(Generator.s_ParseJson(data, "surgeryCategories():root_id"));
-        Assert.assertNotNull(Generator.s_ParseJson(data, "surgeryCategories():root"));
-        Assert.assertNotNull(Generator.s_ParseJson(data, "surgeryCategories():branch()"));
-        Assert.assertNotNull(Generator.s_ParseJson(data, "surgeryCategories():branch():id"));
-        Assert.assertNotNull(Generator.s_ParseJson(data, "surgeryCategories():branch():parent_category_id"));
-        Assert.assertNotNull(Generator.s_ParseJson(data, "surgeryCategories():branch():name"));
+        Assert.assertNotNull(Helper.s_ParseJson(data, "surgeryCategories()"));
+        Assert.assertNotNull(Helper.s_ParseJson(data, "surgeryCategories():root_id"));
+        Assert.assertNotNull(Helper.s_ParseJson(data, "surgeryCategories():root"));
+        Assert.assertNotNull(Helper.s_ParseJson(data, "surgeryCategories():branch()"));
+        Assert.assertNotNull(Helper.s_ParseJson(data, "surgeryCategories():branch():id"));
+        Assert.assertNotNull(Helper.s_ParseJson(data, "surgeryCategories():branch():parent_category_id"));
+        Assert.assertNotNull(Helper.s_ParseJson(data, "surgeryCategories():branch():name"));
     }
 }

@@ -5,6 +5,7 @@ import com.mingyizhudao.qa.common.TestLogger;
 import com.mingyizhudao.qa.dataprofile.crm.DiseaseProfile;
 import com.mingyizhudao.qa.dataprofile.crm.ExpertProfile;
 import com.mingyizhudao.qa.dataprofile.crm.HospitalProfile;
+import com.mingyizhudao.qa.utilities.Helper;
 import com.mingyizhudao.qa.utilities.HttpRequest;
 import com.mingyizhudao.qa.utilities.Generator;
 import net.sf.json.JSONArray;
@@ -65,13 +66,13 @@ public class KB_Track extends BaseTest {
             } catch (IOException e) {
                 logger.error(e);
             }
-            Assert.assertNotNull(Generator.s_ParseJson(data, "list():id"));
-            Assert.assertNotNull(Generator.s_ParseJson(data, "list():operate_object_id"));
-            Assert.assertNotNull(Generator.s_ParseJson(data, "list():operate_type"));
-            Assert.assertNotNull(Generator.s_ParseJson(data, "list():operator_id"));
-            Assert.assertNotNull(Generator.s_ParseJson(data, "list():operator_name"));
-            Assert.assertNotNull(Generator.s_ParseJson(data, "list():operator_role"));
-            Assert.assertNotNull(Generator.s_ParseJson(data, "list():records"));
+            Assert.assertNotNull(Helper.s_ParseJson(data, "list():id"));
+            Assert.assertNotNull(Helper.s_ParseJson(data, "list():operate_object_id"));
+            Assert.assertNotNull(Helper.s_ParseJson(data, "list():operate_type"));
+            Assert.assertNotNull(Helper.s_ParseJson(data, "list():operator_id"));
+            Assert.assertNotNull(Helper.s_ParseJson(data, "list():operator_name"));
+            Assert.assertNotNull(Helper.s_ParseJson(data, "list():operator_role"));
+            Assert.assertNotNull(Helper.s_ParseJson(data, "list():records"));
         }
     }
 
