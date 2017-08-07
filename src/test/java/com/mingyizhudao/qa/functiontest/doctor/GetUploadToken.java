@@ -2,8 +2,8 @@ package com.mingyizhudao.qa.functiontest.doctor;
 
 import com.mingyizhudao.qa.common.BaseTest;
 import com.mingyizhudao.qa.common.TestLogger;
+import com.mingyizhudao.qa.utilities.Helper;
 import com.mingyizhudao.qa.utilities.HttpRequest;
-import com.mingyizhudao.qa.utilities.Generator;
 import org.junit.Ignore;
 import org.testng.Assert;
 import org.testng.annotations.Test;
@@ -38,7 +38,7 @@ public class GetUploadToken extends BaseTest {
             logger.error(e);
         }
         s_CheckResponse(res);
-        Assert.assertNotNull(Generator.s_ParseJson(data, "token"));
+        Assert.assertNotNull(Helper.s_ParseJson(data, "token"));
         Assert.assertEquals(code, "1000000");
     }
 
@@ -55,7 +55,7 @@ public class GetUploadToken extends BaseTest {
             logger.error(e);
         }
         s_CheckResponse(res);
-        Assert.assertNotNull(Generator.s_ParseJson(data, "token"));
+        Assert.assertNotNull(Helper.s_ParseJson(data, "token"));
         Assert.assertEquals(code, "1000000");
 
     }
@@ -73,7 +73,7 @@ public class GetUploadToken extends BaseTest {
             logger.error(e);
         }
         s_CheckResponse(res);
-        Assert.assertNotNull(Generator.s_ParseJson(data, "token"));
+        Assert.assertNotNull(Helper.s_ParseJson(data, "token"));
         Assert.assertEquals(code, "1000000");
     }
 

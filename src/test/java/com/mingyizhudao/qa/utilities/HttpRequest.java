@@ -62,7 +62,6 @@ public class HttpRequest {
 	    String result = "";
 		BufferedReader in = null;
 		try {
-		    HttpsURLConnection httpsURLConnection;
 			String urlNameString = url;
             if (param != null && !param.isEmpty()) urlNameString = urlNameString.concat("?").concat(param);
             URL realUrl = new URL(urlNameString);
@@ -72,7 +71,8 @@ public class HttpRequest {
 			// 设置通用的请求属性
 			httpURLConnection.setRequestProperty("accept", "*/*");
 			httpURLConnection.setRequestProperty("connection", "close");
-			httpURLConnection.setRequestProperty("user-agent", "Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1;SV1)");
+            httpURLConnection.setRequestProperty("Content-Type", "application/json");
+            httpURLConnection.setRequestProperty("user-agent", "Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1;SV1)");
 			httpURLConnection.setInstanceFollowRedirects(true);
 			HttpURLConnection.setFollowRedirects(true);
             if (!authCode.isEmpty()) httpURLConnection.setRequestProperty("Authorization", "Bearer " + authCode);
@@ -83,21 +83,25 @@ public class HttpRequest {
             start = System.currentTimeMillis();
 			httpURLConnection.connect();
             int status = httpURLConnection.getResponseCode();
+            in = new BufferedReader(new InputStreamReader(httpURLConnection.getInputStream())); //connection
+            end = System.currentTimeMillis();
+            logger.info("等待回应: <<<<<  " + httpURLConnection.getResponseCode() + " " + httpURLConnection.getResponseMessage());
+//            logger.info("响应时间: <<<<<  " + Long.toString(end-start) + " ms");
             if (status == HttpURLConnection.HTTP_OK) {
-                in = new BufferedReader(new InputStreamReader(httpURLConnection.getInputStream())); //connection
-                end = System.currentTimeMillis();
-                logger.info("等待回应: <<<<<  " + httpURLConnection.getResponseCode() + " " + httpURLConnection.getResponseMessage());
-                logger.info("响应时间: <<<<<  " + Long.toString(end-start) + " ms");
                 String line;
                 while ((line = in.readLine()) != null) {
                     result += line;
                 }
-                in.close();
+            } else {
+                String line;
+                while ((line = in.readLine()) != null) {
+                    logger.info(line);
+                }
             }
+            in.close();
             if (status == HttpURLConnection.HTTP_MOVED_TEMP || status == HttpURLConnection.HTTP_MOVED_PERM || status == HttpURLConnection.HTTP_SEE_OTHER) { // now only available for redirect on qiye wechat
                 // get redirect url from "location" header field
                 String newUrl = httpURLConnection.getHeaderField("Location");
-
                 // open the new https connection
                 logger.info("Redirect to URL : " + newUrl);
                 result = HttpsRequest.s_DoGet(newUrl);
@@ -226,7 +230,7 @@ public class HttpRequest {
             in = new BufferedReader(new InputStreamReader(httpURLConnection.getInputStream()));
             end = System.currentTimeMillis();
             logger.info("等待回应: <<<<<  " + httpURLConnection.getResponseCode() + " " + httpURLConnection.getResponseMessage());
-            logger.info("响应时间: <<<<<  " + Long.toString(end-start) + " ms");
+//            logger.info("响应时间: <<<<<  " + Long.toString(end-start) + " ms");
             String line;
             while ((line = in.readLine()) != null) {
                 result += line;
@@ -399,7 +403,7 @@ public class HttpRequest {
             in = new BufferedReader(new InputStreamReader(httpURLConnection.getInputStream()));
             end = System.currentTimeMillis();
             logger.info("等待回应: <<<<<  " + httpURLConnection.getResponseCode() + " " + httpURLConnection.getResponseMessage());
-            logger.info("响应时间: <<<<<  " + Long.toString(end-start) + " ms");
+//            logger.info("响应时间: <<<<<  " + Long.toString(end-start) + " ms");
 
             in = new BufferedReader(new InputStreamReader(httpURLConnection.getInputStream()));
             String line;
@@ -490,7 +494,7 @@ public class HttpRequest {
             in = new BufferedReader(new InputStreamReader(httpURLConnection.getInputStream()));
             end = System.currentTimeMillis();
             logger.info("等待回应: <<<<<  " + httpURLConnection.getResponseCode() + " " + httpURLConnection.getResponseMessage());
-            logger.info("响应时间: <<<<<  " + Long.toString(end-start) + " ms");
+//            logger.info("响应时间: <<<<<  " + Long.toString(end-start) + " ms");
 
             in = new BufferedReader(new InputStreamReader(httpURLConnection.getInputStream()));
             String line;
@@ -565,33 +569,4 @@ public class HttpRequest {
         return new String(sb);
     }
 
-    /**
-     * 对于非unicode的字符串，转换为unicode，用于打印显示
-     *
-     * @param strArr
-     *            非unicode String
-     *
-     * @return unicode String
-     */
-
-    public static String unicodeString( String strArr ) {
-        List<String> list	= new ArrayList<String>();
-        String		zz	= "\\\\u[0-9,a-z,A-Z]{4}";
-		/* 正则表达式用法参考API */
-        Pattern pattern = Pattern.compile( zz );
-        Matcher m = pattern.matcher( strArr );
-        while ( m.find() )
-        {
-            list.add( m.group() );
-        }
-        for ( int i = 0, j = 2; i < list.size(); i++ )
-        {
-            String st = list.get( i ).substring( j, j + 4 );
-			/* 将得到的数据按16进制解析为十进制整数，再強转为字符*/
-            char ch = (char) Integer.parseInt( st, 16 );
-			/* 用得到的字符替换编码表达式 */
-            strArr = strArr.replace( list.get( i ), String.valueOf( ch ) );
-        }
-        return(strArr);
-    }
 }

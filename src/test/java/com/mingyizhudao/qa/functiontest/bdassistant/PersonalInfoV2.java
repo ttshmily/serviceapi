@@ -1,8 +1,8 @@
 package com.mingyizhudao.qa.functiontest.bdassistant;
 
 import com.mingyizhudao.qa.common.BaseTest;
+import com.mingyizhudao.qa.utilities.Helper;
 import com.mingyizhudao.qa.utilities.HttpRequest;
-import com.mingyizhudao.qa.utilities.Generator;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 import org.apache.log4j.Logger;
@@ -72,10 +72,10 @@ public class PersonalInfoV2 extends BaseTest {
         }
         s_CheckResponse(res);
         Assert.assertEquals(code, "1000000", "有token应该调用成功");
-        Assert.assertNotNull(Generator.s_ParseJson(data, "doctorCounts"), "doctorCounts字段缺失");
-        Assert.assertNotNull(Generator.s_ParseJson(data, "orderCounts"), "orderCounts字段缺失");
-        Assert.assertNull(Generator.s_ParseJson(data, "teamMemberCounts"));
-        Assert.assertEquals(Generator.s_ParseJson(data, "role"), "1"); // 1-表示普通员工，2-表示主管
+        Assert.assertNotNull(Helper.s_ParseJson(data, "doctorCounts"), "doctorCounts字段缺失");
+        Assert.assertNotNull(Helper.s_ParseJson(data, "orderCounts"), "orderCounts字段缺失");
+        Assert.assertNull(Helper.s_ParseJson(data, "teamMemberCounts"));
+        Assert.assertEquals(Helper.s_ParseJson(data, "role"), "1"); // 1-表示普通员工，2-表示主管
     }
 
     @Test
@@ -89,10 +89,10 @@ public class PersonalInfoV2 extends BaseTest {
         }
         s_CheckResponse(res);
         Assert.assertEquals(code, "1000000", "有token应该调用成功");
-        Assert.assertNotNull(Generator.s_ParseJson(data, "doctorCounts"), "doctorCounts字段缺失");
-        Assert.assertNotNull(Generator.s_ParseJson(data, "orderCounts"), "orderCounts字段缺失");
-        Assert.assertNotNull(Generator.s_ParseJson(data, "teamMemberCounts"), "员工主管必须返回团队人员数量");
-        Assert.assertEquals(Generator.s_ParseJson(data, "role"), "2"); // 1-表示普通员工，2-表示主管
+        Assert.assertNotNull(Helper.s_ParseJson(data, "doctorCounts"), "doctorCounts字段缺失");
+        Assert.assertNotNull(Helper.s_ParseJson(data, "orderCounts"), "orderCounts字段缺失");
+        Assert.assertNotNull(Helper.s_ParseJson(data, "teamMemberCounts"), "员工主管必须返回团队人员数量");
+        Assert.assertEquals(Helper.s_ParseJson(data, "role"), "2"); // 1-表示普通员工，2-表示主管
     }
 
     @Test
@@ -106,11 +106,11 @@ public class PersonalInfoV2 extends BaseTest {
         }
         s_CheckResponse(res);
         Assert.assertEquals(code, "1000000", "有token应该调用成功");
-        Assert.assertNotNull(Generator.s_ParseJson(data, "user"), "user字段缺失");
-        Assert.assertNotNull(Generator.s_ParseJson(data, "staff_id"), "staff_id字段缺失");
-        Assert.assertNotNull(Generator.s_ParseJson(data, "userName"), "userName字段缺失");
-        Assert.assertNotNull(Generator.s_ParseJson(data, "city()"), "分配城市字段");
-        Assert.assertNotNull(Generator.s_ParseJson(data, "role"), "role字段不能为空"); // 1-表示普通员工，2-表示主管
+        Assert.assertNotNull(Helper.s_ParseJson(data, "user"), "user字段缺失");
+        Assert.assertNotNull(Helper.s_ParseJson(data, "staff_id"), "staff_id字段缺失");
+        Assert.assertNotNull(Helper.s_ParseJson(data, "userName"), "userName字段缺失");
+        Assert.assertNotNull(Helper.s_ParseJson(data, "city()"), "分配城市字段");
+        Assert.assertNotNull(Helper.s_ParseJson(data, "role"), "role字段不能为空"); // 1-表示普通员工，2-表示主管
     }
 
     @Test
@@ -124,7 +124,7 @@ public class PersonalInfoV2 extends BaseTest {
         }
         s_CheckResponse(res);
         Assert.assertEquals(code, "1000000", "有token应该调用成功");
-        Assert.assertNotNull(Generator.s_ParseJson(data, "city()"), "分配城市字段");
+        Assert.assertNotNull(Helper.s_ParseJson(data, "city()"), "分配城市字段");
 
         JSONArray bd_city_list = JSONObject.fromObject(data).getJSONArray("city");
         for (int j=0; j<bd_city_list.size(); j++) {

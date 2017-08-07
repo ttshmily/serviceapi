@@ -2,8 +2,8 @@ package com.mingyizhudao.qa.functiontest.doctor;
 
 import com.mingyizhudao.qa.common.BaseTest;
 import com.mingyizhudao.qa.common.TestLogger;
+import com.mingyizhudao.qa.utilities.Helper;
 import com.mingyizhudao.qa.utilities.HttpRequest;
-import com.mingyizhudao.qa.utilities.Generator;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
@@ -36,10 +36,10 @@ public class GetSurgeryList extends BaseTest {
             logger.error(e);
         }
         s_CheckResponse(res);
-        Assert.assertNotNull(Generator.s_ParseJson(data, "surgeryCategories()"));
-        Assert.assertNotEquals(Generator.s_ParseJson(data, "surgeryCategories():id"), "");
-        Assert.assertEquals(Generator.s_ParseJson(data, "surgeryCategories():surgery_category_id"), "6");
-        Assert.assertNotEquals(Generator.s_ParseJson(data, "surgeryCategories():name"), "");
+        Assert.assertNotNull(Helper.s_ParseJson(data, "surgeryCategories()"));
+        Assert.assertNotEquals(Helper.s_ParseJson(data, "surgeryCategories():id"), "");
+        Assert.assertEquals(Helper.s_ParseJson(data, "surgeryCategories():surgery_category_id"), "6");
+        Assert.assertNotEquals(Helper.s_ParseJson(data, "surgeryCategories():name"), "");
     }
 
     @Test
@@ -55,7 +55,7 @@ public class GetSurgeryList extends BaseTest {
         }
         s_CheckResponse(res);
         Assert.assertEquals(code, "1000000");
-        Assert.assertNotNull(Generator.s_ParseJson(data, "surgeryCategories()"));
+        Assert.assertNotNull(Helper.s_ParseJson(data, "surgeryCategories()"));
     }
 
     @Test

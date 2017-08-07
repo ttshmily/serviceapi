@@ -2,8 +2,8 @@ package com.mingyizhudao.qa.functiontest.doctor;
 
 import com.mingyizhudao.qa.common.BaseTest;
 import com.mingyizhudao.qa.common.TestLogger;
+import com.mingyizhudao.qa.utilities.Helper;
 import com.mingyizhudao.qa.utilities.HttpRequest;
-import com.mingyizhudao.qa.utilities.Generator;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
@@ -32,13 +32,13 @@ public class ProfessionList extends BaseTest {
             logger.error(e);
         }
         s_CheckResponse(res);
-        Assert.assertNotNull(Generator.s_ParseJson(data, "diseasecategory()"));
-        Assert.assertNotNull(Generator.s_ParseJson(data, "diseasecategory():root_id"));
-        Assert.assertNotNull(Generator.s_ParseJson(data, "diseasecategory():root"));
-        Assert.assertNotNull(Generator.s_ParseJson(data, "diseasecategory():branch()"));
-        Assert.assertNotNull(Generator.s_ParseJson(data, "diseasecategory():branch():id"));
-        Assert.assertNotNull(Generator.s_ParseJson(data, "diseasecategory():branch():parent_category_id"));
-        Assert.assertNotNull(Generator.s_ParseJson(data, "diseasecategory():branch():name"));
+        Assert.assertNotNull(Helper.s_ParseJson(data, "diseasecategory()"));
+        Assert.assertNotNull(Helper.s_ParseJson(data, "diseasecategory():root_id"));
+        Assert.assertNotNull(Helper.s_ParseJson(data, "diseasecategory():root"));
+        Assert.assertNotNull(Helper.s_ParseJson(data, "diseasecategory():branch()"));
+        Assert.assertNotNull(Helper.s_ParseJson(data, "diseasecategory():branch():id"));
+        Assert.assertNotNull(Helper.s_ParseJson(data, "diseasecategory():branch():parent_category_id"));
+        Assert.assertNotNull(Helper.s_ParseJson(data, "diseasecategory():branch():name"));
     }
 
     @Test
@@ -50,13 +50,13 @@ public class ProfessionList extends BaseTest {
             logger.error(e);
         }
         s_CheckResponse(res);
-        Assert.assertNotNull(Generator.s_ParseJson(data, "diseasecategory()"));
-        Assert.assertNotNull(Generator.s_ParseJson(data, "diseasecategory():root_id"));
-        Assert.assertNotNull(Generator.s_ParseJson(data, "diseasecategory():root"));
-        Assert.assertNotNull(Generator.s_ParseJson(data, "diseasecategory():branch()"));
-        Assert.assertNotNull(Generator.s_ParseJson(data, "diseasecategory():branch():id"));
-        Assert.assertNotNull(Generator.s_ParseJson(data, "diseasecategory():branch():parent_category_id"));
-        Assert.assertNotNull(Generator.s_ParseJson(data, "diseasecategory():branch():name"));
+        Assert.assertNotNull(Helper.s_ParseJson(data, "diseasecategory()"));
+        Assert.assertNotNull(Helper.s_ParseJson(data, "diseasecategory():root_id"));
+        Assert.assertNotNull(Helper.s_ParseJson(data, "diseasecategory():root"));
+        Assert.assertNotNull(Helper.s_ParseJson(data, "diseasecategory():branch()"));
+        Assert.assertNotNull(Helper.s_ParseJson(data, "diseasecategory():branch():id"));
+        Assert.assertNotNull(Helper.s_ParseJson(data, "diseasecategory():branch():parent_category_id"));
+        Assert.assertNotNull(Helper.s_ParseJson(data, "diseasecategory():branch():name"));
     }
 
 }

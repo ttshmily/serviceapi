@@ -2,6 +2,7 @@ package com.mingyizhudao.qa.functiontest.bdassistant;
 
 import com.mingyizhudao.qa.common.BaseTest;
 import com.mingyizhudao.qa.common.KnowledgeBase;
+import com.mingyizhudao.qa.utilities.Helper;
 import com.mingyizhudao.qa.utilities.HttpRequest;
 import com.mingyizhudao.qa.utilities.Generator;
 import net.sf.json.JSONArray;
@@ -53,11 +54,11 @@ public class DoctorList extends BaseTest {
         }
         s_CheckResponse(res);
         Assert.assertEquals(code, "1000000", "有token应该调用成功");
-        Assert.assertNotNull(Generator.s_ParseJson(data, "list(0):name"), "医生的name字段缺失");
-        Assert.assertNotNull(Generator.s_ParseJson(data, "list(0):hospital_name"), "医生的hospital_name字段缺失");
-        Assert.assertNotNull(Generator.s_ParseJson(data, "list(0):academic_title"), "医生的academic_title字段缺失");
-        Assert.assertNotNull(Generator.s_ParseJson(data, "list(0):medical_title"), "医生的academic_title字段缺失");
-        Assert.assertNotNull(Generator.s_ParseJson(data, "list(0):doctor_card_pictures"), "医生的academic_title字段缺失");
+        Assert.assertNotNull(Helper.s_ParseJson(data, "list(0):name"), "医生的name字段缺失");
+        Assert.assertNotNull(Helper.s_ParseJson(data, "list(0):hospital_name"), "医生的hospital_name字段缺失");
+        Assert.assertNotNull(Helper.s_ParseJson(data, "list(0):academic_title"), "医生的academic_title字段缺失");
+        Assert.assertNotNull(Helper.s_ParseJson(data, "list(0):medical_title"), "医生的academic_title字段缺失");
+        Assert.assertNotNull(Helper.s_ParseJson(data, "list(0):doctor_card_pictures"), "医生的academic_title字段缺失");
     }
 
     @Test
@@ -73,11 +74,11 @@ public class DoctorList extends BaseTest {
         }
         s_CheckResponse(res);
         Assert.assertEquals(code, "1000000", "有token应该调用成功");
-        Assert.assertNotNull(Generator.s_ParseJson(data, "list(0):name"), "医生的name字段缺失");
-        Assert.assertNotNull(Generator.s_ParseJson(data, "list(0):hospital_name"), "医生的hospital_name字段缺失");
-        Assert.assertNotNull(Generator.s_ParseJson(data, "list(0):academic_title"), "医生的academic_title字段缺失");
-        Assert.assertNotNull(Generator.s_ParseJson(data, "list(0):medical_title"), "医生的academic_title字段缺失");
-        Assert.assertNotNull(Generator.s_ParseJson(data, "list(0):doctor_card_pictures"), "医生的academic_title字段缺失");
+        Assert.assertNotNull(Helper.s_ParseJson(data, "list(0):name"), "医生的name字段缺失");
+        Assert.assertNotNull(Helper.s_ParseJson(data, "list(0):hospital_name"), "医生的hospital_name字段缺失");
+        Assert.assertNotNull(Helper.s_ParseJson(data, "list(0):academic_title"), "医生的academic_title字段缺失");
+        Assert.assertNotNull(Helper.s_ParseJson(data, "list(0):medical_title"), "医生的academic_title字段缺失");
+        Assert.assertNotNull(Helper.s_ParseJson(data, "list(0):doctor_card_pictures"), "医生的academic_title字段缺失");
     }
 
     @Test
@@ -94,11 +95,11 @@ public class DoctorList extends BaseTest {
         }
         s_CheckResponse(res);
         Assert.assertEquals(code, "1000000", "有token应该调用成功");
-        Assert.assertNotNull(Generator.s_ParseJson(data, "list(0):name"), "医生的name字段缺失");
-        Assert.assertNotNull(Generator.s_ParseJson(data, "list(0):hospital_name"), "医生的hospital_name字段缺失");
-        Assert.assertNotNull(Generator.s_ParseJson(data, "list(0):academic_title"), "医生的academic_title字段缺失");
-        Assert.assertNotNull(Generator.s_ParseJson(data, "list(0):medical_title"), "医生的academic_title字段缺失");
-        Assert.assertNotNull(Generator.s_ParseJson(data, "list(0):doctor_card_pictures"), "医生的academic_title字段缺失");
+        Assert.assertNotNull(Helper.s_ParseJson(data, "list(0):name"), "医生的name字段缺失");
+        Assert.assertNotNull(Helper.s_ParseJson(data, "list(0):hospital_name"), "医生的hospital_name字段缺失");
+        Assert.assertNotNull(Helper.s_ParseJson(data, "list(0):academic_title"), "医生的academic_title字段缺失");
+        Assert.assertNotNull(Helper.s_ParseJson(data, "list(0):medical_title"), "医生的academic_title字段缺失");
+        Assert.assertNotNull(Helper.s_ParseJson(data, "list(0):doctor_card_pictures"), "医生的academic_title字段缺失");
     }
 
     @Test
@@ -130,8 +131,8 @@ public class DoctorList extends BaseTest {
         }
         s_CheckResponse(res);
         Assert.assertEquals(code, "1000000", "有token应该调用成功");
-        Assert.assertNotNull(Generator.s_ParseJson(data, "list(0):create_order_time"), "没有第一次创建订单的时间");
-        Assert.assertNotNull(Generator.s_ParseJson(data, "list(0):date_verified"), "没有认证通过的时间");
+        Assert.assertNotNull(Helper.s_ParseJson(data, "list(0):create_order_time"), "没有第一次创建订单的时间");
+        Assert.assertNotNull(Helper.s_ParseJson(data, "list(0):date_verified"), "没有认证通过的时间");
 
     }
 
@@ -165,7 +166,7 @@ public class DoctorList extends BaseTest {
         JSONArray doctorList = JSONObject.fromObject(res).getJSONObject("data").getJSONArray("list");
         for (int i=0; i<doctorList.size(); i++) {
             JSONObject doc = doctorList.getJSONObject(i);
-            Assert.assertEquals(Generator.s_ParseJson(doc, "academic_title_list"), title, "academic_title过滤后有其他的titil存在");
+            Assert.assertEquals(Helper.s_ParseJson(doc, "academic_title_list"), title, "academic_title过滤后有其他的titil存在");
         }
 
     }
@@ -187,7 +188,7 @@ public class DoctorList extends BaseTest {
         JSONArray doctorList = JSONObject.fromObject(res).getJSONObject("data").getJSONArray("list");
         for (int i=0; i<doctorList.size(); i++) {
             JSONObject doc = doctorList.getJSONObject(i);
-            Assert.assertEquals(Generator.s_ParseJson(doc, "medical_title_list"), title, "medical_title过滤后有其他的titil存在");
+            Assert.assertEquals(Helper.s_ParseJson(doc, "medical_title_list"), title, "medical_title过滤后有其他的titil存在");
         }
 
     }
@@ -224,7 +225,7 @@ public class DoctorList extends BaseTest {
             JSONArray doctorList = JSONObject.fromObject(res).getJSONObject("data").getJSONArray("list");
             for (int i = 0; i < doctorList.size(); i++) {
                 JSONObject doc = doctorList.getJSONObject(i);
-                Assert.assertEquals(Generator.s_ParseJson(doc, "is_verified"), s, "过滤后有杂质状态存在");
+                Assert.assertEquals(Helper.s_ParseJson(doc, "is_verified"), s, "过滤后有杂质状态存在");
             }
         }
     }

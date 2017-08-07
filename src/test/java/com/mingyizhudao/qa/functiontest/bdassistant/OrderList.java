@@ -1,6 +1,7 @@
 package com.mingyizhudao.qa.functiontest.bdassistant;
 
 import com.mingyizhudao.qa.common.BaseTest;
+import com.mingyizhudao.qa.utilities.Helper;
 import com.mingyizhudao.qa.utilities.HttpRequest;
 import com.mingyizhudao.qa.utilities.Generator;
 import net.sf.json.JSONArray;
@@ -50,9 +51,9 @@ public class OrderList extends BaseTest {
         }
         s_CheckResponse(res);
         Assert.assertEquals(code, "1000000", "有token应该调用成功");
-        Assert.assertNotNull(Generator.s_ParseJson(data, "list(0):agent_name"), "下级医生姓名字段缺失");
-        Assert.assertNotNull(Generator.s_ParseJson(data, "list(0):id"), "订单编号字段缺失");
-        Assert.assertNotNull(Generator.s_ParseJson(data, "list(0):major_disease_name"), "主诉疾病字段缺失");
+        Assert.assertNotNull(Helper.s_ParseJson(data, "list(0):agent_name"), "下级医生姓名字段缺失");
+        Assert.assertNotNull(Helper.s_ParseJson(data, "list(0):id"), "订单编号字段缺失");
+        Assert.assertNotNull(Helper.s_ParseJson(data, "list(0):major_disease_name"), "主诉疾病字段缺失");
 //        Assert.assertNotNull(s_ParseJson(data, "list(0):minor_disease_name"), "次诉疾病字段缺失");
 //        Assert.assertNotNull(s_ParseJson(data, "list(0):major_reps_name"), "客服姓名字段缺失");
     }
@@ -70,9 +71,9 @@ public class OrderList extends BaseTest {
         }
         s_CheckResponse(res);
         Assert.assertEquals(code, "1000000", "有token应该调用成功");
-        Assert.assertNotNull(Generator.s_ParseJson(data, "list(0):agent_name"), "下级医生姓名字段缺失");
-        Assert.assertNotNull(Generator.s_ParseJson(data, "list(0):id"), "订单编号字段缺失");
-        Assert.assertNotNull(Generator.s_ParseJson(data, "list(0):major_disease_name"), "主诉疾病字段缺失");
+        Assert.assertNotNull(Helper.s_ParseJson(data, "list(0):agent_name"), "下级医生姓名字段缺失");
+        Assert.assertNotNull(Helper.s_ParseJson(data, "list(0):id"), "订单编号字段缺失");
+        Assert.assertNotNull(Helper.s_ParseJson(data, "list(0):major_disease_name"), "主诉疾病字段缺失");
 //        Assert.assertNotNull(s_ParseJson(data, "list(0):minor_disease_name"), "次诉疾病字段缺失");
 //        Assert.assertNotNull(s_ParseJson(data, "list(0):major_reps_name"), "客服姓名字段缺失");
     }
@@ -91,9 +92,9 @@ public class OrderList extends BaseTest {
         }
         s_CheckResponse(res);
         Assert.assertEquals(code, "1000000", "有token应该调用成功");
-        Assert.assertNotNull(Generator.s_ParseJson(data, "list(0):agent_name"), "下级医生姓名字段缺失");
-        Assert.assertNotNull(Generator.s_ParseJson(data, "list(0):id"), "订单编号字段缺失");
-        Assert.assertNotNull(Generator.s_ParseJson(data, "list(0):major_disease_name"), "主诉疾病字段缺失");
+        Assert.assertNotNull(Helper.s_ParseJson(data, "list(0):agent_name"), "下级医生姓名字段缺失");
+        Assert.assertNotNull(Helper.s_ParseJson(data, "list(0):id"), "订单编号字段缺失");
+        Assert.assertNotNull(Helper.s_ParseJson(data, "list(0):major_disease_name"), "主诉疾病字段缺失");
     }
 
     @Test
@@ -147,7 +148,7 @@ public class OrderList extends BaseTest {
             JSONArray orderList = JSONObject.fromObject(res).getJSONObject("data").getJSONArray("list");
             for (int i = 0; i < orderList.size(); i++) {
                 JSONObject ord = orderList.getJSONObject(i);
-                Assert.assertEquals(Generator.s_ParseJson(ord, "status"), s, "过滤后有杂质状态存在");
+                Assert.assertEquals(Helper.s_ParseJson(ord, "status"), s, "过滤后有杂质状态存在");
             }
         }
     }

@@ -1,8 +1,8 @@
 package com.mingyizhudao.qa.functiontest.bdassistant;
 
 import com.mingyizhudao.qa.common.BaseTest;
+import com.mingyizhudao.qa.utilities.Helper;
 import com.mingyizhudao.qa.utilities.HttpRequest;
-import com.mingyizhudao.qa.utilities.Generator;
 import org.apache.log4j.Logger;
 import org.testng.Assert;
 import org.testng.annotations.Test;
@@ -31,9 +31,9 @@ public class SearchHospital extends BaseTest {
             logger.error(e);
         }
         s_CheckResponse(res);
-        Assert.assertNotNull(Generator.s_ParseJson(data, "list(0)"), "hospital字段缺失");
-        Assert.assertNotNull(Generator.s_ParseJson(data, "list(0):name"), "hospital的name字段缺失");
-        Assert.assertNotNull(Generator.s_ParseJson(data, "list(0):id"), "hospital的id字段缺失");
+        Assert.assertNotNull(Helper.s_ParseJson(data, "list(0)"), "hospital字段缺失");
+        Assert.assertNotNull(Helper.s_ParseJson(data, "list(0):name"), "hospital的name字段缺失");
+        Assert.assertNotNull(Helper.s_ParseJson(data, "list(0):id"), "hospital的id字段缺失");
     }
 
     @Test(enabled = false)
@@ -45,7 +45,7 @@ public class SearchHospital extends BaseTest {
             logger.error(e);
         }
         s_CheckResponse(res);
-        Assert.assertNotNull(Generator.s_ParseJson(data, "list()"));
+        Assert.assertNotNull(Helper.s_ParseJson(data, "list()"));
     }
 
     @Test(enabled = false)
@@ -59,7 +59,7 @@ public class SearchHospital extends BaseTest {
             logger.error(e);
         }
         s_CheckResponse(res);
-        Assert.assertNotNull(Generator.s_ParseJson(data, "list()"));
+        Assert.assertNotNull(Helper.s_ParseJson(data, "list()"));
     }
 
     @Test
@@ -73,7 +73,7 @@ public class SearchHospital extends BaseTest {
             logger.error(e);
         }
         s_CheckResponse(res);
-        Assert.assertNotNull(Generator.s_ParseJson(data, "list()"));
+        Assert.assertNotNull(Helper.s_ParseJson(data, "list()"));
     }
 
     @Test
@@ -87,7 +87,7 @@ public class SearchHospital extends BaseTest {
             logger.error(e);
         }
         s_CheckResponse(res);
-        Assert.assertNotNull(Generator.s_ParseJson(data, "list()"));
+        Assert.assertNotNull(Helper.s_ParseJson(data, "list()"));
     }
 
     @Test
@@ -101,7 +101,7 @@ public class SearchHospital extends BaseTest {
             logger.error(e);
         }
         s_CheckResponse(res);
-        Assert.assertNotEquals(Generator.s_ParseJson(data, "list()"), "0");
+        Assert.assertNotEquals(Helper.s_ParseJson(data, "list()"), "0");
     }
 
 }

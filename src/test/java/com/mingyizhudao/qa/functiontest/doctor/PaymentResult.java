@@ -2,10 +2,10 @@ package com.mingyizhudao.qa.functiontest.doctor;
 
 import com.mingyizhudao.qa.common.BaseTest;
 import com.mingyizhudao.qa.common.TestLogger;
-import com.mingyizhudao.qa.functiontest.crm.Order_ReceiveTask;
-import com.mingyizhudao.qa.functiontest.crm.Order_RecommendDoctor;
-import com.mingyizhudao.qa.functiontest.crm.Order_ThreewayCall;
-import com.mingyizhudao.qa.functiontest.crm.Order_ThreewayCall_V2;
+import com.mingyizhudao.qa.functiontest.crm.trading.surgery.Order_ReceiveTask;
+import com.mingyizhudao.qa.functiontest.crm.trading.surgery.Order_RecommendDoctor;
+import com.mingyizhudao.qa.functiontest.crm.trading.surgery.Order_ThreewayCall;
+import com.mingyizhudao.qa.functiontest.crm.trading.surgery.Order_ThreewayCall_V2;
 import com.mingyizhudao.qa.utilities.HttpRequest;
 import net.sf.json.JSONObject;
 import org.testng.Assert;
