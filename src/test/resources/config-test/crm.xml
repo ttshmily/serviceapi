@@ -10,9 +10,9 @@
             <class name="com.mingyizhudao.qa.functiontest.crm.common.Common_Provinces"/>
             <class name="com.mingyizhudao.qa.functiontest.crm.common.Common_SearchDiseases"/>
             <class name="com.mingyizhudao.qa.functiontest.crm.common.Common_SearchHospitals"/>
-            <class name="com.mingyizhudao.qa.functiontest.crm.Finance_BillList"/>
-            <class name="com.mingyizhudao.qa.functiontest.crm.Finance_PayBill"/>
-            <class name="com.mingyizhudao.qa.functiontest.crm.Finance_PayInfo"/>
+            <class name="com.mingyizhudao.qa.functiontest.crm.trading.surgery.Finance_BillList"/>
+            <class name="com.mingyizhudao.qa.functiontest.crm.trading.surgery.Finance_PayBill"/>
+            <class name="com.mingyizhudao.qa.functiontest.crm.trading.surgery.Finance_PayInfo"/>
             <class name="com.mingyizhudao.qa.functiontest.crm.kb.management.KB_Track"/>
             <class name="com.mingyizhudao.qa.functiontest.crm.kb.management.KBDisease_Create"/>
             <class name="com.mingyizhudao.qa.functiontest.crm.kb.management.KBDisease_Delete"/>

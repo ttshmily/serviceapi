@@ -1,7 +1,7 @@
 package com.mingyizhudao.qa.functiontest.doctor;
 
-import com.mingyizhudao.qa.dataprofile.doctor.MedicalRecords;
-import com.mingyizhudao.qa.dataprofile.doctor.OrderDetail;
+import com.mingyizhudao.qa.dataprofile.crm.MedicalRecords;
+import com.mingyizhudao.qa.dataprofile.crm.OrderDetail;
 import com.mingyizhudao.qa.common.BaseTest;
 import com.mingyizhudao.qa.common.KnowledgeBase;
 import com.mingyizhudao.qa.common.TestLogger;

@@ -1,7 +1,8 @@
 package com.mingyizhudao.qa.functiontest.doctor;
 
 import com.mingyizhudao.qa.common.BaseTest;
-import com.mingyizhudao.qa.dataprofile.doctor.DoctorProfile;
+import com.mingyizhudao.qa.dataprofile.crm.DoctorProfile;
+import com.mingyizhudao.qa.dataprofile.User;
 import com.mingyizhudao.qa.functiontest.crm.kb.management.KBHospital_Detail;
 import com.mingyizhudao.qa.common.KnowledgeBase;
 import com.mingyizhudao.qa.common.TestLogger;
@@ -38,6 +39,18 @@ public class UpdateDoctorProfile_V1 extends BaseTest {
             logger.info("更新医生信息成功");
         } else {
             logger.debug(Helper.unicodeString(res));
+            logger.error("更新医生信息失败");
+        }
+        return res;
+    }
+
+    public static String s_Update(String token, User user) {
+        String res = "";
+        TestLogger logger = new TestLogger(s_JobName());
+        res = HttpRequest.s_SendPost(host_doc+uri, JSONObject.fromObject(user).toString(), token);
+        String code = Helper.s_ParseJson(JSONObject.fromObject(res), "code");
+        if (!code.equals("1000000")) {
+            logger.error(Helper.unicodeString(res));
             logger.error("更新医生信息失败");
         }
         return res;

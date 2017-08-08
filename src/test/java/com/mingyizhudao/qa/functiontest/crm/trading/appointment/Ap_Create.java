@@ -1,7 +1,7 @@
 package com.mingyizhudao.qa.functiontest.crm.trading.appointment;
 
 import com.mingyizhudao.qa.common.BaseTest;
-import com.mingyizhudao.qa.dataprofile.crm.Appointment;
+import com.mingyizhudao.qa.dataprofile.Appointment;
 import com.mingyizhudao.qa.common.TestLogger;
 
 import static com.mingyizhudao.qa.utilities.Helper.*;
@@ -59,7 +59,8 @@ public class Ap_Create extends BaseTest {
         Assert.assertEquals(s_ParseJson(data, "major_disease_id"), ap.getMajor_disease_id());
         Assert.assertEquals(s_ParseJson(data, "major_disease_name"), ap.getMajor_disease_name());
         Assert.assertEquals(s_ParseJson(data, "medical_record_pictures"), ap.printPictures());
-
+        Assert.assertEquals(s_ParseJson(data, "major_reps_id"), mainOperatorId);
+        Assert.assertEquals(s_ParseJson(data, "status"), "1000");
     }
 
     @Test

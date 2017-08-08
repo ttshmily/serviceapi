@@ -5,7 +5,7 @@ import com.mingyizhudao.qa.functiontest.crm.trading.surgery.Order_Detail;
 import com.mingyizhudao.qa.functiontest.login.CheckVerifyCode;
 import com.mingyizhudao.qa.functiontest.login.SendVerifyCode;
 import com.mingyizhudao.qa.common.TestLogger;
-import com.mingyizhudao.qa.dataprofile.doctor.SurgeryBrief;
+import com.mingyizhudao.qa.dataprofile.crm.SurgeryBrief;
 import com.mingyizhudao.qa.functiontest.crm.trading.surgery.Order_List;
 import com.mingyizhudao.qa.utilities.Generator;
 import com.mingyizhudao.qa.utilities.HttpRequest;

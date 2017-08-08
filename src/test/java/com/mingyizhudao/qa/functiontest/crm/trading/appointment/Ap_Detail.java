@@ -2,7 +2,7 @@ package com.mingyizhudao.qa.functiontest.crm.trading.appointment;
 
 import com.mingyizhudao.qa.common.BaseTest;
 import com.mingyizhudao.qa.common.TestLogger;
-import com.mingyizhudao.qa.dataprofile.crm.Appointment;
+import com.mingyizhudao.qa.dataprofile.Appointment;
 import com.mingyizhudao.qa.utilities.Helper;
 import com.mingyizhudao.qa.utilities.HttpRequest;
 import org.testng.Assert;
@@ -24,7 +24,7 @@ public class Ap_Detail extends BaseTest {
     public static String s_Detail(String orderNumber) {
         HashMap<String, String> pathValue = new HashMap<>();
         pathValue.put("orderNumber", orderNumber);
-        return HttpRequest.s_SendGet(host_appointment + uri, "", crm_token);
+        return HttpRequest.s_SendGet(host_appointment + uri, "", crm_token, pathValue);
     }
 
     @Test

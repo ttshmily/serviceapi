@@ -1,4 +1,4 @@
-package com.mingyizhudao.qa.functiontest.crm;
+package com.mingyizhudao.qa.functiontest.crm.trading.surgery;
 
 import com.mingyizhudao.qa.common.BaseTest;
 import com.mingyizhudao.qa.common.TestLogger;
