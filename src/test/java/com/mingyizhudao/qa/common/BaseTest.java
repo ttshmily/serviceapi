@@ -1,7 +1,9 @@
 package com.mingyizhudao.qa.common;
 
 
+import com.mingyizhudao.qa.dataprofile.crm.Doctor;
 import com.mingyizhudao.qa.dataprofile.doctor.DoctorProfile;
+import com.mingyizhudao.qa.dataprofile.doctor.User;
 import com.mingyizhudao.qa.functiontest.doctor.GetDoctorProfile_V1;
 import com.mingyizhudao.qa.functiontest.login.CheckVerifyCode;
 import com.mingyizhudao.qa.functiontest.login.SendVerifyCode;
@@ -126,7 +128,7 @@ public class BaseTest {
     public void SetUpSuite() throws Exception {
         KnowledgeBase.s_Init();
         crm_token = JSONObject.fromObject(HttpRequest.s_SendGet("http://services.dev.myzd.info/crm/api/internal/devToken" , "email="+mainOperatorId+"&name=test", "")).getJSONObject("data").getString("token");
-        bda_token = JSONObject.fromObject(HttpRequest.s_SendGet("http://work.myzd.info/wx/internal/api/dev-tokens" , "", "")).getJSONObject("data").getJSONObject("chao.fang@mingyizhudao.com").getString("token");
+        bda_token = JSONObject.fromObject(HttpRequest.s_SendGet("http://work.myzd.info/wx/internal/api/dev-tokens" , "", "")).getJSONObject("data").getJSONObject(mainOperatorId).getString("token");
         bda_token_staff = JSONObject.fromObject(HttpRequest.s_SendGet("http://work.myzd.info/wx/internal/api/dev-tokens" , "", "")).getJSONObject("data").getJSONObject("lei.wang@mingyizhudao.com").getString("token");
         mainDP = new DoctorProfile(true);
         HashMap<String,String> mainDoctorInfo = s_CreateSyncedDoctor(mainDP);
@@ -272,6 +274,27 @@ public class BaseTest {
         return info;
     }
 
+    protected static HashMap<String, String> s_CreateRegisteredDoctor(User user) {
+        TestLogger logger = new TestLogger(s_JobName());
+        HashMap<String,String> info = s_CreateRegistered();
+        if (info == null) return null;
+        String token = info.get("token");
+
+        logger.info("更新医生信息...");
+        UpdateDoctorProfile_V1.s_Update(token, user);
+        String res = GetDoctorProfile_V1.s_MyProfile(token);
+        String doctorHospitalId = JSONObject.fromObject(res).getJSONObject("data").getJSONObject("doctor").getString("hospital_id");
+        if (doctorHospitalId == null || doctorHospitalId.isEmpty()) {
+            logger.error("更新失败，医生信息不完整");
+            return null;
+        }
+        info.put("hospitalId", doctorHospitalId);
+        logger.info("doctorName为:\t"+user.getDoctor().getName());
+        logger.info("doctorHospitalId为:\t"+doctorHospitalId);
+        logger.info("doctorHospitalName为:\t"+ Generator.hospitalName(doctorHospitalId));
+        return info;
+    }
+
 //    创建一个医生并且认证
     protected static HashMap<String, String> s_CreateVerifiedDoctor(DoctorProfile dp) {
         TestLogger logger = new TestLogger(s_JobName());
@@ -292,10 +315,47 @@ public class BaseTest {
         return info;
     }
 
+    protected static HashMap<String, String> s_CreateVerifiedDoctor(User user) {
+        TestLogger logger = new TestLogger(s_JobName());
+        HashMap<String,String> info = s_CreateRegisteredDoctor(user);
+        if (info == null) return null;
+
+        logger.info("认证医生...");
+        String doctorId = info.get("id");
+
+        RegisteredDoctor_Certify_V2.s_CertifyOnly(doctorId, "1");
+        String is_verified = RegisteredDoctor_Certify_V2.s_CertifyOnly(doctorId, "1");
+        if (!is_verified.equals("1")) {
+            logger.error("认证失败");
+            return null;
+        }
+        info.put("is_verified", is_verified);
+        logger.info("is_verified为:\t"+is_verified);
+        return info;
+    }
+
 //    创建一个医生并且认证和同步
     protected static HashMap<String, String> s_CreateSyncedDoctor(DoctorProfile dp) {
         TestLogger logger = new TestLogger(s_JobName());
         HashMap<String,String> info = s_CreateRegisteredDoctor(dp);
+        if (info == null) return null;
+        logger.info("认证并同步医生...");
+        String doctorId = info.get("id");
+        HashMap<String,String> tmp = RegisteredDoctor_CertifySync_V2.s_CertifyAndSync(doctorId, "1");
+        if (!tmp.get("is_verified").equals("1") || tmp.get("kb_id") == null) {
+            logger.error("认证/同步医生失败");
+            return null;
+        }
+        info.put("is_verified", tmp.get("is_verified"));
+        info.put("expert_id", tmp.get("kb_id"));
+        logger.info("is_verified为:\t"+tmp.get("is_verified"));
+        logger.info("expert_id为:\t"+tmp.get("kb_id"));
+        return info;
+    }
+
+    protected static HashMap<String, String> s_CreateSyncedDoctor(User user) {
+        TestLogger logger = new TestLogger(s_JobName());
+        HashMap<String,String> info = s_CreateRegisteredDoctor(user);
         if (info == null) return null;
         logger.info("认证并同步医生...");
         String doctorId = info.get("id");

@@ -24,7 +24,7 @@ public class Ap_Detail extends BaseTest {
     public static String s_Detail(String orderNumber) {
         HashMap<String, String> pathValue = new HashMap<>();
         pathValue.put("orderNumber", orderNumber);
-        return HttpRequest.s_SendGet(host_appointment + uri, "", crm_token);
+        return HttpRequest.s_SendGet(host_appointment + uri, "", crm_token, pathValue);
     }
 
     @Test

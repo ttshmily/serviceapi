@@ -95,7 +95,7 @@ public class Ap_Update extends BaseTest {
         pathValue.put("orderNumber", orderNumber);
         String expertId = Generator.randomExpertId();
         ap.setExpected_doctor_id(expertId);
-        ap.setExpected_doctor_name(Generator.cityName(expertId));
+        ap.setExpected_doctor_name(Generator.expertName(expertId));
         res = HttpRequest.s_SendPut(host_appointment + uri, JSONObject.fromObject(ap).toString(), crm_token, pathValue);
         s_CheckResponse(res);
         Assert.assertEquals(code, "1000000");
@@ -195,7 +195,7 @@ public class Ap_Update extends BaseTest {
         res = Ap_Detail.s_Detail(orderNumber);
         s_CheckResponse(res);
         Assert.assertEquals(code, "1000000");
-        Assert.assertEquals(s_ParseJson(data, "patient_phone"), String.valueOf(ap.getPatient_phone()));
+        Assert.assertEquals(s_ParseJson(data, "patient_phone"), ap.getPatient_phone());
     }
 
     @Test

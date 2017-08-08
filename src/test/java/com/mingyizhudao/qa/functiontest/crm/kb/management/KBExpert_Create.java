@@ -2,6 +2,7 @@ package com.mingyizhudao.qa.functiontest.crm.kb.management;
 
 import com.mingyizhudao.qa.common.BaseTest;
 import com.mingyizhudao.qa.common.TestLogger;
+import com.mingyizhudao.qa.dataprofile.crm.Doctor;
 import com.mingyizhudao.qa.dataprofile.crm.ExpertProfile;
 import com.mingyizhudao.qa.common.KnowledgeBase;
 import com.mingyizhudao.qa.utilities.Generator;
@@ -41,6 +42,22 @@ public class KBExpert_Create extends BaseTest {
         result.put("major_id", expert.getString("major_id"));
         result.put("hospital_id", expert.getString("hospital_id"));
         return result;
+    }
+
+    public static String s_Create(Doctor ep) {
+        String res = "";
+        TestLogger logger = new TestLogger(s_JobName());
+        res = HttpRequest.s_SendPost(host_crm+uri, JSONObject.fromObject(ep).toString(), crm_token);
+        JSONObject node = JSONObject.fromObject(res);
+        HashMap<String, String> result = new HashMap<>();
+        if(!node.getString("code").equals("1000000")) return null;
+        if(!node.has("data")) return null;
+        JSONObject expert = node.getJSONObject("data");
+        result.put("id", expert.getString("id"));
+        result.put("name", expert.getString("name"));
+        result.put("major_id", expert.getString("major_id"));
+        result.put("hospital_id", expert.getString("hospital_id"));
+        return expert.getString("id");
     }
 
     @Test
