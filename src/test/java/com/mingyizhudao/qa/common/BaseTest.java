@@ -42,6 +42,8 @@ public class BaseTest {
     public static String bda_token = "";
     public static String bda_token_staff = "";
     public static String init_kb = "";
+    public static String designatedDoctor_token = "";
+
 
     public static String mainMobile = "";
     public static String mainToken = "";
@@ -96,6 +98,7 @@ public class BaseTest {
             bda_token = prop.getProperty("bda_token");
             bda_token_staff = prop.getProperty("bda_token_staff");
             init_kb = prop.getProperty("init_kb", "false");
+            designatedDoctor_token = prop.getProperty("designatedDoctor_token");
 
             host_doc = protocol.concat("://").concat(host_doc);
             host_crm = protocol.concat("://").concat(host_crm);
