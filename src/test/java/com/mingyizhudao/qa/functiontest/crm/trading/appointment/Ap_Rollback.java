@@ -2,7 +2,7 @@ package com.mingyizhudao.qa.functiontest.crm.trading.appointment;
 
 import com.mingyizhudao.qa.common.BaseTest;
 import com.mingyizhudao.qa.common.TestLogger;
-import com.mingyizhudao.qa.dataprofile.crm.Appointment;
+import com.mingyizhudao.qa.dataprofile.Appointment;
 import net.sf.json.JSONObject;
 import org.testng.Assert;
 import org.testng.annotations.Test;
@@ -11,7 +11,6 @@ import java.util.HashMap;
 
 import static com.mingyizhudao.qa.functiontest.crm.trading.appointment.Ap_Create.s_Create;
 import static com.mingyizhudao.qa.functiontest.crm.trading.appointment.Ap_RiskControl.s_Take;
-import static com.mingyizhudao.qa.utilities.Generator.*;
 import static com.mingyizhudao.qa.utilities.HttpRequest.*;
 import static com.mingyizhudao.qa.utilities.Helper.*;
 

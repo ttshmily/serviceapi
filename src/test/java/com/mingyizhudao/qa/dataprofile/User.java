@@ -1,4 +1,4 @@
-package com.mingyizhudao.qa.dataprofile.doctor;
+package com.mingyizhudao.qa.dataprofile;
 
 import static com.mingyizhudao.qa.utilities.Generator.*;
 import static com.mingyizhudao.qa.utilities.Helper.*;

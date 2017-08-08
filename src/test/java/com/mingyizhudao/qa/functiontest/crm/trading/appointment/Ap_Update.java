@@ -1,6 +1,6 @@
 package com.mingyizhudao.qa.functiontest.crm.trading.appointment;
 
-import com.mingyizhudao.qa.dataprofile.crm.Appointment;
+import com.mingyizhudao.qa.dataprofile.Appointment;
 import com.mingyizhudao.qa.common.BaseTest;
 import com.mingyizhudao.qa.common.TestLogger;
 import com.mingyizhudao.qa.utilities.Generator;

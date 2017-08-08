@@ -2,12 +2,9 @@ package com.mingyizhudao.qa.functiontest.crm.trading.appointment;
 
 import com.mingyizhudao.qa.common.BaseTest;
 import com.mingyizhudao.qa.common.TestLogger;
-import com.mingyizhudao.qa.dataprofile.crm.Appointment;
-import com.mingyizhudao.qa.dataprofile.crm.Doctor;
-import com.mingyizhudao.qa.dataprofile.doctor.User;
-import com.mingyizhudao.qa.functiontest.crm.kb.management.KBExpert_Create;
+import com.mingyizhudao.qa.dataprofile.Appointment;
+import com.mingyizhudao.qa.dataprofile.User;
 import net.sf.json.JSONObject;
-import net.sf.json.JsonConfig;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 

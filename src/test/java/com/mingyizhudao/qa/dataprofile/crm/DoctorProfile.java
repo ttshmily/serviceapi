@@ -1,4 +1,4 @@
-package com.mingyizhudao.qa.dataprofile.doctor;
+package com.mingyizhudao.qa.dataprofile.crm;
 
 import com.mingyizhudao.qa.utilities.Generator;
 import net.sf.json.JSONArray;

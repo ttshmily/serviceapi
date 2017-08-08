@@ -1,4 +1,4 @@
-package com.mingyizhudao.qa.dataprofile.crm;
+package com.mingyizhudao.qa.dataprofile;
 
 import static com.mingyizhudao.qa.utilities.Generator.*;
 import lombok.Data;
