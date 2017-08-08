@@ -1,18 +1,17 @@
 package com.mingyizhudao.qa.functiontest.doctor;
 
 import com.mingyizhudao.qa.common.BaseTest;
-import com.mingyizhudao.qa.common.TestLogger;
 import com.mingyizhudao.qa.dataprofile.doctor.DoctorProfile;
 import com.mingyizhudao.qa.functiontest.crm.user.management.RegisteredDoctor_Certify_V2;
 import com.mingyizhudao.qa.functiontest.login.CheckVerifyCode;
 import com.mingyizhudao.qa.functiontest.login.SendVerifyCode;
-import com.mingyizhudao.qa.utilities.Helper;
+import com.mingyizhudao.qa.common.TestLogger;
 import com.mingyizhudao.qa.utilities.HttpRequest;
+import com.mingyizhudao.qa.utilities.Helper;
 import net.sf.json.JSONObject;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
-import java.io.IOException;
 import java.util.HashMap;
 
 /**
@@ -34,11 +33,7 @@ public class GetOrderDetail extends BaseTest {
         TestLogger logger = new TestLogger(s_JobName());
         HashMap<String, String> pathValue = new HashMap<String, String>();
         pathValue.put("orderId", orderId);
-        try {
-            res = HttpRequest.s_SendGet(host_doc + uri, "", token, pathValue);
-        } catch (IOException e) {
-            logger.error(e);
-        }
+        res = HttpRequest.s_SendGet(host_doc + uri, "", token, pathValue);
         return res;
     }
 
@@ -49,11 +44,7 @@ public class GetOrderDetail extends BaseTest {
         HashMap<String, String> pathValue = new HashMap<String, String>();
         String orderId = CreateOrder.s_CreateOrder(mainToken);
         pathValue.put("orderId", orderId);
-        try {
-            res = HttpRequest.s_SendGet(host_doc + uri,"", mainToken, pathValue);
-        } catch (IOException e) {
-            logger.error(e);
-        }
+        res = HttpRequest.s_SendGet(host_doc + uri,"", mainToken, pathValue);
         s_CheckResponse(res);
 //        Assert.assertEquals(s_ParseJson(data,"order:id"), orderId, "订单ID字段不正确");
         Assert.assertNotEquals(Helper.s_ParseJson(data,"order:patient_name"), "", "患者姓名字段缺失");
@@ -84,11 +75,7 @@ public class GetOrderDetail extends BaseTest {
         String res = "";
         HashMap<String, String> pathValue = new HashMap<String, String>();
         pathValue.put("orderId", "20000000000");
-        try {
-            res = HttpRequest.s_SendGet(host_doc + uri,"", mainToken, pathValue);
-        } catch (IOException e) {
-            logger.error(e);
-        }
+        res = HttpRequest.s_SendGet(host_doc + uri,"", mainToken, pathValue);
         s_CheckResponse(res);
         Assert.assertEquals(code, "2210430");
     }
@@ -98,11 +85,7 @@ public class GetOrderDetail extends BaseTest {
         String res = "";
         HashMap<String, String> pathValue = new HashMap<String, String>();
         pathValue.put("orderId", "20000asdfa000");
-        try {
-            res = HttpRequest.s_SendGet(host_doc + uri,"", mainToken, pathValue);
-        } catch (IOException e) {
-            logger.error(e);
-        }
+        res = HttpRequest.s_SendGet(host_doc + uri,"", mainToken, pathValue);
         s_CheckResponse(res);
         Assert.assertEquals(code, "2210430");
 
@@ -126,11 +109,7 @@ public class GetOrderDetail extends BaseTest {
         String docId = JSONObject.fromObject(res).getJSONObject("data").getJSONObject("doctor").getString("user_id");
         RegisteredDoctor_Certify_V2.s_CertifyOnly(docId, "1");
 
-        try {
-            res = HttpRequest.s_SendGet(host_doc + uri,"", tmpToken, pathValue);
-        } catch (IOException e) {
-            logger.error(e);
-        }
+        res = HttpRequest.s_SendGet(host_doc + uri,"", tmpToken, pathValue);
         s_CheckResponse(res);
         Assert.assertNotEquals(code, "1000000");
     }

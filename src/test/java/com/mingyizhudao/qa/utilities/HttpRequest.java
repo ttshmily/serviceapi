@@ -2,7 +2,6 @@ package com.mingyizhudao.qa.utilities;
 
 import com.mingyizhudao.qa.common.TestLogger;
 
-import javax.net.ssl.*;
 import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.URL;
@@ -10,9 +9,7 @@ import java.net.URLConnection;
 import java.net.URLEncoder;
 import java.security.KeyManagementException;
 import java.security.NoSuchAlgorithmException;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -45,7 +42,7 @@ public class HttpRequest {
      *            请求参数，请求参数应该是 name1=value1&name2=value2 的形式。
      * @return URL所代表远程资源的响应结果，类型为String
      */
-	public static String s_SendGet(String url, String param, String authCode) throws IOException {
+	public static String s_SendGet(String url, String param, String authCode) {
 
         String jobName = "";
 	    StackTraceElement stack[] = (new Throwable()).getStackTrace();
@@ -120,7 +117,7 @@ public class HttpRequest {
 		return result;
 	}
 
-    public static String s_SendGet(String url, HashMap<String,String> query, String authCode) throws IOException {
+    public static String s_SendGet(String url, HashMap<String,String> query, String authCode) {
         String result = "";
         String param = "";
         try {
@@ -128,14 +125,13 @@ public class HttpRequest {
                 param = queryBuilder(query);
             }
             result = s_SendGet(url, param, authCode);
-        } catch (IOException e) {
+        } catch (Exception e) {
             logger.error("发送请求异常");
-            throw e;
         }
         return result;
     }
 
-    public static String s_SendGet(String url, String param, String authCode, HashMap<String,String> pathValue) throws IOException {
+    public static String s_SendGet(String url, String param, String authCode, HashMap<String,String> pathValue) {
         String result = "";
         try {
             String urlNameString;
@@ -146,14 +142,13 @@ public class HttpRequest {
             }
             result = s_SendGet(urlNameString, param, authCode);
 
-        } catch (IOException e) {
+        } catch (Exception e) {
             logger.error("发送请求异常");
-            throw e;
         }
         return result;
     }
 
-    public static String s_SendGet(String url, HashMap<String,String> query, String authCode, HashMap<String,String> pathValue) throws IOException {
+    public static String s_SendGet(String url, HashMap<String,String> query, String authCode, HashMap<String,String> pathValue) {
         String result = "";
         String param = "";
         BufferedReader in = null;
@@ -169,9 +164,8 @@ public class HttpRequest {
             }
             result = s_SendGet(urlNameString, param, authCode);
 
-        } catch (IOException e) {
+        } catch (Exception e) {
             logger.error("发送请求异常");
-            throw e;
         }
         return result;
     }
@@ -185,7 +179,7 @@ public class HttpRequest {
      *            请求参数，请求参数是JsonString的形式。
      * @return 所代表远程资源的响应结果，JSON转换的String
      */
-    public static String s_SendPost(String url, String param, String authCode) throws IOException {
+    public static String s_SendPost(String url, String param, String authCode) {
 
         String jobName = "";
         StackTraceElement stack[] = (new Throwable()).getStackTrace();
@@ -202,11 +196,12 @@ public class HttpRequest {
         PrintWriter out = null;
         BufferedReader in = null;
         String result = "";
+        HttpURLConnection httpURLConnection;
         try {
             URL realUrl = new URL(url);
             // 打开和URL之间的连接
             URLConnection conn = realUrl.openConnection();
-            HttpURLConnection httpURLConnection = (HttpURLConnection)conn;
+            httpURLConnection = (HttpURLConnection)conn;
             // 设置通用的请求属性
             httpURLConnection.setRequestMethod("POST");
             httpURLConnection.setRequestProperty("Content-Type", "application/json");
@@ -227,32 +222,29 @@ public class HttpRequest {
             // flush输出流的缓冲
             out.flush();
             // 定义BufferedReader输入流来读取URL的响应
-            in = new BufferedReader(new InputStreamReader(httpURLConnection.getInputStream()));
-            end = System.currentTimeMillis();
             logger.info("等待回应: <<<<<  " + httpURLConnection.getResponseCode() + " " + httpURLConnection.getResponseMessage());
-//            logger.info("响应时间: <<<<<  " + Long.toString(end-start) + " ms");
+            end = System.currentTimeMillis();
+            in = new BufferedReader(new InputStreamReader(httpURLConnection.getInputStream()));
             String line;
             while ((line = in.readLine()) != null) {
                 result += line;
             }
             in.close();
             out.close();
-        } catch (IOException e) {
-            logger.debug("发送请求异常");
-            throw e;
+        } catch (Exception e) {
+            logger.error("发送请求异常");
         }
         return result;
 	}
 
-    public static String s_SendPost(String url, String param, String authCode, HashMap<String,String> pathValue) throws IOException {
+    public static String s_SendPost(String url, String param, String authCode, HashMap<String,String> pathValue) {
 
         String result = "";
         try {
             String urlString = restUrl(url, pathValue);
             result = s_SendPost(urlString, param, authCode);
-        } catch (IOException e) {
+        } catch (Exception e) {
             logger.error("发送请求异常");
-            throw e;
         }
         return result;
     }
@@ -359,7 +351,7 @@ public class HttpRequest {
      * @return 所代表远程资源的响应结果，JSON转换的String
      */
 
-    public static String s_SendPut(String url, String param, String authCode) throws IOException {
+    public static String s_SendPut(String url, String param, String authCode) {
 
         String jobName = "";
         StackTraceElement stack[] = (new Throwable()).getStackTrace();
@@ -412,14 +404,13 @@ public class HttpRequest {
             }
             in.close();
             out.close();
-        } catch (IOException e) {
+        } catch (Exception e) {
             logger.error("发送请求异常");
-            throw e;
         }
         return result;
 	}
 
-    public static String s_SendPut(String url, String param, String authCode, HashMap<String,String> pathValue) throws IOException {
+    public static String s_SendPut(String url, String param, String authCode, HashMap<String,String> pathValue) {
 
         String result = "";
         try {
@@ -430,9 +421,8 @@ public class HttpRequest {
                 urlString = url;
             }
             result = s_SendPut(urlString, param, authCode);
-        } catch (IOException e) {
+        } catch (Exception e) {
             logger.error("发送请求异常");
-            throw e;
         }
         return result;
     }
@@ -447,7 +437,7 @@ public class HttpRequest {
      * @return 所代表远程资源的响应结果，JSON转换的String
      */
 
-    public static String s_SendDelete(String url, String param, String authCode, HashMap<String,String> pathValue) throws IOException {
+    public static String s_SendDelete(String url, String param, String authCode, HashMap<String,String> pathValue) {
         String jobName = "";
         StackTraceElement stack[] = (new Throwable()).getStackTrace();
         for (int i = 0; i < stack.length; i++) {
@@ -503,9 +493,8 @@ public class HttpRequest {
             }
             in.close();
             out.close();
-        } catch (IOException e) {
+        } catch (Exception e) {
             logger.error("发送请求异常");
-            throw e;
         }
         return result;
     }

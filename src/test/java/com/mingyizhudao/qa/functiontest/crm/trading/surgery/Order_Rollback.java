@@ -3,13 +3,12 @@ package com.mingyizhudao.qa.functiontest.crm.trading.surgery;
 import com.mingyizhudao.qa.common.BaseTest;
 import com.mingyizhudao.qa.common.TestLogger;
 import com.mingyizhudao.qa.functiontest.doctor.CreateOrder;
-import com.mingyizhudao.qa.utilities.Helper;
 import com.mingyizhudao.qa.utilities.HttpRequest;
+import com.mingyizhudao.qa.utilities.Helper;
 import net.sf.json.JSONObject;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
-import java.io.IOException;
 import java.util.HashMap;
 
 /**
@@ -34,11 +33,7 @@ public class Order_Rollback extends BaseTest {
         pathValue.put("orderNumber", orderId);
         JSONObject body = new JSONObject();
         body.put("content", "自动化测试的回退原因");
-        try {
-            res = HttpRequest.s_SendPost(host_crm+uri, body.toString(), crm_token, pathValue);
-        } catch (IOException e) {
-            logger.error(e);
-        }
+        res = HttpRequest.s_SendPost(host_crm+uri, body.toString(), crm_token, pathValue);
         res = Order_Detail.s_Detail(orderId);
         return Helper.s_ParseJson(JSONObject.fromObject(res), "data:status"); // 期望2000
     }
@@ -59,11 +54,7 @@ public class Order_Rollback extends BaseTest {
 
         JSONObject body = new JSONObject();
         body.put("content", "自动化测试的回退原因");
-        try {
-            res = HttpRequest.s_SendPost(host_crm+uri, body.toString(), crm_token, pathValue);
-        } catch (IOException e) {
-            logger.error(e);
-        }
+        res = HttpRequest.s_SendPost(host_crm+uri, body.toString(), crm_token, pathValue);
         s_CheckResponse(res);
         Assert.assertEquals(code, "1000000");
         res = Order_Detail.s_Detail(order_number);
@@ -88,11 +79,7 @@ public class Order_Rollback extends BaseTest {
         pathValue.put("orderNumber", order_number);
         JSONObject body = new JSONObject();
         body.put("content", "自动化测试的回退原因");
-        try {
-            res = HttpRequest.s_SendPost(host_crm+uri, body.toString(), crm_token, pathValue);
-        } catch (IOException e) {
-            logger.error(e);
-        }
+        res = HttpRequest.s_SendPost(host_crm+uri, body.toString(), crm_token, pathValue);
         s_CheckResponse(res);
         Assert.assertNotEquals(code, "1000000");
         res = Order_Detail.s_Detail(order_number);
@@ -101,11 +88,7 @@ public class Order_Rollback extends BaseTest {
 
         // 刚领取的订单
         Order_ReceiveTask.s_ReceiveTask(order_number);
-        try {
-            res = HttpRequest.s_SendPost(host_crm+uri, body.toString(), crm_token, pathValue);
-        } catch (IOException e) {
-            logger.error(e);
-        }
+        res = HttpRequest.s_SendPost(host_crm+uri, body.toString(), crm_token, pathValue);
         s_CheckResponse(res);
         Assert.assertNotEquals(code, "1000000");
         res = Order_Detail.s_Detail(order_number);
@@ -114,11 +97,7 @@ public class Order_Rollback extends BaseTest {
 
         // 刚推荐的订单
         Order_RecommendDoctor.s_RecommendDoctor(order_number, "666");
-        try {
-            res = HttpRequest.s_SendPost(host_crm+uri, body.toString(), crm_token, pathValue);
-        } catch (IOException e) {
-            logger.error(e);
-        }
+        res = HttpRequest.s_SendPost(host_crm+uri, body.toString(), crm_token, pathValue);
         s_CheckResponse(res);
         Assert.assertNotEquals(code, "1000000");
         res = Order_Detail.s_Detail(order_number);
@@ -127,11 +106,7 @@ public class Order_Rollback extends BaseTest {
 
         // 三方通话中的订单
         Order_ThreewayCall_V2.s_CallV2(order_number, "undetermined");
-        try {
-            res = HttpRequest.s_SendPost(host_crm+uri, body.toString(), crm_token, pathValue);
-        } catch (IOException e) {
-            logger.error(e);
-        }
+        res = HttpRequest.s_SendPost(host_crm+uri, body.toString(), crm_token, pathValue);
         s_CheckResponse(res);
         Assert.assertNotEquals(code, "1000000");
         res = Order_Detail.s_Detail(order_number);
@@ -141,11 +116,7 @@ public class Order_Rollback extends BaseTest {
         // 已拒绝合作的订单
         Order_ThreewayCall.s_Call(order_number, "failed");
         Order_Reject.s_RejectOrder(order_number);
-        try {
-            res = HttpRequest.s_SendPost(host_crm+uri, body.toString(), crm_token, pathValue);
-        } catch (IOException e) {
-            logger.error(e);
-        }
+        res = HttpRequest.s_SendPost(host_crm+uri, body.toString(), crm_token, pathValue);
         s_CheckResponse(res);
         Assert.assertNotEquals(code, "1000000");
         res = Order_Detail.s_Detail(order_number);

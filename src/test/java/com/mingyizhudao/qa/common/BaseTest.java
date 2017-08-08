@@ -2,13 +2,14 @@ package com.mingyizhudao.qa.common;
 
 
 import com.mingyizhudao.qa.dataprofile.doctor.DoctorProfile;
-import com.mingyizhudao.qa.functiontest.crm.user.management.RegisteredDoctor_CertifySync_V2;
-import com.mingyizhudao.qa.functiontest.crm.user.management.RegisteredDoctor_Certify_V2;
-import com.mingyizhudao.qa.functiontest.doctor.*;
+import com.mingyizhudao.qa.functiontest.doctor.GetDoctorProfile_V1;
 import com.mingyizhudao.qa.functiontest.login.CheckVerifyCode;
 import com.mingyizhudao.qa.functiontest.login.SendVerifyCode;
-import com.mingyizhudao.qa.utilities.HttpRequest;
+import com.mingyizhudao.qa.functiontest.crm.user.management.RegisteredDoctor_CertifySync_V2;
+import com.mingyizhudao.qa.functiontest.crm.user.management.RegisteredDoctor_Certify_V2;
+import com.mingyizhudao.qa.functiontest.doctor.UpdateDoctorProfile_V1;
 import com.mingyizhudao.qa.utilities.Generator;
+import com.mingyizhudao.qa.utilities.HttpRequest;
 import net.sf.json.JSONException;
 import net.sf.json.JSONObject;
 import org.apache.log4j.PropertyConfigurator;
@@ -196,9 +197,19 @@ public class BaseTest {
         logger.info(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> \n");
     }*/
 
-    public void s_CheckResponse(String res) throws JSONException {
+    public void s_CheckResponse(String res) {
         TestLogger logger = new TestLogger(s_JobName());
-        JSONObject json = JSONObject.fromObject(res);
+        JSONObject json = null;
+        try {
+            json = JSONObject.fromObject(res);
+        } catch (JSONException e) {
+            logger.error("res is NOT a JSON");
+            logger.error(res);
+            this.code = null;
+            this.data = null;
+            this.message = null;
+            return;
+        }
         this.code = json.getString("code");
         this.message = json.getString("message");
         if (json.containsKey("data")) {

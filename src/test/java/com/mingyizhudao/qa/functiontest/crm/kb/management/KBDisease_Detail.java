@@ -3,13 +3,12 @@ package com.mingyizhudao.qa.functiontest.crm.kb.management;
 import com.mingyizhudao.qa.common.BaseTest;
 import com.mingyizhudao.qa.common.TestLogger;
 import com.mingyizhudao.qa.dataprofile.crm.DiseaseProfile;
-import com.mingyizhudao.qa.utilities.Helper;
-import com.mingyizhudao.qa.utilities.HttpRequest;
 import com.mingyizhudao.qa.utilities.Generator;
+import com.mingyizhudao.qa.utilities.HttpRequest;
+import com.mingyizhudao.qa.utilities.Helper;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -34,11 +33,7 @@ public class KBDisease_Detail extends BaseTest {
         TestLogger logger = new TestLogger(s_JobName());
         HashMap<String, String> pathValue = new HashMap<>();
         pathValue.put("id",diseaseId);
-        try {
-            res = HttpRequest.s_SendGet(host_crm + uri,"", crm_token, pathValue);
-        } catch (IOException e) {
-            logger.error(e);
-        }
+        res = HttpRequest.s_SendGet(host_crm + uri,"", crm_token, pathValue);
         return res;
     }
 
@@ -51,11 +46,7 @@ public class KBDisease_Detail extends BaseTest {
         if (info == null) Assert.fail("创建疾病失败，退出用例执行");
         HashMap<String, String> pathValue = new HashMap<>();
         pathValue.put("id",info.get("id"));
-        try {
-            res = HttpRequest.s_SendGet(host_crm+uri, "", crm_token, pathValue);
-        } catch (IOException e) {
-            logger.error(e);
-        }
+        res = HttpRequest.s_SendGet(host_crm+uri, "", crm_token, pathValue);
         s_CheckResponse(res);
         Assert.assertEquals(code, "1000000");
         Assert.assertEquals(Helper.s_ParseJson(data, "name"), dp.body.getString("name"));
@@ -75,11 +66,7 @@ public class KBDisease_Detail extends BaseTest {
         if (info == null) Assert.fail("创建疾病失败，退出用例执行");
         HashMap<String, String> pathValue = new HashMap<>();
         pathValue.put("id","111"+info.get("id"));
-        try {
-            res = HttpRequest.s_SendGet(host_crm+uri, "", crm_token, pathValue);
-        } catch (IOException e) {
-            logger.error(e);
-        }
+        res = HttpRequest.s_SendGet(host_crm+uri, "", crm_token, pathValue);
         s_CheckResponse(res);
         Assert.assertNotEquals(code, "1000000");
     }
@@ -94,11 +81,7 @@ public class KBDisease_Detail extends BaseTest {
         String diseaseId = info.get("id");
         HashMap<String, String> pathValue = new HashMap<>();
         pathValue.put("id", diseaseId);
-        try {
-            res = HttpRequest.s_SendGet(host_crm+uri, "", crm_token, pathValue);
-        } catch (IOException e) {
-            logger.error(e);
-        }
+        res = HttpRequest.s_SendGet(host_crm+uri, "", crm_token, pathValue);
         s_CheckResponse(res);
         Assert.assertEquals(code, "1000000");
         Assert.assertEquals(Helper.s_ParseJson(data, "related_to_doctors"), "0");
@@ -106,31 +89,19 @@ public class KBDisease_Detail extends BaseTest {
         ids.add(diseaseId);
 
         if (!KBExpert_Diseases.s_Connect(Generator.randomExpertId(), ids)) Assert.fail("关联疾病失败，退出用例执行");
-        try {
-            res = HttpRequest.s_SendGet(host_crm+uri, "", crm_token, pathValue);
-        } catch (IOException e) {
-            logger.error(e);
-        }
+        res = HttpRequest.s_SendGet(host_crm+uri, "", crm_token, pathValue);
         s_CheckResponse(res);
         Assert.assertEquals(code, "1000000");
         Assert.assertEquals(Helper.s_ParseJson(data, "related_to_doctors"), "1");
 
         KBExpert_Diseases.s_Connect(Generator.randomExpertId(), ids);
-        try {
-            res = HttpRequest.s_SendGet(host_crm+uri, "", crm_token, pathValue);
-        } catch (IOException e) {
-            logger.error(e);
-        }
+        res = HttpRequest.s_SendGet(host_crm+uri, "", crm_token, pathValue);
         s_CheckResponse(res);
         Assert.assertEquals(code, "1000000");
         Assert.assertEquals(Helper.s_ParseJson(data, "related_to_doctors"), "2");
 
         KBExpert_Diseases.s_Connect(Generator.randomExpertId(), ids);
-        try {
-            res = HttpRequest.s_SendGet(host_crm+uri, "", crm_token, pathValue);
-        } catch (IOException e) {
-            logger.error(e);
-        }
+        res = HttpRequest.s_SendGet(host_crm+uri, "", crm_token, pathValue);
         s_CheckResponse(res);
         Assert.assertEquals(code, "1000000");
         Assert.assertEquals(Helper.s_ParseJson(data, "related_to_doctors"), "3");

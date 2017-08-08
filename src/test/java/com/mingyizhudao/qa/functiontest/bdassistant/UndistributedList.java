@@ -6,7 +6,6 @@ import org.apache.log4j.Logger;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
-import java.io.IOException;
 import java.util.HashMap;
 
 /**
@@ -21,14 +20,9 @@ public class UndistributedList extends BaseTest {
     public void test_01_获取待分配城市列表(){
         String res = "";
         HashMap<String, String> query = new HashMap<>();
-        try {
-            res = HttpRequest.s_SendGet(host_bda + uri, query, bda_token);
-        } catch (IOException e) {
-            logger.error(e);
-        }
+        res = HttpRequest.s_SendGet(host_bda + uri, query, bda_token);
         s_CheckResponse(res);
         Assert.assertEquals(code, "1000000", "");
     }
-
 
 }

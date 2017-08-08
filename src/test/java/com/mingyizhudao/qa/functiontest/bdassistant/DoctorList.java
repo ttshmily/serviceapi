@@ -2,16 +2,15 @@ package com.mingyizhudao.qa.functiontest.bdassistant;
 
 import com.mingyizhudao.qa.common.BaseTest;
 import com.mingyizhudao.qa.common.KnowledgeBase;
-import com.mingyizhudao.qa.utilities.Helper;
-import com.mingyizhudao.qa.utilities.HttpRequest;
 import com.mingyizhudao.qa.utilities.Generator;
+import com.mingyizhudao.qa.utilities.HttpRequest;
+import com.mingyizhudao.qa.utilities.Helper;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 import org.apache.log4j.Logger;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -32,11 +31,7 @@ public class DoctorList extends BaseTest {
 
         String res = "";
         HashMap<String, String> map = new HashMap<>();
-        try {
-            res = HttpRequest.s_SendGet(host_bda + uri, map, "", null);
-        } catch (IOException e) {
-            logger.error(e);
-        }
+        res = HttpRequest.s_SendGet(host_bda + uri, map, "", null);
         s_CheckResponse(res);
         Assert.assertNotEquals(code, "1000000", "没有token不应该调用成功");
     }
@@ -47,11 +42,7 @@ public class DoctorList extends BaseTest {
         String res = "";
         HashMap<String, String> map = new HashMap<>();
         map.put("agent_contact_id", Generator.randomEmployeeId());
-        try {
-            res = HttpRequest.s_SendGet(host_bda + uri, map, bda_token);
-        } catch (IOException e) {
-            logger.error(e);
-        }
+        res = HttpRequest.s_SendGet(host_bda + uri, map, bda_token);
         s_CheckResponse(res);
         Assert.assertEquals(code, "1000000", "有token应该调用成功");
         Assert.assertNotNull(Helper.s_ParseJson(data, "list(0):name"), "医生的name字段缺失");
@@ -67,11 +58,7 @@ public class DoctorList extends BaseTest {
         String res = "";
         HashMap<String, String> map = new HashMap<>();
         map.put("agent_contact_id", "SH0133");
-        try {
-            res = HttpRequest.s_SendGet(host_bda + uri, map, bda_token, null);
-        } catch (IOException e) {
-            logger.error(e);
-        }
+        res = HttpRequest.s_SendGet(host_bda + uri, map, bda_token, null);
         s_CheckResponse(res);
         Assert.assertEquals(code, "1000000", "有token应该调用成功");
         Assert.assertNotNull(Helper.s_ParseJson(data, "list(0):name"), "医生的name字段缺失");
@@ -88,11 +75,7 @@ public class DoctorList extends BaseTest {
         HashMap<String, String> map = new HashMap<>();
         String agent_contact_id = Generator.randomEmployeeId();
         map.put("agent_contact_id", agent_contact_id);
-        try {
-            res = HttpRequest.s_SendGet(host_bda + uri, map, bda_token, null);
-        } catch (IOException e) {
-            logger.error(e);
-        }
+        res = HttpRequest.s_SendGet(host_bda + uri, map, bda_token, null);
         s_CheckResponse(res);
         Assert.assertEquals(code, "1000000", "有token应该调用成功");
         Assert.assertNotNull(Helper.s_ParseJson(data, "list(0):name"), "医生的name字段缺失");
@@ -108,11 +91,7 @@ public class DoctorList extends BaseTest {
         String res = "";
         HashMap<String, String> map = new HashMap<>();
         map.put("agent_contact_id", "SH0001");
-        try {
-            res = HttpRequest.s_SendGet(host_bda + uri, map, bda_token, null);
-        } catch (IOException e) {
-            logger.error(e);
-        }
+        res = HttpRequest.s_SendGet(host_bda + uri, map, bda_token, null);
         s_CheckResponse(res);
         Assert.assertNotEquals(code, "1000000", "非下属的ID不应该调用成功");
     }
@@ -124,11 +103,7 @@ public class DoctorList extends BaseTest {
         HashMap<String, String> map = new HashMap<>();
         String agent_contact_id = Generator.randomEmployeeId();
         map.put("agent_contact_id", agent_contact_id);
-        try {
-            res = HttpRequest.s_SendGet(host_bda + uri, map, bda_token, null);
-        } catch (IOException e) {
-            logger.error(e);
-        }
+        res = HttpRequest.s_SendGet(host_bda + uri, map, bda_token, null);
         s_CheckResponse(res);
         Assert.assertEquals(code, "1000000", "有token应该调用成功");
         Assert.assertNotNull(Helper.s_ParseJson(data, "list(0):create_order_time"), "没有第一次创建订单的时间");
@@ -156,11 +131,7 @@ public class DoctorList extends BaseTest {
         map.put("agent_contact_id", "SH0105");
         String title = Generator.randomKey(KnowledgeBase.kb_academic_title);
         map.put("academic_title", title);
-        try {
-            res = HttpRequest.s_SendGet(host_bda + uri, map, bda_token, null);
-        } catch (IOException e) {
-            logger.error(e);
-        }
+        res = HttpRequest.s_SendGet(host_bda + uri, map, bda_token, null);
         s_CheckResponse(res);
         Assert.assertEquals(code, "1000000", "有token应该调用成功");
         JSONArray doctorList = JSONObject.fromObject(res).getJSONObject("data").getJSONArray("list");
@@ -178,11 +149,7 @@ public class DoctorList extends BaseTest {
         map.put("agent_contact_id", "SH0105");
         String title = Generator.randomKey(KnowledgeBase.kb_medical_title);
         map.put("medical_title", title);
-        try {
-            res = HttpRequest.s_SendGet(host_bda + uri, map, bda_token, null);
-        } catch (IOException e) {
-            logger.error(e);
-        }
+        res = HttpRequest.s_SendGet(host_bda + uri, map, bda_token, null);
         s_CheckResponse(res);
         Assert.assertEquals(code, "1000000", "有token应该调用成功");
         JSONArray doctorList = JSONObject.fromObject(res).getJSONObject("data").getJSONArray("list");
@@ -215,11 +182,7 @@ public class DoctorList extends BaseTest {
         for (String s:status
              ) {
             map.replace("is_verified", s);
-            try {
-                res = HttpRequest.s_SendGet(host_bda + uri, map, bda_token, null);
-            } catch (IOException e) {
-                logger.error(e);
-            }
+            res = HttpRequest.s_SendGet(host_bda + uri, map, bda_token, null);
             s_CheckResponse(res);
             Assert.assertEquals(code, "1000000", "有token应该调用成功");
             JSONArray doctorList = JSONObject.fromObject(res).getJSONObject("data").getJSONArray("list");

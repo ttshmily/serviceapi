@@ -1,19 +1,18 @@
 package com.mingyizhudao.qa.functiontest.doctor;
 
 import com.mingyizhudao.qa.common.BaseTest;
-import com.mingyizhudao.qa.common.TestLogger;
-import com.mingyizhudao.qa.dataprofile.doctor.SurgeryBrief;
+import com.mingyizhudao.qa.functiontest.crm.trading.surgery.Order_Detail;
 import com.mingyizhudao.qa.functiontest.login.CheckVerifyCode;
 import com.mingyizhudao.qa.functiontest.login.SendVerifyCode;
-import com.mingyizhudao.qa.functiontest.crm.trading.surgery.Order_Detail;
+import com.mingyizhudao.qa.common.TestLogger;
+import com.mingyizhudao.qa.dataprofile.doctor.SurgeryBrief;
 import com.mingyizhudao.qa.functiontest.crm.trading.surgery.Order_List;
-import com.mingyizhudao.qa.utilities.HttpRequest;
 import com.mingyizhudao.qa.utilities.Generator;
+import com.mingyizhudao.qa.utilities.HttpRequest;
 import net.sf.json.JSONObject;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
-import java.io.IOException;
 import java.util.HashMap;
 
 /**
@@ -43,11 +42,7 @@ public class CreateSurgeryBriefs extends BaseTest {
         SurgeryBrief sb = new SurgeryBrief(true);
         HashMap<String, String> pathValue = new HashMap<>();
         pathValue.put("orderId", orderId);
-        try {
-            res = HttpRequest.s_SendPut(host_doc + uri, sb.body.toString(), token, pathValue);
-        } catch (IOException e) {
-            logger.error(e);
-        }
+        res = HttpRequest.s_SendPut(host_doc + uri, sb.body.toString(), token, pathValue);
         status = JSONObject.fromObject(res).getJSONObject("data").getString("status");
         return status;
     }
@@ -69,11 +64,7 @@ public class CreateSurgeryBriefs extends BaseTest {
         SurgeryBrief sb = new SurgeryBrief(true);
         HashMap<String, String> pathValue = new HashMap<>();
         pathValue.put("orderId", orderId);
-        try {
-            res = HttpRequest.s_SendPut(host_doc + uri, sb.body.toString(), token, pathValue);
-        } catch (IOException e) {
-            logger.error(e);
-        }
+        res = HttpRequest.s_SendPut(host_doc + uri, sb.body.toString(), token, pathValue);
         s_CheckResponse(res);
         Assert.assertEquals(code, "1000000");
         res = GetOrderDetail_V1.s_MyInitiateOrder(token, orderId);
@@ -109,41 +100,25 @@ public class CreateSurgeryBriefs extends BaseTest {
         sb1.body.getJSONObject("order").remove("surgery_brief_surgery_id");
         HashMap<String, String> pathValue = new HashMap<>();
         pathValue.put("orderId", orderId);
-        try {
-            res = HttpRequest.s_SendPut(host_doc + uri, sb1.body.toString(), token, pathValue);
-        } catch (IOException e) {
-            logger.error(e);
-        }
+        res = HttpRequest.s_SendPut(host_doc + uri, sb1.body.toString(), token, pathValue);
         s_CheckResponse(res);
         Assert.assertNotEquals(code, "1000000");
 
         SurgeryBrief sb2 = new SurgeryBrief(true);
         sb2.body.getJSONObject("order").remove("surgery_brief_final_diagnosed_disease_id");
-        try {
-            res = HttpRequest.s_SendPut(host_doc + uri, sb2.body.toString(), token, pathValue);
-        } catch (IOException e) {
-            logger.error(e);
-        }
+        res = HttpRequest.s_SendPut(host_doc + uri, sb2.body.toString(), token, pathValue);
         s_CheckResponse(res);
         Assert.assertNotEquals(code, "1000000");
 
         SurgeryBrief sb3 = new SurgeryBrief(true);
         sb3.body.getJSONObject("order").remove("surgery_brief_date");
-        try {
-            res = HttpRequest.s_SendPut(host_doc + uri, sb3.body.toString(), token, pathValue);
-        } catch (IOException e) {
-            logger.error(e);
-        }
+        res = HttpRequest.s_SendPut(host_doc + uri, sb3.body.toString(), token, pathValue);
         s_CheckResponse(res);
         Assert.assertNotEquals(code, "1000000");
 
         SurgeryBrief sb4 = new SurgeryBrief(true);
         sb4.body.getJSONObject("order").remove("surgery_brief_hospital_id");
-        try {
-            res = HttpRequest.s_SendPut(host_doc + uri, sb4.body.toString(), token, pathValue);
-        } catch (IOException e) {
-            logger.error(e);
-        }
+        res = HttpRequest.s_SendPut(host_doc + uri, sb4.body.toString(), token, pathValue);
         s_CheckResponse(res);
         Assert.assertNotEquals(code, "1000000");
 

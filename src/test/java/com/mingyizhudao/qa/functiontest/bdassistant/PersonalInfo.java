@@ -12,7 +12,6 @@ import org.apache.log4j.Logger;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
-import java.io.IOException;
 import java.util.HashMap;
 
 /**
@@ -30,14 +29,9 @@ public class PersonalInfo extends BaseTest {
 
         String res = "";
         HashMap<String, String> map = new HashMap<>();
-        try {
-            res = HttpRequest.s_SendGet(host_bda + uri, map, "", null);
-        } catch (IOException e) {
-            logger.error(e);
-        }
+        res = HttpRequest.s_SendGet(host_bda + uri, map, "");
         s_CheckResponse(res);
         Assert.assertNotEquals(code, "1000000", "没有token不应该调用成功");
-
     }
 
     @Test
@@ -45,11 +39,7 @@ public class PersonalInfo extends BaseTest {
 
         String res = "";
         HashMap<String, String> map = new HashMap<>();
-        try {
-            res = HttpRequest.s_SendGet(host_bda + uri, map, bda_token, null);
-        } catch (IOException e) {
-            logger.error(e);
-        }
+        res = HttpRequest.s_SendGet(host_bda + uri, map, bda_token);
         s_CheckResponse(res);
         Assert.assertEquals(code, "1000000", "有token应该调用成功");
         Assert.assertNotNull(Helper.s_ParseJson(data, "doctorCounts"), "doctorCounts字段缺失");
@@ -66,11 +56,7 @@ public class PersonalInfo extends BaseTest {
         String res = "";
 
         HashMap<String, String> map = new HashMap<>();
-        try {
-            res = HttpRequest.s_SendGet(host_bda + uri, map, bda_token);
-        } catch (IOException e) {
-            logger.error(e);
-        }
+        res = HttpRequest.s_SendGet(host_bda + uri, map, bda_token);
         s_CheckResponse(res);
         Assert.assertEquals(code, "1000000");
         int doctorCountsBefore = Integer.parseInt(Helper.s_ParseJson(data, "doctorCounts"));
@@ -91,11 +77,7 @@ public class PersonalInfo extends BaseTest {
         if(!inviter_no.equals("SH0133")) Assert.fail("更新医生的invitor_no失败，退出用例执行");
 
         CreateOrder.s_CreateOrder(info.get("token"));
-        try {
-            res = HttpRequest.s_SendGet(host_bda + uri, map, bda_token);
-        } catch (IOException e) {
-            logger.error(e);
-        }
+        res = HttpRequest.s_SendGet(host_bda + uri, map, bda_token);
         s_CheckResponse(res);
         Assert.assertEquals(code, "1000000");
         int doctorCountsAfter = Integer.parseInt(Helper.s_ParseJson(data, "doctorCounts"));

@@ -1,16 +1,15 @@
 package com.mingyizhudao.qa.functiontest.bdassistant;
 
 import com.mingyizhudao.qa.common.BaseTest;
-import com.mingyizhudao.qa.utilities.Helper;
-import com.mingyizhudao.qa.utilities.HttpRequest;
 import com.mingyizhudao.qa.utilities.Generator;
+import com.mingyizhudao.qa.utilities.HttpRequest;
+import com.mingyizhudao.qa.utilities.Helper;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 import org.apache.log4j.Logger;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -29,11 +28,7 @@ public class OrderList extends BaseTest {
 
         String res = "";
         HashMap<String, String> map = new HashMap<>();
-        try {
-            res = HttpRequest.s_SendGet(host_bda + uri, map, "", null);
-        } catch (IOException e) {
-            logger.error(e);
-        }
+        res = HttpRequest.s_SendGet(host_bda + uri, map, "");
         s_CheckResponse(res);
         Assert.assertNotEquals(code, "1000000", "没有token不应该调用成功");
     }
@@ -44,11 +39,7 @@ public class OrderList extends BaseTest {
         String res = "";
         HashMap<String, String> map = new HashMap<>();
         map.put("agent_contact_id", Generator.randomEmployeeId());
-        try {
-            res = HttpRequest.s_SendGet(host_bda + uri, map, bda_token, null);
-        } catch (IOException e) {
-            logger.error(e);
-        }
+        res = HttpRequest.s_SendGet(host_bda + uri, map, bda_token);
         s_CheckResponse(res);
         Assert.assertEquals(code, "1000000", "有token应该调用成功");
         Assert.assertNotNull(Helper.s_ParseJson(data, "list(0):agent_name"), "下级医生姓名字段缺失");
@@ -64,11 +55,7 @@ public class OrderList extends BaseTest {
         String res = "";
         HashMap<String, String> map = new HashMap<>();
         map.put("agent_contact_id", "SH0133");
-        try {
-            res = HttpRequest.s_SendGet(host_bda + uri, map, bda_token, null);
-        } catch (IOException e) {
-            logger.error(e);
-        }
+        res = HttpRequest.s_SendGet(host_bda + uri, map, bda_token);
         s_CheckResponse(res);
         Assert.assertEquals(code, "1000000", "有token应该调用成功");
         Assert.assertNotNull(Helper.s_ParseJson(data, "list(0):agent_name"), "下级医生姓名字段缺失");
@@ -85,11 +72,7 @@ public class OrderList extends BaseTest {
         HashMap<String, String> query = new HashMap<>();
         String agent_contact_id = Generator.randomEmployeeId();
         query.put("agent_contact_id", agent_contact_id);
-        try {
-            res = HttpRequest.s_SendGet(host_bda + uri, query, bda_token);
-        } catch (IOException e) {
-            logger.error(e);
-        }
+        res = HttpRequest.s_SendGet(host_bda + uri, query, bda_token);
         s_CheckResponse(res);
         Assert.assertEquals(code, "1000000", "有token应该调用成功");
         Assert.assertNotNull(Helper.s_ParseJson(data, "list(0):agent_name"), "下级医生姓名字段缺失");
@@ -103,11 +86,7 @@ public class OrderList extends BaseTest {
         String res = "";
         HashMap<String, String> map = new HashMap<>();
         map.put("agent_contact_id", "SH0001");
-        try {
-            res = HttpRequest.s_SendGet(host_bda + uri, map, bda_token, null);
-        } catch (IOException e) {
-            logger.error(e);
-        }
+        res = HttpRequest.s_SendGet(host_bda + uri, map, bda_token);
         s_CheckResponse(res);
         Assert.assertNotEquals(code, "1000000", "传入非下属ID不应该获取成功");
     }
@@ -138,11 +117,7 @@ public class OrderList extends BaseTest {
         for (String s:status
                 ) {
             map.replace("status", s);
-            try {
-                res = HttpRequest.s_SendGet(host_bda + uri, map, bda_token, null);
-            } catch (IOException e) {
-                logger.error(e);
-            }
+            res = HttpRequest.s_SendGet(host_bda + uri, map, bda_token);
             s_CheckResponse(res);
             Assert.assertEquals(code, "1000000", "有token应该调用成功");
             JSONArray orderList = JSONObject.fromObject(res).getJSONObject("data").getJSONArray("list");

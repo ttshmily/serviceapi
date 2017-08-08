@@ -2,7 +2,6 @@ package com.mingyizhudao.qa.functiontest.bdassistant;
 
 import com.mingyizhudao.qa.common.BaseTest;
 import com.mingyizhudao.qa.common.TestLogger;
-import org.apache.log4j.Logger;
 
 /**
  * Created by ttshmily on 17/5/2017.

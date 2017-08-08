@@ -3,12 +3,11 @@ package com.mingyizhudao.qa.functiontest.crm.trading.surgery;
 import com.mingyizhudao.qa.common.BaseTest;
 import com.mingyizhudao.qa.common.TestLogger;
 import com.mingyizhudao.qa.functiontest.doctor.CreateOrder;
-import com.mingyizhudao.qa.utilities.Helper;
 import com.mingyizhudao.qa.utilities.HttpRequest;
+import com.mingyizhudao.qa.utilities.Helper;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
-import java.io.IOException;
 import java.util.HashMap;
 
 /**
@@ -37,11 +36,7 @@ public class Order_TrackList extends BaseTest {
         } else {
             query = null;
         }
-        try {
-            res = HttpRequest.s_SendGet(host_crm+uri, query, crm_token, pathValue);
-        } catch (IOException e) {
-            logger.error(e);
-        }
+        res = HttpRequest.s_SendGet(host_crm+uri, query, crm_token, pathValue);
         return res;
     }
 

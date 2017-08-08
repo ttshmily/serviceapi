@@ -1,16 +1,13 @@
 package com.mingyizhudao.qa.functiontest.login;
 
+import com.mingyizhudao.qa.functiontest.doctor.GetDoctorProfile_V1;
 import com.mingyizhudao.qa.common.BaseTest;
 import com.mingyizhudao.qa.common.TestLogger;
 import com.mingyizhudao.qa.dataprofile.login.RefreshProfile;
-import com.mingyizhudao.qa.functiontest.doctor.GetDoctorProfile_V1;
 import com.mingyizhudao.qa.utilities.Helper;
 import com.mingyizhudao.qa.utilities.HttpRequest;
-import net.sf.json.JSONException;
 import org.testng.Assert;
 import org.testng.annotations.Test;
-
-import java.io.IOException;
 
 /**
  * Created by ttshmily on 22/3/2017.
@@ -42,13 +39,8 @@ public class Refresh extends BaseTest{
         String oldToken = token;
 
         RefreshProfile body = new RefreshProfile(true);
-        try {
-            res = HttpRequest.s_SendPost(host_login + uri,body.body.toString(), oldToken);
-            s_CheckResponse(res);
-        } catch (IOException e) {
-
-        } catch (JSONException e) {
-        }
+        res = HttpRequest.s_SendPost(host_login + uri,body.body.toString(), oldToken);
+        s_CheckResponse(res);
         Assert.assertEquals(code, "1000000");
         Assert.assertNotNull(Helper.s_ParseJson(data,"token"), "token not exist");
         Assert.assertNotNull(Helper.s_ParseJson(data, "expire"), "expire not exist");
@@ -85,13 +77,8 @@ public class Refresh extends BaseTest{
         String oldToken = token;
         RefreshProfile body = new RefreshProfile(false);
         body.body.replace("token", mainToken);
-        try {
-            res = HttpRequest.s_SendPost(host_login + uri,body.body.toString(), oldToken);
-            s_CheckResponse(res);
-        } catch (IOException e) {
-            Assert.fail();
-        } catch (JSONException e) {
-        }
+        res = HttpRequest.s_SendPost(host_login + uri,body.body.toString(), oldToken);
+        s_CheckResponse(res);
         Assert.assertEquals(code, "1000000");
 
         // s_Check token in body still effective

@@ -2,18 +2,17 @@ package com.mingyizhudao.qa.functiontest.crm;
 
 import com.mingyizhudao.qa.common.BaseTest;
 import com.mingyizhudao.qa.common.TestLogger;
-import com.mingyizhudao.qa.utilities.Helper;
 import com.mingyizhudao.qa.utilities.HttpRequest;
+import com.mingyizhudao.qa.utilities.Helper;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
-import java.io.IOException;
 import java.util.HashMap;
 
 /**
  * Created by dayi on 2017/7/3.
  */
-public class Finance_BillList extends BaseTest{
+public class Finance_BillList extends BaseTest {
 
     public static String clazzName = new Object() {
         public String getClassName() {
@@ -29,11 +28,7 @@ public class Finance_BillList extends BaseTest{
     public void test_01_获取支付订单列表() {
         String res = "";
         HashMap<String, String> query = new HashMap<>();
-        try {
-            res = HttpRequest.s_SendGet(host_crm+uri, "", crm_token);
-        } catch (IOException e) {
-            logger.error(e);
-        }
+        res = HttpRequest.s_SendGet(host_crm+uri, "", crm_token);
         s_CheckResponse(res);
         Assert.assertEquals(code, "1000000");
         //TODO
@@ -50,11 +45,7 @@ public class Finance_BillList extends BaseTest{
         query.put("pageSize", "0");
         for (int i = 1; i < 10; i++) {
             query.replace("pageSize", String.valueOf(i));
-            try {
-                res = HttpRequest.s_SendGet(host_crm + uri, query, crm_token);
-            } catch (IOException e) {
-                logger.error(e);
-            }
+            res = HttpRequest.s_SendGet(host_crm + uri, query, crm_token);
             s_CheckResponse(res);
             Assert.assertEquals(code, "1000000");
             Assert.assertEquals(Helper.s_ParseJson(data, "list()"), String.valueOf(i));

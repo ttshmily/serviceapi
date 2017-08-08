@@ -2,13 +2,12 @@ package com.mingyizhudao.qa.functiontest.doctor;
 
 import com.mingyizhudao.qa.common.BaseTest;
 import com.mingyizhudao.qa.common.TestLogger;
-import com.mingyizhudao.qa.utilities.Helper;
-import com.mingyizhudao.qa.utilities.HttpRequest;
 import com.mingyizhudao.qa.utilities.Generator;
+import com.mingyizhudao.qa.utilities.HttpRequest;
+import com.mingyizhudao.qa.utilities.Helper;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
-import java.io.IOException;
 import java.util.HashMap;
 
 /**
@@ -34,12 +33,7 @@ public class GetEmployeeProfile extends BaseTest {
         String res = "";
         HashMap<String, String> query = new HashMap<>();
         query.put("number", Generator.randomEmployeeId());
-        try {
-            res = HttpRequest.s_SendGet(host_doc +uri,query, mainToken);
-        } catch (IOException e) {
-            logger.error(e);
-            Assert.fail();
-        }
+        res = HttpRequest.s_SendGet(host_doc +uri,query, mainToken);
         s_CheckResponse(res);
         Assert.assertEquals(code, "1000000", "错误码应该是1000000");
         Assert.assertNotNull(Helper.s_ParseJson(data, "employee:id"), "id must not be null");
@@ -52,12 +46,7 @@ public class GetEmployeeProfile extends BaseTest {
         String res = "";
         HashMap<String, String> query = new HashMap<>();
         query.put("number", Generator.randomEmployeeId());
-        try {
-            res = HttpRequest.s_SendGet(host_doc +uri, query, "");
-        } catch (IOException e) {
-            logger.error(e);
-            Assert.fail();
-        }
+        res = HttpRequest.s_SendGet(host_doc +uri, query, "");
         s_CheckResponse(res);
         Assert.assertEquals(code, "1000000");
         Assert.assertNotNull(Helper.s_ParseJson(data, "employee:id"), "id must not be null");
@@ -68,11 +57,7 @@ public class GetEmployeeProfile extends BaseTest {
     @Test
     public void test_03_员工ID无效时返回空的Employee() {
         String res = "";
-        try {
-            res = HttpRequest.s_SendGet(host_doc + uri,"number=SH0444", "");
-        } catch (IOException e) {
-            logger.error(e);
-        }
+        res = HttpRequest.s_SendGet(host_doc + uri,"number=SH0444", "");
         s_CheckResponse(res);
         Assert.assertEquals(code, "1000000");
         Assert.assertNull(Helper.s_ParseJson(data, "employee:id"));

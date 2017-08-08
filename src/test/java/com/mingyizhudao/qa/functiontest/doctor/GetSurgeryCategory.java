@@ -2,12 +2,10 @@ package com.mingyizhudao.qa.functiontest.doctor;
 
 import com.mingyizhudao.qa.common.BaseTest;
 import com.mingyizhudao.qa.common.TestLogger;
-import com.mingyizhudao.qa.utilities.Helper;
 import com.mingyizhudao.qa.utilities.HttpRequest;
+import com.mingyizhudao.qa.utilities.Helper;
 import org.testng.Assert;
 import org.testng.annotations.Test;
-
-import java.io.IOException;
 
 /**
  * Created by ttshmily on 26/4/2017.
@@ -26,11 +24,7 @@ public class GetSurgeryCategory extends BaseTest {
     @Test
     public void test_01_有token信息的请求可以获得有效信息() {
         String res = "";
-        try {
-            res = HttpRequest.s_SendGet(host_doc+uri,"", mainToken);
-        } catch (IOException e) {
-            logger.error(e);
-        }
+        res = HttpRequest.s_SendGet(host_doc+uri,"", mainToken);
         s_CheckResponse(res);
         Assert.assertNotNull(Helper.s_ParseJson(data, "surgeryCategories()"));
         Assert.assertNotNull(Helper.s_ParseJson(data, "surgeryCategories():root_id"));
@@ -44,11 +38,7 @@ public class GetSurgeryCategory extends BaseTest {
     @Test
     public void test_02_没有token信息的请求可以获得有效信息() {
         String res = "";
-        try {
-            res = HttpRequest.s_SendGet(host_doc + uri,"", "");
-        } catch (IOException e) {
-            logger.error(e);
-        }
+        res = HttpRequest.s_SendGet(host_doc + uri,"", "");
         s_CheckResponse(res);
         Assert.assertNotNull(Helper.s_ParseJson(data, "surgeryCategories()"));
         Assert.assertNotNull(Helper.s_ParseJson(data, "surgeryCategories():root_id"));

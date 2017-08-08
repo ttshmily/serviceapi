@@ -1,15 +1,14 @@
 package com.mingyizhudao.qa.functiontest.bdassistant;
 
 import com.mingyizhudao.qa.common.BaseTest;
-import com.mingyizhudao.qa.utilities.HttpRequest;
 import com.mingyizhudao.qa.utilities.Generator;
+import com.mingyizhudao.qa.utilities.HttpRequest;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 import org.apache.log4j.Logger;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
-import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 
@@ -26,19 +25,11 @@ public class DoctorListV2 extends BaseTest {
     public void test_01_没有token或token错误无权限使用接口() {
         String res = "";
         HashMap<String, String> query = new HashMap<>();
-        try {
-            res = HttpRequest.s_SendGet(host_bda + uri, query, "");
-        } catch (IOException e) {
-            logger.error(e);
-        }
+        res = HttpRequest.s_SendGet(host_bda + uri, query, "");
         s_CheckResponse(res);
         Assert.assertNotEquals(code, "1000000", "没有token不应该调用成功");
 
-        try {
-            res = HttpRequest.s_SendGet(host_bda + uri, query, "aaa");
-        } catch (IOException e) {
-            logger.error(e);
-        }
+        res = HttpRequest.s_SendGet(host_bda + uri, query, "aaa");
         s_CheckResponse(res);
         Assert.assertNotEquals(code, "1000000", "token错误不应该调用成功");
     }
@@ -53,11 +44,7 @@ public class DoctorListV2 extends BaseTest {
         //TODO 每个地推所对应的城市需要提前准备好
         String cityId = "";
 
-        try {
-            res = HttpRequest.s_SendGet(host_bda + uri, query, bda_token);
-        } catch (IOException e) {
-            logger.error(e);
-        }
+        res = HttpRequest.s_SendGet(host_bda + uri, query, bda_token);
         s_CheckResponse(res);
         Assert.assertEquals(code, "1000000", "主管查看下属应该成功");
 
@@ -76,11 +63,7 @@ public class DoctorListV2 extends BaseTest {
         String agent_contact_id = "SH0001";
         query.put("agent_contact_id", agent_contact_id);
 
-        try {
-            res = HttpRequest.s_SendGet(host_bda + uri, query, bda_token);
-        } catch (IOException e) {
-            logger.error(e);
-        }
+        res = HttpRequest.s_SendGet(host_bda + uri, query, bda_token);
         s_CheckResponse(res);
         Assert.assertNotEquals(code, "1000000", "主管查看非下属不应该成功");
     }
@@ -96,11 +79,7 @@ public class DoctorListV2 extends BaseTest {
         // TODO
         String cityId = "";
 
-        try {
-            res = HttpRequest.s_SendGet(host_bda + uri, query, bda_token);
-        } catch (IOException e) {
-            logger.error(e);
-        }
+        res = HttpRequest.s_SendGet(host_bda + uri, query, bda_token);
         s_CheckResponse(res);
         Assert.assertEquals(code, "1000000", "");
         // TODO
@@ -123,11 +102,7 @@ public class DoctorListV2 extends BaseTest {
         // TODO
         String cityId = "";
         query.put("city_id", cityId);
-        try {
-            res = HttpRequest.s_SendGet(host_bda + uri, query, bda_token);
-        } catch (IOException e) {
-            logger.error(e);
-        }
+        res = HttpRequest.s_SendGet(host_bda + uri, query, bda_token);
         s_CheckResponse(res);
         Assert.assertEquals(code, "1000000", "");
 
@@ -152,11 +127,7 @@ public class DoctorListV2 extends BaseTest {
 
         String medical_title_list = Generator.randomMedicalId();
         query.put("medical_title", medical_title_list);
-        try {
-            res = HttpRequest.s_SendGet(host_bda + uri, query, bda_token);
-        } catch (IOException e) {
-            logger.error(e);
-        }
+        res = HttpRequest.s_SendGet(host_bda + uri, query, bda_token);
         s_CheckResponse(res);
         Assert.assertEquals(code, "1000000", "");
 
@@ -182,11 +153,7 @@ public class DoctorListV2 extends BaseTest {
 
         String academic_title_list = Generator.randomAcademicId();
         query.put("academic_title", academic_title_list);
-        try {
-            res = HttpRequest.s_SendGet(host_bda + uri, query, bda_token);
-        } catch (IOException e) {
-            logger.error(e);
-        }
+        res = HttpRequest.s_SendGet(host_bda + uri, query, bda_token);
         s_CheckResponse(res);
         Assert.assertEquals(code, "1000000", "");
 
@@ -212,11 +179,7 @@ public class DoctorListV2 extends BaseTest {
 
         String academic_title_list = Generator.randomAcademicId();
         query.put("academic_title", academic_title_list);
-        try {
-            res = HttpRequest.s_SendGet(host_bda + uri, query, bda_token_staff);
-        } catch (IOException e) {
-            logger.error(e);
-        }
+        res = HttpRequest.s_SendGet(host_bda + uri, query, bda_token_staff);
         s_CheckResponse(res);
         Assert.assertEquals(code, "1000000", "");
 

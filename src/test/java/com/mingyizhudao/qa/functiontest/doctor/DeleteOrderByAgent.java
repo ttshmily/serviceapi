@@ -1,16 +1,15 @@
 package com.mingyizhudao.qa.functiontest.doctor;
 
 import com.mingyizhudao.qa.common.BaseTest;
-import com.mingyizhudao.qa.common.TestLogger;
 import com.mingyizhudao.qa.dataprofile.doctor.DoctorProfile;
 import com.mingyizhudao.qa.functiontest.crm.trading.surgery.Order_ReceiveTask;
 import com.mingyizhudao.qa.functiontest.crm.trading.surgery.Order_RecommendDoctor;
+import com.mingyizhudao.qa.common.TestLogger;
 import com.mingyizhudao.qa.utilities.HttpRequest;
 import net.sf.json.JSONObject;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
-import java.io.IOException;
 import java.util.HashMap;
 
 import static com.mingyizhudao.qa.utilities.Helper.s_ParseJson;
@@ -43,11 +42,7 @@ public class DeleteOrderByAgent extends BaseTest {
         JSONObject order = new JSONObject();
         order.put("role", "1"); // 1 - agent
         body.put("order", order);
-        try {
-            res = HttpRequest.s_SendDelete(host_doc+uri, body.toString(), doctor.get("token"), pathValue);
-        } catch (IOException e) {
-            logger.error(e);
-        }
+        res = HttpRequest.s_SendDelete(host_doc+uri, body.toString(), doctor.get("token"), pathValue);
         int orderCountAfter = Integer.parseInt(GetOrderList_V1.s_List(doctor.get("token"), "1"));// 1 - agent
         logger.info("订单数："+orderCountAfter);
         Assert.assertEquals(orderCountAfter, orderCountBefore-1);
@@ -73,11 +68,7 @@ public class DeleteOrderByAgent extends BaseTest {
         JSONObject order = new JSONObject();
         order.put("role", "2"); // 2 - expert
         body.put("order", order);
-        try {
-            res = HttpRequest.s_SendDelete(host_doc+uri, body.toString(), doctor.get("token"), pathValue);
-        } catch (IOException e) {
-            logger.error(e);
-        }
+        res = HttpRequest.s_SendDelete(host_doc+uri, body.toString(), doctor.get("token"), pathValue);
         int orderCountAfter = Integer.parseInt(GetOrderList_V1.s_List(doctor.get("token"), "2"));// 1 - agent
         logger.info("订单数：" + orderCountAfter);
         Assert.assertEquals(orderCountAfter, orderCountBefore-1);

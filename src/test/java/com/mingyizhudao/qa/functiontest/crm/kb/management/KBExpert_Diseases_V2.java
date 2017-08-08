@@ -1,19 +1,18 @@
 package com.mingyizhudao.qa.functiontest.crm.kb.management;
 
 import com.mingyizhudao.qa.common.BaseTest;
-import com.mingyizhudao.qa.common.TestLogger;
 import com.mingyizhudao.qa.dataprofile.crm.ExpertProfile;
 import com.mingyizhudao.qa.dataprofile.doctor.DoctorProfile;
 import com.mingyizhudao.qa.functiontest.crm.user.management.RegisteredDoctor_Detail;
-import com.mingyizhudao.qa.utilities.Helper;
-import com.mingyizhudao.qa.utilities.HttpRequest;
+import com.mingyizhudao.qa.common.TestLogger;
 import com.mingyizhudao.qa.utilities.Generator;
+import com.mingyizhudao.qa.utilities.HttpRequest;
+import com.mingyizhudao.qa.utilities.Helper;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
-import java.io.IOException;
 import java.util.HashMap;
 
 /**
@@ -43,11 +42,7 @@ public class KBExpert_Diseases_V2 extends BaseTest {
         HashMap<String, String> pathValue = new HashMap<>();
         pathValue.put("doctor_id", expertId);
         JSONObject body = DiseaseJson(5, 4);
-        try {
-            res = HttpRequest.s_SendPost(host_crm+uri, body.toString(), crm_token, pathValue);
-        } catch (IOException e) {
-            logger.error(e);
-        }
+        res = HttpRequest.s_SendPost(host_crm+uri, body.toString(), crm_token, pathValue);
         s_CheckResponse(res);
         Assert.assertEquals(code, "1000000");
         res = KBExpert_Detail.s_Detail(expertId);
@@ -89,11 +84,7 @@ public class KBExpert_Diseases_V2 extends BaseTest {
         pathValue.put("doctor_id", expertId);
 
         JSONObject body = DiseaseJson(5, 4);
-        try {
-            res = HttpRequest.s_SendPost(host_crm+uri, body.toString(), crm_token, pathValue);
-        } catch (IOException e) {
-            logger.error(e);
-        }
+        res = HttpRequest.s_SendPost(host_crm+uri, body.toString(), crm_token, pathValue);
         s_CheckResponse(res);
         Assert.assertEquals(code, "1000000");
         res = KBExpert_Detail.s_Detail(expertId);

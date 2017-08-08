@@ -2,7 +2,6 @@ package com.mingyizhudao.qa.utilities;
 
 import com.mingyizhudao.qa.common.KnowledgeBase;
 
-import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -14,7 +13,7 @@ import java.util.Random;
  */
 public class Generator {
 
-    public static SimpleDateFormat df = new SimpleDateFormat("yyyy/MM/dd");
+    private static SimpleDateFormat df = new SimpleDateFormat("yyyy/MM/dd");
 
 
     public static void main(String[] args) {
@@ -38,7 +37,7 @@ public class Generator {
         return random.nextInt(count)+1;
     }
 
-    public static String randomDateFromNow(int i, int j) {
+    public static String randomDateFromNow(int i, int j, SimpleDateFormat df) {
         try {
             Date now = df.parse(df.format(new Date()));
             Calendar date = Calendar.getInstance();
@@ -48,8 +47,6 @@ public class Generator {
             Date start = df.parse(df.format(date.getTime()));// 构造开始日期
             date.set(Calendar.DATE, date.get(Calendar.DATE) + j);
             Date end = df.parse(df.format(date.getTime()));// 构造结束日期
-
-//            Timestamp timestamp = new Timestamp(date.getTime());
 
             if (start.getTime() > end.getTime()) {
                 return null;
@@ -62,7 +59,11 @@ public class Generator {
         return null;
     }
 
-    public static String randomDate(String startDate, String endDate) {
+    public static String randomDateFromNow(int i, int j) {
+        return randomDateFromNow(i, j, df);
+    }
+
+    public static String randomDate(String startDate, String endDate, SimpleDateFormat df) {
         try {
             Date start = df.parse(startDate);// 构造开始日期
             Date end = df.parse(endDate);// 构造结束日期
@@ -77,7 +78,12 @@ public class Generator {
         return null;
     }
 
-    public static String randomDateTillNow() {
+    public static String randomDate(String startDate, String endDate) {
+        return randomDate(startDate, endDate, df);
+    }
+
+
+    public static String randomDateTillNow(SimpleDateFormat df) {
         try {
             Date start = df.parse("2017/03/13");// 构造开始日期
             Date end = df.parse(df.format(new Date()));// 构造结束日期
@@ -92,9 +98,13 @@ public class Generator {
         return null;
     }
 
+    public static String randomDateTillNow() {
+        return randomDateTillNow(df);
+    }
+
     public static String randomKey(HashMap<String, String> map) {
         String[] keys = map.keySet().toArray(new String[] {});
-        return keys[(int)randomInt(keys.length-1)];
+        return keys[(int)(randomInt(keys.length)-1)];
     }
 
     public static String randomPhone() {

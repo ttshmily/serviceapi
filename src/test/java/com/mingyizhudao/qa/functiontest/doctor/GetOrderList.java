@@ -1,27 +1,25 @@
 package com.mingyizhudao.qa.functiontest.doctor;
 
 import com.mingyizhudao.qa.common.BaseTest;
-import com.mingyizhudao.qa.common.TestLogger;
 import com.mingyizhudao.qa.dataprofile.doctor.DoctorProfile;
-import com.mingyizhudao.qa.functiontest.login.CheckVerifyCode;
-import com.mingyizhudao.qa.functiontest.login.SendVerifyCode;
 import com.mingyizhudao.qa.functiontest.crm.trading.surgery.Order_ReceiveTask;
 import com.mingyizhudao.qa.functiontest.crm.trading.surgery.Order_RecommendDoctor;
 import com.mingyizhudao.qa.functiontest.crm.trading.surgery.Order_ThreewayCall_V2;
+import com.mingyizhudao.qa.functiontest.login.CheckVerifyCode;
+import com.mingyizhudao.qa.functiontest.login.SendVerifyCode;
+import com.mingyizhudao.qa.common.TestLogger;
 import com.mingyizhudao.qa.functiontest.crm.user.management.RegisteredDoctor_CertifySync_V2;
-import com.mingyizhudao.qa.utilities.Helper;
-import com.mingyizhudao.qa.utilities.HttpRequest;
 import com.mingyizhudao.qa.utilities.Generator;
+import com.mingyizhudao.qa.utilities.HttpRequest;
+import com.mingyizhudao.qa.utilities.Helper;
 import net.sf.json.JSONObject;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
-import java.io.IOException;
-
 /**
  * Created by ttshmily on 7/4/2017.
  */
-public class GetOrderList extends BaseTest{
+public class GetOrderList extends BaseTest {
 
     public static String clazzName = new Object() {
         public String getClassName() {
@@ -35,13 +33,7 @@ public class GetOrderList extends BaseTest{
     public static String s_List(String token) {
         String res = "";
         TestLogger logger = new TestLogger(s_JobName());
-        try {
-            res = HttpRequest.s_SendGet(host_doc+uri,"", token);
-        } catch (IOException e) {
-            logger.debug(Helper.unicodeString(res));
-            logger.error(e);
-            return null;
-        }
+        res = HttpRequest.s_SendGet(host_doc+uri,"", token);
         JSONObject orderList = JSONObject.fromObject(res).getJSONObject("data");
         return String.valueOf(orderList.getJSONArray("order").size());
     }
@@ -55,11 +47,7 @@ public class GetOrderList extends BaseTest{
             logger.error("创建订单with mainToken失败");
             Assert.fail("创建订单with mainToken失败");
         }
-        try {
-            res = HttpRequest.s_SendGet(host_doc + uri,"", mainToken);
-        } catch (IOException e) {
-            logger.error(e);
-        }
+        res = HttpRequest.s_SendGet(host_doc + uri,"", mainToken);
         s_CheckResponse(res);
         Assert.assertNotEquals(Helper.s_ParseJson(data,"order():patient_name"), "", "患者姓名字段缺失");
         Assert.assertNotEquals(Helper.s_ParseJson(data,"order():patient_gender"), "", "患者性别字段缺失");
@@ -97,11 +85,7 @@ public class GetOrderList extends BaseTest{
             logger.error("创建订单with tmpToken失败");
             Assert.fail("创建订单with tmpToken失败");
         }
-        try {
-            res = HttpRequest.s_SendGet(host_doc + uri,"", tmpToken);
-        } catch (IOException e) {
-            logger.error(e);
-        }
+        res = HttpRequest.s_SendGet(host_doc + uri,"", tmpToken);
         s_CheckResponse(res);
         Assert.assertEquals(Helper.s_ParseJson(data, "order(0):order_number"), orderId1);
 
@@ -111,11 +95,7 @@ public class GetOrderList extends BaseTest{
             logger.error("创建订单with tmpToken失败");
             Assert.fail("创建订单with tmpToken失败");
         }
-        try {
-            res = HttpRequest.s_SendGet(host_doc + uri,"", tmpToken);
-        } catch (IOException e) {
-            logger.error(e);
-        }
+        res = HttpRequest.s_SendGet(host_doc + uri,"", tmpToken);
         s_CheckResponse(res);
         Assert.assertEquals(Helper.s_ParseJson(data, "order(0):order_number"), orderId2);
         Assert.assertEquals(Helper.s_ParseJson(data, "order(1):order_number"), orderId1);
@@ -126,11 +106,7 @@ public class GetOrderList extends BaseTest{
             logger.error("创建订单with tmpToken失败");
             Assert.fail("创建订单with tmpToken失败");
         }
-        try {
-            res = HttpRequest.s_SendGet(host_doc + uri,"", tmpToken);
-        } catch (IOException e) {
-            logger.error(e);
-        }
+        res = HttpRequest.s_SendGet(host_doc + uri,"", tmpToken);
         s_CheckResponse(res);
         Assert.assertEquals(Helper.s_ParseJson(data, "order(0):order_number"), orderId3);
         Assert.assertEquals(Helper.s_ParseJson(data, "order(1):order_number"), orderId2);
@@ -142,11 +118,7 @@ public class GetOrderList extends BaseTest{
             logger.error("创建订单with tmpToken失败");
             Assert.fail("创建订单with tmpToken失败");
         }
-        try {
-            res = HttpRequest.s_SendGet(host_doc + uri,"", tmpToken);
-        } catch (IOException e) {
-            logger.error(e);
-        }
+        res = HttpRequest.s_SendGet(host_doc + uri,"", tmpToken);
         s_CheckResponse(res);
         Assert.assertEquals(Helper.s_ParseJson(data, "order(0):order_number"), orderId4);
         Assert.assertEquals(Helper.s_ParseJson(data, "order(1):order_number"), orderId3);
@@ -157,11 +129,7 @@ public class GetOrderList extends BaseTest{
     @Test
     public void test_03_获取订单列表_未登录用户() {
         String res = "";
-        try {
-            res = HttpRequest.s_SendGet(host_doc + uri,"", "");
-        } catch (IOException e) {
-            logger.error(e);
-        }
+        res = HttpRequest.s_SendGet(host_doc + uri,"", "");
         s_CheckResponse(res);
         Assert.assertEquals(code, "2210304", "应当提示未登录");
     }
@@ -184,11 +152,7 @@ public class GetOrderList extends BaseTest{
             logger.error("推荐医生失败");
             Assert.fail("推荐医生失败，退出执行");
         }
-        try {
-            res = HttpRequest.s_SendGet(host_doc + uri,"", mainToken);
-        } catch (IOException e) {
-            logger.error(e);
-        }
+        res = HttpRequest.s_SendGet(host_doc + uri,"", mainToken);
         s_CheckResponse(res);
         Assert.assertNotEquals(Helper.s_ParseJson(data,"order():patient_name"), "", "患者姓名字段缺失");
         Assert.assertNotEquals(Helper.s_ParseJson(data,"order():patient_gender"), "", "患者性别字段缺失");
@@ -223,11 +187,7 @@ public class GetOrderList extends BaseTest{
             logger.error("确定三方通话失败");
             Assert.fail("确定三方通话失败，退出执行");
         }
-        try {
-            res = HttpRequest.s_SendGet(host_doc + uri,"", mainToken);
-        } catch (IOException e) {
-            logger.error(e);
-        }
+        res = HttpRequest.s_SendGet(host_doc + uri,"", mainToken);
         s_CheckResponse(res);
         Assert.assertNotEquals(Helper.s_ParseJson(data,"order():patient_name"), "", "患者姓名字段缺失");
         Assert.assertNotEquals(Helper.s_ParseJson(data,"order():patient_gender"), "", "患者性别字段缺失");

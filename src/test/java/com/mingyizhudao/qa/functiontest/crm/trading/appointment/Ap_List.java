@@ -3,10 +3,9 @@ package com.mingyizhudao.qa.functiontest.crm.trading.appointment;
 import com.mingyizhudao.qa.common.BaseTest;
 import com.mingyizhudao.qa.common.TestLogger;
 
-import static com.mingyizhudao.qa.utilities.Generator.randomInt;
-import static com.mingyizhudao.qa.utilities.HttpRequest.*;
 import static com.mingyizhudao.qa.utilities.Helper.*;
 
+import com.mingyizhudao.qa.utilities.Generator;
 import com.mingyizhudao.qa.utilities.HttpRequest;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
@@ -14,8 +13,6 @@ import org.apache.commons.net.ntp.TimeStamp;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
-import java.lang.reflect.Array;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
@@ -55,7 +52,6 @@ public class Ap_List extends BaseTest {
         Assert.assertNotNull(s_ParseJson(data, "list(0):modified_at"));
         Assert.assertNotNull(s_ParseJson(data, "list(0):major_reps_name"));
         Assert.assertNotNull(s_ParseJson(data, "list(0):modified_at"));
-
     }
 
     @Test
@@ -65,7 +61,7 @@ public class Ap_List extends BaseTest {
         query.put("sortCriteria", "0");
         query.put("collatingSequence", "0");
         try {
-            res = s_SendGet(host_appointment + uri, query, crm_token);
+            res = HttpRequest.s_SendGet(host_appointment + uri, query, crm_token);
         } catch (Exception e) {
             Assert.fail(e.toString());
         }
@@ -91,7 +87,7 @@ public class Ap_List extends BaseTest {
 
         query.put("collatingSequence", "1");
         try {
-            res = s_SendGet(host_appointment + uri, query, crm_token);
+            res = HttpRequest.s_SendGet(host_appointment + uri, query, crm_token);
         } catch (Exception e) {
             Assert.fail(e.toString());
         }
@@ -121,7 +117,7 @@ public class Ap_List extends BaseTest {
         query.put("sortCriteria", "1");
         query.put("collatingSequence", "0");
         try {
-            res = s_SendGet(host_appointment + uri, query, crm_token);
+            res = HttpRequest.s_SendGet(host_appointment + uri, query, crm_token);
         } catch (Exception e) {
             Assert.fail(e.toString());
         }
@@ -147,7 +143,7 @@ public class Ap_List extends BaseTest {
 
         query.put("collatingSequence", "1");
         try {
-            res = s_SendGet(host_appointment + uri, query, crm_token);
+            res = HttpRequest.s_SendGet(host_appointment + uri, query, crm_token);
         } catch (Exception e) {
             Assert.fail(e.toString());
         }
@@ -174,19 +170,14 @@ public class Ap_List extends BaseTest {
     public void test_04_获取列表检查筛选状态() {
         String res = "";
         HashMap<String, String> query = new HashMap<>();
-        query.put("page", String.valueOf(randomInt(2)));
+        query.put("page", String.valueOf(Generator.randomInt(2)));
         int[] size_per_status = new int[]{};
         int i = 0;
         for (String status:new String[]{"2000","3000","3000,4000","2000,3000","4000"}) {
             logger.info("筛选状态为"+status+"的订单");
             query.put("status", status);
             List<String> status_list = Arrays.asList(status.split(","));
-
-            try {
-                res = s_SendGet(host_appointment + uri, query, crm_token);
-            } catch (Exception e) {
-                Assert.fail(e.toString());
-            }
+            res = HttpRequest.s_SendGet(host_appointment + uri, query, crm_token);
             s_CheckResponse(res);
             Assert.assertEquals(code, "1000000");
             JSONArray ap_list = data.getJSONArray("list");
@@ -194,7 +185,7 @@ public class Ap_List extends BaseTest {
                 JSONObject ap = ap_list.getJSONObject(j);
                 Assert.assertTrue(status_list.contains(ap.getString("status")));
             }
-            size_per_status[i++] = data.getInt("size");
+            size_per_status[i++] = data.getInt("size"); // 对应{"2000","3000","3000,4000","2000,3000","4000"}
         }
         Assert.assertTrue(size_per_status[0]+size_per_status[1]==size_per_status[3]);
         Assert.assertTrue(size_per_status[1]+size_per_status[4]==size_per_status[2]);

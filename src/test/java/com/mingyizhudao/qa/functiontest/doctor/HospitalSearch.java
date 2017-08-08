@@ -2,13 +2,12 @@ package com.mingyizhudao.qa.functiontest.doctor;
 
 import com.mingyizhudao.qa.common.BaseTest;
 import com.mingyizhudao.qa.common.TestLogger;
-import com.mingyizhudao.qa.utilities.Helper;
-import com.mingyizhudao.qa.utilities.HttpRequest;
 import com.mingyizhudao.qa.utilities.Generator;
+import com.mingyizhudao.qa.utilities.HttpRequest;
+import com.mingyizhudao.qa.utilities.Helper;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
-import java.io.IOException;
 import java.util.HashMap;
 
 /**
@@ -28,11 +27,7 @@ public class HospitalSearch extends BaseTest {
     @Test
     public void test_01_有token信息的请求可以获得有效信息() {
         String res = "";
-        try {
-            res = HttpRequest.s_SendGet(host_doc + uri,"", mainToken);
-        } catch (IOException e) {
-            logger.error(e);
-        }
+        res = HttpRequest.s_SendGet(host_doc + uri,"", mainToken);
         s_CheckResponse(res);
         Assert.assertNotNull(Helper.s_ParseJson(data, "hospital()"));
     }
@@ -40,11 +35,7 @@ public class HospitalSearch extends BaseTest {
     @Test
     public void test_02_没有searchName字段的请求可以获得有效信息() {
         String res = "";
-        try {
-            res = HttpRequest.s_SendGet(host_doc + uri, "", "");
-        } catch (IOException e) {
-            logger.error(e);
-        }
+        res = HttpRequest.s_SendGet(host_doc + uri, "", "");
         s_CheckResponse(res);
         Assert.assertNotNull(Helper.s_ParseJson(data, "hospital()"));
     }
@@ -54,11 +45,7 @@ public class HospitalSearch extends BaseTest {
         String res = "";
         HashMap<String, String> map = new HashMap<>();
         map.put("searchname","");
-        try {
-            res = HttpRequest.s_SendGet(host_doc + uri, map, "");
-        } catch (IOException e) {
-            logger.error(e);
-        }
+        res = HttpRequest.s_SendGet(host_doc + uri, map, "");
         s_CheckResponse(res);
         Assert.assertNotNull(Helper.s_ParseJson(data, "hospital()"));
     }
@@ -68,11 +55,7 @@ public class HospitalSearch extends BaseTest {
         String res = "";
         HashMap<String, String> map = new HashMap<>();
         map.put("searchname","人民医院");
-        try {
-            res = HttpRequest.s_SendGet(host_doc + uri, map, "");
-        } catch (IOException e) {
-            logger.error(e);
-        }
+        res = HttpRequest.s_SendGet(host_doc + uri, map, "");
         s_CheckResponse(res);
         Assert.assertNotNull(Helper.s_ParseJson(data, "hospital()"));
     }
@@ -82,11 +65,7 @@ public class HospitalSearch extends BaseTest {
         String res = "";
         HashMap<String, String> map = new HashMap<>();
         map.put("searchname","changzhou");
-        try {
-            res = HttpRequest.s_SendGet(host_doc + uri, map, "");
-        } catch (IOException e) {
-            logger.error(e);
-        }
+        res = HttpRequest.s_SendGet(host_doc + uri, map, "");
         s_CheckResponse(res);
         Assert.assertNotNull(Helper.s_ParseJson(data, "hospital()"));
     }
@@ -96,11 +75,7 @@ public class HospitalSearch extends BaseTest {
         String res = "";
         HashMap<String, String> map = new HashMap<>();
         map.put("searchname","中国changzhou");
-        try {
-            res = HttpRequest.s_SendGet(host_doc + uri, map, "");
-        } catch (IOException e) {
-            logger.error(e);
-        }
+        res = HttpRequest.s_SendGet(host_doc + uri, map, "");
         s_CheckResponse(res);
         Assert.assertNotEquals(Helper.s_ParseJson(data, "hospital()"), "0");
     }
@@ -110,11 +85,7 @@ public class HospitalSearch extends BaseTest {
         String res = "";
         HashMap<String, String> map = new HashMap<>();
         map.put("searchname","安阳医院");
-        try {
-            res = HttpRequest.s_SendGet(host_doc + uri, map, "");
-        } catch (IOException e) {
-            logger.error(e);
-        }
+        res = HttpRequest.s_SendGet(host_doc + uri, map, "");
         s_CheckResponse(res);
         Assert.assertNotNull(Helper.s_ParseJson(data, "hospital()"), "hospital字段缺失");
         Assert.assertNotNull(Helper.s_ParseJson(data, "hospital():name"), "hospital的name字段缺失");
@@ -131,18 +102,12 @@ public class HospitalSearch extends BaseTest {
         String city_id = Generator.randomCityId();
         query.put("city_id", city_id);
         query.put("searchname","安阳医院");
-        try {
-            res = HttpRequest.s_SendGet(host_doc + uri, query, "");
-        } catch (IOException e) {
-            logger.error(e);
-        }
+        res = HttpRequest.s_SendGet(host_doc + uri, query, "");
         s_CheckResponse(res);
         Assert.assertNotNull(Helper.s_ParseJson(data, "hospital()"), "hospital字段缺失");
         Assert.assertNotNull(Helper.s_ParseJson(data, "hospital():name"), "hospital的name字段缺失");
         Assert.assertNotNull(Helper.s_ParseJson(data, "hospital():id"), "hospital的id字段缺失");
         Assert.assertEquals(Helper.s_ParseJson(data, "hospital():city_id"), city_id,"hospital的city字段缺失");
         Assert.assertEquals(Helper.s_ParseJson(data, "hospital():city_name"), Generator.cityName(city_id), "hospital的city字段缺失");
-
     }
-
 }

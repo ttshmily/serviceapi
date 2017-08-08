@@ -2,12 +2,11 @@ package com.mingyizhudao.qa.functiontest.crm;
 
 import com.mingyizhudao.qa.common.BaseTest;
 import com.mingyizhudao.qa.common.TestLogger;
-import org.apache.log4j.Logger;
 
 /**
  * Created by dayi on 2017/7/3.
  */
-public class Finance_PayBill extends BaseTest{
+public class Finance_PayBill extends BaseTest {
 
     public static String clazzName = new Object() {
         public String getClassName() {

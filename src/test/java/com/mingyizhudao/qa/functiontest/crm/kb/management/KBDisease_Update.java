@@ -1,17 +1,16 @@
 package com.mingyizhudao.qa.functiontest.crm.kb.management;
 
 import com.mingyizhudao.qa.common.BaseTest;
-import com.mingyizhudao.qa.common.TestLogger;
 import com.mingyizhudao.qa.dataprofile.crm.DiseaseProfile;
-import com.mingyizhudao.qa.utilities.Helper;
-import com.mingyizhudao.qa.utilities.HttpRequest;
+import com.mingyizhudao.qa.common.TestLogger;
 import com.mingyizhudao.qa.utilities.Generator;
+import com.mingyizhudao.qa.utilities.HttpRequest;
+import com.mingyizhudao.qa.utilities.Helper;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -35,11 +34,7 @@ public class KBDisease_Update extends BaseTest {
         String res = "";
         HashMap<String, String> pathValue = new HashMap<>();
         pathValue.put("id", diseaseId);
-        try {
-            res = HttpRequest.s_SendPut(host_crm + uri, dp.body.toString(), crm_token, pathValue);
-        } catch (IOException e) {
-            logger.error(e);
-        }
+        res = HttpRequest.s_SendPut(host_crm + uri, dp.body.toString(), crm_token, pathValue);
         JSONObject node = JSONObject.fromObject(res);
         HashMap<String, String> result = new HashMap<>();
         if(!node.getString("code").equals("1000000")) return null;
@@ -68,44 +63,28 @@ public class KBDisease_Update extends BaseTest {
         pathValue.put("id", info.get("id"));
         DiseaseProfile dpModified = new DiseaseProfile(false);
         dpModified.body.put("name", "修改疾病名称" + Generator.randomString(2));
-        try {
-            res = HttpRequest.s_SendPut(host_crm + uri, dpModified.body.toString(), crm_token, pathValue);
-        } catch (IOException e) {
-            logger.error(e);
-        }
+        res = HttpRequest.s_SendPut(host_crm + uri, dpModified.body.toString(), crm_token, pathValue);
         s_CheckResponse(res);
         Assert.assertEquals(code, "1000000");
         Assert.assertEquals(Helper.s_ParseJson(data, "name"), dpModified.body.getString("name"));
 
         dpModified.body.remove("name");
         dpModified.body.put("description", "修改疾病描述" + Generator.randomString(30));
-        try {
-            res = HttpRequest.s_SendPut(host_crm + uri, dpModified.body.toString(), crm_token, pathValue);
-        } catch (IOException e) {
-            logger.error(e);
-        }
+        res = HttpRequest.s_SendPut(host_crm + uri, dpModified.body.toString(), crm_token, pathValue);
         s_CheckResponse(res);
         Assert.assertEquals(code, "1000000");
         Assert.assertEquals(Helper.s_ParseJson(data, "description"), dpModified.body.getString("description"));
 
         dpModified.body.remove("description");
         dpModified.body.put("user_visible", 0);
-        try {
-            res = HttpRequest.s_SendPut(host_crm + uri, dpModified.body.toString(), crm_token, pathValue);
-        } catch (IOException e) {
-            logger.error(e);
-        }
+        res = HttpRequest.s_SendPut(host_crm + uri, dpModified.body.toString(), crm_token, pathValue);
         s_CheckResponse(res);
         Assert.assertEquals(code, "1000000");
         Assert.assertEquals(Helper.s_ParseJson(data, "user_visible"), "false");
 
         dpModified.body.remove("user_visible");
         dpModified.body.put("is_common", 0);
-        try {
-            res = HttpRequest.s_SendPut(host_crm + uri, dpModified.body.toString(), crm_token, pathValue);
-        } catch (IOException e) {
-            logger.error(e);
-        }
+        res = HttpRequest.s_SendPut(host_crm + uri, dpModified.body.toString(), crm_token, pathValue);
         s_CheckResponse(res);
         Assert.assertEquals(code, "1000000");
         Assert.assertEquals(Helper.s_ParseJson(data, "is_common"), "0");
@@ -147,11 +126,7 @@ public class KBDisease_Update extends BaseTest {
         categoryId.replace("disease_category_id", id);
         dpModified.body.accumulate("category_list", categoryId);
         input_ids.add(id);
-        try {
-            res = HttpRequest.s_SendPut(host_crm + uri, dpModified.body.toString(), crm_token, pathValue);
-        } catch (IOException e) {
-            logger.error(e);
-        }
+        res = HttpRequest.s_SendPut(host_crm + uri, dpModified.body.toString(), crm_token, pathValue);
         s_CheckResponse(res);
         Assert.assertEquals(code, "1000000");
 
@@ -206,11 +181,7 @@ public class KBDisease_Update extends BaseTest {
         categoryId.replace("disease_category_id", id);
         dpModified.body.accumulate("category_list", categoryId);
 //        input_ids.add(id);
-        try {
-            res = HttpRequest.s_SendPut(host_crm + uri, dpModified.body.toString(), crm_token, pathValue);
-        } catch (IOException e) {
-            logger.error(e);
-        }
+        res = HttpRequest.s_SendPut(host_crm + uri, dpModified.body.toString(), crm_token, pathValue);
         s_CheckResponse(res);
         Assert.assertEquals(code, "1000000");
 
@@ -266,11 +237,7 @@ public class KBDisease_Update extends BaseTest {
         categoryId.replace("disease_category_id", "22"+id);
         dpModified.body.accumulate("category_list", categoryId);
 //        input_ids.add(id);
-        try {
-            res = HttpRequest.s_SendPut(host_crm + uri, dpModified.body.toString(), crm_token, pathValue);
-        } catch (IOException e) {
-            logger.error(e);
-        }
+        res = HttpRequest.s_SendPut(host_crm + uri, dpModified.body.toString(), crm_token, pathValue);
         s_CheckResponse(res);
         Assert.assertNotEquals(code, "1000000"); //抱专业错误
 

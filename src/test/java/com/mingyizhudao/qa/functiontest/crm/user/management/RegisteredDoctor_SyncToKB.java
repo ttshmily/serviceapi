@@ -1,18 +1,17 @@
 package com.mingyizhudao.qa.functiontest.crm.user.management;
 
-import com.mingyizhudao.qa.common.BaseTest;
-import com.mingyizhudao.qa.common.TestLogger;
 import com.mingyizhudao.qa.dataprofile.crm.ExpertProfile;
 import com.mingyizhudao.qa.dataprofile.doctor.DoctorProfile;
-import com.mingyizhudao.qa.functiontest.crm.kb.management.KBExpert_Create;
 import com.mingyizhudao.qa.functiontest.crm.kb.management.KBExpert_Detail;
-import com.mingyizhudao.qa.utilities.Helper;
+import com.mingyizhudao.qa.common.BaseTest;
+import com.mingyizhudao.qa.common.TestLogger;
+import com.mingyizhudao.qa.functiontest.crm.kb.management.KBExpert_Create;
 import com.mingyizhudao.qa.utilities.HttpRequest;
+import com.mingyizhudao.qa.utilities.Helper;
 import net.sf.json.JSONObject;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
-import java.io.IOException;
 import java.util.HashMap;
 
 /**
@@ -48,11 +47,7 @@ public class RegisteredDoctor_SyncToKB extends BaseTest {
 
         body.put("status", "1");
         body.put("reason", "单独同步");
-        try {
-            res = HttpRequest.s_SendPut(host_crm+uri, body.toString(), crm_token, pathValue);
-        } catch (IOException e) {
-            logger.error(e);
-        }
+        res = HttpRequest.s_SendPut(host_crm+uri, body.toString(), crm_token, pathValue);
         s_CheckResponse(res);
         Assert.assertEquals(code, "1000000");
 
@@ -93,11 +88,7 @@ public class RegisteredDoctor_SyncToKB extends BaseTest {
 
         body.put("status", "1");
         body.put("reason", "单独同步");
-        try {
-            res = HttpRequest.s_SendPut(host_crm+uri, body.toString(), crm_token, pathValue);
-        } catch (IOException e) {
-            logger.error(e);
-        }
+        res = HttpRequest.s_SendPut(host_crm+uri, body.toString(), crm_token, pathValue);
         s_CheckResponse(res);
         Assert.assertNotEquals(code, "1000000");
     }
@@ -121,11 +112,7 @@ public class RegisteredDoctor_SyncToKB extends BaseTest {
         body.put("status", "1");
 //        body.put("reason", "单独同步");
         body.put("expert_id", expertId);
-        try {
-            res = HttpRequest.s_SendPut(host_crm+uri, body.toString(), crm_token, pathValue);
-        } catch (IOException e) {
-            logger.error(e);
-        }
+        res = HttpRequest.s_SendPut(host_crm+uri, body.toString(), crm_token, pathValue);
         s_CheckResponse(res);
         Assert.assertEquals(code, "1000000");
 

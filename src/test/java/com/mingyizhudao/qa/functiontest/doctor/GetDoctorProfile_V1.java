@@ -10,8 +10,6 @@ import org.testng.Assert;
 import org.testng.Reporter;
 import org.testng.annotations.Test;
 
-import java.io.IOException;
-
 import static com.mingyizhudao.qa.utilities.Helper.s_ParseJson;
 
 /**
@@ -31,22 +29,14 @@ public class GetDoctorProfile_V1 extends BaseTest {
     public static String s_MyProfile(String token) {
         String res = "";
         TestLogger logger = new TestLogger(s_JobName());
-        try {
-            res = HttpRequest.s_SendGet(host_doc +uri, "", token);
-        } catch (IOException e) {
-            logger.error(e);
-        }
+        res = HttpRequest.s_SendGet(host_doc +uri, "", token);
         return res;
     }
 
     @Test
     public void test_01_有token信息的请求可以获得有效信息() {
         String res = "";
-        try {
-            res = HttpRequest.s_SendGet(host_doc + uri,"", mainToken);
-        } catch (IOException e) {
-            logger.error(e);
-        }
+        res = HttpRequest.s_SendGet(host_doc + uri,"", mainToken);
         s_CheckResponse(res);
         Assert.assertNotNull(s_ParseJson(data,"doctor"),"doctor字段缺失");
         Assert.assertNotNull(s_ParseJson(data,"doctor:name"), "name字段缺失");
@@ -60,11 +50,7 @@ public class GetDoctorProfile_V1 extends BaseTest {
     @Test
     public void test_02_没有token信息的请求不能获得个人信息并返回正确的错误提示() {
         String res = "";
-        try {
-            res = HttpRequest.s_SendGet(host_doc+uri,"", "");
-        } catch (IOException e) {
-            logger.error(e);
-        }
+        res = HttpRequest.s_SendGet(host_doc+uri,"", "");
     //    logger.info(unicodeString(res));
         s_CheckResponse(res);
         Assert.assertNotEquals(code, "1000000","没有登录信息，不应该返回data");
@@ -74,11 +60,7 @@ public class GetDoctorProfile_V1 extends BaseTest {
     @Test
     public void test_03_错误token的请求不能获得个人信息并返回正确的错误提示() {
         String res = "";
-        try {
-            res = HttpRequest.s_SendGet(host_doc + uri,"", "nidawoya");
-        } catch (IOException e) {
-            logger.error(e);
-        }
+        res = HttpRequest.s_SendGet(host_doc + uri,"", "nidawoya");
         //    logger.info(unicodeString(res));
         s_CheckResponse(res);
         Assert.assertNotEquals(code, "1000000","错误token信息，不应该返回data");
@@ -88,11 +70,7 @@ public class GetDoctorProfile_V1 extends BaseTest {
     @Test
     public void test_04_测试data字段返回了足够的医生信息() {
         String res = "";
-        try {
-            res = HttpRequest.s_SendGet(host_doc + uri,"", mainToken);
-        } catch (IOException e) {
-            logger.error(e);
-        }
+        res = HttpRequest.s_SendGet(host_doc + uri,"", mainToken);
         s_CheckResponse(res);
         Assert.assertNotNull(s_ParseJson(data,"doctor"),"doctor字段缺失");
         Assert.assertNotNull(s_ParseJson(data,"doctor:name"), "name字段缺失");
@@ -109,11 +87,7 @@ public class GetDoctorProfile_V1 extends BaseTest {
 
         CreateOrder.s_CreateOrder(mainToken);
         String resOld = "";
-        try {
-            resOld = HttpRequest.s_SendGet(host_doc + uri,"", mainToken);
-        } catch (IOException e) {
-            logger.error(e);
-        }
+        resOld = HttpRequest.s_SendGet(host_doc + uri,"", mainToken);
         s_CheckResponse(resOld);
         int count = Integer.parseInt(s_ParseJson(data,"doctor:status_count:agentId:count"));
         int countHandling = Integer.parseInt(s_ParseJson(data,"doctor:status_count:agentId:handling"));
@@ -126,11 +100,7 @@ public class GetDoctorProfile_V1 extends BaseTest {
             i++;
         }
         String res = "";
-        try {
-            res = HttpRequest.s_SendGet(host_doc + uri,"", mainToken);
-        } catch (IOException e) {
-            logger.error(e);
-        }
+        res = HttpRequest.s_SendGet(host_doc + uri,"", mainToken);
         s_CheckResponse(res);
         Assert.assertNotNull(s_ParseJson(data,"doctor"),"doctor字段缺失");
         Assert.assertNotNull(s_ParseJson(data,"doctor:name"), "name字段缺失");
@@ -145,11 +115,7 @@ public class GetDoctorProfile_V1 extends BaseTest {
     @Test
     public void test_06_测试总订单数_测试处理中订单数_CRM已领取(){
         String resOld = "";
-        try {
-            resOld = HttpRequest.s_SendGet(host_doc + uri,"", mainToken);
-        } catch (IOException e) {
-            logger.error(e);
-        }
+        resOld = HttpRequest.s_SendGet(host_doc + uri,"", mainToken);
         s_CheckResponse(resOld);
         int count = Integer.parseInt(s_ParseJson(data,"doctor:status_count:agentId:count"));
         int countHandling = Integer.parseInt(s_ParseJson(data,"doctor:status_count:agentId:handling"));
@@ -162,11 +128,7 @@ public class GetDoctorProfile_V1 extends BaseTest {
         }
         //s_CreateOrder.s_CreateOrder(mainToken);
         String res = "";
-        try {
-            res = HttpRequest.s_SendGet(host_doc + uri,"", mainToken);
-        } catch (IOException e) {
-            logger.error(e);
-        }
+        res = HttpRequest.s_SendGet(host_doc + uri,"", mainToken);
         s_CheckResponse(res);
         Assert.assertNotNull(s_ParseJson(data,"doctor"),"doctor字段缺失");
         Assert.assertNotNull(s_ParseJson(data,"doctor:name"), "name字段缺失");
@@ -181,11 +143,7 @@ public class GetDoctorProfile_V1 extends BaseTest {
     @Test
     public void test_07_测试总订单数_测试处理中订单数_推荐完医生(){
         String resOld = "";
-        try {
-            resOld = HttpRequest.s_SendGet(host_doc + uri,"", mainToken);
-        } catch (IOException e) {
-            logger.error(e);
-        }
+        resOld = HttpRequest.s_SendGet(host_doc + uri,"", mainToken);
         s_CheckResponse(resOld);
         int count = Integer.parseInt(s_ParseJson(data,"doctor:status_count:agentId:count"));
         int countHandling = Integer.parseInt(s_ParseJson(data,"doctor:status_count:agentId:handling"));
@@ -199,11 +157,7 @@ public class GetDoctorProfile_V1 extends BaseTest {
         }
         //s_CreateOrder.s_CreateOrder(mainToken);
         String res = "";
-        try {
-            res = HttpRequest.s_SendGet(host_doc + uri,"", mainToken);
-        } catch (IOException e) {
-            logger.error(e);
-        }
+        res = HttpRequest.s_SendGet(host_doc + uri,"", mainToken);
         s_CheckResponse(res);
         Assert.assertNotNull(s_ParseJson(data,"doctor"),"doctor字段缺失");
         Assert.assertNotNull(s_ParseJson(data,"doctor:name"), "name字段缺失");
@@ -218,11 +172,7 @@ public class GetDoctorProfile_V1 extends BaseTest {
     @Test
     public void test_08_测试总订单数_待支付状态的订单数(){
         String resOld = "";
-        try {
-            resOld = HttpRequest.s_SendGet(host_doc + uri,"", mainToken);
-        } catch (IOException e) {
-            logger.error(e);
-        }
+        resOld = HttpRequest.s_SendGet(host_doc + uri,"", mainToken);
         s_CheckResponse(resOld);
         int count = Integer.parseInt(s_ParseJson(data,"doctor:status_count:agentId:count"));
         int countHandling = Integer.parseInt(s_ParseJson(data,"doctor:status_count:agentId:handling"));
@@ -237,11 +187,7 @@ public class GetDoctorProfile_V1 extends BaseTest {
             i++;
         }
         String res = "";
-        try {
-            res = HttpRequest.s_SendGet(host_doc + uri,"", mainToken);
-        } catch (IOException e) {
-            logger.error(e);
-        }
+        res = HttpRequest.s_SendGet(host_doc + uri,"", mainToken);
         s_CheckResponse(res);
         Assert.assertNotNull(s_ParseJson(data,"doctor"),"doctor字段缺失");
         Assert.assertNotNull(s_ParseJson(data,"doctor:name"), "name字段缺失");

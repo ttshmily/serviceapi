@@ -14,8 +14,7 @@ import org.apache.log4j.Logger;
 /**
  * custom logger class to create separate log files based on test name
  */
-public class TestLogger
-{
+public class TestLogger {
     private static Map testLoggers = new ConcurrentHashMap<String,Logger>();
     private static String dir = "logs"; // Root log directory
     private static Layout layout;
@@ -39,6 +38,7 @@ public class TestLogger
         l.info(message);
         Reporter.log("[INFO] "+message); // also log to TestNG report
     }
+
     public synchronized void info(String message) {
         Logger l = getTestLogger(jobName);
         l.info(message);
@@ -50,11 +50,13 @@ public class TestLogger
         l.error(message);
         Reporter.log("[ERROR] "+message); // also log to TestNG report
     }
+
     public synchronized void error(String message) {
         Logger l = getTestLogger(jobName);
         l.error(message);
         Reporter.log("[ERROR] "+message); // also log to TestNG report
     }
+
     public synchronized void error(Object message) {
         Logger l = getTestLogger(jobName);
         l.error(message.toString());
@@ -66,11 +68,13 @@ public class TestLogger
         l.debug(message);
         Reporter.log("[DEBUG] "+message); // also log to TestNG report
     }
+
     public synchronized void debug(String message) {
         Logger l = getTestLogger(jobName);
         l.debug(message);
         Reporter.log("[DEBUG] "+message); // also log to TestNG report
     }
+
     public synchronized void debug(Object message) {
         Logger l = getTestLogger(jobName);
         l.error(message.toString());

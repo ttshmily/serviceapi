@@ -1,16 +1,15 @@
 package com.mingyizhudao.qa.functiontest.crm.kb.management;
 
 import com.mingyizhudao.qa.common.BaseTest;
-import com.mingyizhudao.qa.common.TestLogger;
 import com.mingyizhudao.qa.dataprofile.crm.ExpertProfile;
-import com.mingyizhudao.qa.utilities.HttpRequest;
+import com.mingyizhudao.qa.common.TestLogger;
 import com.mingyizhudao.qa.utilities.Generator;
+import com.mingyizhudao.qa.utilities.HttpRequest;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -40,11 +39,7 @@ public class KBExpert_Diseases extends BaseTest {
         }
         diseaseList.put("disease_ids", disease_ids.toArray());
         logger.debug(diseaseList.toString());
-        try {
-            res = HttpRequest.s_SendPost(host_crm+uri, diseaseList.toString(), crm_token, pathValue);
-        } catch (IOException e) {
-            logger.error(e);
-        }
+        res = HttpRequest.s_SendPost(host_crm+uri, diseaseList.toString(), crm_token, pathValue);
         JSONObject node = JSONObject.fromObject(res);
         if(!node.getString("code").equals("1000000")) return false;
         return true;
@@ -80,11 +75,7 @@ public class KBExpert_Diseases extends BaseTest {
         System.out.println(inputString);
 
         List<String> outputString = new ArrayList<>();
-        try {
-            res = HttpRequest.s_SendPost(host_crm+uri, diseaseList.toString(), crm_token, pathValue);
-        } catch (IOException e) {
-            logger.error(e);
-        }
+        res = HttpRequest.s_SendPost(host_crm+uri, diseaseList.toString(), crm_token, pathValue);
         s_CheckResponse(res);
         Assert.assertEquals(code, "1000000", "关联疾病失败");
 
@@ -134,11 +125,7 @@ public class KBExpert_Diseases extends BaseTest {
         inputString.add(id);
         System.out.println(inputString);
 
-        try {
-            res = HttpRequest.s_SendPost(host_crm+uri, diseaseList.toString(), crm_token, pathValue);
-        } catch (IOException e) {
-            logger.error(e);
-        }
+        res = HttpRequest.s_SendPost(host_crm+uri, diseaseList.toString(), crm_token, pathValue);
         s_CheckResponse(res);
         Assert.assertEquals(code, "1000000", "关联疾病失败");
 
@@ -152,11 +139,7 @@ public class KBExpert_Diseases extends BaseTest {
         id = Generator.randomDiseaseId();
         diseaseList.accumulate("disease_ids", id);
         inputString.add(id);
-        try {
-            res = HttpRequest.s_SendPost(host_crm+uri, diseaseList.toString(), crm_token, pathValue);
-        } catch (IOException e) {
-            logger.error(e);
-        }
+        res = HttpRequest.s_SendPost(host_crm+uri, diseaseList.toString(), crm_token, pathValue);
         s_CheckResponse(res);
         Assert.assertEquals(code, "1000000", "关联疾病失败");
 
@@ -208,11 +191,7 @@ public class KBExpert_Diseases extends BaseTest {
         inputString.add(id5);
         System.out.println(inputString);
 
-        try {
-            res = HttpRequest.s_SendPost(host_crm+uri, diseaseList.toString(), crm_token, pathValue);
-        } catch (IOException e) {
-            logger.error(e);
-        }
+        res = HttpRequest.s_SendPost(host_crm+uri, diseaseList.toString(), crm_token, pathValue);
         s_CheckResponse(res);
         Assert.assertEquals(code, "1000000", "关联疾病失败");
 
@@ -225,11 +204,7 @@ public class KBExpert_Diseases extends BaseTest {
         inputString.add(id1);
         inputString.add(id3);
         inputString.add(id5);
-        try {
-            res = HttpRequest.s_SendPost(host_crm+uri, diseaseList.toString(), crm_token, pathValue);
-        } catch (IOException e) {
-            logger.error(e);
-        }
+        res = HttpRequest.s_SendPost(host_crm+uri, diseaseList.toString(), crm_token, pathValue);
         s_CheckResponse(res);
         Assert.assertEquals(code, "1000000", "关联疾病失败");
 
@@ -287,11 +262,7 @@ public class KBExpert_Diseases extends BaseTest {
         System.out.println(inputString);
 
         List<String> outputString = new ArrayList<>();
-        try {
-            res = HttpRequest.s_SendPost(host_crm+uri, diseaseList.toString(), crm_token, pathValue);
-        } catch (IOException e) {
-            logger.error(e);
-        }
+        res = HttpRequest.s_SendPost(host_crm+uri, diseaseList.toString(), crm_token, pathValue);
         s_CheckResponse(res);
         Assert.assertEquals(code, "1000000", "关联疾病失败");
 
@@ -347,11 +318,7 @@ public class KBExpert_Diseases extends BaseTest {
         System.out.println(inputString);
 
         List<String> outputString = new ArrayList<>();
-        try {
-            res = HttpRequest.s_SendPost(host_crm+uri, diseaseList.toString(), crm_token, pathValue);
-        } catch (IOException e) {
-            logger.error(e);
-        }
+        res = HttpRequest.s_SendPost(host_crm+uri, diseaseList.toString(), crm_token, pathValue);
         s_CheckResponse(res);
         Assert.assertNotEquals(code, "1000000");
 
@@ -402,20 +369,12 @@ public class KBExpert_Diseases extends BaseTest {
         System.out.println(inputString);
 
         List<String> outputString = new ArrayList<>();
-        try {
-            res = HttpRequest.s_SendPost(host_crm+uri, diseaseList.toString(), crm_token, pathValue);
-        } catch (IOException e) {
-            logger.error(e);
-        }
+        res = HttpRequest.s_SendPost(host_crm+uri, diseaseList.toString(), crm_token, pathValue);
         s_CheckResponse(res);
         Assert.assertEquals(code, "1000000");
 
         diseaseList.replace("disease_ids","[]");
-        try {
-            res = HttpRequest.s_SendPost(host_crm+uri, diseaseList.toString(), crm_token, pathValue);
-        } catch (IOException e) {
-            logger.error(e);
-        }
+        res = HttpRequest.s_SendPost(host_crm+uri, diseaseList.toString(), crm_token, pathValue);
         s_CheckResponse(res);
         Assert.assertEquals(code, "1000000");
 

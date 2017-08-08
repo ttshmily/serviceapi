@@ -11,7 +11,6 @@ import net.sf.json.JSONObject;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
-import java.io.IOException;
 import java.util.HashMap;
 
 /**
@@ -37,11 +36,7 @@ public class RegisteredDoctor_Modify extends BaseTest {
         pathValue.put("id",doctorId);
         if (map == null) return null;
         if (map.keySet().size() != 0) {
-            try {
-                res = HttpRequest.s_SendPut(host_crm+uri, map.toString(), crm_token, pathValue);
-            } catch (IOException e) {
-                logger.error(e);
-            }
+            res = HttpRequest.s_SendPut(host_crm+uri, map.toString(), crm_token, pathValue);
         }
         return res;
     }
@@ -69,11 +64,7 @@ public class RegisteredDoctor_Modify extends BaseTest {
 
         HashMap<String, String> hospitalInfo = KBHospital_Detail.s_Detail(hospital);
         String another_city = hospitalInfo.get("city_id");
-        try {
-            res = HttpRequest.s_SendPut(host_crm+uri, body.toString(), crm_token, pathValue);
-        } catch (IOException e) {
-            logger.error(e);
-        }
+        res = HttpRequest.s_SendPut(host_crm+uri, body.toString(), crm_token, pathValue);
         logger.info(Helper.unicodeString(res));
         s_CheckResponse(res);
         res = RegisteredDoctor_Detail.s_Detail(mainDoctorId);
@@ -87,11 +78,7 @@ public class RegisteredDoctor_Modify extends BaseTest {
 
         // 错误的医生ID，应该更新失败
         pathValue.replace("id", mainDoctorId+"11111");
-        try {
-            res = HttpRequest.s_SendPut(host_crm+uri, body.toString(), crm_token, pathValue);
-        } catch (IOException e) {
-            logger.error(e);
-        }
+        res = HttpRequest.s_SendPut(host_crm+uri, body.toString(), crm_token, pathValue);
         s_CheckResponse(res);
         Assert.assertNotEquals(code, "1000000");
 
@@ -107,13 +94,9 @@ public class RegisteredDoctor_Modify extends BaseTest {
         body.put("content", "自动化修改医生姓名");
         // 更新正确的name，应当成功
         body.put("name", "美女医生");
-        try {
-            res = HttpRequest.s_SendPut(host_crm+uri, body.toString(), crm_token, pathValue);
-            s_CheckResponse(res);
-            Assert.assertEquals(code, "1000000");
-        } catch (IOException e) {
-            logger.error(e);
-        }
+        res = HttpRequest.s_SendPut(host_crm+uri, body.toString(), crm_token, pathValue);
+        s_CheckResponse(res);
+        Assert.assertEquals(code, "1000000");
         res = RegisteredDoctor_Detail.s_Detail(mainDoctorId);
         s_CheckResponse(res);
         Assert.assertEquals(Helper.s_ParseJson(data, "name"), "美女医生");
@@ -135,13 +118,9 @@ public class RegisteredDoctor_Modify extends BaseTest {
         HashMap<String, String> hospitalInfo = KBHospital_Detail.s_Detail(hospitalId);
         String another_city = hospitalInfo.get("city_id");
 
-        try {
-            res = HttpRequest.s_SendPut(host_crm+uri, body.toString(), crm_token, pathValue);
-            s_CheckResponse(res);
-            Assert.assertEquals(code, "1000000");
-        } catch (IOException e) {
-            logger.error(e);
-        }
+        res = HttpRequest.s_SendPut(host_crm+uri, body.toString(), crm_token, pathValue);
+        s_CheckResponse(res);
+        Assert.assertEquals(code, "1000000");
         res = RegisteredDoctor_Detail.s_Detail(mainDoctorId);
         s_CheckResponse(res);
         Assert.assertEquals(Helper.s_ParseJson(data, "hospital_id"), hospitalId);
@@ -153,13 +132,9 @@ public class RegisteredDoctor_Modify extends BaseTest {
         hospitalId = Generator.randomHospitalId();
         body.replace("hospital_id", hospitalId);
         body.put("hospital_name", "测试医院");
-        try {
-            res = HttpRequest.s_SendPut(host_crm+uri, body.toString(), crm_token, pathValue);
-            s_CheckResponse(res);
-            Assert.assertEquals(code, "1000000");
-        } catch (IOException e) {
-            logger.error(e);
-        }
+        res = HttpRequest.s_SendPut(host_crm+uri, body.toString(), crm_token, pathValue);
+        s_CheckResponse(res);
+        Assert.assertEquals(code, "1000000");
         res = RegisteredDoctor_Detail.s_Detail(mainDoctorId);
         s_CheckResponse(res);
         Assert.assertEquals(Helper.s_ParseJson(data, "hospital_id"), hospitalId);
@@ -178,11 +153,7 @@ public class RegisteredDoctor_Modify extends BaseTest {
         // 更新正确的academic_title，应当成功
         String academic = Generator.randomKey(KnowledgeBase.kb_academic_title);
         body.put("academic_title", academic);
-        try {
-            res = HttpRequest.s_SendPut(host_crm+mock+uri, body.toString(), crm_token, pathValue);
-        } catch (IOException e) {
-            logger.error(e);
-        }
+        res = HttpRequest.s_SendPut(host_crm+mock+uri, body.toString(), crm_token, pathValue);
         s_CheckResponse(res);
         Assert.assertEquals(code, "1000000");
         //TODO
@@ -193,11 +164,7 @@ public class RegisteredDoctor_Modify extends BaseTest {
 
         // 更新错误的academic_title，应当不成功
         body.replace("academic_title", "ASSOCIATE_PROFESSOR_WRONG");
-        try {
-            res = HttpRequest.s_SendPut(host_crm+mock+uri, body.toString(), crm_token, pathValue);
-        } catch (IOException e) {
-            logger.error(e);
-        }
+        res = HttpRequest.s_SendPut(host_crm+mock+uri, body.toString(), crm_token, pathValue);
         s_CheckResponse(res);
         Assert.assertNotEquals(code, "1000000");
         //TODO
@@ -219,11 +186,7 @@ public class RegisteredDoctor_Modify extends BaseTest {
         // 更新正确的medical_title，应当成功
         String medical = Generator.randomKey(KnowledgeBase.kb_medical_title);
         body.put("medical_title", medical);
-        try {
-            res = HttpRequest.s_SendPut(host_crm+uri, body.toString(), crm_token, pathValue);
-        } catch (IOException e) {
-            logger.error(e);
-        }
+        res = HttpRequest.s_SendPut(host_crm+uri, body.toString(), crm_token, pathValue);
         s_CheckResponse(res);
         Assert.assertEquals(code, "1000000");
         res = RegisteredDoctor_Detail.s_Detail(mainDoctorId);
@@ -233,11 +196,7 @@ public class RegisteredDoctor_Modify extends BaseTest {
 
         // 更新错误的medical_title，应当不成功
         body.replace("medical_title", "ARCHIATER_WRONG");
-        try {
-            res = HttpRequest.s_SendPut(host_crm+uri, body.toString(), crm_token, pathValue);
-        } catch (IOException e) {
-            logger.error(e);
-        }
+        res = HttpRequest.s_SendPut(host_crm+uri, body.toString(), crm_token, pathValue);
         s_CheckResponse(res);
         Assert.assertNotEquals(code, "1000000");
         res = RegisteredDoctor_Detail.s_Detail(mainDoctorId);
@@ -258,11 +217,7 @@ public class RegisteredDoctor_Modify extends BaseTest {
         // 更新正确的major_id，应当成功
         String majorId = Generator.randomKey(KnowledgeBase.kb_major);
         body.put("major_id", majorId);
-        try {
-            res = HttpRequest.s_SendPut(host_crm+mock+uri, body.toString(), crm_token, pathValue);
-        } catch (IOException e) {
-            logger.error(e);
-        }
+        res = HttpRequest.s_SendPut(host_crm+mock+uri, body.toString(), crm_token, pathValue);
         s_CheckResponse(res);
         Assert.assertEquals(code, "1000000");
         res = RegisteredDoctor_Detail.s_Detail(mainDoctorId);
@@ -272,11 +227,7 @@ public class RegisteredDoctor_Modify extends BaseTest {
 
         // 更新错误的major_id，应当不成功
         body.replace("major_id", "1000000");
-        try {
-            res = HttpRequest.s_SendPut(host_crm+uri, body.toString(), crm_token, pathValue);
-        } catch (IOException e) {
-            logger.error(e);
-        }
+        res = HttpRequest.s_SendPut(host_crm+uri, body.toString(), crm_token, pathValue);
         s_CheckResponse(res);
         Assert.assertNotEquals(code, "1000000");
         res = RegisteredDoctor_Detail.s_Detail(mainDoctorId);
@@ -298,11 +249,7 @@ public class RegisteredDoctor_Modify extends BaseTest {
         // 更新正确的mobile，应当成功
         String phone = Generator.randomPhone();
         body.put("mobile", phone);
-        try {
-            res = HttpRequest.s_SendPut(host_crm+mock+uri, body.toString(), crm_token, pathValue);
-        } catch (IOException e) {
-            logger.error(e);
-        }
+        res = HttpRequest.s_SendPut(host_crm+mock+uri, body.toString(), crm_token, pathValue);
         s_CheckResponse(res);
         Assert.assertEquals(code, "1000000");
         //TODO
@@ -325,11 +272,7 @@ public class RegisteredDoctor_Modify extends BaseTest {
         body.accumulate("doctor_card_pictures", JSONObject.fromObject("{'key':'2017/05/04/1265834e-97d8-44a0-95e7-047c7facaee8/IMG_20170429_102738.jpg';'type':'3'}").toString());
         body.accumulate("doctor_card_pictures", JSONObject.fromObject("{'key':'2017/05/04/1265834e-97d8-44a0-95e7-047c7facaee8/IMG_20170429_102739.jpg';'type':'3'}").toString());
         body.accumulate("doctor_card_pictures", JSONObject.fromObject("{'key':'2017/05/04/1265834e-97d8-44a0-95e7-047c7facaee8/IMG_20170429_102736.jpg';'type':'3'}").toString());
-        try {
-            res = HttpRequest.s_SendPut(host_crm+uri, body.toString(), crm_token, pathValue);
-        } catch (IOException e) {
-            logger.error(e);
-        }
+        res = HttpRequest.s_SendPut(host_crm+uri, body.toString(), crm_token, pathValue);
         s_CheckResponse(res);
         Assert.assertEquals(code, "1000000");
 
@@ -344,11 +287,7 @@ public class RegisteredDoctor_Modify extends BaseTest {
 
 
         body.accumulate("doctor_card_pictures", JSONObject.fromObject("{'key':'2017/05/04/1265834e-97d8-44a0-95e7-047c7facaee8/IMG_20170429_102740.jpg';'type':'3'}").toString());
-        try {
-            res = HttpRequest.s_SendPut(host_crm+uri, body.toString(), crm_token, pathValue);
-        } catch (IOException e) {
-            logger.error(e);
-        }
+        res = HttpRequest.s_SendPut(host_crm+uri, body.toString(), crm_token, pathValue);
         logger.debug(res);
         s_CheckResponse(res);
         Assert.assertEquals(code, "1000000");
@@ -363,11 +302,7 @@ public class RegisteredDoctor_Modify extends BaseTest {
         }
 
         body.accumulate("doctor_card_pictures", JSONObject.fromObject("{'key':'2017/05/04/1265834e-97d8-44a0-95e7-047c7facaee8/IMG_20170429_102741.jpg';'type':'3'}").toString());
-        try {
-            res = HttpRequest.s_SendPut(host_crm+uri, body.toString(), crm_token, pathValue);
-        } catch (IOException e) {
-            logger.error(e);
-        }
+        res = HttpRequest.s_SendPut(host_crm+uri, body.toString(), crm_token, pathValue);
         s_CheckResponse(res);
         Assert.assertEquals(code, "1000000");
 
@@ -381,11 +316,7 @@ public class RegisteredDoctor_Modify extends BaseTest {
         }
 // 删除所有图片
         body.replace("doctor_card_pictures", "[]");
-        try {
-            res = HttpRequest.s_SendPut(host_crm+uri, body.toString(), crm_token, pathValue);
-        } catch (IOException e) {
-            logger.error(e);
-        }
+        res = HttpRequest.s_SendPut(host_crm+uri, body.toString(), crm_token, pathValue);
         s_CheckResponse(res);
         Assert.assertEquals(code, "1000000");
 

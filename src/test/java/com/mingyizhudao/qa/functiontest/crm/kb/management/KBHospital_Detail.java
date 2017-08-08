@@ -3,14 +3,13 @@ package com.mingyizhudao.qa.functiontest.crm.kb.management;
 import com.mingyizhudao.qa.common.BaseTest;
 import com.mingyizhudao.qa.common.TestLogger;
 import com.mingyizhudao.qa.dataprofile.crm.HospitalProfile;
-import com.mingyizhudao.qa.utilities.Helper;
-import com.mingyizhudao.qa.utilities.HttpRequest;
 import com.mingyizhudao.qa.utilities.Generator;
+import com.mingyizhudao.qa.utilities.HttpRequest;
+import com.mingyizhudao.qa.utilities.Helper;
 import net.sf.json.JSONObject;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
-import java.io.IOException;
 import java.util.HashMap;
 
 /**
@@ -33,12 +32,8 @@ public class KBHospital_Detail extends BaseTest {
         JSONObject hospital = null;
         HashMap<String, String> pathValue = new HashMap<>();
         pathValue.put("hospital_id", hospitalId);
-        try {
-            res = HttpRequest.s_SendGet(host_crm+uri,"", crm_token, pathValue);
-            hospital = JSONObject.fromObject(res).getJSONObject("data");
-        } catch (IOException e) {
-            logger.error(e);
-        }
+        res = HttpRequest.s_SendGet(host_crm+uri,"", crm_token, pathValue);
+        hospital = JSONObject.fromObject(res).getJSONObject("data");
         if (null == hospital) return null;
         HashMap<String, String> result = new HashMap<>();
         String cityId = hospital.containsKey("city_id") ? hospital.getString("city_id") : null;
@@ -76,11 +71,7 @@ public class KBHospital_Detail extends BaseTest {
         if (info == null) Assert.fail("创建医院失败，退出用例执行");
         HashMap<String, String> pathValue = new HashMap<>();
         pathValue.put("hospital_id",info.get("id"));
-        try {
-            res = HttpRequest.s_SendGet(host_crm+uri, "", crm_token, pathValue);
-        } catch (IOException e) {
-            logger.error(e);
-        }
+        res = HttpRequest.s_SendGet(host_crm+uri, "", crm_token, pathValue);
         s_CheckResponse(res);
         Assert.assertEquals(code, "1000000");
 
@@ -105,11 +96,7 @@ public class KBHospital_Detail extends BaseTest {
         if (info == null) Assert.fail("创建医院失败，退出用例执行");
         HashMap<String, String> pathValue = new HashMap<>();
         pathValue.put("hospital_id", "111" + info.get("id"));
-        try {
-            res = HttpRequest.s_SendGet(host_crm+uri, "", crm_token, pathValue);
-        } catch (IOException e) {
-            logger.error(e);
-        }
+        res = HttpRequest.s_SendGet(host_crm+uri, "", crm_token, pathValue);
         s_CheckResponse(res);
         Assert.assertNotEquals(code, "1000000");
     }

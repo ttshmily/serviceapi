@@ -2,12 +2,10 @@ package com.mingyizhudao.qa.functiontest.crm.trading.surgery;
 
 import com.mingyizhudao.qa.common.BaseTest;
 import com.mingyizhudao.qa.common.TestLogger;
-import com.mingyizhudao.qa.utilities.Helper;
 import com.mingyizhudao.qa.utilities.HttpRequest;
+import com.mingyizhudao.qa.utilities.Helper;
 import org.testng.Assert;
 import org.testng.annotations.Test;
-
-import java.io.IOException;
 
 /**
  * Created by ttshmily on 25/4/2017.
@@ -29,11 +27,7 @@ public class Order_Counts extends BaseTest {
 
         String res = "";
 
-        try {
-            res = HttpRequest.s_SendGet(host_crm+uri, "", crm_token, null);
-        } catch (IOException e) {
-            logger.error(e);
-        }
+        res = HttpRequest.s_SendGet(host_crm+uri, "", crm_token, null);
         s_CheckResponse(res);
         Assert.assertEquals(code, "1000000");
         Assert.assertNotNull(Helper.s_ParseJson(data, "load_take"));
@@ -48,11 +42,7 @@ public class Order_Counts extends BaseTest {
 
         String res = "";
 
-        try {
-            res = HttpRequest.s_SendGet(host_crm + uri, "", crm_token, null);
-        } catch (IOException e) {
-            logger.error(e);
-        }
+        res = HttpRequest.s_SendGet(host_crm + uri, "", crm_token, null);
         s_CheckResponse(res);
         Assert.assertEquals(code, "1000000");
 

@@ -6,7 +6,6 @@ import com.mingyizhudao.qa.utilities.HttpRequest;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
-import java.io.IOException;
 import java.util.HashMap;
 
 /**
@@ -30,11 +29,7 @@ public class Finance_PayInfo extends BaseTest {
 
         HashMap<String, String> pathValue = new HashMap<>();
         pathValue.put("paymentNumber", "");
-        try {
-            res = HttpRequest.s_SendGet(host_crm + uri, "", crm_token, pathValue);
-        } catch (IOException e) {
-            logger.error(e);
-        }
+        res = HttpRequest.s_SendGet(host_crm + uri, "", crm_token, pathValue);
         s_CheckResponse(res);
         Assert.assertEquals(code, "1000000");
 

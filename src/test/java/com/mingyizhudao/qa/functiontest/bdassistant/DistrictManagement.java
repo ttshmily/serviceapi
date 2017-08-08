@@ -1,15 +1,14 @@
 package com.mingyizhudao.qa.functiontest.bdassistant;
 
 import com.mingyizhudao.qa.common.BaseTest;
-import com.mingyizhudao.qa.utilities.HttpRequest;
 import com.mingyizhudao.qa.utilities.Generator;
+import com.mingyizhudao.qa.utilities.HttpRequest;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 import org.apache.log4j.Logger;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -38,12 +37,7 @@ public class DistrictManagement extends BaseTest {
             cities.add(cityRow);
         }
         body.put("list", cities);
-        try {
-            res = HttpRequest.s_SendPost(host_bda + uri, body.toString(), bda_token);
-        } catch (IOException e) {
-            logger.debug(res);
-            logger.error(e);
-        }
+        res = HttpRequest.s_SendPost(host_bda + uri, body.toString(), bda_token);
     }
 
     @Test
@@ -66,11 +60,7 @@ public class DistrictManagement extends BaseTest {
             city_list.add(city_id);
         }
         body.put("list", cities);
-        try {
-            res = HttpRequest.s_SendPost(host_bda + uri, body.toString(), bda_token);
-        } catch (IOException e) {
-            logger.error(e);
-        }
+        res = HttpRequest.s_SendPost(host_bda + uri, body.toString(), bda_token);
         s_CheckResponse(res);
         Assert.assertEquals(code, "1000000", "");
         for (String city:city_list

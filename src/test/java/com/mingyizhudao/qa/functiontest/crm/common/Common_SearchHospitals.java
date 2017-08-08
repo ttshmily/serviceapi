@@ -2,12 +2,11 @@ package com.mingyizhudao.qa.functiontest.crm.common;
 
 import com.mingyizhudao.qa.common.BaseTest;
 import com.mingyizhudao.qa.common.TestLogger;
-import com.mingyizhudao.qa.utilities.Helper;
 import com.mingyizhudao.qa.utilities.HttpRequest;
+import com.mingyizhudao.qa.utilities.Helper;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
-import java.io.IOException;
 import java.util.HashMap;
 
 /**
@@ -33,11 +32,7 @@ public class Common_SearchHospitals extends BaseTest {
         HashMap<String, String> query = new HashMap<>();
         query.put("hospital_name", "安庆");
 
-        try {
-            res = HttpRequest.s_SendGet(host_crm + uri, query, crm_token, null);
-        } catch (IOException e) {
-            logger.error(e);
-        }
+        res = HttpRequest.s_SendGet(host_crm + uri, query, crm_token, null);
         s_CheckResponse(res);
         Assert.assertEquals(code, "1000000");
     }
@@ -50,11 +45,7 @@ public class Common_SearchHospitals extends BaseTest {
 
         // 查询字符串中文
         query.put("hospital_name", "安阳");
-        try {
-            res = HttpRequest.s_SendGet(host_crm + uri, query, crm_token, null);
-        } catch (IOException e) {
-            logger.error(e);
-        }
+        res = HttpRequest.s_SendGet(host_crm + uri, query, crm_token, null);
         s_CheckResponse(res);
         Assert.assertEquals(code, "1000000"); // 必须要有输入
         Assert.assertNotEquals(Helper.s_ParseJson(data,"list()"), "0");
@@ -68,11 +59,7 @@ public class Common_SearchHospitals extends BaseTest {
 
         // 查询字符串为拼音
         query.put("hospital_name", "anyang");
-        try {
-            res = HttpRequest.s_SendGet(host_crm + uri, query, crm_token, null);
-        } catch (IOException e) {
-            logger.error(e);
-        }
+        res = HttpRequest.s_SendGet(host_crm + uri, query, crm_token, null);
         s_CheckResponse(res);
         Assert.assertEquals(code, "1000000");
         Assert.assertNotEquals(Helper.s_ParseJson(data,"list()"), "0");
@@ -86,11 +73,7 @@ public class Common_SearchHospitals extends BaseTest {
 
         // 查询字符串为中文拼音混合
         query.put("hospital_name", "安阳yiyuan");
-        try {
-            res = HttpRequest.s_SendGet(host_crm + uri, query, crm_token, null);
-        } catch (IOException e) {
-            logger.error(e);
-        }
+        res = HttpRequest.s_SendGet(host_crm + uri, query, crm_token, null);
         s_CheckResponse(res);
         Assert.assertEquals(code, "1000000");
         Assert.assertNotEquals(Helper.s_ParseJson(data, "list()"), "0", "搜索结果不应该为0");
@@ -103,11 +86,7 @@ public class Common_SearchHospitals extends BaseTest {
         HashMap<String, String> query = new HashMap<>();
 
         // 查询key不存在
-        try {
-            res = HttpRequest.s_SendGet(host_crm + uri, "", crm_token, null);
-        } catch (IOException e) {
-            logger.error(e);
-        }
+        res = HttpRequest.s_SendGet(host_crm + uri, "", crm_token, null);
         s_CheckResponse(res);
         Assert.assertEquals(code, "1000000");
     }

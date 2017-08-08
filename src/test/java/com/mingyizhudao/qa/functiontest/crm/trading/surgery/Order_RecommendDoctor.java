@@ -5,14 +5,13 @@ import com.mingyizhudao.qa.common.KnowledgeBase;
 import com.mingyizhudao.qa.common.TestLogger;
 import com.mingyizhudao.qa.dataprofile.doctor.DoctorProfile;
 import com.mingyizhudao.qa.functiontest.doctor.CreateOrder;
-import com.mingyizhudao.qa.utilities.Helper;
-import com.mingyizhudao.qa.utilities.HttpRequest;
 import com.mingyizhudao.qa.utilities.Generator;
+import com.mingyizhudao.qa.utilities.HttpRequest;
+import com.mingyizhudao.qa.utilities.Helper;
 import net.sf.json.JSONObject;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
-import java.io.IOException;
 import java.util.HashMap;
 
 /**
@@ -45,11 +44,7 @@ public class Order_RecommendDoctor extends BaseTest {
         JSONObject body = new JSONObject();
         body.put("surgeon_id",doctorId);
         body.put("content","自动化推荐的医生");
-        try {
-            res = HttpRequest.s_SendPut(host_crm + uri, body.toString(), crm_token, pathValue);
-        } catch (IOException e) {
-            logger.error(e);
-        }
+        HttpRequest.s_SendPut(host_crm + uri, body.toString(), crm_token, pathValue);
         res = Order_Detail.s_Detail(orderId);
         return Helper.s_ParseJson(JSONObject.fromObject(res), "data:status"); // 期望2020
     }
@@ -69,11 +64,7 @@ public class Order_RecommendDoctor extends BaseTest {
         String recommendedId = doc.get("expert_id");
         body.put("surgeon_id",recommendedId);
         body.put("content","自动化推荐的医生");
-        try {
-            res = HttpRequest.s_SendPut(host_crm+uri, body.toString(), crm_token, pathValue);
-        } catch (IOException e) {
-            logger.error(e);
-        }
+        res = HttpRequest.s_SendPut(host_crm+uri, body.toString(), crm_token, pathValue);
         s_CheckResponse(res);
         Assert.assertEquals(code, "1000000");
         res = Order_Detail.s_Detail(order_number);
@@ -109,11 +100,7 @@ public class Order_RecommendDoctor extends BaseTest {
         String recommendedId = Generator.randomExpertId();
         body.put("surgeon_id",recommendedId);
         body.put("content","自动化推荐的医生");
-        try {
-            res = HttpRequest.s_SendPut(host_crm+uri, body.toString(), crm_token, pathValue);
-        } catch (IOException e) {
-            logger.error(e);
-        }
+        res = HttpRequest.s_SendPut(host_crm+uri, body.toString(), crm_token, pathValue);
         s_CheckResponse(res);
         Assert.assertEquals(code, "1000000");
         res = Order_Detail.s_Detail(order_number);
@@ -126,11 +113,7 @@ public class Order_RecommendDoctor extends BaseTest {
         recommendedId = "666";
         body.replace("surgeon_id",recommendedId);
         body.replace("content","自动化重新推荐的医生");
-        try {
-            res = HttpRequest.s_SendPut(host_crm+uri, body.toString(), crm_token, pathValue);
-        } catch (IOException e) {
-            logger.error(e);
-        }
+        res = HttpRequest.s_SendPut(host_crm+uri, body.toString(), crm_token, pathValue);
         s_CheckResponse(res);
         Assert.assertEquals(code, "1000000");
         res = Order_Detail.s_Detail(order_number);
@@ -143,12 +126,8 @@ public class Order_RecommendDoctor extends BaseTest {
         String new_recommendedId = "666new_66666";
         body.replace("surgeon_id",new_recommendedId);
         body.replace("content","自动化重新推荐的不存在的医生");
-        try {
-            res = HttpRequest.s_SendPut(host_crm+uri, body.toString(), crm_token, pathValue);
-            s_CheckResponse(res);
-        } catch (IOException e) {
-            logger.error(e);
-        }
+        res = HttpRequest.s_SendPut(host_crm+uri, body.toString(), crm_token, pathValue);
+        s_CheckResponse(res);
         Assert.assertNotEquals(code, "1000000");
         res = Order_Detail.s_Detail(order_number);
         s_CheckResponse(res);
@@ -168,11 +147,7 @@ public class Order_RecommendDoctor extends BaseTest {
         JSONObject body = new JSONObject();
         body.put("surgeon_id",mainDoctorId);
         body.put("content","和下级医生相同的上级医生");
-        try {
-            res = HttpRequest.s_SendPut(host_crm+uri, body.toString(), crm_token, pathValue);
-        } catch (IOException e) {
-            logger.error(e);
-        }
+        res = HttpRequest.s_SendPut(host_crm+uri, body.toString(), crm_token, pathValue);
         s_CheckResponse(res);
         Assert.assertNotEquals(code, "1000000", "不应该推荐和发起医生相同的专家医生");
         res = Order_Detail.s_Detail(order_number);
@@ -195,11 +170,7 @@ public class Order_RecommendDoctor extends BaseTest {
         String recommendedId = "444444444";
         body.put("surgeon_id",recommendedId);
         body.put("content","自动化推荐的不存在的医生");
-        try {
-            res = HttpRequest.s_SendPut(host_crm+uri, body.toString(), crm_token, pathValue);
-        } catch (IOException e) {
-            logger.error(e);
-        }
+        res = HttpRequest.s_SendPut(host_crm+uri, body.toString(), crm_token, pathValue);
         s_CheckResponse(res);
         Assert.assertNotEquals(code, "1000000");
         res = Order_Detail.s_Detail(order_number);
@@ -223,11 +194,7 @@ public class Order_RecommendDoctor extends BaseTest {
         String recommendedId = Generator.randomExpertId();
         body.put("surgeon_id",recommendedId);
         body.put("content","无证操作");
-        try {
-            res = HttpRequest.s_SendPut(host_crm+uri, body.toString(), "", pathValue);
-        } catch (IOException e) {
-            logger.error(e);
-        }
+        res = HttpRequest.s_SendPut(host_crm+uri, body.toString(), "", pathValue);
         s_CheckResponse(res);
         Assert.assertNotEquals(code, "1000000");
         res = Order_Detail.s_Detail(order_number);
@@ -250,11 +217,7 @@ public class Order_RecommendDoctor extends BaseTest {
         String recommendedId = Generator.randomExpertId();
         body.put("surgeon_id",recommendedId);
         body.put("content","自动化推荐的医生");
-        try {
-            res = HttpRequest.s_SendPut(host_crm+uri, body.toString(), crm_token, pathValue);
-        } catch (IOException e) {
-            logger.error(e);
-        }
+        res = HttpRequest.s_SendPut(host_crm+uri, body.toString(), crm_token, pathValue);
         s_CheckResponse(res);
         Assert.assertEquals(code, "1000000");
         res = Order_Detail.s_Detail(order_number);
@@ -271,12 +234,8 @@ public class Order_RecommendDoctor extends BaseTest {
         String new_recommendedId = "666";
         body.replace("surgeon_id",new_recommendedId);
         body.replace("content","自动化重新推荐的医生");
-        try {
-            res = HttpRequest.s_SendPut(host_crm+uri, body.toString(), crm_token, pathValue);
-            s_CheckResponse(res);
-        } catch (IOException e) {
-            logger.error(e);
-        }
+        res = HttpRequest.s_SendPut(host_crm+uri, body.toString(), crm_token, pathValue);
+        s_CheckResponse(res);
         Assert.assertNotEquals(code, "1000000");
         res = Order_Detail.s_Detail(order_number);
         s_CheckResponse(res);

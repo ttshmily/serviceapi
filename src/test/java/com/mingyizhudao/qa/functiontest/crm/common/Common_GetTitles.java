@@ -7,8 +7,6 @@ import com.mingyizhudao.qa.utilities.HttpRequest;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
-import java.io.IOException;
-
 /**
  * Created by ttshmily on 25/4/2017.
  */
@@ -28,18 +26,13 @@ public class Common_GetTitles extends BaseTest {
     public void test_01_获取所有职级列表() {
 
         String res = "";
+        res = HttpRequest.s_SendGet(host_crm + uri, "", crm_token, null);
+        s_CheckResponse(res);
+        Assert.assertEquals(code, "1000000");
+        int academicLen = Integer.parseInt(Helper.s_ParseJson(data, "list:academic()"));
+        int medicalLen = Integer.parseInt(Helper.s_ParseJson(data, "list:medical()"));
+        Assert.assertEquals(academicLen, 4);
+        Assert.assertEquals(medicalLen, 12);
 
-        try {
-            res = HttpRequest.s_SendGet(host_crm + uri, "", crm_token, null);
-            s_CheckResponse(res);
-            Assert.assertEquals(code, "1000000");
-            int academicLen = Integer.parseInt(Helper.s_ParseJson(data, "list:academic()"));
-            int medicalLen = Integer.parseInt(Helper.s_ParseJson(data, "list:medical()"));
-            Assert.assertEquals(academicLen, 4);
-            Assert.assertEquals(medicalLen, 12);
-
-        } catch (IOException e) {
-            logger.error(e);
-        }
     }
 }

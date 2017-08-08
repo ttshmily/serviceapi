@@ -1,16 +1,15 @@
 package com.mingyizhudao.qa.functiontest.crm.trading.surgery;
 
 import com.mingyizhudao.qa.common.BaseTest;
-import com.mingyizhudao.qa.common.TestLogger;
 import com.mingyizhudao.qa.dataprofile.doctor.DoctorProfile;
+import com.mingyizhudao.qa.common.TestLogger;
 import com.mingyizhudao.qa.functiontest.doctor.CreateOrder;
-import com.mingyizhudao.qa.utilities.Helper;
 import com.mingyizhudao.qa.utilities.HttpRequest;
+import com.mingyizhudao.qa.utilities.Helper;
 import net.sf.json.JSONObject;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
-import java.io.IOException;
 import java.util.HashMap;
 
 /**
@@ -40,11 +39,7 @@ public class Order_ReceiveTask extends BaseTest {
             logger.error("订单处于不可领取状态");
             return Helper.s_ParseJson(JSONObject.fromObject(res), "data:status");
         }
-        try {
-            res = HttpRequest.s_SendPost(host_crm + uri, "", crm_token, pathValue);
-        } catch (IOException e) {
-            logger.error(e);
-        }
+        HttpRequest.s_SendPost(host_crm + uri, "", crm_token, pathValue);
         res = Order_Detail.s_Detail(orderId);
         return Helper.s_ParseJson(JSONObject.fromObject(res), "data:status"); // 期望2000
     }
@@ -59,11 +54,7 @@ public class Order_ReceiveTask extends BaseTest {
         String order_number = CreateOrder.s_CreateOrder(mainToken); // create an order
         pathValue.put("orderNumber", order_number);
 
-        try {
-            res = HttpRequest.s_SendPost(host_crm + uri, "", crm_token, pathValue);
-        } catch (IOException e) {
-            logger.error(e);
-        }
+        res = HttpRequest.s_SendPost(host_crm + uri, "", crm_token, pathValue);
         logger.debug(res);
         s_CheckResponse(res);
         Assert.assertEquals(code, "1000000", "领取订单失败");
@@ -83,11 +74,7 @@ public class Order_ReceiveTask extends BaseTest {
         String order_number = CreateOrder.s_CreateOrder(mainToken); // create an order
         pathValue.put("orderNumber", order_number);
 
-        try {
-            res = HttpRequest.s_SendPost(host_crm + uri, "", "", pathValue);
-        } catch (IOException e) {
-            logger.error(e);
-        }
+        res = HttpRequest.s_SendPost(host_crm + uri, "", "", pathValue);
         s_CheckResponse(res);
         Assert.assertNotEquals(code, "1000000", "领取订单失败");
         res = Order_Detail.s_Detail(order_number);
@@ -106,11 +93,7 @@ public class Order_ReceiveTask extends BaseTest {
         String order_number = CreateOrder.s_CreateOrder(mainToken); // create an order
         pathValue.put("orderNumber", order_number);
 
-        try {
-            res = HttpRequest.s_SendPost(host_crm + uri, "", crm_token, pathValue);
-        } catch (IOException e) {
-            logger.error(e);
-        }
+        res = HttpRequest.s_SendPost(host_crm + uri, "", crm_token, pathValue);
         s_CheckResponse(res);
         Assert.assertEquals(code, "1000000", "领取订单失败");
         res = Order_Detail.s_Detail(order_number);
@@ -122,23 +105,15 @@ public class Order_ReceiveTask extends BaseTest {
         Assert.assertEquals(Helper.s_ParseJson(data, "order_number"), order_number);
 
         // do it again
-        try {
-            res = HttpRequest.s_SendPost(host_crm + uri, "", crm_token, pathValue);
-            s_CheckResponse(res);
-        } catch (IOException e) {
-            logger.error(e);
-        }
+        res = HttpRequest.s_SendPost(host_crm + uri, "", crm_token, pathValue);
+        s_CheckResponse(res);
         Assert.assertNotEquals(code, "1000000", "领取了已经领取过的订单");
         res = Order_Detail.s_Detail(order_number);
         s_CheckResponse(res);
         Assert.assertEquals(Helper.s_ParseJson(data, "major_reps_id"), "chao.fang@mingyizhudao.com", "");
 
         // do it again
-        try {
-            res = HttpRequest.s_SendPost(host_crm + uri, "", crm_token, pathValue);
-        } catch (IOException e) {
-            logger.error(e);
-        }
+        res = HttpRequest.s_SendPost(host_crm + uri, "", crm_token, pathValue);
         s_CheckResponse(res);
         Assert.assertNotEquals(code, "1000000", "领取已经领取过的订单失败");
         res = Order_Detail.s_Detail(order_number);
@@ -158,11 +133,7 @@ public class Order_ReceiveTask extends BaseTest {
         String order_number = CreateOrder.s_CreateOrder(tmpToken); // create an order
         pathValue.put("orderNumber", order_number);
 
-        try {
-            res = HttpRequest.s_SendPost(host_crm + uri, "", crm_token, pathValue);
-        } catch (IOException e) {
-            logger.error(e);
-        }
+        res = HttpRequest.s_SendPost(host_crm + uri, "", crm_token, pathValue);
 //        logger.debug(res);
         s_CheckResponse(res);
         Assert.assertNotEquals(code, "1000000");
@@ -172,14 +143,9 @@ public class Order_ReceiveTask extends BaseTest {
         order_number = CreateOrder.s_CreateOrder(tmpToken); // create an order
         pathValue.put("orderNumber", order_number);
 
-        try {
-            res = HttpRequest.s_SendPost(host_crm + uri, "", crm_token, pathValue);
-        } catch (IOException e) {
-            logger.error(e);
-        }
+        res = HttpRequest.s_SendPost(host_crm + uri, "", crm_token, pathValue);
 //        logger.debug(res);
         s_CheckResponse(res);
         Assert.assertNotEquals(code, "1000000");
-
     }
 }

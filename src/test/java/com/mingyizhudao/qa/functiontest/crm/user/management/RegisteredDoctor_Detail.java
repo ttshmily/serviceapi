@@ -2,12 +2,11 @@ package com.mingyizhudao.qa.functiontest.crm.user.management;
 
 import com.mingyizhudao.qa.common.BaseTest;
 import com.mingyizhudao.qa.common.TestLogger;
-import com.mingyizhudao.qa.utilities.Helper;
 import com.mingyizhudao.qa.utilities.HttpRequest;
+import com.mingyizhudao.qa.utilities.Helper;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
-import java.io.IOException;
 import java.util.HashMap;
 
 /**
@@ -29,11 +28,7 @@ public class RegisteredDoctor_Detail extends BaseTest {
         String res = "";
         HashMap<String, String> pathValue = new HashMap<>();
         pathValue.put("id",regId);
-        try {
-            res = HttpRequest.s_SendGet(host_crm+uri,"", crm_token, pathValue);
-        } catch (IOException e) {
-            logger.error(e);
-        }
+        res = HttpRequest.s_SendGet(host_crm+uri,"", crm_token, pathValue);
         return res;
     }
 
@@ -43,11 +38,7 @@ public class RegisteredDoctor_Detail extends BaseTest {
         String res = "";
         HashMap<String, String> pathValue = new HashMap<>();
         pathValue.put("id",mainDoctorId);
-        try {
-            res = HttpRequest.s_SendGet(host_crm + uri, "", crm_token, pathValue);
-        } catch (IOException e) {
-            logger.error(e);
-        }
+        res = HttpRequest.s_SendGet(host_crm + uri, "", crm_token, pathValue);
         s_CheckResponse(res);
         Assert.assertEquals(code, "1000000");
         Assert.assertNotNull(Helper.s_ParseJson(data, "medical_title_list"));
@@ -66,11 +57,7 @@ public class RegisteredDoctor_Detail extends BaseTest {
         String res = "";
         HashMap<String, String> pathValue = new HashMap<>();
         pathValue.put("id","1"+mainDoctorId);
-        try {
-            res = HttpRequest.s_SendGet(host_crm + uri, "", crm_token, pathValue);
-        } catch (IOException e) {
-            logger.error(e);
-        }
+        res = HttpRequest.s_SendGet(host_crm + uri, "", crm_token, pathValue);
         s_CheckResponse(res);
         Assert.assertEquals(code, "1000000");
     }

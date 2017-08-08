@@ -1,17 +1,16 @@
 package com.mingyizhudao.qa.functiontest.crm.trading.surgery;
 
+import com.mingyizhudao.qa.functiontest.login.CheckVerifyCode;
 import com.mingyizhudao.qa.common.BaseTest;
 import com.mingyizhudao.qa.common.TestLogger;
 import com.mingyizhudao.qa.functiontest.doctor.GetOrderDetail_V1;
-import com.mingyizhudao.qa.functiontest.login.CheckVerifyCode;
 import com.mingyizhudao.qa.functiontest.login.SendVerifyCode;
-import com.mingyizhudao.qa.utilities.Helper;
 import com.mingyizhudao.qa.utilities.HttpRequest;
+import com.mingyizhudao.qa.utilities.Helper;
 import net.sf.json.JSONObject;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
-import java.io.IOException;
 import java.util.HashMap;
 
 /**
@@ -51,11 +50,7 @@ public class Order_Cancel extends BaseTest {
         body.put("reason", "小节审核不通过的列表选择原因");
         body.put("responsible", "责任方：下级医生原因");
 
-        try {
-            res = HttpRequest.s_SendPost(host_crm + uri, body.toString(), crm_token, pathValue);
-        } catch (IOException e) {
-            logger.error(e);
-        }
+        res = HttpRequest.s_SendPost(host_crm + uri, body.toString(), crm_token, pathValue);
         s_CheckResponse(res);
         Assert.assertEquals(code, "1000000", "取消订单接口失败");
         Assert.assertEquals(Helper.s_ParseJson(data, "status"), "4030");

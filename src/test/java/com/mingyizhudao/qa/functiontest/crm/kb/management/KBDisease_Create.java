@@ -1,17 +1,16 @@
 package com.mingyizhudao.qa.functiontest.crm.kb.management;
 
 import com.mingyizhudao.qa.common.BaseTest;
-import com.mingyizhudao.qa.common.TestLogger;
 import com.mingyizhudao.qa.dataprofile.crm.DiseaseProfile;
-import com.mingyizhudao.qa.utilities.Helper;
-import com.mingyizhudao.qa.utilities.HttpRequest;
+import com.mingyizhudao.qa.common.TestLogger;
 import com.mingyizhudao.qa.utilities.Generator;
+import com.mingyizhudao.qa.utilities.HttpRequest;
+import com.mingyizhudao.qa.utilities.Helper;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -34,11 +33,7 @@ public class KBDisease_Create extends BaseTest {
     public static HashMap<String, String> s_Create(DiseaseProfile dp) {
         String res = "";
         TestLogger logger = new TestLogger(s_JobName());
-        try {
-            res = HttpRequest.s_SendPost(host_crm+uri, dp.body.toString(), crm_token);
-        } catch (IOException e) {
-            logger.error(e);
-        }
+        res = HttpRequest.s_SendPost(host_crm+uri, dp.body.toString(), crm_token);
         JSONObject node = JSONObject.fromObject(res);
         HashMap<String, String> result = new HashMap<>();
         if(!node.getString("code").equals("1000000")) return null;
@@ -61,11 +56,7 @@ public class KBDisease_Create extends BaseTest {
         String res = "";
         DiseaseProfile dp = new DiseaseProfile(true);
 
-        try {
-            res = HttpRequest.s_SendPost(host_crm + uri, dp.body.toString(), crm_token);
-        } catch (IOException e) {
-            logger.error(e);
-        }
+        res = HttpRequest.s_SendPost(host_crm + uri, dp.body.toString(), crm_token);
         s_CheckResponse(res);
         Assert.assertEquals(code, "1000000");
         Assert.assertNotNull(Helper.s_ParseJson(data, "id"), "医库ID不能少");
@@ -83,11 +74,7 @@ public class KBDisease_Create extends BaseTest {
         DiseaseProfile dp = new DiseaseProfile(true);
         dp.body.replace("is_common", 0);
         dp.body.replace("user_visible", 0);
-        try {
-            res = HttpRequest.s_SendPost(host_crm + uri, dp.body.toString(), crm_token);
-        } catch (IOException e) {
-            logger.error(e);
-        }
+        res = HttpRequest.s_SendPost(host_crm + uri, dp.body.toString(), crm_token);
         s_CheckResponse(res);
         Assert.assertEquals(code, "1000000");
         Assert.assertNotNull(Helper.s_ParseJson(data, "id"), "医库ID不能少");
@@ -105,41 +92,25 @@ public class KBDisease_Create extends BaseTest {
         DiseaseProfile dp = new DiseaseProfile(true);
 
         dp.body.remove("name");
-        try {
-            res = HttpRequest.s_SendPost(host_crm + uri, dp.body.toString(), crm_token);
-        } catch (IOException e) {
-            logger.error(e);
-        }
+        res = HttpRequest.s_SendPost(host_crm + uri, dp.body.toString(), crm_token);
         s_CheckResponse(res);
         Assert.assertNotEquals(code, "1000000");
 
         dp.body.put("name", "疾病"+ Generator.randomString(2));
         dp.body.remove("user_visible");
-        try {
-            res = HttpRequest.s_SendPost(host_crm + uri, dp.body.toString(), crm_token);
-        } catch (IOException e) {
-            logger.error(e);
-        }
+        res = HttpRequest.s_SendPost(host_crm + uri, dp.body.toString(), crm_token);
         s_CheckResponse(res);
         Assert.assertNotEquals(code, "1000000");
 
         dp.body.put("user_visible", 1);
         dp.body.remove("is_common");
-        try {
-            res = HttpRequest.s_SendPost(host_crm + uri, dp.body.toString(), crm_token);
-        } catch (IOException e) {
-            logger.error(e);
-        }
+        res = HttpRequest.s_SendPost(host_crm + uri, dp.body.toString(), crm_token);
         s_CheckResponse(res);
         Assert.assertNotEquals(code, "1000000");
 
         dp.body.put("is_common", 1);
         dp.body.remove("category_list");
-        try {
-            res = HttpRequest.s_SendPost(host_crm + uri, dp.body.toString(), crm_token);
-        } catch (IOException e) {
-            logger.error(e);
-        }
+        res = HttpRequest.s_SendPost(host_crm + uri, dp.body.toString(), crm_token);
         s_CheckResponse(res);
         Assert.assertNotEquals(code, "1000000");
     }

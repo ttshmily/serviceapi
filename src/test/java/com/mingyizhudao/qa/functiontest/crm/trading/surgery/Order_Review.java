@@ -1,18 +1,17 @@
 package com.mingyizhudao.qa.functiontest.crm.trading.surgery;
 
+import com.mingyizhudao.qa.functiontest.login.CheckVerifyCode;
+import com.mingyizhudao.qa.functiontest.login.SendVerifyCode;
 import com.mingyizhudao.qa.common.BaseTest;
 import com.mingyizhudao.qa.common.TestLogger;
 import com.mingyizhudao.qa.functiontest.doctor.CreateSurgeryBriefs;
 import com.mingyizhudao.qa.functiontest.doctor.GetOrderDetail_V1;
-import com.mingyizhudao.qa.functiontest.login.CheckVerifyCode;
-import com.mingyizhudao.qa.functiontest.login.SendVerifyCode;
-import com.mingyizhudao.qa.utilities.Helper;
 import com.mingyizhudao.qa.utilities.HttpRequest;
+import com.mingyizhudao.qa.utilities.Helper;
 import net.sf.json.JSONObject;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
-import java.io.IOException;
 import java.util.HashMap;
 
 /**
@@ -56,11 +55,7 @@ public class Order_Review extends BaseTest {
         body.put("reason", "固定原因");
         body.put("reps_content", "客服原因");
         body.put("result", "true");//TODO 审核结果
-        try {
-            res = HttpRequest.s_SendPost(host_crm+uri, body.toString(), crm_token, pathValue);
-        } catch (IOException e) {
-            logger.error(e);
-        }
+        res = HttpRequest.s_SendPost(host_crm+uri, body.toString(), crm_token, pathValue);
         s_CheckResponse(res);
         Assert.assertEquals(code, "1000000", "审核订单接口失败");
         Assert.assertEquals(Helper.s_ParseJson(data, "status"), "4020");
@@ -92,11 +87,7 @@ public class Order_Review extends BaseTest {
         body.put("reason", "小姐审核不通过的列表选择原因");
         body.put("reps_content", "客服原因");
         body.put("result", "false");
-        try {
-            res = HttpRequest.s_SendPost(host_crm+uri, body.toString(), crm_token, pathValue);
-        } catch (IOException e) {
-            logger.error(e);
-        }
+        res = HttpRequest.s_SendPost(host_crm+uri, body.toString(), crm_token, pathValue);
         s_CheckResponse(res);
         Assert.assertEquals(code, "1000000", "审核订单接口失败");
         Assert.assertEquals(Helper.s_ParseJson(data, "status"), "4000");
