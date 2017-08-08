@@ -546,10 +546,10 @@ public class HttpRequest {
     private static String queryBuilder(HashMap<String,String> query) {
         StringBuffer sb=new StringBuffer();
         if (query == null) return "";
-        for (String key:query.keySet()
-             ) {
+        for (String key:query.keySet()) {
             try {
-                sb.append(key).append("=").append(URLEncoder.encode(query.get(key), "utf-8")).append("&");
+                if (!query.get(key).isEmpty())
+                    sb.append(key).append("=").append(URLEncoder.encode(query.get(key), "utf-8")).append("&");
             } catch (UnsupportedEncodingException e) {
                 e.printStackTrace();
             }

@@ -191,8 +191,28 @@ public class Ap_List extends BaseTest {
         Assert.assertTrue(size_per_status[1]+size_per_status[4]==size_per_status[2]);
     }
 
-    public void test_05_获取列表检查筛选日期() {
-
+    @Test
+    public void test_05_获取列表_筛选来源() {
+        String res = "";
+        HashMap<String, String> query = new HashMap<>();
+        query.put("page", String.valueOf(Generator.randomInt(2)));
+        int[] size_per_source = new int[]{};
+        int i = 0;
+        for (String source_type:new String[]{"BUSINESS", "HOT_LINE", "WEIBO", "BAIDU_BRIDGE", "SUSHU", "WECHAT", "PC_WEB", ""}) {
+            logger.info("筛选状态为"+source_type+"的订单");
+            query.put("source_type", source_type);
+            List<String> status_list = Arrays.asList(source_type.split(","));
+            res = HttpRequest.s_SendGet(host_appointment + uri, query, crm_token);
+            s_CheckResponse(res);
+            Assert.assertEquals(code, "1000000");
+            JSONArray ap_list = data.getJSONArray("list");
+            for (int j=0; j < ap_list.size(); j++) {
+                JSONObject ap = ap_list.getJSONObject(j);
+                Assert.assertTrue(status_list.contains(ap.getString("status")));
+            }
+            size_per_source[i++] = data.getInt("size"); // 对应{"2000","3000","3000,4000","2000,3000","4000"}
+        }
+        Assert.assertTrue(size_per_source[0]+size_per_source[1]+size_per_source[2]+size_per_source[3]+size_per_source[4]+size_per_source[5]+size_per_source[6]==size_per_source[7]);
     }
 
     public void test_06_获取列表搜索患者姓名() {

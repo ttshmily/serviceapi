@@ -2,9 +2,15 @@ package com.mingyizhudao.qa.functiontest.crm.trading.appointment;
 
 import com.mingyizhudao.qa.common.BaseTest;
 import com.mingyizhudao.qa.common.TestLogger;
+import com.mingyizhudao.qa.dataprofile.crm.Appointment;
 import net.sf.json.JSONObject;
+import org.testng.Assert;
+import org.testng.annotations.Test;
+
 import java.util.HashMap;
 
+import static com.mingyizhudao.qa.functiontest.crm.trading.appointment.Ap_Create.s_Create;
+import static com.mingyizhudao.qa.functiontest.crm.trading.appointment.Ap_RiskControl.s_Take;
 import static com.mingyizhudao.qa.utilities.Generator.*;
 import static com.mingyizhudao.qa.utilities.HttpRequest.*;
 import static com.mingyizhudao.qa.utilities.Helper.*;
@@ -31,12 +37,53 @@ public class Ap_Rollback extends BaseTest {
         return status.equals("1000") ? true : false;
     }
 
+    @Test
     public void test_01_回退面诊订单() {
-
+        String res = "";
+        Appointment ap = new Appointment();
+        String orderNumber = s_Create(ap);
+        if (!s_Take(orderNumber)) {
+            Assert.fail("创建状态2000订单失败");
+        }
+        HashMap<String, String> pathValue = new HashMap<>();
+        pathValue.put("orderNumber", orderNumber);
+        JSONObject body = new JSONObject();
+        body.put("content", "重新风控content");
+        body.put("reason", "重新风控reason");
+        res = s_SendPut(host_appointment + uri, "", crm_token, pathValue);
+        s_CheckResponse(res);
+        Assert.assertEquals(code, "1000000");
+        res = Ap_Detail.s_Detail(orderNumber);
+        s_CheckResponse(res);
+        Assert.assertEquals(s_ParseJson(data, "status"), "1000");
+        Assert.assertEquals(s_ParseJson(data, "major_recommended_doctor_id"), "");
+        Assert.assertEquals(s_ParseJson(data, "major_recommended_doctor_name"), "");
+        Assert.assertEquals(s_ParseJson(data, "major_recommended_doctor_hospital"), "");
+        Assert.assertEquals(s_ParseJson(data, "major_recommended_doctor_department"), "");
+        Assert.assertEquals(s_ParseJson(data, "major_recommended_doctor_medical_title"), "");
+        Assert.assertEquals(s_ParseJson(data, "minor_recommended_doctor_id"), "");
+        Assert.assertEquals(s_ParseJson(data, "minor_recommended_doctor_name"), "");
+        Assert.assertEquals(s_ParseJson(data, "minor_recommended_doctor_hospital"), "");
+        Assert.assertEquals(s_ParseJson(data, "minor_recommended_doctor_department"), "");
+        Assert.assertEquals(s_ParseJson(data, "minor_recommended_doctor_medical_title"), "");
     }
 
+    @Test
     public void test_02_回退面诊订单理由不完整() {
-
+        String res = "";
+        Appointment ap = new Appointment();
+        String orderNumber = s_Create(ap);
+        if (!s_Take(orderNumber)) {
+            Assert.fail("创建状态2000订单失败");
+        }
+        HashMap<String, String> pathValue = new HashMap<>();
+        pathValue.put("orderNumber", orderNumber);
+        JSONObject body = new JSONObject();
+//        body.put("content", "重新风控content");
+        body.put("reason", "重新风控reason");
+        res = s_SendPut(host_appointment + uri, "", crm_token, pathValue);
+        s_CheckResponse(res);
+        Assert.assertNotEquals(code, "1000000");
     }
 
 }
