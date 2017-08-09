@@ -152,6 +152,11 @@ public class Generator {
         return randomKey(KnowledgeBase.kb_county);
     }
 
+    public static String randomCountyIdUnder(String cityId) {
+
+        return randomKey(KnowledgeBase.kb_county_ext.get(cityId));
+    }
+
     public static String countyName(String id) {
 
         return KnowledgeBase.kb_county.get(id);

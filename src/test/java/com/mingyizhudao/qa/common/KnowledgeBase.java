@@ -74,6 +74,7 @@ public class KnowledgeBase {
     public static String county_uri = "/api/v1/cities/{id}/counties";
     public static HashMap<String, String> kb_county = new HashMap<>();
     public static String county_file = log_dir + "kb_county.txt";
+    public static HashMap<String, HashMap<String, String>> kb_county_ext = new HashMap<>();
 
     public static void s_Init() {
         TestLogger logger = new TestLogger(BaseTest.s_JobName());
@@ -163,9 +164,8 @@ public class KnowledgeBase {
                 fileToString(province_file,kb_province);
             } else {
                 String res = HttpRequest.s_SendGet(BaseTest.host_kb + province_uri, "", "", null);
-                int total = Integer.parseInt(Helper.s_ParseJson(JSONObject.fromObject(res), "data:list()"));
                 JSONArray province_list = JSONObject.fromObject(res).getJSONObject("data").getJSONArray("list");
-                for (int j = 0; j < total; j++) {
+                for (int j = 0; j < province_list.size(); j++) {
                     JSONObject province = province_list.getJSONObject(j);
                     kb_province.put(province.getString("id"), province.getString("name"));
                 }
@@ -184,24 +184,49 @@ public class KnowledgeBase {
                 String res = "";
                 HashMap<String, String> query = new HashMap<>();
                 query.put("provinceId", "100");
-                for (String key : kb_province.keySet()) {
+                for (String provinceId : kb_province.keySet()) {
                     HashMap<String, String> tmp = new HashMap<>();
-                    query.replace("provinceId", key);
+                    query.replace("provinceId", provinceId);
                     res = HttpRequest.s_SendGet(BaseTest.host_kb + city_uri, query, "", null);
-                    int total = Integer.parseInt(Helper.s_ParseJson(JSONObject.fromObject(res), "data:list()"));
                     JSONArray city_list = JSONObject.fromObject(res).getJSONObject("data").getJSONArray("list");
-                    for (int j = 0; j < total; j++) {
+                    for (int j = 0; j < city_list.size(); j++) {
                         JSONObject city = city_list.getJSONObject(j);
                         tmp.put(city.getString("id"), city.getString("name"));
                         kb_city.put(city.getString("id"), city.getString("name"));
                     }
-                    kb_city_ext.put(key, tmp);
+                    kb_city_ext.put(provinceId, tmp);
                 }
 //                stringToFile(kb_city, city_file);//created by tianjing on 2017/6/21
             }
         } catch (Exception e) {
             logger.error("ENUM初始化失败，准备退出");
             System.exit(4);
+        }
+
+        try {
+            File file = new File(county_file);
+            if (BaseTest.init_kb.equals("false") && file.exists()) {
+                fileToString(county_file,kb_county);
+            } else {
+                String res = "";
+                HashMap<String, String> pathValue = new HashMap<>();
+                for (String cityId : kb_city.keySet()) {
+                    HashMap<String, String> tmp = new HashMap<>();
+                    pathValue.put("id", cityId);
+                    res = HttpRequest.s_SendGet(BaseTest.host_kb + county_uri, "", "", pathValue);
+                    JSONArray county_list = JSONObject.fromObject(res).getJSONObject("data").getJSONArray("list");
+                    for (int j = 0; j < county_list.size(); j++) {
+                        JSONObject county = county_list.getJSONObject(j);
+                        tmp.put(county.getString("id"), county.getString("name"));
+                        kb_county.put(county.getString("id"), county.getString("name"));
+                    }
+                    kb_county_ext.put(cityId, tmp);
+                }
+//                stringToFile(kb_county, county_file);//created by tianjing on 2017/6/21
+            }
+        } catch (Exception e) {
+            logger.error("ENUM初始化失败，准备退出");
+            System.exit(13);
         }
 
         try {
@@ -212,9 +237,8 @@ public class KnowledgeBase {
                 String res = "";
                 res = HttpRequest.s_SendGet(BaseTest.host_kb + medical_uri, "", "", null);
                 logger.debug(res);
-                int total = Integer.parseInt(Helper.s_ParseJson(JSONObject.fromObject(res), "data:list()"));
                 JSONArray mt_list = JSONObject.fromObject(res).getJSONObject("data").getJSONArray("list");
-                for (int j = 0; j < total; j++) {
+                for (int j = 0; j < mt_list.size(); j++) {
                     JSONObject mt = mt_list.getJSONObject(j);
                     for (String key : (Set<String>) mt.keySet()) {
                         kb_medical_title.put(key, mt.getString(key));
@@ -235,9 +259,8 @@ public class KnowledgeBase {
             } else {
                 String res = "";
                 res = HttpRequest.s_SendGet(BaseTest.host_kb + academic_uri, "", "", null);
-                int total = Integer.parseInt(Helper.s_ParseJson(JSONObject.fromObject(res), "data:list()"));
                 JSONArray at_list = JSONObject.fromObject(res).getJSONObject("data").getJSONArray("list");
-                for (int j = 0; j < total; j++) {
+                for (int j = 0; j < at_list.size(); j++) {
                     JSONObject at = at_list.getJSONObject(j);
                     for (String key : (Set<String>) at.keySet()) {
                         kb_academic_title.put(key, at.getString(key));
@@ -256,10 +279,9 @@ public class KnowledgeBase {
                 fileToString(surgery_category_file,kb_surgery_category);
             } else {
                 String res = "";
-                res = HttpRequest.s_SendGet(BaseTest.host_kb + surgery_category_uri, "", "", null);
-                int total_1 = Integer.parseInt(Helper.s_ParseJson(JSONObject.fromObject(res), "data:list()")); // 一级分类个数
+                res = HttpRequest.s_SendGet(BaseTest.host_kb + surgery_category_uri, "", "");
                 JSONArray psc_list = JSONObject.fromObject(res).getJSONObject("data").getJSONArray("list");
-                for (int i = 0; i < total_1; i++) {
+                for (int i = 0; i < psc_list.size(); i++) {
                     JSONObject psc = psc_list.getJSONObject(i);
                     JSONArray sc_list = psc.getJSONArray("branch");
                     for (int j = 0; j < sc_list.size(); j++) {
@@ -286,8 +308,7 @@ public class KnowledgeBase {
                 query.put("surgeryCategoryId", "100");
                 for (String key : kb_surgery_category.keySet()) {
                     query.replace("surgeryCategoryId", key);
-                    res = HttpRequest.s_SendGet(BaseTest.host_kb + surgery_uri, query, "", null);
-                    int total = Integer.parseInt(Helper.s_ParseJson(JSONObject.fromObject(res), "data:list()"));
+                    res = HttpRequest.s_SendGet(BaseTest.host_kb + surgery_uri, query, "");
                     JSONArray surgery_list = JSONObject.fromObject(res).getJSONObject("data").getJSONArray("list");
                     for (int j = 0; j < surgery_list.size(); j++) {
                         JSONObject surgery = surgery_list.getJSONObject(j);
@@ -307,10 +328,9 @@ public class KnowledgeBase {
                 fileToString(major_file,kb_major);
             } else {
                 String res = "";
-                res = HttpRequest.s_SendGet(BaseTest.host_kb + major_uri, "", "", null);
-                int total_1 = Integer.parseInt(Helper.s_ParseJson(JSONObject.fromObject(res), "data:list()")); // 一级分类个数
+                res = HttpRequest.s_SendGet(BaseTest.host_kb + major_uri, "", "");
                 JSONArray pdc_list = JSONObject.fromObject(res).getJSONObject("data").getJSONArray("list");
-                for (int i = 0; i < total_1; i++) {
+                for (int i = 0; i < pdc_list.size(); i++) {
                     JSONObject pdc = pdc_list.getJSONObject(i);
                     JSONArray dc_list = pdc.getJSONArray("branch");
                     for (int j = 0; j < dc_list.size(); j++) {
@@ -338,10 +358,7 @@ public class KnowledgeBase {
                     HashMap<String, String> tmp = new HashMap<>();
                     query.replace("diseaseCategoryId", key);
                     res = HttpRequest.s_SendGet(BaseTest.host_kb + disease_uri, query, "");
-//                    int total = Integer.parseInt(UT.s_ParseJson(JSONObject.fromObject(res), "data:list()"));
-                    JSONObject res_json = JSONObject.fromObject(res);
-                    String disease_str = res_json.getJSONObject("data").getString("list");
-                    JSONArray disease_list = JSONArray.fromObject(disease_str);
+                    JSONArray disease_list = JSONObject.fromObject(res).getJSONObject("data").getJSONArray("list");
                     for (int j = 0; j < disease_list.size(); j++) {
                         JSONObject disease = disease_list.getJSONObject(j);
                         tmp.put(disease.getString("id"), disease.getString("name"));
@@ -403,30 +420,6 @@ public class KnowledgeBase {
             System.exit(12);
         }
 
-        try {
-            File file = new File(county_file);
-            if (BaseTest.init_kb.equals("false") && file.exists()) {
-                fileToString(county_file,kb_county);
-            } else {
-                String res = "";
-                for (String cityId : kb_city.keySet()) {
-                    HashMap<String, String> pathValue = new HashMap<>();
-                    pathValue.put("id", cityId);
-                    res = HttpRequest.s_SendGet(BaseTest.host_kb + county_uri, "", "", pathValue);
-                    int total = Integer.parseInt(Helper.s_ParseJson(JSONObject.fromObject(res), "data:list()"));
-                    JSONArray country_list = JSONObject.fromObject(res).getJSONObject("data").getJSONArray("list");
-                    for (int j = 0; j < total; j++) {
-                        JSONObject country = country_list.getJSONObject(j);
-                        kb_county.put(country.getString("id"), country.getString("name"));
-                    }
-                }
-                stringToFile(kb_county, county_file);//created by tianjing on 2017/6/21
-            }
-        } catch (Exception e) {
-            logger.error("ENUM初始化失败，准备退出");
-            logger.error(e);
-            System.exit(13);
-        }
     }
 
     //created by tianjing on 2017/6/21
