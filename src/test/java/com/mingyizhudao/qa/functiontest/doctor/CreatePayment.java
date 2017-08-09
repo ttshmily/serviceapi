@@ -49,7 +49,7 @@ public class CreatePayment extends BaseTest {
 
         String orderId = CreateOrder.s_CreateOrder(mainToken);
         Order_ReceiveTask.s_ReceiveTask(orderId);
-        Order_RecommendDoctor.s_RecommendDoctor(orderId, mainDoctorId);
+        Order_RecommendDoctor.s_RecommendDoctor(orderId, mainExpertId);
         if (!Order_ThreewayCall_V2.s_CallV2(orderId, "success").equals("3000")) {
             Assert.fail("未到支付状态，不能进行支付");
         }

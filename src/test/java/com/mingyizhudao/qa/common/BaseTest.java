@@ -1,6 +1,7 @@
 package com.mingyizhudao.qa.common;
 
 
+import com.mingyizhudao.qa.dataprofile.Appointment;
 import com.mingyizhudao.qa.dataprofile.crm.DoctorProfile;
 import com.mingyizhudao.qa.dataprofile.User;
 import com.mingyizhudao.qa.functiontest.doctor.GetDoctorProfile_V1;
@@ -13,6 +14,7 @@ import com.mingyizhudao.qa.utilities.Generator;
 import com.mingyizhudao.qa.utilities.HttpRequest;
 import net.sf.json.JSONException;
 import net.sf.json.JSONObject;
+import net.sf.json.JsonConfig;
 import org.apache.log4j.PropertyConfigurator;
 import org.testng.annotations.*;
 
@@ -60,6 +62,8 @@ public class BaseTest {
     public String code = "";
     public String message = "";
     public JSONObject data;
+
+    protected JsonConfig config = new JsonConfig();
 
     public static void main(String[] args) {
 //        String mobile = SendVerifyCode.s_Send();
@@ -126,7 +130,7 @@ public class BaseTest {
     @BeforeSuite
     public void SetUpSuite() throws Exception {
         KnowledgeBase.s_Init();
-        crm_token = JSONObject.fromObject(HttpRequest.s_SendGet("http://services.dev.myzd.info/crm/api/internal/devToken" , "email="+mainOperatorId+"&name=test", "")).getJSONObject("data").getString("token");
+        crm_token = JSONObject.fromObject(HttpRequest.s_SendGet("http://services.dev.myzd.info/crm/api/internal/devToken" , "email="+mainOperatorId+"&name=方超（男）", "")).getJSONObject("data").getString("token");
         bda_token = JSONObject.fromObject(HttpRequest.s_SendGet("http://work.myzd.info/wx/internal/api/dev-tokens" , "", "")).getJSONObject("data").getJSONObject(mainOperatorId).getString("token");
         bda_token_staff = JSONObject.fromObject(HttpRequest.s_SendGet("http://work.myzd.info/wx/internal/api/dev-tokens" , "", "")).getJSONObject("data").getJSONObject("lei.wang@mingyizhudao.com").getString("token");
         mainDP = new DoctorProfile(true);
