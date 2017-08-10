@@ -73,7 +73,7 @@ public class KBDisease_Detail extends BaseTest {
 
     @Test
     public void test_03_获取疾病详情_检查关联医生数量() {
-
+//TODO
         String res = "";
         DiseaseProfile dp = new DiseaseProfile(true);
         HashMap<String, String> info = KBDisease_Create.s_Create(dp);

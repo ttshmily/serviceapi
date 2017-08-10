@@ -1,11 +1,10 @@
 package com.mingyizhudao.qa.functiontest.crm.kb.management;
 
+import com.mingyizhudao.qa.dataprofile.Doctor;
 import com.mingyizhudao.qa.dataprofile.Hospital;
-import com.mingyizhudao.qa.dataprofile.crm.HospitalProfile_test;
 import com.mingyizhudao.qa.common.BaseTest;
 import com.mingyizhudao.qa.common.TestLogger;
 import com.mingyizhudao.qa.dataprofile.crm.DiseaseProfile;
-import com.mingyizhudao.qa.dataprofile.crm.ExpertProfile;
 import com.mingyizhudao.qa.utilities.Generator;
 import com.mingyizhudao.qa.utilities.HttpRequest;
 import com.mingyizhudao.qa.utilities.Helper;
@@ -108,20 +107,17 @@ public class KB_Track extends BaseTest {
         HashMap<String, String> query = new HashMap<>();
         query.put("type", "DOCTOR");
         //创建医生
-        HashMap<String,String> info = KBExpert_Create.s_Create(new ExpertProfile(true));
-        String expertId = info.get("id");
+        String expertId = KBExpert_Create.s_Create(new Doctor());
         query.put("id", expertId);
         JSONArray trackList = s_KBTrack("DOCTOR", expertId);
         Assert.assertEquals(trackList.size(), 1);
-        KBExpert_Update.s_Update(expertId, new ExpertProfile(true));
+        KBExpert_Update.s_Update(expertId, new Doctor());
         trackList = s_KBTrack("DOCTOR", expertId);
         Assert.assertEquals(trackList.size(), 2);
-        KBExpert_Update.s_Update(expertId, new ExpertProfile(true));
+        KBExpert_Update.s_Update(expertId, new Doctor());
         trackList = s_KBTrack("DOCTOR", expertId);
         Assert.assertEquals(trackList.size(), 3);
-        List<String> list = new ArrayList<String>();
-        list.add(Generator.randomDiseaseId());
-        KBExpert_Diseases.s_Connect(expertId, list);
+        KBExpert_Diseases_V2.s_Connect(expertId);
         trackList = s_KBTrack("DOCTOR", expertId);
         Assert.assertEquals(trackList.size(), 4);
     }

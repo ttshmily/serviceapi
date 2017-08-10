@@ -17,7 +17,7 @@ import java.util.HashMap;
  */
 public class RegisteredDoctor_Sign extends BaseTest {
 
-    public static String clazzName = new Object() {
+/*    public static String clazzName = new Object() {
         public String getClassName() {
             String clazzName = this.getClass().getName();
             return clazzName.substring(0, clazzName.lastIndexOf('$'));
@@ -73,5 +73,5 @@ public class RegisteredDoctor_Sign extends BaseTest {
         res = RegisteredDoctor_Detail.s_Detail(doctorId);
         s_CheckResponse(res);
         Assert.assertEquals(Helper.s_ParseJson(data, "signed_status"), "NOT_SIGNED");
-    }
+    }*/
 }

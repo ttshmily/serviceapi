@@ -1,7 +1,6 @@
 package com.mingyizhudao.qa.functiontest.crm.kb.management;
 
 import com.mingyizhudao.qa.common.BaseTest;
-import com.mingyizhudao.qa.dataprofile.crm.ExpertProfile;
 import com.mingyizhudao.qa.common.TestLogger;
 import com.mingyizhudao.qa.utilities.Generator;
 import com.mingyizhudao.qa.utilities.HttpRequest;
@@ -44,11 +43,11 @@ public class KBExpert_Diseases extends BaseTest {
         if(!node.getString("code").equals("1000000")) return false;
         return true;
     }
-
+/*
     @Test
     public void test_01_关联疾病() {
         String res = "";
-        ExpertProfile ep = new ExpertProfile(true);
+        ExpertProfile_Test ep = new ExpertProfile_Test(true);
         HashMap<String, String> info = KBExpert_Create.s_Create(ep);
         if (info == null) Assert.fail("创建医库医生失败，退出用例执行");
         String expertId = info.get("id");
@@ -99,7 +98,7 @@ public class KBExpert_Diseases extends BaseTest {
     @Test
     public void test_02_关联疾病_增加() {
         String res = "";
-        ExpertProfile ep = new ExpertProfile(true);
+        ExpertProfile_Test ep = new ExpertProfile_Test(true);
         HashMap<String, String> info = KBExpert_Create.s_Create(ep);
         if (info == null) Assert.fail("创建医库医生失败，退出用例执行");
         String expertId = info.get("id");
@@ -165,7 +164,7 @@ public class KBExpert_Diseases extends BaseTest {
     @Test
     public void test_03_关联疾病_减少() {
         String res = "";
-        ExpertProfile ep = new ExpertProfile(true);
+        ExpertProfile_Test ep = new ExpertProfile_Test(true);
         HashMap<String, String> info = KBExpert_Create.s_Create(ep);
         if (info == null) Assert.fail("创建医库医生失败，退出用例执行");
         String expertId = info.get("id");
@@ -230,7 +229,7 @@ public class KBExpert_Diseases extends BaseTest {
     @Test
     public void test_04_去重疾病() {
         String res = "";
-        ExpertProfile ep = new ExpertProfile(true);
+        ExpertProfile_Test ep = new ExpertProfile_Test(true);
         HashMap<String, String> info = KBExpert_Create.s_Create(ep);
         if (info == null) Assert.fail("创建医库医生失败，退出用例执行");
         String expertId = info.get("id");
@@ -286,7 +285,7 @@ public class KBExpert_Diseases extends BaseTest {
     @Test
     public void test_05_去除错误疾病ID() {
         String res = "";
-        ExpertProfile ep = new ExpertProfile(true);
+        ExpertProfile_Test ep = new ExpertProfile_Test(true);
         HashMap<String, String> info = KBExpert_Create.s_Create(ep);
         if (info == null) Assert.fail("创建医库医生失败，退出用例执行");
         String expertId = info.get("id");
@@ -342,7 +341,7 @@ public class KBExpert_Diseases extends BaseTest {
     @Test
     public void test_06_去除所有疾病ID() {
         String res = "";
-        ExpertProfile ep = new ExpertProfile(true);
+        ExpertProfile_Test ep = new ExpertProfile_Test(true);
         HashMap<String, String> info = KBExpert_Create.s_Create(ep);
         if (info == null) Assert.fail("创建医库医生失败，退出用例执行");
         String expertId = info.get("id");
@@ -381,5 +380,5 @@ public class KBExpert_Diseases extends BaseTest {
         res = KBExpert_Detail.s_Detail(expertId);
         s_CheckResponse(res);
         Assert.assertEquals(data.getJSONArray("disease_list").size(), 0);
-    }
+    }*/
 }
