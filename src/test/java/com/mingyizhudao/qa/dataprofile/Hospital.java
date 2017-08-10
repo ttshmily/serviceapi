@@ -19,6 +19,7 @@ public class Hospital {
     private String phone;
     private String description;
     private List<Picture> photo_url;
+
     public Hospital() {
         this.name = "新概念医院"+randomString(4);
         this.short_name = "新概念医院短名"+randomString(4);
@@ -32,13 +33,27 @@ public class Hospital {
         this.county_id = randomCountyIdUnder(cityId);
     }
 
+    public String printPictures() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("[");
+        for (int i =0; i < photo_url.size(); i++) {
+            sb.append(photo_url.get(i).print());
+            sb.append(",");
+        }
+        sb.deleteCharAt(sb.lastIndexOf(","));
+        sb.append("]");
+        return sb.toString();
+    }
+
     @Data
     public class Picture {
         String key;
         String type;
-        public Picture(String key, String type) {
+        String tag;
+        public Picture(String key, String type, String tag) {
             this.key = key;
             this.type = type;
+            this.tag = tag;
         }
 
         public String print() {

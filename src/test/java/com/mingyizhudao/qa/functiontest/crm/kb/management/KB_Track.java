@@ -1,6 +1,7 @@
 package com.mingyizhudao.qa.functiontest.crm.kb.management;
 
-import com.mingyizhudao.qa.dataprofile.crm.HospitalProfile;
+import com.mingyizhudao.qa.dataprofile.Hospital;
+import com.mingyizhudao.qa.dataprofile.crm.HospitalProfile_test;
 import com.mingyizhudao.qa.common.BaseTest;
 import com.mingyizhudao.qa.common.TestLogger;
 import com.mingyizhudao.qa.dataprofile.crm.DiseaseProfile;
@@ -131,15 +132,15 @@ public class KB_Track extends BaseTest {
         HashMap<String, String> query = new HashMap<>();
         query.put("type", "HOSPITAL");
         //创建医院
-        HashMap<String,String> info = KBHospital_Create.s_Create(new HospitalProfile(true));
+        HashMap<String,String> info = KBHospital_Create.s_Create(new Hospital());
         String hospitalId = info.get("id");
         query.put("id", hospitalId);
         JSONArray trackList = s_KBTrack("HOSPITAL", hospitalId);
         Assert.assertEquals(trackList.size(), 1);
-        KBHospital_Update.s_Update(hospitalId, new HospitalProfile(true));
+        KBHospital_Update.s_Update(hospitalId, new Hospital());
         trackList = s_KBTrack("HOSPITAL", hospitalId);
         Assert.assertEquals(trackList.size(), 2);
-        KBHospital_Update.s_Update(hospitalId, new HospitalProfile(true));
+        KBHospital_Update.s_Update(hospitalId, new Hospital());
         trackList = s_KBTrack("HOSPITAL", hospitalId);
         Assert.assertEquals(trackList.size(), 3);
 
