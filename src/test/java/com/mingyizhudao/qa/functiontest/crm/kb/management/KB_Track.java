@@ -4,7 +4,7 @@ import com.mingyizhudao.qa.dataprofile.Doctor;
 import com.mingyizhudao.qa.dataprofile.Hospital;
 import com.mingyizhudao.qa.common.BaseTest;
 import com.mingyizhudao.qa.common.TestLogger;
-import com.mingyizhudao.qa.dataprofile.crm.DiseaseProfile;
+import com.mingyizhudao.qa.dataprofile.crm.DiseaseProfile_Test;
 import com.mingyizhudao.qa.utilities.Generator;
 import com.mingyizhudao.qa.utilities.HttpRequest;
 import com.mingyizhudao.qa.utilities.Helper;
@@ -13,9 +13,7 @@ import net.sf.json.JSONObject;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 
 /**
  * Created by ttshmily on 1/6/2017.
@@ -148,15 +146,15 @@ public class KB_Track extends BaseTest {
         HashMap<String, String> query = new HashMap<>();
         query.put("type", "DISEASE");
         //创建疾病
-        HashMap<String,String> info = KBDisease_Create.s_Create(new DiseaseProfile(true));
+        HashMap<String,String> info = KBDisease_Create.s_Create(new DiseaseProfile_Test(true));
         String diseaseId = info.get("id");
         query.put("id", diseaseId);
         JSONArray trackList = s_KBTrack("DISEASE", diseaseId);
         Assert.assertEquals(trackList.size(), 1);
-        KBDisease_Update.s_Update(diseaseId, new DiseaseProfile(true));
+        KBDisease_Update.s_Update(diseaseId, new DiseaseProfile_Test(true));
         trackList = s_KBTrack("DISEASE", diseaseId);
         Assert.assertEquals(trackList.size(), 2);
-        KBDisease_Update.s_Update(diseaseId, new DiseaseProfile(true));
+        KBDisease_Update.s_Update(diseaseId, new DiseaseProfile_Test(true));
         trackList = s_KBTrack("DISEASE", diseaseId);
         Assert.assertEquals(trackList.size(), 3);
     }

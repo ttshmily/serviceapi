@@ -7,9 +7,9 @@ import net.sf.json.JSONObject;
 /**
  * Created by ttshmily on 1/6/2017.
  */
-public class DiseaseProfile {
+public class DiseaseProfile_Test {
     public JSONObject body = new JSONObject();
-    public DiseaseProfile(boolean init) {
+    public DiseaseProfile_Test(boolean init) {
         if (init) {
             String tmp = Generator.randomString(16);
             body.put("name", "病" + tmp);

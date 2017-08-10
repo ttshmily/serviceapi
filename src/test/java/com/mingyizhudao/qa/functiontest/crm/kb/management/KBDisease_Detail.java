@@ -2,7 +2,7 @@ package com.mingyizhudao.qa.functiontest.crm.kb.management;
 
 import com.mingyizhudao.qa.common.BaseTest;
 import com.mingyizhudao.qa.common.TestLogger;
-import com.mingyizhudao.qa.dataprofile.crm.DiseaseProfile;
+import com.mingyizhudao.qa.dataprofile.crm.DiseaseProfile_Test;
 import com.mingyizhudao.qa.utilities.Generator;
 import com.mingyizhudao.qa.utilities.HttpRequest;
 import com.mingyizhudao.qa.utilities.Helper;
@@ -41,7 +41,7 @@ public class KBDisease_Detail extends BaseTest {
     public void test_01_获取疾病详情_有效ID() {
 
         String res = "";
-        DiseaseProfile dp = new DiseaseProfile(true);
+        DiseaseProfile_Test dp = new DiseaseProfile_Test(true);
         HashMap<String, String> info = KBDisease_Create.s_Create(dp);
         if (info == null) Assert.fail("创建疾病失败，退出用例执行");
         HashMap<String, String> pathValue = new HashMap<>();
@@ -61,7 +61,7 @@ public class KBDisease_Detail extends BaseTest {
     public void test_02_获取疾病详情_无效ID() {
 
         String res = "";
-        DiseaseProfile dp = new DiseaseProfile(true);
+        DiseaseProfile_Test dp = new DiseaseProfile_Test(true);
         HashMap<String, String> info = KBDisease_Create.s_Create(dp);
         if (info == null) Assert.fail("创建疾病失败，退出用例执行");
         HashMap<String, String> pathValue = new HashMap<>();
@@ -75,7 +75,7 @@ public class KBDisease_Detail extends BaseTest {
     public void test_03_获取疾病详情_检查关联医生数量() {
 //TODO
         String res = "";
-        DiseaseProfile dp = new DiseaseProfile(true);
+        DiseaseProfile_Test dp = new DiseaseProfile_Test(true);
         HashMap<String, String> info = KBDisease_Create.s_Create(dp);
         if (info == null) Assert.fail("创建疾病失败，退出用例执行");
         String diseaseId = info.get("id");
