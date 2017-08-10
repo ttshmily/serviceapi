@@ -2,7 +2,6 @@ package com.mingyizhudao.qa.functiontest.crm.kb.management;
 
 import com.mingyizhudao.qa.common.BaseTest;
 import com.mingyizhudao.qa.dataprofile.Hospital;
-import com.mingyizhudao.qa.dataprofile.crm.HospitalProfile_test;
 import com.mingyizhudao.qa.common.TestLogger;
 import static com.mingyizhudao.qa.utilities.Generator.*;
 import com.mingyizhudao.qa.utilities.HttpRequest;
@@ -28,22 +27,22 @@ public class KBHospital_Update extends BaseTest {
     public static TestLogger logger = new TestLogger(clazzName);
     public static String uri = "/api/v1/medicallibrary/hospitals/{hospital_id}";
 
-    public static HashMap<String, String> s_Update(String hospitalId, HospitalProfile_test hp) {
-        String res = "";
-        HashMap<String, String> pathValue = new HashMap<>();
-        pathValue.put("hospital_id", hospitalId);
-        res = HttpRequest.s_SendPut(host_crm+uri, hp.body.toString(), crm_token, pathValue);
-        JSONObject node = JSONObject.fromObject(res);
-        if(!node.getString("code").equals("1000000")) return null;
-        if(!node.has("data")) return null;
-        HashMap<String, String> result = new HashMap<>();
-        JSONObject expert = node.getJSONObject("data");
-        result.put("id", expert.getString("id"));
-        result.put("name", expert.getString("name"));
-        result.put("city_id", expert.getString("city_id"));
-        result.put("county_id", expert.getString("county_id"));
-        return result;
-    }
+//    public static HashMap<String, String> s_Update(String hospitalId, HospitalProfile_test hp) {
+//        String res = "";
+//        HashMap<String, String> pathValue = new HashMap<>();
+//        pathValue.put("hospital_id", hospitalId);
+//        res = HttpRequest.s_SendPut(host_crm+uri, hp.body.toString(), crm_token, pathValue);
+//        JSONObject node = JSONObject.fromObject(res);
+//        if(!node.getString("code").equals("1000000")) return null;
+//        if(!node.has("data")) return null;
+//        HashMap<String, String> result = new HashMap<>();
+//        JSONObject expert = node.getJSONObject("data");
+//        result.put("id", expert.getString("id"));
+//        result.put("name", expert.getString("name"));
+//        result.put("city_id", expert.getString("city_id"));
+//        result.put("county_id", expert.getString("county_id"));
+//        return result;
+//    }
     public static HashMap<String, String> s_Update(String hospitalId, Hospital hp) {
         String res = "";
         HashMap<String, String> pathValue = new HashMap<>();

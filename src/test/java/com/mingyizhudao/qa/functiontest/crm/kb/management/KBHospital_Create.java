@@ -3,10 +3,9 @@ package com.mingyizhudao.qa.functiontest.crm.kb.management;
 import com.mingyizhudao.qa.common.BaseTest;
 import com.mingyizhudao.qa.common.TestLogger;
 import com.mingyizhudao.qa.dataprofile.Hospital;
-import com.mingyizhudao.qa.dataprofile.crm.HospitalProfile_test;
 import com.mingyizhudao.qa.utilities.Helper;
 import com.mingyizhudao.qa.utilities.HttpRequest;
-import com.mingyizhudao.qa.utilities.Generator;
+import static com.mingyizhudao.qa.utilities.Generator.*;
 import net.sf.json.JSONObject;
 import org.testng.Assert;
 import org.testng.annotations.Test;
@@ -30,21 +29,21 @@ public class KBHospital_Create extends BaseTest {
     public static String uri = "/api/v1/medicallibrary/hospitals";
 
 
-    public static HashMap<String, String> s_Create(HospitalProfile_test hp) {
-        String res = "";
-        TestLogger logger = new TestLogger(s_JobName());
-        res = HttpRequest.s_SendPost(host_crm+uri, hp.body.toString(), crm_token);
-        JSONObject node = JSONObject.fromObject(res);
-        if(!node.getString("code").equals("1000000")) return null;
-        if(!node.has("data")) return null;
-        HashMap<String, String> result = new HashMap<>();
-        JSONObject expert = node.getJSONObject("data");
-        result.put("id", expert.getString("id"));
-        result.put("name", expert.getString("name"));
-        result.put("city_id", expert.getString("city_id"));
-        result.put("county_id", expert.getString("county_id"));
-        return result;
-    }
+//    public static HashMap<String, String> s_Create(HospitalProfile_test hp) {
+//        String res = "";
+//        TestLogger logger = new TestLogger(s_JobName());
+//        res = HttpRequest.s_SendPost(host_crm+uri, hp.body.toString(), crm_token);
+//        JSONObject node = JSONObject.fromObject(res);
+//        if(!node.getString("code").equals("1000000")) return null;
+//        if(!node.has("data")) return null;
+//        HashMap<String, String> result = new HashMap<>();
+//        JSONObject expert = node.getJSONObject("data");
+//        result.put("id", expert.getString("id"));
+//        result.put("name", expert.getString("name"));
+//        result.put("city_id", expert.getString("city_id"));
+//        result.put("county_id", expert.getString("county_id"));
+//        return result;
+//    }
     public static HashMap<String, String> s_Create(Hospital hp) {
         String res = "";
         TestLogger logger = new TestLogger(s_JobName());
