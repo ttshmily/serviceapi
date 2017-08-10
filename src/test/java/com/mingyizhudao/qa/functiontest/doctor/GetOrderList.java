@@ -1,7 +1,7 @@
 package com.mingyizhudao.qa.functiontest.doctor;
 
 import com.mingyizhudao.qa.common.BaseTest;
-import com.mingyizhudao.qa.dataprofile.crm.DoctorProfile;
+import com.mingyizhudao.qa.dataprofile.User;
 import com.mingyizhudao.qa.functiontest.crm.trading.surgery.Order_ReceiveTask;
 import com.mingyizhudao.qa.functiontest.crm.trading.surgery.Order_RecommendDoctor;
 import com.mingyizhudao.qa.functiontest.crm.trading.surgery.Order_ThreewayCall_V2;
@@ -69,7 +69,7 @@ public class GetOrderList extends BaseTest {
         String tmpToken = CheckVerifyCode.s_Check();
 
         logger.info(tmpToken);
-        DoctorProfile dp = new DoctorProfile(true);
+        User dp = new User();
         res = GetDoctorProfile_V1.s_MyProfile(tmpToken);
         String docId = JSONObject.fromObject(res).getJSONObject("data").getJSONObject("doctor").getString("user_id");
         UpdateDoctorProfile_V1.s_Update(tmpToken, dp);

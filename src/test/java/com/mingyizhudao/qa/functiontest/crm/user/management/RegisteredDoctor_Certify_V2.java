@@ -1,8 +1,8 @@
 package com.mingyizhudao.qa.functiontest.crm.user.management;
 
 import com.mingyizhudao.qa.common.BaseTest;
-import com.mingyizhudao.qa.dataprofile.crm.DoctorProfile;
 import com.mingyizhudao.qa.common.TestLogger;
+import com.mingyizhudao.qa.dataprofile.User;
 import com.mingyizhudao.qa.utilities.HttpRequest;
 import com.mingyizhudao.qa.utilities.Helper;
 import net.sf.json.JSONObject;
@@ -61,8 +61,7 @@ public class RegisteredDoctor_Certify_V2 extends BaseTest {
         HashMap<String, String> pathValue = new HashMap<>();
         JSONObject body = new JSONObject();
 
-        DoctorProfile dp = new DoctorProfile(true);
-        String doctorId = s_CreateRegisteredDoctor(dp).get("id");
+        String doctorId = s_CreateRegisteredDoctor(new User()).get("id");
         if ( doctorId == null)
             Assert.fail("创建医生失败，认证用例无法执行");
         res = RegisteredDoctor_Detail.s_Detail(doctorId);
@@ -89,8 +88,7 @@ public class RegisteredDoctor_Certify_V2 extends BaseTest {
         HashMap<String, String> pathValue = new HashMap<>();
         JSONObject body = new JSONObject();
 
-        DoctorProfile dp = new DoctorProfile(true);
-        String doctorId = s_CreateRegisteredDoctor(dp).get("id");
+        String doctorId = s_CreateRegisteredDoctor(new User()).get("id");
         if (doctorId == null)
             Assert.fail("创建医生失败，认证用例无法执行");
         res = RegisteredDoctor_Detail.s_Detail(doctorId);
@@ -115,8 +113,7 @@ public class RegisteredDoctor_Certify_V2 extends BaseTest {
         HashMap<String, String> pathValue = new HashMap<>();
         JSONObject body = new JSONObject();
 
-        DoctorProfile dp = new DoctorProfile(true);
-        String doctorId = s_CreateRegisteredDoctor(dp).get("id");
+        String doctorId = s_CreateRegisteredDoctor(new User()).get("id");
         if (doctorId == null)
             Assert.fail("创建医生失败，认证用例无法执行");
         res = RegisteredDoctor_Detail.s_Detail(doctorId);
@@ -142,8 +139,7 @@ public class RegisteredDoctor_Certify_V2 extends BaseTest {
         HashMap<String, String> pathValue = new HashMap<>();
         JSONObject body = new JSONObject();
 
-        DoctorProfile dp = new DoctorProfile(true);
-        String doctorId = s_CreateRegisteredDoctor(dp).get("id");
+        String doctorId = s_CreateRegisteredDoctor(new User()).get("id");
         if ( doctorId == null)
             Assert.fail("创建医生失败，认证用例无法执行");
 
@@ -163,8 +159,7 @@ public class RegisteredDoctor_Certify_V2 extends BaseTest {
         HashMap<String, String> pathValue = new HashMap<>();
         JSONObject body = new JSONObject();
 
-        DoctorProfile dp = new DoctorProfile(true);
-        String doctorId = s_CreateRegisteredDoctor(dp).get("id");
+        String doctorId = s_CreateRegisteredDoctor(new User()).get("id");
         if ( doctorId == null)
             Assert.fail("创建医生失败，认证用例无法执行");
 

@@ -1,6 +1,6 @@
 package com.mingyizhudao.qa.functiontest.doctor;
 
-import com.mingyizhudao.qa.dataprofile.crm.DoctorProfile;
+import com.mingyizhudao.qa.dataprofile.User;
 import com.mingyizhudao.qa.functiontest.crm.trading.surgery.Order_RecommendDoctor;
 import com.mingyizhudao.qa.functiontest.crm.trading.surgery.Order_Rollback;
 import com.mingyizhudao.qa.functiontest.crm.trading.surgery.Order_ThreewayCall_V2;
@@ -118,7 +118,7 @@ public class GetOrderDetail_V1 extends BaseTest {
             logger.error("创建订单with mainToken失败");
         }
         pathValue.put("orderId", orderId);
-        HashMap<String, String> doctorInfo = s_CreateSyncedDoctor(new DoctorProfile(true));
+        HashMap<String, String> doctorInfo = s_CreateSyncedDoctor(new User());
         String tmpToken = doctorInfo.get("token");
         HashMap<String, String> query = new HashMap<>();
         query.put("flag", "1");
@@ -130,7 +130,7 @@ public class GetOrderDetail_V1 extends BaseTest {
     @Test
     public void test_05_获取订单详情_我收到的订单_刚被推荐() {
         String res = "";
-        String tmpToken = s_CreateSyncedDoctor(new DoctorProfile(true)).get("token");
+        String tmpToken = s_CreateSyncedDoctor(new User()).get("token");
         String orderId = CreateOrder.s_CreateOrder(tmpToken);
         Order_ReceiveTask.s_ReceiveTask(orderId);
         Order_RecommendDoctor.s_RecommendDoctor(orderId, mainExpertId);

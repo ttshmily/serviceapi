@@ -1,7 +1,7 @@
 package com.mingyizhudao.qa.functiontest.bdassistant;
 
 import com.mingyizhudao.qa.common.BaseTest;
-import com.mingyizhudao.qa.dataprofile.crm.DoctorProfile;
+import com.mingyizhudao.qa.dataprofile.User;
 import com.mingyizhudao.qa.functiontest.crm.user.management.RegisteredDoctor_Detail;
 import com.mingyizhudao.qa.functiontest.crm.user.management.RegisteredDoctor_Modify;
 import com.mingyizhudao.qa.functiontest.doctor.CreateOrder;
@@ -62,8 +62,7 @@ public class PersonalInfo extends BaseTest {
         int doctorCountsBefore = Integer.parseInt(Helper.s_ParseJson(data, "doctorCounts"));
         int orderCountsBefore = Integer.parseInt(Helper.s_ParseJson(data, "orderCounts"));
 
-        DoctorProfile dop = new DoctorProfile(true);
-        HashMap<String, String> info = s_CreateVerifiedDoctor(dop);
+        HashMap<String, String> info = s_CreateVerifiedDoctor(new User());
         String doctorId = info.get("id");
         if (doctorId == null) {
             Assert.fail("创建医生失败，退出用例执行");
