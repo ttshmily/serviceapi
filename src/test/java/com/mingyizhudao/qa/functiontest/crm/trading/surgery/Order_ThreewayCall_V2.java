@@ -43,7 +43,7 @@ public class Order_ThreewayCall_V2 extends BaseTest {
         }
         pathValue.put("orderNumber", orderId);
         JSONObject body = new JSONObject();
-        body.put("surgeryFee", Generator.randomInt(4)+1);
+        body.put("surgeryFee", Generator.randomInt(4)+1000);
         body.put("calling_time", df.format(new Date()));
         body.put("major_disease_id", "55");
         body.put("minor_disease_id","66");

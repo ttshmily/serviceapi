@@ -202,7 +202,6 @@ public class Order_RecommendDoctor extends BaseTest {
         Assert.assertEquals(Helper.s_ParseJson(data, "status"), "2000");
         Assert.assertNull(Helper.s_ParseJson(data, "surgeon_id"));
         Assert.assertNull(Helper.s_ParseJson(data, "surgeon_name"));
-
     }
 
     @Test

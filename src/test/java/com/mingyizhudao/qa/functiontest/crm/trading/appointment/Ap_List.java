@@ -268,4 +268,23 @@ public class Ap_List extends BaseTest {
         }
     }
 
+    @Test
+    public void test_09_获取列表在一定的时间区间() {
+        String res = "";
+        String orderNumber = Ap_Create.s_Create(new Appointment());
+        HashMap<String, String> query = new HashMap<>();
+        query.put("page", String.valueOf(Generator.randomInt(2)));
+        for (String order_number:new String[]{orderNumber}) {
+            logger.info("搜索订单编号为"+order_number+"的订单");
+            query.put("orderNumber", order_number);
+            res = HttpRequest.s_SendGet(host_appointment + uri, query, crm_token);
+            s_CheckResponse(res);
+            Assert.assertEquals(code, "1000000");
+            JSONArray ap_list = data.getJSONArray("list");
+            Assert.assertEquals(ap_list.size(), 1);
+            JSONObject ap = ap_list.getJSONObject(0);
+            Assert.assertEquals(ap.getString("order_number"), order_number);
+        }
+    }
+
 }
