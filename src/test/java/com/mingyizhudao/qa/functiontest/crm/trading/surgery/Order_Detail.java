@@ -82,7 +82,7 @@ public class Order_Detail extends BaseTest {
         Assert.assertNull(Helper.s_ParseJson(data, "orderNumber"), "订单ID错误，不应该有数据返回");
     }
 
-    @Test
+    @Test(enabled = false)
     public void test_03_获取订单详情_错误的ID_ID为英文() {
         String res = "";
         HashMap<String, String> pathValue = new HashMap<>();

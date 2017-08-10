@@ -176,6 +176,7 @@ public class KBExpert_Update extends BaseTest {
         Assert.assertEquals(s_ParseJson(data, "major_id"), ep.getMajor_id(), "专业ID没有更新");
         Assert.assertEquals(s_ParseJson(data, "major"), majorName(ep.getMajor_id()), "专业名称没有更新");
 
+        String tmp = ep.getMajor_id();
         ep.setMajor_id("WRONG_MAJOR_ID");
         res = s_SendPut(host_crm+uri, JSONObject.fromObject(ep).toString(), crm_token, pathValue);
         s_CheckResponse(res);
@@ -183,8 +184,8 @@ public class KBExpert_Update extends BaseTest {
 
         res = KBExpert_Detail.s_Detail(expertId);
         s_CheckResponse(res);
-        Assert.assertEquals(s_ParseJson(data, "major_id"), ep.getMajor_id());
-        Assert.assertEquals(s_ParseJson(data, "major"), majorName(ep.getMajor_id()));
+        Assert.assertEquals(s_ParseJson(data, "major_id"), tmp);
+        Assert.assertEquals(s_ParseJson(data, "major"), majorName(tmp));
     }
 
     @Test
@@ -349,7 +350,7 @@ public class KBExpert_Update extends BaseTest {
         pathValue.put("id", expertId);
 
         Doctor epModified = new Doctor();
-        epModified.setSigned_status(0);
+        epModified.setSigned_status("0");
         res = s_SendPut(host_crm+uri, JSONObject.fromObject(epModified).toString(), crm_token, pathValue);
         s_CheckResponse(res);
         Assert.assertEquals(code, "1000000", "更新主刀专家状态字段失败");
@@ -357,7 +358,7 @@ public class KBExpert_Update extends BaseTest {
         s_CheckResponse(res);
         Assert.assertEquals(s_ParseJson(data, "signed_status"), "NOT_SIGNED");
 
-        epModified.setSigned_status(0);
+        epModified.setSigned_status("1");
         res = s_SendPut(host_crm+uri, JSONObject.fromObject(epModified).toString(), crm_token, pathValue);
         s_CheckResponse(res);
         Assert.assertEquals(code, "1000000", "更新主刀专家状态字段失败");
@@ -383,7 +384,7 @@ public class KBExpert_Update extends BaseTest {
         pathValue.put("id", expertId);
 
         Doctor epModified = new Doctor();
-        epModified.setSigned_status(0);
+        epModified.setSigned_status("0");
         res = s_SendPut(host_crm+uri, JSONObject.fromObject(epModified).toString(), crm_token, pathValue);
         s_CheckResponse(res);
         Assert.assertEquals(code, "1000000", "更新主刀专家状态字段失败");
@@ -391,7 +392,7 @@ public class KBExpert_Update extends BaseTest {
         s_CheckResponse(res);
         Assert.assertEquals(s_ParseJson(data, "signed_status"), "NOT_SIGNED");
 
-        epModified.setSigned_status(0);
+        epModified.setSigned_status("1");
         res = s_SendPut(host_crm+uri, JSONObject.fromObject(epModified).toString(), crm_token, pathValue);
         s_CheckResponse(res);
         Assert.assertEquals(code, "1000000", "更新主刀专家状态字段失败");

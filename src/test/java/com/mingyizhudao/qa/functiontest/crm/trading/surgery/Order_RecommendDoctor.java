@@ -15,8 +15,7 @@ import org.testng.annotations.Test;
 
 import java.util.HashMap;
 
-import static com.mingyizhudao.qa.utilities.Generator.hospitalName;
-import static com.mingyizhudao.qa.utilities.Generator.majorName;
+import static com.mingyizhudao.qa.utilities.Generator.*;
 
 /**
  * Created by ttshmily on 25/4/2017.
@@ -77,8 +76,8 @@ public class Order_RecommendDoctor extends BaseTest {
         Assert.assertEquals(Helper.s_ParseJson(data, "surgeon_id"), recommendedId);
         Assert.assertEquals(Helper.s_ParseJson(data, "surgeon_name"), dp.getDoctor().getName());
         Assert.assertEquals(Helper.s_ParseJson(data, "surgeon_user_id"), doc.get("id"));
-        Assert.assertEquals(Helper.s_ParseJson(data, "surgeon_medical_title"), dp.getDoctor().getMedical_title_list());
-        Assert.assertEquals(Helper.s_ParseJson(data, "surgeon_academic_title"), dp.getDoctor().getAcademic_title_list());
+        Assert.assertEquals(Helper.s_ParseJson(data, "surgeon_medical_title"), medicalName(dp.getDoctor().getMedical_title_list()));
+        Assert.assertEquals(Helper.s_ParseJson(data, "surgeon_academic_title"), academicName(dp.getDoctor().getAcademic_title_list()));
         HashMap<String, String> hos = KBHospital_Detail.s_Detail(dp.getDoctor().getHospital_id());
         Assert.assertEquals(Helper.s_ParseJson(data, "surgeon_hospital"), hos.get("name"));
         Assert.assertEquals(Helper.s_ParseJson(data, "surgeon_city_id"), hos.get("city_id"));

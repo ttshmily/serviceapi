@@ -51,7 +51,7 @@ public class KBExpert_Create extends BaseTest {
         s_CheckResponse(res);
         Assert.assertEquals(code, "1000000");
         Assert.assertNotNull(Helper.s_ParseJson(data, "id"), "医库ID不能少");
-        Assert.assertEquals(Helper.s_ParseJson(data, "gender"), ep.getGender());
+        Assert.assertEquals(Helper.s_ParseJson(data, "gender"), String.valueOf(ep.getGender()));
         Assert.assertEquals(Helper.s_ParseJson(data, "name"), ep.getName());
         Assert.assertNotNull(Helper.s_ParseJson(data, "city_id"), KBHospital_Detail.s_Detail(ep.getHospital_id()).get("city_id")); //TODO
         Assert.assertEquals(Helper.s_ParseJson(data, "hospital_id"), ep.getHospital_id());
@@ -70,7 +70,7 @@ public class KBExpert_Create extends BaseTest {
     @Test
     public void test_02_创建医生_只有必填字段() {
         String res = "";
-        Doctor ep = new Doctor("basis");
+        Doctor ep = new Doctor("basic");
 
         res = HttpRequest.s_SendPost(host_crm + uri, JSONObject.fromObject(ep).toString(), crm_token);
         s_CheckResponse(res);
@@ -86,7 +86,7 @@ public class KBExpert_Create extends BaseTest {
     @Test
     public void test_03_创建医生_缺少必填字段() {
         String res = "";
-        Doctor ep = new Doctor("basis");
+        Doctor ep = new Doctor("basic");
 
         String tmp = ep.getName();
         ep.setName(null);
