@@ -47,7 +47,7 @@ public class KBExpert_Diseases extends BaseTest {
     @Test
     public void test_01_关联疾病() {
         String res = "";
-        ExpertProfile_Test ep = new ExpertProfile_Test(true);
+        ExpertProfile ep = new ExpertProfile(true);
         HashMap<String, String> info = KBExpert_Create.s_Create(ep);
         if (info == null) Assert.fail("创建医库医生失败，退出用例执行");
         String expertId = info.get("id");
@@ -98,7 +98,7 @@ public class KBExpert_Diseases extends BaseTest {
     @Test
     public void test_02_关联疾病_增加() {
         String res = "";
-        ExpertProfile_Test ep = new ExpertProfile_Test(true);
+        ExpertProfile ep = new ExpertProfile(true);
         HashMap<String, String> info = KBExpert_Create.s_Create(ep);
         if (info == null) Assert.fail("创建医库医生失败，退出用例执行");
         String expertId = info.get("id");
@@ -164,7 +164,7 @@ public class KBExpert_Diseases extends BaseTest {
     @Test
     public void test_03_关联疾病_减少() {
         String res = "";
-        ExpertProfile_Test ep = new ExpertProfile_Test(true);
+        ExpertProfile ep = new ExpertProfile(true);
         HashMap<String, String> info = KBExpert_Create.s_Create(ep);
         if (info == null) Assert.fail("创建医库医生失败，退出用例执行");
         String expertId = info.get("id");
@@ -229,7 +229,7 @@ public class KBExpert_Diseases extends BaseTest {
     @Test
     public void test_04_去重疾病() {
         String res = "";
-        ExpertProfile_Test ep = new ExpertProfile_Test(true);
+        ExpertProfile ep = new ExpertProfile(true);
         HashMap<String, String> info = KBExpert_Create.s_Create(ep);
         if (info == null) Assert.fail("创建医库医生失败，退出用例执行");
         String expertId = info.get("id");
@@ -285,7 +285,7 @@ public class KBExpert_Diseases extends BaseTest {
     @Test
     public void test_05_去除错误疾病ID() {
         String res = "";
-        ExpertProfile_Test ep = new ExpertProfile_Test(true);
+        ExpertProfile ep = new ExpertProfile(true);
         HashMap<String, String> info = KBExpert_Create.s_Create(ep);
         if (info == null) Assert.fail("创建医库医生失败，退出用例执行");
         String expertId = info.get("id");
@@ -341,7 +341,7 @@ public class KBExpert_Diseases extends BaseTest {
     @Test
     public void test_06_去除所有疾病ID() {
         String res = "";
-        ExpertProfile_Test ep = new ExpertProfile_Test(true);
+        ExpertProfile ep = new ExpertProfile(true);
         HashMap<String, String> info = KBExpert_Create.s_Create(ep);
         if (info == null) Assert.fail("创建医库医生失败，退出用例执行");
         String expertId = info.get("id");

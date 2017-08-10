@@ -3,7 +3,6 @@ package com.mingyizhudao.qa.functiontest.crm.kb.management;
 import com.mingyizhudao.qa.common.BaseTest;
 import com.mingyizhudao.qa.dataprofile.Doctor;
 import com.mingyizhudao.qa.dataprofile.User;
-import com.mingyizhudao.qa.dataprofile.crm.ExpertProfile_Test;
 import com.mingyizhudao.qa.functiontest.crm.user.management.RegisteredDoctor_Detail;
 import com.mingyizhudao.qa.common.TestLogger;
 import com.mingyizhudao.qa.functiontest.crm.user.management.RegisteredDoctor_CertifySync_V2;
@@ -31,24 +30,6 @@ public class KBExpert_Update extends BaseTest {
     }.getClassName();
     public static TestLogger logger = new TestLogger(clazzName);
     public static String uri = "/api/v1/medicallibrary/doctors/{id}";
-
-    public static HashMap<String, String> s_Update(String expertId, ExpertProfile_Test ep) {
-        String res = "";
-        TestLogger logger = new TestLogger(s_JobName());
-        HashMap<String, String> pathValue = new HashMap<>();
-        pathValue.put("id", expertId);
-        res = s_SendPut(host_crm+uri, ep.body.toString(), crm_token, pathValue);
-        JSONObject node = JSONObject.fromObject(res);
-        HashMap<String, String> result = new HashMap<>();
-        if(!node.getString("code").equals("1000000")) return null;
-        if(!node.has("data")) return null;
-        JSONObject expert = node.getJSONObject("data");
-        result.put("id", expert.getString("id"));
-        result.put("name", expert.getString("name"));
-        result.put("major_id", expert.getString("major_id"));
-        result.put("hospital_id", expert.getString("hospital_id"));
-        return result;
-    }
 
     public static HashMap<String, String> s_Update(String expertId, Doctor ep) {
         String res = "";

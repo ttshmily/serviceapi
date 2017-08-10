@@ -3,7 +3,6 @@ package com.mingyizhudao.qa.functiontest.crm.kb.management;
 import com.mingyizhudao.qa.common.BaseTest;
 import com.mingyizhudao.qa.common.TestLogger;
 import com.mingyizhudao.qa.dataprofile.Doctor;
-import com.mingyizhudao.qa.dataprofile.crm.ExpertProfile_Test;
 import com.mingyizhudao.qa.utilities.HttpRequest;
 import com.mingyizhudao.qa.utilities.Helper;
 import org.testng.Assert;
