@@ -2,7 +2,7 @@ package com.mingyizhudao.qa.functiontest.doctor;
 
 import com.mingyizhudao.qa.common.BaseTest;
 import com.mingyizhudao.qa.common.TestLogger;
-import com.mingyizhudao.qa.dataprofile.crm.DoctorProfile;
+import com.mingyizhudao.qa.dataprofile.User;
 import com.mingyizhudao.qa.dataprofile.crm.OrderDetail;
 import com.mingyizhudao.qa.utilities.Generator;
 import com.mingyizhudao.qa.utilities.Helper;
@@ -241,12 +241,12 @@ public class CreateOrder extends BaseTest {
     }
 
     @Test
-    public void test_09_创建订单_信息齐备_认证中的医生没有邀请者不可以创建() {
+    public void test_09_创建订单_信息齐备_认证中的医生没有邀请者可以创建() {
 
         String res = "";
 
-        DoctorProfile dp = new DoctorProfile(true);
-        dp.body.getJSONObject("doctor").remove("inviter_no");
+        User dp = new User();
+        dp.getDoctor().setInviter_no(null);
         HashMap<String, String> doc = s_CreateRegisteredDoctor(dp);
         if (doc == null) {
             Assert.fail("创建医生失败");
@@ -265,8 +265,7 @@ public class CreateOrder extends BaseTest {
 
         String res = "";
 
-        DoctorProfile dp = new DoctorProfile(true);
-        HashMap<String, String> doc = s_CreateRegisteredDoctor(dp);
+        HashMap<String, String> doc = s_CreateRegisteredDoctor(new User());
         if (doc == null) {
             Assert.fail("创建医生失败");
         }

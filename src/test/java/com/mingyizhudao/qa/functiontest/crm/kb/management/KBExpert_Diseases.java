@@ -1,7 +1,6 @@
 package com.mingyizhudao.qa.functiontest.crm.kb.management;
 
 import com.mingyizhudao.qa.common.BaseTest;
-import com.mingyizhudao.qa.dataprofile.crm.ExpertProfile;
 import com.mingyizhudao.qa.common.TestLogger;
 import com.mingyizhudao.qa.utilities.Generator;
 import com.mingyizhudao.qa.utilities.HttpRequest;
@@ -44,7 +43,7 @@ public class KBExpert_Diseases extends BaseTest {
         if(!node.getString("code").equals("1000000")) return false;
         return true;
     }
-
+/*
     @Test
     public void test_01_关联疾病() {
         String res = "";
@@ -381,5 +380,5 @@ public class KBExpert_Diseases extends BaseTest {
         res = KBExpert_Detail.s_Detail(expertId);
         s_CheckResponse(res);
         Assert.assertEquals(data.getJSONArray("disease_list").size(), 0);
-    }
+    }*/
 }

@@ -1,6 +1,6 @@
 package com.mingyizhudao.qa.functiontest.bdassistant;
 
-import com.mingyizhudao.qa.dataprofile.crm.DoctorProfile;
+import com.mingyizhudao.qa.dataprofile.User;
 import com.mingyizhudao.qa.functiontest.crm.user.management.RegisteredDoctor_Detail;
 import com.mingyizhudao.qa.common.BaseTest;
 import com.mingyizhudao.qa.utilities.HttpRequest;
@@ -28,8 +28,7 @@ public class VerifiyDoctor extends BaseTest {
         HashMap<String, String> pathValue = new HashMap<>();
         JSONObject body = new JSONObject();
 
-        DoctorProfile dp = new DoctorProfile(true);
-        String doctorId = s_CreateRegisteredDoctor(dp).get("id");
+        String doctorId = s_CreateRegisteredDoctor(new User()).get("id");
         if (doctorId == null)
             Assert.fail("创建医生失败，认证用例无法执行");
         res = RegisteredDoctor_Detail.s_Detail(doctorId);
@@ -58,8 +57,7 @@ public class VerifiyDoctor extends BaseTest {
         HashMap<String, String> pathValue = new HashMap<>();
         JSONObject body = new JSONObject();
 
-        DoctorProfile dp = new DoctorProfile(true);
-        String doctorId = s_CreateRegisteredDoctor(dp).get("id");
+        String doctorId = s_CreateRegisteredDoctor(new User()).get("id");
         if (doctorId == null)
             Assert.fail("创建医生失败，认证用例无法执行");
         res = RegisteredDoctor_Detail.s_Detail(doctorId);

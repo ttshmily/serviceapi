@@ -1,7 +1,7 @@
 package com.mingyizhudao.qa.functiontest.doctor;
 
 import com.mingyizhudao.qa.common.BaseTest;
-import com.mingyizhudao.qa.dataprofile.crm.DoctorProfile;
+import com.mingyizhudao.qa.dataprofile.User;
 import com.mingyizhudao.qa.functiontest.crm.user.management.RegisteredDoctor_Certify_V2;
 import com.mingyizhudao.qa.functiontest.login.CheckVerifyCode;
 import com.mingyizhudao.qa.functiontest.login.SendVerifyCode;
@@ -103,7 +103,7 @@ public class GetOrderDetail extends BaseTest {
         pathValue.put("orderId", orderId);
         SendVerifyCode.s_Send();
         String tmpToken = CheckVerifyCode.s_Check();
-        DoctorProfile dp = new DoctorProfile(true);
+        User dp = new User();
         UpdateDoctorProfile_V1.s_Update(tmpToken, dp);
         res = GetDoctorProfile_V1.s_MyProfile(tmpToken);
         String docId = JSONObject.fromObject(res).getJSONObject("data").getJSONObject("doctor").getString("user_id");

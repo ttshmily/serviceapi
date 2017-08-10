@@ -1,7 +1,7 @@
 package com.mingyizhudao.qa.functiontest.doctor;
 
 import com.mingyizhudao.qa.common.BaseTest;
-import com.mingyizhudao.qa.dataprofile.crm.DoctorProfile;
+import com.mingyizhudao.qa.dataprofile.User;
 import com.mingyizhudao.qa.functiontest.crm.trading.surgery.*;
 import com.mingyizhudao.qa.common.TestLogger;
 import com.mingyizhudao.qa.utilities.Generator;
@@ -56,8 +56,7 @@ public class GetOrderList_V1 extends BaseTest {
     public void test_01_我发起的手术单_默认排序() {//已取消置底，已完成倒数第二顺位，其它会诊单按创建时间倒序混排
         String res = "";
 
-        DoctorProfile dp = new DoctorProfile(true);
-        HashMap<String, String> result = s_CreateSyncedDoctor(dp);
+        HashMap<String, String> result = s_CreateSyncedDoctor(new User());
         String tmpToken = result.get("token");
 
         HashMap<String, String> query = new HashMap<>();
@@ -162,8 +161,7 @@ public class GetOrderList_V1 extends BaseTest {
     public void test_02_我收到的手术单_默认排序() {//处理中->已完成->已取消，同一状态按接收时间倒序
 
         String res = "";
-        DoctorProfile dp = new DoctorProfile(true);
-        HashMap<String, String> result = s_CreateSyncedDoctor(dp);
+        HashMap<String, String> result = s_CreateSyncedDoctor(new User());
         String tmpToken = result.get("token");
         String tmpExpertId = result.get("expert_id");
 
@@ -287,8 +285,7 @@ public class GetOrderList_V1 extends BaseTest {
     public void test_03_我收到的手术单_接收时间排序() {
         String res = "";
 
-        DoctorProfile dp = new DoctorProfile(true);
-        HashMap<String, String> result = s_CreateSyncedDoctor(dp);
+        HashMap<String, String> result = s_CreateSyncedDoctor(new User());
         String tmpToken = result.get("token");
         String tmpExpertId = result.get("expert_id");
 
@@ -395,8 +392,7 @@ public class GetOrderList_V1 extends BaseTest {
     public void test_04_验证我收到的手术单_状态筛选() {
         String res = "";
 
-        DoctorProfile dp = new DoctorProfile(true);
-        HashMap<String, String> result = s_CreateSyncedDoctor(dp);
+        HashMap<String, String> result = s_CreateSyncedDoctor(new User());
         String tmpToken = result.get("token");
         String tmpExpertId = result.get("expert_id");
 
@@ -503,8 +499,7 @@ public class GetOrderList_V1 extends BaseTest {
     public void test_05_验证我收到的手术单_重新选择同一个上级专家() {
         String res = "";
 
-        DoctorProfile dp = new DoctorProfile(true);
-        HashMap<String, String> result = s_CreateSyncedDoctor(dp);
+        HashMap<String, String> result = s_CreateSyncedDoctor(new User());
         String tmpToken = result.get("token");
         String tmpExpertId = result.get("expert_id");
 

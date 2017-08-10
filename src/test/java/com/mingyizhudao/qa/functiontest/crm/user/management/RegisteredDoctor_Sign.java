@@ -1,23 +1,13 @@
 package com.mingyizhudao.qa.functiontest.crm.user.management;
 
 import com.mingyizhudao.qa.common.BaseTest;
-import com.mingyizhudao.qa.dataprofile.crm.DoctorProfile;
-import com.mingyizhudao.qa.functiontest.crm.kb.management.KBExpert_Detail;
-import com.mingyizhudao.qa.common.TestLogger;
-import com.mingyizhudao.qa.utilities.HttpRequest;
-import com.mingyizhudao.qa.utilities.Helper;
-import net.sf.json.JSONObject;
-import org.testng.Assert;
-import org.testng.annotations.Test;
-
-import java.util.HashMap;
 
 /**
  * Created by ttshmily on 2/6/2017.
  */
 public class RegisteredDoctor_Sign extends BaseTest {
 
-    public static String clazzName = new Object() {
+/*    public static String clazzName = new Object() {
         public String getClassName() {
             String clazzName = this.getClass().getName();
             return clazzName.substring(0, clazzName.lastIndexOf('$'));
@@ -73,5 +63,5 @@ public class RegisteredDoctor_Sign extends BaseTest {
         res = RegisteredDoctor_Detail.s_Detail(doctorId);
         s_CheckResponse(res);
         Assert.assertEquals(Helper.s_ParseJson(data, "signed_status"), "NOT_SIGNED");
-    }
+    }*/
 }

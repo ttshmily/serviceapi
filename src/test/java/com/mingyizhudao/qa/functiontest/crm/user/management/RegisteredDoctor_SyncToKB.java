@@ -1,18 +1,19 @@
 package com.mingyizhudao.qa.functiontest.crm.user.management;
 
-import com.mingyizhudao.qa.dataprofile.crm.ExpertProfile;
-import com.mingyizhudao.qa.dataprofile.crm.DoctorProfile;
+import com.mingyizhudao.qa.dataprofile.Doctor;
+import com.mingyizhudao.qa.dataprofile.User;
 import com.mingyizhudao.qa.functiontest.crm.kb.management.KBExpert_Detail;
 import com.mingyizhudao.qa.common.BaseTest;
 import com.mingyizhudao.qa.common.TestLogger;
 import com.mingyizhudao.qa.functiontest.crm.kb.management.KBExpert_Create;
-import com.mingyizhudao.qa.utilities.HttpRequest;
 import com.mingyizhudao.qa.utilities.Helper;
 import net.sf.json.JSONObject;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
 import java.util.HashMap;
+
+import static com.mingyizhudao.qa.utilities.HttpRequest.s_SendPut;
 
 /**
  * Created by dayi on 2017/7/20.
@@ -37,7 +38,7 @@ public class RegisteredDoctor_SyncToKB extends BaseTest {
         HashMap<String, String> pathValue = new HashMap<>();
         JSONObject body = new JSONObject();
 
-        DoctorProfile dp = new DoctorProfile(true);
+        User dp = new User();
         HashMap<String, String> doctorInfo = s_CreateVerifiedDoctor(dp);
         if (doctorInfo == null) {
             Assert.fail("创建医生失败，认证用例无法执行");
@@ -47,7 +48,7 @@ public class RegisteredDoctor_SyncToKB extends BaseTest {
 
         body.put("status", "1");
         body.put("reason", "单独同步");
-        res = HttpRequest.s_SendPut(host_crm+uri, body.toString(), crm_token, pathValue);
+        res = s_SendPut(host_crm+uri, body.toString(), crm_token, pathValue);
         s_CheckResponse(res);
         Assert.assertEquals(code, "1000000");
 
@@ -78,7 +79,7 @@ public class RegisteredDoctor_SyncToKB extends BaseTest {
         HashMap<String, String> pathValue = new HashMap<>();
         JSONObject body = new JSONObject();
 
-        DoctorProfile dp = new DoctorProfile(true);
+        User dp = new User();
         HashMap<String, String> doctorInfo = s_CreateRegisteredDoctor(dp);
         if (doctorInfo == null) {
             Assert.fail("创建医生失败，认证用例无法执行");
@@ -88,7 +89,7 @@ public class RegisteredDoctor_SyncToKB extends BaseTest {
 
         body.put("status", "1");
         body.put("reason", "单独同步");
-        res = HttpRequest.s_SendPut(host_crm+uri, body.toString(), crm_token, pathValue);
+        res = s_SendPut(host_crm+uri, body.toString(), crm_token, pathValue);
         s_CheckResponse(res);
         Assert.assertNotEquals(code, "1000000");
     }
@@ -100,8 +101,8 @@ public class RegisteredDoctor_SyncToKB extends BaseTest {
         HashMap<String, String> pathValue = new HashMap<>();
         JSONObject body = new JSONObject();
 
-        String expertId = KBExpert_Create.s_Create(new ExpertProfile(true)).get("id");
-        DoctorProfile dp = new DoctorProfile(true);
+        String expertId = KBExpert_Create.s_Create(new Doctor());
+        User dp = new User();
         HashMap<String, String> doctorInfo = s_CreateVerifiedDoctor(dp);
         if (doctorInfo == null) {
             Assert.fail("创建医生失败，认证用例无法执行");
@@ -110,9 +111,9 @@ public class RegisteredDoctor_SyncToKB extends BaseTest {
         pathValue.put("id", doctorId);
 
         body.put("status", "1");
-//        body.put("reason", "单独同步");
+        body.put("reason", "单独同步");
         body.put("expert_id", expertId);
-        res = HttpRequest.s_SendPut(host_crm+uri, body.toString(), crm_token, pathValue);
+        res = s_SendPut(host_crm+uri, body.toString(), crm_token, pathValue);
         s_CheckResponse(res);
         Assert.assertEquals(code, "1000000");
 

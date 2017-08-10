@@ -1,8 +1,8 @@
 package com.mingyizhudao.qa.functiontest.crm.trading.surgery;
 
 import com.mingyizhudao.qa.common.BaseTest;
-import com.mingyizhudao.qa.dataprofile.crm.DoctorProfile;
 import com.mingyizhudao.qa.common.TestLogger;
+import com.mingyizhudao.qa.dataprofile.User;
 import com.mingyizhudao.qa.functiontest.doctor.CreateOrder;
 import com.mingyizhudao.qa.utilities.HttpRequest;
 import com.mingyizhudao.qa.utilities.Helper;
@@ -128,7 +128,7 @@ public class Order_ReceiveTask extends BaseTest {
         String res = "";
         HashMap<String, String> pathValue = new HashMap<>();
 
-        HashMap<String, String> doctorInfo = s_CreateRegisteredDoctor(new DoctorProfile(true));// 创建一个未认证的医生
+        HashMap<String, String> doctorInfo = s_CreateRegisteredDoctor(new User());// 创建一个未认证的医生
         String tmpToken = doctorInfo.get("token");
         String order_number = CreateOrder.s_CreateOrder(tmpToken); // create an order
         pathValue.put("orderNumber", order_number);
@@ -138,7 +138,7 @@ public class Order_ReceiveTask extends BaseTest {
         s_CheckResponse(res);
         Assert.assertNotEquals(code, "1000000");
 
-        doctorInfo = s_CreateVerifiedDoctor(new DoctorProfile(true));// 创建一个已认证未同步的医生
+        doctorInfo = s_CreateVerifiedDoctor(new User());// 创建一个已认证未同步的医生
         tmpToken = doctorInfo.get("token");
         order_number = CreateOrder.s_CreateOrder(tmpToken); // create an order
         pathValue.put("orderNumber", order_number);

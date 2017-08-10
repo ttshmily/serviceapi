@@ -29,6 +29,7 @@ public class User {
         private List<Picture> doctor_card_pictures;
         private String inviter_no;
         private List<Exp> exp_list;
+        private String major_id;
 
         public UserDetail() {
             this.name = "田静"+randomString(4);
@@ -36,6 +37,8 @@ public class User {
             this.academic_title_list = randomAcademicId();
             this.medical_title_list = randomMedicalId();
             this.hospital_id = randomHospitalId();
+            this.major_id = randomMajorId();
+            this.inviter_no = randomEmployeeId();
         }
 
         @Data

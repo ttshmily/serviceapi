@@ -1,7 +1,7 @@
 package com.mingyizhudao.qa.functiontest.doctor;
 
 import com.mingyizhudao.qa.common.BaseTest;
-import com.mingyizhudao.qa.dataprofile.crm.DoctorProfile;
+import com.mingyizhudao.qa.dataprofile.User;
 import com.mingyizhudao.qa.functiontest.crm.trading.surgery.Order_ReceiveTask;
 import com.mingyizhudao.qa.functiontest.crm.trading.surgery.Order_RecommendDoctor;
 import com.mingyizhudao.qa.common.TestLogger;
@@ -31,8 +31,7 @@ public class DeleteOrderByAgent extends BaseTest {
     @Test
     public void test_01_删除订单_下级医生() {
         String res = "";
-        DoctorProfile dp = new DoctorProfile(true);
-        HashMap<String, String> doctor = s_CreateVerifiedDoctor(dp);
+        HashMap<String, String> doctor = s_CreateVerifiedDoctor(new User());
         String orderId = CreateOrder.s_CreateOrder(doctor.get("token"));
         int orderCountBefore = Integer.parseInt(GetOrderList_V1.s_List(doctor.get("token"), "1"));// 1 - agent
         logger.info("订单数："+orderCountBefore);
@@ -54,8 +53,7 @@ public class DeleteOrderByAgent extends BaseTest {
     @Test
     public void test_02_删除订单_上级医生() {
         String res = "";
-        DoctorProfile dp = new DoctorProfile(true);
-        HashMap<String, String> doctor = s_CreateSyncedDoctor(dp);
+        HashMap<String, String> doctor = s_CreateSyncedDoctor(new User());
         String orderId = CreateOrder.s_CreateOrder(mainToken);
         Order_ReceiveTask.s_ReceiveTask(orderId);
         Order_RecommendDoctor.s_RecommendDoctor(orderId, doctor.get("expert_id"));//推荐上级医生
