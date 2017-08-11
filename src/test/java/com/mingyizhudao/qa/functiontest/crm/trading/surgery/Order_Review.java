@@ -54,7 +54,7 @@ public class Order_Review extends BaseTest {
         JSONObject body = new JSONObject();
         body.put("reason", "固定原因");
         body.put("reps_content", "客服原因");
-        body.put("result", "true");//TODO 审核结果
+        body.put("result", true);//TODO 审核结果
         res = HttpRequest.s_SendPost(host_crm+uri, body.toString(), crm_token, pathValue);
         s_CheckResponse(res);
         Assert.assertEquals(code, "1000000", "审核订单接口失败");
@@ -73,26 +73,24 @@ public class Order_Review extends BaseTest {
         SendVerifyCode.s_Send(agentPhone);
         String token = CheckVerifyCode.s_Check(agentPhone);
         if (token == null) {
-            logger.error("没有获取到token");
-            Assert.fail();
+            Assert.fail("没有获取到token");
         }
         String status = CreateSurgeryBriefs.s_Brief(orderId, token);
         if (!status.equals("4010")) {
-            logger.error("不是待审核状态");
-            Assert.fail();
+            Assert.fail("不是待审核状态");
         }
         HashMap<String, String> pathValue=new HashMap<>();
         pathValue.put("orderNumber", orderId);
         JSONObject body = new JSONObject();
         body.put("reason", "小姐审核不通过的列表选择原因");
         body.put("reps_content", "客服原因");
-        body.put("result", "false");
+        body.put("result", false);
         res = HttpRequest.s_SendPost(host_crm+uri, body.toString(), crm_token, pathValue);
         s_CheckResponse(res);
         Assert.assertEquals(code, "1000000", "审核订单接口失败");
         Assert.assertEquals(Helper.s_ParseJson(data, "status"), "4000");
         res = GetOrderDetail_V1.s_MyInitiateOrder(token, orderId);
         s_CheckResponse(res);
-        Assert.assertEquals(Helper.s_ParseJson(data, "order:header_info"), "自动化推荐之前据拒订单的理由");
+        Assert.assertEquals(Helper.s_ParseJson(data, "order:header_info"), body.getString("reason"));
     }
 }

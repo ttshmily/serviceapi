@@ -5,6 +5,7 @@ import com.mingyizhudao.qa.common.TestLogger;
 
 import static com.mingyizhudao.qa.utilities.Helper.*;
 
+import com.mingyizhudao.qa.dataprofile.Appointment;
 import com.mingyizhudao.qa.utilities.Generator;
 import com.mingyizhudao.qa.utilities.HttpRequest;
 import net.sf.json.JSONArray;
@@ -171,7 +172,7 @@ public class Ap_List extends BaseTest {
         String res = "";
         HashMap<String, String> query = new HashMap<>();
         query.put("page", String.valueOf(Generator.randomInt(2)));
-        int[] size_per_status = new int[]{};
+        int[] size_per_status = new int[5];
         int i = 0;
         for (String status:new String[]{"2000","3000","3000,4000","2000,3000","4000"}) {
             logger.info("筛选状态为"+status+"的订单");
@@ -196,31 +197,94 @@ public class Ap_List extends BaseTest {
         String res = "";
         HashMap<String, String> query = new HashMap<>();
         query.put("page", String.valueOf(Generator.randomInt(2)));
-        int[] size_per_source = new int[]{};
-        int i = 0;
-        for (String source_type:new String[]{"BUSINESS", "HOT_LINE", "WEIBO", "BAIDU_BRIDGE", "SUSHU", "WECHAT", "PC_WEB", ""}) {
-            logger.info("筛选状态为"+source_type+"的订单");
-            query.put("source_type", source_type);
-            List<String> status_list = Arrays.asList(source_type.split(","));
+        for (String source_type:new String[]{"BUSINESS", "HOT_LINE", "WEIBO", "BAIDU_BRIDGE", "SUSHU", "WECHAT", "PC_WEB"}) {
+            logger.info("筛选来源为"+source_type+"的订单");
+            query.put("sourceType", source_type);
             res = HttpRequest.s_SendGet(host_appointment + uri, query, crm_token);
             s_CheckResponse(res);
             Assert.assertEquals(code, "1000000");
             JSONArray ap_list = data.getJSONArray("list");
             for (int j=0; j < ap_list.size(); j++) {
                 JSONObject ap = ap_list.getJSONObject(j);
-                Assert.assertTrue(status_list.contains(ap.getString("status")));
+                Assert.assertEquals(ap.getString("source_type"), source_type);
             }
-            size_per_source[i++] = data.getInt("size"); // 对应{"2000","3000","3000,4000","2000,3000","4000"}
         }
-        Assert.assertTrue(size_per_source[0]+size_per_source[1]+size_per_source[2]+size_per_source[3]+size_per_source[4]+size_per_source[5]+size_per_source[6]==size_per_source[7]);
     }
 
-    public void test_06_获取列表搜索患者姓名() {
-
+    @Test
+    public void test_06_获取列表_筛选客服() {
+        String res = "";
+        HashMap<String, String> query = new HashMap<>();
+        query.put("page", String.valueOf(Generator.randomInt(2)));
+        for (String major_reps_id:new String[]{mainDoctorId, "jing.tian@mingyizhudao.com"}) {
+            logger.info("筛选客服为"+major_reps_id+"的订单");
+            query.put("majorRepsId", major_reps_id);
+            res = HttpRequest.s_SendGet(host_appointment + uri, query, crm_token);
+            s_CheckResponse(res);
+            Assert.assertEquals(code, "1000000");
+            JSONArray ap_list = data.getJSONArray("list");
+            for (int j=0; j < ap_list.size(); j++) {
+                JSONObject ap = ap_list.getJSONObject(j);
+                Assert.assertEquals(ap.getString("major_reps_id"), major_reps_id);
+            }
+        }
     }
 
-    public void test_07_获取列表检查搜索订单号() {
+    @Test
+    public void test_07_获取列表搜索患者姓名() {
+        String res = "";
+        Appointment ap = new Appointment();
+        String orderNumber = Ap_Create.s_Create(ap);
+        HashMap<String, String> query = new HashMap<>();
+        query.put("page", String.valueOf(Generator.randomInt(2)));
+        for (String patient_name:new String[]{ap.getPatient_name()}) {
+            logger.info("搜索患者姓名为"+patient_name+"的订单");
+            query.put("patientName", patient_name);
+            res = HttpRequest.s_SendGet(host_appointment + uri, query, crm_token);
+            s_CheckResponse(res);
+            Assert.assertEquals(code, "1000000");
+            JSONArray ap_list = data.getJSONArray("list");
+            JSONObject a = ap_list.getJSONObject(0);
+            Assert.assertEquals(a.getString("patient_name"), patient_name);
+        }
+    }
 
+    @Test
+    public void test_08_获取列表检查搜索订单号() {
+        String res = "";
+        String orderNumber = Ap_Create.s_Create(new Appointment());
+        HashMap<String, String> query = new HashMap<>();
+        query.put("page", String.valueOf(Generator.randomInt(2)));
+        for (String order_number:new String[]{orderNumber}) {
+            logger.info("搜索订单编号为"+order_number+"的订单");
+            query.put("orderNumber", order_number);
+            res = HttpRequest.s_SendGet(host_appointment + uri, query, crm_token);
+            s_CheckResponse(res);
+            Assert.assertEquals(code, "1000000");
+            JSONArray ap_list = data.getJSONArray("list");
+            Assert.assertEquals(ap_list.size(), 1);
+            JSONObject ap = ap_list.getJSONObject(0);
+            Assert.assertEquals(ap.getString("order_number"), order_number);
+        }
+    }
+
+    @Test
+    public void test_09_获取列表在一定的时间区间() {
+        String res = "";
+        String orderNumber = Ap_Create.s_Create(new Appointment());
+        HashMap<String, String> query = new HashMap<>();
+        query.put("page", String.valueOf(Generator.randomInt(2)));
+        for (String order_number:new String[]{orderNumber}) {
+            logger.info("搜索订单编号为"+order_number+"的订单");
+            query.put("orderNumber", order_number);
+            res = HttpRequest.s_SendGet(host_appointment + uri, query, crm_token);
+            s_CheckResponse(res);
+            Assert.assertEquals(code, "1000000");
+            JSONArray ap_list = data.getJSONArray("list");
+            Assert.assertEquals(ap_list.size(), 1);
+            JSONObject ap = ap_list.getJSONObject(0);
+            Assert.assertEquals(ap.getString("order_number"), order_number);
+        }
     }
 
 }

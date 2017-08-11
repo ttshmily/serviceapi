@@ -35,7 +35,7 @@ public class Ap_Confirm extends BaseTest {
         String expertId = randomExpertId();
         body.put("doctor_id", expertId);
         body.put("doctor_name", expertName(expertId));
-        String res = s_SendPut(host_appointment + uri, "", crm_token, pathValue);
+        String res = s_SendPut(host_appointment + uri, body.toString(), crm_token, pathValue);
         String status = JSONObject.fromObject(res).getJSONObject("data").getString("status");
         return status.equals("3000") ? true : false;
     }

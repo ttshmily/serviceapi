@@ -80,7 +80,7 @@ public class Order_Reject extends BaseTest {
         if (!Order_ReceiveTask.s_ReceiveTask(order_number).equals("2000")) {
             Assert.fail("领取失败，无法进行后续操作");
         }
-        if (!Order_RecommendDoctor.s_RecommendDoctor(order_number, mainDoctorId).equals("2020")) {
+        if (!Order_RecommendDoctor.s_RecommendDoctor(order_number, mainExpertId).equals("2020")) {
             Assert.fail("推荐专家失败，无法进行后续操作");
         }
         pathValue.put("orderNumber", order_number);
@@ -109,7 +109,7 @@ public class Order_Reject extends BaseTest {
         if (!Order_ReceiveTask.s_ReceiveTask(order_number).equals("2000")) {
             Assert.fail("领取失败，无法进行后续操作");
         }
-        if (!Order_RecommendDoctor.s_RecommendDoctor(order_number, mainDoctorId).equals("2020")) {
+        if (!Order_RecommendDoctor.s_RecommendDoctor(order_number, mainExpertId).equals("2020")) {
             Assert.fail("推荐专家失败，无法进行后续操作");
         }
         if (!Order_ThreewayCall_V2.s_CallV2(order_number, "undetermined").equals("2020")) {

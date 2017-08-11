@@ -1,18 +1,20 @@
 package com.mingyizhudao.qa.functiontest.crm.kb.management;
 
 import com.mingyizhudao.qa.common.BaseTest;
-import com.mingyizhudao.qa.dataprofile.crm.ExpertProfile;
-import com.mingyizhudao.qa.dataprofile.crm.DoctorProfile;
+import com.mingyizhudao.qa.dataprofile.Doctor;
+import com.mingyizhudao.qa.dataprofile.User;
 import com.mingyizhudao.qa.functiontest.crm.user.management.RegisteredDoctor_Detail;
 import com.mingyizhudao.qa.common.TestLogger;
 import com.mingyizhudao.qa.functiontest.crm.user.management.RegisteredDoctor_CertifySync_V2;
-import com.mingyizhudao.qa.utilities.Generator;
-import com.mingyizhudao.qa.utilities.HttpRequest;
-import com.mingyizhudao.qa.utilities.Helper;
+import static com.mingyizhudao.qa.utilities.Generator.*;
+import static com.mingyizhudao.qa.utilities.HttpRequest.*;
+import static com.mingyizhudao.qa.utilities.Helper.s_ParseJson;
+
 import net.sf.json.JSONObject;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 /**
@@ -29,12 +31,12 @@ public class KBExpert_Update extends BaseTest {
     public static TestLogger logger = new TestLogger(clazzName);
     public static String uri = "/api/v1/medicallibrary/doctors/{id}";
 
-    public static HashMap<String, String> s_Update(String expertId, ExpertProfile ep) {
+    public static HashMap<String, String> s_Update(String expertId, Doctor ep) {
         String res = "";
         TestLogger logger = new TestLogger(s_JobName());
         HashMap<String, String> pathValue = new HashMap<>();
         pathValue.put("id", expertId);
-        res = HttpRequest.s_SendPut(host_crm+uri, ep.body.toString(), crm_token, pathValue);
+        res = s_SendPut(host_crm+uri, JSONObject.fromObject(ep).toString(), crm_token, pathValue);
         JSONObject node = JSONObject.fromObject(res);
         HashMap<String, String> result = new HashMap<>();
         if(!node.getString("code").equals("1000000")) return null;
@@ -50,16 +52,15 @@ public class KBExpert_Update extends BaseTest {
     @Test
     public void test_01_没有token不能操作() {
         String res = "";
-        ExpertProfile ep = new ExpertProfile(true);
-        HashMap<String, String> info = KBExpert_Create.s_Create(ep);
-        if (info == null) Assert.fail("创建医库医生失败，退出用例执行");
-        String expertId = info.get("id");
+        Doctor ep = new Doctor();
+        String expertId = KBExpert_Create.s_Create(ep);
+        if (expertId == null) Assert.fail("创建医库医生失败，退出用例执行");
         HashMap<String, String> pathValue = new HashMap<>();
         pathValue.put("id", expertId);
-        ExpertProfile epModified = new ExpertProfile(false);
+
         String name = "改名了";
-        epModified.body.put("name", name);
-        res = HttpRequest.s_SendPut(host_crm+uri, epModified.body.toString(), "", pathValue);
+        ep.setName(name);
+        res = s_SendPut(host_crm+uri, JSONObject.fromObject(ep).toString(), "", pathValue);
         s_CheckResponse(res);
         Assert.assertNotEquals(code, "1000000", "没有token不能操作");
     }
@@ -67,37 +68,36 @@ public class KBExpert_Update extends BaseTest {
     @Test
     public void test_02_更新个人信息_name() {
         String res = "";
-        ExpertProfile ep = new ExpertProfile(true);
-        HashMap<String, String> info = KBExpert_Create.s_Create(ep);
-        if (info == null) Assert.fail("创建医库医生失败，退出用例执行");
-        String expertId = info.get("id");
+        Doctor ep = new Doctor();
+        String expertId = KBExpert_Create.s_Create(ep);
+        if (expertId == null) Assert.fail("创建医库医生失败，退出用例执行");
         HashMap<String, String> pathValue = new HashMap<>();
         pathValue.put("id", expertId);
-        ExpertProfile epModified = new ExpertProfile(false);
+
         String name = "改名了";
-        epModified.body.put("name", name);
-        res = HttpRequest.s_SendPut(host_crm+uri, epModified.body.toString(), crm_token, pathValue);
+        ep.setName(name);
+        res = s_SendPut(host_crm+uri, JSONObject.fromObject(ep).toString(), crm_token, pathValue);
         s_CheckResponse(res);
         Assert.assertEquals(code, "1000000", "我想1000000");
 
         res = KBExpert_Detail.s_Detail(expertId);
         s_CheckResponse(res);
-        Assert.assertEquals(Helper.s_ParseJson(data, "name"), name, "姓名未更新");
+        Assert.assertEquals(s_ParseJson(data, "name"), ep.getName(), "姓名未更新");
     }
 
     @Test
     public void test_03_更新个人信息_hospital_id() {
         String res = "";
-        ExpertProfile ep = new ExpertProfile(true);
-        HashMap<String, String> info = KBExpert_Create.s_Create(ep);
-        if (info == null) Assert.fail("创建医库医生失败，退出用例执行");
-        String expertId = info.get("id");
+        Doctor ep = new Doctor();
+        String expertId = KBExpert_Create.s_Create(ep);
+        if (expertId == null) Assert.fail("创建医库医生失败，退出用例执行");
         HashMap<String, String> pathValue = new HashMap<>();
         pathValue.put("id", expertId);
-        ExpertProfile epModified = new ExpertProfile(false);
-        String hospitalId = Generator.randomHospitalId();
-        epModified.body.put("hospital_id", hospitalId);
-        res = HttpRequest.s_SendPut(host_crm+uri, epModified.body.toString(), crm_token, pathValue);
+
+        Doctor epModified = new Doctor();
+        String hospitalId = randomHospitalId();
+        ep.setHospital_id(hospitalId);
+        res = s_SendPut(host_crm+uri, JSONObject.fromObject(ep).toString(), crm_token, pathValue);
         s_CheckResponse(res);
         Assert.assertEquals(code, "1000000", "我想1000000");
 
@@ -107,193 +107,182 @@ public class KBExpert_Update extends BaseTest {
 
         res = KBExpert_Detail.s_Detail(expertId);
         s_CheckResponse(res);
-        Assert.assertEquals(Helper.s_ParseJson(data, "hospital_id"), hospitalId, "医生的医院ID没有更新");
-        Assert.assertEquals(Helper.s_ParseJson(data, "hospital_name"), Generator.hospitalName(hospitalId), "医生的医院名称没有更新");
-        Assert.assertEquals(Helper.s_ParseJson(data, "city_id"), cityId, "医生的城市没有更新");
-        Assert.assertEquals(Helper.s_ParseJson(data, "county_id"), countryId, "医生的地区名称没有更新");
+        Assert.assertEquals(s_ParseJson(data, "hospital_id"), hospitalId, "医生的医院ID没有更新");
+        Assert.assertEquals(s_ParseJson(data, "hospital_name"), hospitalName(ep.getHospital_id()), "医生的医院名称没有更新");
+        Assert.assertEquals(s_ParseJson(data, "city_id"), cityId, "医生的城市没有更新");
+        Assert.assertEquals(s_ParseJson(data, "city_name"), cityName(cityId), "医生的城市没有更新");
+        Assert.assertEquals(s_ParseJson(data, "county_id"), countryId, "医生的地区名称没有更新");
+        Assert.assertEquals(s_ParseJson(data, "county_name"), countyName(countryId), "医生的地区名称没有更新");
 
     }
 
     @Test
     public void test_04_更新个人信息_禁止更新city_id() {
         String res = "";
-        ExpertProfile ep = new ExpertProfile(true);
-        HashMap<String, String> info = KBExpert_Create.s_Create(ep);
-        if (info == null) Assert.fail("创建医库医生失败，退出用例执行");
-        String expertId = info.get("id");
+        Doctor ep = new Doctor();
+        String expertId = KBExpert_Create.s_Create(ep);
+        if (expertId == null) Assert.fail("创建医库医生失败，退出用例执行");
         HashMap<String, String> pathValue = new HashMap<>();
         pathValue.put("id", expertId);
-        ExpertProfile epModified = new ExpertProfile(false);
-        String cityId = Generator.randomCityId();
-        epModified.body.put("city_id", cityId);
-        res = HttpRequest.s_SendPut(host_crm+uri, epModified.body.toString(), crm_token, pathValue);
+
+        String cityId = randomCityId();
+        ep.setCity_id(cityId);
+        res = s_SendPut(host_crm+uri, JSONObject.fromObject(ep).toString(), crm_token, pathValue);
         s_CheckResponse(res);
         Assert.assertNotEquals(code, "1000000", "禁止更新city_id");
 
         res = KBExpert_Detail.s_Detail(expertId);
+        s_CheckResponse(res);
+        Assert.assertNotEquals(s_ParseJson(data, "city_id"), cityId);
     }
 
     @Test
     public void test_05_更新个人信息_禁止更新county_id() {
         String res = "";
-        ExpertProfile ep = new ExpertProfile(true);
-        HashMap<String, String> info = KBExpert_Create.s_Create(ep);
-        if (info == null) Assert.fail("创建医库医生失败，退出用例执行");
-        String expertId = info.get("id");
+        Doctor ep = new Doctor();
+        String expertId = KBExpert_Create.s_Create(ep);
+        if (expertId == null) Assert.fail("创建医库医生失败，退出用例执行");
         HashMap<String, String> pathValue = new HashMap<>();
         pathValue.put("id", expertId);
-        ExpertProfile epModified = new ExpertProfile(false);
-        String countryId = Generator.randomCountyId();
-        epModified.body.put("county_id", countryId);
-        res = HttpRequest.s_SendPut(host_crm+uri, epModified.body.toString(), crm_token, pathValue);
+
+        String countryId = randomCountyId();
+        ep.setCounty_id(countryId);
+        res = s_SendPut(host_crm+uri, JSONObject.fromObject(ep).toString(), crm_token, pathValue);
         s_CheckResponse(res);
         Assert.assertNotEquals(code, "1000000", "禁止更新country_id");
 
         res = KBExpert_Detail.s_Detail(expertId);
+        s_CheckResponse(res);
+        Assert.assertNotEquals(s_ParseJson(data, "county_id"), countryId);
     }
 
     @Test
     public void test_06_更新个人信息_更新major_id() {
         String res = "";
-        ExpertProfile ep = new ExpertProfile(true);
-        HashMap<String, String> info = KBExpert_Create.s_Create(ep);
-        if (info == null) Assert.fail("创建医库医生失败，退出用例执行");
-        String expertId = info.get("id");
+        Doctor ep = new Doctor();
+        String expertId = KBExpert_Create.s_Create(ep);
+        if (expertId == null) Assert.fail("创建医库医生失败，退出用例执行");
         HashMap<String, String> pathValue = new HashMap<>();
         pathValue.put("id", expertId);
-        ExpertProfile epModified = new ExpertProfile(false);
-        String majorId = Generator.randomMajorId();
-        epModified.body.put("major_id", majorId);
-        res = HttpRequest.s_SendPut(host_crm+uri, epModified.body.toString(), crm_token, pathValue);
+
+        String majorId = randomMajorId();
+        ep.setMajor_id(majorId);
+        res = s_SendPut(host_crm+uri, JSONObject.fromObject(ep).toString(), crm_token, pathValue);
         s_CheckResponse(res);
         Assert.assertEquals(code, "1000000", "更新major_id失败");
+
         res = KBExpert_Detail.s_Detail(expertId);
         s_CheckResponse(res);
-        Assert.assertEquals(Helper.s_ParseJson(data, "major_id"), majorId, "专业ID没有更新");
-        Assert.assertEquals(Helper.s_ParseJson(data, "major"), Generator.majorName(majorId), "专业名称没有更新");
+        Assert.assertEquals(s_ParseJson(data, "major_id"), ep.getMajor_id(), "专业ID没有更新");
+        Assert.assertEquals(s_ParseJson(data, "major"), majorName(ep.getMajor_id()), "专业名称没有更新");
 
-
-        epModified.body.replace("major_id", "11"+majorId);
-        res = HttpRequest.s_SendPut(host_crm+uri, epModified.body.toString(), crm_token, pathValue);
+        String tmp = ep.getMajor_id();
+        ep.setMajor_id("WRONG_MAJOR_ID");
+        res = s_SendPut(host_crm+uri, JSONObject.fromObject(ep).toString(), crm_token, pathValue);
         s_CheckResponse(res);
         Assert.assertNotEquals(code, "1000000", "错误major_id");
+
         res = KBExpert_Detail.s_Detail(expertId);
         s_CheckResponse(res);
-        Assert.assertEquals(Helper.s_ParseJson(data, "major_id"), majorId, "专业ID没有更新");
-        Assert.assertEquals(Helper.s_ParseJson(data, "major"), Generator.majorName(majorId), "专业名称没有更新");
+        Assert.assertEquals(s_ParseJson(data, "major_id"), tmp);
+        Assert.assertEquals(s_ParseJson(data, "major"), majorName(tmp));
     }
 
     @Test
     public void test_07_更新个人信息_更新medical_title_list和academic_title_list() {
         String res = "";
-        ExpertProfile ep = new ExpertProfile(true);
-        HashMap<String, String> info = KBExpert_Create.s_Create(ep);
-        if (info == null) Assert.fail("创建医库医生失败，退出用例执行");
-        String expertId = info.get("id");
+        Doctor ep = new Doctor();
+        String expertId = KBExpert_Create.s_Create(ep);
+        if (expertId == null) Assert.fail("创建医库医生失败，退出用例执行");
         HashMap<String, String> pathValue = new HashMap<>();
         pathValue.put("id", expertId);
-        ExpertProfile epModified = new ExpertProfile(false);
-        String medical_title_list = Generator.randomMedicalId();
-        String academic_title_list = Generator.randomAcademicId();
-        epModified.body.put("medical_title_list", medical_title_list);
-        epModified.body.put("academic_title_list", academic_title_list);
-        res = HttpRequest.s_SendPut(host_crm+uri, epModified.body.toString(), crm_token, pathValue);
+
+        ep.setMedical_title_list(randomMedicalId());
+        ep.setAcademic_title_list(randomAcademicId());
+        res = s_SendPut(host_crm+uri, JSONObject.fromObject(ep).toString(), crm_token, pathValue);
         s_CheckResponse(res);
         Assert.assertEquals(code, "1000000", "更新medical_title_list失败");
 
         res = KBExpert_Detail.s_Detail(expertId);
         s_CheckResponse(res);
-        Assert.assertEquals(Helper.s_ParseJson(data, "medical_title_list"), medical_title_list, "技术职称没有更新");
-        Assert.assertEquals(Helper.s_ParseJson(data, "academic_title_list"), academic_title_list, "学术职称没有更新");
+        Assert.assertEquals(s_ParseJson(data, "medical_title_list"), ep.getMedical_title_list(), "技术职称没有更新");
+        Assert.assertEquals(s_ParseJson(data, "academic_title_list"), ep.getAcademic_title_list(), "学术职称没有更新");
 
-        medical_title_list = Generator.randomMedicalId();
-        academic_title_list = Generator.randomAcademicId();
-        epModified.body.replace("medical_title_list", medical_title_list);
-        epModified.body.replace("academic_title_list", academic_title_list);
-        res = HttpRequest.s_SendPut(host_crm+uri, epModified.body.toString(), crm_token, pathValue);
+        String medical_title_list = ep.getMedical_title_list();
+        String academic_title_list = ep.getAcademic_title_list();
+        ep.setMedical_title_list("WRONG_MEDICAL_ID");
+        ep.setAcademic_title_list("WRONG_ACADEMIC_ID");
+        res = s_SendPut(host_crm+uri, JSONObject.fromObject(ep).toString(), crm_token, pathValue);
         s_CheckResponse(res);
-        Assert.assertEquals(code, "1000000", "更新medical_title_list失败");
+        Assert.assertNotEquals(code, "1000000");
 
         res = KBExpert_Detail.s_Detail(expertId);
         s_CheckResponse(res);
-        Assert.assertEquals(Helper.s_ParseJson(data, "medical_title_list"), medical_title_list, "技术职称没有更新");
-        Assert.assertEquals(Helper.s_ParseJson(data, "academic_title_list"), academic_title_list, "学术职称没有更新");
+        Assert.assertEquals(s_ParseJson(data, "medical_title_list"), medical_title_list);
+        Assert.assertEquals(s_ParseJson(data, "academic_title_list"), academic_title_list);
     }
 
     @Test
     public void test_08_更新个人信息_更新specialty和honour和description() {
         String res = "";
-        ExpertProfile ep = new ExpertProfile(true);
-        HashMap<String, String> info = KBExpert_Create.s_Create(ep);
-        String expertId = info.get("id");
+        Doctor ep = new Doctor();
+        String expertId = KBExpert_Create.s_Create(ep);
+        if (expertId == null) Assert.fail("创建医库医生失败，退出用例执行");
         HashMap<String, String> pathValue = new HashMap<>();
         pathValue.put("id", expertId);
-        ExpertProfile epModified = new ExpertProfile(false);
-        String specialty = "特长"+ Generator.randomString(100);
-        String honour = "荣誉"+ Generator.randomString(50);
-        String description = "简介"+ Generator.randomString(70);
-        epModified.body.put("specialty", specialty);
-        epModified.body.put("honour", honour);
-        epModified.body.put("description", description);
-        res = HttpRequest.s_SendPut(host_crm+uri, epModified.body.toString(), crm_token, pathValue);
+
+        String specialty = "特长"+ randomString(100);
+        String honour = "荣誉"+ randomString(50);
+        String description = "简介"+ randomString(70);
+        ep.setSpecialty(specialty);
+        ep.setHonour(honour);
+        ep.setDescription(description);
+        res = s_SendPut(host_crm+uri, JSONObject.fromObject(ep).toString(), crm_token, pathValue);
         s_CheckResponse(res);
         Assert.assertEquals(code, "1000000", "更新三个说明字段失败");
 
         res = KBExpert_Detail.s_Detail(expertId);
         s_CheckResponse(res);
-        Assert.assertEquals(Helper.s_ParseJson(data, "specialty"), specialty, "特长没有更新");
-        Assert.assertEquals(Helper.s_ParseJson(data, "honour"), honour, "荣誉没有更新");
-        Assert.assertEquals(Helper.s_ParseJson(data, "description"), description, "简介没有更新");
+        Assert.assertEquals(s_ParseJson(data, "specialty"), specialty, "特长没有更新");
+        Assert.assertEquals(s_ParseJson(data, "honour"), honour, "荣誉没有更新");
+        Assert.assertEquals(s_ParseJson(data, "description"), description, "简介没有更新");
     }
 
     @Test(enabled = true)
     public void test_09_更新avatar_url() {
         String res = "";
-        ExpertProfile ep = new ExpertProfile(true);
-        HashMap<String, String> info = KBExpert_Create.s_Create(ep);
-        if (info == null) Assert.fail("创建医院失败，退出用例执行");
-        String doctorId = info.get("id");
+        Doctor ep = new Doctor();
+        String expertId = KBExpert_Create.s_Create(ep);
+        if (expertId == null) Assert.fail("创建医库医生失败，退出用例执行");
         HashMap<String, String> pathValue = new HashMap<>();
-        pathValue.put("id", doctorId);
-        ExpertProfile epModified = new ExpertProfile(false);
-        JSONObject large = new JSONObject();
-        large.put("key", "test1.jpg");
-        large.put("type", "5");
-        large.put("tag", "");
-        JSONObject medium = new JSONObject();
-        medium.put("key", "test1.jpg");
-        medium.put("type", "5");
-        medium.put("tag", "");
-        JSONObject small = new JSONObject();
-        small.put("key", "test1.jpg");
-        small.put("type", "5");
-        small.put("tag", "");
-        epModified.body.accumulate("avatar_url", large);
-        epModified.body.accumulate("avatar_url", medium);
-        epModified.body.accumulate("avatar_url", small);
-        logger.info(epModified.body.toString());
-        res = HttpRequest.s_SendPut(host_crm+uri, epModified.body.toString(), crm_token, pathValue);
+        pathValue.put("id", expertId);
+
+        ep.setAvatar_url(new ArrayList<Doctor.Picture>(){
+            {
+                add(ep.new Picture("1.jpg", "5"));
+                add(ep.new Picture("2.jgp", "5"));
+                add(ep.new Picture("3.jgp", "5"));
+            }
+        });
+        res = s_SendPut(host_crm+uri, JSONObject.fromObject(ep).toString(), crm_token, pathValue);
         s_CheckResponse(res);
         Assert.assertEquals(code, "1000000", "医院图片更新失败");
 
-        res = KBExpert_Detail.s_Detail(doctorId);
+        res = KBExpert_Detail.s_Detail(expertId);
         s_CheckResponse(res);
-        Assert.assertEquals(Helper.s_ParseJson(data, "avatar_url()"), "3", "医院图片更新失败");
-        Assert.assertNotNull(Helper.s_ParseJson(data, "avatar_url():url"), "医院图片更新失败");
+        Assert.assertEquals(Integer.parseInt(s_ParseJson(data, "avatar_url()")), ep.getAvatar_url().size(), "医院图片更新失败");
+        Assert.assertNotNull(s_ParseJson(data, "avatar_url():url"), "医院图片更新失败");
     }
 
     @Test
     public void test_10_更新个人信息_已关联医生会同步给注册用户() {
         String res = "";
-        ExpertProfile ep = new ExpertProfile(true);
-        HashMap<String, String> info = KBExpert_Create.s_Create(ep);
-        if (info == null) {
+        String expertId = KBExpert_Create.s_Create(new Doctor());
+        if (expertId == null) {
             Assert.fail("创建医库医生失败，退出用例执行");
         }
-        String expertId = info.get("id");
 
-        DoctorProfile dp = new DoctorProfile(true);
-        String doctorId = s_CreateRegisteredDoctor(dp).get("id");
+        String doctorId = s_CreateRegisteredDoctor(new User()).get("id");
         if ( doctorId == null) {
             Assert.fail("创建医生失败，认证用例无法执行");
         }
@@ -301,135 +290,132 @@ public class KBExpert_Update extends BaseTest {
 
         HashMap<String, String> pathValue = new HashMap<>();
         pathValue.put("id", expertId);
-        ExpertProfile epModified = new ExpertProfile(false);
-        String medical_title_list = Generator.randomMedicalId();
-        String academic_title_list = Generator.randomAcademicId();
-        String majorId = Generator.randomMajorId();
-        String hospitalId = Generator.randomHospitalId();
-        HashMap<String, String> hospitalInfo = KBHospital_Detail.s_Detail(hospitalId);
-        String cityId = hospitalInfo.get("city_id");
-        String countyId = hospitalInfo.get("county_id");
-        String name = "医库中改名" + Generator.randomString(8);
-        epModified.body.put("name", name);
-        epModified.body.put("major_id", majorId);
-        epModified.body.put("hospital_id", hospitalId);
-        epModified.body.put("medical_title_list", medical_title_list);
-        epModified.body.put("academic_title_list", academic_title_list);
-        epModified.body.put("signed_status", "1");
-        epModified.body.put("start_year", "2007");
-        JSONObject small = new JSONObject();
-        small.put("key", "test1.jpg");
-        small.put("type", "5");
-        JSONObject large = new JSONObject();
-        large.put("key", "test1.jpg");
-        large.put("type", "5");
-        epModified.body.accumulate("avatar_url", large);
-        epModified.body.accumulate("avatar_url", small);
-        res = HttpRequest.s_SendPut(host_crm+uri, epModified.body.toString(), crm_token, pathValue);
+
+        Doctor epModified = new Doctor();
+        epModified.setAvatar_url(new ArrayList<Doctor.Picture>(){
+            {
+                add(epModified.new Picture("1.jpg", "5"));
+                add(epModified.new Picture("2.jpg", "5"));
+                add(epModified.new Picture("3.jpg", "5"));
+            }
+        });
+        res = s_SendPut(host_crm+uri, JSONObject.fromObject(epModified).toString(), crm_token, pathValue);
         s_CheckResponse(res);
         Assert.assertEquals(code, "1000000", "更新已关联的医库医生信息失败");
 
         res = KBExpert_Detail.s_Detail(expertId);
         s_CheckResponse(res);
-        Assert.assertEquals(Helper.s_ParseJson(data, "medical_title_list"), medical_title_list, "技术职称没有更新");
-        Assert.assertEquals(Helper.s_ParseJson(data, "academic_title_list"), academic_title_list, "学术职称没有更新");
-        Assert.assertEquals(Helper.s_ParseJson(data, "name"), name, "姓名没有更新");
-        Assert.assertEquals(Helper.s_ParseJson(data, "major_id"), majorId, "专业没有更新");
-        Assert.assertEquals(Helper.s_ParseJson(data, "major"), Generator.majorName(majorId), "专业没有更新");
-        Assert.assertEquals(Helper.s_ParseJson(data, "hospital_id"), hospitalId, "医院ID没有更新");
-        Assert.assertEquals(Helper.s_ParseJson(data, "hospital_name"), Generator.hospitalName(hospitalId), "医院名称没有更新");
-        Assert.assertEquals(Helper.s_ParseJson(data, "city_id"), cityId, "城市ID没有更新");
-        Assert.assertEquals(Helper.s_ParseJson(data, "city_name"), Generator.cityName(cityId), "城市名称没有更新");
-        Assert.assertEquals(Helper.s_ParseJson(data, "county_id"), countyId, "区县ID没有更新");
-        Assert.assertEquals(Helper.s_ParseJson(data, "county_name"), Generator.countyName(countyId), "区县名称没有更新");
-        Assert.assertEquals(Helper.s_ParseJson(data, "signed_status"), "SIGNED", "主刀专家状态没有更新");
-        Assert.assertEquals(Helper.s_ParseJson(data, "start_year"), "2007", "专家从业时间没有更新");
-        Assert.assertEquals(Helper.s_ParseJson(data, "avatar_url()"), "2", "医院图片更新失败");
-        Assert.assertNotNull(Helper.s_ParseJson(data, "avatar_url():url"), "医院图片更新失败");
+        Assert.assertEquals(s_ParseJson(data, "medical_title_list"), epModified.getMedical_title_list(), "技术职称没有更新");
+        Assert.assertEquals(s_ParseJson(data, "academic_title_list"), epModified.getAcademic_title_list(), "学术职称没有更新");
+        Assert.assertEquals(s_ParseJson(data, "name"), epModified.getName(), "姓名没有更新");
+        Assert.assertEquals(s_ParseJson(data, "major_id"), epModified.getMajor_id(), "专业没有更新");
+        Assert.assertEquals(s_ParseJson(data, "major"), majorName(epModified.getMajor_id()), "专业没有更新");
+        Assert.assertEquals(s_ParseJson(data, "hospital_id"), epModified.getHospital_id(), "医院ID没有更新");
+        Assert.assertEquals(s_ParseJson(data, "hospital_name"), hospitalName(epModified.getHospital_id()), "医院名称没有更新");
+        HashMap<String, String> hospital = KBHospital_Detail.s_Detail(epModified.getHospital_id());
+        Assert.assertEquals(s_ParseJson(data, "city_id"), hospital.get("city_id"), "城市ID没有更新");
+        Assert.assertEquals(s_ParseJson(data, "city_name"), cityName(hospital.get("city_id")), "城市名称没有更新");
+        Assert.assertEquals(s_ParseJson(data, "county_id"), hospital.get("county_id"), "区县ID没有更新");
+        Assert.assertEquals(s_ParseJson(data, "county_name"), countyName(hospital.get("county_id")), "区县名称没有更新");
+        Assert.assertEquals(s_ParseJson(data, "signed_status"), "SIGNED", "主刀专家状态没有更新");
+        Assert.assertEquals(s_ParseJson(data, "start_year"), epModified.getStart_year(), "专家从业时间没有更新");
+        Assert.assertEquals(Integer.parseInt(s_ParseJson(data, "avatar_url()")), epModified.getAvatar_url().size(), "医院图片更新失败");
+        Assert.assertNotNull(s_ParseJson(data, "avatar_url():url"), "医院图片更新失败");
 
         res = RegisteredDoctor_Detail.s_Detail(doctorId);
         s_CheckResponse(res);
-        Assert.assertEquals(Helper.s_ParseJson(data, "medical_title_list"), medical_title_list, "技术职称没有更新");
-        Assert.assertEquals(Helper.s_ParseJson(data, "academic_title_list"), academic_title_list, "学术职称没有更新");
-        Assert.assertEquals(Helper.s_ParseJson(data, "name"), name, "姓名没有更新");
-        Assert.assertEquals(Helper.s_ParseJson(data, "major_id"), majorId, "专业没有更新");
-        Assert.assertEquals(Helper.s_ParseJson(data, "major_name"), Generator.majorName(majorId), "专业没有更新");
-        Assert.assertEquals(Helper.s_ParseJson(data, "hospital_id"), hospitalId, "医院ID没有更新");
-        Assert.assertEquals(Helper.s_ParseJson(data, "hospital_name"), Generator.hospitalName(hospitalId), "医院名称没有更新");
-        Assert.assertEquals(Helper.s_ParseJson(data, "city_id"), cityId, "城市ID没有更新");
-        Assert.assertEquals(Helper.s_ParseJson(data, "city"), Generator.cityName(cityId), "城市名称没有更新");
-//        Assert.assertEquals(s_ParseJson(data, "county_id"), cityId, "区县ID没有更新");
-//        Assert.assertEquals(s_ParseJson(data, "county_name"), UT.countyName(countyId), "区县名称没有更新");
-        Assert.assertEquals(Helper.s_ParseJson(data, "signed_status"), "SIGNED", "主刀专家状态没有更新");
-        Assert.assertEquals(Helper.s_ParseJson(data, "icon()"), "2", "医院图片更新失败");
-        Assert.assertNotNull(Helper.s_ParseJson(data, "icon():largePicture"), "医院图片更新失败");
+        Assert.assertEquals(s_ParseJson(data, "medical_title_list"), epModified.getMedical_title_list(), "技术职称没有更新");
+        Assert.assertEquals(s_ParseJson(data, "academic_title_list"), epModified.getAcademic_title_list(), "学术职称没有更新");
+        Assert.assertEquals(s_ParseJson(data, "name"), epModified.getName(), "姓名没有更新");
+        Assert.assertEquals(s_ParseJson(data, "major_id"), epModified.getMajor_id(), "专业没有更新");
+        Assert.assertEquals(s_ParseJson(data, "major_name"), majorName(epModified.getMajor_id()), "专业没有更新");
+        Assert.assertEquals(s_ParseJson(data, "hospital_id"), epModified.getHospital_id(), "医院ID没有更新");
+        Assert.assertEquals(s_ParseJson(data, "hospital_name"), hospitalName(epModified.getHospital_id()), "医院名称没有更新");
+        Assert.assertEquals(s_ParseJson(data, "city_id"), hospital.get("city_id"), "城市ID没有更新");
+        Assert.assertEquals(s_ParseJson(data, "city"), cityName(hospital.get("city_id")), "城市名称没有更新");
+        Assert.assertEquals(s_ParseJson(data, "county_id"), hospital.get("county_id"), "区县ID没有更新");
+        Assert.assertEquals(s_ParseJson(data, "county_name"), countyName(hospital.get("county_id")), "区县名称没有更新");
+        Assert.assertEquals(Integer.parseInt(s_ParseJson(data, "icon()")), epModified.getAvatar_url().size(), "医院图片更新失败");
+        Assert.assertNotNull(s_ParseJson(data, "icon():largePicture"), "医院图片更新失败");
     }
 
     @Test
-    public void test_11_更新个人信息_未关联专家更新signed_status() {
+    public void test_11_更新个人信息_未关联医生修改signed_status() {
         String res = "";
-        ExpertProfile ep = new ExpertProfile(true);
-        HashMap<String, String> info = KBExpert_Create.s_Create(ep);
-        String expertId = info.get("id");
+        String expertId = KBExpert_Create.s_Create(new Doctor());
+        if (expertId == null) {
+            Assert.fail("创建医库医生失败，退出用例执行");
+        }
         HashMap<String, String> pathValue = new HashMap<>();
         pathValue.put("id", expertId);
-        ExpertProfile epModified = new ExpertProfile(false);
 
-        epModified.body.put("signed_status", "0");
-        res = HttpRequest.s_SendPut(host_crm+uri, epModified.body.toString(), crm_token, pathValue);
+        Doctor epModified = new Doctor();
+        epModified.setSigned_status("0");
+        res = s_SendPut(host_crm+uri, JSONObject.fromObject(epModified).toString(), crm_token, pathValue);
         s_CheckResponse(res);
         Assert.assertEquals(code, "1000000", "更新主刀专家状态字段失败");
-
         res = KBExpert_Detail.s_Detail(expertId);
         s_CheckResponse(res);
-        Assert.assertEquals(Helper.s_ParseJson(data, "signed_status"), "NOT_SIGNED");
+        Assert.assertEquals(s_ParseJson(data, "signed_status"), "NOT_SIGNED");
 
-        epModified.body.put("signed_status", "1");
-        res = HttpRequest.s_SendPut(host_crm+uri, epModified.body.toString(), crm_token, pathValue);
+        epModified.setSigned_status("1");
+        res = s_SendPut(host_crm+uri, JSONObject.fromObject(epModified).toString(), crm_token, pathValue);
         s_CheckResponse(res);
         Assert.assertEquals(code, "1000000", "更新主刀专家状态字段失败");
-
         res = KBExpert_Detail.s_Detail(expertId);
         s_CheckResponse(res);
-        Assert.assertEquals(Helper.s_ParseJson(data, "signed_status"), "SIGNED");
+        Assert.assertEquals(s_ParseJson(data, "signed_status"), "SIGNED");
     }
 
     @Test
-    public void test_12_更新个人信息_已关联医生修改专家认证字段() {
+    public void test_12_更新个人信息_已关联医生修改signed_status() {
         String res = "";
-        ExpertProfile ep = new ExpertProfile(true);
-        HashMap<String, String> info = KBExpert_Create.s_Create(ep);
-        if (info == null)
+        String expertId = KBExpert_Create.s_Create(new Doctor());
+        if (expertId == null) {
             Assert.fail("创建医库医生失败，退出用例执行");
-        String expertId = info.get("id");
-
-        DoctorProfile dp = new DoctorProfile(true);
-        String doctorId = s_CreateRegisteredDoctor(dp).get("id");
-        if (doctorId == null)
+        }
+        String doctorId = s_CreateRegisteredDoctor(new User()).get("id");
+        if (doctorId == null) {
             Assert.fail("创建医生失败，认证用例无法执行");
-
+        }
         RegisteredDoctor_CertifySync_V2.s_CertifyAndSync(doctorId, "1", expertId);
 
         HashMap<String, String> pathValue = new HashMap<>();
         pathValue.put("id", expertId);
-        ExpertProfile epModified = new ExpertProfile(false);
-        epModified.body.put("signed_status", "0");
-        res = HttpRequest.s_SendPut(host_crm+uri, epModified.body.toString(), crm_token, pathValue);
+
+        Doctor epModified = new Doctor();
+        epModified.setSigned_status("0");
+        res = s_SendPut(host_crm+uri, JSONObject.fromObject(epModified).toString(), crm_token, pathValue);
         s_CheckResponse(res);
         Assert.assertEquals(code, "1000000", "更新主刀专家状态字段失败");
-
-        res = RegisteredDoctor_Detail.s_Detail(doctorId);
+        res = KBExpert_Detail.s_Detail(expertId);
         s_CheckResponse(res);
-        Assert.assertEquals(Helper.s_ParseJson(data, "signed_status"), "NOT_SIGNED");
+        Assert.assertEquals(s_ParseJson(data, "signed_status"), "NOT_SIGNED");
 
-        epModified.body.put("signed_status", "1");
-        res = HttpRequest.s_SendPut(host_crm+uri, epModified.body.toString(), crm_token, pathValue);
+        epModified.setSigned_status("1");
+        res = s_SendPut(host_crm+uri, JSONObject.fromObject(epModified).toString(), crm_token, pathValue);
         s_CheckResponse(res);
         Assert.assertEquals(code, "1000000", "更新主刀专家状态字段失败");
-
-        res = RegisteredDoctor_Detail.s_Detail(doctorId);
+        res = KBExpert_Detail.s_Detail(expertId);
         s_CheckResponse(res);
-        Assert.assertEquals(Helper.s_ParseJson(data, "signed_status"), "SIGNED");
+        Assert.assertEquals(s_ParseJson(data, "signed_status"), "SIGNED");
+    }
+
+    @Test
+    public void test_13_更新个人信息_更新Department_name() {
+        String res = "";
+        Doctor ep = new Doctor();
+        String expertId = KBExpert_Create.s_Create(ep);
+        if (expertId == null) Assert.fail("创建医库医生失败，退出用例执行");
+        HashMap<String, String> pathValue = new HashMap<>();
+        pathValue.put("id", expertId);
+
+        String department_name = "科室"+ randomString(2);
+        ep.setDepartment_name(department_name);
+        res = s_SendPut(host_crm+uri, JSONObject.fromObject(ep).toString(), crm_token, pathValue);
+        s_CheckResponse(res);
+        Assert.assertEquals(code, "1000000", "更新三个说明字段失败");
+        Assert.assertEquals(s_ParseJson(data, "department_name"), department_name, "特长没有更新");
     }
 
 }

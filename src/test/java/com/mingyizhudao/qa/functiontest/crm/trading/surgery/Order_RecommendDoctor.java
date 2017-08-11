@@ -3,7 +3,8 @@ package com.mingyizhudao.qa.functiontest.crm.trading.surgery;
 import com.mingyizhudao.qa.common.BaseTest;
 import com.mingyizhudao.qa.common.KnowledgeBase;
 import com.mingyizhudao.qa.common.TestLogger;
-import com.mingyizhudao.qa.dataprofile.crm.DoctorProfile;
+import com.mingyizhudao.qa.dataprofile.User;
+import com.mingyizhudao.qa.functiontest.crm.kb.management.KBHospital_Detail;
 import com.mingyizhudao.qa.functiontest.doctor.CreateOrder;
 import com.mingyizhudao.qa.utilities.Generator;
 import com.mingyizhudao.qa.utilities.HttpRequest;
@@ -13,6 +14,8 @@ import org.testng.Assert;
 import org.testng.annotations.Test;
 
 import java.util.HashMap;
+
+import static com.mingyizhudao.qa.utilities.Generator.*;
 
 /**
  * Created by ttshmily on 25/4/2017.
@@ -59,7 +62,7 @@ public class Order_RecommendDoctor extends BaseTest {
         HashMap<String, String> pathValue = new HashMap<>();
         pathValue.put("orderNumber", order_number);
         JSONObject body = new JSONObject();
-        DoctorProfile dp = new DoctorProfile(true);
+        User dp = new User();
         HashMap<String, String> doc = s_CreateSyncedDoctor(dp);
         String recommendedId = doc.get("expert_id");
         body.put("surgeon_id",recommendedId);
@@ -71,17 +74,18 @@ public class Order_RecommendDoctor extends BaseTest {
         s_CheckResponse(res);
         Assert.assertEquals(Helper.s_ParseJson(data, "status"), "2020");
         Assert.assertEquals(Helper.s_ParseJson(data, "surgeon_id"), recommendedId);
-        Assert.assertEquals(Helper.s_ParseJson(data, "surgeon_name"), dp.body.getJSONObject("doctor").getString("name"));
+        Assert.assertEquals(Helper.s_ParseJson(data, "surgeon_name"), dp.getDoctor().getName());
         Assert.assertEquals(Helper.s_ParseJson(data, "surgeon_user_id"), doc.get("id"));
-        Assert.assertNotNull(Helper.s_ParseJson(data, "surgeon_medical_title"));
-        Assert.assertNotNull(Helper.s_ParseJson(data, "surgeon_academic_title"));
-        Assert.assertNotNull(Helper.s_ParseJson(data, "surgeon_hospital"));
-        Assert.assertNotNull(Helper.s_ParseJson(data, "surgeon_city_id"));
-        Assert.assertNotNull(Helper.s_ParseJson(data, "surgeon_city_name"));
+        Assert.assertEquals(Helper.s_ParseJson(data, "surgeon_medical_title"), medicalName(dp.getDoctor().getMedical_title_list()));
+        Assert.assertEquals(Helper.s_ParseJson(data, "surgeon_academic_title"), academicName(dp.getDoctor().getAcademic_title_list()));
+        HashMap<String, String> hos = KBHospital_Detail.s_Detail(dp.getDoctor().getHospital_id());
+        Assert.assertEquals(Helper.s_ParseJson(data, "surgeon_hospital"), hos.get("name"));
+        Assert.assertEquals(Helper.s_ParseJson(data, "surgeon_city_id"), hos.get("city_id"));
+        Assert.assertEquals(Helper.s_ParseJson(data, "surgeon_city_name"), hos.get("city_name"));
         Assert.assertNotNull(Helper.s_ParseJson(data, "surgeon_province_id"));
         Assert.assertNotNull(Helper.s_ParseJson(data, "surgeon_province_name"));
-        Assert.assertNotNull(Helper.s_ParseJson(data, "surgeon_department"));
-        Assert.assertNotNull(Helper.s_ParseJson(data, "surgeon_major"));
+        Assert.assertEquals(Helper.s_ParseJson(data, "surgeon_department"), dp.getDoctor().getDepartment());
+        Assert.assertEquals(Helper.s_ParseJson(data, "surgeon_major"), majorName(dp.getDoctor().getMajor_id()));
         Assert.assertNotNull(Helper.s_ParseJson(data, "surgeon_referrer_id"));
         Assert.assertNotNull(Helper.s_ParseJson(data, "surgeon_referrer_name"));
         Assert.assertNotNull(Helper.s_ParseJson(data, "surgeon_referrer_group_id"));
@@ -202,7 +206,6 @@ public class Order_RecommendDoctor extends BaseTest {
         Assert.assertEquals(Helper.s_ParseJson(data, "status"), "2000");
         Assert.assertNull(Helper.s_ParseJson(data, "surgeon_id"));
         Assert.assertNull(Helper.s_ParseJson(data, "surgeon_name"));
-
     }
 
     @Test

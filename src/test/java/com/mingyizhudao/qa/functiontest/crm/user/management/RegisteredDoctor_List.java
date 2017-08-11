@@ -86,7 +86,7 @@ public class RegisteredDoctor_List extends BaseTest {
         int pageSize = 10;
         int pageNum = total / pageSize + 1;
         // 默认分页大小10
-        for (int i = 1; i < pageNum; i++) {
+        for (int i = 1; i < 10; i++) {
             query.replace("page",String.valueOf(i));
             res = HttpRequest.s_SendGet(host_crm + uri, query, crm_token);
             s_CheckResponse(res);

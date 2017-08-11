@@ -5,6 +5,7 @@ import com.mingyizhudao.qa.common.TestLogger;
 import com.mingyizhudao.qa.dataprofile.Appointment;
 import net.sf.json.JSONObject;
 import org.testng.Assert;
+import org.testng.annotations.Test;
 
 import java.util.HashMap;
 
@@ -61,14 +62,46 @@ public class Ap_RiskControl extends BaseTest{
         return status.equals("9000") ? true : false;
     }
 
+    @Test
     public void test_01_风控推荐一名医生() {
-
+        String res = "";
+        String orderNumber = s_Create(new Appointment());
+        HashMap<String, String> pathValue = new HashMap<>();
+        pathValue.put("orderNumber", orderNumber);
+        JSONObject body = new JSONObject();
+        body.put("result", true);
+        body.put("content", "脚本测试——风控通过");
+        body.put("risk_control_helper", "方超（男）");
+        String expert_id = randomExpertId();
+        body.put("major_recommended_doctor_id", expert_id);
+        res = s_SendPut(host_appointment + uri, body.toString(), crm_token, pathValue);
+        s_CheckResponse(res);
+        Assert.assertEquals(code, "1000000");
+        Assert.assertEquals(s_ParseJson(data, "major_recommended_doctor_id"), body.getString("major_recommended_doctor_id"));
     }
 
+    @Test
     public void test_02_风控推荐二名医生() {
-
+        String res = "";
+        String orderNumber = s_Create(new Appointment());
+        HashMap<String, String> pathValue = new HashMap<>();
+        pathValue.put("orderNumber", orderNumber);
+        JSONObject body = new JSONObject();
+        body.put("result", true);
+        body.put("content", "脚本测试——风控通过");
+        body.put("risk_control_helper", "方超（男）");
+        String expert_id = randomExpertId();
+        body.put("major_recommended_doctor_id", expert_id);
+        expert_id = randomExpertId();
+        body.put("minor_recommended_doctor_id", expert_id);
+        res = s_SendPut(host_appointment + uri, body.toString(), crm_token, pathValue);
+        s_CheckResponse(res);
+        Assert.assertEquals(code, "1000000");
+        Assert.assertEquals(s_ParseJson(data, "major_recommended_doctor_id"), body.getString("major_recommended_doctor_id"));
+        Assert.assertEquals(s_ParseJson(data, "minor_recommended_doctor_id"), body.getString("minor_recommended_doctor_id"));
     }
 
+    @Test
     public void test_03_风控不通过() {
         String res = "";
         Appointment ap = new Appointment();
@@ -89,6 +122,7 @@ public class Ap_RiskControl extends BaseTest{
 
     }
 
+    @Test
     public void test_05_风控不通过理由不完整() {
         String res = "";
         Appointment ap = new Appointment();
@@ -97,15 +131,13 @@ public class Ap_RiskControl extends BaseTest{
         pathValue.put("orderNumber", orderNumber);
         JSONObject body = new JSONObject();
         body.put("result", false);
-//        body.put("content", "脚本测试——风控不通过");
-//        body.put("risk_control_helper", "方超男");
         res = s_SendPut(host_appointment + uri, body.toString(), crm_token, pathValue);
         s_CheckResponse(res);
         Assert.assertNotEquals(code, "1000000");
-        Assert.assertEquals(s_ParseJson(data, "status"), "9000");
     }
 
-    public void test_06_风控result字段为空() {
+    @Test
+    public void test_06_风控result字段不正确() {
         String res = "";
         Appointment ap = new Appointment();
         String orderNumber = s_Create(ap);
@@ -125,6 +157,7 @@ public class Ap_RiskControl extends BaseTest{
         Assert.assertNotEquals(code, "1000000");
     }
 
+    @Test
     public void test_07_风控result字段false时有成功信息() {
         String res = "";
         Appointment ap = new Appointment();

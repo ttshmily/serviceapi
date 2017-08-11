@@ -104,7 +104,10 @@ public class Generator {
 
     public static String randomKey(HashMap<String, String> map) {
         String[] keys = map.keySet().toArray(new String[] {});
-        return keys[(int)(randomInt(keys.length)-1)];
+        if(keys.length==0)
+            return "";
+        else
+            return keys[(int)(randomInt(keys.length)-1)];
     }
 
     public static String randomPhone() {
@@ -152,9 +155,14 @@ public class Generator {
         return randomKey(KnowledgeBase.kb_county);
     }
 
+    public static String randomCountyIdUnder(String cityId) {
+
+        return randomKey(KnowledgeBase.kb_county_ext.get(cityId));
+    }
+
     public static String countyName(String id) {
 
-        return KnowledgeBase.kb_county.get(id);
+        return id.equals("")? "" : KnowledgeBase.kb_county.get(id);
     }
 
     public static String randomHospitalId() {
@@ -208,9 +216,19 @@ public class Generator {
         return randomKey(KnowledgeBase.kb_medical_title);
     }
 
+    public static String medicalName(String medicalId) {
+
+        return KnowledgeBase.kb_medical_title.get(medicalId);
+    }
+
     public static String randomAcademicId() {
 
         return randomKey(KnowledgeBase.kb_academic_title);
+    }
+
+    public static String academicName(String academiclId) {
+
+        return KnowledgeBase.kb_academic_title.get(academiclId);
     }
 
     public static String randomHospitalClass() {

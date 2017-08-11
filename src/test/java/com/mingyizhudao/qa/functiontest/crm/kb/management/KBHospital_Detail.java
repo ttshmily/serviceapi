@@ -2,8 +2,8 @@ package com.mingyizhudao.qa.functiontest.crm.kb.management;
 
 import com.mingyizhudao.qa.common.BaseTest;
 import com.mingyizhudao.qa.common.TestLogger;
-import com.mingyizhudao.qa.dataprofile.crm.HospitalProfile;
-import com.mingyizhudao.qa.utilities.Generator;
+import com.mingyizhudao.qa.dataprofile.Hospital;
+import static com.mingyizhudao.qa.utilities.Generator.*;
 import com.mingyizhudao.qa.utilities.HttpRequest;
 import com.mingyizhudao.qa.utilities.Helper;
 import net.sf.json.JSONObject;
@@ -36,17 +36,17 @@ public class KBHospital_Detail extends BaseTest {
         hospital = JSONObject.fromObject(res).getJSONObject("data");
         if (null == hospital) return null;
         HashMap<String, String> result = new HashMap<>();
-        String cityId = hospital.containsKey("city_id") ? hospital.getString("city_id") : null;
-        String countyId = hospital.containsKey("county_id") ? hospital.getString("county_id") : null;
-        String name = hospital.containsKey("name") ? hospital.getString("name") : null;
-        String short_name = hospital.containsKey("short_name") ? hospital.getString("short_name") : null;
+        String cityId = hospital.containsKey("city_id") ? hospital.getString("city_id") : "";
+        String countyId = hospital.containsKey("county_id") ? hospital.getString("county_id") : "";
+        String name = hospital.containsKey("name") ? hospital.getString("name") : "";
+        String short_name = hospital.containsKey("short_name") ? hospital.getString("short_name") : "";
         String type_list = hospital.containsKey("type_list") ? hospital.getString("type_list") : "";
-        String hospital_class_list = hospital.containsKey("hospital_class_list") ? hospital.getString("hospital_class_list") : null;
-        String city_name = hospital.containsKey("city_name") ? hospital.getString("city_name") : null;
-        String county_name = hospital.containsKey("county_name") ? hospital.getString("county_name") : null;
-        String phone = hospital.containsKey("phone") ? hospital.getString("phone") : null;
-        String description = hospital.containsKey("description") ? hospital.getString("description") : null;
-        String photo_url = hospital.containsKey("photo_url") ? hospital.getString("photo_url") : null;
+        String hospital_class_list = hospital.containsKey("hospital_class_list") ? hospital.getString("hospital_class_list") : "";
+        String city_name = hospital.containsKey("city_name") ? hospital.getString("city_name") : "";
+        String county_name = hospital.containsKey("county_name") ? hospital.getString("county_name") : "";
+        String phone = hospital.containsKey("phone") ? hospital.getString("phone") : "";
+        String description = hospital.containsKey("description") ? hospital.getString("description") : "";
+        String photo_url = hospital.containsKey("photo_url") ? hospital.getString("photo_url") : "";
         result.put("city_id", cityId);
         result.put("city_name", city_name);
         result.put("county_id", countyId);
@@ -66,7 +66,7 @@ public class KBHospital_Detail extends BaseTest {
     public void test_01_获取医院详情_有效ID() {
 
         String res = "";
-        HospitalProfile hp = new HospitalProfile(true);
+        Hospital hp = new Hospital();
         HashMap<String, String> info = KBHospital_Create.s_Create(hp);
         if (info == null) Assert.fail("创建医院失败，退出用例执行");
         HashMap<String, String> pathValue = new HashMap<>();
@@ -75,23 +75,23 @@ public class KBHospital_Detail extends BaseTest {
         s_CheckResponse(res);
         Assert.assertEquals(code, "1000000");
 
-        Assert.assertEquals(Helper.s_ParseJson(data, "name"), hp.body.getString("name"));
-        Assert.assertEquals(Helper.s_ParseJson(data, "short_name"), hp.body.getString("short_name"));
-        Assert.assertEquals(Helper.s_ParseJson(data, "hospital_class_list"), hp.body.getString("hospital_class_list"));
-        Assert.assertEquals(Helper.s_ParseJson(data, "type_list"), hp.body.getString("type_list"));
-        Assert.assertEquals(Helper.s_ParseJson(data, "city_id"), hp.body.getString("city_id"));
-        Assert.assertEquals(Helper.s_ParseJson(data, "city_name"), Generator.cityName(hp.body.getString("city_id")));
-        Assert.assertEquals(Helper.s_ParseJson(data, "county_id"), hp.body.getString("county_id"));
-        Assert.assertEquals(Helper.s_ParseJson(data, "county_name"), Generator.countyName(hp.body.getString("county_id")));
-        Assert.assertEquals(Helper.s_ParseJson(data, "phone"), hp.body.getString("phone"));
-        Assert.assertEquals(Helper.s_ParseJson(data, "description"), hp.body.getString("description"));
+        Assert.assertEquals(Helper.s_ParseJson(data, "name"), hp.getName());
+        Assert.assertEquals(Helper.s_ParseJson(data, "short_name"), hp.getShort_name());
+        Assert.assertEquals(Helper.s_ParseJson(data, "hospital_class_list"), hp.getHospital_class_list());
+        Assert.assertEquals(Helper.s_ParseJson(data, "type_list"), hp.getType_list());
+        Assert.assertEquals(Helper.s_ParseJson(data, "city_id"), hp.getCity_id());
+        Assert.assertEquals(Helper.s_ParseJson(data, "city_name"), cityName(hp.getCity_id()));
+        Assert.assertEquals(Helper.s_ParseJson(data, "county_id"), hp.getCounty_id());
+        Assert.assertEquals(Helper.s_ParseJson(data, "county_name"), countyName(hp.getCounty_id()));
+        Assert.assertEquals(Helper.s_ParseJson(data, "phone"), hp.getPhone());
+        Assert.assertEquals(Helper.s_ParseJson(data, "description"), hp.getDescription());
     }
 
     @Test
     public void test_02_获取医院详情_无效ID() {
 
         String res = "";
-        HospitalProfile hp = new HospitalProfile(true);
+        Hospital hp = new Hospital();
         HashMap<String, String> info = KBHospital_Create.s_Create(hp);
         if (info == null) Assert.fail("创建医院失败，退出用例执行");
         HashMap<String, String> pathValue = new HashMap<>();

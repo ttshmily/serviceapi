@@ -7,12 +7,11 @@ import com.mingyizhudao.qa.dataprofile.Appointment;
 import static com.mingyizhudao.qa.functiontest.crm.trading.appointment.Ap_Confirm.s_Confirm;
 import static com.mingyizhudao.qa.functiontest.crm.trading.appointment.Ap_RiskControl.s_Take;
 import static com.mingyizhudao.qa.functiontest.crm.trading.appointment.Ap_Rollback.s_Rollback;
-import static com.mingyizhudao.qa.utilities.Helper.s_ParseJson;
+import static com.mingyizhudao.qa.utilities.Helper.*;
 import static com.mingyizhudao.qa.utilities.HttpRequest.*;
 import net.sf.json.JSONObject;
 import org.testng.Assert;
 import org.testng.annotations.Test;
-
 import java.util.HashMap;
 
 public class Ap_Close extends BaseTest {
@@ -41,7 +40,10 @@ public class Ap_Close extends BaseTest {
         String orderNumber = Ap_Create.s_Create(ap);
         HashMap<String, String> pathValue = new HashMap<>();
         pathValue.put("orderNumber", orderNumber);
-        res = s_SendPost(host_appointment + uri, "", crm_token, pathValue);
+        JSONObject body = new JSONObject();
+        body.put("content", "客服问题描述");
+        body.put("reason", "关闭原因");
+        res = s_SendPost(host_appointment + uri, body.toString(), crm_token, pathValue);
         s_CheckResponse(res);
         Assert.assertEquals(code, "1000000");
         Assert.assertEquals(s_ParseJson(data, "status"), "9000");
@@ -57,7 +59,10 @@ public class Ap_Close extends BaseTest {
         }
         HashMap<String, String> pathValue = new HashMap<>();
         pathValue.put("orderNumber", orderNumber);
-        res = s_SendPost(host_appointment + uri, "", crm_token, pathValue);
+        JSONObject body = new JSONObject();
+        body.put("content", "客服问题描述");
+        body.put("reason", "关闭原因");
+        res = s_SendPost(host_appointment + uri, body.toString(), crm_token, pathValue);
         s_CheckResponse(res);
         Assert.assertEquals(code, "1000000");
         Assert.assertEquals(s_ParseJson(data, "status"), "9000");
@@ -73,7 +78,10 @@ public class Ap_Close extends BaseTest {
         }
         HashMap<String, String> pathValue = new HashMap<>();
         pathValue.put("orderNumber", orderNumber);
-        res = s_SendPost(host_appointment + uri, "", crm_token, pathValue);
+        JSONObject body = new JSONObject();
+        body.put("content", "客服问题描述");
+        body.put("reason", "关闭原因");
+        res = s_SendPost(host_appointment + uri, body.toString(), crm_token, pathValue);
         s_CheckResponse(res);
         Assert.assertEquals(code, "1000000");
         Assert.assertEquals(s_ParseJson(data, "status"), "9000");
@@ -89,7 +97,10 @@ public class Ap_Close extends BaseTest {
         }
         HashMap<String, String> pathValue = new HashMap<>();
         pathValue.put("orderNumber", orderNumber);
-        res = s_SendPost(host_appointment + uri, "", crm_token, pathValue);
+        JSONObject body = new JSONObject();
+        body.put("content", "客服问题描述");
+        body.put("reason", "关闭原因");
+        res = s_SendPost(host_appointment + uri, body.toString(), crm_token, pathValue);
         s_CheckResponse(res);
         Assert.assertEquals(code, "1000000");
         Assert.assertEquals(s_ParseJson(data, "status"), "9000");

@@ -31,7 +31,7 @@ public class Ap_Rollback extends BaseTest {
         JSONObject body = new JSONObject();
         body.put("content", "客服记录内容");
         body.put("reason", "官方选择理由");
-        String res = s_SendPut(host_appointment + uri, "", crm_token, pathValue);
+        String res = s_SendPut(host_appointment + uri, body.toString(), crm_token, pathValue);
         String status = JSONObject.fromObject(res).getJSONObject("data").getString("status");
         return status.equals("1000") ? true : false;
     }
@@ -49,22 +49,22 @@ public class Ap_Rollback extends BaseTest {
         JSONObject body = new JSONObject();
         body.put("content", "重新风控content");
         body.put("reason", "重新风控reason");
-        res = s_SendPut(host_appointment + uri, "", crm_token, pathValue);
+        res = s_SendPut(host_appointment + uri, body.toString(), crm_token, pathValue);
         s_CheckResponse(res);
         Assert.assertEquals(code, "1000000");
         res = Ap_Detail.s_Detail(orderNumber);
         s_CheckResponse(res);
         Assert.assertEquals(s_ParseJson(data, "status"), "1000");
-        Assert.assertEquals(s_ParseJson(data, "major_recommended_doctor_id"), "");
-        Assert.assertEquals(s_ParseJson(data, "major_recommended_doctor_name"), "");
-        Assert.assertEquals(s_ParseJson(data, "major_recommended_doctor_hospital"), "");
-        Assert.assertEquals(s_ParseJson(data, "major_recommended_doctor_department"), "");
-        Assert.assertEquals(s_ParseJson(data, "major_recommended_doctor_medical_title"), "");
-        Assert.assertEquals(s_ParseJson(data, "minor_recommended_doctor_id"), "");
-        Assert.assertEquals(s_ParseJson(data, "minor_recommended_doctor_name"), "");
-        Assert.assertEquals(s_ParseJson(data, "minor_recommended_doctor_hospital"), "");
-        Assert.assertEquals(s_ParseJson(data, "minor_recommended_doctor_department"), "");
-        Assert.assertEquals(s_ParseJson(data, "minor_recommended_doctor_medical_title"), "");
+        Assert.assertNull(s_ParseJson(data, "major_recommended_doctor_id"), "");
+        Assert.assertNull(s_ParseJson(data, "major_recommended_doctor_name"), "");
+        Assert.assertNull(s_ParseJson(data, "major_recommended_doctor_hospital"), "");
+        Assert.assertNull(s_ParseJson(data, "major_recommended_doctor_department"), "");
+        Assert.assertNull(s_ParseJson(data, "major_recommended_doctor_medical_title"), "");
+        Assert.assertNull(s_ParseJson(data, "minor_recommended_doctor_id"), "");
+        Assert.assertNull(s_ParseJson(data, "minor_recommended_doctor_name"), "");
+        Assert.assertNull(s_ParseJson(data, "minor_recommended_doctor_hospital"), "");
+        Assert.assertNull(s_ParseJson(data, "minor_recommended_doctor_department"), "");
+        Assert.assertNull(s_ParseJson(data, "minor_recommended_doctor_medical_title"), "");
     }
 
     @Test
@@ -80,7 +80,7 @@ public class Ap_Rollback extends BaseTest {
         JSONObject body = new JSONObject();
 //        body.put("content", "重新风控content");
         body.put("reason", "重新风控reason");
-        res = s_SendPut(host_appointment + uri, "", crm_token, pathValue);
+        res = s_SendPut(host_appointment + uri, body.toString(), crm_token, pathValue);
         s_CheckResponse(res);
         Assert.assertNotEquals(code, "1000000");
     }

@@ -40,8 +40,6 @@ public class Ap_Detail extends BaseTest {
         Assert.assertNotNull(Helper.s_ParseJson(data, "order_number"));
         Assert.assertNotNull(Helper.s_ParseJson(data, "created_at"));
         Assert.assertEquals(Helper.s_ParseJson(data, "type"), "2");
-        Assert.assertEquals(Helper.s_ParseJson(data, "expected_appointment_start_date"), ap.getExpected_appointment_start_date());
-        Assert.assertEquals(Helper.s_ParseJson(data, "expected_appointment_due_date"), ap.getExpected_appointment_due_date());
         Assert.assertEquals(Helper.s_ParseJson(data, "patient_name"), ap.getPatient_name());
         Assert.assertEquals(Helper.s_ParseJson(data, "patient_phone"), ap.getPatient_phone());
         Assert.assertEquals(Helper.s_ParseJson(data, "patient_gender"), String.valueOf(ap.getPatient_gender()));
@@ -58,6 +56,8 @@ public class Ap_Detail extends BaseTest {
         Assert.assertEquals(Helper.s_ParseJson(data, "major_disease_id"), ap.getMajor_disease_id());
         Assert.assertEquals(Helper.s_ParseJson(data, "major_disease_name"), ap.getMajor_disease_name());
         Assert.assertEquals(Helper.s_ParseJson(data, "medical_record_pictures"), ap.printPictures());
+        Assert.assertEquals(Helper.s_ParseJson(data, "expected_appointment_start_date"), ap.getExpected_appointment_start_date());
+        Assert.assertEquals(Helper.s_ParseJson(data, "expected_appointment_due_date"), ap.getExpected_appointment_due_date());
     }
 
     @Test
@@ -69,7 +69,7 @@ public class Ap_Detail extends BaseTest {
         pathValue.put("orderNumber", orderNumber+1);
         res = HttpRequest.s_SendGet(host_appointment + uri, "", crm_token, pathValue);
         s_CheckResponse(res);
-        Assert.assertNotEquals(code, "1000000");
+        Assert.assertNull(data);
     }
 
 }
