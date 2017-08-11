@@ -53,7 +53,7 @@ public class BaseTest {
     public static String mainDoctorHospitalId = "";
     public static String mainDoctorHospitalName = "";
     public static String mainExpertId = "";
-    public static User mainDP;
+    public static User mainUser;
 
     public static String mainOperatorId = "";
     public static String mainOperatorName = "";
@@ -94,7 +94,7 @@ public class BaseTest {
             host_kb = prop.getProperty("host_kb", "192.168.33.1");
             host_appointment = prop.getProperty("host_appointment", "services.dev.myzd.info/ims");
             mainOperatorId = prop.getProperty("mainOperatorId", "chao.fang@mingyizhudao.com");
-            mainOperatorName = prop.getProperty("mainOperatorName");
+            mainOperatorName = prop.getProperty("mainOperatorName", "方超（男）");
 
 
             crm_token = prop.getProperty("crm_token");
@@ -132,8 +132,8 @@ public class BaseTest {
         crm_token = JSONObject.fromObject(HttpRequest.s_SendGet("http://services.dev.myzd.info/crm/api/internal/devToken" , "email="+mainOperatorId+"&name=方超（男）", "")).getJSONObject("data").getString("token");
         bda_token = JSONObject.fromObject(HttpRequest.s_SendGet("http://work.myzd.info/wx/internal/api/dev-tokens" , "", "")).getJSONObject("data").getJSONObject(mainOperatorId).getString("token");
         bda_token_staff = JSONObject.fromObject(HttpRequest.s_SendGet("http://work.myzd.info/wx/internal/api/dev-tokens" , "", "")).getJSONObject("data").getJSONObject("lei.wang@mingyizhudao.com").getString("token");
-        mainDP = new User();
-        HashMap<String,String> mainDoctorInfo = s_CreateSyncedDoctor(mainDP);
+        mainUser = new User();
+        HashMap<String,String> mainDoctorInfo = s_CreateSyncedDoctor(mainUser);
         if(mainDoctorInfo == null) {
             logger.error("创建注册专家失败，退出执行");
             System.exit(10000);
@@ -141,7 +141,7 @@ public class BaseTest {
         mainMobile = mainDoctorInfo.get("mobile");
         mainToken = mainDoctorInfo.get("token");
         mainDoctorId = mainDoctorInfo.get("id");
-        mainDoctorName = mainDP.getDoctor().getName();
+        mainDoctorName = mainUser.getDoctor().getName();
         mainDoctorHospitalId = mainDoctorInfo.get("hospitalId");
         mainDoctorHospitalName = Generator.hospitalName(mainDoctorHospitalId);
         mainExpertId = mainDoctorInfo.get("expert_id");
@@ -186,7 +186,7 @@ public class BaseTest {
     @AfterMethod
     public void TearDownTC(Method method) throws Exception {
         TestLogger logger = new TestLogger(getClass().getName());
-        logger.info("<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< ");
+//        logger.info("<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< ");
         logger.info("||\t TestCase END:\t" + method.getName());
         logger.info("<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< \n");
     }
@@ -204,8 +204,7 @@ public class BaseTest {
         try {
             json = JSONObject.fromObject(res);
         } catch (JSONException e) {
-            logger.error("res is NOT a JSON");
-            logger.error(res);
+            logger.error("NOT a JSON: \t" + res);
             this.code = null;
             this.data = null;
             this.message = null;
