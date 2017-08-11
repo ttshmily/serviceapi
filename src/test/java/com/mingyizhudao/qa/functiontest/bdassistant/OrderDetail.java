@@ -37,7 +37,7 @@ public class OrderDetail extends BaseTest {
         HashMap<String, String> query = new HashMap<>();
         res = HttpRequest.s_SendGet(host_bda + uri, query, bda_token);
         s_CheckResponse(res);
-        Assert.assertEquals(code, "1411002", "订单编号不能为空");
+        Assert.assertNotEquals(code, "1000000", "订单编号不能为空");
 
     }
 
@@ -73,6 +73,6 @@ public class OrderDetail extends BaseTest {
             query.put("orderNumber", "0000000000");
             res = HttpRequest.s_SendGet(host_bda + uri, query, bda_token);
             s_CheckResponse(res);
-            Assert.assertNotEquals(code, "1000000", "传入不存在的订单编号应返回订单号不存在");
+            Assert.assertNull(data, "传入不存在的订单编号应返回订单号不存在");
         }
 }

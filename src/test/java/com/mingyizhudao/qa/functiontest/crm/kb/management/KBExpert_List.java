@@ -53,7 +53,7 @@ public class KBExpert_List extends BaseTest {
         Assert.assertNotEquals(Helper.s_ParseJson(data, "list(0):mobile"), "", "医生手机为空");
         Assert.assertNotEquals(Helper.s_ParseJson(data, "list(0):hospital_name"), "", "医生医院名称为空");
         Assert.assertNotEquals(Helper.s_ParseJson(data, "list(0):hospital_id"), "", "医生医院ID为空");
-        Assert.assertNotNull(Helper.s_ParseJson(data, "list(0):major"), "医生专业字段不存在");
+//        Assert.assertNotNull(Helper.s_ParseJson(data, "list(0):major"), "医生专业字段不存在");
 //        Assert.assertNotNull(s_ParseJson(data, "list(0):academic_title"), "医生学术职称不存在");
 //        Assert.assertNotNull(s_ParseJson(data, "list(0):medical_title"), "医生技术职称不存在");
 //        Assert.assertNotEquals(s_ParseJson(data, "list(0):is_verified"), "", "医生是否认证字段没有值");
@@ -87,7 +87,7 @@ public class KBExpert_List extends BaseTest {
         int pageSize = 10;
         int pageNum = total / pageSize + 1;
         // 默认分页大小10
-        for (int i = 1; i < pageNum; i++) {
+        for (int i = 1; i < 10; i++) {
             query.replace("page",String.valueOf(i));
             res = HttpRequest.s_SendGet(host_crm+uri, query, crm_token);
             s_CheckResponse(res);
