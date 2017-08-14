@@ -3,6 +3,7 @@ package com.mingyizhudao.qa.functiontest.crm.trading.appointment;
 import com.mingyizhudao.qa.common.BaseTest;
 import com.mingyizhudao.qa.common.TestLogger;
 
+import static com.mingyizhudao.qa.utilities.Generator.randomString;
 import static com.mingyizhudao.qa.utilities.Helper.*;
 
 import com.mingyizhudao.qa.dataprofile.Appointment;
@@ -234,9 +235,10 @@ public class Ap_List extends BaseTest {
     public void test_07_获取列表搜索患者姓名() {
         String res = "";
         Appointment ap = new Appointment();
+        String name = randomString(6);
+        ap.setPatient_name(name);
         String orderNumber = Ap_Create.s_Create(ap);
         HashMap<String, String> query = new HashMap<>();
-        query.put("page", String.valueOf(Generator.randomInt(2)));
         for (String patient_name:new String[]{ap.getPatient_name()}) {
             logger.info("搜索患者姓名为"+patient_name+"的订单");
             query.put("patientName", patient_name);
@@ -254,7 +256,6 @@ public class Ap_List extends BaseTest {
         String res = "";
         String orderNumber = Ap_Create.s_Create(new Appointment());
         HashMap<String, String> query = new HashMap<>();
-//        query.put("page", String.valueOf(Generator.randomInt(2)));
         for (String order_number:new String[]{orderNumber}) {
             logger.info("搜索订单编号为"+order_number+"的订单");
             query.put("orderNumber", order_number);
@@ -267,23 +268,37 @@ public class Ap_List extends BaseTest {
             Assert.assertEquals(ap.getString("order_number"), order_number);
         }
     }
-    //TODO
+
     @Test
     public void test_09_获取列表在一定的时间区间() {
         String res = "";
-        String orderNumber = Ap_Create.s_Create(new Appointment());
         HashMap<String, String> query = new HashMap<>();
-        query.put("page", String.valueOf(Generator.randomInt(2)));
-        for (String order_number:new String[]{orderNumber}) {
-            logger.info("搜索订单编号为"+order_number+"的订单");
-            query.put("orderNumber", order_number);
+        for (String orderStartTime:new String[]{}) {
+            logger.info("搜索开始时间为"+orderStartTime+"的订单");
+            query.put("orderStartTime", "");
             res = HttpRequest.s_SendGet(host_crm + uri, query, crm_token);
             s_CheckResponse(res);
             Assert.assertEquals(code, "1000000");
+
             JSONArray ap_list = data.getJSONArray("list");
             Assert.assertEquals(ap_list.size(), 1);
             JSONObject ap = ap_list.getJSONObject(0);
-            Assert.assertEquals(ap.getString("order_number"), order_number);
+            //TODO
+            Assert.assertEquals(ap.getString(" created_at"), orderStartTime);
+        }
+
+        for (String orderEndTime:new String[]{}) {
+            logger.info("搜索截止时间为"+orderEndTime+"的订单");
+            query.put("orderEndTime", "");
+            res = HttpRequest.s_SendGet(host_crm + uri, query, crm_token);
+            s_CheckResponse(res);
+            Assert.assertEquals(code, "1000000");
+
+            JSONArray ap_list = data.getJSONArray("list");
+            Assert.assertEquals(ap_list.size(), 1);
+            JSONObject ap = ap_list.getJSONObject(0);
+            //TODO
+            Assert.assertEquals(ap.getString("created_at"), orderEndTime);
         }
     }
 

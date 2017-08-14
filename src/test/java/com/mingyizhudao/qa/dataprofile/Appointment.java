@@ -2,6 +2,7 @@ package com.mingyizhudao.qa.dataprofile;
 
 import static com.mingyizhudao.qa.utilities.Generator.*;
 import lombok.Data;
+import net.sf.json.JSONObject;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -122,13 +123,7 @@ public class Appointment {
         }
 
         public String print() {
-            StringBuilder sb = new StringBuilder();
-            sb.append("{");
-            sb.append("\"type\":\""+type+"\"");
-            sb.append(",");
-            sb.append("\"key\":\""+key+"\"");
-            sb.append("}");
-            return sb.toString();
+            return JSONObject.fromObject(this).toString();
         }
     }
 }

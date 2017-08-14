@@ -28,9 +28,12 @@ public class Ap_Close extends BaseTest {
     public static boolean s_Close(String orderNumber) {
         HashMap<String, String> pathValue = new HashMap<>();
         pathValue.put("orderNumber", orderNumber);
-        String res = s_SendPost(host_crm + uri, "", crm_token, pathValue);
+        JSONObject body = new JSONObject();
+        body.put("content", "客服问题描述");
+        body.put("reason", "关闭原因");
+        String res = s_SendPost(host_crm + uri, body.toString(), crm_token, pathValue);
         String status = JSONObject.fromObject(res).getJSONObject("data").getString("status");
-        return status.equals("9000") ? true : false;
+        return status.equals("9000");
     }
 
     @Test

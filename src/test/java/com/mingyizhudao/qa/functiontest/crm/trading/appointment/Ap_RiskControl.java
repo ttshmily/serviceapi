@@ -56,7 +56,7 @@ public class Ap_RiskControl extends BaseTest{
         JSONObject body = new JSONObject();
         body.put("result", false);
         body.put("content", "脚本测试——风控不通过");
-        body.put("risk_control_helper", "方超男");
+        body.put("risk_control_helper", "方超（男）");
         String res = s_SendPut(host_crm + uri, body.toString(), crm_token, pathValue);
         String status = JSONObject.fromObject(res).getJSONObject("data").getString("status");
         return status.equals("9000") ? true : false;
@@ -110,7 +110,8 @@ public class Ap_RiskControl extends BaseTest{
         pathValue.put("orderNumber", orderNumber);
         JSONObject body = new JSONObject();
         body.put("result", false);
-        body.put("content", "脚本测试——风控不通过");
+        body.put("reason", "脚本测试——风控不通过原因");
+        body.put("content", "脚本测试——风控不通过备注");
         body.put("risk_control_helper", "方超男");
         res = s_SendPut(host_crm + uri, body.toString(), crm_token, pathValue);
         s_CheckResponse(res);
@@ -118,7 +119,8 @@ public class Ap_RiskControl extends BaseTest{
         Assert.assertEquals(s_ParseJson(data, "status"), "9000");
     }
 
-    public void test_04_风控推荐医生信息不完整() {
+    //TODO
+    public void test_04_风控推荐医生信息有误() {
 
     }
 
@@ -166,11 +168,10 @@ public class Ap_RiskControl extends BaseTest{
         pathValue.put("orderNumber", orderNumber);
         JSONObject body = new JSONObject();
         body.put("result", false);
-        body.put("content", "脚本测试——风控不通过");
-        body.put("risk_control_helper", "方超男");
+        body.put("reason", "脚本测试——风控不通过");
+        body.put("risk_control_helper", "方超（男）");
         String expert_id = randomExpertId();
         body.put("major_recommended_doctor_id", expert_id);
-        body.put("major_recommended_doctor_name", expertName(expert_id));
         res = s_SendPut(host_crm + uri, body.toString(), crm_token, pathValue);
         s_CheckResponse(res);
         Assert.assertEquals(code, "1000000");

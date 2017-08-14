@@ -42,7 +42,7 @@ public class Ap_Confirm extends BaseTest {
         body.put("doctor_fee", doctor_fee);
         String res = s_SendPut(host_crm + uri, body.toString(), crm_token, pathValue);
         String status = JSONObject.fromObject(res).getJSONObject("data").getString("status");
-        return status.equals("3000") ? true : false;
+        return status.equals("3000");
     }
 
     @Test
@@ -58,12 +58,6 @@ public class Ap_Confirm extends BaseTest {
 
         HashMap<String, String> expert = s_CreateSyncedDoctor(ep);
         body.put("doctor_id", expert.get("expert_id"));
-//        body.put("doctor_name", ep.getDoctor().getName());
-//        body.put("doctor_phone", expert.get("mobile"));
-//        body.put("doctor_user_id", expert.get("id"));
-//        body.put("doctor_medical_title", ep.getDoctor().getMedical_title_list());
-//        body.put("doctor_academic_title", ep.getDoctor().getAcademic_title_list());
-//        body.put("doctor_department", ep.getDoctor().getDepartment());
         body.put("appointment_date", randomDateFromNow(2, 3, new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'")));
         long platform_fee = randomInt(100);
         body.put("platform_fee", platform_fee);

@@ -25,6 +25,18 @@ public class Ap_AddAccount extends BaseTest {
     public static final String version = "/api/v1";
     public static String uri = version+"/appointments/{orderNumber}/addAlipayAccount";
 
+    public static boolean s_AddPayAccount(String orderNumber) {
+        String res = "";
+        HashMap<String, String> pathValue = new HashMap<>();
+        pathValue.put("orderNumber", orderNumber);
+        JSONObject body = new JSONObject();
+        body.put("doctor_account_name", "收款姓名"+randomString(2));
+        body.put("doctor_account_info", randomPhone());
+        body.put("appointment_fee_remark", "添加说明");
+        res = s_SendPut(host_crm + uri, body.toString(), crm_token, pathValue);
+        String code = JSONObject.fromObject(res).getString("code");
+        return code.equals("1000000");
+    }
     @Test
     public void test_01_添加账号_手机() {
         String res = "";

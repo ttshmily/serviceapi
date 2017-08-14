@@ -25,6 +25,15 @@ public class Ap_Update extends BaseTest {
     public static final String version = "/api/v1";
     public static String uri = version+"/appointments/{orderNumber}";
 
+    public static boolean s_Update(String orderNumber, Appointment ap) {
+        String res = "";
+        HashMap<String, String> pathValue = new HashMap<>();
+        pathValue.put("orderNumber", orderNumber);
+        res = HttpRequest.s_SendPut(host_crm + uri, JSONObject.fromObject(ap).toString(), crm_token, pathValue);
+        String code = JSONObject.fromObject(res).getString("code");
+        return code.equals("1000000");
+    }
+
     @Test
     public void test_01_更新会诊单图片() {
         String res = "";
