@@ -21,7 +21,7 @@ public class RegisteredDoctor_Sign extends BaseTest {
     public void test_01_通过专家认证_已认证的医生() {
 
         String res = "";
-        DoctorProfile dp = new DoctorProfile(true);
+        DoctorProfile_Test dp = new DoctorProfile_Test(true);
         HashMap<String, String> info = s_CreateVerifiedDoctor(dp);
         String doctorId = info.get("id");
         String expertId = info.get("expert_id");
@@ -49,7 +49,7 @@ public class RegisteredDoctor_Sign extends BaseTest {
     @Test(enabled = false)
     public void test_02_通过专家认证_未认证的医生() {
         String res = "";
-        DoctorProfile dp = new DoctorProfile(true);
+        DoctorProfile_Test dp = new DoctorProfile_Test(true);
         HashMap<String, String> info = s_CreateRegisteredDoctor(dp);
         String doctorId = info.get("id");
         HashMap<String, String> pathValue = new HashMap<>();

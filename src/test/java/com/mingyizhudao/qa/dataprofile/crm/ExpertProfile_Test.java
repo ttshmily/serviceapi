@@ -7,10 +7,10 @@ import net.sf.json.JSONObject;
 /**
  * Created by ttshmily on 24/5/2017.
  */
-public class ExpertProfile {
+public class ExpertProfile_Test {
 
     public JSONObject body = new JSONObject();
-    public ExpertProfile(boolean init) {
+    public ExpertProfile_Test(boolean init) {
         if (init) {
             body.put("name", "钟西北" + Generator.randomString(2));
             body.put("gender", Generator.randomInt(2));

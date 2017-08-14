@@ -7,10 +7,10 @@ import net.sf.json.JSONObject;
 /**
  * Created by ttshmily on 8/4/2017.
  */
-public class DoctorProfile {
+public class DoctorProfile_Test {
 
     public JSONObject body = new JSONObject();
-    public DoctorProfile(boolean init) {
+    public DoctorProfile_Test(boolean init) {
         JSONObject doctor = new JSONObject();
         if (init) {
             doctor.put("name", "庄恕" + Generator.randomString(3));

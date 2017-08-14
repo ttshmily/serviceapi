@@ -32,7 +32,7 @@ public class UpdateDoctorProfile_V1 extends BaseTest {
     public static TestLogger logger = new TestLogger(clazzName);
     public static String uri = "/api/v1/updatedoctorprofile";
 
-//    public static String s_Update(String token, DoctorProfile dp) {
+//    public static String s_Update(String token, DoctorProfile_Test dp) {
 //        String res = "";
 //        TestLogger logger = new TestLogger(s_JobName());
 //        res = HttpRequest.s_SendPost(host_doc+uri, dp.body.toString(), token);
@@ -140,7 +140,7 @@ public class UpdateDoctorProfile_V1 extends BaseTest {
 /*    @Test(enabled = false)
     public void test_05_已登录有token的用户可以更新个人信息major_id() {
         String res = "";
-        DoctorProfile body = new DoctorProfile(false);
+        DoctorProfile_Test body = new DoctorProfile_Test(false);
         String key = Generator.randomKey(KnowledgeBase.kb_major);
         body.body.getJSONObject("doctor").put("major_id",key);
         res = HttpRequest.s_SendPost(host_doc + uri, body.body.toString(), mainToken);

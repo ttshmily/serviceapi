@@ -1,7 +1,6 @@
 package com.mingyizhudao.qa.common;
 
 
-//import com.mingyizhudao.qa.dataprofile.crm.DoctorProfile;
 import com.mingyizhudao.qa.dataprofile.User;
 import com.mingyizhudao.qa.functiontest.doctor.GetDoctorProfile_V1;
 import com.mingyizhudao.qa.functiontest.login.CheckVerifyCode;
@@ -257,7 +256,7 @@ public class BaseTest {
     }
 
 //    创建一个医生，并且完善信息
-//    protected static HashMap<String, String> s_CreateRegisteredDoctor(DoctorProfile dp) {
+//    protected static HashMap<String, String> s_CreateRegisteredDoctor(DoctorProfile_Test dp) {
 //        TestLogger logger = new TestLogger(s_JobName());
 //        HashMap<String,String> info = s_CreateRegistered();
 //        if (info == null) return null;
@@ -300,7 +299,7 @@ public class BaseTest {
     }
 
 //    创建一个医生并且认证
-//    protected static HashMap<String, String> s_CreateVerifiedDoctor(DoctorProfile dp) {
+//    protected static HashMap<String, String> s_CreateVerifiedDoctor(DoctorProfile_Test dp) {
 //        TestLogger logger = new TestLogger(s_JobName());
 //        HashMap<String,String> info = s_CreateRegisteredDoctor(dp);
 //        if (info == null) return null;
@@ -339,7 +338,7 @@ public class BaseTest {
     }
 
 //    创建一个医生并且认证和同步
-//    protected static HashMap<String, String> s_CreateSyncedDoctor(DoctorProfile dp) {
+//    protected static HashMap<String, String> s_CreateSyncedDoctor(DoctorProfile_Test dp) {
 //        TestLogger logger = new TestLogger(s_JobName());
 //        HashMap<String,String> info = s_CreateRegisteredDoctor(dp);
 //        if (info == null) return null;
