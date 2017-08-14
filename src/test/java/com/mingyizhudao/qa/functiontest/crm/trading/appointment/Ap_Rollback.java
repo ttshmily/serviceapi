@@ -78,11 +78,11 @@ public class Ap_Rollback extends BaseTest {
         HashMap<String, String> pathValue = new HashMap<>();
         pathValue.put("orderNumber", orderNumber);
         JSONObject body = new JSONObject();
-//        body.put("content", "重新风控content");
-        body.put("reason", "重新风控reason");
+        body.put("content", "重新风控content");
+//        body.put("reason", "重新风控reason");
         res = s_SendPut(host_crm + uri, body.toString(), crm_token, pathValue);
         s_CheckResponse(res);
-        Assert.assertNotEquals(code, "1000000");
+        Assert.assertNotEquals(code, "1000000", "reason必选");
     }
 
 }

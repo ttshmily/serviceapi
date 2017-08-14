@@ -41,8 +41,6 @@ public class Ap_Create extends BaseTest {
         Assert.assertNotNull(s_ParseJson(data, "order_number"));
         Assert.assertNotNull(s_ParseJson(data, "created_at"));
         Assert.assertEquals(s_ParseJson(data, "type"), "2");
-        Assert.assertEquals(s_ParseJson(data, "expected_appointment_start_date"), ap.getExpected_appointment_start_date());
-        Assert.assertEquals(s_ParseJson(data, "expected_appointment_due_date"), ap.getExpected_appointment_due_date());
         Assert.assertEquals(s_ParseJson(data, "patient_name"), ap.getPatient_name());
         Assert.assertEquals(s_ParseJson(data, "patient_phone"), ap.getPatient_phone());
         Assert.assertEquals(s_ParseJson(data, "patient_gender"), String.valueOf(ap.getPatient_gender()));
@@ -61,6 +59,8 @@ public class Ap_Create extends BaseTest {
         Assert.assertEquals(s_ParseJson(data, "medical_record_pictures"), ap.printPictures());
         Assert.assertEquals(s_ParseJson(data, "major_reps_id"), mainOperatorId);
         Assert.assertEquals(s_ParseJson(data, "status"), "1000");
+        Assert.assertEquals(s_ParseJson(data, "expected_appointment_start_date"), ap.getExpected_appointment_start_date());
+        Assert.assertEquals(s_ParseJson(data, "expected_appointment_due_date"), ap.getExpected_appointment_due_date());
     }
 
     @Test

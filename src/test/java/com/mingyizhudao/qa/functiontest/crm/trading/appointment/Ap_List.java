@@ -254,7 +254,7 @@ public class Ap_List extends BaseTest {
         String res = "";
         String orderNumber = Ap_Create.s_Create(new Appointment());
         HashMap<String, String> query = new HashMap<>();
-        query.put("page", String.valueOf(Generator.randomInt(2)));
+//        query.put("page", String.valueOf(Generator.randomInt(2)));
         for (String order_number:new String[]{orderNumber}) {
             logger.info("搜索订单编号为"+order_number+"的订单");
             query.put("orderNumber", order_number);
@@ -267,7 +267,7 @@ public class Ap_List extends BaseTest {
             Assert.assertEquals(ap.getString("order_number"), order_number);
         }
     }
-
+    //TODO
     @Test
     public void test_09_获取列表在一定的时间区间() {
         String res = "";
