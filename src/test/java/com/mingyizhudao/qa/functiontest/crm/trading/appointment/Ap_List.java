@@ -33,7 +33,7 @@ public class Ap_List extends BaseTest {
         String res = "";
         HashMap<String, String> query = new HashMap<>();
         try {
-            res = HttpRequest.s_SendGet(host_appointment + uri, "", crm_token);
+            res = HttpRequest.s_SendGet(host_crm + uri, "", crm_token);
             logger.debug("返回结果:\t"+res);
         } catch (Exception e) {
             Assert.fail(e.toString());
@@ -62,7 +62,7 @@ public class Ap_List extends BaseTest {
         query.put("sortCriteria", "0");
         query.put("collatingSequence", "0");
         try {
-            res = HttpRequest.s_SendGet(host_appointment + uri, query, crm_token);
+            res = HttpRequest.s_SendGet(host_crm + uri, query, crm_token);
         } catch (Exception e) {
             Assert.fail(e.toString());
         }
@@ -88,7 +88,7 @@ public class Ap_List extends BaseTest {
 
         query.put("collatingSequence", "1");
         try {
-            res = HttpRequest.s_SendGet(host_appointment + uri, query, crm_token);
+            res = HttpRequest.s_SendGet(host_crm + uri, query, crm_token);
         } catch (Exception e) {
             Assert.fail(e.toString());
         }
@@ -118,7 +118,7 @@ public class Ap_List extends BaseTest {
         query.put("sortCriteria", "1");
         query.put("collatingSequence", "0");
         try {
-            res = HttpRequest.s_SendGet(host_appointment + uri, query, crm_token);
+            res = HttpRequest.s_SendGet(host_crm + uri, query, crm_token);
         } catch (Exception e) {
             Assert.fail(e.toString());
         }
@@ -144,7 +144,7 @@ public class Ap_List extends BaseTest {
 
         query.put("collatingSequence", "1");
         try {
-            res = HttpRequest.s_SendGet(host_appointment + uri, query, crm_token);
+            res = HttpRequest.s_SendGet(host_crm + uri, query, crm_token);
         } catch (Exception e) {
             Assert.fail(e.toString());
         }
@@ -178,7 +178,7 @@ public class Ap_List extends BaseTest {
             logger.info("筛选状态为"+status+"的订单");
             query.put("status", status);
             List<String> status_list = Arrays.asList(status.split(","));
-            res = HttpRequest.s_SendGet(host_appointment + uri, query, crm_token);
+            res = HttpRequest.s_SendGet(host_crm + uri, query, crm_token);
             s_CheckResponse(res);
             Assert.assertEquals(code, "1000000");
             JSONArray ap_list = data.getJSONArray("list");
@@ -200,7 +200,7 @@ public class Ap_List extends BaseTest {
         for (String source_type:new String[]{"BUSINESS", "HOT_LINE", "WEIBO", "BAIDU_BRIDGE", "SUSHU", "WECHAT", "PC_WEB"}) {
             logger.info("筛选来源为"+source_type+"的订单");
             query.put("sourceType", source_type);
-            res = HttpRequest.s_SendGet(host_appointment + uri, query, crm_token);
+            res = HttpRequest.s_SendGet(host_crm + uri, query, crm_token);
             s_CheckResponse(res);
             Assert.assertEquals(code, "1000000");
             JSONArray ap_list = data.getJSONArray("list");
@@ -219,7 +219,7 @@ public class Ap_List extends BaseTest {
         for (String major_reps_id:new String[]{mainDoctorId, "jing.tian@mingyizhudao.com"}) {
             logger.info("筛选客服为"+major_reps_id+"的订单");
             query.put("majorRepsId", major_reps_id);
-            res = HttpRequest.s_SendGet(host_appointment + uri, query, crm_token);
+            res = HttpRequest.s_SendGet(host_crm + uri, query, crm_token);
             s_CheckResponse(res);
             Assert.assertEquals(code, "1000000");
             JSONArray ap_list = data.getJSONArray("list");
@@ -240,7 +240,7 @@ public class Ap_List extends BaseTest {
         for (String patient_name:new String[]{ap.getPatient_name()}) {
             logger.info("搜索患者姓名为"+patient_name+"的订单");
             query.put("patientName", patient_name);
-            res = HttpRequest.s_SendGet(host_appointment + uri, query, crm_token);
+            res = HttpRequest.s_SendGet(host_crm + uri, query, crm_token);
             s_CheckResponse(res);
             Assert.assertEquals(code, "1000000");
             JSONArray ap_list = data.getJSONArray("list");
@@ -258,7 +258,7 @@ public class Ap_List extends BaseTest {
         for (String order_number:new String[]{orderNumber}) {
             logger.info("搜索订单编号为"+order_number+"的订单");
             query.put("orderNumber", order_number);
-            res = HttpRequest.s_SendGet(host_appointment + uri, query, crm_token);
+            res = HttpRequest.s_SendGet(host_crm + uri, query, crm_token);
             s_CheckResponse(res);
             Assert.assertEquals(code, "1000000");
             JSONArray ap_list = data.getJSONArray("list");
@@ -277,7 +277,7 @@ public class Ap_List extends BaseTest {
         for (String order_number:new String[]{orderNumber}) {
             logger.info("搜索订单编号为"+order_number+"的订单");
             query.put("orderNumber", order_number);
-            res = HttpRequest.s_SendGet(host_appointment + uri, query, crm_token);
+            res = HttpRequest.s_SendGet(host_crm + uri, query, crm_token);
             s_CheckResponse(res);
             Assert.assertEquals(code, "1000000");
             JSONArray ap_list = data.getJSONArray("list");

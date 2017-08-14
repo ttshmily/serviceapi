@@ -27,7 +27,7 @@ public class Ap_Create extends BaseTest {
     public static String uri = version+"/appointments";
 
     public static String s_Create(Appointment ap) {
-        String res = HttpRequest.s_SendPost(host_appointment+uri, JSONObject.fromObject(ap).toString(), crm_token);
+        String res = HttpRequest.s_SendPost(host_crm+uri, JSONObject.fromObject(ap).toString(), crm_token);
         return JSONObject.fromObject(res).getJSONObject("data").getString("order_number");
     }
 
@@ -35,7 +35,7 @@ public class Ap_Create extends BaseTest {
     public void test_01_创建订单信息保存() {
         String res = "";
         Appointment ap = new Appointment();
-        res = HttpRequest.s_SendPost(host_appointment+uri, JSONObject.fromObject(ap).toString(), crm_token);
+        res = HttpRequest.s_SendPost(host_crm+uri, JSONObject.fromObject(ap).toString(), crm_token);
         s_CheckResponse(res);
         Assert.assertEquals(code, "1000000");
         Assert.assertNotNull(s_ParseJson(data, "order_number"));
@@ -74,7 +74,7 @@ public class Ap_Create extends BaseTest {
         } catch (Exception e) {
             logger.error(e);
         }
-        res = HttpRequest.s_SendPost(host_appointment+uri, JSONObject.fromObject(ap).toString(), crm_token);
+        res = HttpRequest.s_SendPost(host_crm+uri, JSONObject.fromObject(ap).toString(), crm_token);
         s_CheckResponse(res);
         Assert.assertEquals(code, "1000000");
         Assert.assertNotNull(s_ParseJson(data, "order_number"));

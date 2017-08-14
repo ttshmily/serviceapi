@@ -39,7 +39,7 @@ public class Ap_AddAccount extends BaseTest {
         body.put("doctor_account_name", "收款姓名"+randomString(2));
         body.put("doctor_account_info", randomPhone());
         body.put("appointment_fee_remark", "添加说明");
-        res = s_SendPut(host_appointment + uri, body.toString(), crm_token, pathValue);
+        res = s_SendPut(host_crm + uri, body.toString(), crm_token, pathValue);
         s_CheckResponse(res);
         Assert.assertEquals(code, "1000000");
         Assert.assertEquals(s_ParseJson(data, "status"), "3000");
@@ -62,7 +62,7 @@ public class Ap_AddAccount extends BaseTest {
         body.put("doctor_account_name", "收款姓名"+randomString(2));
         body.put("doctor_account_info", mainOperatorId);
         body.put("appointment_fee_remark", "添加说明");
-        res = s_SendPut(host_appointment + uri, body.toString(), crm_token, pathValue);
+        res = s_SendPut(host_crm + uri, body.toString(), crm_token, pathValue);
         s_CheckResponse(res);
         Assert.assertEquals(code, "1000000");
         Assert.assertEquals(s_ParseJson(data, "status"), "3000");
@@ -84,7 +84,7 @@ public class Ap_AddAccount extends BaseTest {
         JSONObject body = new JSONObject();
         body.put("doctor_account_info", mainOperatorId);
         body.put("appointment_fee_remark", "添加说明");
-        res = s_SendPut(host_appointment + uri, body.toString(), crm_token, pathValue);
+        res = s_SendPut(host_crm + uri, body.toString(), crm_token, pathValue);
         s_CheckResponse(res);
         Assert.assertNotEquals(code, "1000000");
     }
@@ -102,7 +102,7 @@ public class Ap_AddAccount extends BaseTest {
         JSONObject body = new JSONObject();
         body.put("doctor_account_name", "收款姓名"+randomString(2));
         body.put("appointment_fee_remark", "添加说明");
-        res = s_SendPut(host_appointment + uri, body.toString(), crm_token, pathValue);
+        res = s_SendPut(host_crm + uri, body.toString(), crm_token, pathValue);
         s_CheckResponse(res);
         Assert.assertNotEquals(code, "1000000");
     }
@@ -118,13 +118,13 @@ public class Ap_AddAccount extends BaseTest {
         body.put("doctor_account_name", "收款姓名"+randomString(2));
         body.put("doctor_account_info", randomPhone());
         body.put("appointment_fee_remark", "添加说明");
-        res = s_SendPut(host_appointment + uri, body.toString(), crm_token, pathValue);
+        res = s_SendPut(host_crm + uri, body.toString(), crm_token, pathValue);
         s_CheckResponse(res);
         Assert.assertNotEquals(code, "1000000");
         if(!s_Take(orderNumber)) {
             Assert.fail("处理中订单生成失败");
         }
-        res = s_SendPut(host_appointment + uri, body.toString(), crm_token, pathValue);
+        res = s_SendPut(host_crm + uri, body.toString(), crm_token, pathValue);
         s_CheckResponse(res);
         Assert.assertNotEquals(code, "1000000");
     }
@@ -143,11 +143,11 @@ public class Ap_AddAccount extends BaseTest {
         body.put("doctor_account_name", "收款姓名"+randomString(2));
         body.put("doctor_account_info", randomPhone());
         body.put("appointment_fee_remark", "添加说明");
-        res = s_SendPut(host_appointment + uri, body.toString(), crm_token, pathValue);
+        res = s_SendPut(host_crm + uri, body.toString(), crm_token, pathValue);
         s_CheckResponse(res);
         Assert.assertEquals(code, "1000000");
         body.put("doctor_account_info", mainOperatorId);
-        res = s_SendPut(host_appointment + uri, body.toString(), crm_token, pathValue);
+        res = s_SendPut(host_crm + uri, body.toString(), crm_token, pathValue);
         s_CheckResponse(res);
         Assert.assertEquals(code, "1000000");
         Assert.assertEquals(s_ParseJson(data, "doctor_account_name"), body.getString("doctor_account_name"));

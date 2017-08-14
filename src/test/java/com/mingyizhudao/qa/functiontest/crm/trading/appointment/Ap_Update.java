@@ -37,7 +37,7 @@ public class Ap_Update extends BaseTest {
                 add(ap.new Picture("234.jpg", "7"));
             }
         });
-        res = HttpRequest.s_SendPut(host_appointment + uri, JSONObject.fromObject(ap).toString(), crm_token, pathValue);
+        res = HttpRequest.s_SendPut(host_crm + uri, JSONObject.fromObject(ap).toString(), crm_token, pathValue);
         s_CheckResponse(res);
         Assert.assertEquals(code, "1000000");
         res = Ap_Detail.s_Detail(orderNumber);
@@ -56,7 +56,7 @@ public class Ap_Update extends BaseTest {
         String hospitalId = Generator.randomHospitalId();
         ap.setExpected_appointment_hospital_id(hospitalId);
         ap.setExpected_appointment_hospital_name(Generator.hospitalName(hospitalId));
-        res = HttpRequest.s_SendPut(host_appointment + uri, JSONObject.fromObject(ap).toString(), crm_token, pathValue);
+        res = HttpRequest.s_SendPut(host_crm + uri, JSONObject.fromObject(ap).toString(), crm_token, pathValue);
         s_CheckResponse(res);
         Assert.assertEquals(code, "1000000");
         res = Ap_Detail.s_Detail(orderNumber);
@@ -76,7 +76,7 @@ public class Ap_Update extends BaseTest {
         String cityId = Generator.randomCityId();
         ap.setExpected_city_id(cityId);
         ap.setExpected_city_name(Generator.cityName(cityId));
-        res = HttpRequest.s_SendPut(host_appointment + uri, JSONObject.fromObject(ap).toString(), crm_token, pathValue);
+        res = HttpRequest.s_SendPut(host_crm + uri, JSONObject.fromObject(ap).toString(), crm_token, pathValue);
         s_CheckResponse(res);
         Assert.assertEquals(code, "1000000");
         res = Ap_Detail.s_Detail(orderNumber);
@@ -96,7 +96,7 @@ public class Ap_Update extends BaseTest {
         String expertId = Generator.randomExpertId();
         ap.setExpected_doctor_id(expertId);
         ap.setExpected_doctor_name(Generator.expertName(expertId));
-        res = HttpRequest.s_SendPut(host_appointment + uri, JSONObject.fromObject(ap).toString(), crm_token, pathValue);
+        res = HttpRequest.s_SendPut(host_crm + uri, JSONObject.fromObject(ap).toString(), crm_token, pathValue);
         s_CheckResponse(res);
         Assert.assertEquals(code, "1000000");
         res = Ap_Detail.s_Detail(orderNumber);
@@ -116,7 +116,7 @@ public class Ap_Update extends BaseTest {
         String diseaseId = Generator.randomDiseaseId();
         ap.setMajor_disease_id(diseaseId);
         ap.setMajor_disease_name(Generator.diseaseName(diseaseId));
-        res = HttpRequest.s_SendPut(host_appointment + uri, JSONObject.fromObject(ap).toString(), crm_token, pathValue);
+        res = HttpRequest.s_SendPut(host_crm + uri, JSONObject.fromObject(ap).toString(), crm_token, pathValue);
         s_CheckResponse(res);
         Assert.assertEquals(code, "1000000");
         res = Ap_Detail.s_Detail(orderNumber);
@@ -135,7 +135,7 @@ public class Ap_Update extends BaseTest {
         pathValue.put("orderNumber", orderNumber);
         String name = "新面诊病人"+ Generator.randomString(5);
         ap.setPatient_name(name);
-        res = HttpRequest.s_SendPut(host_appointment + uri, JSONObject.fromObject(ap).toString(), crm_token, pathValue);
+        res = HttpRequest.s_SendPut(host_crm + uri, JSONObject.fromObject(ap).toString(), crm_token, pathValue);
         s_CheckResponse(res);
         Assert.assertEquals(code, "1000000");
         res = Ap_Detail.s_Detail(orderNumber);
@@ -153,7 +153,7 @@ public class Ap_Update extends BaseTest {
         pathValue.put("orderNumber", orderNumber);
         int age = (int) Generator.randomInt(100);
         ap.setPatient_age(age);
-        res = HttpRequest.s_SendPut(host_appointment + uri, JSONObject.fromObject(ap).toString(), crm_token, pathValue);
+        res = HttpRequest.s_SendPut(host_crm + uri, JSONObject.fromObject(ap).toString(), crm_token, pathValue);
         s_CheckResponse(res);
         Assert.assertEquals(code, "1000000");
         res = Ap_Detail.s_Detail(orderNumber);
@@ -171,7 +171,7 @@ public class Ap_Update extends BaseTest {
         pathValue.put("orderNumber", orderNumber);
         int gender = (int) Generator.randomInt(2);
         ap.setPatient_gender(gender);
-        res = HttpRequest.s_SendPut(host_appointment + uri, JSONObject.fromObject(ap).toString(), crm_token, pathValue);
+        res = HttpRequest.s_SendPut(host_crm + uri, JSONObject.fromObject(ap).toString(), crm_token, pathValue);
         s_CheckResponse(res);
         Assert.assertEquals(code, "1000000");
         res = Ap_Detail.s_Detail(orderNumber);
@@ -189,7 +189,7 @@ public class Ap_Update extends BaseTest {
         pathValue.put("orderNumber", orderNumber);
         String phone = Generator.randomPhone();
         ap.setPatient_phone(phone);
-        res = HttpRequest.s_SendPut(host_appointment + uri, JSONObject.fromObject(ap).toString(), crm_token, pathValue);
+        res = HttpRequest.s_SendPut(host_crm + uri, JSONObject.fromObject(ap).toString(), crm_token, pathValue);
         s_CheckResponse(res);
         Assert.assertEquals(code, "1000000");
         res = Ap_Detail.s_Detail(orderNumber);
@@ -207,7 +207,7 @@ public class Ap_Update extends BaseTest {
         pathValue.put("orderNumber", orderNumber);
         String desp = Generator.randomString(100);
         ap.setDisease_description(desp);
-        res = HttpRequest.s_SendPut(host_appointment + uri, JSONObject.fromObject(ap).toString(), crm_token, pathValue);
+        res = HttpRequest.s_SendPut(host_crm + uri, JSONObject.fromObject(ap).toString(), crm_token, pathValue);
         s_CheckResponse(res);
         Assert.assertEquals(code, "1000000");
         res = Ap_Detail.s_Detail(orderNumber);
@@ -228,7 +228,7 @@ public class Ap_Update extends BaseTest {
         String due_date = Generator.randomDateFromNow(10,20, df);
         ap.setExpected_appointment_start_date(start_date);
         ap.setExpected_appointment_due_date(due_date);
-        res = HttpRequest.s_SendPut(host_appointment + uri, JSONObject.fromObject(ap).toString(), crm_token, pathValue);
+        res = HttpRequest.s_SendPut(host_crm + uri, JSONObject.fromObject(ap).toString(), crm_token, pathValue);
         s_CheckResponse(res);
         Assert.assertEquals(code, "1000000");
         res = Ap_Detail.s_Detail(orderNumber);

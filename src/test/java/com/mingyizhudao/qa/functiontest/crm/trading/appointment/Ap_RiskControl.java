@@ -45,7 +45,7 @@ public class Ap_RiskControl extends BaseTest{
             body.put("minor_recommended_doctor_id", expert_id);
             body.put("minor_recommended_doctor_name", expertName(expert_id));
         }
-        String res = s_SendPut(host_appointment + uri, body.toString(), crm_token, pathValue);
+        String res = s_SendPut(host_crm + uri, body.toString(), crm_token, pathValue);
         String status = JSONObject.fromObject(res).getJSONObject("data").getString("status");
         return status.equals("2000") ? true : false;
     }
@@ -57,7 +57,7 @@ public class Ap_RiskControl extends BaseTest{
         body.put("result", false);
         body.put("content", "脚本测试——风控不通过");
         body.put("risk_control_helper", "方超男");
-        String res = s_SendPut(host_appointment + uri, body.toString(), crm_token, pathValue);
+        String res = s_SendPut(host_crm + uri, body.toString(), crm_token, pathValue);
         String status = JSONObject.fromObject(res).getJSONObject("data").getString("status");
         return status.equals("9000") ? true : false;
     }
@@ -74,7 +74,7 @@ public class Ap_RiskControl extends BaseTest{
         body.put("risk_control_helper", "方超（男）");
         String expert_id = randomExpertId();
         body.put("major_recommended_doctor_id", expert_id);
-        res = s_SendPut(host_appointment + uri, body.toString(), crm_token, pathValue);
+        res = s_SendPut(host_crm + uri, body.toString(), crm_token, pathValue);
         s_CheckResponse(res);
         Assert.assertEquals(code, "1000000");
         Assert.assertEquals(s_ParseJson(data, "major_recommended_doctor_id"), body.getString("major_recommended_doctor_id"));
@@ -94,7 +94,7 @@ public class Ap_RiskControl extends BaseTest{
         body.put("major_recommended_doctor_id", expert_id);
         expert_id = randomExpertId();
         body.put("minor_recommended_doctor_id", expert_id);
-        res = s_SendPut(host_appointment + uri, body.toString(), crm_token, pathValue);
+        res = s_SendPut(host_crm + uri, body.toString(), crm_token, pathValue);
         s_CheckResponse(res);
         Assert.assertEquals(code, "1000000");
         Assert.assertEquals(s_ParseJson(data, "major_recommended_doctor_id"), body.getString("major_recommended_doctor_id"));
@@ -112,7 +112,7 @@ public class Ap_RiskControl extends BaseTest{
         body.put("result", false);
         body.put("content", "脚本测试——风控不通过");
         body.put("risk_control_helper", "方超男");
-        res = s_SendPut(host_appointment + uri, body.toString(), crm_token, pathValue);
+        res = s_SendPut(host_crm + uri, body.toString(), crm_token, pathValue);
         s_CheckResponse(res);
         Assert.assertEquals(code, "1000000");
         Assert.assertEquals(s_ParseJson(data, "status"), "9000");
@@ -131,7 +131,7 @@ public class Ap_RiskControl extends BaseTest{
         pathValue.put("orderNumber", orderNumber);
         JSONObject body = new JSONObject();
         body.put("result", false);
-        res = s_SendPut(host_appointment + uri, body.toString(), crm_token, pathValue);
+        res = s_SendPut(host_crm + uri, body.toString(), crm_token, pathValue);
         s_CheckResponse(res);
         Assert.assertNotEquals(code, "1000000");
     }
@@ -147,12 +147,12 @@ public class Ap_RiskControl extends BaseTest{
         body.put("result", "hi test");
         body.put("content", "脚本测试——风控不通过");
         body.put("risk_control_helper", "方超男");
-        res = s_SendPut(host_appointment + uri, body.toString(), crm_token, pathValue);
+        res = s_SendPut(host_crm + uri, body.toString(), crm_token, pathValue);
         s_CheckResponse(res);
         Assert.assertNotEquals(code, "1000000");
 
         body.remove("result");
-        res = s_SendPut(host_appointment + uri, body.toString(), crm_token, pathValue);
+        res = s_SendPut(host_crm + uri, body.toString(), crm_token, pathValue);
         s_CheckResponse(res);
         Assert.assertNotEquals(code, "1000000");
     }
@@ -171,7 +171,7 @@ public class Ap_RiskControl extends BaseTest{
         String expert_id = randomExpertId();
         body.put("major_recommended_doctor_id", expert_id);
         body.put("major_recommended_doctor_name", expertName(expert_id));
-        res = s_SendPut(host_appointment + uri, body.toString(), crm_token, pathValue);
+        res = s_SendPut(host_crm + uri, body.toString(), crm_token, pathValue);
         s_CheckResponse(res);
         Assert.assertEquals(code, "1000000");
         Assert.assertNull(s_ParseJson(data, "major_recommended_doctor_id"));

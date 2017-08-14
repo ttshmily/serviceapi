@@ -24,7 +24,7 @@ public class Ap_Detail extends BaseTest {
     public static String s_Detail(String orderNumber) {
         HashMap<String, String> pathValue = new HashMap<>();
         pathValue.put("orderNumber", orderNumber);
-        return HttpRequest.s_SendGet(host_appointment + uri, "", crm_token, pathValue);
+        return HttpRequest.s_SendGet(host_crm + uri, "", crm_token, pathValue);
     }
 
     @Test
@@ -34,7 +34,7 @@ public class Ap_Detail extends BaseTest {
         String orderNumber = Ap_Create.s_Create(ap);
         HashMap<String, String> pathValue = new HashMap<>();
         pathValue.put("orderNumber", orderNumber);
-        res = HttpRequest.s_SendGet(host_appointment + uri, "", crm_token, pathValue);
+        res = HttpRequest.s_SendGet(host_crm + uri, "", crm_token, pathValue);
         s_CheckResponse(res);
         Assert.assertEquals(code, "1000000");
         Assert.assertNotNull(Helper.s_ParseJson(data, "order_number"));
@@ -67,7 +67,7 @@ public class Ap_Detail extends BaseTest {
         String orderNumber = Ap_Create.s_Create(ap);
         HashMap<String, String> pathValue = new HashMap<>();
         pathValue.put("orderNumber", orderNumber+1);
-        res = HttpRequest.s_SendGet(host_appointment + uri, "", crm_token, pathValue);
+        res = HttpRequest.s_SendGet(host_crm + uri, "", crm_token, pathValue);
         s_CheckResponse(res);
         Assert.assertNull(data);
     }

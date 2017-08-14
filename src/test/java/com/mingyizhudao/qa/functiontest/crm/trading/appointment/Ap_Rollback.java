@@ -31,7 +31,7 @@ public class Ap_Rollback extends BaseTest {
         JSONObject body = new JSONObject();
         body.put("content", "客服记录内容");
         body.put("reason", "官方选择理由");
-        String res = s_SendPut(host_appointment + uri, body.toString(), crm_token, pathValue);
+        String res = s_SendPut(host_crm + uri, body.toString(), crm_token, pathValue);
         String status = JSONObject.fromObject(res).getJSONObject("data").getString("status");
         return status.equals("1000") ? true : false;
     }
@@ -49,7 +49,7 @@ public class Ap_Rollback extends BaseTest {
         JSONObject body = new JSONObject();
         body.put("content", "重新风控content");
         body.put("reason", "重新风控reason");
-        res = s_SendPut(host_appointment + uri, body.toString(), crm_token, pathValue);
+        res = s_SendPut(host_crm + uri, body.toString(), crm_token, pathValue);
         s_CheckResponse(res);
         Assert.assertEquals(code, "1000000");
         res = Ap_Detail.s_Detail(orderNumber);
@@ -80,7 +80,7 @@ public class Ap_Rollback extends BaseTest {
         JSONObject body = new JSONObject();
 //        body.put("content", "重新风控content");
         body.put("reason", "重新风控reason");
-        res = s_SendPut(host_appointment + uri, body.toString(), crm_token, pathValue);
+        res = s_SendPut(host_crm + uri, body.toString(), crm_token, pathValue);
         s_CheckResponse(res);
         Assert.assertNotEquals(code, "1000000");
     }

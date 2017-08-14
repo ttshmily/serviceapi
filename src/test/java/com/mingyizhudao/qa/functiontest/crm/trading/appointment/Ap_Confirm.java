@@ -35,7 +35,7 @@ public class Ap_Confirm extends BaseTest {
         String expertId = randomExpertId();
         body.put("doctor_id", expertId);
         body.put("doctor_name", expertName(expertId));
-        String res = s_SendPut(host_appointment + uri, body.toString(), crm_token, pathValue);
+        String res = s_SendPut(host_crm + uri, body.toString(), crm_token, pathValue);
         String status = JSONObject.fromObject(res).getJSONObject("data").getString("status");
         return status.equals("3000") ? true : false;
     }
@@ -66,7 +66,7 @@ public class Ap_Confirm extends BaseTest {
         body.put("doctor_fee", doctor_fee);
         HashMap<String, String> pathValue = new HashMap<>();
         pathValue.put("orderNumber", orderNumber);
-        res = s_SendPut(host_appointment+uri, body.toString(), crm_token, pathValue);
+        res = s_SendPut(host_crm+uri, body.toString(), crm_token, pathValue);
         s_CheckResponse(res);
         Assert.assertEquals(code, "1000000");
         Assert.assertEquals(s_ParseJson(data, "doctor_id"), expert.get("expert_id"));
@@ -97,7 +97,7 @@ public class Ap_Confirm extends BaseTest {
         body.put("doctor_name", ep.getDoctor().getName());
         HashMap<String, String> pathValue = new HashMap<>();
         pathValue.put("orderNumber", orderNumber);
-        res = s_SendPut(host_appointment+uri, body.toString(), crm_token, pathValue);
+        res = s_SendPut(host_crm+uri, body.toString(), crm_token, pathValue);
         s_CheckResponse(res);
         Assert.assertEquals(code, "1000000");
         Assert.assertEquals(s_ParseJson(data, "status"), "3000");
