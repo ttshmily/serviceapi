@@ -36,18 +36,16 @@ public class Ap_RiskControl extends BaseTest{
         JSONObject body = new JSONObject();
         body.put("result", true);
         body.put("content", "脚本测试——风控通过");
-        body.put("risk_control_helper", "方超男");
+        body.put("risk_control_helper", "方超（男）");
         String expert_id = doctor_list[0];
         body.put("major_recommended_doctor_id", expert_id);
-        body.put("major_recommended_doctor_name", expertName(expert_id));
         if (doctor_list.length == 2) {
             expert_id = doctor_list[1];
             body.put("minor_recommended_doctor_id", expert_id);
-            body.put("minor_recommended_doctor_name", expertName(expert_id));
         }
         String res = s_SendPut(host_crm + uri, body.toString(), crm_token, pathValue);
         String status = JSONObject.fromObject(res).getJSONObject("data").getString("status");
-        return status.equals("2000") ? true : false;
+        return status.equals("2000");
     }
 
     public static boolean s_Reject(String orderNumber) {
@@ -59,7 +57,7 @@ public class Ap_RiskControl extends BaseTest{
         body.put("risk_control_helper", "方超（男）");
         String res = s_SendPut(host_crm + uri, body.toString(), crm_token, pathValue);
         String status = JSONObject.fromObject(res).getJSONObject("data").getString("status");
-        return status.equals("9000") ? true : false;
+        return status.equals("9000");
     }
 
     @Test

@@ -27,14 +27,14 @@ public class Ap_PayUrl extends BaseTest {
     public static final String version = "/api/v1";
     public static String uri = version + "/appointments/{orderNumber}/payments";
 
-    @Test
+
     public void test_01_显示支付链接_APPOINTMENT() {
         String res = "";
         Appointment ap = new Appointment();
         String orderNumber = s_Create(ap);
         HashMap<String, String> pathValue = new HashMap<>();
         pathValue.put("orderNumber", orderNumber);
-        if (!s_Take(orderNumber) || !s_Confirm(orderNumber) || !s_AddPayAccount(orderNumber) || s_CreatePayment(orderNumber, "APPOINTMENT")) {
+        if (!s_Take(orderNumber) || !s_Confirm(orderNumber) || !s_CreatePayment(orderNumber, "APPOINTMENT")) {
             Assert.fail("订单未生成支付链接");
         }
 
@@ -44,14 +44,14 @@ public class Ap_PayUrl extends BaseTest {
         Assert.assertNull(data.getJSONArray("list").getJSONObject(0).getString("id"));
     }
 
-    @Test
+
     public void test_02_显示支付链接_PLATFORM() {
         String res = "";
         Appointment ap = new Appointment();
         String orderNumber = s_Create(ap);
         HashMap<String, String> pathValue = new HashMap<>();
         pathValue.put("orderNumber", orderNumber);
-        if (!s_Take(orderNumber) || !s_Confirm(orderNumber) || !s_AddPayAccount(orderNumber) || s_CreatePayment(orderNumber, "PLATFORM")) {
+        if (!s_Take(orderNumber) || !s_Confirm(orderNumber) || !s_CreatePayment(orderNumber, "PLATFORM")) {
             Assert.fail("订单未生成支付链接");
         }
 
@@ -61,14 +61,14 @@ public class Ap_PayUrl extends BaseTest {
         Assert.assertNull(data.getJSONArray("list").getJSONObject(0).getString("id"));
     }
 
-    @Test
+
     public void test_03_显示支付链接_DOCTOR() {
         String res = "";
         Appointment ap = new Appointment();
         String orderNumber = s_Create(ap);
         HashMap<String, String> pathValue = new HashMap<>();
         pathValue.put("orderNumber", orderNumber);
-        if (!s_Take(orderNumber) || !s_Confirm(orderNumber) || !s_AddPayAccount(orderNumber) || s_CreatePayment(orderNumber, "DOCTOR")) {
+        if (!s_Take(orderNumber) || !s_Confirm(orderNumber) || !s_CreatePayment(orderNumber, "DOCTOR")) {
             Assert.fail("订单未生成支付链接");
         }
 

@@ -100,13 +100,13 @@ public class UpdateDoctorProfile_V1 extends BaseTest {
         s_CheckResponse(res);
         Assert.assertEquals(code, "1000000");
 
-        res = GetDoctorProfile_V1.s_MyProfile(mainToken);
+        res = GetDoctorProfile_V1.s_MyProfile(tmpToken);
         s_CheckResponse(res);
         Assert.assertEquals(code, "1000000");
         Assert.assertEquals(Helper.s_ParseJson(data, "doctor:hospital_id"), dp.getDoctor().getHospital_id());
         Assert.assertEquals(Helper.s_ParseJson(data, "doctor:hospital_name"), hospitalName(dp.getDoctor().getHospital_id()));
         Assert.assertEquals(Helper.s_ParseJson(data, "doctor:city_id"), cityId);
-        Assert.assertEquals(Helper.s_ParseJson(data, "doctor:hospital_name"), cityName(cityId));
+        Assert.assertEquals(Helper.s_ParseJson(data, "doctor:city"), cityName(cityId));
 
     }
 
@@ -192,7 +192,7 @@ public class UpdateDoctorProfile_V1 extends BaseTest {
         s_CheckResponse(res);
         Assert.assertEquals(code, "1000000");
 
-        res = GetDoctorProfile_V1.s_MyProfile(mainToken);
+        res = GetDoctorProfile_V1.s_MyProfile(tmpToken);
         s_CheckResponse(res);
         Assert.assertEquals(Helper.s_ParseJson(data, "doctor:doctor_card_pictures(0):key"), "2017/05/04/1265834e-97d8-44a0-95e7-047c7facaee8/IMG_20170429_102737.jpg", "key值错误");
         Assert.assertEquals(Helper.s_ParseJson(data, "doctor:doctor_card_pictures(0):type"), "3", "type值错误");
@@ -218,7 +218,7 @@ public class UpdateDoctorProfile_V1 extends BaseTest {
         s_CheckResponse(res);
         Assert.assertEquals(code, "1000000");
 
-        res = GetDoctorProfile_V1.s_MyProfile(mainToken);
+        res = GetDoctorProfile_V1.s_MyProfile(tmpToken);
         s_CheckResponse(res);
         Assert.assertEquals(Helper.s_ParseJson(data, "doctor:exp_list()"), "2");
     }
