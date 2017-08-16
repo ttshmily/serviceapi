@@ -56,11 +56,11 @@ public class Ap_Create extends BaseTest {
         Assert.assertEquals(s_ParseJson(data, "expected_province_name"), ap.getExpected_province_name());
         Assert.assertEquals(s_ParseJson(data, "major_disease_id"), ap.getMajor_disease_id());
         Assert.assertEquals(s_ParseJson(data, "major_disease_name"), ap.getMajor_disease_name());
-        Assert.assertEquals(s_ParseJson(data, "medical_record_pictures"), ap.printPictures());
         Assert.assertEquals(s_ParseJson(data, "major_reps_id"), mainOperatorId);
         Assert.assertEquals(s_ParseJson(data, "status"), "1000");
         Assert.assertEquals(s_ParseJson(data, "expected_appointment_start_date"), ap.getExpected_appointment_start_date());
         Assert.assertEquals(s_ParseJson(data, "expected_appointment_due_date"), ap.getExpected_appointment_due_date());
+        Assert.assertEquals(s_ParseJson(data, "medical_record_pictures"), ap.printPictures());
     }
 
     @Test
@@ -79,6 +79,25 @@ public class Ap_Create extends BaseTest {
         Assert.assertEquals(code, "1000000");
         Assert.assertNotNull(s_ParseJson(data, "order_number"));
         Assert.assertNotNull(s_ParseJson(data, "created_at").substring(0, 20), now.substring(0,20));
+    }
+
+    @Test
+    public void test_03_创建测试订单() {
+        String res = "";
+        Appointment ap = new Appointment();
+        ap.setPatient_phone("13817634203"); // a test number
+        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'");
+        String now = null;
+        try {
+            now = df.format(new Date());
+        } catch (Exception e) {
+            logger.error(e);
+        }
+        res = HttpRequest.s_SendPost(host_crm+uri, JSONObject.fromObject(ap).toString(), crm_token);
+        s_CheckResponse(res);
+        Assert.assertEquals(code, "1000000");
+        Assert.assertNotNull(s_ParseJson(data, "order_number"));
+        Assert.assertEquals(s_ParseJson(data, "is_test"), "true");
     }
 
 }
