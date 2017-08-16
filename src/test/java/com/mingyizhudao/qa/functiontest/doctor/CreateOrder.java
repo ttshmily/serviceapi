@@ -102,11 +102,11 @@ public class CreateOrder extends BaseTest {
         Assert.assertEquals(Helper.s_ParseJson(data,"order:medical_record_pictures(0):key"), "2017/05/04/1265834e-97d8-44a0-95e7-047c7facaee8/IMG_20170429_102737.jpg");
         Assert.assertEquals(Helper.s_ParseJson(data,"order:medical_record_pictures(1):key"), "2017/05/04/1315bbe0-2836-4776-8216-ec55044f32dd/IMG_20161013_172442.jpg");
         Assert.assertNotNull(Helper.s_ParseJson(data,"order:agent_contact_id"));
-        Assert.assertNotNull(Helper.s_ParseJson(data,"order:agent_referrer_id"));
-        Assert.assertNotNull(Helper.s_ParseJson(data,"order:agent_referrer_name"));
+        Assert.assertEquals(Helper.s_ParseJson(data,"order:agent_referrer_id"), "SH0133"); //常州市武进人民医院, 常州，区域服务人员 - 方超 - SH0133
+        Assert.assertEquals(Helper.s_ParseJson(data,"order:agent_referrer_name"), "方超"); //常州市武进人民医院, 常州，区域服务人员 - 方超 - SH0133
         Assert.assertNotNull(Helper.s_ParseJson(data,"order:agent_city_id"));
         Assert.assertNotNull(Helper.s_ParseJson(data,"order:agent_city_name"));
-        Assert.assertNotNull(Helper.s_ParseJson(data,"order:agent_hospital"));
+        Assert.assertEquals(Helper.s_ParseJson(data,"order:agent_hospital"), "常州市武进人民医院");
         Assert.assertNotNull(Helper.s_ParseJson(data,"order:agent_referrer_group_id"));
 
     }
@@ -247,6 +247,7 @@ public class CreateOrder extends BaseTest {
 
         User dp = new User();
         dp.getDoctor().setInviter_no(null);
+        dp.getDoctor().setHospital_id("98");//常州市武进人民医院, 常州，区域服务人员 - 方超
         HashMap<String, String> doc = s_CreateRegisteredDoctor(dp);
         if (doc == null) {
             Assert.fail("创建医生失败");
@@ -255,7 +256,6 @@ public class CreateOrder extends BaseTest {
         OrderDetail order = new OrderDetail(true);
         res = HttpRequest.s_SendPost(host_doc + uri, order.body.toString(), tmpToken);
         s_CheckResponse(res);
-//        Assert.assertNotEquals(code, "1000000");
         Assert.assertEquals(code, "1000000"); // PD要求认证中的医生也可以创建了。。。
 
     }
