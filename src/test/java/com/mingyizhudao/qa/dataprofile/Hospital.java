@@ -18,6 +18,7 @@ public class Hospital {
     private String county_id;
     private String phone;
     private String description;
+    private String address;
     private List<Picture> photo_url;
 
     public Hospital() {
@@ -27,10 +28,14 @@ public class Hospital {
         this.type_list = randomHospitalType();
         this.phone = randomPhone();
         this.description = "新概念医院描述"+randomString(10);
+        this.address = "医院地址"+randomString(10);
 
         String cityId = randomCityId();
         this.city_id = cityId;
         this.county_id = randomCountyIdUnder(cityId);
+        this.photo_url = new ArrayList<Picture>() {
+            {add(new Picture("1,jpg", "5", "1x1"));}
+        };
     }
 
     public String printPictures() {

@@ -60,6 +60,14 @@ public class KBHospital_Create extends BaseTest {
         return result;
     }
 
+//    public static String s_Create(Hospital hp) {
+//        String res = "";
+//        TestLogger logger = new TestLogger(s_JobName());
+//        res = HttpRequest.s_SendPost(host_crm+uri, JSONObject.fromObject(hp).toString(), crm_token);
+//        JSONObject node = JSONObject.fromObject(res);
+//        return node.getString("code").equals("1000000") ? node.getJSONObject("data").getString("id") : null;
+//    }
+
     @Test
     public void test_01_创建医院() {
         String res = "";

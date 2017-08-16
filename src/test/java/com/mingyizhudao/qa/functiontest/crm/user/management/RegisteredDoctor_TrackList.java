@@ -10,6 +10,8 @@ import org.testng.annotations.Test;
 
 import java.util.HashMap;
 
+import static com.mingyizhudao.qa.functiontest.crm.user.management.RegisteredDoctor_CertifySync_V2.s_CertifyAndSync;
+
 /**
  * Created by ttshmily on 25/4/2017.
  */
@@ -43,6 +45,7 @@ public class RegisteredDoctor_TrackList extends BaseTest {
         s_CheckResponse(res);
         Assert.assertEquals(code, "1000000");
         Assert.assertEquals(Helper.s_ParseJson(data, "list()"), "2");
+        s_CertifyAndSync(doctorId, "1");
         res = s_TrackList(doctorId);
         s_CheckResponse(res);
         Assert.assertEquals(code, "1000000");
@@ -66,6 +69,7 @@ public class RegisteredDoctor_TrackList extends BaseTest {
         s_CheckResponse(res);
         Assert.assertEquals(code, "1000000");
         Assert.assertEquals(Helper.s_ParseJson(data, "list()"), "2");
+        s_CertifyAndSync(doctorId, "-1");
         res = s_TrackList(doctorId);
         s_CheckResponse(res);
         Assert.assertEquals(code, "1000000");

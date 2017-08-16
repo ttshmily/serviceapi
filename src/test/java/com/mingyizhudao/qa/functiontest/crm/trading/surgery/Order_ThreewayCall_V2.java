@@ -81,8 +81,8 @@ public class Order_ThreewayCall_V2 extends BaseTest {
         body.put("audio_file", "http://www.automation.com");
         body.put("record_type", "success");
         body.put("reject_reason", "http://www.automation.com");
-        long platform_p = Generator.randomInt(100);
-        long agent_p = Generator.randomInt(20);
+        long platform_p = Generator.randomInt(20);
+        long agent_p = 100 - platform_p;
         body.put("platform_proportion", String.valueOf(platform_p)); //百分比
         body.put("agent_proportion", String.valueOf(agent_p)); //百分比
         res = HttpRequest.s_SendPost(host_crm+uri, body.toString(), crm_token, pathValue);

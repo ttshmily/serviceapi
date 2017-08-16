@@ -77,7 +77,7 @@ public class UpdateDoctorProfile_V1 extends BaseTest {
         dp.getDoctor().setDepartment("科室");
         res = HttpRequest.s_SendPost(host_doc + uri, JSONObject.fromObject(dp).toString(), tmpToken);
         s_CheckResponse(res);
-        Assert.assertEquals(code, "1000000", "我想1000000");
+        Assert.assertEquals(code, "1000000");
 
         res = GetDoctorProfile_V1.s_MyProfile(tmpToken);
         s_CheckResponse(res);
@@ -171,7 +171,7 @@ public class UpdateDoctorProfile_V1 extends BaseTest {
         HashMap<String, String> doc = s_CreateSyncedDoctor(dp);
         String tmpToken = doc.get("token");
 
-        res = HttpRequest.s_SendPost(host_doc + uri, JSONObject.fromObject(dp).toString(), mainToken);
+        res = HttpRequest.s_SendPost(host_doc + uri, JSONObject.fromObject(dp).toString(), tmpToken+"1");
         s_CheckResponse(res);
         Assert.assertEquals(code, "1211012");
     }
@@ -194,8 +194,8 @@ public class UpdateDoctorProfile_V1 extends BaseTest {
 
         res = GetDoctorProfile_V1.s_MyProfile(tmpToken);
         s_CheckResponse(res);
-        Assert.assertEquals(Helper.s_ParseJson(data, "doctor:doctor_card_pictures(0):key"), "2017/05/04/1265834e-97d8-44a0-95e7-047c7facaee8/IMG_20170429_102737.jpg", "key值错误");
-        Assert.assertEquals(Helper.s_ParseJson(data, "doctor:doctor_card_pictures(0):type"), "3", "type值错误");
+        Assert.assertEquals(Helper.s_ParseJson(data, "doctor:doctor_card_pictures(0):key"), dp.getDoctor().getDoctor_card_pictures().get(0).getKey(), "key值错误");
+        Assert.assertEquals(Helper.s_ParseJson(data, "doctor:doctor_card_pictures(0):type"), dp.getDoctor().getDoctor_card_pictures().get(0).getType(), "type值错误");
         Assert.assertNotNull(Helper.s_ParseJson(data, "doctor:doctor_card_pictures(0):url"), "url值错误");
         Assert.assertNotNull(Helper.s_ParseJson(data, "doctor:doctor_card_pictures(0):large_url"), "large_url缺少");
     }

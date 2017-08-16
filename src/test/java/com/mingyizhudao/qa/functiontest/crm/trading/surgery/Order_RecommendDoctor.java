@@ -63,8 +63,9 @@ public class Order_RecommendDoctor extends BaseTest {
         pathValue.put("orderNumber", order_number);
         JSONObject body = new JSONObject();
         User dp = new User();
+        dp.getDoctor().setHospital_id("98");
         HashMap<String, String> doc = s_CreateSyncedDoctor(dp);
-        String recommendedId = doc.get("expert_id");
+        String recommendedId = doc.get("expert_id");//常州市武进人民医院, 常州，区域服务人员 - 方超
         body.put("surgeon_id",recommendedId);
         body.put("content","自动化推荐的医生");
         res = HttpRequest.s_SendPut(host_crm+uri, body.toString(), crm_token, pathValue);
@@ -86,8 +87,8 @@ public class Order_RecommendDoctor extends BaseTest {
         Assert.assertNotNull(Helper.s_ParseJson(data, "surgeon_province_name"));
         Assert.assertEquals(Helper.s_ParseJson(data, "surgeon_department"), dp.getDoctor().getDepartment());
         Assert.assertEquals(Helper.s_ParseJson(data, "surgeon_major"), majorName(dp.getDoctor().getMajor_id()));
-        Assert.assertNotNull(Helper.s_ParseJson(data, "surgeon_referrer_id"));
-        Assert.assertNotNull(Helper.s_ParseJson(data, "surgeon_referrer_name"));
+        Assert.assertEquals(Helper.s_ParseJson(data, "surgeon_referrer_id"), "SH0133");//常州市武进人民医院, 常州，区域服务人员 - 方超
+        Assert.assertEquals(Helper.s_ParseJson(data, "surgeon_referrer_name"), "方超");//常州市武进人民医院, 常州，区域服务人员 - 方超
         Assert.assertNotNull(Helper.s_ParseJson(data, "surgeon_referrer_group_id"));
         Assert.assertNotNull(Helper.s_ParseJson(data, "surgeon_registration_time"));
     }
