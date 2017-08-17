@@ -31,9 +31,9 @@ public class VisitRecordList extends BaseTest {
         String res = "";
         HashMap<String, String> query = new HashMap<>();
 
-        for (String createDate:s_VisitDate(bda_token_staff)) {
+        for (String createDate:s_VisitDate(bda_session_staff)) {
             query.put("createDate", createDate);
-            res = s_SendGet(host_bda + uri, query, bda_token_staff);
+            res = s_SendGet(host_bda + uri, query, bda_session_staff);
 
             s_CheckResponse(res);
             Assert.assertEquals(code, "1000000");
@@ -47,19 +47,19 @@ public class VisitRecordList extends BaseTest {
         String res = "";
         HashMap<String, String> query = new HashMap<>();
 
-        for (String createDate:s_VisitDate(bda_token)) {
+        for (String createDate:s_VisitDate(bda_session)) {
             query.put("createDate", createDate);
-            res = s_SendGet(host_bda + uri, query, bda_token);
+            res = s_SendGet(host_bda + uri, query, bda_session);
             s_CheckResponse(res);
             Assert.assertEquals(code, "1000000");
             Assert.assertNotEquals(data.getJSONArray("list").size(), 0);
         }
 
-        s_Create(bda_token_staff);
+        s_Create(bda_session_staff);
         query.put("staff_id", "SH0098");
-        for (String createDate:s_VisitDate(bda_token_staff)) {
+        for (String createDate:s_VisitDate(bda_session_staff)) {
             query.put("createDate", createDate);
-            String res1 = s_SendGet(host_bda + uri, query, bda_token);
+            String res1 = s_SendGet(host_bda + uri, query, bda_session);
             s_CheckResponse(res1);
             int size1 = data.getJSONArray("list").size();
             String res2 = s_SendGet(host_bda + uri, query, bda_token_staff);

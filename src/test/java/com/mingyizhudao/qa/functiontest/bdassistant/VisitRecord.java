@@ -17,12 +17,12 @@ public class VisitRecord extends BaseTest {
     public static final String version = "/api/v1";
     public static String uri = version+"/visitRecord/{id}";
 
-    public static String s_Detail(String id) {
+    public static String s_Detail(String id, String token) {
         String res = "";
         TestLogger logger = new TestLogger(s_JobName());
         HashMap<String, String> pathValue = new HashMap<>();
         pathValue.put("id", id);
-        res = HttpRequest.s_SendGet(host_bda + uri, "", crm_token, pathValue);
+        res = HttpRequest.s_SendGet(host_bda + uri, "", token, pathValue);
         return res;
     }
 }

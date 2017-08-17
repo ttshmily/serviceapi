@@ -36,8 +36,8 @@ public class VisitRecordCreate extends BaseTest {
         body.put("doctor_hospital_name", "xx医院");
         body.put("doctor_department_name", "xx部门");
         body.put("doctor_medical_title", randomMedicalId());
-        body.put("interview_start_time", randomDateFromNow(1,2, new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss")));
-        body.put("interview_end_time", randomDateFromNow(1,2, new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss")));
+        body.put("interview_start_time", randomDateFromNow(1,2, new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'")));
+        body.put("interview_end_time", randomDateFromNow(1,2, new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'")));
         body.put("location", "xx location");
         body.put("visit_content", randomString(100));
 
@@ -59,19 +59,19 @@ public class VisitRecordCreate extends BaseTest {
         body.put("doctor_hospital_name", "xx医院");
         body.put("doctor_department_name", "xx部门");
         body.put("doctor_medical_title", randomMedicalId());
-        body.put("interview_start_time", randomDateFromNow(1,2, new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss")));
-        body.put("interview_end_time", randomDateFromNow(1,2, new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss")));
+        body.put("interview_start_time", randomDateFromNow(1,2, new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'")));
+        body.put("interview_end_time", randomDateFromNow(1,2, new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'")));
         body.put("location", "xx location");
         body.put("visit_content", randomString(100));
 
-        for (String token:new String[] {bda_token_staff, bda_token}) {
-            res = s_SendPost(host_bda + uri, body.toString(), bda_token_staff);
+        for (String token:new String[] {bda_session_staff, bda_session}) {
+            res = s_SendPost(host_bda + uri, body.toString(), bda_session_staff);
 
             s_CheckResponse(res);
             Assert.assertEquals(code, "1000000");
 
             String recordId = data.getString("id");
-            res = s_Detail(recordId);
+            res = s_Detail(recordId, token);
             s_CheckResponse(res);
             Assert.assertEquals(data.getString("doctor_id"), body.getString("doctor_id"));
             Assert.assertEquals(data.getString("doctor_user_id"), body.getString("doctor_user_id"));
@@ -83,7 +83,7 @@ public class VisitRecordCreate extends BaseTest {
             Assert.assertEquals(data.getString("interview_end_time"), body.getString("interview_end_time"));
             Assert.assertEquals(data.getString("location"), body.getString("location"));
             Assert.assertEquals(data.getString("visit_content"), body.getString("visit_content"));
-            if (token.equals(bda_token)) {
+            if (token.equals(bda_session)) {
                 Assert.assertEquals(data.getString("staff_id"), "SH0098");
             } else {
                 Assert.assertEquals(data.getString("staff_id"), "SH0133");
@@ -103,19 +103,19 @@ public class VisitRecordCreate extends BaseTest {
         body.put("doctor_hospital_name", "xx医院");
         body.put("doctor_department_name", "xx部门");
         body.put("doctor_medical_title", randomMedicalId());
-        body.put("interview_start_time", randomDateFromNow(1,2, new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss")));
-        body.put("interview_end_time", randomDateFromNow(1,2, new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss")));
+        body.put("interview_start_time", randomDateFromNow(1,2, new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'")));
+        body.put("interview_end_time", randomDateFromNow(1,2, new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'")));
         body.put("location", "xx location");
         body.put("visit_content", randomString(100));
 
-        for (String token:new String[] {bda_token_staff, bda_token}) {
-            res = s_SendPost(host_bda + uri, body.toString(), bda_token_staff);
+        for (String token:new String[] {bda_session_staff, bda_session}) {
+            res = s_SendPost(host_bda + uri, body.toString(), bda_session_staff);
 
             s_CheckResponse(res);
             Assert.assertEquals(code, "1000000");
 
             String recordId = data.getString("id");
-            res = s_Detail(recordId);
+            res = s_Detail(recordId, token);
             s_CheckResponse(res);
             Assert.assertEquals(data.getString("doctor_name"), body.getString("doctor_name"));
             Assert.assertEquals(data.getString("doctor_hospital_id"), body.getString("doctor_hospital_id"));
@@ -125,7 +125,7 @@ public class VisitRecordCreate extends BaseTest {
             Assert.assertEquals(data.getString("interview_end_time"), body.getString("interview_end_time"));
             Assert.assertEquals(data.getString("location"), body.getString("location"));
             Assert.assertEquals(data.getString("visit_content"), body.getString("visit_content"));
-            if (token.equals(bda_token)) {
+            if (token.equals(bda_session)) {
                 Assert.assertEquals(data.getString("staff_id"), "SH0098");
             } else {
                 Assert.assertEquals(data.getString("staff_id"), "SH0133");
@@ -145,19 +145,19 @@ public class VisitRecordCreate extends BaseTest {
         body.put("doctor_hospital_name", "xx医院");
         body.put("doctor_department_name", "xx部门");
         body.put("doctor_medical_title", randomMedicalId());
-        body.put("interview_start_time", randomDateFromNow(1,2, new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss")));
-        body.put("interview_end_time", randomDateFromNow(1,2, new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss")));
+        body.put("interview_start_time", randomDateFromNow(1,2, new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'")));
+        body.put("interview_end_time", randomDateFromNow(1,2, new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'")));
         body.put("location", "xx location");
         body.put("visit_content", randomString(100));
 
-        for (String token:new String[] {bda_token_staff, bda_token}) {
-            res = s_SendPost(host_bda + uri, body.toString(), bda_token_staff);
+        for (String token:new String[] {bda_session_staff, bda_session}) {
+            res = s_SendPost(host_bda + uri, body.toString(), bda_session_staff);
 
             s_CheckResponse(res);
             Assert.assertEquals(code, "1000000");
 
             String recordId = data.getString("id");
-            res = s_Detail(recordId);
+            res = s_Detail(recordId, token);
             s_CheckResponse(res);
             Assert.assertEquals(data.getString("doctor_id"), body.getString("doctor_id"));
             Assert.assertEquals(data.getString("doctor_name"), body.getString("doctor_name"));
@@ -168,7 +168,7 @@ public class VisitRecordCreate extends BaseTest {
             Assert.assertEquals(data.getString("interview_end_time"), body.getString("interview_end_time"));
             Assert.assertEquals(data.getString("location"), body.getString("location"));
             Assert.assertEquals(data.getString("visit_content"), body.getString("visit_content"));
-            if (token.equals(bda_token)) {
+            if (token.equals(bda_session)) {
                 Assert.assertEquals(data.getString("staff_id"), "SH0098");
             } else {
                 Assert.assertEquals(data.getString("staff_id"), "SH0133");
@@ -188,19 +188,19 @@ public class VisitRecordCreate extends BaseTest {
         body.put("doctor_hospital_name", "xx医院");
         body.put("doctor_department_name", "xx部门");
         body.put("doctor_medical_title", randomMedicalId());
-        body.put("interview_start_time", randomDateFromNow(1,2, new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss")));
-        body.put("interview_end_time", randomDateFromNow(1,2, new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss")));
+        body.put("interview_start_time", randomDateFromNow(1,2, new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'")));
+        body.put("interview_end_time", randomDateFromNow(1,2, new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'")));
         body.put("location", "xx location");
         body.put("visit_content", randomString(100));
 
-        for (String token:new String[] {bda_token_staff, bda_token}) {
-            res = s_SendPost(host_bda + uri, body.toString(), bda_token_staff);
+        for (String token:new String[] {bda_session_staff, bda_session}) {
+            res = s_SendPost(host_bda + uri, body.toString(), bda_session_staff);
 
             s_CheckResponse(res);
             Assert.assertEquals(code, "1000000");
 
             String recordId = data.getString("id");
-            res = s_Detail(recordId);
+            res = s_Detail(recordId, token);
             s_CheckResponse(res);
             Assert.assertEquals(data.getString("doctor_user_id"), body.getString("doctor_user_id"));
             Assert.assertEquals(data.getString("doctor_name"), body.getString("doctor_name"));
@@ -211,7 +211,7 @@ public class VisitRecordCreate extends BaseTest {
             Assert.assertEquals(data.getString("interview_end_time"), body.getString("interview_end_time"));
             Assert.assertEquals(data.getString("location"), body.getString("location"));
             Assert.assertEquals(data.getString("visit_content"), body.getString("visit_content"));
-            if (token.equals(bda_token)) {
+            if (token.equals(bda_session)) {
                 Assert.assertEquals(data.getString("staff_id"), "SH0098");
             } else {
                 Assert.assertEquals(data.getString("staff_id"), "SH0133");

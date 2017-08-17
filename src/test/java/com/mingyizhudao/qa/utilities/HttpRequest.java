@@ -1,5 +1,6 @@
 package com.mingyizhudao.qa.utilities;
 
+import com.mingyizhudao.qa.common.BaseTest;
 import com.mingyizhudao.qa.common.TestLogger;
 
 import java.io.*;
@@ -70,6 +71,7 @@ public class HttpRequest {
 			httpURLConnection.setRequestProperty("connection", "close");
             httpURLConnection.setRequestProperty("Content-Type", "application/json");
             httpURLConnection.setRequestProperty("user-agent", "Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1;SV1)");
+            httpURLConnection.setRequestProperty("Cookie", "myzd="+ authCode);
 			httpURLConnection.setInstanceFollowRedirects(true);
 			HttpURLConnection.setFollowRedirects(true);
             if (!authCode.isEmpty()) httpURLConnection.setRequestProperty("Authorization", "Bearer " + authCode);
@@ -206,6 +208,7 @@ public class HttpRequest {
             httpURLConnection.setRequestMethod("POST");
             httpURLConnection.setRequestProperty("Content-Type", "application/json");
             httpURLConnection.setRequestProperty("connection", "close");
+            httpURLConnection.setRequestProperty("Cookie", "myzd="+ authCode);
             httpURLConnection.setRequestProperty("Referer", "http://www.mingyizhudao.com");
             if (!authCode.isEmpty())
                 httpURLConnection.setRequestProperty("Authorization", "Bearer " +authCode);
@@ -376,6 +379,7 @@ public class HttpRequest {
             // 设置通用的请求属性
             httpURLConnection.setRequestMethod("PUT");
             httpURLConnection.setRequestProperty("Content-Type", "application/json");
+            httpURLConnection.setRequestProperty("Cookie", "myzd="+ authCode);
             httpURLConnection.setRequestProperty("connection", "Keep-Alive");
             if (!authCode.isEmpty())
                 httpURLConnection.setRequestProperty("Authorization", "Bearer "+authCode);
@@ -465,6 +469,7 @@ public class HttpRequest {
             HttpURLConnection httpURLConnection = (HttpURLConnection)conn;
             // 设置通用的请求属性
             httpURLConnection.setRequestMethod("DELETE");
+            httpURLConnection.setRequestProperty("Cookie", "myzd="+ authCode);
             httpURLConnection.setRequestProperty("Content-Type", "application/json");
             httpURLConnection.setRequestProperty("connection", "Keep-Alive");
             if (!authCode.isEmpty())

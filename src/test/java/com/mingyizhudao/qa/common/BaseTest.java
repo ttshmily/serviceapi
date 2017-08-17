@@ -43,6 +43,8 @@ public class BaseTest {
     public static String crm_token = "";
     public static String bda_token = "";
     public static String bda_token_staff = "";
+    public static String bda_session = "";
+    public static String bda_session_staff = "";
     public static String init_kb = "";
     public static String designatedDoctor_token = "";
 
@@ -90,7 +92,7 @@ public class BaseTest {
             protocol = prop.getProperty("protocol", "http");
             host_doc = prop.getProperty("host_doc", "services.dev.myzd.info/doctor");
             host_crm = prop.getProperty("host_crm", "services.dev.myzd.info/crm");
-            host_bda = prop.getProperty("host_bda", "services.dev.myzd.info/bd-assistant");
+            host_bda = prop.getProperty("host_bda", "services.dev.myzd.info/bd-service");
             host_login = prop.getProperty("host_login", "login.dev.myzd.info");
             host_kb = prop.getProperty("host_kb", "192.168.33.1");
             host_appointment = prop.getProperty("host_appointment", "services.dev.myzd.info/ims");
@@ -132,8 +134,10 @@ public class BaseTest {
     public void SetUpSuite() throws Exception {
         KnowledgeBase.s_Init();
         crm_token = JSONObject.fromObject(HttpRequest.s_SendGet("http://services.dev.myzd.info/crm/api/internal/devToken" , "email="+mainOperatorId+"&name=方超（男）", "")).getJSONObject("data").getString("token");
-        bda_token = JSONObject.fromObject(HttpRequest.s_SendGet("http://work.myzd.info/wx/internal/api/dev-tokens" , "", "")).getJSONObject("data").getJSONObject(mainOperatorId).getString("token");
-        bda_token_staff = JSONObject.fromObject(HttpRequest.s_SendGet("http://work.myzd.info/wx/internal/api/dev-tokens" , "", "")).getJSONObject("data").getJSONObject("lei.wang@mingyizhudao.com").getString("token");
+//        bda_token = JSONObject.fromObject(HttpRequest.s_SendGet("http://work.myzd.info/wx/internal/api/dev-tokens" , "", "")).getJSONObject("data").getJSONObject(mainOperatorId).getString("token");
+//        bda_token_staff = JSONObject.fromObject(HttpRequest.s_SendGet("http://work.myzd.info/wx/internal/api/dev-tokens" , "", "")).getJSONObject("data").getJSONObject("lei.wang@mingyizhudao.com").getString("token");
+        bda_session = JSONObject.fromObject(HttpRequest.s_SendGet("http://services.dev.myzd.info/internal/api/session/create" , "number=Sh0133", "")).getString("data");
+        bda_session_staff = JSONObject.fromObject(HttpRequest.s_SendGet("http://services.dev.myzd.info/internal/api/session/create" , "number=Sh0098", "")).getString("data");
         mainUser = new User();
         mainUser.getDoctor().setHospital_id("98");//常州市武进人民医院, 常州，区域服务人员 - 方超
         HashMap<String,String> mainDoctorInfo = s_CreateSyncedDoctor(mainUser);
