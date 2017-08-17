@@ -44,7 +44,7 @@ public class DoctorListV2 extends BaseTest {
         //TODO 每个地推所对应的城市需要提前准备好
         String cityId = "";
 
-        res = HttpRequest.s_SendGet(host_bda + uri, query, bda_token);
+        res = HttpRequest.s_SendGet(host_bda + uri, query, bda_session);
         s_CheckResponse(res);
         Assert.assertEquals(code, "1000000", "主管查看下属应该成功");
 
@@ -63,7 +63,7 @@ public class DoctorListV2 extends BaseTest {
         String agent_contact_id = "SH0001";
         query.put("agent_contact_id", agent_contact_id);
 
-        res = HttpRequest.s_SendGet(host_bda + uri, query, bda_token);
+        res = HttpRequest.s_SendGet(host_bda + uri, query, bda_session);
         s_CheckResponse(res);
         Assert.assertNotEquals(code, "1000000", "主管查看非下属不应该成功");
     }
@@ -79,7 +79,7 @@ public class DoctorListV2 extends BaseTest {
         // TODO
         String cityId = "";
 
-        res = HttpRequest.s_SendGet(host_bda + uri, query, bda_token);
+        res = HttpRequest.s_SendGet(host_bda + uri, query, bda_session);
         s_CheckResponse(res);
         Assert.assertEquals(code, "1000000", "");
         // TODO
@@ -98,11 +98,11 @@ public class DoctorListV2 extends BaseTest {
         String agent_contact_id = Generator.randomEmployeeId();
         query.put("agent_contact_id", agent_contact_id);
 
-        HashMap<String, List<String>> cities = PersonalInfoV2.BDInfo(bda_token_staff);
+        HashMap<String, List<String>> cities = PersonalInfoV2.BDInfo(bda_session_staff);
         // TODO
         String cityId = "";
         query.put("city_id", cityId);
-        res = HttpRequest.s_SendGet(host_bda + uri, query, bda_token);
+        res = HttpRequest.s_SendGet(host_bda + uri, query, bda_session);
         s_CheckResponse(res);
         Assert.assertEquals(code, "1000000", "");
 
@@ -127,7 +127,7 @@ public class DoctorListV2 extends BaseTest {
 
         String medical_title_list = Generator.randomMedicalId();
         query.put("medical_title", medical_title_list);
-        res = HttpRequest.s_SendGet(host_bda + uri, query, bda_token);
+        res = HttpRequest.s_SendGet(host_bda + uri, query, bda_session);
         s_CheckResponse(res);
         Assert.assertEquals(code, "1000000", "");
 
@@ -153,7 +153,7 @@ public class DoctorListV2 extends BaseTest {
 
         String academic_title_list = Generator.randomAcademicId();
         query.put("academic_title", academic_title_list);
-        res = HttpRequest.s_SendGet(host_bda + uri, query, bda_token);
+        res = HttpRequest.s_SendGet(host_bda + uri, query, bda_session);
         s_CheckResponse(res);
         Assert.assertEquals(code, "1000000", "");
 
@@ -179,7 +179,7 @@ public class DoctorListV2 extends BaseTest {
 
         String academic_title_list = Generator.randomAcademicId();
         query.put("academic_title", academic_title_list);
-        res = HttpRequest.s_SendGet(host_bda + uri, query, bda_token_staff);
+        res = HttpRequest.s_SendGet(host_bda + uri, query, bda_session_staff);
         s_CheckResponse(res);
         Assert.assertEquals(code, "1000000", "");
 

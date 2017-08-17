@@ -173,7 +173,7 @@ public class UpdateDoctorProfile_V1 extends BaseTest {
 
         res = HttpRequest.s_SendPost(host_doc + uri, JSONObject.fromObject(dp).toString(), tmpToken+"1");
         s_CheckResponse(res);
-        Assert.assertEquals(code, "1211012");
+        Assert.assertNotEquals(code, "1000000");
     }
 
     @Test

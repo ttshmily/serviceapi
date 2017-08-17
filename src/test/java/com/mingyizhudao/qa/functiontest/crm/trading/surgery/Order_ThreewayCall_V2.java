@@ -51,8 +51,8 @@ public class Order_ThreewayCall_V2 extends BaseTest {
         body.put("audio_file", "http://www.automation.com");
         body.put("record_type", result);
         body.put("reject_reason", "http://www.automation.com");
-        body.put("platform_proportion", "5");
-        body.put("agent_proportion", "15");
+        body.put("platform_fee", Generator.randomInt(4)+1000);
+        body.put("agent_fee", Generator.randomInt(4)+1000);
         res = HttpRequest.s_SendPost(host_crm+uri, body.toString(), crm_token, pathValue);
         res = Order_Detail.s_Detail(orderId);
         return Helper.s_ParseJson(JSONObject.fromObject(res), "data:status");
@@ -81,10 +81,10 @@ public class Order_ThreewayCall_V2 extends BaseTest {
         body.put("audio_file", "http://www.automation.com");
         body.put("record_type", "success");
         body.put("reject_reason", "http://www.automation.com");
-        long platform_p = Generator.randomInt(20);
-        long agent_p = 100 - platform_p;
-        body.put("platform_proportion", String.valueOf(platform_p)); //百分比
-        body.put("agent_proportion", String.valueOf(agent_p)); //百分比
+        long platform_p = Generator.randomInt(4)*100;
+        long agent_p = Generator.randomInt(4)*100;
+        body.put("platform_fee", String.valueOf(platform_p)); //百分比
+        body.put("agent_fee", String.valueOf(agent_p)); //百分比
         res = HttpRequest.s_SendPost(host_crm+uri, body.toString(), crm_token, pathValue);
         s_CheckResponse(res);
         Assert.assertEquals(code, "1000000");
@@ -100,9 +100,9 @@ public class Order_ThreewayCall_V2 extends BaseTest {
 //        Assert.assertEquals(UT.s_ParseJson(data, "minor_disease_id"), minorDiseaseId);
 //        Assert.assertEquals(UT.s_ParseJson(data, "major_disease_name"), UT.diseaseName(majorDiseaseId));
 //        Assert.assertEquals(UT.s_ParseJson(data, "minor_disease_name"), UT.diseaseName(minorDiseaseId));
-        Assert.assertEquals(Helper.s_ParseJson(data, "agent_fee"), String.valueOf(fee*agent_p/100));
-        Assert.assertEquals(Helper.s_ParseJson(data, "platform_fee"), String.valueOf(fee*platform_p/100));
-        Assert.assertEquals(Helper.s_ParseJson(data, "pre_order_fee"), String.valueOf(fee*(agent_p+platform_p)/100));
+        Assert.assertEquals(Helper.s_ParseJson(data, "agent_fee"), body.getString("agent_fee"));
+        Assert.assertEquals(Helper.s_ParseJson(data, "platform_fee"), body.getString("platform_fee"));
+        Assert.assertEquals(Helper.s_ParseJson(data, "pre_order_fee"), String.valueOf(platform_p+agent_p));
     }
 
     @Test
@@ -128,8 +128,8 @@ public class Order_ThreewayCall_V2 extends BaseTest {
         body.put("audio_file", "http://www.automation.com");
         body.put("record_type", "undetermined");
         body.put("reject_reason", "http://www.automation.com");
-        body.put("platform_proportion", "5");
-        body.put("agent_proportion", "15");
+        body.put("platform_fee", "5");
+        body.put("agent_fee", "15");
         res = HttpRequest.s_SendPost(host_crm+uri, body.toString(), crm_token, pathValue);
         s_CheckResponse(res);
         Assert.assertEquals(code, "1000000");
