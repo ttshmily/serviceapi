@@ -2,7 +2,7 @@ package com.mingyizhudao.qa.functiontest.crm.trading.appointment;
 
 import com.mingyizhudao.qa.common.BaseTest;
 import com.mingyizhudao.qa.common.TestLogger;
-import com.mingyizhudao.qa.dataprofile.Appointment;
+import com.mingyizhudao.qa.dataprofile.AppointmentOrder;
 import net.sf.json.JSONObject;
 import org.testng.Assert;
 import org.testng.annotations.Test;
@@ -63,7 +63,7 @@ public class Ap_RiskControl extends BaseTest{
     @Test
     public void test_01_风控推荐一名医生() {
         String res = "";
-        String orderNumber = s_Create(new Appointment());
+        String orderNumber = s_Create(new AppointmentOrder());
         HashMap<String, String> pathValue = new HashMap<>();
         pathValue.put("orderNumber", orderNumber);
         JSONObject body = new JSONObject();
@@ -81,7 +81,7 @@ public class Ap_RiskControl extends BaseTest{
     @Test
     public void test_02_风控推荐二名医生() {
         String res = "";
-        String orderNumber = s_Create(new Appointment());
+        String orderNumber = s_Create(new AppointmentOrder());
         HashMap<String, String> pathValue = new HashMap<>();
         pathValue.put("orderNumber", orderNumber);
         JSONObject body = new JSONObject();
@@ -102,7 +102,7 @@ public class Ap_RiskControl extends BaseTest{
     @Test
     public void test_03_风控不通过() {
         String res = "";
-        Appointment ap = new Appointment();
+        AppointmentOrder ap = new AppointmentOrder();
         String orderNumber = s_Create(ap);
         HashMap<String, String> pathValue = new HashMap<>();
         pathValue.put("orderNumber", orderNumber);
@@ -125,7 +125,7 @@ public class Ap_RiskControl extends BaseTest{
     @Test
     public void test_05_风控不通过理由不完整() {
         String res = "";
-        Appointment ap = new Appointment();
+        AppointmentOrder ap = new AppointmentOrder();
         String orderNumber = s_Create(ap);
         HashMap<String, String> pathValue = new HashMap<>();
         pathValue.put("orderNumber", orderNumber);
@@ -139,7 +139,7 @@ public class Ap_RiskControl extends BaseTest{
     @Test
     public void test_06_风控result字段不正确() {
         String res = "";
-        Appointment ap = new Appointment();
+        AppointmentOrder ap = new AppointmentOrder();
         String orderNumber = s_Create(ap);
         HashMap<String, String> pathValue = new HashMap<>();
         pathValue.put("orderNumber", orderNumber);
@@ -160,7 +160,7 @@ public class Ap_RiskControl extends BaseTest{
     @Test
     public void test_07_风控result字段false时有成功信息() {
         String res = "";
-        Appointment ap = new Appointment();
+        AppointmentOrder ap = new AppointmentOrder();
         String orderNumber = s_Create(ap);
         HashMap<String, String> pathValue = new HashMap<>();
         pathValue.put("orderNumber", orderNumber);

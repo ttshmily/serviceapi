@@ -2,9 +2,8 @@ package com.mingyizhudao.qa.functiontest.crm.trading.appointment;
 
 import com.mingyizhudao.qa.common.BaseTest;
 import com.mingyizhudao.qa.common.TestLogger;
-import com.mingyizhudao.qa.dataprofile.Appointment;
+import com.mingyizhudao.qa.dataprofile.AppointmentOrder;
 import net.sf.json.JSONArray;
-import net.sf.json.JSONObject;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
@@ -34,7 +33,7 @@ public class Ap_Track extends BaseTest {
     @Test
     public void test_01_创建订单记录CREATE_ORDER() {
         String res = "";
-        String orderNumber = s_Create(new Appointment());
+        String orderNumber = s_Create(new AppointmentOrder());
         HashMap<String, String> pathValue = new HashMap<>();
         pathValue.put("orderNumber", orderNumber);
 
@@ -49,7 +48,7 @@ public class Ap_Track extends BaseTest {
     @Test
     public void test_02_推荐医生记录RECOMMEND_DOCTOR() {
         String res = "";
-        String orderNumber = s_Create(new Appointment());
+        String orderNumber = s_Create(new AppointmentOrder());
         HashMap<String, String> pathValue = new HashMap<>();
         pathValue.put("orderNumber", orderNumber);
 
@@ -69,7 +68,7 @@ public class Ap_Track extends BaseTest {
     @Test
     public void test_03_修改订单记录UPDATE_ORDER() {
         String res = "";
-        Appointment ap = new Appointment();
+        AppointmentOrder ap = new AppointmentOrder();
         String orderNumber = s_Create(ap);
         HashMap<String, String> pathValue = new HashMap<>();
         pathValue.put("orderNumber", orderNumber);
@@ -90,7 +89,7 @@ public class Ap_Track extends BaseTest {
     @Test
     public void test_04_确认医生记录CONFIRM_SURGEON() {
         String res = "";
-        Appointment ap = new Appointment();
+        AppointmentOrder ap = new AppointmentOrder();
         String orderNumber = s_Create(ap);
         HashMap<String, String> pathValue = new HashMap<>();
         pathValue.put("orderNumber", orderNumber);
@@ -113,7 +112,7 @@ public class Ap_Track extends BaseTest {
     @Test
     public void test_05_关闭订单记录CANCEL_BEFORE_PAY() {
         String res = "";
-        Appointment ap = new Appointment();
+        AppointmentOrder ap = new AppointmentOrder();
         String orderNumber = s_Create(ap);
         HashMap<String, String> pathValue = new HashMap<>();
         pathValue.put("orderNumber", orderNumber);
@@ -136,7 +135,7 @@ public class Ap_Track extends BaseTest {
     @Test
     public void test_06_添加支付账号ADD_ALIPAY_ACCOUNT() {
         String res = "";
-        Appointment ap = new Appointment();
+        AppointmentOrder ap = new AppointmentOrder();
         String orderNumber = s_Create(ap);
         HashMap<String, String> pathValue = new HashMap<>();
         pathValue.put("orderNumber", orderNumber);

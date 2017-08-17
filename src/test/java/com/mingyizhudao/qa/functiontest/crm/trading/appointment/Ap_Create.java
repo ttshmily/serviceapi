@@ -1,7 +1,7 @@
 package com.mingyizhudao.qa.functiontest.crm.trading.appointment;
 
 import com.mingyizhudao.qa.common.BaseTest;
-import com.mingyizhudao.qa.dataprofile.Appointment;
+import com.mingyizhudao.qa.dataprofile.AppointmentOrder;
 import com.mingyizhudao.qa.common.TestLogger;
 
 import static com.mingyizhudao.qa.utilities.Helper.*;
@@ -26,7 +26,7 @@ public class Ap_Create extends BaseTest {
     public static final String version = "/api/v1";
     public static String uri = version+"/appointments";
 
-    public static String s_Create(Appointment ap) {
+    public static String s_Create(AppointmentOrder ap) {
         String res = HttpRequest.s_SendPost(host_crm+uri, JSONObject.fromObject(ap).toString(), crm_token);
         return JSONObject.fromObject(res).getJSONObject("data").getString("order_number");
     }
@@ -34,7 +34,7 @@ public class Ap_Create extends BaseTest {
     @Test
     public void test_01_创建订单信息保存() {
         String res = "";
-        Appointment ap = new Appointment();
+        AppointmentOrder ap = new AppointmentOrder();
         res = HttpRequest.s_SendPost(host_crm+uri, JSONObject.fromObject(ap).toString(), crm_token);
         s_CheckResponse(res);
         Assert.assertEquals(code, "1000000");
@@ -66,7 +66,7 @@ public class Ap_Create extends BaseTest {
     @Test
     public void test_02_创建订单检查创建时间() {
         String res = "";
-        Appointment ap = new Appointment();
+        AppointmentOrder ap = new AppointmentOrder();
         SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'");
         String now = null;
         try {
@@ -84,7 +84,7 @@ public class Ap_Create extends BaseTest {
     @Test
     public void test_03_创建测试订单() {
         String res = "";
-        Appointment ap = new Appointment();
+        AppointmentOrder ap = new AppointmentOrder();
         ap.setPatient_phone("13817634203"); // a test number
         SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'");
         String now = null;

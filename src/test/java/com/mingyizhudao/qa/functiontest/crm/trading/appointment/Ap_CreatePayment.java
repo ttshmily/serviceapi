@@ -2,7 +2,7 @@ package com.mingyizhudao.qa.functiontest.crm.trading.appointment;
 
 import com.mingyizhudao.qa.common.BaseTest;
 import com.mingyizhudao.qa.common.TestLogger;
-import com.mingyizhudao.qa.dataprofile.Appointment;
+import com.mingyizhudao.qa.dataprofile.AppointmentOrder;
 import com.mingyizhudao.qa.utilities.HttpRequest;
 import net.sf.json.JSONObject;
 import org.testng.Assert;
@@ -39,7 +39,7 @@ public class Ap_CreatePayment extends BaseTest {
     @Test
     public void test_01_创建支付链接_APPOINTMENT() {
         String res = "";
-        Appointment ap = new Appointment();
+        AppointmentOrder ap = new AppointmentOrder();
         String orderNumber = s_Create(ap);
         HashMap<String, String> pathValue = new HashMap<>();
         pathValue.put("orderNumber", orderNumber);
@@ -69,7 +69,7 @@ public class Ap_CreatePayment extends BaseTest {
     @Test
     public void test_02_创建支付链接_DOCTOR() {
         String res = "";
-        Appointment ap = new Appointment();
+        AppointmentOrder ap = new AppointmentOrder();
         String orderNumber = s_Create(ap);
         HashMap<String, String> pathValue = new HashMap<>();
         pathValue.put("orderNumber", orderNumber);
@@ -99,7 +99,7 @@ public class Ap_CreatePayment extends BaseTest {
     @Test
     public void test_03_创建支付链接_PLATFORM() {
         String res = "";
-        Appointment ap = new Appointment();
+        AppointmentOrder ap = new AppointmentOrder();
         String orderNumber = s_Create(ap);
         HashMap<String, String> pathValue = new HashMap<>();
         pathValue.put("orderNumber", orderNumber);
@@ -129,7 +129,7 @@ public class Ap_CreatePayment extends BaseTest {
     @Test
     public void test_04_创建支付链接_DOCTOR_PLATFORM() {
         String res = "";
-        Appointment ap = new Appointment();
+        AppointmentOrder ap = new AppointmentOrder();
         String orderNumber = s_Create(ap);
         HashMap<String, String> pathValue = new HashMap<>();
         pathValue.put("orderNumber", orderNumber);
@@ -158,7 +158,7 @@ public class Ap_CreatePayment extends BaseTest {
     @Test
     public void test_05_创建支付链接_APPOINTMENT_X() {
         String res = "";
-        Appointment ap = new Appointment();
+        AppointmentOrder ap = new AppointmentOrder();
         String orderNumber = s_Create(ap);
         HashMap<String, String> pathValue = new HashMap<>();
         pathValue.put("orderNumber", orderNumber);

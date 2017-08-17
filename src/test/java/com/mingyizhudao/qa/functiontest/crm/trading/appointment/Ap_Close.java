@@ -2,7 +2,7 @@ package com.mingyizhudao.qa.functiontest.crm.trading.appointment;
 
 import com.mingyizhudao.qa.common.BaseTest;
 import com.mingyizhudao.qa.common.TestLogger;
-import com.mingyizhudao.qa.dataprofile.Appointment;
+import com.mingyizhudao.qa.dataprofile.AppointmentOrder;
 
 import static com.mingyizhudao.qa.functiontest.crm.trading.appointment.Ap_Confirm.s_Confirm;
 import static com.mingyizhudao.qa.functiontest.crm.trading.appointment.Ap_RiskControl.s_Take;
@@ -39,7 +39,7 @@ public class Ap_Close extends BaseTest {
     @Test
     public void test_01_关闭1000的订单() {
         String res = "";
-        Appointment ap = new Appointment();
+        AppointmentOrder ap = new AppointmentOrder();
         String orderNumber = Ap_Create.s_Create(ap);
         HashMap<String, String> pathValue = new HashMap<>();
         pathValue.put("orderNumber", orderNumber);
@@ -55,7 +55,7 @@ public class Ap_Close extends BaseTest {
     @Test
     public void test_02_关闭2000的订单() {
         String res = "";
-        Appointment ap = new Appointment();
+        AppointmentOrder ap = new AppointmentOrder();
         String orderNumber = Ap_Create.s_Create(ap);
         if (!s_Take(orderNumber)) {
             Assert.fail("设定订单2000状态失败");
@@ -74,7 +74,7 @@ public class Ap_Close extends BaseTest {
     @Test
     public void test_03_关闭3000的订单() {
         String res = "";
-        Appointment ap = new Appointment();
+        AppointmentOrder ap = new AppointmentOrder();
         String orderNumber = Ap_Create.s_Create(ap);
         if (!s_Take(orderNumber) || !s_Confirm(orderNumber)) {
             Assert.fail("设定订单3000状态失败");
@@ -93,7 +93,7 @@ public class Ap_Close extends BaseTest {
     @Test
     public void test_04_关闭回退到1000的订单() {
         String res = "";
-        Appointment ap = new Appointment();
+        AppointmentOrder ap = new AppointmentOrder();
         String orderNumber = Ap_Create.s_Create(ap);
         if (!s_Take(orderNumber) || !s_Rollback(orderNumber)) {
             Assert.fail("设定订单3000状态失败");

@@ -2,11 +2,10 @@ package com.mingyizhudao.qa.functiontest.crm.trading.appointment;
 
 import com.mingyizhudao.qa.common.BaseTest;
 import com.mingyizhudao.qa.common.TestLogger;
-import com.mingyizhudao.qa.dataprofile.Appointment;
+import com.mingyizhudao.qa.dataprofile.AppointmentOrder;
 
 import static com.mingyizhudao.qa.functiontest.crm.trading.appointment.Ap_Confirm.s_Confirm;
 import static com.mingyizhudao.qa.functiontest.crm.trading.appointment.Ap_RiskControl.s_Take;
-import static com.mingyizhudao.qa.functiontest.crm.trading.appointment.Ap_Rollback.s_Rollback;
 import static com.mingyizhudao.qa.utilities.Generator.*;
 import static com.mingyizhudao.qa.utilities.Helper.*;
 import static com.mingyizhudao.qa.utilities.HttpRequest.*;
@@ -40,7 +39,7 @@ public class Ap_AddAccount extends BaseTest {
     @Test
     public void test_01_添加账号_手机() {
         String res = "";
-        Appointment ap = new Appointment();
+        AppointmentOrder ap = new AppointmentOrder();
         String orderNumber = Ap_Create.s_Create(ap);
         if(!s_Take(orderNumber) || !s_Confirm(orderNumber)) {
             Assert.fail("待支付订单生成失败");
@@ -63,7 +62,7 @@ public class Ap_AddAccount extends BaseTest {
     @Test
     public void test_02_添加账号_邮箱() {
         String res = "";
-        Appointment ap = new Appointment();
+        AppointmentOrder ap = new AppointmentOrder();
         String orderNumber = Ap_Create.s_Create(ap);
         if(!s_Take(orderNumber) || !s_Confirm(orderNumber)) {
             Assert.fail("待支付订单生成失败");
@@ -86,7 +85,7 @@ public class Ap_AddAccount extends BaseTest {
     @Test
     public void test_03_添加账号_缺少姓名() {
         String res = "";
-        Appointment ap = new Appointment();
+        AppointmentOrder ap = new AppointmentOrder();
         String orderNumber = Ap_Create.s_Create(ap);
         if(!s_Take(orderNumber) || !s_Confirm(orderNumber)) {
             Assert.fail("待支付订单生成失败");
@@ -104,7 +103,7 @@ public class Ap_AddAccount extends BaseTest {
     @Test
     public void test_04_添加账号_缺少账户() {
         String res = "";
-        Appointment ap = new Appointment();
+        AppointmentOrder ap = new AppointmentOrder();
         String orderNumber = Ap_Create.s_Create(ap);
         if(!s_Take(orderNumber) || !s_Confirm(orderNumber)) {
             Assert.fail("待支付订单生成失败");
@@ -122,7 +121,7 @@ public class Ap_AddAccount extends BaseTest {
     @Test
     public void test_05_添加账号_非待支付状态() {
         String res = "";
-        Appointment ap = new Appointment();
+        AppointmentOrder ap = new AppointmentOrder();
         String orderNumber = Ap_Create.s_Create(ap);
         HashMap<String, String> pathValue = new HashMap<>();
         pathValue.put("orderNumber", orderNumber);
@@ -144,7 +143,7 @@ public class Ap_AddAccount extends BaseTest {
     @Test
     public void test_06_修改账号() {
         String res = "";
-        Appointment ap = new Appointment();
+        AppointmentOrder ap = new AppointmentOrder();
         String orderNumber = Ap_Create.s_Create(ap);
         if(!s_Take(orderNumber) || !s_Confirm(orderNumber)) {
             Assert.fail("待支付订单生成失败");

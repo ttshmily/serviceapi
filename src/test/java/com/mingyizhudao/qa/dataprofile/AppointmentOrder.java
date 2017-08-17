@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.Random;
 
 @Data
-public class Appointment {
+public class AppointmentOrder {
 
     String expected_appointment_start_date;
     String expected_appointment_due_date;
@@ -34,7 +34,7 @@ public class Appointment {
 
     String source_type;
 
-    public Appointment() {
+    public AppointmentOrder() {
         this.patient_name = "面诊病人"+randomString(4);
         this.patient_age = (int)randomInt(100);
         this.patient_gender = (int)randomInt(2);
@@ -86,7 +86,7 @@ public class Appointment {
     private String appointment_date;
 
     //TODO
-    public Appointment(String type) {
+    public AppointmentOrder(String type) {
         switch (type) {
             case "confirm": {
                 String expert_id = randomExpertId();

@@ -2,7 +2,7 @@ package com.mingyizhudao.qa.functiontest.crm.trading.appointment;
 
 import com.mingyizhudao.qa.common.BaseTest;
 import com.mingyizhudao.qa.common.TestLogger;
-import com.mingyizhudao.qa.dataprofile.Appointment;
+import com.mingyizhudao.qa.dataprofile.AppointmentOrder;
 import net.sf.json.JSONObject;
 import org.testng.Assert;
 import org.testng.annotations.Test;
@@ -39,7 +39,7 @@ public class Ap_Rollback extends BaseTest {
     @Test
     public void test_01_回退面诊订单() {
         String res = "";
-        Appointment ap = new Appointment();
+        AppointmentOrder ap = new AppointmentOrder();
         String orderNumber = s_Create(ap);
         if (!s_Take(orderNumber)) {
             Assert.fail("创建状态2000订单失败");
@@ -70,7 +70,7 @@ public class Ap_Rollback extends BaseTest {
     @Test
     public void test_02_回退面诊订单理由不完整() {
         String res = "";
-        Appointment ap = new Appointment();
+        AppointmentOrder ap = new AppointmentOrder();
         String orderNumber = s_Create(ap);
         if (!s_Take(orderNumber)) {
             Assert.fail("创建状态2000订单失败");

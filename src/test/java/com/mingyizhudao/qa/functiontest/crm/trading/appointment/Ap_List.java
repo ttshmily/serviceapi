@@ -6,7 +6,7 @@ import com.mingyizhudao.qa.common.TestLogger;
 import static com.mingyizhudao.qa.utilities.Generator.randomString;
 import static com.mingyizhudao.qa.utilities.Helper.*;
 
-import com.mingyizhudao.qa.dataprofile.Appointment;
+import com.mingyizhudao.qa.dataprofile.AppointmentOrder;
 import com.mingyizhudao.qa.utilities.Generator;
 import com.mingyizhudao.qa.utilities.HttpRequest;
 import net.sf.json.JSONArray;
@@ -234,7 +234,7 @@ public class Ap_List extends BaseTest {
     @Test
     public void test_07_获取列表搜索患者姓名() {
         String res = "";
-        Appointment ap = new Appointment();
+        AppointmentOrder ap = new AppointmentOrder();
         String name = randomString(6);
         ap.setPatient_name(name);
         String orderNumber = Ap_Create.s_Create(ap);
@@ -254,7 +254,7 @@ public class Ap_List extends BaseTest {
     @Test
     public void test_08_获取列表检查搜索订单号() {
         String res = "";
-        String orderNumber = Ap_Create.s_Create(new Appointment());
+        String orderNumber = Ap_Create.s_Create(new AppointmentOrder());
         HashMap<String, String> query = new HashMap<>();
         for (String order_number:new String[]{orderNumber}) {
             logger.info("搜索订单编号为"+order_number+"的订单");

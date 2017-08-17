@@ -2,15 +2,12 @@ package com.mingyizhudao.qa.functiontest.crm.trading.appointment;
 
 import com.mingyizhudao.qa.common.BaseTest;
 import com.mingyizhudao.qa.common.TestLogger;
-import com.mingyizhudao.qa.dataprofile.Appointment;
+import com.mingyizhudao.qa.dataprofile.AppointmentOrder;
 import com.mingyizhudao.qa.utilities.HttpRequest;
-import net.sf.json.JSONObject;
 import org.testng.Assert;
-import org.testng.annotations.Test;
 
 import java.util.HashMap;
 
-import static com.mingyizhudao.qa.functiontest.crm.trading.appointment.Ap_AddAccount.s_AddPayAccount;
 import static com.mingyizhudao.qa.functiontest.crm.trading.appointment.Ap_Confirm.s_Confirm;
 import static com.mingyizhudao.qa.functiontest.crm.trading.appointment.Ap_Create.s_Create;
 import static com.mingyizhudao.qa.functiontest.crm.trading.appointment.Ap_CreatePayment.s_CreatePayment;
@@ -30,7 +27,7 @@ public class Ap_PayUrl extends BaseTest {
 
     public void test_01_显示支付链接_APPOINTMENT() {
         String res = "";
-        Appointment ap = new Appointment();
+        AppointmentOrder ap = new AppointmentOrder();
         String orderNumber = s_Create(ap);
         HashMap<String, String> pathValue = new HashMap<>();
         pathValue.put("orderNumber", orderNumber);
@@ -47,7 +44,7 @@ public class Ap_PayUrl extends BaseTest {
 
     public void test_02_显示支付链接_PLATFORM() {
         String res = "";
-        Appointment ap = new Appointment();
+        AppointmentOrder ap = new AppointmentOrder();
         String orderNumber = s_Create(ap);
         HashMap<String, String> pathValue = new HashMap<>();
         pathValue.put("orderNumber", orderNumber);
@@ -64,7 +61,7 @@ public class Ap_PayUrl extends BaseTest {
 
     public void test_03_显示支付链接_DOCTOR() {
         String res = "";
-        Appointment ap = new Appointment();
+        AppointmentOrder ap = new AppointmentOrder();
         String orderNumber = s_Create(ap);
         HashMap<String, String> pathValue = new HashMap<>();
         pathValue.put("orderNumber", orderNumber);

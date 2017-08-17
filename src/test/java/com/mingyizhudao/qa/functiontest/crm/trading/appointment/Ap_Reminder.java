@@ -2,9 +2,8 @@ package com.mingyizhudao.qa.functiontest.crm.trading.appointment;
 
 import com.mingyizhudao.qa.common.BaseTest;
 import com.mingyizhudao.qa.common.TestLogger;
-import com.mingyizhudao.qa.dataprofile.Appointment;
+import com.mingyizhudao.qa.dataprofile.AppointmentOrder;
 import com.mingyizhudao.qa.utilities.HttpRequest;
-import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 import org.testng.Assert;
 import org.testng.annotations.Test;
@@ -15,7 +14,6 @@ import java.util.HashMap;
 import static com.mingyizhudao.qa.functiontest.crm.trading.appointment.Ap_AddAccount.s_AddPayAccount;
 import static com.mingyizhudao.qa.functiontest.crm.trading.appointment.Ap_Confirm.s_Confirm;
 import static com.mingyizhudao.qa.functiontest.crm.trading.appointment.Ap_Create.s_Create;
-import static com.mingyizhudao.qa.functiontest.crm.trading.appointment.Ap_CreatePayment.s_CreatePayment;
 import static com.mingyizhudao.qa.functiontest.crm.trading.appointment.Ap_ReminderList.s_ReminderList;
 import static com.mingyizhudao.qa.functiontest.crm.trading.appointment.Ap_RiskControl.s_Take;
 import static com.mingyizhudao.qa.utilities.Generator.randomDateFromNow;
@@ -35,7 +33,7 @@ public class Ap_Reminder extends BaseTest {
     @Test
     public void test_01_创建备忘录_reminder() {
         String res = "";
-        Appointment ap = new Appointment();
+        AppointmentOrder ap = new AppointmentOrder();
         String orderNumber = s_Create(ap);
         HashMap<String, String> pathValue = new HashMap<>();
         pathValue.put("orderNumber", orderNumber);
@@ -61,7 +59,7 @@ public class Ap_Reminder extends BaseTest {
     @Test
     public void test_02_创建备忘录_note() {
         String res = "";
-        Appointment ap = new Appointment();
+        AppointmentOrder ap = new AppointmentOrder();
         String orderNumber = s_Create(ap);
         HashMap<String, String> pathValue = new HashMap<>();
         pathValue.put("orderNumber", orderNumber);

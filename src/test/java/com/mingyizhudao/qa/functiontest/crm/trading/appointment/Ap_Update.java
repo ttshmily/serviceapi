@@ -1,6 +1,6 @@
 package com.mingyizhudao.qa.functiontest.crm.trading.appointment;
 
-import com.mingyizhudao.qa.dataprofile.Appointment;
+import com.mingyizhudao.qa.dataprofile.AppointmentOrder;
 import com.mingyizhudao.qa.common.BaseTest;
 import com.mingyizhudao.qa.common.TestLogger;
 import static com.mingyizhudao.qa.utilities.Generator.*;
@@ -25,7 +25,7 @@ public class Ap_Update extends BaseTest {
     public static final String version = "/api/v1";
     public static String uri = version+"/appointments/{orderNumber}";
 
-    public static boolean s_Update(String orderNumber, Appointment ap) {
+    public static boolean s_Update(String orderNumber, AppointmentOrder ap) {
         String res = "";
         HashMap<String, String> pathValue = new HashMap<>();
         pathValue.put("orderNumber", orderNumber);
@@ -37,11 +37,11 @@ public class Ap_Update extends BaseTest {
     @Test
     public void test_01_更新会诊单图片() {
         String res = "";
-        Appointment ap = new Appointment();
+        AppointmentOrder ap = new AppointmentOrder();
         String orderNumber = Ap_Create.s_Create(ap);
         HashMap<String, String> pathValue = new HashMap<>();
         pathValue.put("orderNumber", orderNumber);
-        ap.setMedical_record_pictures(new ArrayList<Appointment.Picture>() {
+        ap.setMedical_record_pictures(new ArrayList<AppointmentOrder.Picture>() {
             {
                 add(ap.new Picture("234.jpg", "7"));
             }
@@ -58,7 +58,7 @@ public class Ap_Update extends BaseTest {
     @Test
     public void test_02_更新期望手术医院() {
         String res = "";
-        Appointment ap = new Appointment();
+        AppointmentOrder ap = new AppointmentOrder();
         String orderNumber = Ap_Create.s_Create(ap);
         HashMap<String, String> pathValue = new HashMap<>();
         pathValue.put("orderNumber", orderNumber);
@@ -78,7 +78,7 @@ public class Ap_Update extends BaseTest {
     @Test
     public void test_03_更新期望手术省市() {
         String res = "";
-        Appointment ap = new Appointment();
+        AppointmentOrder ap = new AppointmentOrder();
         String orderNumber = Ap_Create.s_Create(ap);
         HashMap<String, String> pathValue = new HashMap<>();
         pathValue.put("orderNumber", orderNumber);
@@ -103,7 +103,7 @@ public class Ap_Update extends BaseTest {
     @Test
     public void test_04_更新期望手术医生() {
         String res = "";
-        Appointment ap = new Appointment();
+        AppointmentOrder ap = new AppointmentOrder();
         String orderNumber = Ap_Create.s_Create(ap);
         HashMap<String, String> pathValue = new HashMap<>();
         pathValue.put("orderNumber", orderNumber);
@@ -123,7 +123,7 @@ public class Ap_Update extends BaseTest {
     @Test
     public void test_05_更新疾病名称() {
         String res = "";
-        Appointment ap = new Appointment();
+        AppointmentOrder ap = new AppointmentOrder();
         String orderNumber = Ap_Create.s_Create(ap);
         HashMap<String, String> pathValue = new HashMap<>();
         pathValue.put("orderNumber", orderNumber);
@@ -143,7 +143,7 @@ public class Ap_Update extends BaseTest {
     @Test
     public void test_06_更新患者姓名() {
         String res = "";
-        Appointment ap = new Appointment();
+        AppointmentOrder ap = new AppointmentOrder();
         String orderNumber = Ap_Create.s_Create(ap);
         HashMap<String, String> pathValue = new HashMap<>();
         pathValue.put("orderNumber", orderNumber);
@@ -161,7 +161,7 @@ public class Ap_Update extends BaseTest {
     @Test
     public void test_07_更新患者年龄() {
         String res = "";
-        Appointment ap = new Appointment();
+        AppointmentOrder ap = new AppointmentOrder();
         String orderNumber = Ap_Create.s_Create(ap);
         HashMap<String, String> pathValue = new HashMap<>();
         pathValue.put("orderNumber", orderNumber);
@@ -179,7 +179,7 @@ public class Ap_Update extends BaseTest {
     @Test
     public void test_08_更新患者性别() {
         String res = "";
-        Appointment ap = new Appointment();
+        AppointmentOrder ap = new AppointmentOrder();
         String orderNumber = Ap_Create.s_Create(ap);
         HashMap<String, String> pathValue = new HashMap<>();
         pathValue.put("orderNumber", orderNumber);
@@ -197,7 +197,7 @@ public class Ap_Update extends BaseTest {
     @Test
     public void test_09_更新患者手机() {
         String res = "";
-        Appointment ap = new Appointment();
+        AppointmentOrder ap = new AppointmentOrder();
         String orderNumber = Ap_Create.s_Create(ap);
         HashMap<String, String> pathValue = new HashMap<>();
         pathValue.put("orderNumber", orderNumber);
@@ -215,7 +215,7 @@ public class Ap_Update extends BaseTest {
     @Test
     public void test_10_更新疾病描述() {
         String res = "";
-        Appointment ap = new Appointment();
+        AppointmentOrder ap = new AppointmentOrder();
         String orderNumber = Ap_Create.s_Create(ap);
         HashMap<String, String> pathValue = new HashMap<>();
         pathValue.put("orderNumber", orderNumber);
@@ -233,7 +233,7 @@ public class Ap_Update extends BaseTest {
     @Test
     public void test_11_更新期望的起止时间() {
         String res = "";
-        Appointment ap = new Appointment();
+        AppointmentOrder ap = new AppointmentOrder();
         String orderNumber = Ap_Create.s_Create(ap);
         HashMap<String, String> pathValue = new HashMap<>();
         pathValue.put("orderNumber", orderNumber);

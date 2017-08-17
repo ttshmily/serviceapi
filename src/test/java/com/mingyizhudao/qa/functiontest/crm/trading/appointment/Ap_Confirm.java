@@ -2,7 +2,7 @@ package com.mingyizhudao.qa.functiontest.crm.trading.appointment;
 
 import com.mingyizhudao.qa.common.BaseTest;
 import com.mingyizhudao.qa.common.TestLogger;
-import com.mingyizhudao.qa.dataprofile.Appointment;
+import com.mingyizhudao.qa.dataprofile.AppointmentOrder;
 import com.mingyizhudao.qa.dataprofile.User;
 import net.sf.json.JSONObject;
 import org.testng.Assert;
@@ -48,7 +48,7 @@ public class Ap_Confirm extends BaseTest {
     @Test
     public void test_01_确认面诊医生() {
         String res = "";
-        Appointment ap = new Appointment();
+        AppointmentOrder ap = new AppointmentOrder();
         String orderNumber = s_Create(ap);
         if (!s_Take(orderNumber)) {
             Assert.fail("创建状态2000订单失败");
@@ -84,7 +84,7 @@ public class Ap_Confirm extends BaseTest {
     @Test
     public void test_02_面诊医生信息不完整() {
         String res = "";
-        Appointment ap = new Appointment();
+        AppointmentOrder ap = new AppointmentOrder();
         String orderNumber = s_Create(ap);
         if (!s_Take(orderNumber)) {
             Assert.fail("创建状态2000订单失败");

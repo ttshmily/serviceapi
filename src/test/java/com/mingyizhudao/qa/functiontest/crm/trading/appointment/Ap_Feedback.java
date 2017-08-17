@@ -2,7 +2,7 @@ package com.mingyizhudao.qa.functiontest.crm.trading.appointment;
 
 import com.mingyizhudao.qa.common.BaseTest;
 import com.mingyizhudao.qa.common.TestLogger;
-import com.mingyizhudao.qa.dataprofile.Appointment;
+import com.mingyizhudao.qa.dataprofile.AppointmentOrder;
 import net.sf.json.JSONObject;
 import org.testng.Assert;
 import org.testng.annotations.Test;
@@ -16,7 +16,6 @@ import static com.mingyizhudao.qa.functiontest.crm.trading.appointment.Ap_Confir
 import static com.mingyizhudao.qa.functiontest.crm.trading.appointment.Ap_Create.s_Create;
 import static com.mingyizhudao.qa.functiontest.crm.trading.appointment.Ap_RiskControl.s_Take;
 import static com.mingyizhudao.qa.utilities.Generator.randomDateFromNow;
-import static com.mingyizhudao.qa.utilities.Generator.randomExpertId;
 import static com.mingyizhudao.qa.utilities.Generator.randomInt;
 import static com.mingyizhudao.qa.utilities.Helper.s_ParseJson;
 import static com.mingyizhudao.qa.utilities.HttpRequest.s_SendPut;
@@ -37,7 +36,7 @@ public class Ap_Feedback extends BaseTest {
         String res = "";
         Random random = new Random();
         String[] type = new String[] {"WECHAT", "PHONE", "FACE_TO_FACE"};
-        String orderNumber = s_Create(new Appointment());
+        String orderNumber = s_Create(new AppointmentOrder());
         HashMap<String, String> pathValue = new HashMap<>();
         pathValue.put("orderNumber", orderNumber);
         if(!s_Take(orderNumber) || !s_Confirm(orderNumber) || !s_AddPayAccount(orderNumber)) {
