@@ -26,6 +26,7 @@ public class VisitRecordCreate extends BaseTest {
 
     public static String s_Create(String token) {
         String res = "";
+        TestLogger logger = new TestLogger(s_JobName());
         JSONObject body = new JSONObject();
 
         body.put("doctor_attitude", randomInt(3));
@@ -65,7 +66,7 @@ public class VisitRecordCreate extends BaseTest {
         body.put("visit_content", randomString(100));
 
         for (String token:new String[] {bda_session_staff, bda_session}) {
-            res = s_SendPost(host_bda + uri, body.toString(), bda_session_staff);
+            res = s_SendPost(host_bda + uri, body.toString(), token);
 
             s_CheckResponse(res);
             Assert.assertEquals(code, "1000000");
@@ -79,14 +80,14 @@ public class VisitRecordCreate extends BaseTest {
             Assert.assertEquals(data.getString("doctor_hospital_id"), body.getString("doctor_hospital_id"));
             Assert.assertEquals(data.getString("doctor_hospital_name"), body.getString("doctor_hospital_name"));
             Assert.assertEquals(data.getString("doctor_department_name"), body.getString("doctor_department_name"));
-            Assert.assertEquals(data.getString("interview_start_time"), body.getString("interview_start_time"));
-            Assert.assertEquals(data.getString("interview_end_time"), body.getString("interview_end_time"));
+            Assert.assertEquals(data.getString("interview_start_time").split("\\.")[0], body.getString("interview_start_time").split("\\.")[0]);
+            Assert.assertEquals(data.getString("interview_end_time").split("\\.")[0], body.getString("interview_end_time").split("\\.")[0]);
             Assert.assertEquals(data.getString("location"), body.getString("location"));
             Assert.assertEquals(data.getString("visit_content"), body.getString("visit_content"));
             if (token.equals(bda_session)) {
-                Assert.assertEquals(data.getString("staff_id"), "SH0098");
-            } else {
                 Assert.assertEquals(data.getString("staff_id"), "SH0133");
+            } else {
+                Assert.assertEquals(data.getString("staff_id"), "SH0098");
             }
         }
 
@@ -109,7 +110,7 @@ public class VisitRecordCreate extends BaseTest {
         body.put("visit_content", randomString(100));
 
         for (String token:new String[] {bda_session_staff, bda_session}) {
-            res = s_SendPost(host_bda + uri, body.toString(), bda_session_staff);
+            res = s_SendPost(host_bda + uri, body.toString(), token);
 
             s_CheckResponse(res);
             Assert.assertEquals(code, "1000000");
@@ -121,14 +122,14 @@ public class VisitRecordCreate extends BaseTest {
             Assert.assertEquals(data.getString("doctor_hospital_id"), body.getString("doctor_hospital_id"));
             Assert.assertEquals(data.getString("doctor_hospital_name"), body.getString("doctor_hospital_name"));
             Assert.assertEquals(data.getString("doctor_department_name"), body.getString("doctor_department_name"));
-            Assert.assertEquals(data.getString("interview_start_time"), body.getString("interview_start_time"));
-            Assert.assertEquals(data.getString("interview_end_time"), body.getString("interview_end_time"));
+            Assert.assertEquals(data.getString("interview_start_time").split("\\.")[0], body.getString("interview_start_time").split("\\.")[0]);
+            Assert.assertEquals(data.getString("interview_end_time").split("\\.")[0], body.getString("interview_end_time").split("\\.")[0]);
             Assert.assertEquals(data.getString("location"), body.getString("location"));
             Assert.assertEquals(data.getString("visit_content"), body.getString("visit_content"));
             if (token.equals(bda_session)) {
-                Assert.assertEquals(data.getString("staff_id"), "SH0098");
-            } else {
                 Assert.assertEquals(data.getString("staff_id"), "SH0133");
+            } else {
+                Assert.assertEquals(data.getString("staff_id"), "SH0098");
             }
         }
     }
@@ -151,7 +152,7 @@ public class VisitRecordCreate extends BaseTest {
         body.put("visit_content", randomString(100));
 
         for (String token:new String[] {bda_session_staff, bda_session}) {
-            res = s_SendPost(host_bda + uri, body.toString(), bda_session_staff);
+            res = s_SendPost(host_bda + uri, body.toString(), token);
 
             s_CheckResponse(res);
             Assert.assertEquals(code, "1000000");
@@ -164,14 +165,14 @@ public class VisitRecordCreate extends BaseTest {
             Assert.assertEquals(data.getString("doctor_hospital_id"), body.getString("doctor_hospital_id"));
             Assert.assertEquals(data.getString("doctor_hospital_name"), body.getString("doctor_hospital_name"));
             Assert.assertEquals(data.getString("doctor_department_name"), body.getString("doctor_department_name"));
-            Assert.assertEquals(data.getString("interview_start_time"), body.getString("interview_start_time"));
-            Assert.assertEquals(data.getString("interview_end_time"), body.getString("interview_end_time"));
+            Assert.assertEquals(data.getString("interview_start_time").split("\\.")[0], body.getString("interview_start_time").split("\\.")[0]);
+            Assert.assertEquals(data.getString("interview_end_time").split("\\.")[0], body.getString("interview_end_time").split("\\.")[0]);
             Assert.assertEquals(data.getString("location"), body.getString("location"));
             Assert.assertEquals(data.getString("visit_content"), body.getString("visit_content"));
             if (token.equals(bda_session)) {
-                Assert.assertEquals(data.getString("staff_id"), "SH0098");
-            } else {
                 Assert.assertEquals(data.getString("staff_id"), "SH0133");
+            } else {
+                Assert.assertEquals(data.getString("staff_id"), "SH0098");
             }
         }
     }
@@ -194,7 +195,7 @@ public class VisitRecordCreate extends BaseTest {
         body.put("visit_content", randomString(100));
 
         for (String token:new String[] {bda_session_staff, bda_session}) {
-            res = s_SendPost(host_bda + uri, body.toString(), bda_session_staff);
+            res = s_SendPost(host_bda + uri, body.toString(), token);
 
             s_CheckResponse(res);
             Assert.assertEquals(code, "1000000");
@@ -207,14 +208,14 @@ public class VisitRecordCreate extends BaseTest {
             Assert.assertEquals(data.getString("doctor_hospital_id"), body.getString("doctor_hospital_id"));
             Assert.assertEquals(data.getString("doctor_hospital_name"), body.getString("doctor_hospital_name"));
             Assert.assertEquals(data.getString("doctor_department_name"), body.getString("doctor_department_name"));
-            Assert.assertEquals(data.getString("interview_start_time"), body.getString("interview_start_time"));
-            Assert.assertEquals(data.getString("interview_end_time"), body.getString("interview_end_time"));
+            Assert.assertEquals(data.getString("interview_start_time").split("\\.")[0], body.getString("interview_start_time").split("\\.")[0]);
+            Assert.assertEquals(data.getString("interview_end_time").split("\\.")[0], body.getString("interview_end_time").split("\\.")[0]);
             Assert.assertEquals(data.getString("location"), body.getString("location"));
             Assert.assertEquals(data.getString("visit_content"), body.getString("visit_content"));
             if (token.equals(bda_session)) {
-                Assert.assertEquals(data.getString("staff_id"), "SH0098");
-            } else {
                 Assert.assertEquals(data.getString("staff_id"), "SH0133");
+            } else {
+                Assert.assertEquals(data.getString("staff_id"), "SH0098");
             }
         }
     }

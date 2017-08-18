@@ -248,8 +248,8 @@ public class Ap_Update extends BaseTest {
         res = Ap_Detail.s_Detail(orderNumber);
         s_CheckResponse(res);
         Assert.assertEquals(code, "1000000");
-        Assert.assertEquals(s_ParseJson(data, "expected_appointment_start_date"), ap.getExpected_appointment_start_date());
-        Assert.assertEquals(s_ParseJson(data, "expected_appointment_due_date"), ap.getExpected_appointment_due_date());
+        Assert.assertEquals(s_ParseJson(data, "expected_appointment_start_date").split("\\.")[0], ap.getExpected_appointment_start_date().split("\\.")[0]);
+        Assert.assertEquals(s_ParseJson(data, "expected_appointment_due_date").split("\\.")[0], ap.getExpected_appointment_due_date().split("\\.")[0]);
     }
 
 }

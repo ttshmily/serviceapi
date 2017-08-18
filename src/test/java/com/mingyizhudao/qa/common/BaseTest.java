@@ -72,6 +72,8 @@ public class BaseTest {
 //        String token = CheckVerifyCode.s_Check();
 //        s_CreateRegistered();
 //        s_CreateRegisteredDoctor();
+        String a = "a.b";
+        System.out.println(a.split("\\.")[0]);
     }
 
     static {

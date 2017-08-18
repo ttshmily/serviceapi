@@ -18,8 +18,10 @@ public class VisitDate extends BaseTest {
     public static String uri = version+"/visitDate";
 
     public static String[] s_VisitDate(String token) {
-        String res= "";
+        String res = "";
+        TestLogger logger = new TestLogger(s_JobName());
         res = s_SendGet(host_bda + uri, "", token);
+        logger.info(res);
         return (String[]) JSONObject.fromObject(res).getJSONObject("data").getJSONArray("list").toArray();
 
     }
