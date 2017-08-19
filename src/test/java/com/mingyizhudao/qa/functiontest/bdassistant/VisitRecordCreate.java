@@ -11,6 +11,7 @@ import java.util.HashMap;
 
 import static com.mingyizhudao.qa.functiontest.bdassistant.VisitRecord.s_Detail;
 import static com.mingyizhudao.qa.utilities.Generator.*;
+import static com.mingyizhudao.qa.utilities.Helper.*;
 import static com.mingyizhudao.qa.utilities.HttpRequest.s_SendPost;
 
 public class VisitRecordCreate extends BaseTest {
@@ -80,8 +81,8 @@ public class VisitRecordCreate extends BaseTest {
             Assert.assertEquals(data.getString("doctor_hospital_id"), body.getString("doctor_hospital_id"));
             Assert.assertEquals(data.getString("doctor_hospital_name"), body.getString("doctor_hospital_name"));
             Assert.assertEquals(data.getString("doctor_department_name"), body.getString("doctor_department_name"));
-            Assert.assertEquals(data.getString("interview_start_time").split("\\.")[0], body.getString("interview_start_time").split("\\.")[0]);
-            Assert.assertEquals(data.getString("interview_end_time").split("\\.")[0], body.getString("interview_end_time").split("\\.")[0]);
+            Assert.assertTrue(almostEqual(data.getString("interview_start_time"), body.getString("interview_start_time"), "yyyy-MM-dd'T'HH:mm:ss"));
+            Assert.assertTrue(almostEqual(data.getString("interview_start_time"), body.getString("interview_start_time"), "yyyy-MM-dd'T'HH:mm:ss"));
             Assert.assertEquals(data.getString("location"), body.getString("location"));
             Assert.assertEquals(data.getString("visit_content"), body.getString("visit_content"));
             if (token.equals(bda_session)) {
@@ -122,9 +123,8 @@ public class VisitRecordCreate extends BaseTest {
             Assert.assertEquals(data.getString("doctor_hospital_id"), body.getString("doctor_hospital_id"));
             Assert.assertEquals(data.getString("doctor_hospital_name"), body.getString("doctor_hospital_name"));
             Assert.assertEquals(data.getString("doctor_department_name"), body.getString("doctor_department_name"));
-            Assert.assertEquals(data.getString("interview_start_time").split("\\.")[0], body.getString("interview_start_time").split("\\.")[0]);
-            Assert.assertEquals(data.getString("interview_end_time").split("\\.")[0], body.getString("interview_end_time").split("\\.")[0]);
-            Assert.assertEquals(data.getString("location"), body.getString("location"));
+            Assert.assertTrue(almostEqual(data.getString("interview_start_time"), body.getString("interview_start_time"), "yyyy-MM-dd'T'HH:mm:ss"));
+            Assert.assertTrue(almostEqual(data.getString("interview_start_time"), body.getString("interview_start_time"), "yyyy-MM-dd'T'HH:mm:ss"));            Assert.assertEquals(data.getString("location"), body.getString("location"));
             Assert.assertEquals(data.getString("visit_content"), body.getString("visit_content"));
             if (token.equals(bda_session)) {
                 Assert.assertEquals(data.getString("staff_id"), "SH0133");
@@ -165,9 +165,8 @@ public class VisitRecordCreate extends BaseTest {
             Assert.assertEquals(data.getString("doctor_hospital_id"), body.getString("doctor_hospital_id"));
             Assert.assertEquals(data.getString("doctor_hospital_name"), body.getString("doctor_hospital_name"));
             Assert.assertEquals(data.getString("doctor_department_name"), body.getString("doctor_department_name"));
-            Assert.assertEquals(data.getString("interview_start_time").split("\\.")[0], body.getString("interview_start_time").split("\\.")[0]);
-            Assert.assertEquals(data.getString("interview_end_time").split("\\.")[0], body.getString("interview_end_time").split("\\.")[0]);
-            Assert.assertEquals(data.getString("location"), body.getString("location"));
+            Assert.assertTrue(almostEqual(data.getString("interview_start_time"), body.getString("interview_start_time"), "yyyy-MM-dd'T'HH:mm:ss"));
+            Assert.assertTrue(almostEqual(data.getString("interview_start_time"), body.getString("interview_start_time"), "yyyy-MM-dd'T'HH:mm:ss"));            Assert.assertEquals(data.getString("location"), body.getString("location"));
             Assert.assertEquals(data.getString("visit_content"), body.getString("visit_content"));
             if (token.equals(bda_session)) {
                 Assert.assertEquals(data.getString("staff_id"), "SH0133");
@@ -208,9 +207,8 @@ public class VisitRecordCreate extends BaseTest {
             Assert.assertEquals(data.getString("doctor_hospital_id"), body.getString("doctor_hospital_id"));
             Assert.assertEquals(data.getString("doctor_hospital_name"), body.getString("doctor_hospital_name"));
             Assert.assertEquals(data.getString("doctor_department_name"), body.getString("doctor_department_name"));
-            Assert.assertEquals(data.getString("interview_start_time").split("\\.")[0], body.getString("interview_start_time").split("\\.")[0]);
-            Assert.assertEquals(data.getString("interview_end_time").split("\\.")[0], body.getString("interview_end_time").split("\\.")[0]);
-            Assert.assertEquals(data.getString("location"), body.getString("location"));
+            Assert.assertTrue(almostEqual(data.getString("interview_start_time"), body.getString("interview_start_time"), "yyyy-MM-dd'T'HH:mm:ss"));
+            Assert.assertTrue(almostEqual(data.getString("interview_start_time"), body.getString("interview_start_time"), "yyyy-MM-dd'T'HH:mm:ss"));            Assert.assertEquals(data.getString("location"), body.getString("location"));
             Assert.assertEquals(data.getString("visit_content"), body.getString("visit_content"));
             if (token.equals(bda_session)) {
                 Assert.assertEquals(data.getString("staff_id"), "SH0133");

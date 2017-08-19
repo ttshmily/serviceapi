@@ -4,7 +4,9 @@ import com.mingyizhudao.qa.common.BaseTest;
 import com.mingyizhudao.qa.common.TestLogger;
 import net.sf.json.JSONObject;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -89,6 +91,73 @@ public class Helper {
             strArr = strArr.replace( list.get( i ), String.valueOf( ch ) );
         }
         return(strArr);
+    }
+
+    /**
+     * 对于时间的比较
+     *
+     * @param date1
+     *            参与比较的时间1
+     * @param date2
+     *            参与比较的时间2
+     * @param s
+     *            时间精确度
+     * @return boolean
+     *
+     *
+     */
+
+    public static boolean noLater(String date1, String date2, String s) {
+        SimpleDateFormat df = new SimpleDateFormat(s);
+        long d1,d2;
+        try {
+            d1 = df.parse(date1).getTime();
+            d2 = df.parse(date2).getTime();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+        return d1<=d2;
+    }
+
+    public static boolean noEarlier(String date1, String date2, String s) {
+        SimpleDateFormat df = new SimpleDateFormat(s);
+        long d1,d2;
+        try {
+            d1 = df.parse(date1).getTime();
+            d2 = df.parse(date2).getTime();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+        return d1>=d2;
+    }
+
+    public static boolean almostEqual(String date1, String date2, String s) {
+        SimpleDateFormat df = new SimpleDateFormat(s);
+        long d1,d2;
+        try {
+            d1 = df.parse(date1).getTime();
+            d2 = df.parse(date2).getTime();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+        return d1==d2 || d1-d2>=1000 || d2-d1<=1000;
+    }
+
+    public static void main(String[] args) {
+        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
+        long d1,d2;
+        try {
+            d1 = df.parse("2017-5-6T1:4:19").getTime();
+            d2 = df.parse("2017-5-6T1:4:20").getTime();
+            System.out.println(d1);
+            System.out.println(d2);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
     }
 
 }

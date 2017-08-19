@@ -23,6 +23,5 @@ public class VisitDate extends BaseTest {
         res = s_SendGet(host_bda + uri, "", token);
         logger.info(res);
         return (String[]) JSONObject.fromObject(res).getJSONObject("data").getJSONArray("list").toArray();
-
     }
 }

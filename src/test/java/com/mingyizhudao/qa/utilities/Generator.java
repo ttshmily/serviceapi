@@ -21,6 +21,7 @@ public class Generator {
             System.out.println(randomEmployeeId());
         }
     }
+
     public static String randomString(int length) {
         StringBuffer sb = new StringBuffer();
         String string = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
