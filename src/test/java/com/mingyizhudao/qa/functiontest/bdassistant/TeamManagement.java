@@ -1,6 +1,7 @@
 package com.mingyizhudao.qa.functiontest.bdassistant;
 
 import com.mingyizhudao.qa.common.BaseTest;
+import com.mingyizhudao.qa.common.TestLogger;
 import com.mingyizhudao.qa.utilities.Generator;
 import com.mingyizhudao.qa.utilities.HttpRequest;
 import com.mingyizhudao.qa.utilities.Helper;
@@ -17,11 +18,16 @@ import java.util.List;
 /**
  * Created by dayi on 2017/6/22.
  */
-public class TeamListV2 extends BaseTest {
+public class TeamManagement extends BaseTest {
 
-    public static final Logger logger= Logger.getLogger(TeamListV2.class);
-    public static String uri = "/api/v2/user/teamList";
-    public static String mock = false ? "/mockjs/1" : "";
+    public static String clazzName = new Object() {
+        public String getClassName() {
+            String clazzName = this.getClass().getName();
+            return clazzName.substring(0, clazzName.lastIndexOf('$'));
+        }
+    }.getClassName();
+    public static TestLogger logger = new TestLogger(clazzName);
+    public static String uri = "/api/v1/undistributedList";
 
     @Test
     public void test_01_没有token调用应该失败() {
@@ -80,6 +86,7 @@ public class TeamListV2 extends BaseTest {
             orderCount = tmpOrderCount;
         }
     }
+
     @Test
     public void test_05_排序规则_未激活医生量() {
         String res = "";
@@ -113,6 +120,7 @@ public class TeamListV2 extends BaseTest {
             disactiveCount = tmpDisactiveCount;
         }
     }
+
     @Test
     public void test_06_排序规则_医生量() {
         String res = "";

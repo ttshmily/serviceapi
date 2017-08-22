@@ -28,7 +28,7 @@ public class CityList extends BaseTest {
     public static String uri = "/api/v1/cities";
 
     @Test
-    public void test_01_获取个人负责区域列表() {
+    public void test_01_获取城市列表() {
         String res = "";
         HashMap<String, String> query = new HashMap<>();
         for (String token: new String[] {bda_session, bda_session_staff}) {

@@ -13,6 +13,8 @@ import org.testng.annotations.Test;
 import java.util.HashMap;
 import java.util.List;
 
+import static com.mingyizhudao.qa.utilities.Generator.cityName;
+
 /**
  * Created by dayi on 2017/6/23.
  */
@@ -47,9 +49,6 @@ public class DoctorListV2 extends BaseTest {
         String referrerId = Generator.randomEmployeeId();
         query.put("referrerId", referrerId);
 
-        //TODO 每个地推所对应的城市需要提前准备好
-        String cityId = "";
-
         res = HttpRequest.s_SendGet(host_bda + uri, query, bda_session);
         s_CheckResponse(res);
         Assert.assertEquals(code, "1000000", "主管查看下属应该成功");
@@ -57,8 +56,8 @@ public class DoctorListV2 extends BaseTest {
         JSONArray doctor_list = data.getJSONArray("list");
         for(int i=0; i<doctor_list.size(); i++) {
             JSONObject doctor = doctor_list.getJSONObject(i);
-            // TODO 判断条件需要重写
-            Assert.assertEquals(doctor.getString("city_id"), cityId);
+            // TODO 判断条件需要重写，
+            Assert.assertEquals(doctor.getString("city_name"), referrerId);
         }
     }
 
