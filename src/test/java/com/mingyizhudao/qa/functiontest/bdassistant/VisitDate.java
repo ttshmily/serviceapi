@@ -2,6 +2,7 @@ package com.mingyizhudao.qa.functiontest.bdassistant;
 
 import com.mingyizhudao.qa.common.BaseTest;
 import com.mingyizhudao.qa.common.TestLogger;
+import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 
 import static com.mingyizhudao.qa.utilities.HttpRequest.s_SendGet;
@@ -22,6 +23,11 @@ public class VisitDate extends BaseTest {
         TestLogger logger = new TestLogger(s_JobName());
         res = s_SendGet(host_bda + uri, "", token);
         logger.info(res);
-        return (String[]) JSONObject.fromObject(res).getJSONObject("data").getJSONArray("list").toArray();
+        JSONArray date_list = JSONObject.fromObject(res).getJSONObject("data").getJSONArray("list");
+        String[] a= new String[date_list.size()];
+        for(int i =0; i<date_list.size(); i++) {
+            a[i] = date_list.getString(i);
+        }
+        return a;
     }
 }

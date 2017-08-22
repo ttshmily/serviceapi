@@ -62,7 +62,7 @@ public class VisitRecordList extends BaseTest {
             String res1 = s_SendGet(host_bda + uri, query, bda_session);
             s_CheckResponse(res1);
             int size1 = data.getJSONArray("list").size();
-            String res2 = s_SendGet(host_bda + uri, query, bda_token_staff);
+            String res2 = s_SendGet(host_bda + uri, query, bda_session_staff);
             s_CheckResponse(res2);
             int size2 = data.getJSONArray("list").size();
             Assert.assertEquals(size1, size2);

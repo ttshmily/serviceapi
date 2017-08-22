@@ -38,8 +38,8 @@ public class VisitRecordCreate extends BaseTest {
         body.put("doctor_hospital_name", "xx医院");
         body.put("doctor_department_name", "xx部门");
         body.put("doctor_medical_title", randomMedicalId());
-        body.put("interview_start_time", randomDateFromNow(1,2, new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'")));
-        body.put("interview_end_time", randomDateFromNow(1,2, new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'")));
+        body.put("interview_start_time", randomDateFromNow(0,1, new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'")));
+        body.put("interview_end_time", randomDateFromNow(0,1, new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'")));
         body.put("location", "xx location");
         body.put("visit_content", randomString(100));
 

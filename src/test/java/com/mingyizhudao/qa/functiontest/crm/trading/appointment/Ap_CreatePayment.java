@@ -27,11 +27,12 @@ public class Ap_CreatePayment extends BaseTest {
     public static final String version = "/api/v1";
     public static String uri = version + "/appointments/{orderNumber}/createPayment";
 
-    public static boolean s_CreatePayment(String orderNumber, String type) {
+    public static boolean s_CreatePayment(String orderNumber, String type, String serviceType) {
         HashMap<String, String> pathValue = new HashMap<>();
         pathValue.put("orderNumber", orderNumber);
         JSONObject body = new JSONObject();
         body.put("paymentCreateType", type);//APPOINTMENT-全款 DOCTOR-成本价 PLATFORM-尾款
+        body.put("serviceType", serviceType);
         String res = HttpRequest.s_SendPost(host_crm + uri, body.toString(), crm_token, pathValue);
         return JSONObject.fromObject(res).getString("code").equals("1000000");
     }
@@ -51,6 +52,7 @@ public class Ap_CreatePayment extends BaseTest {
         String platform_fee = data.getString("platform_fee");
         String doctor_fee = data.getString("doctor_fee");
         JSONObject body = new JSONObject();
+        body.put("serviceType", "APPOINTMENT");
         body.put("paymentCreateType", "APPOINTMENT");//APPOINTMENT-全款 DOCTOR-成本价 PLATFORM-尾款
         res = HttpRequest.s_SendPost(host_crm + uri, body.toString(), crm_token, pathValue);
         s_CheckResponse(res);
@@ -82,6 +84,7 @@ public class Ap_CreatePayment extends BaseTest {
         String doctor_fee = data.getString("doctor_fee");
         JSONObject body = new JSONObject();
         body.put("paymentCreateType", "DOCTOR");//APPOINTMENT-全款 DOCTOR-成本价 PLATFORM-尾款
+        body.put("serviceType", "APPOINTMENT");
         res = HttpRequest.s_SendPost(host_crm + uri, body.toString(), crm_token, pathValue);
         s_CheckResponse(res);
         Assert.assertEquals(code, "1000000");
@@ -111,6 +114,7 @@ public class Ap_CreatePayment extends BaseTest {
         String platform_fee = data.getString("platform_fee");
         String doctor_fee = data.getString("doctor_fee");
         JSONObject body = new JSONObject();
+        body.put("serviceType", "APPOINTMENT");
         body.put("paymentCreateType", "PLATFORM");//APPOINTMENT-全款 DOCTOR-成本价 PLATFORM-尾款
         res = HttpRequest.s_SendPost(host_crm + uri, body.toString(), crm_token, pathValue);
         s_CheckResponse(res);
@@ -144,6 +148,7 @@ public class Ap_CreatePayment extends BaseTest {
         Assert.assertEquals(code, "1000000");
         String paymentId1 = data.getString("payment_number");
 
+        body.put("serviceType", "APPOINTMENT");
         body.put("paymentCreateType", "PLATFORM");//APPOINTMENT-全款 DOCTOR-成本价 PLATFORM-尾款
         res = HttpRequest.s_SendPost(host_crm + uri, body.toString(), crm_token, pathValue);
         s_CheckResponse(res);
@@ -167,6 +172,7 @@ public class Ap_CreatePayment extends BaseTest {
         }
 
         JSONObject body = new JSONObject();
+        body.put("serviceType", "APPOINTMENT");
         body.put("paymentCreateType", "APPOINTMENT");//APPOINTMENT-全款 DOCTOR-成本价 PLATFORM-尾款
         res = HttpRequest.s_SendPost(host_crm + uri, body.toString(), crm_token, pathValue);
         s_CheckResponse(res);
