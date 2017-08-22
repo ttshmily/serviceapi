@@ -2,6 +2,8 @@ package com.mingyizhudao.qa.dataprofile;
 
 import lombok.Data;
 import net.sf.json.JSONObject;
+import net.sf.json.JsonConfig;
+import net.sf.json.processors.DefaultValueProcessor;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -14,18 +16,27 @@ public class SurgeryOrder {
 
     private OrderDetail order;
     private Brief brief;
+//    private Detail order;
 
+    public static void main(String[] args) {
+        SurgeryOrder a = new SurgeryOrder("order");
+        System.out.println(a.transform());
+    }
     public SurgeryOrder(String type) {
         if(type.equals("order")){
             this.order = new OrderDetail();
         }else if(type.equals("brief")){
             this.brief = new Brief();
         }
-
     }
 
-    @Data
-    public class Detail {
+    public String transform() {
+        JsonConfig jc = new JsonConfig();
+        jc.setAllowNonStringKeys(true);
+        return JSONObject.fromObject(this, jc).toString();
+    }
+
+    public abstract class Detail {
 
     }
     @Data
