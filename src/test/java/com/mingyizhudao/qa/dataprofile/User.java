@@ -12,6 +12,7 @@ import java.util.Random;
 
 @Data
 public class User {
+
     private UserDetail doctor;
 
     public User() {

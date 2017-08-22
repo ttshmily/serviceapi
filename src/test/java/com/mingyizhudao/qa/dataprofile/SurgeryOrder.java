@@ -1,10 +1,13 @@
 package com.mingyizhudao.qa.dataprofile;
 
 import lombok.Data;
+import net.sf.json.JSONNull;
 import net.sf.json.JSONObject;
 import net.sf.json.JsonConfig;
 import net.sf.json.processors.DefaultValueProcessor;
 
+import java.lang.reflect.Field;
+import java.lang.reflect.Method;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
@@ -19,9 +22,10 @@ public class SurgeryOrder {
 //    private Detail order;
 
     public static void main(String[] args) {
-        SurgeryOrder a = new SurgeryOrder("order");
+        SurgeryOrder a = new SurgeryOrder("brief");
         System.out.println(a.transform());
     }
+
     public SurgeryOrder(String type) {
         if(type.equals("order")){
             this.order = new OrderDetail();
@@ -33,14 +37,38 @@ public class SurgeryOrder {
     public String transform() {
         JsonConfig jc = new JsonConfig();
         jc.setAllowNonStringKeys(true);
+        jc.setExcludes(getNullFieldName(this));
         return JSONObject.fromObject(this, jc).toString();
     }
 
-    public abstract class Detail {
-
+    public static String[] getNullFieldName(Object o){
+        Field[] fields=o.getClass().getDeclaredFields();
+        List<String> tmpNames = new ArrayList<>();
+        for(int i=0;i<fields.length;i++){
+            if (getFieldValueByName(fields[i].getName(),o)==null) {
+//                System.out.println(fields[i].getType());
+//                System.out.println(fields[i].getName());
+                tmpNames.add(fields[i].getName());
+            }
+        }
+        return (String[])tmpNames.toArray(new String[tmpNames.size()]);
     }
+
+    public static Object getFieldValueByName(String fieldName, Object o) {
+        try {
+            String firstLetter = fieldName.substring(0, 1).toUpperCase();
+            String getter = "get" + firstLetter + fieldName.substring(1);
+            Method method = o.getClass().getMethod(getter, new Class[] {});
+            Object value = method.invoke(o, new Object[] {});
+            return value;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
     @Data
-    public class OrderDetail extends Detail{
+    public class OrderDetail {
         private String patient_name;
         private int patient_gender;
         private int patient_age;
@@ -77,7 +105,7 @@ public class SurgeryOrder {
     }
 
     @Data
-    public class Brief extends Detail {
+    public class Brief {
         private String surgery_brief_hospital_id;
         private String surgery_brief_date;
         private String surgery_brief_description;
