@@ -1,9 +1,11 @@
 package com.mingyizhudao.qa.dataprofile;
 
+import com.mingyizhudao.qa.dataprofile.crm.SurgeryBriefOld;
 import lombok.Data;
 import net.sf.json.JSONObject;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.List;
 
 import static com.mingyizhudao.qa.utilities.Generator.*;
@@ -12,13 +14,23 @@ import static com.mingyizhudao.qa.utilities.Generator.*;
 public class SurgeryOrder {
 
     private OrderDetail order;
+    private Brief brief;
 
-    public SurgeryOrder() {
-        this.order = new OrderDetail();
+    public SurgeryOrder(String type) {
+        if(type.equals("order")){
+            this.order = new OrderDetail();
+        }else if(type.equals("brief")){
+            this.brief = new Brief();
+        }
+
     }
 
     @Data
-    public class OrderDetail {
+    public class Detail {
+
+    }
+    @Data
+    public class OrderDetail extends Detail{
         private String patient_name;
         private int patient_gender;
         private int patient_age;
@@ -44,20 +56,51 @@ public class SurgeryOrder {
             this.expected_surgery_hospital_id = randomHospitalId();
             this.expected_surgery_start_date = randomDateFromNow(1, 2, new SimpleDateFormat("yyyy-MM-dd"));
             this.expected_surgery_due_date = randomDateFromNow(2, 7, new SimpleDateFormat("yyyy-MM-dd"));
+            this.diagnosis = randomString(300);
+            this.medical_record_pictures = new ArrayList<Picture>(){
+                {
+                    add(new Picture("2017/05/04/1265834e-97d8-44a0-95e7-047c7facaee8/IMG_20170429_102737.jpg", "1"));
+                    add(new Picture("2017/05/04/1315bbe0-2836-4776-8216-ec55044f32dd/IMG_20161013_172442.jpg", "1"));
+                }
+            };
+        }
+    }
+
+    @Data
+    public class Brief extends Detail {
+        private String surgery_brief_hospital_id;
+        private String surgery_brief_date;
+        private String surgery_brief_description;
+        private String surgery_brief_final_diagnosed_disease_id;
+        private String surgery_brief_surgery_id;
+        private List<Picture> surgery_brief_pictures;
+
+        public Brief() {
+            this.surgery_brief_hospital_id = randomHospitalId();
+            this.surgery_brief_date = randomDateTillNow();
+            this.surgery_brief_description = randomString(100);
+            this.surgery_brief_final_diagnosed_disease_id = randomDiseaseId();
+            this.surgery_brief_surgery_id = randomSurgeryId();
+            this.surgery_brief_pictures = new ArrayList<Picture>(){
+                {
+                    add(new Picture("2017/05/04/1265834e-97d8-44a0-95e7-047c7facaee8/IMG_20170429_102737.jpg", "2"));
+                    add(new Picture("2017/05/04/1315bbe0-2836-4776-8216-ec55044f32dd/IMG_20161013_172442.jpg","2"));
+                }
+            };
+        }
+    }
+
+    @Data
+    public class Picture {
+        String key;
+        String type;
+        public Picture(String key, String type) {
+            this.key = key;
+            this.type = type;
         }
 
-        @Data
-        public class Picture {
-            String key;
-            String type;
-            public Picture(String key, String type) {
-                this.key = key;
-                this.type = type;
-            }
-
-            public String print() {
-                return JSONObject.fromObject(this).toString();
-            }
+        public String print() {
+            return JSONObject.fromObject(this).toString();
         }
     }
 }
