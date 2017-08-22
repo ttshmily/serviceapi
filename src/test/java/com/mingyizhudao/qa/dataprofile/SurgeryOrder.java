@@ -1,6 +1,5 @@
 package com.mingyizhudao.qa.dataprofile;
 
-import com.mingyizhudao.qa.dataprofile.crm.SurgeryBriefOld;
 import lombok.Data;
 import net.sf.json.JSONObject;
 
