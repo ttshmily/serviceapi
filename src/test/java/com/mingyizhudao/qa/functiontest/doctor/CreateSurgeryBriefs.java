@@ -66,7 +66,7 @@ public class CreateSurgeryBriefs extends BaseTest {
         SurgeryOrder su = new SurgeryOrder("brief");
         HashMap<String, String> pathValue = new HashMap<>();
         pathValue.put("orderId", orderId);
-        res = HttpRequest.s_SendPut(host_doc + uri, JSONObject.fromObject(su).toString(), token, pathValue);
+        res = HttpRequest.s_SendPut(host_doc + uri, su.transform(), token, pathValue);
         s_CheckResponse(res);
         Assert.assertEquals(code, "1000000");
         res = GetOrderDetail_V1.s_MyInitiateOrder(token, orderId);
@@ -74,14 +74,14 @@ public class CreateSurgeryBriefs extends BaseTest {
         Assert.assertEquals(code, "1000000");
         JSONObject order = data.getJSONObject("order");
         Assert.assertEquals(order.getString("status"), "4010", "上传完成后状态不为4010");
-        Assert.assertEquals(order.getString("surgery_brief_date").substring(0, 10), su.getBrief().getSurgery_brief_date().replace('-', '/'));
-        Assert.assertEquals(order.getString("surgery_brief_description"), su.getBrief().getSurgery_brief_description());
-        Assert.assertEquals(order.getString("surgery_brief_surgery_id"), su.getBrief().getSurgery_brief_surgery_id());
-        Assert.assertEquals(order.getString("surgery_brief_surgery_name"), Generator.surgeryName(su.getBrief().getSurgery_brief_surgery_id()));
-        Assert.assertEquals(order.getString("surgery_brief_final_diagnosed_disease_id"), su.getBrief().getSurgery_brief_final_diagnosed_disease_id());
-        Assert.assertEquals(order.getString("surgery_brief_final_diagnosed_disease_name"), Generator.diseaseName(su.getBrief().getSurgery_brief_final_diagnosed_disease_id()));
-        Assert.assertEquals(order.getString("surgery_brief_hospital_id"), su.getBrief().getSurgery_brief_hospital_id());
-        Assert.assertEquals(order.getString("surgery_brief_hospital_name"), Generator.hospitalName(su.getBrief().getSurgery_brief_hospital_id()));
+        Assert.assertEquals(order.getString("surgery_brief_date").substring(0, 10), su.getOrder().getSurgery_brief_date().replace('-', '/'));
+        Assert.assertEquals(order.getString("surgery_brief_description"), su.getOrder().getSurgery_brief_description());
+        Assert.assertEquals(order.getString("surgery_brief_surgery_id"), su.getOrder().getSurgery_brief_surgery_id());
+        Assert.assertEquals(order.getString("surgery_brief_surgery_name"), Generator.surgeryName(su.getOrder().getSurgery_brief_surgery_id()));
+        Assert.assertEquals(order.getString("surgery_brief_final_diagnosed_disease_id"), su.getOrder().getSurgery_brief_final_diagnosed_disease_id());
+        Assert.assertEquals(order.getString("surgery_brief_final_diagnosed_disease_name"), Generator.diseaseName(su.getOrder().getSurgery_brief_final_diagnosed_disease_id()));
+        Assert.assertEquals(order.getString("surgery_brief_hospital_id"), su.getOrder().getSurgery_brief_hospital_id());
+        Assert.assertEquals(order.getString("surgery_brief_hospital_name"), Generator.hospitalName(su.getOrder().getSurgery_brief_hospital_id()));
     }
 
     @Test
@@ -95,38 +95,32 @@ public class CreateSurgeryBriefs extends BaseTest {
         SendVerifyCode.s_Send(agentPhone);
         String token = CheckVerifyCode.s_Check(agentPhone);
         if (token == null) {
-            logger.error("没有获取到token");
-            Assert.fail();
+            Assert.fail("没有获取到用户token");
         }
 
         HashMap<String, String> pathValue = new HashMap<>();
         pathValue.put("orderId", orderId);
 
-        SurgeryOrder su1 = new SurgeryOrder("Brief");
-        JsonConfig jsonConfig1 = new JsonConfig();
-        jsonConfig1.setExcludes(new String[]{"surgery_brief_surgery_id"});
-        res = HttpRequest.s_SendPut(host_doc + uri, JSONObject.fromObject(JSONSerializer.toJSON(su1, jsonConfig1)).toString(), token, pathValue);
+        SurgeryOrder su1 = new SurgeryOrder("brief");
+        res = HttpRequest.s_SendPut(host_doc + uri, su1.transform(), token, pathValue);
         s_CheckResponse(res);
         Assert.assertNotEquals(code, "1000000");
 
-        SurgeryOrder su2 = new SurgeryOrder("Brief");
-        JsonConfig jsonConfig2 = new JsonConfig();
-        jsonConfig2.setExcludes(new String[]{"surgery_brief_final_diagnosed_disease_id"});
-        res = HttpRequest.s_SendPut(host_doc + uri, JSONObject.fromObject(JSONSerializer.toJSON(su2, jsonConfig2)).toString(), token, pathValue);
+        SurgeryOrder su2 = new SurgeryOrder("brief");
+        su2.getOrder().setSurgery_brief_final_diagnosed_disease_id(null);
+        res = HttpRequest.s_SendPut(host_doc + uri, su2.transform(), token, pathValue);
         s_CheckResponse(res);
         Assert.assertNotEquals(code, "1000000");
 
-        SurgeryOrder su3 = new SurgeryOrder("Brief");
-        JsonConfig jsonConfig3 = new JsonConfig();
-        jsonConfig3.setExcludes(new String[]{"surgery_brief_date"});
-        res = HttpRequest.s_SendPut(host_doc + uri, JSONObject.fromObject(JSONSerializer.toJSON(su3, jsonConfig3)).toString(), token, pathValue);
+        SurgeryOrder su3 = new SurgeryOrder("brief");
+        su3.getOrder().setSurgery_brief_date(null);
+        res = HttpRequest.s_SendPut(host_doc + uri, su3.transform(), token, pathValue);
         s_CheckResponse(res);
         Assert.assertNotEquals(code, "1000000");
 
-        SurgeryOrder su4 = new SurgeryOrder("Brief");
-        JsonConfig jsonConfig4 = new JsonConfig();
-        jsonConfig4.setExcludes(new String[]{"surgery_brief_hospital_id"});
-        res = HttpRequest.s_SendPut(host_doc + uri, JSONObject.fromObject(JSONSerializer.toJSON(su4, jsonConfig4)).toString(), token, pathValue);
+        SurgeryOrder su4 = new SurgeryOrder("brief");
+        su4.getOrder().setExpected_surgery_hospital_id(null);
+        res = HttpRequest.s_SendPut(host_doc + uri, su4.transform(), token, pathValue);
         s_CheckResponse(res);
         Assert.assertNotEquals(code, "1000000");
     }

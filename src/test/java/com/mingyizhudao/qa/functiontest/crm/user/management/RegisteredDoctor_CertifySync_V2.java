@@ -39,23 +39,23 @@ public class RegisteredDoctor_CertifySync_V2 extends BaseTest {
             logger.error("医生ID不存在");
             return null;
         }
-        res = RegisteredDoctor_Detail.s_Detail(regId);
-        logger.debug(Helper.unicodeString(res));
-        if (Helper.s_ParseJson(JSONObject.fromObject(res), "data:is_verified").equals("1")) {
-            logger.info("已认证医生");
-            result.put("is_verified", "1");
-            return result;
-        }
-        if (Helper.s_ParseJson(JSONObject.fromObject(res), "data:is_verified").equals("-1")) {
-            logger.error("认证失败状态不能直接进行验证");
-            result.put("is_verified", "-1");
-            return result;
-        }
-        if (Helper.s_ParseJson(JSONObject.fromObject(res), "data:is_verified").equals("0")) {
-            logger.error("信息不完整，不能验证");
-            result.put("is_verified", "0");
-            return result;
-        }
+//        res = RegisteredDoctor_Detail.s_Detail(regId);
+//        logger.debug(Helper.unicodeString(res));
+//        if (Helper.s_ParseJson(JSONObject.fromObject(res), "data:is_verified").equals("1")) {
+//            logger.info("已认证医生");
+//            result.put("is_verified", "1");
+//            return result;
+//        }
+//        if (Helper.s_ParseJson(JSONObject.fromObject(res), "data:is_verified").equals("-1")) {
+//            logger.error("认证失败状态不能直接进行验证");
+//            result.put("is_verified", "-1");
+//            return result;
+//        }
+//        if (Helper.s_ParseJson(JSONObject.fromObject(res), "data:is_verified").equals("0")) {
+//            logger.error("信息不完整，不能验证");
+//            result.put("is_verified", "0");
+//            return result;
+//        }
         HashMap<String, String> pathValue = new HashMap<>();
         pathValue.put("id", regId);
 
@@ -80,23 +80,23 @@ public class RegisteredDoctor_CertifySync_V2 extends BaseTest {
             logger.error("医生ID不存在");
             return null;
         }
-        res = RegisteredDoctor_Detail.s_Detail(regId);
-        logger.debug(Helper.unicodeString(res));
-        if (Helper.s_ParseJson(JSONObject.fromObject(res), "data:is_verified").equals("1")) {
-            logger.info("已认证医生");
-            result.put("is_verified", "1");
-            return result;
-        }
-        if (Helper.s_ParseJson(JSONObject.fromObject(res), "data:is_verified").equals("-1")) {
-            logger.error("认证失败状态不能直接进行验证");
-            result.put("is_verified", "-1");
-            return result;
-        }
-        if (Helper.s_ParseJson(JSONObject.fromObject(res), "data:is_verified").equals("0")) {
-            logger.error("信息不完整，不能验证");
-            result.put("is_verified", "0");
-            return result;
-        }
+//        res = RegisteredDoctor_Detail.s_Detail(regId);
+//        logger.debug(Helper.unicodeString(res));
+//        if (Helper.s_ParseJson(JSONObject.fromObject(res), "data:is_verified").equals("1")) {
+//            logger.info("已认证医生");
+//            result.put("is_verified", "1");
+//            return result;
+//        }
+//        if (Helper.s_ParseJson(JSONObject.fromObject(res), "data:is_verified").equals("-1")) {
+//            logger.error("认证失败状态不能直接进行验证");
+//            result.put("is_verified", "-1");
+//            return result;
+//        }
+//        if (Helper.s_ParseJson(JSONObject.fromObject(res), "data:is_verified").equals("0")) {
+//            logger.error("信息不完整，不能验证");
+//            result.put("is_verified", "0");
+//            return result;
+//        }
         HashMap<String, String> pathValue = new HashMap<>();
         pathValue.put("id", regId);
 

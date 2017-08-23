@@ -468,7 +468,7 @@ public class UpdateMedicalRecords extends BaseTest {
 
         logger.info("更新期望手术医院ID为空");
         su.getOrder().setExpected_surgery_hospital_id("");
-        res = HttpRequest.s_SendPut(host_doc + uri, JSONObject.fromObject(su).toString(), mainToken, pathValue);
+        res = HttpRequest.s_SendPut(host_doc + uri, su.transform(), mainToken, pathValue);
         s_CheckResponse(res);
         Assert.assertEquals(code, "1000000", "更新正常数据未成功");
         logger.info("查看刚刚更新的订单详情");
@@ -480,7 +480,7 @@ public class UpdateMedicalRecords extends BaseTest {
 
         logger.info("更新期望手术医院ID=0");
         su.getOrder().setExpected_surgery_hospital_id("0");
-        res = HttpRequest.s_SendGet(host_doc + uri, JSONObject.fromObject(su).toString(), mainToken, pathValue);
+        res = HttpRequest.s_SendPut(host_doc + uri, su.transform(), mainToken, pathValue);
         s_CheckResponse(res);
         Assert.assertEquals(code, "1000000", "更新正常数据未成功");
         logger.info("查看刚刚更新的订单详情");
@@ -493,7 +493,7 @@ public class UpdateMedicalRecords extends BaseTest {
         String key = Generator.randomKey(KnowledgeBase.kb_hospital);
         logger.info("更新期望手术医院ID="+key);
         su.getOrder().setExpected_surgery_hospital_id(key);
-        res = HttpRequest.s_SendGet(host_doc + uri, JSONObject.fromObject(su).toString(), mainToken, pathValue);
+        res = HttpRequest.s_SendPut(host_doc + uri, su.transform(), mainToken, pathValue);
         s_CheckResponse(res);
         Assert.assertEquals(code, "1000000", "更新正常数据未成功");
         logger.info("查看刚刚更新的订单详情");
@@ -524,7 +524,7 @@ public class UpdateMedicalRecords extends BaseTest {
 
         logger.info("姓名为中文");
         su.getOrder().setPatient_name("大头猪");
-        res = HttpRequest.s_SendPut(host_doc + uri, JSONObject.fromObject(su).toString(), mainToken, pathValue);
+        res = HttpRequest.s_SendPut(host_doc + uri, su.transform(), mainToken, pathValue);
         s_CheckResponse(res);
         Assert.assertEquals(code, "1000000", "更新订单失败");
         logger.info("查看刚刚更新的订单详情");
@@ -535,7 +535,7 @@ public class UpdateMedicalRecords extends BaseTest {
 
         logger.info("姓名为中文字母组合");
         su.getOrder().setPatient_name("方超xyz");
-        res = HttpRequest.s_SendPut(host_doc + uri, JSONObject.fromObject(su).toString(), mainToken, pathValue);
+        res = HttpRequest.s_SendPut(host_doc + uri, su.transform(), mainToken, pathValue);
         s_CheckResponse(res);
         Assert.assertEquals(code, "1000000", "更新订单失败");
         logger.info("查看刚刚更新的订单详情");
@@ -546,7 +546,7 @@ public class UpdateMedicalRecords extends BaseTest {
 
         logger.info("姓名为长字符：大于前端控制");
         su.getOrder().setPatient_name("方超xyz惺惺惜惺惺想寻寻寻寻寻寻寻寻寻寻寻寻寻寻寻寻寻寻寻寻寻寻寻寻寻寻寻寻寻寻寻寻寻寻");
-        res = HttpRequest.s_SendPut(host_doc + uri, JSONObject.fromObject(su).toString(), mainToken, pathValue);
+        res = HttpRequest.s_SendPut(host_doc + uri, su.transform(), mainToken, pathValue);
         s_CheckResponse(res);
         Assert.assertEquals(code, "1000000", "更新订单失败");
         logger.info("查看刚刚更新的订单详情");
@@ -577,7 +577,7 @@ public class UpdateMedicalRecords extends BaseTest {
 
         logger.info("更新年龄为-1");
         su.getOrder().setPatient_age(-1);
-        res = HttpRequest.s_SendPut(host_doc + uri, JSONObject.fromObject(su).toString(), mainToken, pathValue);
+        res = HttpRequest.s_SendPut(host_doc + uri, su.transform(), mainToken, pathValue);
         s_CheckResponse(res);
         Assert.assertNotEquals(code, "1000000", "更新异常数据成功");
         logger.info("查看刚刚更新的订单详情");
@@ -587,40 +587,16 @@ public class UpdateMedicalRecords extends BaseTest {
         Assert.assertEquals(Helper.s_ParseJson(data, "order:patient_age"), age, "年龄为-1，不应该更新成功");
         logger.info("禁止更新年龄为-1");
 
-        logger.info("更新年龄为0");
-        su.getOrder().setPatient_age(0);
-        res = HttpRequest.s_SendPut(host_doc + uri, JSONObject.fromObject(su).toString(), mainToken, pathValue);
-        s_CheckResponse(res);
-        Assert.assertNotEquals(code, "1000000", "更新异常数据成功");
-        logger.info("查看刚刚更新的订单详情");
-        res = GetOrderDetail_V1.s_MyInitiateOrder(mainToken, orderId);
-        s_CheckResponse(res);
-        Assert.assertEquals(code, "1000000", "查看订单失败");
-        Assert.assertEquals(Helper.s_ParseJson(data, "order:patient_age"), age, "年龄为0，不应该更新成功");
-        logger.info("禁止更新年龄为0");
-
-        logger.info("更新年龄为:1000000009999999999900000000000000000000000000000000000000");
-        su.getOrder().setPatient_age(1000000090);
-        res = HttpRequest.s_SendPut(host_doc + uri, JSONObject.fromObject(su).toString(), mainToken, pathValue);
-        s_CheckResponse(res);
-        Assert.assertNotEquals(code, "1000000", "更新异常数据成功");
-        logger.info("查看刚刚更新的订单详情");
-        res = GetOrderDetail_V1.s_MyInitiateOrder(mainToken, orderId);
-        s_CheckResponse(res);
-        Assert.assertEquals(code, "1000000", "查看订单失败");
-        Assert.assertEquals(Helper.s_ParseJson(data, "order:patient_age"), age, "年龄为1000000009999999999900000000000000000000000000000000000000，不应该更新成功");
-        logger.info("禁止更新年龄为:1000000009999999999900000000000000000000000000000000000000");
-
         logger.info("更新年龄为103。。。");
         su.getOrder().setPatient_age(103);
-        res = HttpRequest.s_SendPut(host_doc + uri, JSONObject.fromObject(su).toString(), mainToken, pathValue);
+        res = HttpRequest.s_SendPut(host_doc + uri, su.transform(), mainToken, pathValue);
         s_CheckResponse(res);
         Assert.assertEquals(code, "1000000", "更新正常数据未成功");
         logger.info("查看刚刚更新的订单详情");
         res = GetOrderDetail_V1.s_MyInitiateOrder(mainToken, orderId);
         s_CheckResponse(res);
         Assert.assertEquals(code, "1000000", "查看订单失败");
-        Assert.assertEquals(Helper.s_ParseJson(data, "order:patient_age"), "103", "年龄不为103，更新未成功");
+        Assert.assertEquals(Helper.s_ParseJson(data, "order:patient_age"), su.getOrder().getPatient_age().toString(), "年龄不为103，更新未成功");
         logger.info("更新年龄为103成功");
     }
 
@@ -668,8 +644,8 @@ public class UpdateMedicalRecords extends BaseTest {
         pathValue.put("orderId", orderId);
 
         SurgeryOrder su = new SurgeryOrder("order");
-        su.getOrder().setIs_reoperation("0");
-        res = HttpRequest.s_SendPut(host_doc + uri, JSONObject.fromObject(su).toString(), mainToken, pathValue);
+        su.getOrder().setIs_reoperation(0);
+        res = HttpRequest.s_SendPut(host_doc + uri, su.transform(), mainToken, pathValue);
         s_CheckResponse(res);
         Assert.assertEquals(code, "1000000");
         res = GetOrderDetail_V1.s_MyInitiateOrder(mainToken, orderId);
@@ -677,8 +653,8 @@ public class UpdateMedicalRecords extends BaseTest {
         Assert.assertEquals(code, "1000000", "查看订单失败");
         Assert.assertEquals(Helper.s_ParseJson(data, "order:is_reoperation"), "false");
 
-        su.getOrder().setIs_reoperation("1");
-        res = HttpRequest.s_SendPut(host_doc + uri, JSONObject.fromObject(su).toString(), mainToken, pathValue);
+        su.getOrder().setIs_reoperation(1);
+        res = HttpRequest.s_SendPut(host_doc + uri, su.transform(), mainToken, pathValue);
         s_CheckResponse(res);
         Assert.assertEquals(code, "1000000");
         res = GetOrderDetail_V1.s_MyInitiateOrder(mainToken, orderId);
@@ -701,7 +677,7 @@ public class UpdateMedicalRecords extends BaseTest {
 
         SurgeryOrder su = new SurgeryOrder("order");
         su.getOrder().setPatient_phone("13899991234");
-        res = HttpRequest.s_SendPut(host_doc + uri, JSONObject.fromObject(su).toString(), mainToken, pathValue);
+        res = HttpRequest.s_SendPut(host_doc + uri, su.transform(), mainToken, pathValue);
         s_CheckResponse(res);
         Assert.assertEquals(code, "1000000");
         res = GetOrderDetail_V1.s_MyInitiateOrder(mainToken, orderId);
@@ -710,7 +686,7 @@ public class UpdateMedicalRecords extends BaseTest {
         Assert.assertEquals(Helper.s_ParseJson(data, "order:patient_phone"), "13899991234");
 
         su.getOrder().setPatient_phone("13899991235");
-        res = HttpRequest.s_SendPut(host_doc + uri, JSONObject.fromObject(su).toString(), mainToken, pathValue);
+        res = HttpRequest.s_SendPut(host_doc + uri, su.transform(), mainToken, pathValue);
         s_CheckResponse(res);
         Assert.assertEquals(code, "1000000");
         res = GetOrderDetail_V1.s_MyInitiateOrder(mainToken, orderId);

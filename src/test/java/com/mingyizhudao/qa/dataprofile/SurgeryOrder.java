@@ -14,15 +14,9 @@ import static com.mingyizhudao.qa.utilities.Helper.*;
 public class SurgeryOrder {
 
     private OrderDetail order;
-    private Brief brief;
-//    private Detail order;
 
     public SurgeryOrder(String type) {
-        if(type.equals("order")){
-            this.order = new OrderDetail();
-        }else if(type.equals("brief")){
-            this.brief = new Brief();
-        }
+        this.order = new OrderDetail(type);
     }
 
     public String transform() {
@@ -35,42 +29,54 @@ public class SurgeryOrder {
     @Data
     public class OrderDetail {
         private String patient_name;
-        private int patient_gender;
-        private int patient_age;
+        private Integer patient_gender;
+        private Integer patient_age;
         private String patient_phone;
         private String major_disease_id;
         private String minor_disease_id;
         private String diagnosis;
-        private String is_reoperation;
+        private Integer is_reoperation;
         private String expected_doctor_id;
         private String expected_surgery_hospital_id;
         private String expected_surgery_start_date;
         private String expected_surgery_due_date;
         private List<Picture> medical_record_pictures;
 
-        public OrderDetail() {
-            this.patient_name = "王二"+randomString(4);
-            this.patient_gender = (int)randomInt(2);
-            this.patient_age = (int)randomInt(100);
-            this.patient_phone = randomPhone();
-            this.major_disease_id = randomDiseaseId();
-            this.minor_disease_id = randomDiseaseId();
-            this.expected_doctor_id = randomExpertId();
-            this.expected_surgery_hospital_id = randomHospitalId();
-            this.expected_surgery_start_date = randomDateFromNow(1, 2, new SimpleDateFormat("yyyy-MM-dd"));
-            this.expected_surgery_due_date = randomDateFromNow(2, 7, new SimpleDateFormat("yyyy-MM-dd"));
-            this.diagnosis = randomString(300);
-            this.medical_record_pictures = new ArrayList<Picture>(){
-                {
-                    add(new Picture("2017/05/04/1265834e-97d8-44a0-95e7-047c7facaee8/IMG_20170429_102737.jpg", "1"));
-                    add(new Picture("2017/05/04/1315bbe0-2836-4776-8216-ec55044f32dd/IMG_20161013_172442.jpg", "1"));
-                }
-            };
+        public OrderDetail(String type) {
+            if(type.equals("order")) {
+                this.patient_name = "王二" + randomString(4);
+                this.patient_gender = (int) randomInt(2);
+                this.patient_age = (int) randomInt(100);
+                this.patient_phone = randomPhone();
+                this.major_disease_id = randomDiseaseId();
+                this.minor_disease_id = randomDiseaseId();
+                this.expected_doctor_id = randomExpertId();
+                this.is_reoperation = (int) randomInt(2) - 1;
+                this.expected_surgery_hospital_id = randomHospitalId();
+                this.expected_surgery_start_date = randomDateFromNow(1, 2, new SimpleDateFormat("yyyy-MM-dd"));
+                this.expected_surgery_due_date = randomDateFromNow(2, 7, new SimpleDateFormat("yyyy-MM-dd"));
+                this.diagnosis = randomString(300);
+                this.medical_record_pictures = new ArrayList<Picture>() {
+                    {
+                        add(new Picture("2017/05/04/1265834e-97d8-44a0-95e7-047c7facaee8/IMG_20170429_102737.jpg", "1"));
+                        add(new Picture("2017/05/04/1315bbe0-2836-4776-8216-ec55044f32dd/IMG_20161013_172442.jpg", "1"));
+                    }
+                };
+            } else if (type.equals("brief")) {
+                this.surgery_brief_hospital_id = randomHospitalId();
+                this.surgery_brief_date = randomDateTillNow();
+                this.surgery_brief_description = randomString(100);
+                this.surgery_brief_final_diagnosed_disease_id = randomDiseaseId();
+                this.surgery_brief_surgery_id = randomSurgeryId();
+                this.surgery_brief_pictures = new ArrayList<Picture>(){
+                    {
+                        add(new Picture("2017/05/04/1265834e-97d8-44a0-95e7-047c7facaee8/IMG_20170429_102737.jpg", "2"));
+                        add(new Picture("2017/05/04/1315bbe0-2836-4776-8216-ec55044f32dd/IMG_20161013_172442.jpg","2"));
+                    }
+                };
+            }
         }
-    }
 
-    @Data
-    public class Brief {
         private String surgery_brief_hospital_id;
         private String surgery_brief_date;
         private String surgery_brief_description;
@@ -78,19 +84,14 @@ public class SurgeryOrder {
         private String surgery_brief_surgery_id;
         private List<Picture> surgery_brief_pictures;
 
-        public Brief() {
-            this.surgery_brief_hospital_id = randomHospitalId();
-            this.surgery_brief_date = randomDateTillNow();
-            this.surgery_brief_description = randomString(100);
-            this.surgery_brief_final_diagnosed_disease_id = randomDiseaseId();
-            this.surgery_brief_surgery_id = randomSurgeryId();
-            this.surgery_brief_pictures = new ArrayList<Picture>(){
-                {
-                    add(new Picture("2017/05/04/1265834e-97d8-44a0-95e7-047c7facaee8/IMG_20170429_102737.jpg", "2"));
-                    add(new Picture("2017/05/04/1315bbe0-2836-4776-8216-ec55044f32dd/IMG_20161013_172442.jpg","2"));
-                }
-            };
+        public OrderDetail() {
+
         }
+    }
+
+    @Data
+    public class Brief {
+
     }
 
     @Data

@@ -111,49 +111,6 @@ public class KBExpert_Update extends BaseTest {
         Assert.assertEquals(s_ParseJson(data, "hospital_name"), hospitalName(ep.getHospital_id()), "医生的医院名称没有更新");
         Assert.assertEquals(s_ParseJson(data, "city_id"), cityId, "医生的城市没有更新");
         Assert.assertEquals(s_ParseJson(data, "city_name"), cityName(cityId), "医生的城市没有更新");
-//        Assert.assertEquals(s_ParseJson(data, "county_id"), countryId, "医生的地区名称没有更新");
-//        Assert.assertEquals(s_ParseJson(data, "county_name"), countyName(countryId), "医生的地区名称没有更新");
-
-    }
-
-    @Test(enabled = false)
-    public void test_04_更新个人信息_禁止更新city_id() {
-        String res = "";
-        Doctor ep = new Doctor();
-        String expertId = KBExpert_Create.s_Create(ep);
-        if (expertId == null) Assert.fail("创建医库医生失败，退出用例执行");
-        HashMap<String, String> pathValue = new HashMap<>();
-        pathValue.put("id", expertId);
-
-        String cityId = randomCityId();
-        ep.setCity_id(cityId);
-        res = s_SendPut(host_crm+uri, JSONObject.fromObject(ep).toString(), crm_token, pathValue);
-        s_CheckResponse(res);
-        Assert.assertNotEquals(code, "1000000", "禁止更新city_id");
-
-        res = KBExpert_Detail.s_Detail(expertId);
-        s_CheckResponse(res);
-        Assert.assertNotEquals(s_ParseJson(data, "city_id"), cityId);
-    }
-
-    @Test(enabled = false)
-    public void test_05_更新个人信息_禁止更新county_id() {
-        String res = "";
-        Doctor ep = new Doctor();
-        String expertId = KBExpert_Create.s_Create(ep);
-        if (expertId == null) Assert.fail("创建医库医生失败，退出用例执行");
-        HashMap<String, String> pathValue = new HashMap<>();
-        pathValue.put("id", expertId);
-
-        String countryId = randomCountyId();
-        ep.setCounty_id(countryId);
-        res = s_SendPut(host_crm+uri, JSONObject.fromObject(ep).toString(), crm_token, pathValue);
-        s_CheckResponse(res);
-        Assert.assertNotEquals(code, "1000000", "禁止更新country_id");
-
-        res = KBExpert_Detail.s_Detail(expertId);
-        s_CheckResponse(res);
-        Assert.assertNotEquals(s_ParseJson(data, "county_id"), countryId);
     }
 
     @Test

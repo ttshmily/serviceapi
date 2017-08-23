@@ -14,7 +14,7 @@ import java.util.List;
 public class Doctor {
 
     private String name;
-    private int gender;
+    private Integer gender;
     private String birthday;
     private String major_id;
     private String hospital_id;
@@ -29,23 +29,19 @@ public class Doctor {
 //    private boolean is_internet_operation_doctor;
     private String[] cooperation_channel;
     private String signed_status;
-    private String city_id;
-    private String county_id;
+    private List<Specialty> specialty_list;
 
     public Doctor(String type) {
-        if (type.equals("basic")) {
-            this.name = "大一" + randomString(4);
-            this.hospital_id = randomHospitalId();
-            this.department_name = "随机科室" + randomString(2);
-            this.medical_title_list = randomMedicalId();
+        if (type.equals("specialty_list")) {
+            int size = (int) randomInt(4);
+            specialty_list = new ArrayList<Specialty>() {
+                {
+                    for (int i = 0; i < size; i++) {
+                        add(new Specialty());
+                    }
+                }
+            };
         }
-    }
-
-    public String transform() {
-        JsonConfig jc = new JsonConfig();
-        jc.setAllowNonStringKeys(true);
-        jc.setExcludes(getNullFieldName(this));
-        return JSONObject.fromObject(this, jc).toString();
     }
 
     public Doctor() {
@@ -67,7 +63,12 @@ public class Doctor {
 //        this.avatar_url = new ArrayList<Picture>(){{add(new Picture("123.jpb", "7")); add(new Picture("123.jpb", "7"));}};
     }
 
-
+    public String transform() {
+        JsonConfig jc = new JsonConfig();
+        jc.setAllowNonStringKeys(true);
+        jc.setExcludes(getNullFieldName(this));
+        return JSONObject.fromObject(this, jc).toString();
+    }
 
     @Data
     public class Picture {

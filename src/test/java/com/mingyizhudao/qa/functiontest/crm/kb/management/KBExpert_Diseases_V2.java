@@ -35,10 +35,9 @@ public class KBExpert_Diseases_V2 extends BaseTest {
         TestLogger logger = new TestLogger(s_JobName());
         HashMap<String, String> pathValue = new HashMap<>();
         pathValue.put("id", expertId);
-        JSONObject body = DiseaseJson(5, 4);
-        res = s_SendPost(host_crm+uri, body.toString(), crm_token, pathValue);
-        if(!JSONObject.fromObject(res).getString("code").equals("1000000")) return false;
-        return true;
+        Doctor dp = new Doctor("specialty_list");
+        res = s_SendPost(host_crm+uri, dp.transform(), crm_token, pathValue);
+        return JSONObject.fromObject(res).getString("code").equals("1000000");
     }
 
     @Test
@@ -52,18 +51,19 @@ public class KBExpert_Diseases_V2 extends BaseTest {
         String doctorId = info.get("id");
         HashMap<String, String> pathValue = new HashMap<>();
         pathValue.put("id", expertId);
-        JSONObject body = DiseaseJson(5, 4);
-        res = s_SendPost(host_crm+uri, body.toString(), crm_token, pathValue);
+
+        Doctor dp = new Doctor("specialty_list");
+        res = s_SendPost(host_crm+uri, dp.transform(), crm_token, pathValue);
         s_CheckResponse(res);
         Assert.assertEquals(code, "1000000");
 
         res = KBExpert_Detail.s_Detail(expertId);
         s_CheckResponse(res);
-        Assert.assertEquals(Helper.s_ParseJson(data, "specialty_list()"), "5");
-
+        String size1 = Helper.s_ParseJson(data, "specialty_list()");
         res = RegisteredDoctor_Detail.s_Detail(doctorId);
         s_CheckResponse(res);
-        Assert.assertEquals(Helper.s_ParseJson(data, "exp_list()"), "5");
+        String size2 = Helper.s_ParseJson(data, "exp_list()");
+        Assert.assertEquals(size1, size2);
     }
 
     @Test
@@ -95,14 +95,14 @@ public class KBExpert_Diseases_V2 extends BaseTest {
         HashMap<String, String> pathValue = new HashMap<>();
         pathValue.put("id", expertId);
 
-        JSONObject body = DiseaseJson(5, 4);
-        res = s_SendPost(host_crm+uri, body.toString(), crm_token, pathValue);
+        Doctor dp = new Doctor("specialty_list");
+        res = s_SendPost(host_crm+uri, dp.transform(), crm_token, pathValue);
         s_CheckResponse(res);
         Assert.assertEquals(code, "1000000");
 
         res = KBExpert_Detail.s_Detail(expertId);
         s_CheckResponse(res);
-        Assert.assertEquals(Helper.s_ParseJson(data, "specialty_list()"), "5");
+        Assert.assertEquals(Helper.s_ParseJson(data, "specialty_list()"), String.valueOf(dp.getSpecialty_list().size()));
     }
 
     public static JSONObject DiseaseJson(int cat_count, int dis_count) {

@@ -39,8 +39,8 @@ public class Order_List extends BaseTest {
         TestLogger logger = new TestLogger(s_JobName());
         HashMap<String, String> query = new HashMap<>();
         query.put("status", "4000");
-        query.put("searchValue", "测试的医生");
-        query.put("searchKey", "agent_name");
+//        query.put("searchValue", "测试的医生");
+//        query.put("searchKey", "agent_name");
         query.put("page", "1");
         query.put("pageSize", "1");
         //query.put("hideTest", "true");

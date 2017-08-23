@@ -1,6 +1,7 @@
 package com.mingyizhudao.qa.functiontest.doctor;
 
 import com.mingyizhudao.qa.common.BaseTest;
+import com.mingyizhudao.qa.dataprofile.Specialty;
 import com.mingyizhudao.qa.dataprofile.User;
 import com.mingyizhudao.qa.functiontest.crm.kb.management.KBHospital_Detail;
 import com.mingyizhudao.qa.common.KnowledgeBase;
@@ -16,6 +17,7 @@ import org.testng.annotations.Test;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import static com.mingyizhudao.qa.functiontest.crm.kb.management.KBExpert_Detail.s_Detail;
 import static com.mingyizhudao.qa.utilities.Generator.*;
 
 /**
@@ -90,6 +92,7 @@ public class UpdateDoctorProfile_V1 extends BaseTest {
         User dp = new User();
         HashMap<String, String> doc = s_CreateSyncedDoctor(dp);
         String tmpToken = doc.get("token");
+        String expertId = doc.get("expert_id");
 
         String hospitalId = randomHospitalId();
         HashMap<String, String> hospitalInfo = KBHospital_Detail.s_Detail(hospitalId);
@@ -108,6 +111,12 @@ public class UpdateDoctorProfile_V1 extends BaseTest {
         Assert.assertEquals(Helper.s_ParseJson(data, "doctor:city_id"), cityId);
         Assert.assertEquals(Helper.s_ParseJson(data, "doctor:city"), cityName(cityId));
 
+//        res = s_Detail(expertId);
+//        s_CheckResponse(res);
+//        Assert.assertEquals(Helper.s_ParseJson(data, "hospital_id"), dp.getDoctor().getHospital_id());
+//        Assert.assertEquals(Helper.s_ParseJson(data, "hospital_name"), hospitalName(dp.getDoctor().getHospital_id()));
+//        Assert.assertEquals(Helper.s_ParseJson(data, "city_id"), cityId);
+//        Assert.assertEquals(Helper.s_ParseJson(data, "city_name"), cityName(cityId));
     }
 
 /*    @Test (enabled = false)
@@ -201,28 +210,55 @@ public class UpdateDoctorProfile_V1 extends BaseTest {
     }
 
     @Test
-    public void test_13_更新擅长exp_list() {
+    public void test_13_更新擅长exp_list_并同步医库() {
         String res = "";
         User dp = new User();
         HashMap<String, String> doc = s_CreateSyncedDoctor(dp);
         String tmpToken = doc.get("token");
-
-        dp.getDoctor().setExp_list(new ArrayList<User.UserDetail.Exp>(){
+        String expertId = doc.get("expert_id");
+        dp.getDoctor().setExp_list(new ArrayList<Specialty>(){
             {
-                add(dp.getDoctor().new Exp());
-
+                int size = (int)randomInt(4);
+                for (int i = 0; i < size; i++) {
+                    add(new Specialty());
+                }
             }
         });
-//        body.body.getJSONObject("doctor").put("exp_list", JSONArray.fromObject("[{\"category\": {\"id\": 6,\"name\": \"皮肤肿瘤\"},\"disease_list\": [{\"id\": 339,\"name\": \"早期乳腺癌\"},{\"id\": 336,\"name\": \"炎性乳腺癌\"}]},{\"category\": {\"id\": 7,\"name\": \"神经肿瘤\"},\"disease_list\": [{\"id\": 394,\"name\": \"垂体腺瘤\"},{\"id\": 393,\"name\": \"催乳素瘤\"}]}]"));
-        res = HttpRequest.s_SendPost(host_doc + uri, JSONObject.fromObject(dp).toString(), tmpToken);
+        res = HttpRequest.s_SendPost(host_doc + uri, dp.transform(), tmpToken);
         s_CheckResponse(res);
         Assert.assertEquals(code, "1000000");
 
         res = GetDoctorProfile_V1.s_MyProfile(tmpToken);
         s_CheckResponse(res);
-        Assert.assertEquals(Helper.s_ParseJson(data, "doctor:exp_list()"), "2");
+        Assert.assertEquals(Helper.s_ParseJson(data, "doctor:exp_list()"), String.valueOf(dp.getDoctor().getExp_list().size()));
+
+        res = s_Detail(expertId);
+        s_CheckResponse(res);
+        Assert.assertEquals(Helper.s_ParseJson(data, "specialty_list()"), String.valueOf(dp.getDoctor().getExp_list().size()));
     }
 
+    @Test
+    public void test_14_更新擅长exp_list_同步到医库医生() {
+        String res = "";
+        User dp = new User();
+        HashMap<String, String> doc = s_CreateVerifiedDoctor(dp);
+        String tmpToken = doc.get("token");
 
+        dp.getDoctor().setExp_list(new ArrayList<Specialty>(){
+            {
+                int size = (int)randomInt(4);
+                for (int i = 0; i < size; i++) {
+                    add(new Specialty());
+                }
+            }
+        });
+        res = HttpRequest.s_SendPost(host_doc + uri, dp.transform(), tmpToken);
+        s_CheckResponse(res);
+        Assert.assertEquals(code, "1000000");
+
+        res = GetDoctorProfile_V1.s_MyProfile(tmpToken);
+        s_CheckResponse(res);
+        Assert.assertEquals(Helper.s_ParseJson(data, "doctor:exp_list()"), String.valueOf(dp.getDoctor().getExp_list().size()));
+    }
 }
 

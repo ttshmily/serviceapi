@@ -202,6 +202,5 @@ public class GetOrderList extends BaseTest {
         Assert.assertNotNull(Helper.s_ParseJson(data,"order():surgeon_name"), "手术医生姓名字段不能缺失");
         Assert.assertNotNull(Helper.s_ParseJson(data,"order():surgeon_hospital"), "手术医生所在医院字段不能缺失");
         Assert.assertNotNull(Helper.s_ParseJson(data,"order():surgeon_medical_title"), "手术医生技术职称字段不能缺失");
-        Assert.assertNotNull(Helper.s_ParseJson(data,"order():surgeon_academic_title"), "手术医生学术职称字段不能缺失");
     }
 }

@@ -20,6 +20,12 @@ public class User {
         this.doctor = new UserDetail();
     }
 
+    public String transform() {
+        JsonConfig jc = new JsonConfig();
+        jc.setExcludes(getNullFieldName(this));
+        return JSONObject.fromObject(this, jc).toString();
+    }
+
     @Data
     public class UserDetail {
 
@@ -30,8 +36,14 @@ public class User {
         private String hospital_id;
         private List<Picture> doctor_card_pictures;
         private String inviter_no;
-        private List<Exp> exp_list;
+        private List<Specialty> exp_list;
         private String major_id;
+
+        public String transform() {
+            JsonConfig jc = new JsonConfig();
+            jc.setExcludes(getNullFieldName(this));
+            return JSONObject.fromObject(this, jc).toString();
+        }
 
         public UserDetail() {
             this.name = "田静"+randomString(4);
@@ -41,18 +53,6 @@ public class User {
             this.hospital_id = randomHospitalId();
             this.major_id = randomMajorId();
             this.inviter_no = randomEmployeeId();
-        }
-
-        public String transform() {
-            JsonConfig jc = new JsonConfig();
-            jc.setAllowNonStringKeys(true);
-            jc.setExcludes(getNullFieldName(this));
-            return JSONObject.fromObject(this, jc).toString();
-        }
-
-        @Data
-        public class Exp {
-
         }
 
         @Data

@@ -32,7 +32,7 @@ public class CreateOrder extends BaseTest {
 
     public static String s_CreateOrder(String token){
         SurgeryOrder su = new SurgeryOrder("order");
-        String res = HttpRequest.s_SendPost(host_doc + uri, JSONObject.fromObject(su).toString(), token);
+        String res = HttpRequest.s_SendPost(host_doc + uri, su.transform(), token);
         return JSONObject.fromObject(res).getJSONObject("data").getString("order_number");
     }
 

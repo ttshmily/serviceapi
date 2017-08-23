@@ -33,17 +33,17 @@ public class RegisteredDoctor_Certify_V2 extends BaseTest {
             logger.error("医生ID不存在");
             return null;
         }
-        res = RegisteredDoctor_Detail.s_Detail(regId);
-        logger.info(Helper.unicodeString(res));
-        if (Helper.s_ParseJson(JSONObject.fromObject(res), "data:is_verified").equals("1")) return "1";
-        if (Helper.s_ParseJson(JSONObject.fromObject(res), "data:is_verified").equals("-1")) {
-            logger.error("认证失败状态不能直接进行验证");
-            return "-1";
-        }
-        if (Helper.s_ParseJson(JSONObject.fromObject(res), "data:is_verified").equals("0")) {
-            logger.error("信息不完整，不能验证");
-            return "0";
-        }
+//        res = RegisteredDoctor_Detail.s_Detail(regId);
+//        logger.info(Helper.unicodeString(res));
+//        if (Helper.s_ParseJson(JSONObject.fromObject(res), "data:is_verified").equals("1")) return "1";
+//        if (Helper.s_ParseJson(JSONObject.fromObject(res), "data:is_verified").equals("-1")) {
+//            logger.error("认证失败状态不能直接进行验证");
+//            return "-1";
+//        }
+//        if (Helper.s_ParseJson(JSONObject.fromObject(res), "data:is_verified").equals("0")) {
+//            logger.error("信息不完整，不能验证");
+//            return "0";
+//        }
         HashMap<String, String> pathValue = new HashMap<>();
         JSONObject body = new JSONObject();
         pathValue.put("id", regId);
