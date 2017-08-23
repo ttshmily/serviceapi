@@ -3,15 +3,14 @@ package com.mingyizhudao.qa.functiontest.bdassistant;
 import com.mingyizhudao.qa.common.BaseTest;
 import com.mingyizhudao.qa.common.TestLogger;
 import com.mingyizhudao.qa.utilities.Generator;
+import static com.mingyizhudao.qa.utilities.Generator.*;
 import com.mingyizhudao.qa.utilities.HttpRequest;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
-import org.apache.log4j.Logger;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -33,6 +32,7 @@ public class DistrictManagement extends BaseTest {
         JSONObject body = new JSONObject();
         JSONArray cities = new JSONArray();
         body.put("staff_id", staffId);
+        body.put("staff_name", employeeName(staffId));
         for(int i=0; i<cityList.size(); i++) {
             String cityId = cityList.get(i);
             JSONObject cityRow = new JSONObject();
@@ -43,7 +43,7 @@ public class DistrictManagement extends BaseTest {
             cityRow.put("city_name", Generator.cityName(cityId));
             cities.add(cityRow);
         }
-        body.put("list", cities);
+        body.put("city_list", cities);
         res = HttpRequest.s_SendPost(host_bda + uri, body.toString(), bda_session);
     }
 
@@ -52,7 +52,8 @@ public class DistrictManagement extends BaseTest {
         String res = "";
         JSONObject body = new JSONObject();
         String staff_id = Generator.randomEmployeeId();
-        body.put("staffId", staff_id);
+        body.put("staff_id", staff_id);
+        body.put("staff_name", employeeName(staff_id));
         List<String> city_list = new ArrayList<>();
         JSONArray cities = new JSONArray();
         for(int i=0; i<2; i++) {
@@ -66,7 +67,7 @@ public class DistrictManagement extends BaseTest {
             cities.add(cityRow);
             city_list.add(city_id);
         }
-        body.put("cityList", cities);
+        body.put("city_list", cities);
         res = HttpRequest.s_SendPost(host_bda + uri, body.toString(), bda_session);
         s_CheckResponse(res);
         Assert.assertEquals(code, "1000000", "");

@@ -1,6 +1,7 @@
 package com.mingyizhudao.qa.functiontest.bdassistant;
 
 import com.mingyizhudao.qa.common.BaseTest;
+import com.mingyizhudao.qa.common.TestLogger;
 import com.mingyizhudao.qa.utilities.Generator;
 import com.mingyizhudao.qa.utilities.HttpRequest;
 import com.mingyizhudao.qa.utilities.Helper;
@@ -17,11 +18,16 @@ import java.util.List;
 /**
  * Created by dayi on 2017/6/22.
  */
-public class TeamListV2 extends BaseTest {
+public class TeamManagement extends BaseTest {
 
-    public static final Logger logger= Logger.getLogger(TeamListV2.class);
-    public static String uri = "/api/v2/user/teamList";
-    public static String mock = false ? "/mockjs/1" : "";
+    public static String clazzName = new Object() {
+        public String getClassName() {
+            String clazzName = this.getClass().getName();
+            return clazzName.substring(0, clazzName.lastIndexOf('$'));
+        }
+    }.getClassName();
+    public static TestLogger logger = new TestLogger(clazzName);
+    public static String uri = "/api/v1/undistributedList";
 
     @Test
     public void test_01_没有token调用应该失败() {
@@ -43,7 +49,7 @@ public class TeamListV2 extends BaseTest {
     public void test_03_非主管token应该返回错误() {
         String res = "";
         HashMap<String, String> query = new HashMap<>();
-        res = HttpRequest.s_SendGet(host_bda + uri, query, bda_token_staff);
+        res = HttpRequest.s_SendGet(host_bda + uri, query, bda_session_staff);
         s_CheckResponse(res);
         Assert.assertNotEquals(code, "1000000", "非主管token不应该调用成功");
     }
@@ -53,7 +59,7 @@ public class TeamListV2 extends BaseTest {
         HashMap<String, String> query = new HashMap<>();
         query.put("sortKey", "orderCounts");
         query.put("sortValue", "asc");
-        res = HttpRequest.s_SendGet(host_bda + uri, query, bda_token);
+        res = HttpRequest.s_SendGet(host_bda + uri, query, bda_session);
         s_CheckResponse(res);
         Assert.assertEquals(code, "1000000");
         JSONArray bd_list = data.getJSONArray("list");
@@ -80,7 +86,8 @@ public class TeamListV2 extends BaseTest {
             orderCount = tmpOrderCount;
         }
     }
-    @Test
+
+    @Test(enabled = false)
     public void test_05_排序规则_未激活医生量() {
         String res = "";
         HashMap<String, String> query = new HashMap<>();
@@ -113,13 +120,14 @@ public class TeamListV2 extends BaseTest {
             disactiveCount = tmpDisactiveCount;
         }
     }
-    @Test
+
+    @Test(enabled = false)
     public void test_06_排序规则_医生量() {
         String res = "";
         HashMap<String, String> query = new HashMap<>();
         query.put("sortKey", "doctorCounts");
         query.put("sortValue", "asc");
-        res = HttpRequest.s_SendGet(host_bda + uri, query, bda_token);
+        res = HttpRequest.s_SendGet(host_bda + uri, query, bda_session);
         s_CheckResponse(res);
         Assert.assertEquals(code, "1000000");
         JSONArray bd_list = data.getJSONArray("list");
@@ -150,7 +158,7 @@ public class TeamListV2 extends BaseTest {
     public void test_07_默认情况下分页数据() {
         String res = "";
         HashMap<String, String> query = new HashMap<>();
-        res = HttpRequest.s_SendGet(host_bda + uri, query, bda_token);
+        res = HttpRequest.s_SendGet(host_bda + uri, query, bda_session);
         s_CheckResponse(res);
         Assert.assertEquals(code, "1000000");
         Assert.assertNotNull(Helper.s_ParseJson(data, "list()"), "地推人员列表字段不能缺失");
@@ -165,7 +173,7 @@ public class TeamListV2 extends BaseTest {
         HashMap<String, String> query = new HashMap<>();
         String city = Generator.randomCityId();
         query.put("city_id", city);
-        res = HttpRequest.s_SendGet(host_bda + uri, query, bda_token);
+        res = HttpRequest.s_SendGet(host_bda + uri, query, bda_session);
         s_CheckResponse(res);
         Assert.assertEquals(code, "1000000");
         JSONArray bd_list = data.getJSONArray("list");

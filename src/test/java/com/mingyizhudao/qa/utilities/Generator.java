@@ -106,7 +106,7 @@ public class Generator {
     public static String randomKey(HashMap<String, String> map) {
         String[] keys = map.keySet().toArray(new String[] {});
         if(keys.length==0)
-            return null;
+            return "";
         else
             return keys[(int)(randomInt(keys.length)-1)];
     }
@@ -119,11 +119,16 @@ public class Generator {
 
     public static String randomEmployeeId() {
         String[] prefix = {"SH"};
-//        String[] ID = {"0105", "0098", "0130", "0129", "0133"};
-        String[] ID = {"0133","0143","9999","0031", "0098","0025"};
-
+        String[] ID = {"0133","0143"};
         Random random = new Random();
         return prefix[random.nextInt(prefix.length)]+ID[random.nextInt(ID.length)];
+    }
+
+    public static String employeeName(String employeeId) {
+        HashMap<String, String> pair = new HashMap<>();
+        pair.put("SH0133", "方超");
+        pair.put("SH0143", "田静");
+        return pair.get(employeeId);
     }
 
     public static String randomProvinceId() {

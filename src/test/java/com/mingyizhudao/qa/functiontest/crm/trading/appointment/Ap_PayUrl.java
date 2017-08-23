@@ -31,7 +31,7 @@ public class Ap_PayUrl extends BaseTest {
         String orderNumber = s_Create(ap);
         HashMap<String, String> pathValue = new HashMap<>();
         pathValue.put("orderNumber", orderNumber);
-        if (!s_Take(orderNumber) || !s_Confirm(orderNumber) || !s_CreatePayment(orderNumber, "APPOINTMENT")) {
+        if (!s_Take(orderNumber) || !s_Confirm(orderNumber) || !s_CreatePayment(orderNumber, "APPOINTMENT", "APPOINTMENT")) {
             Assert.fail("订单未生成支付链接");
         }
 
@@ -48,7 +48,7 @@ public class Ap_PayUrl extends BaseTest {
         String orderNumber = s_Create(ap);
         HashMap<String, String> pathValue = new HashMap<>();
         pathValue.put("orderNumber", orderNumber);
-        if (!s_Take(orderNumber) || !s_Confirm(orderNumber) || !s_CreatePayment(orderNumber, "PLATFORM")) {
+        if (!s_Take(orderNumber) || !s_Confirm(orderNumber) || !s_CreatePayment(orderNumber, "PLATFORM", "APPOINTMENT")) {
             Assert.fail("订单未生成支付链接");
         }
 
@@ -65,7 +65,7 @@ public class Ap_PayUrl extends BaseTest {
         String orderNumber = s_Create(ap);
         HashMap<String, String> pathValue = new HashMap<>();
         pathValue.put("orderNumber", orderNumber);
-        if (!s_Take(orderNumber) || !s_Confirm(orderNumber) || !s_CreatePayment(orderNumber, "DOCTOR")) {
+        if (!s_Take(orderNumber) || !s_Confirm(orderNumber) || !s_CreatePayment(orderNumber, "DOCTOR", "APPOINTMENT")) {
             Assert.fail("订单未生成支付链接");
         }
 
