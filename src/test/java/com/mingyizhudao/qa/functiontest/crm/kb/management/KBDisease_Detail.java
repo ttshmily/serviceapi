@@ -2,7 +2,7 @@ package com.mingyizhudao.qa.functiontest.crm.kb.management;
 
 import com.mingyizhudao.qa.common.BaseTest;
 import com.mingyizhudao.qa.common.TestLogger;
-import com.mingyizhudao.qa.dataprofile.crm.DiseaseProfile_Test;
+import com.mingyizhudao.qa.dataprofile.Disease;
 import com.mingyizhudao.qa.utilities.Generator;
 import com.mingyizhudao.qa.utilities.HttpRequest;
 import com.mingyizhudao.qa.utilities.Helper;
@@ -12,6 +12,8 @@ import org.testng.annotations.Test;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+
+import static com.mingyizhudao.qa.utilities.Helper.s_ParseJson;
 
 /**
  * Created by ttshmily on 1/6/2017.
@@ -41,31 +43,30 @@ public class KBDisease_Detail extends BaseTest {
     public void test_01_获取疾病详情_有效ID() {
 
         String res = "";
-        DiseaseProfile_Test dp = new DiseaseProfile_Test(true);
-        HashMap<String, String> info = KBDisease_Create.s_Create(dp);
-        if (info == null) Assert.fail("创建疾病失败，退出用例执行");
+        Disease d = new Disease();
+        String id = KBDisease_Create.s_Create(d);
+        if (id == null)
+            Assert.fail("创建疾病失败，退出用例执行");
+
         HashMap<String, String> pathValue = new HashMap<>();
-        pathValue.put("id",info.get("id"));
+        pathValue.put("id",id);
         res = HttpRequest.s_SendGet(host_crm+uri, "", crm_token, pathValue);
         s_CheckResponse(res);
         Assert.assertEquals(code, "1000000");
-        Assert.assertEquals(Helper.s_ParseJson(data, "name"), dp.body.getString("name"));
-        Assert.assertEquals(Helper.s_ParseJson(data, "description"), dp.body.getString("description"));
-        Assert.assertEquals(Helper.s_ParseJson(data, "user_visible"), "true");
-        Assert.assertEquals(Helper.s_ParseJson(data, "doctor_visible"), "true");
-        Assert.assertEquals(Helper.s_ParseJson(data, "is_common"), "1");
-        Assert.assertEquals(Helper.s_ParseJson(data, "category_list(0):disease_category_id"), dp.body.getJSONArray("category_list").getJSONObject(0).getString("disease_category_id"));
+        Assert.assertEquals(s_ParseJson(data, "name"), d.getName());
+        Assert.assertEquals(s_ParseJson(data, "description"), d.getDescription());
+        Assert.assertEquals(s_ParseJson(data, "user_visible"), "true");
+        Assert.assertEquals(s_ParseJson(data, "doctor_visible"), "true");
+        Assert.assertEquals(s_ParseJson(data, "is_common"), d.getIs_common().toString());
+        Assert.assertEquals(s_ParseJson(data, "category_list(0):disease_category_id"), d.getCategory_list().get(0).getDisease_category_id());
     }
 
     @Test
     public void test_02_获取疾病详情_无效ID() {
 
         String res = "";
-        DiseaseProfile_Test dp = new DiseaseProfile_Test(true);
-        HashMap<String, String> info = KBDisease_Create.s_Create(dp);
-        if (info == null) Assert.fail("创建疾病失败，退出用例执行");
         HashMap<String, String> pathValue = new HashMap<>();
-        pathValue.put("id","111"+info.get("id"));
+        pathValue.put("id","abc");
         res = HttpRequest.s_SendGet(host_crm+uri, "", crm_token, pathValue);
         s_CheckResponse(res);
         Assert.assertNotEquals(code, "1000000");
@@ -73,18 +74,19 @@ public class KBDisease_Detail extends BaseTest {
 
     @Test
     public void test_03_获取疾病详情_检查关联医生数量() {
-//TODO
         String res = "";
-        DiseaseProfile_Test dp = new DiseaseProfile_Test(true);
-        HashMap<String, String> info = KBDisease_Create.s_Create(dp);
-        if (info == null) Assert.fail("创建疾病失败，退出用例执行");
-        String diseaseId = info.get("id");
+        Disease d = new Disease();
+        String diseaseId = KBDisease_Create.s_Create(d);
+        if (diseaseId == null)
+            Assert.fail("创建疾病失败，退出用例执行");
+
         HashMap<String, String> pathValue = new HashMap<>();
         pathValue.put("id", diseaseId);
+
         res = HttpRequest.s_SendGet(host_crm+uri, "", crm_token, pathValue);
         s_CheckResponse(res);
         Assert.assertEquals(code, "1000000");
-        Assert.assertEquals(Helper.s_ParseJson(data, "related_to_doctors"), "0");
+        Assert.assertEquals(s_ParseJson(data, "related_to_doctors"), "0");
         List<String> ids = new ArrayList<>();
         ids.add(diseaseId);
 

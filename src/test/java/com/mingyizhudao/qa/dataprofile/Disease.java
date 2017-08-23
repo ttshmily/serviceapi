@@ -13,16 +13,32 @@ import java.util.List;
 @Data
 public class Disease {
     private String name;
-    private int is_common;
+    private Integer is_common;
     private String description;
-    private int user_visible;
-    private List<String> category;
+    private String initial;
+    private Integer user_visible;
+    private List<Category> category_list;
+
+    @Data
+    public class Category {
+        private String disease_category_id;
+        public Category() {
+            this.disease_category_id = randomMajorId();
+        }
+    }
 
     public Disease() {
         this.name = "疾病"+randomString(3);
         this.is_common = 1;
         this.description = randomString(10);
         this.user_visible = 1;
+        this.initial = randomString(1).toUpperCase();
+        this.category_list = new ArrayList<Category>() {
+            {
+                add (new Category());
+                add (new Category());
+            }
+        };
     }
 
     public String transform() {
