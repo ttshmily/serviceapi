@@ -26,7 +26,7 @@ public class VisitDate extends BaseTest {
         JSONArray date_list = JSONObject.fromObject(res).getJSONObject("data").getJSONArray("list");
         String[] a= new String[date_list.size()];
         for(int i =0; i<date_list.size(); i++) {
-            a[i] = date_list.getString(i);
+            a[i] = date_list.getJSONObject(i).getString("visit_date");
         }
         return a;
     }

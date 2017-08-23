@@ -88,7 +88,7 @@ public class VisitRecordCreate extends BaseTest {
             if (token.equals(bda_session)) {
                 Assert.assertEquals(data.getString("staff_id"), "SH0133");
             } else {
-                Assert.assertEquals(data.getString("staff_id"), "SH0098");
+                Assert.assertEquals(data.getString("staff_id"), "SH0143");
             }
         }
 
@@ -129,7 +129,7 @@ public class VisitRecordCreate extends BaseTest {
             if (token.equals(bda_session)) {
                 Assert.assertEquals(data.getString("staff_id"), "SH0133");
             } else {
-                Assert.assertEquals(data.getString("staff_id"), "SH0098");
+                Assert.assertEquals(data.getString("staff_id"), "SH0143");
             }
         }
     }
@@ -171,7 +171,7 @@ public class VisitRecordCreate extends BaseTest {
             if (token.equals(bda_session)) {
                 Assert.assertEquals(data.getString("staff_id"), "SH0133");
             } else {
-                Assert.assertEquals(data.getString("staff_id"), "SH0098");
+                Assert.assertEquals(data.getString("staff_id"), "SH0143");
             }
         }
     }
@@ -213,7 +213,7 @@ public class VisitRecordCreate extends BaseTest {
             if (token.equals(bda_session)) {
                 Assert.assertEquals(data.getString("staff_id"), "SH0133");
             } else {
-                Assert.assertEquals(data.getString("staff_id"), "SH0098");
+                Assert.assertEquals(data.getString("staff_id"), "SH0143");
             }
         }
     }

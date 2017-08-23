@@ -38,7 +38,7 @@ public class DistrictUndelivered extends BaseTest {
         JSONArray city_list = data.getJSONArray("list");
         for (int i=0; i<city_list.size(); i++) {
             JSONObject city = city_list.getJSONObject(i);
-            Assert.assertEquals(city.getString("status"), "2");
+            Assert.assertEquals(city.getString("status"), "1");
         }
     }
 

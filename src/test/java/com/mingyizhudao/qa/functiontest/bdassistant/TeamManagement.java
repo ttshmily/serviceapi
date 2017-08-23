@@ -49,7 +49,7 @@ public class TeamManagement extends BaseTest {
     public void test_03_非主管token应该返回错误() {
         String res = "";
         HashMap<String, String> query = new HashMap<>();
-        res = HttpRequest.s_SendGet(host_bda + uri, query, bda_token_staff);
+        res = HttpRequest.s_SendGet(host_bda + uri, query, bda_session_staff);
         s_CheckResponse(res);
         Assert.assertNotEquals(code, "1000000", "非主管token不应该调用成功");
     }
@@ -59,7 +59,7 @@ public class TeamManagement extends BaseTest {
         HashMap<String, String> query = new HashMap<>();
         query.put("sortKey", "orderCounts");
         query.put("sortValue", "asc");
-        res = HttpRequest.s_SendGet(host_bda + uri, query, bda_token);
+        res = HttpRequest.s_SendGet(host_bda + uri, query, bda_session);
         s_CheckResponse(res);
         Assert.assertEquals(code, "1000000");
         JSONArray bd_list = data.getJSONArray("list");
@@ -87,7 +87,7 @@ public class TeamManagement extends BaseTest {
         }
     }
 
-    @Test
+    @Test(enabled = false)
     public void test_05_排序规则_未激活医生量() {
         String res = "";
         HashMap<String, String> query = new HashMap<>();
@@ -121,13 +121,13 @@ public class TeamManagement extends BaseTest {
         }
     }
 
-    @Test
+    @Test(enabled = false)
     public void test_06_排序规则_医生量() {
         String res = "";
         HashMap<String, String> query = new HashMap<>();
         query.put("sortKey", "doctorCounts");
         query.put("sortValue", "asc");
-        res = HttpRequest.s_SendGet(host_bda + uri, query, bda_token);
+        res = HttpRequest.s_SendGet(host_bda + uri, query, bda_session);
         s_CheckResponse(res);
         Assert.assertEquals(code, "1000000");
         JSONArray bd_list = data.getJSONArray("list");
@@ -158,7 +158,7 @@ public class TeamManagement extends BaseTest {
     public void test_07_默认情况下分页数据() {
         String res = "";
         HashMap<String, String> query = new HashMap<>();
-        res = HttpRequest.s_SendGet(host_bda + uri, query, bda_token);
+        res = HttpRequest.s_SendGet(host_bda + uri, query, bda_session);
         s_CheckResponse(res);
         Assert.assertEquals(code, "1000000");
         Assert.assertNotNull(Helper.s_ParseJson(data, "list()"), "地推人员列表字段不能缺失");
@@ -173,7 +173,7 @@ public class TeamManagement extends BaseTest {
         HashMap<String, String> query = new HashMap<>();
         String city = Generator.randomCityId();
         query.put("city_id", city);
-        res = HttpRequest.s_SendGet(host_bda + uri, query, bda_token);
+        res = HttpRequest.s_SendGet(host_bda + uri, query, bda_session);
         s_CheckResponse(res);
         Assert.assertEquals(code, "1000000");
         JSONArray bd_list = data.getJSONArray("list");

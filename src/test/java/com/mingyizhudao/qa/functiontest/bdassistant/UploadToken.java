@@ -73,27 +73,10 @@ public class UploadToken extends BaseTest {
 
         HashMap<String, String> query = new HashMap<>();
         query.put("type", "6");
-        query.put("fileName", "abcd!@#$%^&(~.png");
+        query.put("fileName", "abcd!-+ _.png");
         res = HttpRequest.s_SendGet(host_bda + uri, query, bda_session_staff);
-        s_CheckResponse(res);
-        Assert.assertEquals(code, "1000000");
-
-        query.replace("fileName", "+_)(*&^%$#@!.PNG");
-        res = HttpRequest.s_SendGet(host_doc + uri, query, mainToken, null);
         s_CheckResponse(res);
         Assert.assertEquals(code, "1000000");
     }
 
-    @Ignore
-    public void 获取文件名无后缀名图片token_失败() {
-
-        String res = "";
-
-        HashMap<String, String> query = new HashMap<>();
-        query.put("type", "6");
-        query.put("fileName", "abcd!@#$%^&*(~aa");
-        res = HttpRequest.s_SendGet(host_bda + uri, query, bda_session_staff);
-        s_CheckResponse(res);
-        Assert.assertNotEquals(code, "1000000");
-    }
 }
