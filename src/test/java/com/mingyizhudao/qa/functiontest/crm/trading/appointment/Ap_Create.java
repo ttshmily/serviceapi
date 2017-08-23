@@ -79,7 +79,7 @@ public class Ap_Create extends BaseTest {
         } catch (Exception e) {
             logger.error(e);
         }
-        res = HttpRequest.s_SendPost(host_crm+uri, JSONObject.fromObject(ap).toString(), crm_token);
+        res = HttpRequest.s_SendPost(host_crm+uri, ap.transform(), crm_token);
         s_CheckResponse(res);
         Assert.assertEquals(code, "1000000");
         String order_number = s_ParseJson(data, "order_number");

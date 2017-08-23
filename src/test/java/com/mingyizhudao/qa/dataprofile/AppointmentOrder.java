@@ -1,8 +1,12 @@
 package com.mingyizhudao.qa.dataprofile;
 
 import static com.mingyizhudao.qa.utilities.Generator.*;
+import static com.mingyizhudao.qa.utilities.Helper.getNullFieldName;
+
+import com.mingyizhudao.qa.functiontest.crm.trading.appointment.Ap_Create;
 import lombok.Data;
 import net.sf.json.JSONObject;
+import net.sf.json.JsonConfig;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -27,8 +31,8 @@ public class AppointmentOrder {
     String disease_description;
     List<Picture> medical_record_pictures;
 
-    int patient_age;
-    int patient_gender;
+    Integer patient_age;
+    Integer patient_gender;
     String patient_name;
     String patient_phone;
 
@@ -85,20 +89,30 @@ public class AppointmentOrder {
     private String platform_fee;
     private String appointment_date;
 
+    public String transform() {
+        JsonConfig jc = new JsonConfig();
+        jc.setAllowNonStringKeys(true);
+        jc.setExcludes(getNullFieldName(this));
+        return JSONObject.fromObject(this, jc).toString();
+    }
+
     //TODO
     public AppointmentOrder(String type) {
         switch (type) {
             case "confirm": {
-                String expert_id = randomExpertId();
-                this.doctor_id = expert_id;
-                this.doctor_name = expertName(expert_id);
+                this.doctor_id = randomExpertId();
+                this.doctor_name = expertName(doctor_id);
                 break;
             }
             case "feedback": {
                 break;
             }
         }
+    }
 
+    public static void main(String[] args) {
+        AppointmentOrder a = new AppointmentOrder("confirm");
+        System.out.println(a.transform());
     }
 
     public String printPictures() {

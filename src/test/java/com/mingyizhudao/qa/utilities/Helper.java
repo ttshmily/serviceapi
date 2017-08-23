@@ -4,6 +4,8 @@ import com.mingyizhudao.qa.common.BaseTest;
 import com.mingyizhudao.qa.common.TestLogger;
 import net.sf.json.JSONObject;
 
+import java.lang.reflect.Field;
+import java.lang.reflect.Method;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -144,6 +146,31 @@ public class Helper {
             return false;
         }
         return d1==d2 || d1-d2>=1000 || d2-d1<=1000;
+    }
+
+    public static String[] getNullFieldName(Object o){
+        Field[] fields=o.getClass().getDeclaredFields();
+        List<String> tmpNames = new ArrayList<>();
+        for(int i=0;i<fields.length;i++){
+//            System.out.println(fields[i].getName() + "\t" + fields[i].getType() + "\t" + getFieldValueByName(fields[i].getName(),o));
+            if (getFieldValueByName(fields[i].getName(),o)==null) {
+                tmpNames.add(fields[i].getName());
+            }
+        }
+        return (String[])tmpNames.toArray(new String[tmpNames.size()]);
+    }
+
+    public static Object getFieldValueByName(String fieldName, Object o) {
+        try {
+            String firstLetter = fieldName.substring(0, 1).toUpperCase();
+            String getter = "get" + firstLetter + fieldName.substring(1);
+            Method method = o.getClass().getMethod(getter, new Class[] {});
+            Object value = method.invoke(o, new Object[] {});
+            return value;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 
     public static void main(String[] args) {

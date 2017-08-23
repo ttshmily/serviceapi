@@ -4,6 +4,7 @@ import static com.mingyizhudao.qa.utilities.Generator.*;
 import static com.mingyizhudao.qa.utilities.Helper.*;
 import lombok.Data;
 import net.sf.json.JSONObject;
+import net.sf.json.JsonConfig;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -40,6 +41,13 @@ public class User {
             this.hospital_id = randomHospitalId();
             this.major_id = randomMajorId();
             this.inviter_no = randomEmployeeId();
+        }
+
+        public String transform() {
+            JsonConfig jc = new JsonConfig();
+            jc.setAllowNonStringKeys(true);
+            jc.setExcludes(getNullFieldName(this));
+            return JSONObject.fromObject(this, jc).toString();
         }
 
         @Data

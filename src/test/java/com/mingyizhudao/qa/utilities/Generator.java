@@ -106,7 +106,7 @@ public class Generator {
     public static String randomKey(HashMap<String, String> map) {
         String[] keys = map.keySet().toArray(new String[] {});
         if(keys.length==0)
-            return "";
+            return null;
         else
             return keys[(int)(randomInt(keys.length)-1)];
     }
