@@ -8,6 +8,7 @@ import net.sf.json.JsonConfig;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Random;
 
@@ -21,9 +22,11 @@ public class User {
     }
 
     public String transform() {
-        JsonConfig jc = new JsonConfig();
-        jc.setExcludes(getNullFieldName(this));
-        return JSONObject.fromObject(this, jc).toString();
+        HashMap<String, Object> a = new HashMap<>();
+        for (String o:getNotNullFieldName(this)) {
+            a.put(o, simplify(getFieldValueByName(o, this)));
+        }
+        return JSONObject.fromObject(a).toString();
     }
 
     @Data
@@ -40,9 +43,7 @@ public class User {
         private String major_id;
 
         public String transform() {
-            JsonConfig jc = new JsonConfig();
-            jc.setExcludes(getNullFieldName(this));
-            return JSONObject.fromObject(this, jc).toString();
+            return simplify(this).toString();
         }
 
         public UserDetail() {

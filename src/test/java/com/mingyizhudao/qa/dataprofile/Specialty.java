@@ -1,8 +1,6 @@
 package com.mingyizhudao.qa.dataprofile;
 
 import lombok.Data;
-import net.sf.json.JSONArray;
-import net.sf.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;

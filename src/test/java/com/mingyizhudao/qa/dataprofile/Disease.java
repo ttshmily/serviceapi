@@ -1,11 +1,9 @@
 package com.mingyizhudao.qa.dataprofile;
 
 import static com.mingyizhudao.qa.utilities.Generator.*;
-import static com.mingyizhudao.qa.utilities.Helper.getNullFieldName;
+import static com.mingyizhudao.qa.utilities.Helper.simplify;
 
 import lombok.Data;
-import net.sf.json.JSONObject;
-import net.sf.json.JsonConfig;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -42,10 +40,7 @@ public class Disease {
     }
 
     public String transform() {
-        JsonConfig jc = new JsonConfig();
-        jc.setAllowNonStringKeys(true);
-        jc.setExcludes(getNullFieldName(this));
-        return JSONObject.fromObject(this, jc).toString();
+        return simplify(this).toString();
     }
 
 }

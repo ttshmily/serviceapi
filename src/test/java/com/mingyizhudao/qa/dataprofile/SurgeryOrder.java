@@ -5,6 +5,7 @@ import net.sf.json.JSONObject;
 import net.sf.json.JsonConfig;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import static com.mingyizhudao.qa.utilities.Generator.*;
@@ -15,15 +16,23 @@ public class SurgeryOrder {
 
     private OrderDetail order;
 
+    public static void main(String[] args) {
+        SurgeryOrder a = new SurgeryOrder("brief");
+        System.out.println(a.transform());
+//        System.out.println(a.transform1());
+    }
+
     public SurgeryOrder(String type) {
         this.order = new OrderDetail(type);
     }
 
+
     public String transform() {
-        JsonConfig jc = new JsonConfig();
-        jc.setAllowNonStringKeys(true);
-        jc.setExcludes(getNullFieldName(this));
-        return JSONObject.fromObject(this, jc).toString();
+        HashMap<String, Object> a = new HashMap<>();
+        for (String o:getNotNullFieldName(this)) {
+            a.put(o, simplify(getFieldValueByName(o, this)));
+        }
+        return JSONObject.fromObject(a).toString();
     }
 
     @Data
@@ -84,13 +93,9 @@ public class SurgeryOrder {
         private String surgery_brief_surgery_id;
         private List<Picture> surgery_brief_pictures;
 
-        public OrderDetail() {
-
+        public String transform() {
+            return simplify(this).toString();
         }
-    }
-
-    @Data
-    public class Brief {
 
     }
 

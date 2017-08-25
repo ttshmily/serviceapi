@@ -3,6 +3,7 @@ package com.mingyizhudao.qa.utilities;
 import com.mingyizhudao.qa.common.BaseTest;
 import com.mingyizhudao.qa.common.TestLogger;
 import net.sf.json.JSONObject;
+import net.sf.json.JsonConfig;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
@@ -152,13 +153,28 @@ public class Helper {
         Field[] fields=o.getClass().getDeclaredFields();
         List<String> tmpNames = new ArrayList<>();
         for(int i=0;i<fields.length;i++){
-//            System.out.println(fields[i].getName() + "\t" + fields[i].getType() + "\t" + getFieldValueByName(fields[i].getName(),o));
+            if (fields[i].getName().equals("this$0")) continue;
             if (getFieldValueByName(fields[i].getName(),o)==null) {
                 tmpNames.add(fields[i].getName());
+//                System.out.println(fields[i].getName());
             }
         }
         return (String[])tmpNames.toArray(new String[tmpNames.size()]);
     }
+
+    public static String[] getNotNullFieldName(Object o){
+        Field[] fields=o.getClass().getDeclaredFields();
+        List<String> tmpNames = new ArrayList<>();
+        for(int i=0;i<fields.length;i++){
+            if (fields[i].getName().equals("this$0")) continue;
+            if (getFieldValueByName(fields[i].getName(),o)!=null) {
+                tmpNames.add(fields[i].getName());
+//                System.out.println(fields[i].getName());
+            }
+        }
+        return (String[])tmpNames.toArray(new String[tmpNames.size()]);
+    }
+
 
     public static Object getFieldValueByName(String fieldName, Object o) {
         try {
@@ -171,6 +187,13 @@ public class Helper {
             e.printStackTrace();
             return null;
         }
+    }
+
+    public static JSONObject simplify(Object o) {
+        JsonConfig jc = new JsonConfig();
+        jc.setAllowNonStringKeys(true);
+        jc.setExcludes(getNullFieldName(o));
+        return JSONObject.fromObject(o, jc);
     }
 
     public static void main(String[] args) {

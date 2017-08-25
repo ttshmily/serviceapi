@@ -1,12 +1,10 @@
 package com.mingyizhudao.qa.dataprofile;
 
 import static com.mingyizhudao.qa.utilities.Generator.*;
-import static com.mingyizhudao.qa.utilities.Helper.getNullFieldName;
+import static com.mingyizhudao.qa.utilities.Helper.simplify;
 
-import com.mingyizhudao.qa.functiontest.crm.trading.appointment.Ap_Create;
 import lombok.Data;
 import net.sf.json.JSONObject;
-import net.sf.json.JsonConfig;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -90,10 +88,7 @@ public class AppointmentOrder {
     private String appointment_date;
 
     public String transform() {
-        JsonConfig jc = new JsonConfig();
-        jc.setAllowNonStringKeys(true);
-        jc.setExcludes(getNullFieldName(this));
-        return JSONObject.fromObject(this, jc).toString();
+        return simplify(this).toString();
     }
 
     //TODO
