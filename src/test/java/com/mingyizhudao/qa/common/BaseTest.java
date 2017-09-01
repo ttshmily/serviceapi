@@ -135,37 +135,37 @@ public class BaseTest {
     @BeforeSuite
     public void SetUpSuite() throws Exception {
         KnowledgeBase.s_Init();
-        crm_token = JSONObject.fromObject(HttpRequest.s_SendGet("http://services.dev.myzd.info/crm/api/internal/devToken" , "email="+mainOperatorId+"&name=方超（男）", "")).getJSONObject("data").getString("token");
+        crm_token = JSONObject.fromObject(HttpRequest.s_SendGet("http://services.dev.myzd.info/crm/api/internal/devToken" , "email="+mainOperatorId+"&name="+mainOperatorName, "")).getJSONObject("data").getString("token");
 //        bda_token = JSONObject.fromObject(HttpRequest.s_SendGet("http://work.myzd.info/wx/internal/api/dev-tokens" , "", "")).getJSONObject("data").getJSONObject(mainOperatorId).getString("token");
 //        bda_token_staff = JSONObject.fromObject(HttpRequest.s_SendGet("http://work.myzd.info/wx/internal/api/dev-tokens" , "", "")).getJSONObject("data").getJSONObject("lei.wang@mingyizhudao.com").getString("token");
         bda_session = JSONObject.fromObject(HttpRequest.s_SendGet("http://services.dev.myzd.info/internal/api/session/create" , "number=SH0133", "")).getString("data");
         bda_session_staff = JSONObject.fromObject(HttpRequest.s_SendGet("http://services.dev.myzd.info/internal/api/session/create" , "number=Sh0143", "")).getString("data");
         mainUser = new User();
-        mainUser.getDoctor().setHospital_id("98");//常州市武进人民医院, 常州，区域服务人员 - 方超
-        HashMap<String,String> mainDoctorInfo = s_CreateSyncedDoctor(mainUser);
-        if(mainDoctorInfo == null) {
-            logger.error("创建注册专家失败，退出执行");
-            System.exit(10000);
-        }
-        mainMobile = mainDoctorInfo.get("mobile");
-        mainToken = mainDoctorInfo.get("token");
-        mainDoctorId = mainDoctorInfo.get("id");
-        mainDoctorName = mainUser.getDoctor().getName();
-        mainDoctorHospitalId = mainDoctorInfo.get("hospitalId");
-        mainDoctorHospitalName = Generator.hospitalName(mainDoctorHospitalId);
-        mainExpertId = mainDoctorInfo.get("expert_id");
+        mainUser.getDoctor().setHospital_id("57");//北京大学口腔医院, 北京，区域服务人员 - 方超
+        //HashMap<String,String> mainDoctorInfo = s_CreateSyncedDoctor(mainUser);
+//        if(mainDoctorInfo == null) {
+//            logger.error("创建注册专家失败，退出执行");
+//            System.exit(10000);
+//        }
+//        mainMobile = mainDoctorInfo.get("mobile");
+//        mainToken = mainDoctorInfo.get("token");
+//        mainDoctorId = mainDoctorInfo.get("id");
+//        mainDoctorName = mainUser.getDoctor().getName();
+//        mainDoctorHospitalId = mainDoctorInfo.get("hospitalId");
+//        mainDoctorHospitalName = Generator.hospitalName(mainDoctorHospitalId);
+//        mainExpertId = mainDoctorInfo.get("expert_id");
 
         logger.info("初始化信息完成，准备执行用例");
-        logger.info("mainDoctorId为:\t"+mainDoctorId);
-        logger.info("mainDoctorName为:\t"+mainDoctorName);
-        logger.info("mainDoctorToken为:\t"+mainToken);
-        logger.info("mainDoctorHospitalId为:\t"+mainDoctorHospitalId);
-        logger.info("mainDoctorHospitalName为:\t"+mainDoctorHospitalName);
-        logger.info("mainExpertId为:\t"+mainExpertId);
-        logger.info("mainOperatorId为:\t"+mainOperatorId);
+//        logger.info("mainDoctorId为:\t"+mainDoctorId);
+//        logger.info("mainDoctorName为:\t"+mainDoctorName);
+//        logger.info("mainDoctorToken为:\t"+mainToken);
+//        logger.info("mainDoctorHospitalId为:\t"+mainDoctorHospitalId);
+//        logger.info("mainDoctorHospitalName为:\t"+mainDoctorHospitalName);
+//        logger.info("mainExpertId为:\t"+mainExpertId);
+//        logger.info("mainOperatorId为:\t"+mainOperatorId);
         logger.info("crm_token为:\t"+crm_token);
-        logger.info("bda_token为:\t"+bda_token);
-        logger.info("bda_token_staff为:\t"+bda_token_staff);
+        logger.info("bda_session为:\t"+bda_session);
+        logger.info("bda_session_staff为:\t"+bda_session_staff);
     }
 
     @BeforeClass
@@ -240,6 +240,7 @@ public class BaseTest {
     }
 
 //    生成一个医生用户
+    //田静注释
     protected static HashMap<String, String> s_CreateRegistered() {
         TestLogger logger = new TestLogger(s_JobName());
         logger.info("创建注册用户...");
@@ -284,6 +285,7 @@ public class BaseTest {
 //        return info;
 //    }
 
+    //tianjingzhushi
     protected static HashMap<String, String> s_CreateRegisteredDoctor(User user) {
         TestLogger logger = new TestLogger(s_JobName());
         HashMap<String,String> info = s_CreateRegistered();
@@ -325,6 +327,7 @@ public class BaseTest {
 //        return info;
 //    }
 
+    //tianjignzhushi
     protected static HashMap<String, String> s_CreateVerifiedDoctor(User user) {
         TestLogger logger = new TestLogger(s_JobName());
         HashMap<String,String> info = s_CreateRegisteredDoctor(user);
@@ -363,6 +366,7 @@ public class BaseTest {
 //        return info;
 //    }
 
+    //tianjingzhushi
     protected static HashMap<String, String> s_CreateSyncedDoctor(User user) {
         TestLogger logger = new TestLogger(s_JobName());
         HashMap<String,String> info = s_CreateRegisteredDoctor(user);

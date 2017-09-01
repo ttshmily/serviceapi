@@ -7,6 +7,8 @@ import com.mingyizhudao.qa.utilities.Helper;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
+import java.util.HashMap;
+
 /**
  * Created by ttshmily on 21/3/2017.
  */
@@ -23,8 +25,16 @@ public class ProfessionList extends BaseTest {
 
     @Test
     public void test_01_有token信息的请求可以获得有效信息() {
+        String userToken = "";
+        HashMap<String,String> mainDoctorInfo = s_CreateSyncedDoctor(mainUser);
+        if(mainDoctorInfo == null) {
+            logger.error("创建注册专家失败，退出执行");
+            System.exit(10000);
+        }
+        userToken = mainDoctorInfo.get("token");
+
         String res = "";
-        res = HttpRequest.s_SendGet(host_doc + uri,"", mainToken);
+        res = HttpRequest.s_SendGet(host_doc + uri,"", userToken);
         s_CheckResponse(res);
         Assert.assertNotNull(Helper.s_ParseJson(data, "diseasecategory()"));
         Assert.assertNotNull(Helper.s_ParseJson(data, "diseasecategory():root_id"));

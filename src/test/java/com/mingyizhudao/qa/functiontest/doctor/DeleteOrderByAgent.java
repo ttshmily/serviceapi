@@ -53,8 +53,11 @@ public class DeleteOrderByAgent extends BaseTest {
     @Test
     public void test_02_删除订单_上级医生() {
         String res = "";
+        String userToken = "";
         HashMap<String, String> doctor = s_CreateSyncedDoctor(new User());
-        String orderId = CreateOrder.s_CreateOrder(mainToken);
+        userToken = doctor.get("token");
+
+        String orderId = CreateOrder.s_CreateOrder(userToken);
         Order_ReceiveTask.s_ReceiveTask(orderId);
         Order_RecommendDoctor.s_RecommendDoctor(orderId, doctor.get("expert_id"));//推荐上级医生
 

@@ -16,6 +16,8 @@ import net.sf.json.JSONObject;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
+import java.util.HashMap;
+
 /**
  * Created by ttshmily on 7/4/2017.
  */
@@ -40,14 +42,22 @@ public class GetOrderList extends BaseTest {
 
     @Test
     public void test_01_获取订单列表_登录用户() {
+        String userToken = "";
+        HashMap<String,String> mainDoctorInfo = s_CreateSyncedDoctor(mainUser);
+        if(mainDoctorInfo == null) {
+            logger.error("创建注册专家失败，退出执行");
+            System.exit(10000);
+        }
+        userToken = mainDoctorInfo.get("token");
+
         String res = "";
         logger.info("创建订单with mainToken");
-        String orderId = CreateOrder.s_CreateOrder(mainToken);
+        String orderId = CreateOrder.s_CreateOrder(userToken);
         if (orderId.isEmpty()) {
             logger.error("创建订单with mainToken失败");
             Assert.fail("创建订单with mainToken失败");
         }
-        res = HttpRequest.s_SendGet(host_doc + uri,"", mainToken);
+        res = HttpRequest.s_SendGet(host_doc + uri,"", userToken);
         s_CheckResponse(res);
         Assert.assertNotEquals(Helper.s_ParseJson(data,"order():patient_name"), "", "患者姓名字段缺失");
         Assert.assertNotEquals(Helper.s_ParseJson(data,"order():patient_gender"), "", "患者性别字段缺失");
@@ -136,9 +146,17 @@ public class GetOrderList extends BaseTest {
 
     @Test
     public void test_04_获取订单列表_推荐医生后病历不展示上级医生信息() {
+        String userToken = "";
+        HashMap<String,String> mainDoctorInfo = s_CreateSyncedDoctor(mainUser);
+        if(mainDoctorInfo == null) {
+            logger.error("创建注册专家失败，退出执行");
+            System.exit(10000);
+        }
+        userToken = mainDoctorInfo.get("token");
+
         String res = "";
         logger.info("创建订单with mainToken");
-        String orderId = CreateOrder.s_CreateOrder(mainToken);
+        String orderId = CreateOrder.s_CreateOrder(userToken);
         if (orderId.isEmpty()) {
             logger.error("创建订单with mainToken失败");
             Assert.fail("创建订单with mainToken失败，退出执行");
@@ -152,7 +170,7 @@ public class GetOrderList extends BaseTest {
             logger.error("推荐医生失败");
             Assert.fail("推荐医生失败，退出执行");
         }
-        res = HttpRequest.s_SendGet(host_doc + uri,"", mainToken);
+        res = HttpRequest.s_SendGet(host_doc + uri,"", userToken);
         s_CheckResponse(res);
         Assert.assertNotEquals(Helper.s_ParseJson(data,"order():patient_name"), "", "患者姓名字段缺失");
         Assert.assertNotEquals(Helper.s_ParseJson(data,"order():patient_gender"), "", "患者性别字段缺失");
@@ -167,9 +185,17 @@ public class GetOrderList extends BaseTest {
 
     @Test
     public void test_05_获取订单列表_三方通话成功后病历上展示上级医生信息() {
+        String userToken = "";
+        HashMap<String,String> mainDoctorInfo = s_CreateSyncedDoctor(mainUser);
+        if(mainDoctorInfo == null) {
+            logger.error("创建注册专家失败，退出执行");
+            System.exit(10000);
+        }
+        userToken = mainDoctorInfo.get("token");
+
         String res = "";
         logger.info("创建订单with mainToken");
-        String orderId = CreateOrder.s_CreateOrder(mainToken);
+        String orderId = CreateOrder.s_CreateOrder(userToken);
         if (orderId.isEmpty()) {
             logger.error("创建订单with mainToken失败");
             Assert.fail("创建订单with mainToken失败，退出执行");
@@ -187,7 +213,7 @@ public class GetOrderList extends BaseTest {
             logger.error("确定三方通话失败");
             Assert.fail("确定三方通话失败，退出执行");
         }
-        res = HttpRequest.s_SendGet(host_doc + uri,"", mainToken);
+        res = HttpRequest.s_SendGet(host_doc + uri,"", userToken);
         s_CheckResponse(res);
         Assert.assertNotEquals(Helper.s_ParseJson(data,"order():patient_name"), "", "患者姓名字段缺失");
         Assert.assertNotEquals(Helper.s_ParseJson(data,"order():patient_gender"), "", "患者性别字段缺失");
