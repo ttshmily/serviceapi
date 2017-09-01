@@ -8,7 +8,6 @@
     <artifactId>serviceapi</artifactId>
     <version>1.0-SNAPSHOT</version>
 
-
     <dependencies>
         <!-- https://mvnrepository.com/artifact/org.apache.jmeter/ApacheJMeter_java -->
         <dependency>
@@ -27,7 +26,7 @@
         <dependency>
             <groupId>org.testng</groupId>
             <artifactId>testng</artifactId>
-            <version>6.8</version>
+            <version>6.11</version>
             <scope>test</scope>
         </dependency>
 
@@ -46,6 +45,13 @@
             <classifier>jdk15</classifier>
         </dependency>
 
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <version>1.16.16</version>
+            <scope>provided</scope>
+        </dependency>
+
     </dependencies>
 
     <build>
@@ -59,59 +65,56 @@
                     <target>1.8</target>
                 </configuration>
             </plugin>
+
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-resources-plugin</artifactId>
                 <version>3.0.2</version>
             </plugin>
+
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
                 <version>2.19.1</version>
                 <configuration>
-                    <!--注释了以下代码tj-->
-                    <includes>
-                        <include>test.java</include>
-                    </includes>
-                     <suiteXmlFiles>
-                         <suiteXmlFile>src/test/resources/config-${profiles.active}/${suiteFilename}</suiteXmlFile>
-                     </suiteXmlFiles>
-                    <!--增加以下代码tj-->
-                    <!--<skipTests>true</skipTests>-->
+                    <argLine>-Dfile.encoding=UTF-8</argLine>
+                    <suiteXmlFiles>
+                        <suiteXmlFile>src/test/resources/config-${profiles.active}/${suiteFilename}</suiteXmlFile>
+                    </suiteXmlFiles>
                 </configuration>
-             </plugin>
-             <plugin>
-                 <artifactId>maven-assembly-plugin</artifactId>
-                 <configuration>
-                     <archive>
-                         <manifest>
-                             <mainClass>fully.qualified.MainClass</mainClass>
-                         </manifest>
-                     </archive>
-                     <descriptorRefs>
-                         <descriptorRef>jar-with-dependencies</descriptorRef>
-                     </descriptorRefs>
-                 </configuration>
-             </plugin>
-         </plugins>
-         <testResources>
-             <testResource>
-                 <directory>src/test/resources</directory>
-                 <excludes>
-                     <exclude>config-test/*</exclude>
-                     <exclude>config-prod/*</exclude>
-                     <exclude>config-pre/*</exclude>
-                 </excludes>
-             </testResource>
-             <testResource>
-                 <directory>src/test/resources/config-${profiles.active}</directory>
-             </testResource>
-         </testResources>
-     </build>
+            </plugin>
 
-     <profiles>
-         <profile>
-             <!-- 本地环境 -->
+            <plugin>
+                <artifactId>maven-assembly-plugin</artifactId>
+                <configuration>
+                    <archive>
+                        <manifest>
+                            <mainClass>com.mingyizhudao.qa.hello</mainClass>
+                        </manifest>
+                    </archive>
+                    <descriptorRefs>
+                        <descriptorRef>jar-with-dependencies</descriptorRef>
+                    </descriptorRefs>
+                </configuration>
+            </plugin>
+        </plugins>
+        <testResources>
+            <testResource>
+                <directory>src/test/resources</directory>
+                <excludes>
+                    <exclude>config-test/*</exclude>
+                    <exclude>config-pre/*</exclude>
+                    <exclude>config-prod/*</exclude>
+                </excludes>
+            </testResource>
+            <testResource>
+                <directory>src/test/resources/config-${profiles.active}</directory>
+            </testResource>
+        </testResources>
+    </build>
+    <profiles>
+        <profile>
+            <!-- 测试环境 -->
             <id>test</id>
             <properties>
                 <profiles.active>test</profiles.active>
@@ -121,7 +124,7 @@
             </activation>
         </profile>
         <profile>
-            <!-- 测试环境 -->
+            <!-- 预发环境 -->
             <id>pre</id>
             <properties>
                 <profiles.active>pre</profiles.active>

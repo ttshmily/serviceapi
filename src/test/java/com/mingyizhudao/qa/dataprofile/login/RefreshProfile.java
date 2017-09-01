@@ -1,6 +1,6 @@
 package com.mingyizhudao.qa.dataprofile.login;
 
-import com.mingyizhudao.qa.testcase.login.Refresh;
+import com.mingyizhudao.qa.functiontest.login.Refresh;
 import net.sf.json.JSONObject;
 
 /**
