@@ -26,7 +26,8 @@ public class KBHospital_Create extends BaseTest {
         }
     }.getClassName();
     public static TestLogger logger = new TestLogger(clazzName);
-    public static String uri = "/api/v1/medicallibrary/hospitals";
+    public static String version = "/api/v2";
+    public static String uri = version + "/medicallibrary/hospitals";
 
 
 //    public static HashMap<String, String> s_Create(HospitalProfile_test hp) {
@@ -72,7 +73,7 @@ public class KBHospital_Create extends BaseTest {
     public void test_01_创建医院() {
         String res = "";
         Hospital hp = new Hospital();
-        res = HttpRequest.s_SendPost(host_crm + uri, JSONObject.fromObject(hp).toString(), crm_token);
+        res = HttpRequest.s_SendPost(host_crm + uri, hp.transform(), crm_token);
         s_CheckResponse(res);
         Assert.assertEquals(code, "1000000");
         Assert.assertNotNull(Helper.s_ParseJson(data, "id"), "医库ID不能少");
@@ -82,6 +83,7 @@ public class KBHospital_Create extends BaseTest {
         Assert.assertEquals(Helper.s_ParseJson(data, "county_name"), countyName(hp.getCounty_id()));
         Assert.assertEquals(Helper.s_ParseJson(data, "description"), hp.getDescription());
         Assert.assertEquals(Helper.s_ParseJson(data, "phone"), hp.getPhone());
+        Assert.assertEquals(Helper.s_ParseJson(data, "hospital_level"), hp.getHospital_level());
         Assert.assertNotNull(Helper.s_ParseJson(data, "user_visible"));
         Assert.assertNotNull(Helper.s_ParseJson(data, "doctor_visible"));
     }
@@ -131,6 +133,13 @@ public class KBHospital_Create extends BaseTest {
         s_CheckResponse(res);
         Assert.assertNotEquals(code, "1000000");
         hp.setCity_id(tmp);
+
+        int level = hp.getHospital_level();
+        hp.setHospital_level(null);
+        res = HttpRequest.s_SendPost(host_crm + uri, JSONObject.fromObject(hp).toString(), crm_token);
+        s_CheckResponse(res);
+        Assert.assertNotEquals(code, "1000000");
+        hp.setHospital_level(level);
 
         res = HttpRequest.s_SendPost(host_crm + uri, JSONObject.fromObject(hp).toString(), crm_token);
         s_CheckResponse(res);

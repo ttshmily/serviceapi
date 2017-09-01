@@ -21,6 +21,7 @@ public class Hospital {
     private String phone;
     private String description;
     private String address;
+    private Integer hospital_level;
     private List<Picture> photo_url;
 
     public Hospital() {
@@ -31,6 +32,7 @@ public class Hospital {
         this.phone = randomPhone();
         this.description = "新概念医院描述"+randomString(10);
         this.address = "医院地址"+randomString(10);
+        this.hospital_level = (int)randomInt(3);
 
         String cityId = randomCityId();
         this.city_id = cityId;

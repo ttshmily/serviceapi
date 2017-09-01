@@ -31,6 +31,9 @@ public class Order_ModifyBrief extends BaseTest {
 
         String res = "";
         String orderId = Order_List.s_SelectBriefedOrder();
+        if (orderId == null) {
+            Assert.fail("没有合适的测试订单");
+        }
         HashMap<String, String> pathValue = new HashMap<>();
         pathValue.put("orderNumber", orderId);
         JSONObject body = new JSONObject();

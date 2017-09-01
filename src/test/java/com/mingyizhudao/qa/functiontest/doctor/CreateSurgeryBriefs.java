@@ -101,10 +101,10 @@ public class CreateSurgeryBriefs extends BaseTest {
         HashMap<String, String> pathValue = new HashMap<>();
         pathValue.put("orderId", orderId);
 
-        SurgeryOrder su1 = new SurgeryOrder("brief");
-        res = HttpRequest.s_SendPut(host_doc + uri, su1.transform(), token, pathValue);
-        s_CheckResponse(res);
-        Assert.assertNotEquals(code, "1000000");
+//        SurgeryOrder su1 = new SurgeryOrder("brief");
+//        res = HttpRequest.s_SendPut(host_doc + uri, su1.transform(), token, pathValue);
+//        s_CheckResponse(res);
+//        Assert.assertNotEquals(code, "1000000");
 
         SurgeryOrder su2 = new SurgeryOrder("brief");
         su2.getOrder().setSurgery_brief_final_diagnosed_disease_id(null);
@@ -118,11 +118,11 @@ public class CreateSurgeryBriefs extends BaseTest {
         s_CheckResponse(res);
         Assert.assertNotEquals(code, "1000000");
 
-        SurgeryOrder su4 = new SurgeryOrder("brief");
-        su4.getOrder().setExpected_surgery_hospital_id(null);
-        res = HttpRequest.s_SendPut(host_doc + uri, su4.transform(), token, pathValue);
-        s_CheckResponse(res);
-        Assert.assertNotEquals(code, "1000000");
+//        SurgeryOrder su4 = new SurgeryOrder("brief");
+//        su4.getOrder().setExpected_surgery_hospital_id(null);
+//        res = HttpRequest.s_SendPut(host_doc + uri, su4.transform(), token, pathValue);
+//        s_CheckResponse(res);
+//        Assert.assertNotEquals(code, "1000000");
     }
 
 }

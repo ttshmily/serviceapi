@@ -33,17 +33,27 @@ public class Order_ReceiveTask extends BaseTest {
         TestLogger logger = new TestLogger(s_JobName());
         HashMap<String, String> pathValue = new HashMap<>();
         pathValue.put("orderNumber", orderId);
-        res = Order_Detail.s_Detail(orderId);
-
-        if (!Helper.s_ParseJson(JSONObject.fromObject(res), "data:status").equals("1000")) {
-            logger.error("订单处于不可领取状态");
-            return Helper.s_ParseJson(JSONObject.fromObject(res), "data:status");
-        }
+//        res = Order_Detail.s_Detail(orderId);
+//
+//        if (!Helper.s_ParseJson(JSONObject.fromObject(res), "data:status").equals("1000")) {
+//            logger.error("订单处于不可领取状态");
+//            return Helper.s_ParseJson(JSONObject.fromObject(res), "data:status");
+//        }
         HttpRequest.s_SendPost(host_crm + uri, "", crm_token, pathValue);
         res = Order_Detail.s_Detail(orderId);
         return Helper.s_ParseJson(JSONObject.fromObject(res), "data:status"); // 期望2000
     }
 
+//    public static boolean s_ReceiveTask(String orderId) {
+//
+//        String res = "";
+//        TestLogger logger = new TestLogger(s_JobName());
+//        HashMap<String, String> pathValue = new HashMap<>();
+//        pathValue.put("orderNumber", orderId);
+//        HttpRequest.s_SendPost(host_crm + uri, "", crm_token, pathValue);
+//        res = Order_Detail.s_Detail(orderId);
+//        return Helper.s_ParseJson(JSONObject.fromObject(res), "data:status").equals("2000"); // 期望2000
+//    }
 
     @Test
     public void test_01_客服领取订单_1000状态的订单() {
