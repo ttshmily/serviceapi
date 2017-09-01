@@ -44,7 +44,7 @@ public class CreateSurgeryBriefs extends BaseTest {
         SurgeryOrder su = new SurgeryOrder("brief");
         HashMap<String, String> pathValue = new HashMap<>();
         pathValue.put("orderId", orderId);
-        res = HttpRequest.s_SendPut(host_doc + uri, JSONObject.fromObject(su).toString(), token, pathValue);
+        res = HttpRequest.s_SendPut(host_doc + uri, su.transform(), token, pathValue);
         status = JSONObject.fromObject(res).getJSONObject("data").getString("status");
         return status;
     }
