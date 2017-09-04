@@ -40,6 +40,7 @@ public class BaseTest {
     public static String host_kb = "";
     public static String host_bda = "";
     public static String host_appointment = "";
+    public static String host_patient = "";
     public static String crm_token = "";
     public static String bda_token = "";
     public static String bda_token_staff = "";
@@ -98,6 +99,7 @@ public class BaseTest {
             host_login = prop.getProperty("host_login", "login.dev.myzd.info");
             host_kb = prop.getProperty("host_kb", "192.168.33.1");
             host_appointment = prop.getProperty("host_appointment", "services.dev.myzd.info/ims");
+            host_patient = prop.getProperty("host_patient","services.dev.myzd.info/edge-gateway");
             mainOperatorId = prop.getProperty("mainOperatorId", "chao.fang@mingyizhudao.com");
             mainOperatorName = prop.getProperty("mainOperatorName", "方超（男）");
 
@@ -114,6 +116,7 @@ public class BaseTest {
             host_kb = protocol.concat("://").concat(host_kb);
             host_bda = protocol.concat("://").concat(host_bda);
             host_appointment = protocol.concat("://").concat(host_appointment);
+            host_patient = protocol.concat("://").concat(host_patient);
         }
     }
 
