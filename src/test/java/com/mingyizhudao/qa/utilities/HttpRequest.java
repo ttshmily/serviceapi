@@ -553,7 +553,7 @@ public class HttpRequest {
         if (query == null) return "";
         for (String key:query.keySet()) {
             try {
-                if (!query.get(key).isEmpty())
+                //if (!query.get(key).isEmpty())
                     sb.append(key).append("=").append(URLEncoder.encode(query.get(key), "utf-8")).append("&");
             } catch (UnsupportedEncodingException e) {
                 e.printStackTrace();
