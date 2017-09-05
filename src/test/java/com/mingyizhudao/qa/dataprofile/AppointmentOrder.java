@@ -39,7 +39,6 @@ public class AppointmentOrder {
 
     String source_type;
 
-    String[] sources = new String[]{"BUSINESS", "HOT_LINE", "WEIBO", "BAIDU_BRIDGE", "SUSHU", "WECHAT", "PC_WEB", "MINGYIHUI", "RED_BIRD"};
 
     public AppointmentOrder() {
         this.patient_name = "面诊病人"+randomString(4);
@@ -74,6 +73,7 @@ public class AppointmentOrder {
 
         this.medical_record_pictures = new ArrayList<Picture>(){{add(new Picture("123.jpb", "7")); add(new Picture("123.jpb", "7"));}};
 
+        String[] sources = new String[]{"BUSINESS", "HOT_LINE", "WEIBO", "BAIDU_BRIDGE", "SUSHU", "WECHAT", "PC_WEB", "MINGYIHUI", "RED_BIRD"};
         Random random = new Random();
         this.source_type = sources[random.nextInt(sources.length)];
 
@@ -121,6 +121,7 @@ public class AppointmentOrder {
                 this.major_disease_name = diseaseName(tmp);
                 this.disease_description = randomString(300);
 
+                String[] sources = new String[]{"BUSINESS", "HOT_LINE", "WEIBO", "BAIDU_BRIDGE", "SUSHU", "WECHAT", "PC_WEB", "MINGYIHUI", "RED_BIRD"};
                 Random random = new Random();
                 this.source_type = sources[random.nextInt(sources.length)];
             }
