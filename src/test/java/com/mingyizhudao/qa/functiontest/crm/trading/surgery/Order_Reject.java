@@ -43,10 +43,18 @@ public class Order_Reject extends BaseTest {
 
     @Test
     public void test_01_客服拒绝订单_推荐之前() {
+        String userToken = "";
+        HashMap<String,String> mainDoctorInfo = s_CreateSyncedDoctor(mainUser);
+        if(mainDoctorInfo == null) {
+            logger.error("创建注册专家失败，退出执行");
+            System.exit(10000);
+        }
+        userToken = mainDoctorInfo.get("token");
+
         String res = "";
         HashMap<String, String> pathValue = new HashMap<>();
 
-        String order_number = CreateOrder.s_CreateOrder(mainToken); // create an order
+        String order_number = CreateOrder.s_CreateOrder(userToken); // create an order
         if (!Order_ReceiveTask.s_ReceiveTask(order_number).equals("2000")) {
             Assert.fail("领取失败，无法进行后续操作");
         }
@@ -63,7 +71,7 @@ public class Order_Reject extends BaseTest {
         Assert.assertEquals(Helper.s_ParseJson(data, "major_reps_id"), "chao.fang@mingyizhudao.com");
         Assert.assertEquals(Helper.s_ParseJson(data, "status"), "9000");
         Assert.assertEquals(Helper.s_ParseJson(data, "order_number"), order_number);
-        res = GetOrderDetail_V1.s_MyInitiateOrder(mainToken, order_number);
+        res = GetOrderDetail_V1.s_MyInitiateOrder(userToken, order_number);
         s_CheckResponse(res);
         Assert.assertEquals(Helper.s_ParseJson(data, "order:header_info"), "自动化推荐之前据拒订单的理由");
 //        Assert.assertEquals(UT.s_ParseJson(data, "content"), "自动化推荐之前据拒订单的理由");
@@ -72,15 +80,24 @@ public class Order_Reject extends BaseTest {
 
     @Test
     public void test_02_客服拒绝订单_推荐之后_不能拒绝() {
+        String userToken = "";
+        String userExpertId = "";
+        HashMap<String,String> mainDoctorInfo = s_CreateSyncedDoctor(mainUser);
+        if(mainDoctorInfo == null) {
+            logger.error("创建注册专家失败，退出执行");
+            System.exit(10000);
+        }
+        userToken = mainDoctorInfo.get("token");
+        userExpertId = mainDoctorInfo.get("expert_id");
 
         String res = "";
         HashMap<String, String> pathValue = new HashMap<>();
 
-        String order_number = CreateOrder.s_CreateOrder(mainToken); // create an order
+        String order_number = CreateOrder.s_CreateOrder(userToken); // create an order
         if (!Order_ReceiveTask.s_ReceiveTask(order_number).equals("2000")) {
             Assert.fail("领取失败，无法进行后续操作");
         }
-        if (!Order_RecommendDoctor.s_RecommendDoctor(order_number, mainExpertId).equals("2020")) {
+        if (!Order_RecommendDoctor.s_RecommendDoctor(order_number, userExpertId).equals("2020")) {
             Assert.fail("推荐专家失败，无法进行后续操作");
         }
         pathValue.put("orderNumber", order_number);
@@ -101,15 +118,24 @@ public class Order_Reject extends BaseTest {
 
     @Test
     public void test_03_客服拒绝订单_三方通话待定之后_不能拒绝() {
+        String userToken = "";
+        String userExpertId = "";
+        HashMap<String,String> mainDoctorInfo = s_CreateSyncedDoctor(mainUser);
+        if(mainDoctorInfo == null) {
+            logger.error("创建注册专家失败，退出执行");
+            System.exit(10000);
+        }
+        userToken = mainDoctorInfo.get("token");
+        userExpertId = mainDoctorInfo.get("expert_id");
 
         String res = "";
         HashMap<String, String> pathValue = new HashMap<>();
 
-        String order_number = CreateOrder.s_CreateOrder(mainToken); // create an order
+        String order_number = CreateOrder.s_CreateOrder(userToken); // create an order
         if (!Order_ReceiveTask.s_ReceiveTask(order_number).equals("2000")) {
             Assert.fail("领取失败，无法进行后续操作");
         }
-        if (!Order_RecommendDoctor.s_RecommendDoctor(order_number, mainExpertId).equals("2020")) {
+        if (!Order_RecommendDoctor.s_RecommendDoctor(order_number, userExpertId).equals("2020")) {
             Assert.fail("推荐专家失败，无法进行后续操作");
         }
         if (!Order_ThreewayCall_V2.s_CallV2(order_number, "undetermined").equals("2020")) {
@@ -133,11 +159,20 @@ public class Order_Reject extends BaseTest {
 
     @Test
     public void test_04_客服拒绝订单_无证操作() {
+        String userToken = "";
+        String userExpertId = "";
+        HashMap<String,String> mainDoctorInfo = s_CreateSyncedDoctor(mainUser);
+        if(mainDoctorInfo == null) {
+            logger.error("创建注册专家失败，退出执行");
+            System.exit(10000);
+        }
+        userToken = mainDoctorInfo.get("token");
+        userExpertId = mainDoctorInfo.get("expert_id");
 
         String res = "";
         HashMap<String, String> pathValue = new HashMap<>();
 
-        String order_number = CreateOrder.s_CreateOrder(mainToken); // create an order
+        String order_number = CreateOrder.s_CreateOrder(userToken); // create an order
         if (!Order_ReceiveTask.s_ReceiveTask(order_number).equals("2000")) {
             Assert.fail("领取失败，无法进行后续操作");
         }

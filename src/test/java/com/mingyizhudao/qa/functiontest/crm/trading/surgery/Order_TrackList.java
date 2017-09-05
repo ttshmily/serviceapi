@@ -42,9 +42,18 @@ public class Order_TrackList extends BaseTest {
 
     @Test
     public void test_01_获取订单操作记录_所有() {
+        String userToken = "";
+        HashMap<String,String> mainDoctorInfo = s_CreateSyncedDoctor(mainUser);
+        if(mainDoctorInfo == null) {
+            logger.error("创建注册专家失败，退出执行");
+            System.exit(10000);
+        }
+        userToken = mainDoctorInfo.get("token");
+
+
         String res = "";
         HashMap<String, String> pathValue = new HashMap<>();
-        String order_number = CreateOrder.s_CreateOrder(mainToken); // create an order
+        String order_number = CreateOrder.s_CreateOrder(userToken); // create an order
         res = s_TrackList(order_number, "");
         logger.debug(res);
         s_CheckResponse(res);
@@ -87,9 +96,17 @@ public class Order_TrackList extends BaseTest {
 
     @Test
     public void test_02_获取订单操作记录_三方通话记录() {
+        String userToken = "";
+        HashMap<String,String> mainDoctorInfo = s_CreateSyncedDoctor(mainUser);
+        if(mainDoctorInfo == null) {
+            logger.error("创建注册专家失败，退出执行");
+            System.exit(10000);
+        }
+        userToken = mainDoctorInfo.get("token");
+
         String res = "";
         HashMap<String, String> pathValue = new HashMap<>();
-        String order_number = CreateOrder.s_CreateOrder(mainToken); // create an order
+        String order_number = CreateOrder.s_CreateOrder(userToken); // create an order
         res = s_TrackList(order_number, "");
         logger.debug(res);
         s_CheckResponse(res);
