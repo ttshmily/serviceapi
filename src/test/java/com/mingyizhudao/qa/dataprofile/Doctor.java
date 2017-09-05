@@ -28,6 +28,9 @@ public class Doctor {
 //    private boolean is_internet_operation_doctor;
     private String[] cooperation_channel;
     private String signed_status;
+    private Integer doctor_level;
+    private Integer comprehensive_level;
+
     private List<Specialty> specialty_list;
 
     public Doctor(String type) {

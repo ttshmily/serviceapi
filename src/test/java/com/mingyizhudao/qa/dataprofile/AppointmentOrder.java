@@ -69,7 +69,7 @@ public class AppointmentOrder {
 
         this.medical_record_pictures = new ArrayList<Picture>(){{add(new Picture("123.jpb", "7")); add(new Picture("123.jpb", "7"));}};
 
-        String[] sources = new String[]{"BUSINESS", "HOT_LINE", "WEIBO", "BAIDU_BRIDGE", "SUSHU", "WECHAT", "PC_WEB"};
+        String[] sources = new String[]{"BUSINESS", "HOT_LINE", "WEIBO", "BAIDU_BRIDGE", "SUSHU", "WECHAT", "PC_WEB", "MINGYIHUI", "RED_BIRD"};
         Random random = new Random();
         this.source_type = sources[random.nextInt(sources.length)];
     }
