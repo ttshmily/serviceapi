@@ -3,6 +3,7 @@ package com.mingyizhudao.qa.dataprofile;
 import static com.mingyizhudao.qa.utilities.Generator.*;
 import static com.mingyizhudao.qa.utilities.Helper.simplify;
 
+import com.mingyizhudao.qa.functiontest.patient.PatientSendVerifyCode;
 import lombok.Data;
 import net.sf.json.JSONObject;
 
@@ -33,8 +34,12 @@ public class AppointmentOrder {
     Integer patient_gender;
     String patient_name;
     String patient_phone;
+    //add by tianjing 2017/09/01
+    String code;
 
     String source_type;
+
+    String[] sources = new String[]{"BUSINESS", "HOT_LINE", "WEIBO", "BAIDU_BRIDGE", "SUSHU", "WECHAT", "PC_WEB", "MINGYIHUI", "RED_BIRD"};
 
     public AppointmentOrder() {
         this.patient_name = "面诊病人"+randomString(4);
@@ -69,9 +74,9 @@ public class AppointmentOrder {
 
         this.medical_record_pictures = new ArrayList<Picture>(){{add(new Picture("123.jpb", "7")); add(new Picture("123.jpb", "7"));}};
 
-        String[] sources = new String[]{"BUSINESS", "HOT_LINE", "WEIBO", "BAIDU_BRIDGE", "SUSHU", "WECHAT", "PC_WEB", "MINGYIHUI", "RED_BIRD"};
         Random random = new Random();
         this.source_type = sources[random.nextInt(sources.length)];
+
     }
 
     private String doctor_id;
@@ -87,6 +92,7 @@ public class AppointmentOrder {
     private String platform_fee;
     private String appointment_date;
 
+
     public String transform() {
         return simplify(this).toString();
     }
@@ -101,6 +107,29 @@ public class AppointmentOrder {
             }
             case "feedback": {
                 break;
+            }
+            case "patient":{
+                this.patient_name = "面诊病人"+randomString(4);
+                this.patient_age = (int)randomInt(100);
+                this.patient_gender = (int)randomInt(2);
+                this.patient_phone = randomPhone();
+                PatientSendVerifyCode.s_SendVerifyCode(patient_phone);
+                this.code = "123456";
+
+                String tmp = randomDiseaseId();
+                this.major_disease_id = tmp;
+                this.major_disease_name = diseaseName(tmp);
+                this.disease_description = randomString(300);
+
+                Random random = new Random();
+                this.source_type = sources[random.nextInt(sources.length)];
+            }
+            case "picture":{
+                this.medical_record_pictures = new ArrayList<Picture>() {
+                    {
+                        add(new Picture("", "7"));
+                    }
+                };
             }
         }
     }
