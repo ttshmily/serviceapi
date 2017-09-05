@@ -24,9 +24,9 @@ public class KBHospital_Detail extends BaseTest {
         }
     }.getClassName();
     public static TestLogger logger = new TestLogger(clazzName);
-    public static String uri = "/api/v1/medicallibrary/hospitals/{hospital_id}";
+    public static String uri = "/api/v2/medicallibrary/hospitals/{hospital_id}";
 
-    public static HashMap<String, String> s_Detail(String hospitalId) {
+/*    public static HashMap<String, String> s_Detail(String hospitalId) {
         String res = "";
         TestLogger logger = new TestLogger(s_JobName());
         JSONObject hospital = null;
@@ -60,6 +60,15 @@ public class KBHospital_Detail extends BaseTest {
         result.put("description", description);
         result.put("photo_url", photo_url);
         return result;
+    }*/
+
+    public static String s_Detail(String hospitalId) {
+        String res = "";
+        TestLogger logger = new TestLogger(s_JobName());
+        HashMap<String, String> pathValue = new HashMap<>();
+        pathValue.put("hospital_id", hospitalId);
+        res = HttpRequest.s_SendGet(host_crm+uri,"", crm_token, pathValue);
+        return res;
     }
 
     @Test

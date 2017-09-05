@@ -52,8 +52,8 @@ public class User {
             this.academic_title_list = randomAcademicId();
             this.medical_title_list = randomMedicalId();
             this.hospital_id = randomHospitalId();
-            this.major_id = randomMajorId();
-            this.inviter_no = randomEmployeeId();
+//            this.major_id = randomMajorId();
+//            this.inviter_no = randomEmployeeId();
         }
 
         @Data

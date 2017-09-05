@@ -176,6 +176,11 @@ public class Generator {
         return randomKey(KnowledgeBase.kb_hospital);
     }
 
+    public static String randomHospitalIdWithType(String type) {
+
+        return randomKey(KnowledgeBase.kb_hospital_ext.get("type"));
+    }
+
     public static String hospitalName(String id) {
 
         return KnowledgeBase.kb_hospital.get(id);
@@ -245,6 +250,21 @@ public class Generator {
     public static String randomHospitalType() {
 
         return randomKey(KnowledgeBase.kb_hospital_type);
+    }
+
+    public static String randomDepartmentId() {
+
+        return randomKey(KnowledgeBase.kb_department);
+    }
+
+    public static String randomDepartmentIdUnder(String type) {
+
+        return randomKey(KnowledgeBase.kb_department_ext.get(type));
+    }
+
+    public static String departmentName(String type) {
+
+        return KnowledgeBase.kb_department.get(type);
     }
 
     public static String randomSurgeryId() {

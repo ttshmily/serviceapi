@@ -62,8 +62,9 @@ public class RegisteredDoctor_Modify extends BaseTest {
         body.put("academic_title", academic);
         body.put("medical_title", medical);
 
-        HashMap<String, String> hospitalInfo = KBHospital_Detail.s_Detail(hospital);
-        String another_city = hospitalInfo.get("city_id");
+        res = KBHospital_Detail.s_Detail(hospital);
+        s_CheckResponse(res);
+        String another_city = data.getString("city_id");
         res = HttpRequest.s_SendPut(host_crm+uri, body.toString(), crm_token, pathValue);
         logger.info(Helper.unicodeString(res));
         s_CheckResponse(res);
@@ -115,8 +116,9 @@ public class RegisteredDoctor_Modify extends BaseTest {
         String hospitalId = Generator.randomHospitalId();
         body.put("hospital_id", hospitalId);
 
-        HashMap<String, String> hospitalInfo = KBHospital_Detail.s_Detail(hospitalId);
-        String another_city = hospitalInfo.get("city_id");
+        res = KBHospital_Detail.s_Detail(hospitalId);
+        s_CheckResponse(res);
+        String another_city = data.getString("city_id");
 
         res = HttpRequest.s_SendPut(host_crm+uri, body.toString(), crm_token, pathValue);
         s_CheckResponse(res);

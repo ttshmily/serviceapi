@@ -5,6 +5,7 @@ import com.mingyizhudao.qa.dataprofile.User;
 import com.mingyizhudao.qa.functiontest.crm.trading.surgery.Order_ReceiveTask;
 import com.mingyizhudao.qa.functiontest.crm.trading.surgery.Order_RecommendDoctor;
 import com.mingyizhudao.qa.functiontest.crm.trading.surgery.Order_ThreewayCall_V2;
+import com.mingyizhudao.qa.functiontest.crm.user.management.RegisteredDoctor_CertifySync_V3;
 import com.mingyizhudao.qa.functiontest.login.CheckVerifyCode;
 import com.mingyizhudao.qa.functiontest.login.SendVerifyCode;
 import com.mingyizhudao.qa.common.TestLogger;
@@ -84,7 +85,7 @@ public class GetOrderList extends BaseTest {
         String docId = JSONObject.fromObject(res).getJSONObject("data").getJSONObject("doctor").getString("user_id");
         UpdateDoctorProfile_V1.s_Update(tmpToken, dp);
 
-        if (!RegisteredDoctor_CertifySync_V2.s_CertifyAndSync(docId, "1").get("is_verified").equals("1")) {
+        if (!RegisteredDoctor_CertifySync_V3.s_CertifyAndSync(docId, "1").get("is_verified").equals("1")) {
             logger.error("认证医生失败，退出用例执行");
             Assert.fail("认证医生失败，退出用例执行");
         }

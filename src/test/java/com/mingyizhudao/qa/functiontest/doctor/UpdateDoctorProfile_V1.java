@@ -95,8 +95,9 @@ public class UpdateDoctorProfile_V1 extends BaseTest {
         String expertId = doc.get("expert_id");
 
         String hospitalId = randomHospitalId();
-        HashMap<String, String> hospitalInfo = KBHospital_Detail.s_Detail(hospitalId);
-        String cityId = hospitalInfo.get("city_id");
+        res = KBHospital_Detail.s_Detail(hospitalId);
+        s_CheckResponse(res);
+        String cityId = data.getString("city_id");
 
         dp.getDoctor().setHospital_id(hospitalId);
         res = HttpRequest.s_SendPost(host_doc + uri, JSONObject.fromObject(dp).toString(), tmpToken);

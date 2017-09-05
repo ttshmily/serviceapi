@@ -57,8 +57,8 @@ public class KBExpert_Detail extends BaseTest {
         Assert.assertEquals(Helper.s_ParseJson(data, "hospital_id"), ep.getHospital_id());
         Assert.assertEquals(Helper.s_ParseJson(data, "hospital_name"), hospitalName(ep.getHospital_id()));
         Assert.assertEquals(Helper.s_ParseJson(data, "honour"), ep.getHonour());
-        Assert.assertEquals(Helper.s_ParseJson(data, "city_id"), KBHospital_Detail.s_Detail(ep.getHospital_id()).get("city_id"));
-        Assert.assertEquals(Helper.s_ParseJson(data, "city_name"), cityName(KBHospital_Detail.s_Detail(ep.getHospital_id()).get("city_id")));
+//        Assert.assertEquals(Helper.s_ParseJson(data, "city_id"), KBHospital_Detail.s_Detail(ep.getHospital_id()).get("city_id"));
+//        Assert.assertEquals(Helper.s_ParseJson(data, "city_name"), cityName(KBHospital_Detail.s_Detail(ep.getHospital_id()).get("city_id")));
     }
 
     @Test

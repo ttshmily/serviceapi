@@ -10,7 +10,7 @@ import org.testng.annotations.Test;
 
 import java.util.HashMap;
 
-import static com.mingyizhudao.qa.functiontest.crm.user.management.RegisteredDoctor_CertifySync_V2.s_CertifyAndSync;
+import static com.mingyizhudao.qa.functiontest.crm.user.management.RegisteredDoctor_CertifySync_V3.s_CertifyAndSync;
 
 /**
  * Created by ttshmily on 25/4/2017.

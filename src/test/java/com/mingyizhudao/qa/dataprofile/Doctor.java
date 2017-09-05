@@ -30,6 +30,7 @@ public class Doctor {
     private String signed_status;
     private Integer doctor_level;
     private Integer comprehensive_level;
+    private String department_category_id;
 
     private List<Specialty> specialty_list;
 
@@ -47,11 +48,12 @@ public class Doctor {
     }
 
     public Doctor() {
+        String type = randomHospitalType();
         this.name = "大一"+randomString(4);
         this.gender = (int)randomInt(2);
         this.birthday = randomDate("1949/10/01", "2017/03/13");
         this.major_id = randomMajorId();
-        this.hospital_id = randomHospitalId();
+        this.hospital_id = randomHospitalIdWithType(type);
         this.department_name = "随机科室"+randomString(2);
         this.medical_title_list = randomMedicalId();
         this.academic_title_list = randomAcademicId();
@@ -62,6 +64,10 @@ public class Doctor {
 //        this.is_internet_operation_doctor = true;
         this.cooperation_channel = new String[]{"WEIBO"};
         this.major_id = randomMajorId();
+        this.department_category_id = randomDepartmentIdUnder(type);
+        this.doctor_level = (int)randomInt(4);
+        this.comprehensive_level = (int)randomInt(10);
+
 //        this.avatar_url = new ArrayList<Picture>(){{add(new Picture("123.jpb", "7")); add(new Picture("123.jpb", "7"));}};
     }
 

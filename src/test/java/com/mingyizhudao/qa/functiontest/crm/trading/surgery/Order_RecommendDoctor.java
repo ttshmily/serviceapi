@@ -71,6 +71,12 @@ public class Order_RecommendDoctor extends BaseTest {
         res = HttpRequest.s_SendPut(host_crm+uri, body.toString(), crm_token, pathValue);
         s_CheckResponse(res);
         Assert.assertEquals(code, "1000000");
+        res = KBHospital_Detail.s_Detail(dp.getDoctor().getHospital_id());
+        s_CheckResponse(res);
+        String name = data.getString("name");
+        String city_id = data.getString("city_id");
+        String city_name = data.getString("city_name");
+
         res = Order_Detail.s_Detail(order_number);
         s_CheckResponse(res);
         Assert.assertEquals(Helper.s_ParseJson(data, "status"), "2020");
@@ -79,10 +85,9 @@ public class Order_RecommendDoctor extends BaseTest {
         Assert.assertEquals(Helper.s_ParseJson(data, "surgeon_user_id"), doc.get("id"));
         Assert.assertEquals(Helper.s_ParseJson(data, "surgeon_medical_title"), medicalName(dp.getDoctor().getMedical_title_list()));
         Assert.assertEquals(Helper.s_ParseJson(data, "surgeon_academic_title"), academicName(dp.getDoctor().getAcademic_title_list()));
-        HashMap<String, String> hos = KBHospital_Detail.s_Detail(dp.getDoctor().getHospital_id());
-        Assert.assertEquals(Helper.s_ParseJson(data, "surgeon_hospital"), hos.get("name"));
-        Assert.assertEquals(Helper.s_ParseJson(data, "surgeon_city_id"), hos.get("city_id"));
-        Assert.assertEquals(Helper.s_ParseJson(data, "surgeon_city_name"), hos.get("city_name"));
+        Assert.assertEquals(Helper.s_ParseJson(data, "surgeon_hospital"), name);
+        Assert.assertEquals(Helper.s_ParseJson(data, "surgeon_city_id"), city_id);
+        Assert.assertEquals(Helper.s_ParseJson(data, "surgeon_city_name"), city_name);
         Assert.assertNotNull(Helper.s_ParseJson(data, "surgeon_province_id"));
         Assert.assertNotNull(Helper.s_ParseJson(data, "surgeon_province_name"));
         Assert.assertEquals(Helper.s_ParseJson(data, "surgeon_department"), dp.getDoctor().getDepartment());

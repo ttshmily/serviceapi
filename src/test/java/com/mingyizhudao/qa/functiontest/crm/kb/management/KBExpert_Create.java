@@ -12,6 +12,7 @@ import org.testng.annotations.Test;
 import java.util.HashMap;
 
 import static com.mingyizhudao.qa.utilities.Generator.*;
+import static com.mingyizhudao.qa.utilities.Helper.s_ParseJson;
 
 /**
  * Created by ttshmily on 16/5/2017.
@@ -25,7 +26,7 @@ public class KBExpert_Create extends BaseTest {
         }
     }.getClassName();
     public static TestLogger logger = new TestLogger(clazzName);
-    public static String uri = "/api/v1/medicallibrary/doctors";
+    public static String uri = "/api/v2/medicallibrary/doctors";
 
     public static String s_Create(Doctor ep) {
         String res = "";
@@ -50,21 +51,25 @@ public class KBExpert_Create extends BaseTest {
         res = HttpRequest.s_SendPost(host_crm + uri, JSONObject.fromObject(ep).toString(), crm_token);
         s_CheckResponse(res);
         Assert.assertEquals(code, "1000000");
-        Assert.assertNotNull(Helper.s_ParseJson(data, "id"), "医库ID不能少");
-        Assert.assertEquals(Helper.s_ParseJson(data, "gender"), String.valueOf(ep.getGender()));
-        Assert.assertEquals(Helper.s_ParseJson(data, "name"), ep.getName());
-        Assert.assertNotNull(Helper.s_ParseJson(data, "city_id"), KBHospital_Detail.s_Detail(ep.getHospital_id()).get("city_id")); //TODO
-        Assert.assertEquals(Helper.s_ParseJson(data, "hospital_id"), ep.getHospital_id());
-        Assert.assertEquals(Helper.s_ParseJson(data, "medical_title_list"), ep.getMedical_title_list());
-        Assert.assertEquals(Helper.s_ParseJson(data, "academic_title_list"), ep.getAcademic_title_list());
-        Assert.assertEquals(Helper.s_ParseJson(data, "description"), ep.getDescription());
-        Assert.assertEquals(Helper.s_ParseJson(data, "specialty"), ep.getSpecialty());
-        Assert.assertEquals(Helper.s_ParseJson(data, "honour"), ep.getHonour());
-        Assert.assertEquals(Helper.s_ParseJson(data, "start_year"), ep.getStart_year());
-        Assert.assertEquals(Helper.s_ParseJson(data, "birthday"), ep.getBirthday().replace('/', '-'));
-        Assert.assertNotNull(Helper.s_ParseJson(data, "user_visible"));
-        Assert.assertNotNull(Helper.s_ParseJson(data, "doctor_visible"));
-
+        String expertId = data.getString("id");
+        res = KBExpert_Detail.s_Detail(expertId);
+        s_CheckResponse(res);
+        Assert.assertNotNull(s_ParseJson(data, "id"), "医库ID不能少");
+        Assert.assertEquals(s_ParseJson(data, "gender"), String.valueOf(ep.getGender()));
+        Assert.assertEquals(s_ParseJson(data, "name"), ep.getName());
+//        Assert.assertNotNull(s_ParseJson(data, "city_id"), KBHospital_Detail.s_Detail(ep.getHospital_id()).get("city_id")); //TODO
+        Assert.assertEquals(s_ParseJson(data, "hospital_id"), ep.getHospital_id());
+        Assert.assertEquals(s_ParseJson(data, "medical_title_list"), ep.getMedical_title_list());
+        Assert.assertEquals(s_ParseJson(data, "academic_title_list"), ep.getAcademic_title_list());
+        Assert.assertEquals(s_ParseJson(data, "description"), ep.getDescription());
+        Assert.assertEquals(s_ParseJson(data, "specialty"), ep.getSpecialty());
+        Assert.assertEquals(s_ParseJson(data, "honour"), ep.getHonour());
+        Assert.assertEquals(s_ParseJson(data, "start_year"), ep.getStart_year());
+        Assert.assertEquals(s_ParseJson(data, "birthday"), ep.getBirthday().replace('/', '-'));
+        Assert.assertNotNull(s_ParseJson(data, "user_visible"));
+        Assert.assertNotNull(s_ParseJson(data, "doctor_visible"));
+        Assert.assertEquals(s_ParseJson(data, "department_category_id"), ep.getDepartment_category_id(), "科室类别没有更新");
+        Assert.assertEquals(s_ParseJson(data, "department_category_name"), departmentName(ep.getDepartment_category_id()), "科室类别没有更新");
     }
 
     @Test
@@ -75,12 +80,12 @@ public class KBExpert_Create extends BaseTest {
         res = HttpRequest.s_SendPost(host_crm + uri, JSONObject.fromObject(ep).toString(), crm_token);
         s_CheckResponse(res);
         Assert.assertEquals(code, "1000000");
-        Assert.assertNotNull(Helper.s_ParseJson(data, "id"), "医库ID不能少");
-        Assert.assertEquals(Helper.s_ParseJson(data, "name"), ep.getName());
-        Assert.assertEquals(Helper.s_ParseJson(data, "hospital_id"), ep.getHospital_id());
-        Assert.assertEquals(Helper.s_ParseJson(data, "hospital_name"), hospitalName(ep.getHospital_id()));
-        Assert.assertEquals(Helper.s_ParseJson(data, "medical_title_list"), ep.getMedical_title_list());
-        Assert.assertEquals(Helper.s_ParseJson(data, "city_id"), KBHospital_Detail.s_Detail(ep.getHospital_id()).get("city_id"));
+        Assert.assertNotNull(s_ParseJson(data, "id"), "医库ID不能少");
+        Assert.assertEquals(s_ParseJson(data, "name"), ep.getName());
+        Assert.assertEquals(s_ParseJson(data, "hospital_id"), ep.getHospital_id());
+        Assert.assertEquals(s_ParseJson(data, "hospital_name"), hospitalName(ep.getHospital_id()));
+        Assert.assertEquals(s_ParseJson(data, "medical_title_list"), ep.getMedical_title_list());
+//        Assert.assertEquals(s_ParseJson(data, "city_id"), KBHospital_Detail.s_Detail(ep.getHospital_id()).get("city_id"));
     }
 
     @Test

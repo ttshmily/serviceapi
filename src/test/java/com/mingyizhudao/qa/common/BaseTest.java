@@ -2,6 +2,7 @@ package com.mingyizhudao.qa.common;
 
 
 import com.mingyizhudao.qa.dataprofile.User;
+import com.mingyizhudao.qa.functiontest.crm.user.management.RegisteredDoctor_CertifySync_V3;
 import com.mingyizhudao.qa.functiontest.doctor.GetDoctorProfile_V1;
 import com.mingyizhudao.qa.functiontest.login.CheckVerifyCode;
 import com.mingyizhudao.qa.functiontest.login.SendVerifyCode;
@@ -145,18 +146,18 @@ public class BaseTest {
         bda_session_staff = JSONObject.fromObject(HttpRequest.s_SendGet("http://services.dev.myzd.info/internal/api/session/create" , "number=Sh0143", "")).getString("data");
         mainUser = new User();
         mainUser.getDoctor().setHospital_id("57");//北京大学口腔医院, 北京，区域服务人员 - 方超
-        //HashMap<String,String> mainDoctorInfo = s_CreateSyncedDoctor(mainUser);
-//        if(mainDoctorInfo == null) {
-//            logger.error("创建注册专家失败，退出执行");
-//            System.exit(10000);
-//        }
-//        mainMobile = mainDoctorInfo.get("mobile");
-//        mainToken = mainDoctorInfo.get("token");
-//        mainDoctorId = mainDoctorInfo.get("id");
-//        mainDoctorName = mainUser.getDoctor().getName();
-//        mainDoctorHospitalId = mainDoctorInfo.get("hospitalId");
-//        mainDoctorHospitalName = Generator.hospitalName(mainDoctorHospitalId);
-//        mainExpertId = mainDoctorInfo.get("expert_id");
+        HashMap<String,String> mainDoctorInfo = s_CreateSyncedDoctor(mainUser);
+        if(mainDoctorInfo == null) {
+            logger.error("创建注册专家失败，退出执行");
+            System.exit(10000);
+        }
+        mainMobile = mainDoctorInfo.get("mobile");
+        mainToken = mainDoctorInfo.get("token");
+        mainDoctorId = mainDoctorInfo.get("id");
+        mainDoctorName = mainUser.getDoctor().getName();
+        mainDoctorHospitalId = mainDoctorInfo.get("hospitalId");
+        mainDoctorHospitalName = Generator.hospitalName(mainDoctorHospitalId);
+        mainExpertId = mainDoctorInfo.get("expert_id");
 
         logger.info("初始化信息完成，准备执行用例");
 //        logger.info("mainDoctorId为:\t"+mainDoctorId);
@@ -376,7 +377,7 @@ public class BaseTest {
         if (info == null) return null;
         logger.info("认证并同步医生...");
         String doctorId = info.get("id");
-        HashMap<String,String> tmp = RegisteredDoctor_CertifySync_V2.s_CertifyAndSync(doctorId, "1");
+        HashMap<String,String> tmp = RegisteredDoctor_CertifySync_V3.s_CertifyAndSync(doctorId, "1");
         if (!tmp.get("is_verified").equals("1") || tmp.get("kb_id") == null) {
             logger.error("认证/同步医生失败");
             return null;
