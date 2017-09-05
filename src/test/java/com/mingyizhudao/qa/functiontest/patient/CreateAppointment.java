@@ -55,7 +55,7 @@ public class CreateAppointment extends BaseTest{
         Assert.assertEquals(s_ParseJson(data, "source_type"), ap.getSource_type(), "订单来源存储不正确");
         Assert.assertEquals(s_ParseJson(data,"type"), "2", "订单类型应该为2");
         Assert.assertEquals(s_ParseJson(data, "status"), "1000", "订单状态应该为1000待领取");
-        Assert.assertEquals(s_ParseJson(data, "is_test"), "false", "订单为应该为真实数据");
+        Assert.assertNotEquals(s_ParseJson(data, "is_test"), "true", "订单为应该为真实数据");
     }
 
     @Test
@@ -142,13 +142,13 @@ public class CreateAppointment extends BaseTest{
         ap.setMajor_disease_name("");
         res = HttpRequest.s_SendPost(host_patient + url, ap.transform(),"");
         s_CheckResponse(res);
-        Assert.assertNotEquals(code, "1000000", "确诊疾病不能为空");
+        Assert.assertEquals(code, "1000000", "确诊疾病可以为空");
 
         ap.setMajor_disease_id(null);
         ap.setMajor_disease_name(null);
         res = HttpRequest.s_SendPost(host_patient + url, ap.transform(),"");
         s_CheckResponse(res);
-        Assert.assertNotEquals(code, "1000000", "确诊疾病不能为空");
+        Assert.assertEquals(code, "1000000", "确诊疾病可以为空");
     }
 
     @Test
@@ -159,11 +159,11 @@ public class CreateAppointment extends BaseTest{
         ap.setDisease_description("");
         res = HttpRequest.s_SendPost(host_patient + url, ap.transform(),"");
         s_CheckResponse(res);
-        Assert.assertNotEquals(code, "1000000", "疾病描述不能为空");
+        Assert.assertEquals(code, "1000000", "疾病描述可以为空");
 
         ap.setDisease_description(null);
         res = HttpRequest.s_SendPost(host_patient + url, ap.transform(),"");
         s_CheckResponse(res);
-        Assert.assertNotEquals(code, "1000000", "疾病描述不能为空");
+        Assert.assertEquals(code, "1000000", "疾病描述可以为空");
     }
 }
