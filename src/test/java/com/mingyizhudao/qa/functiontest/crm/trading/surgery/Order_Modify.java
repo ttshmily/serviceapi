@@ -30,9 +30,16 @@ public class Order_Modify extends BaseTest {
 
     @Test
     public void test_01_修改订单_患者姓名() {
+        String userToken = "";
+        HashMap<String,String> mainDoctorInfo = s_CreateSyncedDoctor(mainUser);
+        if(mainDoctorInfo == null) {
+            logger.error("创建注册专家失败，退出执行");
+            System.exit(10000);
+        }
+        userToken = mainDoctorInfo.get("token");
 
         String res = "";
-        String order_number = CreateOrder.s_CreateOrder(mainToken); // create an order
+        String order_number = CreateOrder.s_CreateOrder(userToken); // create an order
         Order_ReceiveTask.s_ReceiveTask(order_number);
         HashMap<String, String> pathValue = new HashMap<>();
         pathValue.put("orderNumber", order_number);
@@ -51,8 +58,16 @@ public class Order_Modify extends BaseTest {
     @Test
     public void test_02_修改订单_患者年龄() {
 
+        String userToken = "";
+        HashMap<String,String> mainDoctorInfo = s_CreateSyncedDoctor(mainUser);
+        if(mainDoctorInfo == null) {
+            logger.error("创建注册专家失败，退出执行");
+            System.exit(10000);
+        }
+        userToken = mainDoctorInfo.get("token");
+
         String res = "";
-        String order_number = CreateOrder.s_CreateOrder(mainToken); // create an order
+        String order_number = CreateOrder.s_CreateOrder(userToken); // create an order
         Order_ReceiveTask.s_ReceiveTask(order_number);
         HashMap<String, String> pathValue = new HashMap<>();
         pathValue.put("orderNumber", order_number);
@@ -69,9 +84,16 @@ public class Order_Modify extends BaseTest {
 
     @Test
     public void test_03_修改订单_患者主诉疾病() {
+        String userToken = "";
+        HashMap<String,String> mainDoctorInfo = s_CreateSyncedDoctor(mainUser);
+        if(mainDoctorInfo == null) {
+            logger.error("创建注册专家失败，退出执行");
+            System.exit(10000);
+        }
+        userToken = mainDoctorInfo.get("token");
 
         String res = "";
-        String order_number = CreateOrder.s_CreateOrder(mainToken); // create an order
+        String order_number = CreateOrder.s_CreateOrder(userToken); // create an order
         Order_ReceiveTask.s_ReceiveTask(order_number);
         HashMap<String, String> pathValue = new HashMap<>();
         pathValue.put("orderNumber", order_number);
@@ -90,9 +112,16 @@ public class Order_Modify extends BaseTest {
 
     @Test
     public void test_04_修改订单_患者次诉疾病() {
+        String userToken = "";
+        HashMap<String,String> mainDoctorInfo = s_CreateSyncedDoctor(mainUser);
+        if(mainDoctorInfo == null) {
+            logger.error("创建注册专家失败，退出执行");
+            System.exit(10000);
+        }
+        userToken = mainDoctorInfo.get("token");
 
         String res = "";
-        String order_number = CreateOrder.s_CreateOrder(mainToken); // create an order
+        String order_number = CreateOrder.s_CreateOrder(userToken); // create an order
         Order_ReceiveTask.s_ReceiveTask(order_number);
         HashMap<String, String> pathValue = new HashMap<>();
         pathValue.put("orderNumber", order_number);
@@ -111,9 +140,16 @@ public class Order_Modify extends BaseTest {
 
     @Test
     public void test_05_修改订单_患者性别() {
+        String userToken = "";
+        HashMap<String,String> mainDoctorInfo = s_CreateSyncedDoctor(mainUser);
+        if(mainDoctorInfo == null) {
+            logger.error("创建注册专家失败，退出执行");
+            System.exit(10000);
+        }
+        userToken = mainDoctorInfo.get("token");
 
         String res = "";
-        String order_number = CreateOrder.s_CreateOrder(mainToken); // create an order
+        String order_number = CreateOrder.s_CreateOrder(userToken); // create an order
         Order_ReceiveTask.s_ReceiveTask(order_number);
         HashMap<String, String> pathValue = new HashMap<>();
         pathValue.put("orderNumber", order_number);
@@ -130,9 +166,16 @@ public class Order_Modify extends BaseTest {
 
     @Test
     public void test_06_修改订单_患者手机() {
+        String userToken = "";
+        HashMap<String,String> mainDoctorInfo = s_CreateSyncedDoctor(mainUser);
+        if(mainDoctorInfo == null) {
+            logger.error("创建注册专家失败，退出执行");
+            System.exit(10000);
+        }
+        userToken = mainDoctorInfo.get("token");
 
         String res = "";
-        String order_number = CreateOrder.s_CreateOrder(mainToken); // create an order
+        String order_number = CreateOrder.s_CreateOrder(userToken); // create an order
         Order_ReceiveTask.s_ReceiveTask(order_number);
         Order_RecommendDoctor.s_RecommendDoctor(order_number, "666");
         HashMap<String, String> pathValue = new HashMap<>();
@@ -150,8 +193,16 @@ public class Order_Modify extends BaseTest {
 
     @Test(enabled = false) // 可修改，由前端控制
     public void test_07_修改订单_待支付后不可修改() {
+        String userToken = "";
+        HashMap<String,String> mainDoctorInfo = s_CreateSyncedDoctor(mainUser);
+        if(mainDoctorInfo == null) {
+            logger.error("创建注册专家失败，退出执行");
+            System.exit(10000);
+        }
+        userToken = mainDoctorInfo.get("token");
+
         String res = "";
-        String order_number = CreateOrder.s_CreateOrder(mainToken); // create an order
+        String order_number = CreateOrder.s_CreateOrder(userToken); // create an order
         logger.debug(Order_ReceiveTask.s_ReceiveTask(order_number));
         logger.debug(Order_RecommendDoctor.s_RecommendDoctor(order_number, "666"));
         if (!Order_ThreewayCall_V2.s_CallV2(order_number, "success").equals("3000")) {
@@ -172,8 +223,16 @@ public class Order_Modify extends BaseTest {
 
     @Test(enabled = false)
     public void test_08_修改订单_未领之前不可修改() {
+        String userToken = "";
+        HashMap<String,String> mainDoctorInfo = s_CreateSyncedDoctor(mainUser);
+        if(mainDoctorInfo == null) {
+            logger.error("创建注册专家失败，退出执行");
+            System.exit(10000);
+        }
+        userToken = mainDoctorInfo.get("token");
+
         String res = "";
-        String order_number = CreateOrder.s_CreateOrder(mainToken); // create an order
+        String order_number = CreateOrder.s_CreateOrder(userToken); // create an order
 
         HashMap<String, String> pathValue = new HashMap<>();
         pathValue.put("orderNumber", order_number);
@@ -189,9 +248,16 @@ public class Order_Modify extends BaseTest {
 
     @Test
     public void test_09_修改订单_图片资料() {
+        String userToken = "";
+        HashMap<String,String> mainDoctorInfo = s_CreateSyncedDoctor(mainUser);
+        if(mainDoctorInfo == null) {
+            logger.error("创建注册专家失败，退出执行");
+            System.exit(10000);
+        }
+        userToken = mainDoctorInfo.get("token");
 
         String res = "";
-        String order_number = CreateOrder.s_CreateOrder(mainToken); // create an order
+        String order_number = CreateOrder.s_CreateOrder(userToken); // create an order
         Order_ReceiveTask.s_ReceiveTask(order_number);
         String expId = Generator.randomExpertId();
         Order_RecommendDoctor.s_RecommendDoctor(order_number, expId);
