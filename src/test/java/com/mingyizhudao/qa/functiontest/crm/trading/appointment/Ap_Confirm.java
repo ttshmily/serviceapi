@@ -35,7 +35,7 @@ public class Ap_Confirm extends BaseTest {
         String expertId = randomExpertId();
         body.put("doctor_id", expertId);
 //        body.put("doctor_name", expertName(expertId));
-        body.put("appointment_date", randomDateFromNow(2, 7, new SimpleDateFormat("yyyy-MM-dd")));
+        body.put("appointment_date", randomDateFromNow(2, 7, new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'")));
         long platform_fee = randomInt(100);
         body.put("platform_fee", platform_fee);
         long doctor_fee = randomInt(10);

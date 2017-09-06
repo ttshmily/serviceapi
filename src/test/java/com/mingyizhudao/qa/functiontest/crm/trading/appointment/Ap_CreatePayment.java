@@ -127,7 +127,7 @@ public class Ap_CreatePayment extends BaseTest {
 
         res = s_Detail(orderNumber);
         s_CheckResponse(res);
-        Assert.assertEquals(data.getString("first_income_payment_id"), paymentId);
+        Assert.assertEquals(data.getString("last_income_payment_id"), paymentId);
     }
 
     @Test
@@ -142,13 +142,13 @@ public class Ap_CreatePayment extends BaseTest {
         }
 
         JSONObject body = new JSONObject();
+        body.put("serviceType", "APPOINTMENT");
         body.put("paymentCreateType", "DOCTOR");//APPOINTMENT-全款 DOCTOR-成本价 PLATFORM-尾款
         res = HttpRequest.s_SendPost(host_crm + uri, body.toString(), crm_token, pathValue);
         s_CheckResponse(res);
         Assert.assertEquals(code, "1000000");
         String paymentId1 = data.getString("payment_number");
 
-        body.put("serviceType", "APPOINTMENT");
         body.put("paymentCreateType", "PLATFORM");//APPOINTMENT-全款 DOCTOR-成本价 PLATFORM-尾款
         res = HttpRequest.s_SendPost(host_crm + uri, body.toString(), crm_token, pathValue);
         s_CheckResponse(res);

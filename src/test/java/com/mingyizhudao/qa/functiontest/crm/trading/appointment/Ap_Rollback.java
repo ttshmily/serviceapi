@@ -33,7 +33,7 @@ public class Ap_Rollback extends BaseTest {
         body.put("reason", "官方选择理由");
         String res = s_SendPut(host_crm + uri, body.toString(), crm_token, pathValue);
         String status = JSONObject.fromObject(res).getJSONObject("data").getString("status");
-        return status.equals("1000") ? true : false;
+        return status.equals("1010");
     }
 
     @Test
@@ -54,7 +54,7 @@ public class Ap_Rollback extends BaseTest {
         Assert.assertEquals(code, "1000000");
         res = Ap_Detail.s_Detail(orderNumber);
         s_CheckResponse(res);
-        Assert.assertEquals(s_ParseJson(data, "status"), "1000");
+        Assert.assertEquals(s_ParseJson(data, "status"), "1010");
         Assert.assertNull(s_ParseJson(data, "major_recommended_doctor_id"), "");
         Assert.assertNull(s_ParseJson(data, "major_recommended_doctor_name"), "");
         Assert.assertNull(s_ParseJson(data, "major_recommended_doctor_hospital"), "");
