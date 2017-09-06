@@ -178,7 +178,7 @@ public class Generator {
 
     public static String randomHospitalIdWithType(String type) {
 
-        return randomKey(KnowledgeBase.kb_hospital_ext.get("type"));
+        return randomKey(KnowledgeBase.kb_hospital_ext.get(type));
     }
 
     public static String hospitalName(String id) {

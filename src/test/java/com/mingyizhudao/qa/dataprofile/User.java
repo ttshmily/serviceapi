@@ -38,9 +38,9 @@ public class User {
         private String medical_title_list;
         private String hospital_id;
         private List<Picture> doctor_card_pictures;
-        private String inviter_no;
         private List<Specialty> exp_list;
-        private String major_id;
+//        private String major_id;
+//        private String inviter_no;
 
         public String transform() {
             return simplify(this).toString();

@@ -5,6 +5,7 @@ import com.mingyizhudao.qa.common.TestLogger;
 import com.mingyizhudao.qa.dataprofile.Doctor;
 import com.mingyizhudao.qa.dataprofile.User;
 import com.mingyizhudao.qa.functiontest.crm.kb.management.KBExpert_Detail;
+import com.mingyizhudao.qa.functiontest.crm.kb.management.KBHospital_Detail;
 import com.mingyizhudao.qa.functiontest.doctor.GetDoctorProfile_V1;
 import com.mingyizhudao.qa.functiontest.crm.kb.management.KBExpert_Create;
 import com.mingyizhudao.qa.utilities.Generator;
@@ -30,7 +31,7 @@ public class RegisteredDoctor_CertifySync_V3 extends BaseTest {
     }.getClassName();
     public static TestLogger logger = new TestLogger(clazzName);
     public static final String version = "/api/v3";
-    public static String uri = version+"/doctors/{id}/verificationssynchronization";
+    public static String uri = version+"/doctors/{id}/verificationsSynchronization";
 
     public static HashMap<String, String> s_CertifyAndSync(String regId, String verified_status) {
         String res = "";
@@ -47,7 +48,7 @@ public class RegisteredDoctor_CertifySync_V3 extends BaseTest {
         body.put("status", verified_status);  // 认证
         body.put("reason", "程序认证注册医生并关联到医库");
         body.put("is_signed", "1");
-        body.put("department_category_id", Generator.randomDepartmentId());
+        body.put("department_category_id", Generator.randomDepartmentIdUnder(doctorHospitalType(regId)));
         res = s_SendPut(host_crm+uri, body.toString(), crm_token, pathValue);
         logger.debug(Helper.unicodeString(res));
         res = RegisteredDoctor_Detail.s_Detail(regId);
@@ -73,7 +74,7 @@ public class RegisteredDoctor_CertifySync_V3 extends BaseTest {
         body.put("reason", "程序认证注册医生并关联到医库");
         body.put("kb_id", expertId);
         body.put("is_signed", "1");
-        body.put("department_category_id", Generator.randomDepartmentId());
+        body.put("department_category_id", Generator.randomDepartmentIdUnder(doctorHospitalType(regId)));
         s_SendPut(host_crm+uri, body.toString(), crm_token, pathValue);
         res = RegisteredDoctor_Detail.s_Detail(regId);
         result.put("is_verified", Helper.s_ParseJson(JSONObject.fromObject(res), "data:is_verified"));
@@ -100,7 +101,7 @@ public class RegisteredDoctor_CertifySync_V3 extends BaseTest {
         pathValue.put("id", doctorId);
         body.put("status", "-1");  // 认证失败
         body.put("reason", "程序自动测试失败原因");  // 失败原因
-        body.put("department_category_id", Generator.randomDepartmentId());
+        body.put("department_category_id", Generator.randomDepartmentIdUnder(doctorHospitalType(doctorId)));
         res = s_SendPut(host_crm+uri, body.toString(), crm_token, pathValue);
         logger.debug(Helper.unicodeString(res));
         s_CheckResponse(res);
@@ -127,7 +128,7 @@ public class RegisteredDoctor_CertifySync_V3 extends BaseTest {
         pathValue.put("id", doctorId);
         body.put("status", "1");  // 认证成功
         body.put("reason", "程序测试认真成功原因");  // 成功原因
-        body.put("department_category_id", Generator.randomDepartmentId());
+        body.put("department_category_id", Generator.randomDepartmentIdUnder(doctorHospitalType(doctorId)));
         res = s_SendPut(host_crm + uri, body.toString(), crm_token, pathValue);
         s_CheckResponse(res);
         Assert.assertEquals(code, "1000000");
@@ -181,7 +182,7 @@ public class RegisteredDoctor_CertifySync_V3 extends BaseTest {
         body.put("reason", "程序测试认真成功原因");  // 成功原因
         body.put("kb_id", expertId);
         body.put("is_signed", "0");
-        body.put("department_category_id", Generator.randomDepartmentId());
+        body.put("department_category_id", Generator.randomDepartmentIdUnder(doctorHospitalType(doctorId)));
         res = s_SendPut(host_crm + uri, body.toString(), crm_token, pathValue);
         s_CheckResponse(res);
         Assert.assertEquals(code, "1000000");
@@ -232,7 +233,7 @@ public class RegisteredDoctor_CertifySync_V3 extends BaseTest {
         body.put("reason", "程序测试认真成功原因");  // 成功原因
         body.put("kb_id", expertId);
         body.put("is_signed", "1");
-        body.put("department_category_id", Generator.randomDepartmentId());
+        body.put("department_category_id", Generator.randomDepartmentIdUnder(doctorHospitalType(doctorId)));
         res = s_SendPut(host_crm + uri, body.toString(), crm_token, pathValue);
         s_CheckResponse(res);
         Assert.assertEquals(code, "1000000");
@@ -261,6 +262,16 @@ public class RegisteredDoctor_CertifySync_V3 extends BaseTest {
         Assert.assertEquals(Helper.s_ParseJson(data, "academic_title_list"), dp.getDoctor().getAcademic_title_list());
         Assert.assertEquals(Helper.s_ParseJson(data, "medical_title_list"), dp.getDoctor().getMedical_title_list());
         Assert.assertEquals(Helper.s_ParseJson(data, "city_id"), cityId);
+    }
+
+    public static String doctorHospitalType(String doctorId) {
+        String res = "";
+        res = RegisteredDoctor_Detail.s_Detail(doctorId);
+        String hospitalId = JSONObject.fromObject(res).getJSONObject("data").getString("hospital_id");
+
+        res = KBHospital_Detail.s_Detail(hospitalId);
+        String hospitalType = JSONObject.fromObject(res).getJSONObject("data").getString("type_list");
+        return hospitalType;
     }
 
 }

@@ -58,7 +58,7 @@ public class RegisteredDoctor_List extends BaseTest {
         Assert.assertNotNull(Helper.s_ParseJson(data, "list(0):inviter_name"), "医生的地推字段不存在");
         Assert.assertNotNull(Helper.s_ParseJson(data, "list(0):is_famous"), "医生是否是专家字段不存在");
         Assert.assertNotNull(Helper.s_ParseJson(data, "size"), "列表总量字段不存在");
-        Assert.assertEquals(Helper.s_ParseJson(data, "pagesize"), "10", "默认分页大小不为10");
+        Assert.assertEquals(Helper.s_ParseJson(data, "page_size"), "10", "默认分页大小不为10");
         Assert.assertNotNull(Helper.s_ParseJson(data, "page"), "默认没有传回第1页");
         Assert.assertEquals(Helper.s_ParseJson(data, "list()"), "10", "分页的默认值不为10");
         Integer id1 = Integer.parseInt(Helper.s_ParseJson(data, "list(0):user_id"));

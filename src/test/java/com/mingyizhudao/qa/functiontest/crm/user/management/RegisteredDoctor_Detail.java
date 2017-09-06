@@ -2,6 +2,7 @@ package com.mingyizhudao.qa.functiontest.crm.user.management;
 
 import com.mingyizhudao.qa.common.BaseTest;
 import com.mingyizhudao.qa.common.TestLogger;
+import com.mingyizhudao.qa.dataprofile.User;
 import com.mingyizhudao.qa.utilities.HttpRequest;
 import com.mingyizhudao.qa.utilities.Helper;
 import org.testng.Assert;
@@ -37,13 +38,13 @@ public class RegisteredDoctor_Detail extends BaseTest {
 
         String res = "";
         HashMap<String, String> pathValue = new HashMap<>();
-        pathValue.put("id",mainDoctorId);
+        String doctorId = s_CreateRegisteredDoctor(new User()).get("id");
+        pathValue.put("id", doctorId);
         res = HttpRequest.s_SendGet(host_crm + uri, "", crm_token, pathValue);
         s_CheckResponse(res);
         Assert.assertEquals(code, "1000000");
         Assert.assertNotNull(Helper.s_ParseJson(data, "medical_title_list"));
         Assert.assertNotNull(Helper.s_ParseJson(data, "academic_title_list"));
-        Assert.assertNotNull(Helper.s_ParseJson(data, "inviter_name"));
         Assert.assertNotNull(Helper.s_ParseJson(data, "hospital_name"));
         Assert.assertNotNull(Helper.s_ParseJson(data, "icon"));
         Assert.assertNotNull(Helper.s_ParseJson(data, "audit_state"));

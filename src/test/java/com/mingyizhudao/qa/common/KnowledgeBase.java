@@ -115,11 +115,16 @@ public class KnowledgeBase {
             } else {
                 HashMap<String, String> query = new HashMap<>();
                 query.put("type", "1");
-                query.put("page", "1");
                 for (String key:kb_hospital_type.keySet()) {
                     HashMap<String, String> tmp = new HashMap<>();
                     query.replace("type", key);
                     String res = HttpRequest.s_SendGet(BaseTest.host_kb + hospital_uri, query, "");
+                    int pageSize = 500;
+                    int size = Integer.parseInt(JSONObject.fromObject(res).getJSONObject("data").getString("size"));
+                    int page = size/pageSize + 1;
+                    query.put("page", String.valueOf(page));
+                    query.put("pageSize", String.valueOf(pageSize));
+                    res = HttpRequest.s_SendGet(BaseTest.host_kb + hospital_uri, query, "");
                     JSONArray hospital_list = JSONObject.fromObject(res).getJSONObject("data").getJSONArray("list");
                     for (int j = 0; j < hospital_list.size(); j++) {
                         JSONObject hospital = hospital_list.getJSONObject(j);

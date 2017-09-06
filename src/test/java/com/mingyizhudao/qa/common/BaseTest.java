@@ -146,7 +146,7 @@ public class BaseTest {
         bda_session_staff = JSONObject.fromObject(HttpRequest.s_SendGet("http://services.dev.myzd.info/internal/api/session/create" , "number=Sh0143", "")).getString("data");
         mainUser = new User();
         mainUser.getDoctor().setHospital_id("57");//北京大学口腔医院, 北京，区域服务人员 - 方超
-        HashMap<String,String> mainDoctorInfo = s_CreateSyncedDoctor(mainUser);
+/*        HashMap<String,String> mainDoctorInfo = s_CreateSyncedDoctor(mainUser);
         if(mainDoctorInfo == null) {
             logger.error("创建注册专家失败，退出执行");
             System.exit(10000);
@@ -157,7 +157,7 @@ public class BaseTest {
         mainDoctorName = mainUser.getDoctor().getName();
         mainDoctorHospitalId = mainDoctorInfo.get("hospitalId");
         mainDoctorHospitalName = Generator.hospitalName(mainDoctorHospitalId);
-        mainExpertId = mainDoctorInfo.get("expert_id");
+        mainExpertId = mainDoctorInfo.get("expert_id");*/
 
         logger.info("初始化信息完成，准备执行用例");
 //        logger.info("mainDoctorId为:\t"+mainDoctorId);
@@ -297,8 +297,9 @@ public class BaseTest {
         String token = info.get("token");
 
         logger.info("更新医生信息...");
-        UpdateDoctorProfile_V1.s_Update(token, user);
+        logger.info(UpdateDoctorProfile_V1.s_Update(token, user));
         String res = GetDoctorProfile_V1.s_MyProfile(token);
+        logger.info(res);
         String doctorHospitalId = JSONObject.fromObject(res).getJSONObject("data").getJSONObject("doctor").getString("hospital_id");
         if (doctorHospitalId == null || doctorHospitalId.isEmpty()) {
             logger.error("更新失败，医生信息不完整");

@@ -31,7 +31,7 @@ public class KBExpert_Create extends BaseTest {
     public static String s_Create(Doctor ep) {
         String res = "";
         TestLogger logger = new TestLogger(s_JobName());
-        res = HttpRequest.s_SendPost(host_crm+uri, JSONObject.fromObject(ep).toString(), crm_token);
+        res = HttpRequest.s_SendPost(host_crm+uri, ep.transform(), crm_token);
         JSONObject node = JSONObject.fromObject(res);
         HashMap<String, String> result = new HashMap<>();
         if(!node.getString("code").equals("1000000")) return null;
@@ -48,7 +48,7 @@ public class KBExpert_Create extends BaseTest {
     public void test_01_创建医生() {
         String res = "";
         Doctor ep = new Doctor();
-        res = HttpRequest.s_SendPost(host_crm + uri, JSONObject.fromObject(ep).toString(), crm_token);
+        res = HttpRequest.s_SendPost(host_crm + uri, ep.transform(), crm_token);
         s_CheckResponse(res);
         Assert.assertEquals(code, "1000000");
         String expertId = data.getString("id");
@@ -75,9 +75,9 @@ public class KBExpert_Create extends BaseTest {
     @Test
     public void test_02_创建医生_只有必填字段() {
         String res = "";
-        Doctor ep = new Doctor("basic");
+        Doctor ep = new Doctor();
 
-        res = HttpRequest.s_SendPost(host_crm + uri, JSONObject.fromObject(ep).toString(), crm_token);
+        res = HttpRequest.s_SendPost(host_crm + uri, ep.transform(), crm_token);
         s_CheckResponse(res);
         Assert.assertEquals(code, "1000000");
         Assert.assertNotNull(s_ParseJson(data, "id"), "医库ID不能少");
@@ -95,26 +95,26 @@ public class KBExpert_Create extends BaseTest {
 
         String tmp = ep.getName();
         ep.setName(null);
-        res = HttpRequest.s_SendPost(host_crm + uri, JSONObject.fromObject(ep).toString(), crm_token);
+        res = HttpRequest.s_SendPost(host_crm + uri, ep.transform(), crm_token);
         s_CheckResponse(res);
         Assert.assertNotEquals(code, "1000000");
         ep.setName(tmp);
 
         tmp = ep.getHospital_id();
         ep.setHospital_id(null);
-        res = HttpRequest.s_SendPost(host_crm + uri, JSONObject.fromObject(ep).toString(), crm_token);
+        res = HttpRequest.s_SendPost(host_crm + uri, ep.transform(), crm_token);
         s_CheckResponse(res);
         Assert.assertNotEquals(code, "1000000");
         ep.setHospital_id(tmp);
 
         tmp = ep.getMedical_title_list();
         ep.setMedical_title_list(null);
-        res = HttpRequest.s_SendPost(host_crm + uri, JSONObject.fromObject(ep).toString(), crm_token);
+        res = HttpRequest.s_SendPost(host_crm + uri, ep.transform(), crm_token);
         s_CheckResponse(res);
         Assert.assertNotEquals(code, "1000000");
         ep.setMedical_title_list(tmp);
 
-        res = HttpRequest.s_SendPost(host_crm + uri, JSONObject.fromObject(ep).toString(), crm_token);
+        res = HttpRequest.s_SendPost(host_crm + uri, ep.transform(), crm_token);
         s_CheckResponse(res);
         Assert.assertEquals(code, "1000000");
     }
@@ -126,13 +126,13 @@ public class KBExpert_Create extends BaseTest {
 
         String tmp = ep.getMedical_title_list();
         ep.setMedical_title_list("WRONG_ENUM");
-        res = HttpRequest.s_SendPost(host_crm + uri, JSONObject.fromObject(ep).toString(), crm_token);
+        res = HttpRequest.s_SendPost(host_crm + uri, ep.transform(), crm_token);
         s_CheckResponse(res);
         Assert.assertNotEquals(code, "1000000");
         ep.setMedical_title_list(tmp);
 
         ep.setAcademic_title_list("WRONG_ENUM");
-        res = HttpRequest.s_SendPost(host_crm + uri, JSONObject.fromObject(ep).toString(), crm_token);
+        res = HttpRequest.s_SendPost(host_crm + uri, ep.transform(), crm_token);
         s_CheckResponse(res);
         Assert.assertNotEquals(code, "1000000");
     }

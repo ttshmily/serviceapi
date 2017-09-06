@@ -138,7 +138,7 @@ public class KBHospital_List extends BaseTest {
         String res = "";
         HashMap<String, String> query = new HashMap<>();
         String provinceId = Generator.randomProvinceId();
-        query.put("province", provinceId);
+        query.put("provinceId", provinceId);
         res = HttpRequest.s_SendGet(host_crm+uri, query, crm_token);
         s_CheckResponse(res);
         Assert.assertEquals(code, "1000000");
@@ -150,7 +150,7 @@ public class KBHospital_List extends BaseTest {
         }
 
         provinceId = Generator.randomProvinceId().concat(",").concat(Generator.randomProvinceId()).concat(",").concat(Generator.randomProvinceId()).concat(",").concat(Generator.randomProvinceId()).concat(",").concat(Generator.randomProvinceId()).concat(",").concat(Generator.randomProvinceId()).concat(",").concat(Generator.randomProvinceId());
-        query.replace("province",provinceId);
+        query.replace("provinceId",provinceId);
         res = HttpRequest.s_SendGet(host_crm+uri, query, crm_token);
         s_CheckResponse(res);
         Assert.assertEquals(code, "1000000");
