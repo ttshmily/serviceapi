@@ -43,10 +43,17 @@ public class RegisteredDoctor_Modify extends BaseTest {
 
     @Test
     public void test_01_CRM更新医生详情_综合正确调用() {
+        String userDoctorId = "";
+        HashMap<String,String> mainDoctorInfo = s_CreateSyncedDoctor(mainUser);
+        if(mainDoctorInfo == null) {
+            logger.error("创建注册专家失败，退出执行");
+            System.exit(10000);
+        }
+        userDoctorId = mainDoctorInfo.get("id");
 
         String res = "";
         HashMap<String, String> pathValue = new HashMap<>();
-        pathValue.put("id",mainDoctorId);
+        pathValue.put("id",userDoctorId);
 
         JSONObject body = new JSONObject();
         body.put("content", "自动化修改医生信息");
@@ -68,7 +75,7 @@ public class RegisteredDoctor_Modify extends BaseTest {
         res = HttpRequest.s_SendPut(host_crm+uri, body.toString(), crm_token, pathValue);
         logger.info(Helper.unicodeString(res));
         s_CheckResponse(res);
-        res = RegisteredDoctor_Detail.s_Detail(mainDoctorId);
+        res = RegisteredDoctor_Detail.s_Detail(userDoctorId);
         s_CheckResponse(res);
 //        Assert.assertEquals(s_ParseJson(data, "department"), "科室综合");
         Assert.assertEquals(Helper.s_ParseJson(data, "hospital_id"), hospital);
@@ -78,7 +85,7 @@ public class RegisteredDoctor_Modify extends BaseTest {
         Assert.assertEquals(Helper.s_ParseJson(data, "medical_title_list"), medical);
 
         // 错误的医生ID，应该更新失败
-        pathValue.replace("id", mainDoctorId+"11111");
+        pathValue.replace("id", userDoctorId+"11111");
         res = HttpRequest.s_SendPut(host_crm+uri, body.toString(), crm_token, pathValue);
         s_CheckResponse(res);
         Assert.assertNotEquals(code, "1000000");
@@ -87,10 +94,17 @@ public class RegisteredDoctor_Modify extends BaseTest {
 
     @Test(enabled = false)
     public void test_02_CRM更新医生详情_更新姓名() {
+        String userDoctorId = "";
+        HashMap<String,String> mainDoctorInfo = s_CreateSyncedDoctor(mainUser);
+        if(mainDoctorInfo == null) {
+            logger.error("创建注册专家失败，退出执行");
+            System.exit(10000);
+        }
+        userDoctorId = mainDoctorInfo.get("id");
 
         String res = "";
         HashMap<String, String> pathValue = new HashMap<>();
-        pathValue.put("id",mainDoctorId);
+        pathValue.put("id",userDoctorId);
         JSONObject body = new JSONObject();
         body.put("content", "自动化修改医生姓名");
         // 更新正确的name，应当成功
@@ -98,17 +112,24 @@ public class RegisteredDoctor_Modify extends BaseTest {
         res = HttpRequest.s_SendPut(host_crm+uri, body.toString(), crm_token, pathValue);
         s_CheckResponse(res);
         Assert.assertEquals(code, "1000000");
-        res = RegisteredDoctor_Detail.s_Detail(mainDoctorId);
+        res = RegisteredDoctor_Detail.s_Detail(userDoctorId);
         s_CheckResponse(res);
         Assert.assertEquals(Helper.s_ParseJson(data, "name"), "美女医生");
     }
 
     @Test
     public void test_03_CRM更新医生详情_更新所在医院() {
+        String userDoctorId = "";
+        HashMap<String,String> mainDoctorInfo = s_CreateSyncedDoctor(mainUser);
+        if(mainDoctorInfo == null) {
+            logger.error("创建注册专家失败，退出执行");
+            System.exit(10000);
+        }
+        userDoctorId = mainDoctorInfo.get("id");
 
         String res = "";
         HashMap<String, String> pathValue = new HashMap<>();
-        pathValue.put("id",mainDoctorId);
+        pathValue.put("id",userDoctorId);
         JSONObject body = new JSONObject();
         body.put("content", "自动化修改医生医院信息");
 
@@ -123,7 +144,7 @@ public class RegisteredDoctor_Modify extends BaseTest {
         res = HttpRequest.s_SendPut(host_crm+uri, body.toString(), crm_token, pathValue);
         s_CheckResponse(res);
         Assert.assertEquals(code, "1000000");
-        res = RegisteredDoctor_Detail.s_Detail(mainDoctorId);
+        res = RegisteredDoctor_Detail.s_Detail(userDoctorId);
         s_CheckResponse(res);
         Assert.assertEquals(Helper.s_ParseJson(data, "hospital_id"), hospitalId);
         Assert.assertEquals(Helper.s_ParseJson(data, "hospital_name"), Generator.hospitalName(hospitalId));
@@ -137,7 +158,7 @@ public class RegisteredDoctor_Modify extends BaseTest {
         res = HttpRequest.s_SendPut(host_crm+uri, body.toString(), crm_token, pathValue);
         s_CheckResponse(res);
         Assert.assertEquals(code, "1000000");
-        res = RegisteredDoctor_Detail.s_Detail(mainDoctorId);
+        res = RegisteredDoctor_Detail.s_Detail(userDoctorId);
         s_CheckResponse(res);
         Assert.assertEquals(Helper.s_ParseJson(data, "hospital_id"), hospitalId);
         Assert.assertEquals(Helper.s_ParseJson(data, "hospital_name"), Generator.hospitalName(hospitalId));
@@ -145,10 +166,17 @@ public class RegisteredDoctor_Modify extends BaseTest {
 
     @Test
     public void test_04_CRM更新医生详情_更新学术职称() {
+        String userDoctorId = "";
+        HashMap<String,String> mainDoctorInfo = s_CreateSyncedDoctor(mainUser);
+        if(mainDoctorInfo == null) {
+            logger.error("创建注册专家失败，退出执行");
+            System.exit(10000);
+        }
+        userDoctorId = mainDoctorInfo.get("id");
 
         String res = "";
         HashMap<String, String> pathValue = new HashMap<>();
-        pathValue.put("id", mainDoctorId);
+        pathValue.put("id", userDoctorId);
         JSONObject body = new JSONObject();
         body.put("content", "自动化修改医生学术职称信息");
 
@@ -159,7 +187,7 @@ public class RegisteredDoctor_Modify extends BaseTest {
         s_CheckResponse(res);
         Assert.assertEquals(code, "1000000");
         //TODO
-        res = RegisteredDoctor_Detail.s_Detail(mainDoctorId);
+        res = RegisteredDoctor_Detail.s_Detail(userDoctorId);
         s_CheckResponse(res);
         Assert.assertEquals(Helper.s_ParseJson(data, "academic_title_list"), academic);
         Assert.assertEquals(Helper.s_ParseJson(data, "academic_title"), KnowledgeBase.kb_academic_title.get(academic));
@@ -170,7 +198,7 @@ public class RegisteredDoctor_Modify extends BaseTest {
         s_CheckResponse(res);
         Assert.assertNotEquals(code, "1000000");
         //TODO
-        res = RegisteredDoctor_Detail.s_Detail(mainDoctorId);
+        res = RegisteredDoctor_Detail.s_Detail(userDoctorId);
         s_CheckResponse(res);
         Assert.assertEquals(Helper.s_ParseJson(data, "academic_title_list"), academic);
 
@@ -178,10 +206,17 @@ public class RegisteredDoctor_Modify extends BaseTest {
 
     @Test
     public void test_05_CRM更新医生详情_更新技术职称() {
+        String userDoctorId = "";
+        HashMap<String,String> mainDoctorInfo = s_CreateSyncedDoctor(mainUser);
+        if(mainDoctorInfo == null) {
+            logger.error("创建注册专家失败，退出执行");
+            System.exit(10000);
+        }
+        userDoctorId = mainDoctorInfo.get("id");
 
         String res = "";
         HashMap<String, String> pathValue = new HashMap<>();
-        pathValue.put("id", mainDoctorId);
+        pathValue.put("id",userDoctorId );
         JSONObject body = new JSONObject();
         body.put("content", "自动化修改医生技术职称信息");
 
@@ -191,7 +226,7 @@ public class RegisteredDoctor_Modify extends BaseTest {
         res = HttpRequest.s_SendPut(host_crm+uri, body.toString(), crm_token, pathValue);
         s_CheckResponse(res);
         Assert.assertEquals(code, "1000000");
-        res = RegisteredDoctor_Detail.s_Detail(mainDoctorId);
+        res = RegisteredDoctor_Detail.s_Detail(userDoctorId);
         s_CheckResponse(res);
         Assert.assertEquals(Helper.s_ParseJson(data, "medical_title_list"), medical);
         Assert.assertEquals(Helper.s_ParseJson(data, "medical_title"), KnowledgeBase.kb_medical_title.get(medical));
@@ -201,7 +236,7 @@ public class RegisteredDoctor_Modify extends BaseTest {
         res = HttpRequest.s_SendPut(host_crm+uri, body.toString(), crm_token, pathValue);
         s_CheckResponse(res);
         Assert.assertNotEquals(code, "1000000");
-        res = RegisteredDoctor_Detail.s_Detail(mainDoctorId);
+        res = RegisteredDoctor_Detail.s_Detail(userDoctorId);
         s_CheckResponse(res);
         Assert.assertEquals(Helper.s_ParseJson(data, "medical_title_list"), medical);
         Assert.assertEquals(Helper.s_ParseJson(data, "medical_title"), KnowledgeBase.kb_medical_title.get(medical));
@@ -209,10 +244,17 @@ public class RegisteredDoctor_Modify extends BaseTest {
 
     @Test
     public void test_06_CRM更新医生详情_更新医生专业() {
+        String userDoctorId = "";
+        HashMap<String,String> mainDoctorInfo = s_CreateSyncedDoctor(mainUser);
+        if(mainDoctorInfo == null) {
+            logger.error("创建注册专家失败，退出执行");
+            System.exit(10000);
+        }
+        userDoctorId = mainDoctorInfo.get("id");
 
         String res = "";
         HashMap<String, String> pathValue = new HashMap<>();
-        pathValue.put("id",mainDoctorId);
+        pathValue.put("id",userDoctorId);
         JSONObject body = new JSONObject();
         body.put("content", "自动化修改医生专业信息");
 
@@ -222,7 +264,7 @@ public class RegisteredDoctor_Modify extends BaseTest {
         res = HttpRequest.s_SendPut(host_crm+mock+uri, body.toString(), crm_token, pathValue);
         s_CheckResponse(res);
         Assert.assertEquals(code, "1000000");
-        res = RegisteredDoctor_Detail.s_Detail(mainDoctorId);
+        res = RegisteredDoctor_Detail.s_Detail(userDoctorId);
         s_CheckResponse(res);
         Assert.assertEquals(Helper.s_ParseJson(data, "major_id"), majorId);
         Assert.assertEquals(Helper.s_ParseJson(data, "major_name"), KnowledgeBase.kb_major.get(majorId));
@@ -232,7 +274,7 @@ public class RegisteredDoctor_Modify extends BaseTest {
         res = HttpRequest.s_SendPut(host_crm+uri, body.toString(), crm_token, pathValue);
         s_CheckResponse(res);
         Assert.assertNotEquals(code, "1000000");
-        res = RegisteredDoctor_Detail.s_Detail(mainDoctorId);
+        res = RegisteredDoctor_Detail.s_Detail(userDoctorId);
         s_CheckResponse(res);
         Assert.assertEquals(Helper.s_ParseJson(data, "major_id"), majorId);
         Assert.assertEquals(Helper.s_ParseJson(data, "major_name"), KnowledgeBase.kb_major.get(majorId));
@@ -241,10 +283,17 @@ public class RegisteredDoctor_Modify extends BaseTest {
 
     @Test(enabled = false)
     public void test_07_CRM更新医生详情_更新手机() {
+        String userDoctorId = "";
+        HashMap<String,String> mainDoctorInfo = s_CreateSyncedDoctor(mainUser);
+        if(mainDoctorInfo == null) {
+            logger.error("创建注册专家失败，退出执行");
+            System.exit(10000);
+        }
+        userDoctorId = mainDoctorInfo.get("id");
 
         String res = "";
         HashMap<String, String> pathValue = new HashMap<>();
-        pathValue.put("id",mainDoctorId);
+        pathValue.put("id",userDoctorId);
         JSONObject body = new JSONObject();
         body.put("content", "自动化修改医生手机信息");
 
@@ -255,7 +304,7 @@ public class RegisteredDoctor_Modify extends BaseTest {
         s_CheckResponse(res);
         Assert.assertEquals(code, "1000000");
         //TODO
-        res = RegisteredDoctor_Detail.s_Detail(mainDoctorId);
+        res = RegisteredDoctor_Detail.s_Detail(userDoctorId);
         s_CheckResponse(res);
         Assert.assertEquals(Helper.s_ParseJson(data, "mobile"), phone);
 
@@ -263,10 +312,17 @@ public class RegisteredDoctor_Modify extends BaseTest {
 
     @Test
     public void test_08_CRM更新医生详情_更新医生工牌照() {
+        String userDoctorId = "";
+        HashMap<String,String> mainDoctorInfo = s_CreateSyncedDoctor(mainUser);
+        if(mainDoctorInfo == null) {
+            logger.error("创建注册专家失败，退出执行");
+            System.exit(10000);
+        }
+        userDoctorId = mainDoctorInfo.get("id");
 
         String res = "";
         HashMap<String, String> pathValue = new HashMap<>();
-        pathValue.put("id",mainDoctorId);
+        pathValue.put("id",userDoctorId);
         JSONObject body = new JSONObject();
         body.put("content", "自动化修改医生工牌照信息");
 
@@ -278,7 +334,7 @@ public class RegisteredDoctor_Modify extends BaseTest {
         s_CheckResponse(res);
         Assert.assertEquals(code, "1000000");
 
-        res = RegisteredDoctor_Detail.s_Detail(mainDoctorId);
+        res = RegisteredDoctor_Detail.s_Detail(userDoctorId);
         s_CheckResponse(res);
         Assert.assertNotNull(Helper.s_ParseJson(data, "doctor_card_pictures"));
         int actual_size = Integer.parseInt(Helper.s_ParseJson(data, "doctor_card_pictures()"));
@@ -294,7 +350,7 @@ public class RegisteredDoctor_Modify extends BaseTest {
         s_CheckResponse(res);
         Assert.assertEquals(code, "1000000");
 
-        res = RegisteredDoctor_Detail.s_Detail(mainDoctorId);
+        res = RegisteredDoctor_Detail.s_Detail(userDoctorId);
         s_CheckResponse(res);
         Assert.assertNotNull(Helper.s_ParseJson(data, "doctor_card_pictures"));
         actual_size = Integer.parseInt(Helper.s_ParseJson(data, "doctor_card_pictures()"));
@@ -308,7 +364,7 @@ public class RegisteredDoctor_Modify extends BaseTest {
         s_CheckResponse(res);
         Assert.assertEquals(code, "1000000");
 
-        res = RegisteredDoctor_Detail.s_Detail(mainDoctorId);
+        res = RegisteredDoctor_Detail.s_Detail(userDoctorId);
         s_CheckResponse(res);
         Assert.assertNotNull(Helper.s_ParseJson(data, "doctor_card_pictures"));
         actual_size = Integer.parseInt(Helper.s_ParseJson(data, "doctor_card_pictures()"));
@@ -322,7 +378,7 @@ public class RegisteredDoctor_Modify extends BaseTest {
         s_CheckResponse(res);
         Assert.assertEquals(code, "1000000");
 
-        res = RegisteredDoctor_Detail.s_Detail(mainDoctorId);
+        res = RegisteredDoctor_Detail.s_Detail(userDoctorId);
         s_CheckResponse(res);
         Assert.assertNotNull(Helper.s_ParseJson(data, "doctor_card_pictures_deleted"));
         Assert.assertEquals(body.getJSONArray("doctor_card_pictures").size(),0);

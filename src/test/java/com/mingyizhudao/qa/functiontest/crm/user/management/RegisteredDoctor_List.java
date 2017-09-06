@@ -118,12 +118,19 @@ public class RegisteredDoctor_List extends BaseTest {
 
     @Test
     public void test_03_获取医生列表_传入特定的医生姓名搜索条件() {
+        String userDoctorName = "";
+        HashMap<String,String> mainDoctorInfo = s_CreateSyncedDoctor(mainUser);
+        if(mainDoctorInfo == null) {
+            logger.error("创建注册专家失败，退出执行");
+            System.exit(10000);
+        }
+        userDoctorName = mainUser.getDoctor().getName();
 
         String res = "";
         HashMap<String, String> query = new HashMap<>();
 
         //以姓名进行搜索
-        query.put("doctor_name",mainDoctorName);
+        query.put("doctor_name",userDoctorName);
         res = HttpRequest.s_SendGet(host_crm + uri, query, crm_token);
         s_CheckResponse(res);
         Assert.assertEquals(code, "1000000");
@@ -131,7 +138,7 @@ public class RegisteredDoctor_List extends BaseTest {
         JSONArray doc_list = data.getJSONArray("list");
         for (int i=0; i<doc_list.size(); i++) {
             JSONObject doc = doc_list.getJSONObject(i);
-            Assert.assertEquals(doc.getString("name").toLowerCase(), mainDoctorName.toLowerCase());
+            Assert.assertEquals(doc.getString("name").toLowerCase(), userDoctorName.toLowerCase());
         }
 
         //更换搜索的姓名，确认搜索结果正确性
@@ -150,10 +157,17 @@ public class RegisteredDoctor_List extends BaseTest {
 
     @Test
     public void test_04_获取医生列表_传入特定的医生手机搜索条件() {
+        String userMobile = "";
+        HashMap<String,String> mainDoctorInfo = s_CreateSyncedDoctor(mainUser);
+        if(mainDoctorInfo == null) {
+            logger.error("创建注册专家失败，退出执行");
+            System.exit(10000);
+        }
+        userMobile = mainDoctorInfo.get("mobile");
 
         String res = "";
         HashMap<String, String> query = new HashMap<>();
-        query.put("mobile",mainMobile);
+        query.put("mobile", userMobile);
         res = HttpRequest.s_SendGet(host_crm+uri, query, crm_token);
         s_CheckResponse(res);
         Assert.assertEquals(code, "1000000");
@@ -161,7 +175,7 @@ public class RegisteredDoctor_List extends BaseTest {
         JSONArray doc_list = data.getJSONArray("list");
         for (int i=0; i<doc_list.size(); i++) {
             JSONObject doc = doc_list.getJSONObject(i);
-            Assert.assertEquals(doc.getString("mobile"), mainMobile);
+            Assert.assertEquals(doc.getString("mobile"), userMobile);
         }
 
         query.replace("mobile","13817634203");
