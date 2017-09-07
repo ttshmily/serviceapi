@@ -22,7 +22,7 @@ public class CreateAppointment extends BaseTest{
         }
     }.getClassName();
     public static TestLogger logger = new TestLogger(clazzName);
-    public static String url = "/appointment/api/v1/orders";
+    public static String url = "/api/v1/orders";
     public static String mobile;
 
     public static String s_CreateOrder(){

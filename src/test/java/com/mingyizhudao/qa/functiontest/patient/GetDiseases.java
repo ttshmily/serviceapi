@@ -22,7 +22,7 @@ public class GetDiseases extends BaseTest{
         }
     }.getClassName();
     public static TestLogger logger = new TestLogger(clazzName);
-    public static String uri = "/appointment/api/v1/diseases";
+    public static String uri = "/api/v1/diseases";
 
     @Test
     public void test_01_获取常见病列表(){

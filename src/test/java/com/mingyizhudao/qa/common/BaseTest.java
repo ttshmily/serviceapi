@@ -100,7 +100,7 @@ public class BaseTest {
             host_login = prop.getProperty("host_login", "login.dev.myzd.info");
             host_kb = prop.getProperty("host_kb", "192.168.33.1");
             host_appointment = prop.getProperty("host_appointment", "services.dev.myzd.info/ims");
-            host_patient = prop.getProperty("host_patient","services.dev.myzd.info/edge-gateway");
+            host_patient = prop.getProperty("host_patient","services.dev.myzd.info/appointment");
             mainOperatorId = prop.getProperty("mainOperatorId", "chao.fang@mingyizhudao.com");
             mainOperatorName = prop.getProperty("mainOperatorName", "方超（男）");
 

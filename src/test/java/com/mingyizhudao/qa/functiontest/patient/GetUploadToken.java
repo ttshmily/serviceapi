@@ -22,7 +22,7 @@ public class GetUploadToken extends BaseTest{
         }
     }.getClassName();
     public static TestLogger logger = new TestLogger(clazzName);
-    public static String url = "/appointment/api/v2/getUploadToken";
+    public static String url = "/api/v2/getUploadToken";
 
     public static String s_getUploadToken(HashMap<String ,String> query){
         String res = "";

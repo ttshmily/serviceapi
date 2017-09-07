@@ -19,7 +19,7 @@ public class PatientSendVerifyCode extends BaseTest {
         }
     }.getClassName();
     public static TestLogger logger = new TestLogger(clazzName);
-    public static String url = "/appointment/api/v1/sendVerifyCode";
+    public static String url = "/api/v1/sendVerifyCode";
 
     public static void s_SendVerifyCode(String phone){
         String res = "";

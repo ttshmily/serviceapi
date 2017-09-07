@@ -23,7 +23,7 @@ public class UploadPicture extends BaseTest {
         }
     }.getClassName();
     public static TestLogger logger = new TestLogger(clazzName);
-    public static String url = "/appointment/api/v1/orders/{orderNumber}/uploadPicture";
+    public static String url = "/api/v1/orders/{orderNumber}/uploadPicture";
 
     @Test
     public void test_01_上传图片(){
