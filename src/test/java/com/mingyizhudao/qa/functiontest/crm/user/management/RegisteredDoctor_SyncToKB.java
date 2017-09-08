@@ -29,7 +29,6 @@ public class RegisteredDoctor_SyncToKB extends BaseTest {
     public static TestLogger logger = new TestLogger(clazzName);
     public static final String version = "/api/v1";
     public static String uri = version+"/doctors/{id}/synchronization";
-    public static String mock = false ? "/mockjs/1" : "";
 
     @Test
     public void test_01_已认证医生_同步到医库_新增() {
@@ -101,7 +100,7 @@ public class RegisteredDoctor_SyncToKB extends BaseTest {
         HashMap<String, String> pathValue = new HashMap<>();
         JSONObject body = new JSONObject();
 
-        String expertId = KBExpert_Create.s_Create(new Doctor());
+        String expertId = KBExpert_Create.s_Create(new Doctor(""));
         User dp = new User();
         HashMap<String, String> doctorInfo = s_CreateVerifiedDoctor(dp);
         if (doctorInfo == null) {

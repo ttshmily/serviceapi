@@ -39,7 +39,7 @@ public class KBExpert_Create extends BaseTest {
         JSONObject expert = node.getJSONObject("data");
         result.put("id", expert.getString("id"));
         result.put("name", expert.getString("name"));
-        result.put("major_id", expert.getString("major_id"));
+//        result.put("major_id", expert.getString("major_id"));
         result.put("hospital_id", expert.getString("hospital_id"));
         return expert.getString("id");
     }
@@ -47,7 +47,7 @@ public class KBExpert_Create extends BaseTest {
     @Test
     public void test_01_创建医生() {
         String res = "";
-        Doctor ep = new Doctor();
+        Doctor ep = new Doctor("");
         res = HttpRequest.s_SendPost(host_crm + uri, ep.transform(), crm_token);
         s_CheckResponse(res);
         Assert.assertEquals(code, "1000000");
@@ -75,7 +75,7 @@ public class KBExpert_Create extends BaseTest {
     @Test
     public void test_02_创建医生_只有必填字段() {
         String res = "";
-        Doctor ep = new Doctor();
+        Doctor ep = new Doctor("");
 
         res = HttpRequest.s_SendPost(host_crm + uri, ep.transform(), crm_token);
         s_CheckResponse(res);
@@ -91,7 +91,7 @@ public class KBExpert_Create extends BaseTest {
     @Test
     public void test_03_创建医生_缺少必填字段() {
         String res = "";
-        Doctor ep = new Doctor("basic");
+        Doctor ep = new Doctor("");
 
         String tmp = ep.getName();
         ep.setName(null);
@@ -122,7 +122,7 @@ public class KBExpert_Create extends BaseTest {
     @Test
     public void test_04_创建医生_枚举字段为空值() {
         String res = "";
-        Doctor ep = new Doctor();
+        Doctor ep = new Doctor("");
 
         String tmp = ep.getMedical_title_list();
         ep.setMedical_title_list("WRONG_ENUM");

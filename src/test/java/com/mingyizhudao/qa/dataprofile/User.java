@@ -4,13 +4,9 @@ import static com.mingyizhudao.qa.utilities.Generator.*;
 import static com.mingyizhudao.qa.utilities.Helper.*;
 import lombok.Data;
 import net.sf.json.JSONObject;
-import net.sf.json.JsonConfig;
 
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Random;
 
 @Data
 public class User {
@@ -39,12 +35,6 @@ public class User {
         private String hospital_id;
         private List<Picture> doctor_card_pictures;
         private List<Specialty> exp_list;
-//        private String major_id;
-//        private String inviter_no;
-
-        public String transform() {
-            return simplify(this).toString();
-        }
 
         public UserDetail() {
             this.name = "田静"+randomString(4);
@@ -52,8 +42,10 @@ public class User {
             this.academic_title_list = randomAcademicId();
             this.medical_title_list = randomMedicalId();
             this.hospital_id = randomHospitalId();
-//            this.major_id = randomMajorId();
-//            this.inviter_no = randomEmployeeId();
+        }
+
+        public String transform() {
+            return simplify(this).toString();
         }
 
         @Data

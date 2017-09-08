@@ -30,7 +30,7 @@ public class Ap_Detail extends BaseTest {
     @Test
     public void test_01_获取详情_检查必要字段() {
         String res = "";
-        AppointmentOrder ap = new AppointmentOrder();
+        AppointmentOrder ap = new AppointmentOrder("");
         String orderNumber = Ap_Create.s_Create(ap);
         HashMap<String, String> pathValue = new HashMap<>();
         pathValue.put("orderNumber", orderNumber);
@@ -63,7 +63,7 @@ public class Ap_Detail extends BaseTest {
     @Test
     public void test_02_传入错误的订单ID() {
         String res = "";
-        AppointmentOrder ap = new AppointmentOrder();
+        AppointmentOrder ap = new AppointmentOrder("");
         String orderNumber = Ap_Create.s_Create(ap);
         HashMap<String, String> pathValue = new HashMap<>();
         pathValue.put("orderNumber", orderNumber+1);

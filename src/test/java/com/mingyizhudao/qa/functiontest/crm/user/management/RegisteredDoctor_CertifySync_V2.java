@@ -164,7 +164,7 @@ public class RegisteredDoctor_CertifySync_V2 extends BaseTest {
         if (doctorId == null) Assert.fail("创建医生失败，认证用例无法执行");
         pathValue.put("id", doctorId);
 
-        Doctor ep = new Doctor();
+        Doctor ep = new Doctor("");
         String expertId = KBExpert_Create.s_Create(ep);
         if (expertId == null) Assert.fail("创建专家失败，认证用例无法执行");
 
@@ -211,7 +211,7 @@ public class RegisteredDoctor_CertifySync_V2 extends BaseTest {
         if (doctorId == null) Assert.fail("创建医生失败，认证用例无法执行");
         pathValue.put("id", doctorId);
 
-        Doctor ep = new Doctor();
+        Doctor ep = new Doctor("");
         String expertId = KBExpert_Create.s_Create(ep);
         if (expertId == null) Assert.fail("创建专家失败，认证用例无法执行");
 

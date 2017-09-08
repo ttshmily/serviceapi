@@ -105,14 +105,14 @@ public class KB_Track extends BaseTest {
         HashMap<String, String> query = new HashMap<>();
         query.put("type", "DOCTOR");
         //创建医生
-        String expertId = KBExpert_Create.s_Create(new Doctor());
+        String expertId = KBExpert_Create.s_Create(new Doctor(""));
         query.put("id", expertId);
         JSONArray trackList = s_KBTrack("DOCTOR", expertId);
         Assert.assertEquals(trackList.size(), 1);
-        KBExpert_Update.s_Update(expertId, new Doctor());
+        KBExpert_Update.s_Update(expertId, new Doctor(""));
         trackList = s_KBTrack("DOCTOR", expertId);
         Assert.assertEquals(trackList.size(), 2);
-        KBExpert_Update.s_Update(expertId, new Doctor());
+        KBExpert_Update.s_Update(expertId, new Doctor(""));
         trackList = s_KBTrack("DOCTOR", expertId);
         Assert.assertEquals(trackList.size(), 3);
         KBExpert_Diseases_V2.s_Connect(expertId);

@@ -26,13 +26,16 @@ public class Ap_Rollback extends BaseTest {
     public static String uri = version+"/appointments/{orderNumber}/cleanSurgeons";
 
     public static boolean s_Rollback(String orderNumber) {
+        TestLogger logger = new TestLogger(s_JobName());
         HashMap<String, String> pathValue = new HashMap<>();
         pathValue.put("orderNumber", orderNumber);
         JSONObject body = new JSONObject();
         body.put("content", "客服记录内容");
         body.put("reason", "官方选择理由");
         String res = s_SendPut(host_crm + uri, body.toString(), crm_token, pathValue);
-        String status = JSONObject.fromObject(res).getJSONObject("data").getString("status");
+        JSONObject r = JSONObject.fromObject(res);
+        if (!r.getString("code").equals("1000000")) logger.error(unicodeString(res));
+        String status = r.getJSONObject("data").getString("status");
         return status.equals("1010");
     }
 

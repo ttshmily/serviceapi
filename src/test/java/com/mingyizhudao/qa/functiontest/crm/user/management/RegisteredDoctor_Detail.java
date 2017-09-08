@@ -27,6 +27,7 @@ public class RegisteredDoctor_Detail extends BaseTest {
 
     public static String s_Detail(String regId) {
         String res = "";
+        TestLogger logger = new TestLogger(s_JobName());
         HashMap<String, String> pathValue = new HashMap<>();
         pathValue.put("id",regId);
         res = HttpRequest.s_SendGet(host_crm+uri,"", crm_token, pathValue);

@@ -29,19 +29,21 @@ public class Ap_Confirm extends BaseTest {
     public static String uri = version+"/appointments/{orderNumber}/confirmSurgeon";
 
     public static boolean s_Confirm(String orderNumber) {
+        TestLogger logger = new TestLogger(s_JobName());
         HashMap<String, String> pathValue = new HashMap<>();
         pathValue.put("orderNumber", orderNumber);
         JSONObject body = new JSONObject();
         String expertId = randomExpertId();
         body.put("doctor_id", expertId);
-//        body.put("doctor_name", expertName(expertId));
         body.put("appointment_date", randomDateFromNow(2, 7, new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'")));
         long platform_fee = randomInt(100);
         body.put("platform_fee", platform_fee);
         long doctor_fee = randomInt(10);
         body.put("doctor_fee", doctor_fee);
         String res = s_SendPut(host_crm + uri, body.toString(), crm_token, pathValue);
-        String status = JSONObject.fromObject(res).getJSONObject("data").getString("status");
+        JSONObject r = JSONObject.fromObject(res);
+        if(!r.getString("code").equals("1000000")) logger.error(unicodeString(res));
+        String status = r.getJSONObject("data").getString("status");
         return status.equals("3000");
     }
 

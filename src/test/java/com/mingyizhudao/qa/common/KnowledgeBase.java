@@ -145,29 +145,15 @@ public class KnowledgeBase {
             if (BaseTest.init_kb.equals("false") && file.exists()) {
                 fileToString(doctor_file,kb_doctor);
             } else {
-                int pageSize = 1000;
+                int pageSize = 100;
                 HashMap<String, String> query = new HashMap<>();
-                query.put("pageSize", "1");
-                query.put("page", "1");
-                String res = HttpRequest.s_SendGet(BaseTest.host_kb + doctor_uri, query, "");
-                int total = Integer.parseInt(Helper.s_ParseJson(JSONObject.fromObject(res), "data:size"));
-                int num = total / pageSize + 1;
-                int last_page_num = total - pageSize * (num - 1);
+                query.put("pageSize", String.valueOf(pageSize));
+                query.put("isRegistered", "true");
+                String res = "";
 
-                query.replace("pageSize", String.valueOf(pageSize));
-                for (int i = 1; i < num; i++) {
-                    query.replace("page", String.valueOf(i));
-                    res = HttpRequest.s_SendGet(BaseTest.host_kb + doctor_uri, query, "");
-                    JSONArray doctor_list = JSONObject.fromObject(res).getJSONObject("data").getJSONArray("list");
-                    for (int j = 0; j < pageSize; j++) {
-                        JSONObject doctor = doctor_list.getJSONObject(j);
-                        kb_doctor.put(doctor.getString("id"), doctor.getString("name"));
-                    }
-                }
-                query.replace("page", String.valueOf(num));
                 res = HttpRequest.s_SendGet(BaseTest.host_kb + doctor_uri, query, "");
                 JSONArray doctor_list = JSONObject.fromObject(res).getJSONObject("data").getJSONArray("list");
-                for (int j = 0; j < last_page_num; j++) {
+                for (int j = 0; j < pageSize; j++) {
                     JSONObject doctor = doctor_list.getJSONObject(j);
                     kb_doctor.put(doctor.getString("id"), doctor.getString("name"));
                 }
