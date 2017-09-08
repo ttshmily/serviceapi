@@ -119,7 +119,7 @@ public class Generator {
 
     public static String randomEmployeeId() {
         String[] prefix = {"SH"};
-        String[] ID = {"0133","0143"};
+        String[] ID = {"0133","0143","9999","9998"};
         Random random = new Random();
         return prefix[random.nextInt(prefix.length)]+ID[random.nextInt(ID.length)];
     }
@@ -128,6 +128,7 @@ public class Generator {
         HashMap<String, String> pair = new HashMap<>();
         pair.put("SH0133", "方超");
         pair.put("SH0143", "田静");
+        pair.put("SH9998", "田小静");
         return pair.get(employeeId);
     }
 
