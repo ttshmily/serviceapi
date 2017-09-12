@@ -45,7 +45,6 @@ public class VisitRecordCreate extends BaseTest {
 
         res = s_SendPost(host_bda + uri, body.toString(), token);
         return JSONObject.fromObject(res).getJSONObject("data").getString("id");
-
     }
 
     @Test

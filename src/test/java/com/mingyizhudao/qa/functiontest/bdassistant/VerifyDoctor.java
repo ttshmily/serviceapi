@@ -43,8 +43,8 @@ public class VerifyDoctor extends BaseTest {
         res = RegisteredDoctor_Detail.s_Detail(doctorId);
 
         pathValue.put("id", doctorId);
-        body.put("approveStatus", "1");  // 认证成功
-        body.put("signedStatus", "SIGNED");  // 认证成功
+        body.put("approve_status", "1");  // 认证成功
+        body.put("signed_status", "SIGNED");  // 认证成功
         body.put("staff_id", randomEmployeeId());  // 认证成功
         res = HttpRequest.s_SendPut(host_bda + uri, body.toString(), bda_session_staff, pathValue);
         s_CheckResponse(res);
@@ -72,7 +72,7 @@ public class VerifyDoctor extends BaseTest {
         res = RegisteredDoctor_Detail.s_Detail(doctorId);
 
         pathValue.put("id", doctorId);
-        body.put("approveStatus", "1");  // 认证成功
+        body.put("approve_status", "1");  // 认证成功
         body.put("staff_id", randomEmployeeId());  // 认证成功
         res = HttpRequest.s_SendPut(host_bda + uri, body.toString(), bda_session_staff, pathValue);
         s_CheckResponse(res);

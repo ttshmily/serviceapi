@@ -1,7 +1,8 @@
-package com.mingyizhudao.qa.functiontest.bdassistant;
+package com.mingyizhudao.qa.recycle;
 
 import com.mingyizhudao.qa.common.BaseTest;
 import com.mingyizhudao.qa.common.TestLogger;
+import com.mingyizhudao.qa.recycle.PersonalInfoV2;
 import com.mingyizhudao.qa.utilities.Generator;
 import static com.mingyizhudao.qa.utilities.Generator.*;
 import com.mingyizhudao.qa.utilities.HttpRequest;
