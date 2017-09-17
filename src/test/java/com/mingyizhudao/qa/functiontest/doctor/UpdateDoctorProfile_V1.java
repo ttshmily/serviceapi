@@ -77,7 +77,7 @@ public class UpdateDoctorProfile_V1 extends BaseTest {
         HashMap<String, String> doc = s_CreateSyncedDoctor(dp);
         String tmpToken = doc.get("token");
         dp.getDoctor().setDepartment("科室");
-        res = HttpRequest.s_SendPost(host_doc + uri, JSONObject.fromObject(dp).toString(), tmpToken);
+        res = HttpRequest.s_SendPost(host_doc + uri, dp.transform(), tmpToken);
         s_CheckResponse(res);
         Assert.assertEquals(code, "1000000");
 

@@ -98,7 +98,7 @@ public class AssignDoctor extends BaseTest {
         Assert.assertEquals(code, "1000000");
         Assert.assertEquals(data.getJSONArray("list").size(), doctor_list.size()-1);
 
-        for (int i = 0; i < 5; i++) { //
+        for (int i = 0; i < 5; i++) { // 只有5个id是有效ID
             Assert.assertEquals(getServeIdByRegId(String.valueOf(doctor_list.get(i))), bd_id);
         }
     }
@@ -122,8 +122,7 @@ public class AssignDoctor extends BaseTest {
             return null;
         }
         logger.error(unicodeString(res));
-
-        if(r.getJSONObject("data")==null) return null;
+        if(r.getJSONObject("data").isEmpty()) return null;
         return r.getJSONObject("data").getString("service_id");
     }
 }
