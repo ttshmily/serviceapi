@@ -145,7 +145,7 @@ public class GetUploadToken extends BaseTest {
         HashMap<String,String> mainDoctorInfo = s_CreateSyncedDoctor(mainUser);
         if(mainDoctorInfo == null) {
             logger.error("创建注册专家失败，退出执行");
-            System.exit(10000);
+//            System.exit(10000);
         }
         userToken = mainDoctorInfo.get("token");
 
@@ -179,7 +179,7 @@ public class GetUploadToken extends BaseTest {
         HashMap<String, String> query = new HashMap<>();
         query.put("type", "1");
         query.put("filename", "abcd!@#$%^&*(~aa");
-        res = HttpRequest.s_SendGet(host_doc + uri, query, userToken, null);
+        res = HttpRequest.s_SendGet(host_doc + uri, query, userToken);
         s_CheckResponse(res);
         Assert.assertNotEquals(code, "1000000");
     }

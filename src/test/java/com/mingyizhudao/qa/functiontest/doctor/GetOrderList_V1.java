@@ -1,6 +1,7 @@
 package com.mingyizhudao.qa.functiontest.doctor;
 
 import com.mingyizhudao.qa.common.BaseTest;
+import com.mingyizhudao.qa.dataprofile.SurgeryOrder;
 import com.mingyizhudao.qa.dataprofile.User;
 import com.mingyizhudao.qa.functiontest.crm.trading.surgery.*;
 import com.mingyizhudao.qa.common.TestLogger;
@@ -58,7 +59,6 @@ public class GetOrderList_V1 extends BaseTest {
         HashMap<String,String> mainDoctorInfo = s_CreateSyncedDoctor(mainUser);
         if(mainDoctorInfo == null) {
             logger.error("创建注册专家失败，退出执行");
-            System.exit(10000);
         }
         userExpertId = mainDoctorInfo.get("expert_id");
 
@@ -172,7 +172,6 @@ public class GetOrderList_V1 extends BaseTest {
         HashMap<String,String> mainDoctorInfo = s_CreateSyncedDoctor(mainUser);
         if(mainDoctorInfo == null) {
             logger.error("创建注册专家失败，退出执行");
-            System.exit(10000);
         }
         userToken = mainDoctorInfo.get("token");
 
@@ -303,7 +302,6 @@ public class GetOrderList_V1 extends BaseTest {
         HashMap<String,String> mainDoctorInfo = s_CreateSyncedDoctor(mainUser);
         if(mainDoctorInfo == null) {
             logger.error("创建注册专家失败，退出执行");
-            System.exit(10000);
         }
         userToken = mainDoctorInfo.get("token");
 
@@ -418,7 +416,6 @@ public class GetOrderList_V1 extends BaseTest {
         HashMap<String,String> mainDoctorInfo = s_CreateSyncedDoctor(mainUser);
         if(mainDoctorInfo == null) {
             logger.error("创建注册专家失败，退出执行");
-            System.exit(10000);
         }
         userToken = mainDoctorInfo.get("token");
 
@@ -533,7 +530,6 @@ public class GetOrderList_V1 extends BaseTest {
         HashMap<String,String> mainDoctorInfo = s_CreateSyncedDoctor(mainUser);
         if(mainDoctorInfo == null) {
             logger.error("创建注册专家失败，退出执行");
-            System.exit(10000);
         }
         userToken = mainDoctorInfo.get("token");
 
@@ -609,5 +605,100 @@ public class GetOrderList_V1 extends BaseTest {
         res = HttpRequest.s_SendGet(host_doc + uri, query, tmpToken);
         s_CheckResponse(res);
         Assert.assertEquals(Helper.s_ParseJson(data, "order()"), "2","订单order1应当恢复到处理中");
+    }
+
+    @Test
+    public void test_06_验证发起的列表中包含的必备字段() {
+        String userToken = "";
+        HashMap<String,String> mainDoctorInfo = s_CreateSyncedDoctor(mainUser);
+        if(mainDoctorInfo == null) {
+            logger.error("创建注册专家失败，退出执行");
+        }
+        userToken = mainDoctorInfo.get("token");
+
+        User expertInfo = new User();
+        HashMap<String, String> result = s_CreateSyncedDoctor(expertInfo);
+        String tmpExpertId = result.get("expert_id");
+
+        String res = "";
+
+        HashMap<String, String> query = new HashMap<>();
+        query.put("flag","1"); //下级医生，我收到的订单
+
+        logger.info("创建订单with tmpToken");
+        SurgeryOrder su = new SurgeryOrder("order");
+        String orderId1 = CreateOrder.s_CreateOrder(userToken, su);
+        if (orderId1.isEmpty()) {
+            Assert.fail("创建订单with tmpToken失败");
+        }
+
+        res = HttpRequest.s_SendGet(host_doc + uri, query, userToken);
+        s_CheckResponse(res);
+        Assert.assertEquals(Helper.s_ParseJson(data, "order(0):order_number"), orderId1);
+        Assert.assertEquals(Helper.s_ParseJson(data, "order(0):patient_name"), su.getOrder().getPatient_name());
+        Assert.assertEquals(Helper.s_ParseJson(data, "order(0):patient_gender"), su.getOrder().getPatient_gender().toString());
+        Assert.assertEquals(Helper.s_ParseJson(data, "order(0):major_disease_name"), Generator.diseaseName(su.getOrder().getMajor_disease_id()));
+        Assert.assertEquals(Helper.s_ParseJson(data, "order(0):patient_age"), su.getOrder().getPatient_age().toString());
+        Assert.assertEquals(Helper.s_ParseJson(data, "order(0):agent_name"), mainUser.getDoctor().getName());
+
+        Order_ReceiveTask.s_ReceiveTask(orderId1);
+        Order_RecommendDoctor.s_RecommendDoctor(orderId1, tmpExpertId);
+        Order_ThreewayCall_V2.s_CallV2(orderId1, "success");
+
+        //  推荐以后检查上级医生信息
+        res = HttpRequest.s_SendGet(host_doc + uri, query, userToken);
+        s_CheckResponse(res);
+        Assert.assertEquals(Helper.s_ParseJson(data, "order(0):order_number"), orderId1);
+        Assert.assertEquals(Helper.s_ParseJson(data, "order(0):patient_name"), su.getOrder().getPatient_name());
+        Assert.assertEquals(Helper.s_ParseJson(data, "order(0):patient_gender"), su.getOrder().getPatient_gender().toString());
+        Assert.assertEquals(Helper.s_ParseJson(data, "order(0):major_disease_name"), Generator.diseaseName(su.getOrder().getMajor_disease_id()));
+        Assert.assertEquals(Helper.s_ParseJson(data, "order(0):patient_age"), su.getOrder().getPatient_age().toString());
+        Assert.assertEquals(Helper.s_ParseJson(data, "order(0):agent_name"), mainUser.getDoctor().getName());
+        Assert.assertNotNull(Helper.s_ParseJson(data, "order(0):pre_order_fee"));
+
+        Assert.assertEquals(Helper.s_ParseJson(data, "order(0):surgeon_name"), expertInfo.getDoctor().getName());
+        Assert.assertEquals(Helper.s_ParseJson(data, "order(0):surgeon_medical_title"), Generator.medicalName(expertInfo.getDoctor().getMedical_title_list()));
+    }
+
+    @Test
+    public void test_07_验证收到的列表中包含的必备字段() {
+        String userToken = "";
+        HashMap<String,String> mainDoctorInfo = s_CreateSyncedDoctor(mainUser);
+        if(mainDoctorInfo == null) {
+            logger.error("创建注册专家失败，退出执行");
+        }
+        userToken = mainDoctorInfo.get("token");
+
+        String res = "";
+
+        HashMap<String, String> result = s_CreateSyncedDoctor(new User());
+        String tmpToken = result.get("token");
+        String tmpExpertId = result.get("expert_id");
+
+        logger.info("创建1条测试订单");
+        SurgeryOrder su = new SurgeryOrder("order");
+        String orderId1 = CreateOrder.s_CreateOrder(userToken, su);
+
+        if (orderId1.isEmpty()) {
+            Assert.fail("创建订单测试订单失败");
+        }
+
+        HashMap<String, String> query = new HashMap<>();
+        query.put("flag","2"); //上级医生，我收到的订单
+
+        Order_ReceiveTask.s_ReceiveTask(orderId1);
+        Order_RecommendDoctor.s_RecommendDoctor(orderId1, tmpExpertId);
+        Order_ThreewayCall_V2.s_CallV2(orderId1, "success");
+
+        res = HttpRequest.s_SendGet(host_doc + uri, query, tmpToken);
+        s_CheckResponse(res);
+        Assert.assertEquals(Helper.s_ParseJson(data, "order(0):order_number"), orderId1);
+        Assert.assertEquals(Helper.s_ParseJson(data, "order(0):patient_name"), su.getOrder().getPatient_name());
+        Assert.assertEquals(Helper.s_ParseJson(data, "order(0):patient_gender"), su.getOrder().getPatient_gender().toString());
+        Assert.assertEquals(Helper.s_ParseJson(data, "order(0):major_disease_name"), Generator.diseaseName(su.getOrder().getMajor_disease_id()));
+        Assert.assertEquals(Helper.s_ParseJson(data, "order(0):patient_age"), su.getOrder().getPatient_age().toString());
+        Assert.assertEquals(Helper.s_ParseJson(data, "order(0):agent_name"), mainUser.getDoctor().getName());
+        Assert.assertEquals(Helper.s_ParseJson(data, "order(0):agent_hospital"), Generator.hospitalName(mainUser.getDoctor().getHospital_id()));
+
     }
 }

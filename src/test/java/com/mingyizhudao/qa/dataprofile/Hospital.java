@@ -46,18 +46,6 @@ public class Hospital {
         return simplify(this).toString();
     }
 
-    public String printPictures() {
-        StringBuilder sb = new StringBuilder();
-        sb.append("[");
-        for (int i =0; i < photo_url.size(); i++) {
-            sb.append(photo_url.get(i).print());
-            sb.append(",");
-        }
-        sb.deleteCharAt(sb.lastIndexOf(","));
-        sb.append("]");
-        return sb.toString();
-    }
-
     @Data
     public class Picture {
         String key;

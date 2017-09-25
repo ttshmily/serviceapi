@@ -52,8 +52,7 @@ public class CancelOrder extends BaseTest {
         String userToken = "";
         HashMap<String,String> mainDoctorInfo = s_CreateSyncedDoctor(mainUser);
         if(mainDoctorInfo == null) {
-            logger.error("创建注册专家失败，退出执行");
-            System.exit(10000);
+            Assert.fail("创建注册专家失败，退出执行");
         }
         userToken = mainDoctorInfo.get("token");
 

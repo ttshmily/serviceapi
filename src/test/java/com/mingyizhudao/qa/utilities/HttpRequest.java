@@ -371,11 +371,12 @@ public class HttpRequest {
         PrintWriter out = null;
         BufferedReader in = null;
         String result = "";
+        HttpURLConnection httpURLConnection;
         try {
             URL realUrl = new URL(url);
             // 打开和URL之间的连接
             URLConnection conn = realUrl.openConnection();
-            HttpURLConnection httpURLConnection = (HttpURLConnection)conn;
+            httpURLConnection = (HttpURLConnection)conn;
             // 设置通用的请求属性
             httpURLConnection.setRequestMethod("PUT");
             httpURLConnection.setRequestProperty("Content-Type", "application/json");
@@ -409,7 +410,7 @@ public class HttpRequest {
             in.close();
             out.close();
         } catch (Exception e) {
-            logger.error("发送请求异常");
+            logger.error("发送请求异常" + e);
         }
         return result;
 	}
@@ -553,7 +554,7 @@ public class HttpRequest {
         if (query == null) return "";
         for (String key:query.keySet()) {
             try {
-                if (!query.get(key).isEmpty())
+                //if (!query.get(key).isEmpty())
                     sb.append(key).append("=").append(URLEncoder.encode(query.get(key), "utf-8")).append("&");
             } catch (UnsupportedEncodingException e) {
                 e.printStackTrace();

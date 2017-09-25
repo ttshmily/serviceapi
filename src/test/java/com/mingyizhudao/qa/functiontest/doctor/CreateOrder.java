@@ -35,6 +35,11 @@ public class CreateOrder extends BaseTest {
         return JSONObject.fromObject(res).getJSONObject("data").getString("order_number");
     }
 
+    public static String s_CreateOrder(String token, SurgeryOrder su){
+        String res = HttpRequest.s_SendPost(host_doc + uri, su.transform(), token);
+        return JSONObject.fromObject(res).getJSONObject("data").getString("order_number");
+    }
+
     @Test
     public void test_01_创建订单_信息齐备_已认证用户() {
 
@@ -255,7 +260,7 @@ public class CreateOrder extends BaseTest {
         Assert.assertEquals(code, "1000000");
     }
 
-    @Test
+/*    @Test
     public void test_09_创建订单_信息齐备_认证中的医生没有邀请者可以创建() {
 
         String res = "";
@@ -274,7 +279,7 @@ public class CreateOrder extends BaseTest {
         s_CheckResponse(res);
         Assert.assertEquals(code, "1000000"); // PD要求认证中的医生也可以创建了。。。
 
-    }
+    }*/
 
     @Test
     public void test_10_创建订单_信息齐备_认证中的医生有邀请者可以创建() {

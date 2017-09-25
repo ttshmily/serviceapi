@@ -28,15 +28,18 @@ public class Ap_Create extends BaseTest {
     public static String uri = version+"/appointments";
 
     public static String s_Create(AppointmentOrder ap) {
-        String res = HttpRequest.s_SendPost(host_crm+uri, JSONObject.fromObject(ap).toString(), crm_token);
-        return JSONObject.fromObject(res).getJSONObject("data").getString("order_number");
+        TestLogger logger = new TestLogger(s_JobName());
+        String res = HttpRequest.s_SendPost(host_crm+uri, ap.transform(), crm_token);
+        JSONObject r = JSONObject.fromObject(res);
+        if (!r.getString("code").equals("1000000")) logger.error(unicodeString(res));
+        return r.getJSONObject("data").getString("order_number");
     }
 
     @Test
     public void test_01_创建订单信息保存() {
         String res = "";
         AppointmentOrder ap = new AppointmentOrder();
-        res = HttpRequest.s_SendPost(host_crm+uri, JSONObject.fromObject(ap).toString(), crm_token);
+        res = HttpRequest.s_SendPost(host_crm+uri, ap.transform(), crm_token);
         s_CheckResponse(res);
         Assert.assertEquals(code, "1000000");
         String order_number = s_ParseJson(data, "order_number");
@@ -62,10 +65,10 @@ public class Ap_Create extends BaseTest {
         Assert.assertEquals(s_ParseJson(data, "major_disease_id"), ap.getMajor_disease_id());
         Assert.assertEquals(s_ParseJson(data, "major_disease_name"), ap.getMajor_disease_name());
         Assert.assertEquals(s_ParseJson(data, "major_reps_id"), mainOperatorId);
-        Assert.assertEquals(s_ParseJson(data, "status"), "1000");
+        Assert.assertEquals(s_ParseJson(data, "status"), "1010"); // 通过CRM创建的订单默认为1010
         Assert.assertTrue(almostEqual(data.getString("expected_appointment_start_date"), ap.getExpected_appointment_start_date(), "yyyy-MM-dd'T'HH:mm:ss"));
         Assert.assertTrue(almostEqual(data.getString("expected_appointment_due_date"), ap.getExpected_appointment_due_date(), "yyyy-MM-dd'T'HH:mm:ss"));
-        Assert.assertEquals(s_ParseJson(data, "medical_record_pictures"), ap.printPictures());
+//        Assert.assertEquals(s_ParseJson(data, "medical_record_pictures"), ap.printPictures());
     }
 
     @Test
@@ -101,7 +104,7 @@ public class Ap_Create extends BaseTest {
         } catch (Exception e) {
             logger.error(e);
         }
-        res = HttpRequest.s_SendPost(host_crm+uri, JSONObject.fromObject(ap).toString(), crm_token);
+        res = HttpRequest.s_SendPost(host_crm+uri, ap.transform(), crm_token);
         s_CheckResponse(res);
         Assert.assertEquals(code, "1000000");
         String order_number = s_ParseJson(data, "order_number");

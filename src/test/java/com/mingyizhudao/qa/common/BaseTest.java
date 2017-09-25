@@ -2,6 +2,7 @@ package com.mingyizhudao.qa.common;
 
 
 import com.mingyizhudao.qa.dataprofile.User;
+import com.mingyizhudao.qa.functiontest.crm.user.management.RegisteredDoctor_CertifySync_V3;
 import com.mingyizhudao.qa.functiontest.doctor.GetDoctorProfile_V1;
 import com.mingyizhudao.qa.functiontest.login.CheckVerifyCode;
 import com.mingyizhudao.qa.functiontest.login.SendVerifyCode;
@@ -40,6 +41,7 @@ public class BaseTest {
     public static String host_kb = "";
     public static String host_bda = "";
     public static String host_appointment = "";
+    public static String host_patient = "";
     public static String crm_token = "";
     public static String bda_token = "";
     public static String bda_token_staff = "";
@@ -98,6 +100,7 @@ public class BaseTest {
             host_login = prop.getProperty("host_login", "login.dev.myzd.info");
             host_kb = prop.getProperty("host_kb", "192.168.33.1");
             host_appointment = prop.getProperty("host_appointment", "services.dev.myzd.info/ims");
+            host_patient = prop.getProperty("host_patient","services.dev.myzd.info/appointment");
             mainOperatorId = prop.getProperty("mainOperatorId", "chao.fang@mingyizhudao.com");
             mainOperatorName = prop.getProperty("mainOperatorName", "方超（男）");
 
@@ -114,6 +117,7 @@ public class BaseTest {
             host_kb = protocol.concat("://").concat(host_kb);
             host_bda = protocol.concat("://").concat(host_bda);
             host_appointment = protocol.concat("://").concat(host_appointment);
+            host_patient = protocol.concat("://").concat(host_patient);
         }
     }
 
@@ -136,24 +140,22 @@ public class BaseTest {
     public void SetUpSuite() throws Exception {
         KnowledgeBase.s_Init();
         crm_token = JSONObject.fromObject(HttpRequest.s_SendGet("http://services.dev.myzd.info/crm/api/internal/devToken" , "email="+mainOperatorId+"&name="+mainOperatorName, "")).getJSONObject("data").getString("token");
-//        bda_token = JSONObject.fromObject(HttpRequest.s_SendGet("http://work.myzd.info/wx/internal/api/dev-tokens" , "", "")).getJSONObject("data").getJSONObject(mainOperatorId).getString("token");
-//        bda_token_staff = JSONObject.fromObject(HttpRequest.s_SendGet("http://work.myzd.info/wx/internal/api/dev-tokens" , "", "")).getJSONObject("data").getJSONObject("lei.wang@mingyizhudao.com").getString("token");
         bda_session = JSONObject.fromObject(HttpRequest.s_SendGet("http://services.dev.myzd.info/internal/api/session/create" , "number=SH0133", "")).getString("data");
         bda_session_staff = JSONObject.fromObject(HttpRequest.s_SendGet("http://services.dev.myzd.info/internal/api/session/create" , "number=Sh0143", "")).getString("data");
         mainUser = new User();
         mainUser.getDoctor().setHospital_id("57");//北京大学口腔医院, 北京，区域服务人员 - 方超
-        //HashMap<String,String> mainDoctorInfo = s_CreateSyncedDoctor(mainUser);
-//        if(mainDoctorInfo == null) {
-//            logger.error("创建注册专家失败，退出执行");
-//            System.exit(10000);
-//        }
-//        mainMobile = mainDoctorInfo.get("mobile");
-//        mainToken = mainDoctorInfo.get("token");
-//        mainDoctorId = mainDoctorInfo.get("id");
-//        mainDoctorName = mainUser.getDoctor().getName();
-//        mainDoctorHospitalId = mainDoctorInfo.get("hospitalId");
-//        mainDoctorHospitalName = Generator.hospitalName(mainDoctorHospitalId);
-//        mainExpertId = mainDoctorInfo.get("expert_id");
+/*        HashMap<String,String> mainDoctorInfo = s_CreateSyncedDoctor(mainUser);
+        if(mainDoctorInfo == null) {
+            logger.error("创建注册专家失败，退出执行");
+            System.exit(10000);
+        }
+        mainMobile = mainDoctorInfo.get("mobile");
+        mainToken = mainDoctorInfo.get("token");
+        mainDoctorId = mainDoctorInfo.get("id");
+        mainDoctorName = mainUser.getDoctor().getName();
+        mainDoctorHospitalId = mainDoctorInfo.get("hospitalId");
+        mainDoctorHospitalName = Generator.hospitalName(mainDoctorHospitalId);
+        mainExpertId = mainDoctorInfo.get("expert_id");*/
 
         logger.info("初始化信息完成，准备执行用例");
 //        logger.info("mainDoctorId为:\t"+mainDoctorId);
@@ -293,8 +295,9 @@ public class BaseTest {
         String token = info.get("token");
 
         logger.info("更新医生信息...");
-        UpdateDoctorProfile_V1.s_Update(token, user);
+        logger.info(UpdateDoctorProfile_V1.s_Update(token, user));
         String res = GetDoctorProfile_V1.s_MyProfile(token);
+        logger.info(res);
         String doctorHospitalId = JSONObject.fromObject(res).getJSONObject("data").getJSONObject("doctor").getString("hospital_id");
         if (doctorHospitalId == null || doctorHospitalId.isEmpty()) {
             logger.error("更新失败，医生信息不完整");
@@ -373,7 +376,7 @@ public class BaseTest {
         if (info == null) return null;
         logger.info("认证并同步医生...");
         String doctorId = info.get("id");
-        HashMap<String,String> tmp = RegisteredDoctor_CertifySync_V2.s_CertifyAndSync(doctorId, "1");
+        HashMap<String,String> tmp = RegisteredDoctor_CertifySync_V3.s_CertifyAndSync(doctorId, "1");
         if (!tmp.get("is_verified").equals("1") || tmp.get("kb_id") == null) {
             logger.error("认证/同步医生失败");
             return null;

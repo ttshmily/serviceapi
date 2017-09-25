@@ -31,6 +31,7 @@ public class Ap_RiskControl extends BaseTest{
     }
 
     public static boolean s_Take(String orderNumber, String[] doctor_list) {
+        TestLogger logger = new TestLogger(s_JobName());
         HashMap<String, String> pathValue = new HashMap<>();
         pathValue.put("orderNumber", orderNumber);
         JSONObject body = new JSONObject();
@@ -44,7 +45,9 @@ public class Ap_RiskControl extends BaseTest{
             body.put("minor_recommended_doctor_id", expert_id);
         }
         String res = s_SendPut(host_crm + uri, body.toString(), crm_token, pathValue);
-        String status = JSONObject.fromObject(res).getJSONObject("data").getString("status");
+        JSONObject r = JSONObject.fromObject(res);
+        if (!r.getString("code").equals("1000000")) logger.error(unicodeString(res));
+        String status = r.getJSONObject("data").getString("status");
         return status.equals("2000");
     }
 
@@ -76,6 +79,8 @@ public class Ap_RiskControl extends BaseTest{
         s_CheckResponse(res);
         Assert.assertEquals(code, "1000000");
         Assert.assertEquals(s_ParseJson(data, "major_recommended_doctor_id"), body.getString("major_recommended_doctor_id"));
+        Assert.assertNotNull(s_ParseJson(data, "major_recommended_doctor_referrer_name"));
+
     }
 
     @Test
@@ -96,7 +101,9 @@ public class Ap_RiskControl extends BaseTest{
         s_CheckResponse(res);
         Assert.assertEquals(code, "1000000");
         Assert.assertEquals(s_ParseJson(data, "major_recommended_doctor_id"), body.getString("major_recommended_doctor_id"));
+        Assert.assertNotNull(s_ParseJson(data, "minor_recommended_doctor_referrer_name"));
         Assert.assertEquals(s_ParseJson(data, "minor_recommended_doctor_id"), body.getString("minor_recommended_doctor_id"));
+        Assert.assertNotNull(s_ParseJson(data, "major_recommended_doctor_referrer_name"));
     }
 
     @Test

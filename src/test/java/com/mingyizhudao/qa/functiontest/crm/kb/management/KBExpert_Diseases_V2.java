@@ -89,7 +89,7 @@ public class KBExpert_Diseases_V2 extends BaseTest {
     @Test
     public void test_06_关联专业和疾病_未注册医生() {
         String res = "";
-        Doctor ep = new Doctor();
+        Doctor ep = new Doctor("");
         String expertId = KBExpert_Create.s_Create(ep);
         if (expertId == null) Assert.fail("创建医库医生失败，退出用例执行");
         HashMap<String, String> pathValue = new HashMap<>();

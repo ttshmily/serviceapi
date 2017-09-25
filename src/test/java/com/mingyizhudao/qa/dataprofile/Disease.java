@@ -17,14 +17,6 @@ public class Disease {
     private Integer user_visible;
     private List<Category> category_list;
 
-    @Data
-    public class Category {
-        private String disease_category_id;
-        public Category() {
-            this.disease_category_id = randomMajorId();
-        }
-    }
-
     public Disease() {
         this.name = "疾病"+randomString(3);
         this.is_common = 1;
@@ -33,14 +25,24 @@ public class Disease {
         this.initial = randomString(1).toUpperCase();
         this.category_list = new ArrayList<Category>() {
             {
-                add (new Category());
-                add (new Category());
+                int size = (int)randomInt(3);
+                for(int i=0; i<size; i++){
+                    add(new Category());
+                }
             }
         };
     }
 
     public String transform() {
         return simplify(this).toString();
+    }
+
+    @Data
+    public class Category {
+        private String disease_category_id;
+        public Category() {
+            this.disease_category_id = randomMajorId();
+        }
     }
 
 }

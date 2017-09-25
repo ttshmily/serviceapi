@@ -31,6 +31,7 @@ public class Ap_AddAccount extends BaseTest {
         JSONObject body = new JSONObject();
         body.put("doctor_account_name", "收款姓名"+randomString(2));
         body.put("doctor_account_info", randomPhone());
+        body.put("doctor_account_identity", "340802198511300613");
         body.put("appointment_fee_remark", "添加说明");
         res = s_SendPut(host_crm + uri, body.toString(), crm_token, pathValue);
         String code = JSONObject.fromObject(res).getString("code");
@@ -50,6 +51,7 @@ public class Ap_AddAccount extends BaseTest {
         body.put("doctor_account_name", "收款姓名"+randomString(2));
         body.put("doctor_account_info", randomPhone());
         body.put("appointment_fee_remark", "添加说明");
+        body.put("doctor_account_identity", "340802198511300613");
         res = s_SendPut(host_crm + uri, body.toString(), crm_token, pathValue);
         s_CheckResponse(res);
         Assert.assertEquals(code, "1000000");
@@ -72,6 +74,7 @@ public class Ap_AddAccount extends BaseTest {
         JSONObject body = new JSONObject();
         body.put("doctor_account_name", "收款姓名"+randomString(2));
         body.put("doctor_account_info", mainOperatorId);
+        body.put("doctor_account_identity", "340802198511300613");
         body.put("appointment_fee_remark", "添加说明");
         res = s_SendPut(host_crm + uri, body.toString(), crm_token, pathValue);
         s_CheckResponse(res);
@@ -128,6 +131,7 @@ public class Ap_AddAccount extends BaseTest {
         JSONObject body = new JSONObject();
         body.put("doctor_account_name", "收款姓名"+randomString(2));
         body.put("doctor_account_info", randomPhone());
+        body.put("doctor_account_identity", "340802198511300613");
         body.put("appointment_fee_remark", "添加说明");
         res = s_SendPut(host_crm + uri, body.toString(), crm_token, pathValue);
         s_CheckResponse(res);
@@ -154,6 +158,7 @@ public class Ap_AddAccount extends BaseTest {
         body.put("doctor_account_name", "收款姓名"+randomString(2));
         body.put("doctor_account_info", randomPhone());
         body.put("appointment_fee_remark", "添加说明");
+        body.put("doctor_account_identity", "340802198511300613");
         res = s_SendPut(host_crm + uri, body.toString(), crm_token, pathValue);
         s_CheckResponse(res);
         Assert.assertEquals(code, "1000000");

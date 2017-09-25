@@ -26,14 +26,17 @@ public class Ap_Rollback extends BaseTest {
     public static String uri = version+"/appointments/{orderNumber}/cleanSurgeons";
 
     public static boolean s_Rollback(String orderNumber) {
+        TestLogger logger = new TestLogger(s_JobName());
         HashMap<String, String> pathValue = new HashMap<>();
         pathValue.put("orderNumber", orderNumber);
         JSONObject body = new JSONObject();
         body.put("content", "客服记录内容");
         body.put("reason", "官方选择理由");
         String res = s_SendPut(host_crm + uri, body.toString(), crm_token, pathValue);
-        String status = JSONObject.fromObject(res).getJSONObject("data").getString("status");
-        return status.equals("1000") ? true : false;
+        JSONObject r = JSONObject.fromObject(res);
+        if (!r.getString("code").equals("1000000")) logger.error(unicodeString(res));
+        String status = r.getJSONObject("data").getString("status");
+        return status.equals("1010");
     }
 
     @Test
@@ -54,7 +57,7 @@ public class Ap_Rollback extends BaseTest {
         Assert.assertEquals(code, "1000000");
         res = Ap_Detail.s_Detail(orderNumber);
         s_CheckResponse(res);
-        Assert.assertEquals(s_ParseJson(data, "status"), "1000");
+        Assert.assertEquals(s_ParseJson(data, "status"), "1010");
         Assert.assertNull(s_ParseJson(data, "major_recommended_doctor_id"), "");
         Assert.assertNull(s_ParseJson(data, "major_recommended_doctor_name"), "");
         Assert.assertNull(s_ParseJson(data, "major_recommended_doctor_hospital"), "");

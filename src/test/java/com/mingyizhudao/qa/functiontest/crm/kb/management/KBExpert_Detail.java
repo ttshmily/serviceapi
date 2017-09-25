@@ -40,7 +40,7 @@ public class KBExpert_Detail extends BaseTest {
     public void test_01_获取医库医生详情_有效ID() {
 
         String res = "";
-        Doctor ep = new Doctor();
+        Doctor ep = new Doctor("");
         String expertId = KBExpert_Create.s_Create(ep);
         if (expertId == null) Assert.fail("创建医库医生失败，退出用例执行");
         HashMap<String, String> pathValue = new HashMap<>();
@@ -57,14 +57,14 @@ public class KBExpert_Detail extends BaseTest {
         Assert.assertEquals(Helper.s_ParseJson(data, "hospital_id"), ep.getHospital_id());
         Assert.assertEquals(Helper.s_ParseJson(data, "hospital_name"), hospitalName(ep.getHospital_id()));
         Assert.assertEquals(Helper.s_ParseJson(data, "honour"), ep.getHonour());
-        Assert.assertEquals(Helper.s_ParseJson(data, "city_id"), KBHospital_Detail.s_Detail(ep.getHospital_id()).get("city_id"));
-        Assert.assertEquals(Helper.s_ParseJson(data, "city_name"), cityName(KBHospital_Detail.s_Detail(ep.getHospital_id()).get("city_id")));
+//        Assert.assertEquals(Helper.s_ParseJson(data, "city_id"), KBHospital_Detail.s_Detail(ep.getHospital_id()).get("city_id"));
+//        Assert.assertEquals(Helper.s_ParseJson(data, "city_name"), cityName(KBHospital_Detail.s_Detail(ep.getHospital_id()).get("city_id")));
     }
 
     @Test
     public void test_02_获取医库医生详情_无效ID() {
         String res = "";
-        String expertId = KBExpert_Create.s_Create(new Doctor());
+        String expertId = KBExpert_Create.s_Create(new Doctor(""));
         HashMap<String, String> pathValue = new HashMap<>();
         pathValue.put("id", "111"+expertId);
         res = HttpRequest.s_SendGet(host_crm+uri, "", crm_token, pathValue);

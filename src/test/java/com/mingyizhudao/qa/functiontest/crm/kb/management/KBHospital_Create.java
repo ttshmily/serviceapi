@@ -26,7 +26,7 @@ public class KBHospital_Create extends BaseTest {
         }
     }.getClassName();
     public static TestLogger logger = new TestLogger(clazzName);
-    public static String version = "/api/v2";
+    public static String version = "/api/v1";
     public static String uri = version + "/medicallibrary/hospitals";
 
 
@@ -76,6 +76,11 @@ public class KBHospital_Create extends BaseTest {
         res = HttpRequest.s_SendPost(host_crm + uri, hp.transform(), crm_token);
         s_CheckResponse(res);
         Assert.assertEquals(code, "1000000");
+        String hospitalId = data.getString("id");
+
+        res = KBHospital_Detail.s_Detail(hospitalId);
+        s_CheckResponse(res);
+        Assert.assertNotNull(Helper.s_ParseJson(data, "id"), "医库ID不能少");
         Assert.assertNotNull(Helper.s_ParseJson(data, "id"), "医库ID不能少");
         Assert.assertEquals(Helper.s_ParseJson(data, "short_name"), hp.getShort_name());
         Assert.assertEquals(Helper.s_ParseJson(data, "name"), hp.getName());
@@ -83,7 +88,7 @@ public class KBHospital_Create extends BaseTest {
         Assert.assertEquals(Helper.s_ParseJson(data, "county_name"), countyName(hp.getCounty_id()));
         Assert.assertEquals(Helper.s_ParseJson(data, "description"), hp.getDescription());
         Assert.assertEquals(Helper.s_ParseJson(data, "phone"), hp.getPhone());
-        Assert.assertEquals(Helper.s_ParseJson(data, "hospital_level"), hp.getHospital_level());
+        Assert.assertEquals(Helper.s_ParseJson(data, "hospital_level"), String.valueOf(hp.getHospital_level()));
         Assert.assertNotNull(Helper.s_ParseJson(data, "user_visible"));
         Assert.assertNotNull(Helper.s_ParseJson(data, "doctor_visible"));
     }

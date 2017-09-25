@@ -119,7 +119,7 @@ public class Generator {
 
     public static String randomEmployeeId() {
         String[] prefix = {"SH"};
-        String[] ID = {"0133","0143"};
+        String[] ID = {"0133","0143","9999","9998","0025"};
         Random random = new Random();
         return prefix[random.nextInt(prefix.length)]+ID[random.nextInt(ID.length)];
     }
@@ -128,6 +128,9 @@ public class Generator {
         HashMap<String, String> pair = new HashMap<>();
         pair.put("SH0133", "方超");
         pair.put("SH0143", "田静");
+        pair.put("SH9998", "田小静");
+        pair.put("SH9999", "大一");
+        pair.put("SH0025", "牛玉薇");
         return pair.get(employeeId);
     }
 
@@ -174,6 +177,11 @@ public class Generator {
     public static String randomHospitalId() {
 
         return randomKey(KnowledgeBase.kb_hospital);
+    }
+
+    public static String randomHospitalIdWithType(String type) {
+
+        return randomKey(KnowledgeBase.kb_hospital_ext.get(type));
     }
 
     public static String hospitalName(String id) {
@@ -245,6 +253,21 @@ public class Generator {
     public static String randomHospitalType() {
 
         return randomKey(KnowledgeBase.kb_hospital_type);
+    }
+
+    public static String randomDepartmentId() {
+
+        return randomKey(KnowledgeBase.kb_department);
+    }
+
+    public static String randomDepartmentIdUnder(String type) {
+
+        return randomKey(KnowledgeBase.kb_department_ext.get(type));
+    }
+
+    public static String departmentName(String type) {
+
+        return KnowledgeBase.kb_department.get(type);
     }
 
     public static String randomSurgeryId() {

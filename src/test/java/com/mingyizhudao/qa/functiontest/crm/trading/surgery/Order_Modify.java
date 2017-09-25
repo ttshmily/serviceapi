@@ -2,6 +2,7 @@ package com.mingyizhudao.qa.functiontest.crm.trading.surgery;
 
 import com.mingyizhudao.qa.common.BaseTest;
 import com.mingyizhudao.qa.common.TestLogger;
+import com.mingyizhudao.qa.dataprofile.User;
 import com.mingyizhudao.qa.functiontest.doctor.CreateOrder;
 import com.mingyizhudao.qa.utilities.Generator;
 import com.mingyizhudao.qa.utilities.HttpRequest;
@@ -30,9 +31,15 @@ public class Order_Modify extends BaseTest {
 
     @Test
     public void test_01_修改订单_患者姓名() {
+        String userToken = "";
+        HashMap<String,String> mainDoctorInfo = s_CreateSyncedDoctor(mainUser);
+        if(mainDoctorInfo == null) {
+            logger.error("创建注册专家失败，退出执行");
+        }
+        userToken = mainDoctorInfo.get("token");
 
         String res = "";
-        String order_number = CreateOrder.s_CreateOrder(mainToken); // create an order
+        String order_number = CreateOrder.s_CreateOrder(userToken); // create an order
         Order_ReceiveTask.s_ReceiveTask(order_number);
         HashMap<String, String> pathValue = new HashMap<>();
         pathValue.put("orderNumber", order_number);
@@ -51,8 +58,15 @@ public class Order_Modify extends BaseTest {
     @Test
     public void test_02_修改订单_患者年龄() {
 
+        String userToken = "";
+        HashMap<String,String> mainDoctorInfo = s_CreateSyncedDoctor(mainUser);
+        if(mainDoctorInfo == null) {
+            logger.error("创建注册专家失败，退出执行");
+        }
+        userToken = mainDoctorInfo.get("token");
+
         String res = "";
-        String order_number = CreateOrder.s_CreateOrder(mainToken); // create an order
+        String order_number = CreateOrder.s_CreateOrder(userToken); // create an order
         Order_ReceiveTask.s_ReceiveTask(order_number);
         HashMap<String, String> pathValue = new HashMap<>();
         pathValue.put("orderNumber", order_number);
@@ -69,9 +83,15 @@ public class Order_Modify extends BaseTest {
 
     @Test
     public void test_03_修改订单_患者主诉疾病() {
+        String userToken = "";
+        HashMap<String,String> mainDoctorInfo = s_CreateSyncedDoctor(mainUser);
+        if(mainDoctorInfo == null) {
+            logger.error("创建注册专家失败，退出执行");
+        }
+        userToken = mainDoctorInfo.get("token");
 
         String res = "";
-        String order_number = CreateOrder.s_CreateOrder(mainToken); // create an order
+        String order_number = CreateOrder.s_CreateOrder(userToken); // create an order
         Order_ReceiveTask.s_ReceiveTask(order_number);
         HashMap<String, String> pathValue = new HashMap<>();
         pathValue.put("orderNumber", order_number);
@@ -90,9 +110,15 @@ public class Order_Modify extends BaseTest {
 
     @Test
     public void test_04_修改订单_患者次诉疾病() {
+        String userToken = "";
+        HashMap<String,String> mainDoctorInfo = s_CreateSyncedDoctor(mainUser);
+        if(mainDoctorInfo == null) {
+            logger.error("创建注册专家失败，退出执行");
+        }
+        userToken = mainDoctorInfo.get("token");
 
         String res = "";
-        String order_number = CreateOrder.s_CreateOrder(mainToken); // create an order
+        String order_number = CreateOrder.s_CreateOrder(userToken); // create an order
         Order_ReceiveTask.s_ReceiveTask(order_number);
         HashMap<String, String> pathValue = new HashMap<>();
         pathValue.put("orderNumber", order_number);
@@ -111,9 +137,15 @@ public class Order_Modify extends BaseTest {
 
     @Test
     public void test_05_修改订单_患者性别() {
+        String userToken = "";
+        HashMap<String,String> mainDoctorInfo = s_CreateSyncedDoctor(mainUser);
+        if(mainDoctorInfo == null) {
+            logger.error("创建注册专家失败，退出执行");
+        }
+        userToken = mainDoctorInfo.get("token");
 
         String res = "";
-        String order_number = CreateOrder.s_CreateOrder(mainToken); // create an order
+        String order_number = CreateOrder.s_CreateOrder(userToken); // create an order
         Order_ReceiveTask.s_ReceiveTask(order_number);
         HashMap<String, String> pathValue = new HashMap<>();
         pathValue.put("orderNumber", order_number);
@@ -130,9 +162,15 @@ public class Order_Modify extends BaseTest {
 
     @Test
     public void test_06_修改订单_患者手机() {
+        String userToken = "";
+        HashMap<String,String> mainDoctorInfo = s_CreateSyncedDoctor(mainUser);
+        if(mainDoctorInfo == null) {
+            logger.error("创建注册专家失败，退出执行");
+        }
+        userToken = mainDoctorInfo.get("token");
 
         String res = "";
-        String order_number = CreateOrder.s_CreateOrder(mainToken); // create an order
+        String order_number = CreateOrder.s_CreateOrder(userToken); // create an order
         Order_ReceiveTask.s_ReceiveTask(order_number);
         Order_RecommendDoctor.s_RecommendDoctor(order_number, "666");
         HashMap<String, String> pathValue = new HashMap<>();
@@ -150,8 +188,15 @@ public class Order_Modify extends BaseTest {
 
     @Test(enabled = false) // 可修改，由前端控制
     public void test_07_修改订单_待支付后不可修改() {
+        String userToken = "";
+        HashMap<String,String> mainDoctorInfo = s_CreateSyncedDoctor(mainUser);
+        if(mainDoctorInfo == null) {
+            logger.error("创建注册专家失败，退出执行");
+        }
+        userToken = mainDoctorInfo.get("token");
+
         String res = "";
-        String order_number = CreateOrder.s_CreateOrder(mainToken); // create an order
+        String order_number = CreateOrder.s_CreateOrder(userToken); // create an order
         logger.debug(Order_ReceiveTask.s_ReceiveTask(order_number));
         logger.debug(Order_RecommendDoctor.s_RecommendDoctor(order_number, "666"));
         if (!Order_ThreewayCall_V2.s_CallV2(order_number, "success").equals("3000")) {
@@ -172,8 +217,15 @@ public class Order_Modify extends BaseTest {
 
     @Test(enabled = false)
     public void test_08_修改订单_未领之前不可修改() {
+        String userToken = "";
+        HashMap<String,String> mainDoctorInfo = s_CreateSyncedDoctor(mainUser);
+        if(mainDoctorInfo == null) {
+            logger.error("创建注册专家失败，退出执行");
+        }
+        userToken = mainDoctorInfo.get("token");
+
         String res = "";
-        String order_number = CreateOrder.s_CreateOrder(mainToken); // create an order
+        String order_number = CreateOrder.s_CreateOrder(userToken); // create an order
 
         HashMap<String, String> pathValue = new HashMap<>();
         pathValue.put("orderNumber", order_number);
@@ -189,9 +241,15 @@ public class Order_Modify extends BaseTest {
 
     @Test
     public void test_09_修改订单_图片资料() {
+        String userToken = "";
+        HashMap<String,String> mainDoctorInfo = s_CreateSyncedDoctor(mainUser);
+        if(mainDoctorInfo == null) {
+            logger.error("创建注册专家失败，退出执行");
+        }
+        userToken = mainDoctorInfo.get("token");
 
         String res = "";
-        String order_number = CreateOrder.s_CreateOrder(mainToken); // create an order
+        String order_number = CreateOrder.s_CreateOrder(userToken); // create an order
         Order_ReceiveTask.s_ReceiveTask(order_number);
         String expId = Generator.randomExpertId();
         Order_RecommendDoctor.s_RecommendDoctor(order_number, expId);
@@ -218,5 +276,32 @@ public class Order_Modify extends BaseTest {
         res = Order_Detail.s_Detail(order_number);
         s_CheckResponse(res);
         Assert.assertEquals(Helper.s_ParseJson(data, "medical_record_pictures()"), "0");
+    }
+
+    @Test
+    public void test_10_修改订单_期望手术医院() {
+        String userToken = "";
+        HashMap<String,String> mainDoctorInfo = s_CreateSyncedDoctor(new User());
+        if(mainDoctorInfo == null) {
+            logger.error("创建注册专家失败，退出执行");
+        }
+        userToken = mainDoctorInfo.get("token");
+
+        String res = "";
+        String order_number = CreateOrder.s_CreateOrder(userToken); // create an order
+        Order_ReceiveTask.s_ReceiveTask(order_number);
+        HashMap<String, String> pathValue = new HashMap<>();
+        pathValue.put("orderNumber", order_number);
+        JSONObject body = new JSONObject();
+        String expected_hospital_id = Generator.randomHospitalId();
+        body.put("expected_hospital_id:", expected_hospital_id);
+        res = HttpRequest.s_SendPut(host_crm+uri, body.toString(), crm_token, pathValue);
+        s_CheckResponse(res);
+        Assert.assertEquals(code, "1000000");
+        res = Order_Detail.s_Detail(order_number);
+        s_CheckResponse(res);
+        Assert.assertEquals(Helper.s_ParseJson(data, "expected_surgery_hospital_id"), expected_hospital_id);
+        Assert.assertEquals(Helper.s_ParseJson(data, "expected_surgery_hospital_name"), Generator.hospitalName(expected_hospital_id));
+
     }
 }

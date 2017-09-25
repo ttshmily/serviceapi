@@ -40,10 +40,10 @@ public class Ap_Feedback extends BaseTest {
         HashMap<String, String> pathValue = new HashMap<>();
         pathValue.put("orderNumber", orderNumber);
         if(!s_Take(orderNumber) || !s_Confirm(orderNumber) || !s_AddPayAccount(orderNumber)) {
-            Assert.fail("待支付订单生成失败");
+            Assert.fail("待支付订单生成失败 or 暂无已支付订单");
         }
         JSONObject body = new JSONObject();
-        body.put("return_visit_date", randomDateFromNow(1,2, new SimpleDateFormat("yyyy-MM-dd")));
+        body.put("return_visit_date", randomDateFromNow(1,2, new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'")));
         body.put("return_visit_remark", "我爱名医主刀");
         body.put("return_visit_satisfaction", randomInt(3));
         body.put("return_visit_type", type[random.nextInt(type.length)]);  //WECHAT-微信 PHONE-电话 FACE_TO_FACE-面基
