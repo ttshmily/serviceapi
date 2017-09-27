@@ -35,6 +35,11 @@ public class CreateOrder extends BaseTest {
         return JSONObject.fromObject(res).getJSONObject("data").getString("order_number");
     }
 
+    public static String s_CreateOrder(String token, SurgeryOrder su){
+        String res = HttpRequest.s_SendPost(host_doc + uri, su.transform(), token);
+        return JSONObject.fromObject(res).getJSONObject("data").getString("order_number");
+    }
+
     @Test
     public void test_01_创建订单_信息齐备_已认证用户() {
 

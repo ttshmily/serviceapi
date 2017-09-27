@@ -92,9 +92,8 @@ public class KnowledgeBase {
             } else {
                 String res = "";
                 res = HttpRequest.s_SendGet(BaseTest.host_kb + hospital_type_uri, "", "");
-                int total = Integer.parseInt(Helper.s_ParseJson(JSONObject.fromObject(res), "data:list()"));
                 JSONArray tt_list = JSONObject.fromObject(res).getJSONObject("data").getJSONArray("list");
-                for (int j = 0; j < total; j++) {
+                for (int j = 0; j < tt_list.size(); j++) {
                     JSONObject tt = tt_list.getJSONObject(j);
                     for (String key : (Set<String>) tt.keySet()) {
                         kb_hospital_type.put(key, tt.getString(key));
@@ -153,7 +152,7 @@ public class KnowledgeBase {
 
                 res = HttpRequest.s_SendGet(BaseTest.host_kb + doctor_uri, query, "");
                 JSONArray doctor_list = JSONObject.fromObject(res).getJSONObject("data").getJSONArray("list");
-                for (int j = 0; j < pageSize; j++) {
+                for (int j = 0; j < doctor_list.size(); j++) {
                     JSONObject doctor = doctor_list.getJSONObject(j);
                     kb_doctor.put(doctor.getString("id"), doctor.getString("name"));
                 }
@@ -386,9 +385,8 @@ public class KnowledgeBase {
             } else {
                 String res = "";
                 res = HttpRequest.s_SendGet(BaseTest.host_kb + hospital_class_uri, "", "");
-                int total = Integer.parseInt(Helper.s_ParseJson(JSONObject.fromObject(res), "data:list()"));
                 JSONArray ct_list = JSONObject.fromObject(res).getJSONObject("data").getJSONArray("list");
-                for (int j = 0; j < total; j++) {
+                for (int j = 0; j < ct_list.size(); j++) {
                     JSONObject ct = ct_list.getJSONObject(j);
                     for (String key : (Set<String>) ct.keySet()) {
                         kb_hospital_class.put(key, ct.getString(key));

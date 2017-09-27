@@ -2,6 +2,7 @@ package com.mingyizhudao.qa.functiontest.doctor;
 
 import com.mingyizhudao.qa.common.BaseTest;
 import com.mingyizhudao.qa.common.TestLogger;
+import com.mingyizhudao.qa.dataprofile.User;
 import com.mingyizhudao.qa.functiontest.crm.trading.surgery.Order_ReceiveTask;
 import com.mingyizhudao.qa.functiontest.crm.trading.surgery.Order_RecommendDoctor;
 import com.mingyizhudao.qa.functiontest.crm.trading.surgery.Order_ThreewayCall_V2;
@@ -188,7 +189,7 @@ public class GetDoctorProfile_V1 extends BaseTest {
         HashMap<String,String> mainDoctorInfo = s_CreateSyncedDoctor(mainUser);
         if(mainDoctorInfo == null) {
             logger.error("创建注册专家失败，退出执行");
-            System.exit(10000);
+//            System.exit(10000);
         }
         userToken = mainDoctorInfo.get("token");
 
@@ -200,15 +201,16 @@ public class GetDoctorProfile_V1 extends BaseTest {
         int countHandling = Integer.parseInt(s_ParseJson(data,"doctor:status_count:agentId:handling"));
 
         int i = 1;
+        String token = s_CreateRegisteredDoctor(new User()).get("token");
         while (i<3){
-            String orderId = CreateOrder.s_CreateOrder(mainToken);
+            String orderId = CreateOrder.s_CreateOrder(token);
             Order_ReceiveTask.s_ReceiveTask(orderId);
             Order_RecommendDoctor.s_RecommendDoctor(orderId,"3721");
             i++;
         }
         //s_CreateOrder.s_CreateOrder(mainToken);
         String res = "";
-        res = HttpRequest.s_SendGet(host_doc + uri,"", mainToken);
+        res = HttpRequest.s_SendGet(host_doc + uri,"", token);
         s_CheckResponse(res);
         Assert.assertNotNull(s_ParseJson(data,"doctor"),"doctor字段缺失");
         Assert.assertNotNull(s_ParseJson(data,"doctor:name"), "name字段缺失");

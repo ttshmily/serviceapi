@@ -11,6 +11,7 @@ import static com.mingyizhudao.qa.utilities.Generator.*;
 import static com.mingyizhudao.qa.utilities.HttpRequest.*;
 import static com.mingyizhudao.qa.utilities.Helper.s_ParseJson;
 
+import com.mingyizhudao.qa.functiontest.doctor.GetDoctorProfile_V1;
 import com.mingyizhudao.qa.utilities.Generator;
 import net.sf.json.JSONObject;
 import org.testng.Assert;
@@ -98,6 +99,7 @@ public class KBExpert_Update extends BaseTest {
 
         String hospitalId = randomHospitalId();
         ep.setHospital_id(hospitalId);
+        ep.setDepartment_category_id(randomDepartmentIdUnder(getHospitalTypeById(hospitalId)));
         res = s_SendPut(host_crm+uri, ep.transform(), crm_token, pathValue);
         s_CheckResponse(res);
         Assert.assertEquals(code, "1000000", "我想1000000");
@@ -282,8 +284,8 @@ public class KBExpert_Update extends BaseTest {
         Assert.assertEquals(s_ParseJson(data, "medical_title_list"), epModified.getMedical_title_list(), "技术职称没有更新");
         Assert.assertEquals(s_ParseJson(data, "academic_title_list"), epModified.getAcademic_title_list(), "学术职称没有更新");
         Assert.assertEquals(s_ParseJson(data, "name"), epModified.getName(), "姓名没有更新");
-        Assert.assertEquals(s_ParseJson(data, "major_id"), epModified.getMajor_id(), "专业没有更新");
-        Assert.assertEquals(s_ParseJson(data, "major_name"), majorName(epModified.getMajor_id()), "专业没有更新");
+//        Assert.assertEquals(s_ParseJson(data, "major_id"), epModified.getMajor_id(), "专业没有更新");
+//        Assert.assertEquals(s_ParseJson(data, "major_name"), majorName(epModified.getMajor_id()), "专业没有更新");
         Assert.assertEquals(s_ParseJson(data, "hospital_id"), epModified.getHospital_id(), "医院ID没有更新");
         Assert.assertEquals(s_ParseJson(data, "hospital_name"), hospitalName(epModified.getHospital_id()), "医院名称没有更新");
         Assert.assertEquals(s_ParseJson(data, "department_category_id"), epModified.getDepartment_category_id(), "科室类别没有更新");
@@ -384,12 +386,95 @@ public class KBExpert_Update extends BaseTest {
         HashMap<String, String> pathValue = new HashMap<>();
         pathValue.put("id", expertId);
 
-        String department_id = Generator.randomDepartmentId();
+        String department_id = Generator.randomDepartmentIdUnder(getHospitalTypeById(ep.getHospital_id()));
         ep.setDepartment_category_id(department_id);
         res = s_SendPut(host_crm+uri, ep.transform(), crm_token, pathValue);
         s_CheckResponse(res);
         Assert.assertEquals(code, "1000000", "更新三个说明字段失败");
-        Assert.assertEquals(s_ParseJson(data, "department_name"), department_id, "特长没有更新");
+        Assert.assertEquals(s_ParseJson(data, "department_category_id"), department_id);
+        Assert.assertEquals(s_ParseJson(data, "department_category_name"), departmentName(department_id));
+    }
+
+    @Test
+    public void test_15_未同步医生只更新医库的控制开关() {
+        String res = "";
+        HashMap<String, String> pathValue = new HashMap<>();
+
+        String expertId = KBExpert_Create.s_Create(new Doctor("doctor"));
+//        HashMap<String, String> doctorInfo = s_CreateVerifiedDoctor(new User());
+//        String doctorId = doctorInfo.get("id");
+//        String doctorToken = doctorInfo.get("token");
+
+        pathValue.put("id", expertId);
+
+        JSONObject body = new JSONObject();
+        logger.info("sub_test 1: doctor_visible = 0");
+        body.put("doctor_visible", 0);
+
+        res = s_SendPut(host_crm+uri, body.toString(), crm_token, pathValue);
+        s_CheckResponse(res);
+        Assert.assertEquals(code, "1000000");
+
+        res = KBExpert_Detail.s_Detail(expertId);
+        s_CheckResponse(res);
+        Assert.assertEquals(s_ParseJson(data, "doctor_visible"), "false");
+
+        //
+        logger.info("sub_test 2: doctor_visible = 1");
+        body.put("doctor_visible", 1);
+
+        res = s_SendPut(host_crm+uri, body.toString(), crm_token, pathValue);
+        s_CheckResponse(res);
+        Assert.assertEquals(code, "1000000");
+    }
+
+    @Test
+    public void test_16_已同步医生更新医生端和医生库的控制开关() {
+        String res = "";
+        HashMap<String, String> pathValue = new HashMap<>();
+
+        HashMap<String, String> doctorInfo = s_CreateSyncedDoctor(new User());
+        String doctorId = doctorInfo.get("id");
+        String doctorToken = doctorInfo.get("token");
+        String expertId = doctorInfo.get("expert_id");
+
+        pathValue.put("id", expertId);
+
+        JSONObject body = new JSONObject();
+        logger.info("sub_test 1: doctor_visible = 0");
+        body.put("doctor_visible", 0);
+
+        res = s_SendPut(host_crm+uri, body.toString(), crm_token, pathValue);
+        s_CheckResponse(res);
+        Assert.assertEquals(code, "1000000");
+
+        res = GetDoctorProfile_V1.s_MyProfile(doctorToken);
+        s_CheckResponse(res);
+        Assert.assertEquals(s_ParseJson(data, "doctor:user_visible"), "false");
+        res = KBExpert_Detail.s_Detail(expertId);
+        s_CheckResponse(res);
+        Assert.assertEquals(data.getString("doctor_visible"), "false");
+
+        //
+        logger.info("sub_test 2: doctor_visible = 1");
+        body.put("doctor_visible", 1);
+
+        res = s_SendPut(host_crm+uri, body.toString(), crm_token, pathValue);
+        s_CheckResponse(res);
+        Assert.assertEquals(code, "1000000");
+
+        res = GetDoctorProfile_V1.s_MyProfile(doctorToken);
+        s_CheckResponse(res);
+        Assert.assertEquals(s_ParseJson(data, "doctor:user_visible"), "true");
+        res = KBExpert_Detail.s_Detail(expertId);
+        s_CheckResponse(res);
+        Assert.assertEquals(data.getString("doctor_visible"), "true");
+    }
+
+    private String getHospitalTypeById(String id) {
+        String res = "";
+        res = KBHospital_Detail.s_Detail(id);
+        return JSONObject.fromObject(res).getJSONObject("data").getString("type_list");
     }
 
 }

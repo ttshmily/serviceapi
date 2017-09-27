@@ -1,4 +1,4 @@
-package com.mingyizhudao.qa.functiontest.bdassistant;
+package com.mingyizhudao.qa.recycle;
 
 import com.mingyizhudao.qa.common.BaseTest;
 import com.mingyizhudao.qa.common.TestLogger;

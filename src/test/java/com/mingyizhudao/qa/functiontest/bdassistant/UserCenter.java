@@ -33,15 +33,16 @@ public class UserCenter extends BaseTest {
             s_CheckResponse(res);
             Assert.assertEquals(code, "1000000");
 
-            Assert.assertNotNull(data.getString("distributed_count"));
+//            Assert.assertNotNull(data.getString("distributed_count"));
             Assert.assertNotNull(data.getString("doctor_count"));
             Assert.assertNotNull(data.getString("is_bd_manager"));
             Assert.assertNotNull(data.getString("order_count"));
             Assert.assertNotNull(data.getString("todo"));
             Assert.assertNotNull(data.getString("user_avatar_url"));
-            Assert.assertNotNull(data.getString("user_district"));
+//            Assert.assertNotNull(data.getString("user_district"));
             Assert.assertNotNull(data.getString("user_id"));
             Assert.assertNotNull(data.getString("user_name"));
+            Assert.assertNotNull(data.getString("user_qrcode"));
         }
     }
 
@@ -69,19 +70,19 @@ public class UserCenter extends BaseTest {
             res = s_SendGet(host_bda + uri, query, token);
             s_CheckResponse(res);
             Assert.assertEquals(code, "1000000");
-            Assert.assertNotNull(data.getString("distributed_count"));
+            Assert.assertNotNull(data.getString("user_qrcode"));
             Assert.assertNotNull(data.getString("doctor_count"));
             Assert.assertNotNull(data.getString("is_bd_manager"));
             Assert.assertNotNull(data.getString("order_count"));
             Assert.assertNotNull(data.getString("todo"));
             Assert.assertNotNull(data.getString("user_avatar_url"));
-            Assert.assertNotNull(data.getString("user_district"));
+//            Assert.assertNotNull(data.getString("user_district"));
             Assert.assertNotNull(data.getString("user_id"));
             Assert.assertNotNull(data.getString("user_name"));
         }
     }
 
-    @Test
+    @Test(enabled = false)
     public void test_04_个人负责城市信息的校验(){
         String res = "";
         HashMap<String, String> query = new HashMap<>();

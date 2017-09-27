@@ -2,6 +2,8 @@ package com.mingyizhudao.qa.functiontest.bdassistant;
 
 import com.mingyizhudao.qa.common.BaseTest;
 import com.mingyizhudao.qa.common.TestLogger;
+import com.mingyizhudao.qa.dataprofile.User;
+import com.mingyizhudao.qa.functiontest.doctor.CreateOrder;
 import com.mingyizhudao.qa.utilities.HttpRequest;
 import com.mingyizhudao.qa.utilities.Helper;
 import org.apache.log4j.Logger;
@@ -51,7 +53,8 @@ public class OrderDetail extends BaseTest {
     public void test_03_登录用户_传入订单编号获取订单详情_不考虑员工订单不能相互查看订单的情况(){
         String res = "";
         HashMap<String, String> pathValue = new HashMap<>();
-        pathValue.put("orderNumber", "1017690178");
+        String orderId = CreateOrder.s_CreateOrder(s_CreateSyncedDoctor(new User()).get("token"));
+        pathValue.put("orderNumber", orderId);
         res = HttpRequest.s_SendGet(host_bda + uri, "", bda_session, pathValue);
         s_CheckResponse(res);
         Assert.assertEquals(code, "1000000", "有token应该调用成功");
