@@ -4,8 +4,8 @@
 
         <groups>
             <!--<run>-->
-            <define name="recommended">
-                <include name="recommended"/>
+            <define name="comfirm">
+                <include name="comfirm"/>
             </define>
             <!--</run>-->
         </groups>

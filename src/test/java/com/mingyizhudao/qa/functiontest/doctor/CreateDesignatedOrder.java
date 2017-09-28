@@ -29,7 +29,7 @@ public class CreateDesignatedOrder extends BaseTest{
         }
     }
 
-    @Test(groups = {"pending"})
+    @Test(groups = {"notRecommended"})
     public void test_02_指定医生创建订单_客服领取未推荐专家的医生(){
         int initNum = 1;
         int expectNum = Integer.parseInt(designatedOrderNumber);
@@ -41,7 +41,7 @@ public class CreateDesignatedOrder extends BaseTest{
         }
     }
 
-    @Test
+    @Test(groups = {"recommended"})
     public void test_03_指定医生创建订单_推荐指定的专家(){
         int initNum = 1;
         int expectNum = Integer.parseInt(designatedOrderNumber);
@@ -55,7 +55,7 @@ public class CreateDesignatedOrder extends BaseTest{
         }
     }
 
-    @Test
+    @Test(groups = {"comfirm"})
     public void test_04_指定医生创建待支付预约金订单_推荐指定的专家_确认合作(){
         int initNum = 1;
         int expectNum = Integer.parseInt(designatedOrderNumber);
@@ -68,7 +68,7 @@ public class CreateDesignatedOrder extends BaseTest{
         }
     }
 
-    @Test
+    @Test(groups = {"createVerifiedDoc"})
     public void test_05_创建认证后的医生(){
         int initNum = 1;
         int expectNum = Integer.parseInt(designatedOrderNumber);

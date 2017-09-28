@@ -4,8 +4,8 @@
 
         <groups>
             <!--<run>-->
-            <define name="recommended">
-                <include name="recommended"/>
+            <define name="createVerifiedDoc">
+                <include name="createVerifiedDoc"/>
             </define>
             <!--</run>-->
         </groups>

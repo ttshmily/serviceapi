@@ -4,8 +4,8 @@
 
         <groups>
             <!--<run>-->
-            <define name="recommended">
-                <include name="recommended"/>
+            <define name="pending">
+                <include name="pending"/>
             </define>
             <!--</run>-->
         </groups>
