@@ -50,43 +50,43 @@ public class PaymentResult extends BaseTest {
 
     @Test
     public void test_01_接口联通性() {
-        String userToken = "";
-        HashMap<String,String> mainDoctorInfo = s_CreateSyncedDoctor(mainUser);
-        if(mainDoctorInfo == null) {
-            logger.error("创建注册专家失败，退出执行");
-            System.exit(10000);
-        }
-        userToken = mainDoctorInfo.get("token");
+//        String userToken = "";
+//        HashMap<String,String> mainDoctorInfo = s_CreateSyncedDoctor(mainUser);
+//        if(mainDoctorInfo == null) {
+//            logger.error("创建注册专家失败，退出执行");
+//            System.exit(10000);
+//        }
+//        userToken = mainDoctorInfo.get("token");
 
-        String orderId = CreateOrder.s_CreateOrder(userToken);
+        String orderId = CreateOrder.s_CreateOrder(mainToken);
         if (orderId.isEmpty()) Assert.fail("创建订单失败，退出用例执行");
 
-        s_Result(orderId, userToken);
-        Assert.assertEquals(s_Result(orderId, userToken),"1000");
+        s_Result(orderId, mainToken);
+        Assert.assertEquals(s_Result(orderId, mainToken),"1000");
 
         Order_ReceiveTask.s_ReceiveTask(orderId);
-        s_Result(orderId,userToken);
-        Assert.assertEquals(s_Result(orderId, userToken),"2000");
+        s_Result(orderId,mainToken);
+        Assert.assertEquals(s_Result(orderId, mainToken),"2000");
 
         Order_RecommendDoctor.s_RecommendDoctor(orderId, "23");
-        s_Result(orderId,userToken);
-        Assert.assertEquals(s_Result(orderId, userToken),"2020");
+        s_Result(orderId,mainToken);
+        Assert.assertEquals(s_Result(orderId, mainToken),"2020");
 
         Order_RecommendDoctor.s_RecommendDoctor(orderId, "24");
-        s_Result(orderId,userToken);
-        Assert.assertEquals(s_Result(orderId, userToken),"2020");
+        s_Result(orderId,mainToken);
+        Assert.assertEquals(s_Result(orderId, mainToken),"2020");
 
         Order_ThreewayCall_V2.s_CallV2(orderId, "failed");
-        s_Result(orderId,userToken);
-        Assert.assertEquals(s_Result(orderId, userToken),"2000");
+        s_Result(orderId,mainToken);
+        Assert.assertEquals(s_Result(orderId, mainToken),"2000");
 
         Order_RecommendDoctor.s_RecommendDoctor(orderId, "24");
-        s_Result(orderId,userToken);
-        Assert.assertEquals(s_Result(orderId, userToken),"2020");
+        s_Result(orderId,mainToken);
+        Assert.assertEquals(s_Result(orderId, mainToken),"2020");
 
         Order_ThreewayCall.s_Call(orderId, "success");
-        s_Result(orderId,userToken);
-        Assert.assertEquals(s_Result(orderId, userToken),"3000");
+        s_Result(orderId,mainToken);
+        Assert.assertEquals(s_Result(orderId, mainToken),"3000");
     }
 }
 

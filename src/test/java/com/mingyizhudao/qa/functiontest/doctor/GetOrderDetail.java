@@ -42,20 +42,20 @@ public class GetOrderDetail extends BaseTest {
     @Test
     public void test_01_获取订单详情_提供正确的属于自己的订单ID() {
 
-        String userToken = "";
-        HashMap<String,String> mainDoctorInfo = s_CreateSyncedDoctor(mainUser);
-        if(mainDoctorInfo == null) {
-            logger.error("创建注册专家失败，退出执行");
-            System.exit(10000);
-        }
-        userToken = mainDoctorInfo.get("token");
+//        String userToken = "";
+//        HashMap<String,String> mainDoctorInfo = s_CreateSyncedDoctor(mainUser);
+//        if(mainDoctorInfo == null) {
+//            logger.error("创建注册专家失败，退出执行");
+//            System.exit(10000);
+//        }
+//        userToken = mainDoctorInfo.get("token");
 
         String res = "";
 
         HashMap<String, String> pathValue = new HashMap<String, String>();
-        String orderId = CreateOrder.s_CreateOrder(userToken);
+        String orderId = CreateOrder.s_CreateOrder(mainToken);
         pathValue.put("orderId", orderId);
-        res = HttpRequest.s_SendGet(host_doc + uri,"", userToken, pathValue);
+        res = HttpRequest.s_SendGet(host_doc + uri,"", mainToken, pathValue);
         s_CheckResponse(res);
 //        Assert.assertEquals(s_ParseJson(data,"order:id"), orderId, "订单ID字段不正确");
         Assert.assertNotEquals(Helper.s_ParseJson(data,"order:patient_name"), "", "患者姓名字段缺失");
@@ -84,18 +84,18 @@ public class GetOrderDetail extends BaseTest {
     @Test
     public void test_02_获取订单详情_提供正确的错误的ID_ID为非法整数() {
 
-        String userToken = "";
-        HashMap<String,String> mainDoctorInfo = s_CreateSyncedDoctor(mainUser);
-        if(mainDoctorInfo == null) {
-            logger.error("创建注册专家失败，退出执行");
-            System.exit(10000);
-        }
-        userToken = mainDoctorInfo.get("token");
+//        String userToken = "";
+//        HashMap<String,String> mainDoctorInfo = s_CreateSyncedDoctor(mainUser);
+//        if(mainDoctorInfo == null) {
+//            logger.error("创建注册专家失败，退出执行");
+//            System.exit(10000);
+//        }
+//        userToken = mainDoctorInfo.get("token");
 
         String res = "";
         HashMap<String, String> pathValue = new HashMap<String, String>();
         pathValue.put("orderId", "20000000000");
-        res = HttpRequest.s_SendGet(host_doc + uri,"", userToken, pathValue);
+        res = HttpRequest.s_SendGet(host_doc + uri,"", mainToken, pathValue);
         s_CheckResponse(res);
         Assert.assertEquals(code, "2210430");
     }
@@ -103,18 +103,18 @@ public class GetOrderDetail extends BaseTest {
     @Test
     public void test_03_获取订单详情_提供正确的错误的ID_ID为英文() {
 
-        String userToken = "";
-        HashMap<String,String> mainDoctorInfo = s_CreateSyncedDoctor(mainUser);
-        if(mainDoctorInfo == null) {
-            logger.error("创建注册专家失败，退出执行");
-            System.exit(10000);
-        }
-        userToken = mainDoctorInfo.get("token");
+//        String userToken = "";
+//        HashMap<String,String> mainDoctorInfo = s_CreateSyncedDoctor(mainUser);
+//        if(mainDoctorInfo == null) {
+//            logger.error("创建注册专家失败，退出执行");
+//            System.exit(10000);
+//        }
+//        userToken = mainDoctorInfo.get("token");
 
         String res = "";
         HashMap<String, String> pathValue = new HashMap<String, String>();
         pathValue.put("orderId", "20000asdfa000");
-        res = HttpRequest.s_SendGet(host_doc + uri,"", userToken, pathValue);
+        res = HttpRequest.s_SendGet(host_doc + uri,"", mainToken, pathValue);
         s_CheckResponse(res);
         Assert.assertEquals(code, "2210430");
 
@@ -123,18 +123,18 @@ public class GetOrderDetail extends BaseTest {
     @Test
     public void test_04_获取订单详情_提供不属于自己的订单ID() {
 
-        String userToken = "";
-        HashMap<String,String> mainDoctorInfo = s_CreateSyncedDoctor(mainUser);
-        if(mainDoctorInfo == null) {
-            logger.error("创建注册专家失败，退出执行");
-            System.exit(10000);
-        }
-        userToken = mainDoctorInfo.get("token");
+//        String userToken = "";
+//        HashMap<String,String> mainDoctorInfo = s_CreateSyncedDoctor(mainUser);
+//        if(mainDoctorInfo == null) {
+//            logger.error("创建注册专家失败，退出执行");
+//            System.exit(10000);
+//        }
+//        userToken = mainDoctorInfo.get("token");
 
         String res = "";
         HashMap<String, String> pathValue = new HashMap<String, String>();
         logger.info("创建订单with userToken");
-        String orderId = CreateOrder.s_CreateOrder(userToken);
+        String orderId = CreateOrder.s_CreateOrder(mainToken);
         if (orderId.isEmpty()) {
             logger.error("创建订单with userToken失败");
         }

@@ -25,16 +25,16 @@ public class SurgeryCategory extends BaseTest {
 
     @Test
     public void test_01_有token信息的请求可以获得有效信息() {
-        String userToken = "";
-        HashMap<String,String> mainDoctorInfo = s_CreateSyncedDoctor(mainUser);
-        if(mainDoctorInfo == null) {
-            logger.error("创建注册专家失败，退出执行");
-            System.exit(10000);
-        }
-        userToken = mainDoctorInfo.get("token");
+//        String userToken = "";
+//        HashMap<String,String> mainDoctorInfo = s_CreateSyncedDoctor(mainUser);
+//        if(mainDoctorInfo == null) {
+//            logger.error("创建注册专家失败，退出执行");
+//            System.exit(10000);
+//        }
+//        userToken = mainDoctorInfo.get("token");
 
         String res = "";
-        res = HttpRequest.s_SendGet(host_doc + uri,"", userToken);
+        res = HttpRequest.s_SendGet(host_doc + uri,"", mainToken);
         s_CheckResponse(res);
         Assert.assertNotNull(Helper.s_ParseJson(data, "surgeryCategories()"));
         Assert.assertNotNull(Helper.s_ParseJson(data, "surgeryCategories():root_id"));

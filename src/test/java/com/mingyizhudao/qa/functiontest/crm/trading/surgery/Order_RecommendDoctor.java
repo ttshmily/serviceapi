@@ -54,16 +54,16 @@ public class Order_RecommendDoctor extends BaseTest {
 
     @Test
     public void test_01_正常推荐() {
-        String userToken = "";
-        HashMap<String,String> mainDoctorInfo = s_CreateSyncedDoctor(mainUser);
-        if(mainDoctorInfo == null) {
-            logger.error("创建注册专家失败，退出执行");
-            System.exit(10000);
-        }
-        userToken = mainDoctorInfo.get("token");
+//        String userToken = "";
+//        HashMap<String,String> mainDoctorInfo = s_CreateSyncedDoctor(mainUser);
+//        if(mainDoctorInfo == null) {
+//            logger.error("创建注册专家失败，退出执行");
+//            System.exit(10000);
+//        }
+//        userToken = mainDoctorInfo.get("token");
 
         String res = "";
-        String order_number = CreateOrder.s_CreateOrder(userToken); // create an order
+        String order_number = CreateOrder.s_CreateOrder(mainToken); // create an order
         logger.debug(Order_ReceiveTask.s_ReceiveTask(order_number));
 
         HashMap<String, String> pathValue = new HashMap<>();
@@ -107,16 +107,16 @@ public class Order_RecommendDoctor extends BaseTest {
 
     @Test
     public void test_02_在三方通话成功前重新推荐() {
-        String userToken = "";
-        HashMap<String,String> mainDoctorInfo = s_CreateSyncedDoctor(mainUser);
-        if(mainDoctorInfo == null) {
-            logger.error("创建注册专家失败，退出执行");
-            System.exit(10000);
-        }
-        userToken = mainDoctorInfo.get("token");
+//        String userToken = "";
+//        HashMap<String,String> mainDoctorInfo = s_CreateSyncedDoctor(mainUser);
+//        if(mainDoctorInfo == null) {
+//            logger.error("创建注册专家失败，退出执行");
+//            System.exit(10000);
+//        }
+//        userToken = mainDoctorInfo.get("token");
 
         String res = "";
-        String order_number = CreateOrder.s_CreateOrder(userToken); // create an order
+        String order_number = CreateOrder.s_CreateOrder(mainToken); // create an order
         Order_ReceiveTask.s_ReceiveTask(order_number);
         HashMap<String, String> pathValue = new HashMap<>();
         pathValue.put("orderNumber", order_number);
@@ -162,16 +162,16 @@ public class Order_RecommendDoctor extends BaseTest {
 
     @Test(enabled = false)
     public void test_03_推荐和下级医生相同的用户() {
-        String userToken = "";
-        HashMap<String,String> mainDoctorInfo = s_CreateSyncedDoctor(mainUser);
-        if(mainDoctorInfo == null) {
-            logger.error("创建注册专家失败，退出执行");
-            System.exit(10000);
-        }
-        userToken = mainDoctorInfo.get("token");
+//        String userToken = "";
+//        HashMap<String,String> mainDoctorInfo = s_CreateSyncedDoctor(mainUser);
+//        if(mainDoctorInfo == null) {
+//            logger.error("创建注册专家失败，退出执行");
+//            System.exit(10000);
+//        }
+//        userToken = mainDoctorInfo.get("token");
 
         String res = "";
-        String order_number = CreateOrder.s_CreateOrder(userToken); // create an order
+        String order_number = CreateOrder.s_CreateOrder(mainToken); // create an order
         Order_ReceiveTask.s_ReceiveTask(order_number);
         HashMap<String, String> pathValue = new HashMap<>();
         pathValue.put("orderNumber", order_number);
@@ -191,16 +191,16 @@ public class Order_RecommendDoctor extends BaseTest {
 
     @Test
     public void test_04_推荐不存在于用户表或医库中的医生() {
-        String userToken = "";
-        HashMap<String,String> mainDoctorInfo = s_CreateSyncedDoctor(mainUser);
-        if(mainDoctorInfo == null) {
-            logger.error("创建注册专家失败，退出执行");
-            System.exit(10000);
-        }
-        userToken = mainDoctorInfo.get("token");
+//        String userToken = "";
+//        HashMap<String,String> mainDoctorInfo = s_CreateSyncedDoctor(mainUser);
+//        if(mainDoctorInfo == null) {
+//            logger.error("创建注册专家失败，退出执行");
+//            System.exit(10000);
+//        }
+//        userToken = mainDoctorInfo.get("token");
 
         String res = "";
-        String order_number = CreateOrder.s_CreateOrder(userToken); // create an order
+        String order_number = CreateOrder.s_CreateOrder(mainToken); // create an order
         Order_ReceiveTask.s_ReceiveTask(order_number);
         HashMap<String, String> pathValue = new HashMap<>();
         pathValue.put("orderNumber", order_number);
@@ -222,16 +222,16 @@ public class Order_RecommendDoctor extends BaseTest {
 
     @Test
     public void test_06_推荐医生_无证操作() {
-        String userToken = "";
-        HashMap<String,String> mainDoctorInfo = s_CreateSyncedDoctor(mainUser);
-        if(mainDoctorInfo == null) {
-            logger.error("创建注册专家失败，退出执行");
-            System.exit(10000);
-        }
-        userToken = mainDoctorInfo.get("token");
+//        String userToken = "";
+//        HashMap<String,String> mainDoctorInfo = s_CreateSyncedDoctor(mainUser);
+//        if(mainDoctorInfo == null) {
+//            logger.error("创建注册专家失败，退出执行");
+//            System.exit(10000);
+//        }
+//        userToken = mainDoctorInfo.get("token");
 
         String res = "";
-        String order_number = CreateOrder.s_CreateOrder(userToken); // create an order
+        String order_number = CreateOrder.s_CreateOrder(mainToken); // create an order
         Order_ReceiveTask.s_ReceiveTask(order_number);
         HashMap<String, String> pathValue = new HashMap<>();
         pathValue.put("orderNumber", order_number);
@@ -251,16 +251,16 @@ public class Order_RecommendDoctor extends BaseTest {
 
     @Test
     public void test_07_在三方通话成功后不可以重新推荐() {
-        String userToken = "";
-        HashMap<String,String> mainDoctorInfo = s_CreateSyncedDoctor(mainUser);
-        if(mainDoctorInfo == null) {
-            logger.error("创建注册专家失败，退出执行");
-            System.exit(10000);
-        }
-        userToken = mainDoctorInfo.get("token");
+//        String userToken = "";
+//        HashMap<String,String> mainDoctorInfo = s_CreateSyncedDoctor(mainUser);
+//        if(mainDoctorInfo == null) {
+//            logger.error("创建注册专家失败，退出执行");
+//            System.exit(10000);
+//        }
+//        userToken = mainDoctorInfo.get("token");
 
         String res = "";
-        String order_number = CreateOrder.s_CreateOrder(userToken); // create an order
+        String order_number = CreateOrder.s_CreateOrder(mainToken); // create an order
         Order_ReceiveTask.s_ReceiveTask(order_number);
         HashMap<String, String> pathValue = new HashMap<>();
         pathValue.put("orderNumber", order_number);

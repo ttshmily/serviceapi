@@ -58,18 +58,18 @@ public class Order_ReceiveTask extends BaseTest {
     @Test
     public void test_01_客服领取订单_1000状态的订单() {
 
-        String userToken = "";
-        HashMap<String,String> mainDoctorInfo = s_CreateSyncedDoctor(mainUser);
-        if(mainDoctorInfo == null) {
-            logger.error("创建注册专家失败，退出执行");
-            System.exit(10000);
-        }
-        userToken = mainDoctorInfo.get("token");
+//        String userToken = "";
+//        HashMap<String,String> mainDoctorInfo = s_CreateSyncedDoctor(mainUser);
+//        if(mainDoctorInfo == null) {
+//            logger.error("创建注册专家失败，退出执行");
+//            System.exit(10000);
+//        }
+//        userToken = mainDoctorInfo.get("token");
 
         String res = "";
         HashMap<String, String> pathValue = new HashMap<>();
 
-        String order_number = CreateOrder.s_CreateOrder(userToken); // create an order
+        String order_number = CreateOrder.s_CreateOrder(mainToken); // create an order
         pathValue.put("orderNumber", order_number);
 
         res = HttpRequest.s_SendPost(host_crm + uri, "", crm_token, pathValue);
@@ -85,18 +85,18 @@ public class Order_ReceiveTask extends BaseTest {
 
     @Test
     public void test_02_客服领取订单_无token() {
-        String userToken = "";
-        HashMap<String,String> mainDoctorInfo = s_CreateSyncedDoctor(mainUser);
-        if(mainDoctorInfo == null) {
-            logger.error("创建注册专家失败，退出执行");
-            System.exit(10000);
-        }
-        userToken = mainDoctorInfo.get("token");
+//        String userToken = "";
+//        HashMap<String,String> mainDoctorInfo = s_CreateSyncedDoctor(mainUser);
+//        if(mainDoctorInfo == null) {
+//            logger.error("创建注册专家失败，退出执行");
+//            System.exit(10000);
+//        }
+//        userToken = mainDoctorInfo.get("token");
 
         String res = "";
         HashMap<String, String> pathValue = new HashMap<>();
 
-        String order_number = CreateOrder.s_CreateOrder(userToken); // create an order
+        String order_number = CreateOrder.s_CreateOrder(mainToken); // create an order
         pathValue.put("orderNumber", order_number);
 
         res = HttpRequest.s_SendPost(host_crm + uri, "", "", pathValue);
@@ -111,18 +111,18 @@ public class Order_ReceiveTask extends BaseTest {
 
     @Test
     public void test_03_客服领取订单_已被领取过的订单() {
-        String userToken = "";
-        HashMap<String,String> mainDoctorInfo = s_CreateSyncedDoctor(mainUser);
-        if(mainDoctorInfo == null) {
-            logger.error("创建注册专家失败，退出执行");
-            System.exit(10000);
-        }
-        userToken = mainDoctorInfo.get("token");
+//        String userToken = "";
+//        HashMap<String,String> mainDoctorInfo = s_CreateSyncedDoctor(mainUser);
+//        if(mainDoctorInfo == null) {
+//            logger.error("创建注册专家失败，退出执行");
+//            System.exit(10000);
+//        }
+//        userToken = mainDoctorInfo.get("token");
 
         String res = "";
         HashMap<String, String> pathValue = new HashMap<>();
 
-        String order_number = CreateOrder.s_CreateOrder(userToken); // create an order
+        String order_number = CreateOrder.s_CreateOrder(mainToken); // create an order
         pathValue.put("orderNumber", order_number);
 
         res = HttpRequest.s_SendPost(host_crm + uri, "", crm_token, pathValue);

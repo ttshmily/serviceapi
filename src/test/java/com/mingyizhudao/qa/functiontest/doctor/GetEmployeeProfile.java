@@ -31,18 +31,18 @@ public class GetEmployeeProfile extends BaseTest {
     @Test
     public void test_01_有token的用户请求可以获得有效信息() {
 
-        String userToken = "";
-        HashMap<String,String> mainDoctorInfo = s_CreateSyncedDoctor(mainUser);
-        if(mainDoctorInfo == null) {
-            logger.error("创建注册专家失败，退出执行");
-            System.exit(10000);
-        }
-        userToken = mainDoctorInfo.get("token");
+//        String userToken = "";
+//        HashMap<String,String> mainDoctorInfo = s_CreateSyncedDoctor(mainUser);
+//        if(mainDoctorInfo == null) {
+//            logger.error("创建注册专家失败，退出执行");
+//            System.exit(10000);
+//        }
+//        userToken = mainDoctorInfo.get("token");
 
         String res = "";
         HashMap<String, String> query = new HashMap<>();
         query.put("number", Generator.randomEmployeeId());
-        res = HttpRequest.s_SendGet(host_doc +uri,query, userToken);
+        res = HttpRequest.s_SendGet(host_doc +uri,query, mainToken);
         s_CheckResponse(res);
         Assert.assertEquals(code, "1000000", "错误码应该是1000000");
         Assert.assertNotNull(Helper.s_ParseJson(data, "employee:id"), "id must not be null");
