@@ -42,19 +42,6 @@ public class CreateOrder extends BaseTest {
         return JSONObject.fromObject(res).getJSONObject("data").getString("order_number");
     }
 
-//    public static String s_CreateUser(){
-//        User user = new User();
-//        user.getDoctor().setHospital_id("57");
-//        String userToken = "";
-//        HashMap<String,String> mainDoctorInfo = s_CreateSyncedDoctor(user);
-//        if(mainDoctorInfo == null) {
-//            logger.error("创建注册专家失败，退出执行");
-//            System.exit(10000);
-//        }
-//        userToken = mainDoctorInfo.get("token");
-//        return userToken;
-//    }
-
     @Test
     public void test_01_创建订单_信息齐备_已认证用户() {
 
