@@ -25,19 +25,19 @@ public class GetSurgeryList extends BaseTest {
 
     @Test
     public void test_01_获取手术_提供有效的categoryId() {
-        String userToken = "";
-        HashMap<String,String> mainDoctorInfo = s_CreateSyncedDoctor(mainUser);
-        if(mainDoctorInfo == null) {
-            logger.error("创建注册专家失败，退出执行");
-            System.exit(10000);
-        }
-        userToken = mainDoctorInfo.get("token");
+//        String userToken = "";
+//        HashMap<String,String> mainDoctorInfo = s_CreateSyncedDoctor(mainUser);
+//        if(mainDoctorInfo == null) {
+//            logger.error("创建注册专家失败，退出执行");
+//            System.exit(10000);
+//        }
+//        userToken = mainDoctorInfo.get("token");
 
         String res = "";
 
         HashMap<String, String> query = new HashMap<>();
         query.put("id", "6");
-        res = HttpRequest.s_SendGet(host_doc+uri, query, userToken);
+        res = HttpRequest.s_SendGet(host_doc+uri, query, mainToken);
         s_CheckResponse(res);
         Assert.assertNotNull(Helper.s_ParseJson(data, "surgeryCategories()"));
         Assert.assertNotEquals(Helper.s_ParseJson(data, "surgeryCategories():id"), "");
@@ -47,19 +47,19 @@ public class GetSurgeryList extends BaseTest {
 
     @Test
     public void test_02_获取手术_提供无效的categoryId_ID不存在() {
-        String userToken = "";
-        HashMap<String,String> mainDoctorInfo = s_CreateSyncedDoctor(mainUser);
-        if(mainDoctorInfo == null) {
-            logger.error("创建注册专家失败，退出执行");
-            System.exit(10000);
-        }
-        userToken = mainDoctorInfo.get("token");
+//        String userToken = "";
+//        HashMap<String,String> mainDoctorInfo = s_CreateSyncedDoctor(mainUser);
+//        if(mainDoctorInfo == null) {
+//            logger.error("创建注册专家失败，退出执行");
+//            System.exit(10000);
+//        }
+//        userToken = mainDoctorInfo.get("token");
 
         String res = "";
 
         HashMap<String, String> query = new HashMap<String, String>();
         query.put("id", "600000");
-        res = HttpRequest.s_SendGet(host_doc +uri, query, userToken);
+        res = HttpRequest.s_SendGet(host_doc +uri, query, mainToken);
         s_CheckResponse(res);
         Assert.assertEquals(code, "1000000");
         Assert.assertNotNull(Helper.s_ParseJson(data, "surgeryCategories()"));
@@ -67,32 +67,32 @@ public class GetSurgeryList extends BaseTest {
 
     @Test
     public void test_03_获取手术_提供无效的categoryId_ID为其他字符() {
-        String userToken = "";
-        HashMap<String,String> mainDoctorInfo = s_CreateSyncedDoctor(mainUser);
-        if(mainDoctorInfo == null) {
-            logger.error("创建注册专家失败，退出执行");
-            System.exit(10000);
-        }
-        userToken = mainDoctorInfo.get("token");
+//        String userToken = "";
+//        HashMap<String,String> mainDoctorInfo = s_CreateSyncedDoctor(mainUser);
+//        if(mainDoctorInfo == null) {
+//            logger.error("创建注册专家失败，退出执行");
+//            System.exit(10000);
+//        }
+//        userToken = mainDoctorInfo.get("token");
 
         String res = "";
 
         logger.info("case1: Id = abc");
         HashMap<String, String> query = new HashMap<String, String>();
         query.put("id", "abc");
-        res = HttpRequest.s_SendGet(host_doc +uri, query, userToken);
+        res = HttpRequest.s_SendGet(host_doc +uri, query, mainToken);
         s_CheckResponse(res);
         Assert.assertEquals(code, "2210621");
 
         logger.info("case2: Id = abc12");
         query.replace("id", "abc12");
-        res = HttpRequest.s_SendGet(host_doc +uri, query, userToken);
+        res = HttpRequest.s_SendGet(host_doc +uri, query, mainToken);
         s_CheckResponse(res);
         Assert.assertEquals(code, "2210621");
 
         logger.info("case3: Id = -1");
         query.replace("id", "-1");
-        res = HttpRequest.s_SendGet(host_doc +uri, query, userToken);
+        res = HttpRequest.s_SendGet(host_doc +uri, query, mainToken);
         s_CheckResponse(res);
         Assert.assertEquals(code, "2210621");
     }

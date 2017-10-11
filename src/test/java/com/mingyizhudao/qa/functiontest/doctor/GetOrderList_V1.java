@@ -55,12 +55,12 @@ public class GetOrderList_V1 extends BaseTest {
 
     @Test
     public void test_01_我发起的手术单_默认排序() {//已取消置底，已完成倒数第二顺位，其它会诊单按创建时间倒序混排
-        String userExpertId = "";
-        HashMap<String,String> mainDoctorInfo = s_CreateSyncedDoctor(mainUser);
-        if(mainDoctorInfo == null) {
-            logger.error("创建注册专家失败，退出执行");
-        }
-        userExpertId = mainDoctorInfo.get("expert_id");
+//        String userExpertId = "";
+//        HashMap<String,String> mainDoctorInfo = s_CreateSyncedDoctor(mainUser);
+//        if(mainDoctorInfo == null) {
+//            logger.error("创建注册专家失败，退出执行");
+//        }
+//        userExpertId = mainDoctorInfo.get("expert_id");
 
         String res = "";
 
@@ -137,7 +137,7 @@ public class GetOrderList_V1 extends BaseTest {
 
         logger.info("子用例2：领取并推荐一个订单：处理中，位置不变");
         Order_ReceiveTask.s_ReceiveTask(orderId2);
-        status = Order_RecommendDoctor.s_RecommendDoctor(orderId2, userExpertId);
+        status = Order_RecommendDoctor.s_RecommendDoctor(orderId2, mainExpertId);
         if(!status.equals("2020")) {
             Assert.fail("推荐专家失败");
         }
@@ -151,7 +151,7 @@ public class GetOrderList_V1 extends BaseTest {
 
         logger.info("子用例3：领取推荐并成功创建三方通话一个订单，处理中，位置不变");
         Order_ReceiveTask.s_ReceiveTask(orderId1);
-        Order_RecommendDoctor.s_RecommendDoctor(orderId1, userExpertId);
+        Order_RecommendDoctor.s_RecommendDoctor(orderId1, mainExpertId);
         status = Order_ThreewayCall_V2.s_CallV2(orderId1, "success");
         if(!status.equals("3000")) {
             Assert.fail("三方通话调用失败");
@@ -168,12 +168,12 @@ public class GetOrderList_V1 extends BaseTest {
     @Test
     public void test_02_我收到的手术单_默认排序() {//处理中->已完成->已取消，同一状态按接收时间倒序
 
-        String userToken = "";
-        HashMap<String,String> mainDoctorInfo = s_CreateSyncedDoctor(mainUser);
-        if(mainDoctorInfo == null) {
-            logger.error("创建注册专家失败，退出执行");
-        }
-        userToken = mainDoctorInfo.get("token");
+//        String userToken = "";
+//        HashMap<String,String> mainDoctorInfo = s_CreateSyncedDoctor(mainUser);
+//        if(mainDoctorInfo == null) {
+//            logger.error("创建注册专家失败，退出执行");
+//        }
+//        userToken = mainDoctorInfo.get("token");
 
         String res = "";
         HashMap<String, String> result = s_CreateSyncedDoctor(new User());
@@ -181,10 +181,10 @@ public class GetOrderList_V1 extends BaseTest {
         String tmpExpertId = result.get("expert_id");
 
         logger.info("创建4条测试订单");
-        String orderId1 = CreateOrder.s_CreateOrder(userToken);
-        String orderId2 = CreateOrder.s_CreateOrder(userToken);
-        String orderId3 = CreateOrder.s_CreateOrder(userToken);
-        String orderId4 = CreateOrder.s_CreateOrder(userToken);
+        String orderId1 = CreateOrder.s_CreateOrder(mainToken);
+        String orderId2 = CreateOrder.s_CreateOrder(mainToken);
+        String orderId3 = CreateOrder.s_CreateOrder(mainToken);
+        String orderId4 = CreateOrder.s_CreateOrder(mainToken);
 
         HashMap<String, String> query = new HashMap<>();
         query.put("flag","2"); //上级医生
@@ -298,12 +298,12 @@ public class GetOrderList_V1 extends BaseTest {
 
     @Test
     public void test_03_我收到的手术单_接收时间排序() {
-        String userToken = "";
-        HashMap<String,String> mainDoctorInfo = s_CreateSyncedDoctor(mainUser);
-        if(mainDoctorInfo == null) {
-            logger.error("创建注册专家失败，退出执行");
-        }
-        userToken = mainDoctorInfo.get("token");
+//        String userToken = "";
+//        HashMap<String,String> mainDoctorInfo = s_CreateSyncedDoctor(mainUser);
+//        if(mainDoctorInfo == null) {
+//            logger.error("创建注册专家失败，退出执行");
+//        }
+//        userToken = mainDoctorInfo.get("token");
 
         String res = "";
 
@@ -317,10 +317,10 @@ public class GetOrderList_V1 extends BaseTest {
         query.put("collatingSequence","0");
 
         logger.info("创建4条测试订单");
-        String orderId1 = CreateOrder.s_CreateOrder(userToken);
-        String orderId2 = CreateOrder.s_CreateOrder(userToken);
-        String orderId3 = CreateOrder.s_CreateOrder(userToken);
-        String orderId4 = CreateOrder.s_CreateOrder(userToken);
+        String orderId1 = CreateOrder.s_CreateOrder(mainToken);
+        String orderId2 = CreateOrder.s_CreateOrder(mainToken);
+        String orderId3 = CreateOrder.s_CreateOrder(mainToken);
+        String orderId4 = CreateOrder.s_CreateOrder(mainToken);
 
         if (orderId1.isEmpty()||orderId2.isEmpty()||orderId3.isEmpty()||orderId4.isEmpty()) {
             Assert.fail("创建订单测试订单失败");
@@ -412,12 +412,12 @@ public class GetOrderList_V1 extends BaseTest {
 
     @Test
     public void test_04_验证我收到的手术单_状态筛选() {
-        String userToken = "";
-        HashMap<String,String> mainDoctorInfo = s_CreateSyncedDoctor(mainUser);
-        if(mainDoctorInfo == null) {
-            logger.error("创建注册专家失败，退出执行");
-        }
-        userToken = mainDoctorInfo.get("token");
+//        String userToken = "";
+//        HashMap<String,String> mainDoctorInfo = s_CreateSyncedDoctor(mainUser);
+//        if(mainDoctorInfo == null) {
+//            logger.error("创建注册专家失败，退出执行");
+//        }
+//        userToken = mainDoctorInfo.get("token");
 
         String res = "";
 
@@ -431,10 +431,10 @@ public class GetOrderList_V1 extends BaseTest {
         query.put("collatingSequence","0");
 
         logger.info("创建4条测试订单");
-        String orderId1 = CreateOrder.s_CreateOrder(userToken);
-        String orderId2 = CreateOrder.s_CreateOrder(userToken);
-        String orderId3 = CreateOrder.s_CreateOrder(userToken);
-        String orderId4 = CreateOrder.s_CreateOrder(userToken);
+        String orderId1 = CreateOrder.s_CreateOrder(mainToken);
+        String orderId2 = CreateOrder.s_CreateOrder(mainToken);
+        String orderId3 = CreateOrder.s_CreateOrder(mainToken);
+        String orderId4 = CreateOrder.s_CreateOrder(mainToken);
 
         if (orderId1.isEmpty()||orderId2.isEmpty()||orderId3.isEmpty()||orderId4.isEmpty()) {
             Assert.fail("创建订单测试订单失败");
@@ -526,12 +526,12 @@ public class GetOrderList_V1 extends BaseTest {
 
     @Test
     public void test_05_验证我收到的手术单_重新选择同一个上级专家() {
-        String userToken = "";
-        HashMap<String,String> mainDoctorInfo = s_CreateSyncedDoctor(mainUser);
-        if(mainDoctorInfo == null) {
-            logger.error("创建注册专家失败，退出执行");
-        }
-        userToken = mainDoctorInfo.get("token");
+//        String userToken = "";
+//        HashMap<String,String> mainDoctorInfo = s_CreateSyncedDoctor(mainUser);
+//        if(mainDoctorInfo == null) {
+//            logger.error("创建注册专家失败，退出执行");
+//        }
+//        userToken = mainDoctorInfo.get("token");
 
         String res = "";
 
@@ -545,8 +545,8 @@ public class GetOrderList_V1 extends BaseTest {
         query.put("collatingSequence","0");
 
         logger.info("创建4条测试订单");
-        String orderId1 = CreateOrder.s_CreateOrder(userToken);
-        String orderId2 = CreateOrder.s_CreateOrder(userToken);
+        String orderId1 = CreateOrder.s_CreateOrder(mainToken);
+        String orderId2 = CreateOrder.s_CreateOrder(mainToken);
 
         if (orderId1.isEmpty()||orderId2.isEmpty()) {
             Assert.fail("创建订单测试订单失败");
@@ -609,12 +609,12 @@ public class GetOrderList_V1 extends BaseTest {
 
     @Test
     public void test_06_验证发起的列表中包含的必备字段() {
-        String userToken = "";
-        HashMap<String,String> mainDoctorInfo = s_CreateSyncedDoctor(mainUser);
-        if(mainDoctorInfo == null) {
-            logger.error("创建注册专家失败，退出执行");
-        }
-        userToken = mainDoctorInfo.get("token");
+//        String userToken = "";
+//        HashMap<String,String> mainDoctorInfo = s_CreateSyncedDoctor(mainUser);
+//        if(mainDoctorInfo == null) {
+//            logger.error("创建注册专家失败，退出执行");
+//        }
+//        userToken = mainDoctorInfo.get("token");
 
         User expertInfo = new User();
         HashMap<String, String> result = s_CreateSyncedDoctor(expertInfo);
@@ -627,12 +627,12 @@ public class GetOrderList_V1 extends BaseTest {
 
         logger.info("创建订单with tmpToken");
         SurgeryOrder su = new SurgeryOrder("order");
-        String orderId1 = CreateOrder.s_CreateOrder(userToken, su);
+        String orderId1 = CreateOrder.s_CreateOrder(mainToken, su);
         if (orderId1.isEmpty()) {
             Assert.fail("创建订单with tmpToken失败");
         }
 
-        res = HttpRequest.s_SendGet(host_doc + uri, query, userToken);
+        res = HttpRequest.s_SendGet(host_doc + uri, query, mainToken);
         s_CheckResponse(res);
         Assert.assertEquals(Helper.s_ParseJson(data, "order(0):order_number"), orderId1);
         Assert.assertEquals(Helper.s_ParseJson(data, "order(0):patient_name"), su.getOrder().getPatient_name());
@@ -646,7 +646,7 @@ public class GetOrderList_V1 extends BaseTest {
         Order_ThreewayCall_V2.s_CallV2(orderId1, "success");
 
         //  推荐以后检查上级医生信息
-        res = HttpRequest.s_SendGet(host_doc + uri, query, userToken);
+        res = HttpRequest.s_SendGet(host_doc + uri, query, mainToken);
         s_CheckResponse(res);
         Assert.assertEquals(Helper.s_ParseJson(data, "order(0):order_number"), orderId1);
         Assert.assertEquals(Helper.s_ParseJson(data, "order(0):patient_name"), su.getOrder().getPatient_name());
@@ -662,12 +662,12 @@ public class GetOrderList_V1 extends BaseTest {
 
     @Test
     public void test_07_验证收到的列表中包含的必备字段() {
-        String userToken = "";
-        HashMap<String,String> mainDoctorInfo = s_CreateSyncedDoctor(mainUser);
-        if(mainDoctorInfo == null) {
-            logger.error("创建注册专家失败，退出执行");
-        }
-        userToken = mainDoctorInfo.get("token");
+//        String userToken = "";
+//        HashMap<String,String> mainDoctorInfo = s_CreateSyncedDoctor(mainUser);
+//        if(mainDoctorInfo == null) {
+//            logger.error("创建注册专家失败，退出执行");
+//        }
+//        userToken = mainDoctorInfo.get("token");
 
         String res = "";
 
@@ -677,7 +677,7 @@ public class GetOrderList_V1 extends BaseTest {
 
         logger.info("创建1条测试订单");
         SurgeryOrder su = new SurgeryOrder("order");
-        String orderId1 = CreateOrder.s_CreateOrder(userToken, su);
+        String orderId1 = CreateOrder.s_CreateOrder(mainToken, su);
 
         if (orderId1.isEmpty()) {
             Assert.fail("创建订单测试订单失败");

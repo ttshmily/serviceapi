@@ -40,17 +40,17 @@ public class Order_Rollback extends BaseTest {
 
     @Test
     public void test_01_回退订单_三方通话确认成功之后() {
-        String userToken = "";
-        HashMap<String,String> mainDoctorInfo = s_CreateSyncedDoctor(mainUser);
-        if(mainDoctorInfo == null) {
-            logger.error("创建注册专家失败，退出执行");
-            System.exit(10000);
-        }
-        userToken = mainDoctorInfo.get("token");
+//        String userToken = "";
+//        HashMap<String,String> mainDoctorInfo = s_CreateSyncedDoctor(mainUser);
+//        if(mainDoctorInfo == null) {
+//            logger.error("创建注册专家失败，退出执行");
+//            System.exit(10000);
+//        }
+//        userToken = mainDoctorInfo.get("token");
 
         String res = "";
         HashMap<String, String> pathValue = new HashMap<>();
-        String order_number = CreateOrder.s_CreateOrder(userToken); // create an order
+        String order_number = CreateOrder.s_CreateOrder(mainToken); // create an order
         logger.debug(Order_ReceiveTask.s_ReceiveTask(order_number));
         logger.debug(Order_RecommendDoctor.s_RecommendDoctor(order_number, "666"));
         String status = Order_ThreewayCall_V2.s_CallV2(order_number, "success");
@@ -79,18 +79,18 @@ public class Order_Rollback extends BaseTest {
 
     @Test
     public void test_03_回退订单_三方通话确认以前不可回退() {
-        String userToken = "";
-        HashMap<String,String> mainDoctorInfo = s_CreateSyncedDoctor(mainUser);
-        if(mainDoctorInfo == null) {
-            logger.error("创建注册专家失败，退出执行");
-            System.exit(10000);
-        }
-        userToken = mainDoctorInfo.get("token");
+//        String userToken = "";
+//        HashMap<String,String> mainDoctorInfo = s_CreateSyncedDoctor(mainUser);
+//        if(mainDoctorInfo == null) {
+//            logger.error("创建注册专家失败，退出执行");
+//            System.exit(10000);
+//        }
+//        userToken = mainDoctorInfo.get("token");
 
         // 刚创建的订单
         String res = "";
         HashMap<String, String> pathValue = new HashMap<>();
-        String order_number = CreateOrder.s_CreateOrder(userToken); // create an order
+        String order_number = CreateOrder.s_CreateOrder(mainToken); // create an order
 
         pathValue.put("orderNumber", order_number);
         JSONObject body = new JSONObject();

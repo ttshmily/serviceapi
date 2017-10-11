@@ -39,16 +39,16 @@ public class GetDoctorProfile_V1 extends BaseTest {
     @Test
     public void test_01_有token信息的请求可以获得有效信息() {
 
-        String userToken = "";
-        HashMap<String,String> mainDoctorInfo = s_CreateSyncedDoctor(mainUser);
-        if(mainDoctorInfo == null) {
-            logger.error("创建注册专家失败，退出执行");
-            System.exit(10000);
-        }
-        userToken = mainDoctorInfo.get("token");
+//        String userToken = "";
+//        HashMap<String,String> mainDoctorInfo = s_CreateSyncedDoctor(mainUser);
+//        if(mainDoctorInfo == null) {
+//            logger.error("创建注册专家失败，退出执行");
+//            System.exit(10000);
+//        }
+//        userToken = mainDoctorInfo.get("token");
 
         String res = "";
-        res = HttpRequest.s_SendGet(host_doc + uri,"", userToken);
+        res = HttpRequest.s_SendGet(host_doc + uri,"", mainToken);
         s_CheckResponse(res);
         Assert.assertNotNull(s_ParseJson(data,"doctor"),"doctor字段缺失");
         Assert.assertNotNull(s_ParseJson(data,"doctor:name"), "name字段缺失");
@@ -82,16 +82,16 @@ public class GetDoctorProfile_V1 extends BaseTest {
     @Test
     public void test_04_测试data字段返回了足够的医生信息() {
 
-        String userToken = "";
-        HashMap<String,String> mainDoctorInfo = s_CreateSyncedDoctor(mainUser);
-        if(mainDoctorInfo == null) {
-            logger.error("创建注册专家失败，退出执行");
-            System.exit(10000);
-        }
-        userToken = mainDoctorInfo.get("token");
+//        String userToken = "";
+//        HashMap<String,String> mainDoctorInfo = s_CreateSyncedDoctor(mainUser);
+//        if(mainDoctorInfo == null) {
+//            logger.error("创建注册专家失败，退出执行");
+//            System.exit(10000);
+//        }
+//        userToken = mainDoctorInfo.get("token");
 
         String res = "";
-        res = HttpRequest.s_SendGet(host_doc + uri,"", userToken);
+        res = HttpRequest.s_SendGet(host_doc + uri,"", mainToken);
         s_CheckResponse(res);
         Assert.assertNotNull(s_ParseJson(data,"doctor"),"doctor字段缺失");
         Assert.assertNotNull(s_ParseJson(data,"doctor:name"), "name字段缺失");
@@ -106,17 +106,17 @@ public class GetDoctorProfile_V1 extends BaseTest {
     @Test
     public void test_05_测试总订单数_测试处理中订单数_CRM未领取(){
 
-        String userToken = "";
-        HashMap<String,String> mainDoctorInfo = s_CreateSyncedDoctor(mainUser);
-        if(mainDoctorInfo == null) {
-            logger.error("创建注册专家失败，退出执行");
-            System.exit(10000);
-        }
-        userToken = mainDoctorInfo.get("token");
+//        String userToken = "";
+//        HashMap<String,String> mainDoctorInfo = s_CreateSyncedDoctor(mainUser);
+//        if(mainDoctorInfo == null) {
+//            logger.error("创建注册专家失败，退出执行");
+//            System.exit(10000);
+//        }
+//        userToken = mainDoctorInfo.get("token");
 
-        CreateOrder.s_CreateOrder(userToken);
+        CreateOrder.s_CreateOrder(mainToken);
         String resOld = "";
-        resOld = HttpRequest.s_SendGet(host_doc + uri,"", userToken);
+        resOld = HttpRequest.s_SendGet(host_doc + uri,"", mainToken);
         s_CheckResponse(resOld);
         int count = Integer.parseInt(s_ParseJson(data,"doctor:status_count:agentId:count"));
         int countHandling = Integer.parseInt(s_ParseJson(data,"doctor:status_count:agentId:handling"));
@@ -125,11 +125,11 @@ public class GetDoctorProfile_V1 extends BaseTest {
 
         int i = 1;
         while (i<3){
-            CreateOrder.s_CreateOrder(userToken);
+            CreateOrder.s_CreateOrder(mainToken);
             i++;
         }
         String res = "";
-        res = HttpRequest.s_SendGet(host_doc + uri,"", userToken);
+        res = HttpRequest.s_SendGet(host_doc + uri,"", mainToken);
         s_CheckResponse(res);
         Assert.assertNotNull(s_ParseJson(data,"doctor"),"doctor字段缺失");
         Assert.assertNotNull(s_ParseJson(data,"doctor:name"), "name字段缺失");
@@ -144,17 +144,17 @@ public class GetDoctorProfile_V1 extends BaseTest {
     @Test
     public void test_06_测试总订单数_测试处理中订单数_CRM已领取(){
 
-        String userToken = "";
-        HashMap<String,String> mainDoctorInfo = s_CreateSyncedDoctor(mainUser);
-        if(mainDoctorInfo == null) {
-            logger.error("创建注册专家失败，退出执行");
-            System.exit(10000);
-        }
-        userToken = mainDoctorInfo.get("token");
+//        String userToken = "";
+//        HashMap<String,String> mainDoctorInfo = s_CreateSyncedDoctor(mainUser);
+//        if(mainDoctorInfo == null) {
+//            logger.error("创建注册专家失败，退出执行");
+//            System.exit(10000);
+//        }
+//        userToken = mainDoctorInfo.get("token");
 
-        CreateOrder.s_CreateOrder(userToken);
+        CreateOrder.s_CreateOrder(mainToken);
         String resOld = "";
-        resOld = HttpRequest.s_SendGet(host_doc + uri,"", userToken);
+        resOld = HttpRequest.s_SendGet(host_doc + uri,"", mainToken);
         s_CheckResponse(resOld);
 
         int count = Integer.parseInt(s_ParseJson(data,"doctor:status_count:agentId:count"));
@@ -164,13 +164,13 @@ public class GetDoctorProfile_V1 extends BaseTest {
 
         int i = 1;
         while (i<2){
-            String orderId = CreateOrder.s_CreateOrder(userToken);
+            String orderId = CreateOrder.s_CreateOrder(mainToken);
             Order_ReceiveTask.s_ReceiveTask(orderId);
             i++;
         }
         //s_CreateOrder.s_CreateOrder(mainToken);
         String res = "";
-        res = HttpRequest.s_SendGet(host_doc + uri,"", userToken);
+        res = HttpRequest.s_SendGet(host_doc + uri,"", mainToken);
         s_CheckResponse(res);
         Assert.assertNotNull(s_ParseJson(data,"doctor"),"doctor字段缺失");
         Assert.assertNotNull(s_ParseJson(data,"doctor:name"), "name字段缺失");
@@ -185,17 +185,17 @@ public class GetDoctorProfile_V1 extends BaseTest {
     @Test
     public void test_07_测试总订单数_测试处理中订单数_推荐完医生(){
 
-        String userToken = "";
-        HashMap<String,String> mainDoctorInfo = s_CreateSyncedDoctor(mainUser);
-        if(mainDoctorInfo == null) {
-            logger.error("创建注册专家失败，退出执行");
-//            System.exit(10000);
-        }
-        userToken = mainDoctorInfo.get("token");
+//        String userToken = "";
+//        HashMap<String,String> mainDoctorInfo = s_CreateSyncedDoctor(mainUser);
+//        if(mainDoctorInfo == null) {
+//            logger.error("创建注册专家失败，退出执行");
+////            System.exit(10000);
+//        }
+//        userToken = mainDoctorInfo.get("token");
 
-        CreateOrder.s_CreateOrder(userToken);
+        CreateOrder.s_CreateOrder(mainToken);
         String resOld = "";
-        resOld = HttpRequest.s_SendGet(host_doc + uri,"", userToken);
+        resOld = HttpRequest.s_SendGet(host_doc + uri,"", mainToken);
         s_CheckResponse(resOld);
         int count = Integer.parseInt(s_ParseJson(data,"doctor:status_count:agentId:count"));
         int countHandling = Integer.parseInt(s_ParseJson(data,"doctor:status_count:agentId:handling"));
@@ -225,17 +225,17 @@ public class GetDoctorProfile_V1 extends BaseTest {
     @Test
     public void test_08_测试总订单数_待支付状态的订单数(){
 
-        String userToken = "";
-        HashMap<String,String> mainDoctorInfo = s_CreateSyncedDoctor(mainUser);
-        if(mainDoctorInfo == null) {
-            logger.error("创建注册专家失败，退出执行");
-            System.exit(10000);
-        }
-        userToken = mainDoctorInfo.get("token");
+//        String userToken = "";
+//        HashMap<String,String> mainDoctorInfo = s_CreateSyncedDoctor(mainUser);
+//        if(mainDoctorInfo == null) {
+//            logger.error("创建注册专家失败，退出执行");
+//            System.exit(10000);
+//        }
+//        userToken = mainDoctorInfo.get("token");
 
-        CreateOrder.s_CreateOrder(userToken);
+        CreateOrder.s_CreateOrder(mainToken);
         String resOld = "";
-        resOld = HttpRequest.s_SendGet(host_doc + uri,"", userToken);
+        resOld = HttpRequest.s_SendGet(host_doc + uri,"", mainToken);
         s_CheckResponse(resOld);
         int count = Integer.parseInt(s_ParseJson(data,"doctor:status_count:agentId:count"));
         int countHandling = Integer.parseInt(s_ParseJson(data,"doctor:status_count:agentId:handling"));
@@ -243,14 +243,14 @@ public class GetDoctorProfile_V1 extends BaseTest {
 
         int  i= 1;
         while (i<4){
-            String orderId = CreateOrder.s_CreateOrder(userToken);
+            String orderId = CreateOrder.s_CreateOrder(mainToken);
             Order_ReceiveTask.s_ReceiveTask(orderId);
             Order_RecommendDoctor.s_RecommendDoctor(orderId,"3721");
             Order_ThreewayCall_V2.s_CallV2(orderId,"success");
             i++;
         }
         String res = "";
-        res = HttpRequest.s_SendGet(host_doc + uri,"", userToken);
+        res = HttpRequest.s_SendGet(host_doc + uri,"", mainToken);
         s_CheckResponse(res);
         Assert.assertNotNull(s_ParseJson(data,"doctor"),"doctor字段缺失");
         Assert.assertNotNull(s_ParseJson(data,"doctor:name"), "name字段缺失");

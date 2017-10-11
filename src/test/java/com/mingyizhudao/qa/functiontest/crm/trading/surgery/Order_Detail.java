@@ -36,18 +36,18 @@ public class Order_Detail extends BaseTest {
 
     @Test
     public void test_01_获取订单详情() {
-        String userToken = "";
-        HashMap<String,String> mainDoctorInfo = s_CreateSyncedDoctor(mainUser);
-        if(mainDoctorInfo == null) {
-            logger.error("创建注册专家失败，退出执行");
-            System.exit(10000);
-        }
-        userToken = mainDoctorInfo.get("token");
+//        String userToken = "";
+//        HashMap<String,String> mainDoctorInfo = s_CreateSyncedDoctor(mainUser);
+//        if(mainDoctorInfo == null) {
+//            logger.error("创建注册专家失败，退出执行");
+//            System.exit(10000);
+//        }
+//        userToken = mainDoctorInfo.get("token");
 
         String res = "";
 
         HashMap<String, String> pathValue = new HashMap<>();
-        String orderId = CreateOrder.s_CreateOrder(userToken);
+        String orderId = CreateOrder.s_CreateOrder(mainToken);
         pathValue.put("orderNumber", orderId);
         res = HttpRequest.s_SendGet(host_crm + uri,"", crm_token, pathValue);
         s_CheckResponse(res);

@@ -49,6 +49,8 @@ public class BaseTest {
     public static String bda_session_staff = "";
     public static String init_kb = "";
     public static String designatedDoctor_token = "";
+    public static String designatedOrderNumber = "";
+    public static String designatedExceptDoctor = "";
 
 
     public static String mainMobile = "";
@@ -110,6 +112,8 @@ public class BaseTest {
             bda_token_staff = prop.getProperty("bda_token_staff");
             init_kb = prop.getProperty("init_kb", "false");
             designatedDoctor_token = prop.getProperty("designatedDoctor_token");
+            designatedOrderNumber = prop.getProperty("designatedOrderNumber");
+            designatedExceptDoctor = prop.getProperty("designatedExceptDoctor");
 
             host_doc = protocol.concat("://").concat(host_doc);
             host_crm = protocol.concat("://").concat(host_crm);
@@ -142,9 +146,10 @@ public class BaseTest {
         crm_token = JSONObject.fromObject(HttpRequest.s_SendGet("http://services.dev.myzd.info/crm/api/internal/devToken" , "email="+mainOperatorId+"&name="+mainOperatorName, "")).getJSONObject("data").getString("token");
         bda_session = JSONObject.fromObject(HttpRequest.s_SendGet("http://services.dev.myzd.info/internal/api/session/create" , "number=SH0133", "")).getString("data");
         bda_session_staff = JSONObject.fromObject(HttpRequest.s_SendGet("http://services.dev.myzd.info/internal/api/session/create" , "number=Sh0143", "")).getString("data");
+
         mainUser = new User();
         mainUser.getDoctor().setHospital_id("57");//北京大学口腔医院, 北京，区域服务人员 - 方超
-/*        HashMap<String,String> mainDoctorInfo = s_CreateSyncedDoctor(mainUser);
+        HashMap<String,String> mainDoctorInfo = s_CreateSyncedDoctor(mainUser);
         if(mainDoctorInfo == null) {
             logger.error("创建注册专家失败，退出执行");
             System.exit(10000);
@@ -155,16 +160,16 @@ public class BaseTest {
         mainDoctorName = mainUser.getDoctor().getName();
         mainDoctorHospitalId = mainDoctorInfo.get("hospitalId");
         mainDoctorHospitalName = Generator.hospitalName(mainDoctorHospitalId);
-        mainExpertId = mainDoctorInfo.get("expert_id");*/
+        mainExpertId = mainDoctorInfo.get("expert_id");
 
         logger.info("初始化信息完成，准备执行用例");
-//        logger.info("mainDoctorId为:\t"+mainDoctorId);
-//        logger.info("mainDoctorName为:\t"+mainDoctorName);
-//        logger.info("mainDoctorToken为:\t"+mainToken);
-//        logger.info("mainDoctorHospitalId为:\t"+mainDoctorHospitalId);
-//        logger.info("mainDoctorHospitalName为:\t"+mainDoctorHospitalName);
-//        logger.info("mainExpertId为:\t"+mainExpertId);
-//        logger.info("mainOperatorId为:\t"+mainOperatorId);
+        logger.info("mainDoctorId为:\t"+mainDoctorId);
+        logger.info("mainDoctorName为:\t"+mainDoctorName);
+        logger.info("mainDoctorToken为:\t"+mainToken);
+        logger.info("mainDoctorHospitalId为:\t"+mainDoctorHospitalId);
+        logger.info("mainDoctorHospitalName为:\t"+mainDoctorHospitalName);
+        logger.info("mainExpertId为:\t"+mainExpertId);
+        logger.info("mainOperatorId为:\t"+mainOperatorId);
         logger.info("crm_token为:\t"+crm_token);
         logger.info("bda_session为:\t"+bda_session);
         logger.info("bda_session_staff为:\t"+bda_session_staff);
@@ -177,6 +182,33 @@ public class BaseTest {
         logger.info("//    TestAPI START:\t" + getClass().getSimpleName());
         logger.info("///////////////////////////////////////////////////////////////////////////////////////////////////////////// \n");
 
+//        mainUser = new User();
+//        mainUser.getDoctor().setHospital_id("57");//北京大学口腔医院, 北京，区域服务人员 - 方超
+//
+//        HashMap<String,String> mainDoctorInfo = s_CreateSyncedDoctor(mainUser);
+//        if(mainDoctorInfo == null) {
+//            logger.error("创建注册专家失败，退出执行");
+//            System.exit(10000);
+//        }
+//        mainMobile = mainDoctorInfo.get("mobile");
+//        mainToken = mainDoctorInfo.get("token");
+//        mainDoctorId = mainDoctorInfo.get("id");
+//        mainDoctorName = mainUser.getDoctor().getName();
+//        mainDoctorHospitalId = mainDoctorInfo.get("hospitalId");
+//        mainDoctorHospitalName = Generator.hospitalName(mainDoctorHospitalId);
+//        mainExpertId = mainDoctorInfo.get("expert_id");
+//
+//        logger.info("初始化信息完成，准备执行用例");
+//        logger.info("mainDoctorId为:\t"+mainDoctorId);
+//        logger.info("mainDoctorName为:\t"+mainDoctorName);
+//        logger.info("mainDoctorToken为:\t"+mainToken);
+//        logger.info("mainDoctorHospitalId为:\t"+mainDoctorHospitalId);
+//        logger.info("mainDoctorHospitalName为:\t"+mainDoctorHospitalName);
+//        logger.info("mainExpertId为:\t"+mainExpertId);
+//        logger.info("mainOperatorId为:\t"+mainOperatorId);
+//        logger.info("crm_token为:\t"+crm_token);
+//        logger.info("bda_session为:\t"+bda_session);
+//        logger.info("bda_session_staff为:\t"+bda_session_staff);
     }
 
     @AfterClass

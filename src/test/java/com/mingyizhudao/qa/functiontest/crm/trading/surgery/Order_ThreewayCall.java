@@ -58,17 +58,17 @@ public class Order_ThreewayCall extends BaseTest {
 
     @Test
     public void test_01_创建三方通话_结果为成功() {
-        String userToken = "";
-        HashMap<String,String> mainDoctorInfo = s_CreateSyncedDoctor(mainUser);
-        if(mainDoctorInfo == null) {
-            logger.error("创建注册专家失败，退出执行");
-            System.exit(10000);
-        }
-        userToken = mainDoctorInfo.get("token");
+//        String userToken = "";
+//        HashMap<String,String> mainDoctorInfo = s_CreateSyncedDoctor(mainUser);
+//        if(mainDoctorInfo == null) {
+//            logger.error("创建注册专家失败，退出执行");
+//            System.exit(10000);
+//        }
+//        userToken = mainDoctorInfo.get("token");
 
         String res = "";
         HashMap<String, String> pathValue = new HashMap<>();
-        String orderId = CreateOrder.s_CreateOrder(userToken);
+        String orderId = CreateOrder.s_CreateOrder(mainToken);
         Order_ReceiveTask.s_ReceiveTask(orderId);
         String rcmdDoc = Generator.randomKey(KnowledgeBase.kb_doctor);
         if (!Order_RecommendDoctor.s_RecommendDoctor(orderId, rcmdDoc).equals("2020")) {
@@ -98,17 +98,17 @@ public class Order_ThreewayCall extends BaseTest {
 
     @Test
     public void test_02_创建三方通话_结果为待定() {
-        String userToken = "";
-        HashMap<String,String> mainDoctorInfo = s_CreateSyncedDoctor(mainUser);
-        if(mainDoctorInfo == null) {
-            logger.error("创建注册专家失败，退出执行");
-            System.exit(10000);
-        }
-        userToken = mainDoctorInfo.get("token");
+//        String userToken = "";
+//        HashMap<String,String> mainDoctorInfo = s_CreateSyncedDoctor(mainUser);
+//        if(mainDoctorInfo == null) {
+//            logger.error("创建注册专家失败，退出执行");
+//            System.exit(10000);
+//        }
+//        userToken = mainDoctorInfo.get("token");
 
         String res = "";
         HashMap<String, String> pathValue = new HashMap<>();
-        String orderId = CreateOrder.s_CreateOrder(userToken);
+        String orderId = CreateOrder.s_CreateOrder(mainToken);
         Order_ReceiveTask.s_ReceiveTask(orderId);
         String rcmdDoc = Generator.randomKey(KnowledgeBase.kb_doctor);
         if (!Order_RecommendDoctor.s_RecommendDoctor(orderId, rcmdDoc).equals("2020")) {
@@ -138,19 +138,19 @@ public class Order_ThreewayCall extends BaseTest {
 
     @Test
     public void test_03_创建三方通话_结果为不合作() {
-        String userToken = "";
-        String userExpertId = "";
-        HashMap<String,String> mainDoctorInfo = s_CreateSyncedDoctor(mainUser);
-        if(mainDoctorInfo == null) {
-            logger.error("创建注册专家失败，退出执行");
-            System.exit(10000);
-        }
-        userToken = mainDoctorInfo.get("token");
-        userExpertId = mainDoctorInfo.get("expert_id");
+//        String userToken = "";
+//        String userExpertId = "";
+//        HashMap<String,String> mainDoctorInfo = s_CreateSyncedDoctor(mainUser);
+//        if(mainDoctorInfo == null) {
+//            logger.error("创建注册专家失败，退出执行");
+//            System.exit(10000);
+//        }
+//        userToken = mainDoctorInfo.get("token");
+//        userExpertId = mainDoctorInfo.get("expert_id");
 
         String res = "";
         HashMap<String, String> pathValue = new HashMap<>();
-        String orderId = CreateOrder.s_CreateOrder(userToken);
+        String orderId = CreateOrder.s_CreateOrder(mainToken);
         Order_ReceiveTask.s_ReceiveTask(orderId);
         if (!Order_RecommendDoctor.s_RecommendDoctor(orderId, "555").equals("2020")) {
             Assert.fail("订单没有到达已推荐状态，无法进行三方通话");
@@ -180,17 +180,17 @@ public class Order_ThreewayCall extends BaseTest {
 
     @Test
     public void test_04_创建三方通话_不合作原因为空() {
-        String userToken = "";
-        HashMap<String,String> mainDoctorInfo = s_CreateSyncedDoctor(mainUser);
-        if(mainDoctorInfo == null) {
-            logger.error("创建注册专家失败，退出执行");
-            System.exit(10000);
-        }
-        userToken = mainDoctorInfo.get("token");
+//        String userToken = "";
+//        HashMap<String,String> mainDoctorInfo = s_CreateSyncedDoctor(mainUser);
+//        if(mainDoctorInfo == null) {
+//            logger.error("创建注册专家失败，退出执行");
+//            System.exit(10000);
+//        }
+//        userToken = mainDoctorInfo.get("token");
 
         String res = "";
         HashMap<String, String> pathValue = new HashMap<>();
-        String orderId = CreateOrder.s_CreateOrder(userToken);
+        String orderId = CreateOrder.s_CreateOrder(mainToken);
         Order_ReceiveTask.s_ReceiveTask(orderId);
         if (!Order_RecommendDoctor.s_RecommendDoctor(orderId, "555").equals("2020")) {
             Assert.fail("订单没有到达已推荐状态，无法进行三方通话");
@@ -223,17 +223,17 @@ public class Order_ThreewayCall extends BaseTest {
 
     @Test
     public void test_05_创建三方通话_成功后不能再次通话() {
-        String userToken = "";
-        HashMap<String,String> mainDoctorInfo = s_CreateSyncedDoctor(mainUser);
-        if(mainDoctorInfo == null) {
-            logger.error("创建注册专家失败，退出执行");
-            System.exit(10000);
-        }
-        userToken = mainDoctorInfo.get("token");
+//        String userToken = "";
+//        HashMap<String,String> mainDoctorInfo = s_CreateSyncedDoctor(mainUser);
+//        if(mainDoctorInfo == null) {
+//            logger.error("创建注册专家失败，退出执行");
+//            System.exit(10000);
+//        }
+//        userToken = mainDoctorInfo.get("token");
 
         String res = "";
         HashMap<String, String> pathValue = new HashMap<>();
-        String orderId = CreateOrder.s_CreateOrder(userToken);
+        String orderId = CreateOrder.s_CreateOrder(mainToken);
         Order_ReceiveTask.s_ReceiveTask(orderId);
         if (!Order_RecommendDoctor.s_RecommendDoctor(orderId, "555").equals("2020")) {
             Assert.fail("订单没有到达已推荐状态，无法进行三方通话");
@@ -262,17 +262,17 @@ public class Order_ThreewayCall extends BaseTest {
 
     @Test
     public void test_06_创建三方通话_结果成功但缺少信息() {
-        String userToken = "";
-        HashMap<String,String> mainDoctorInfo = s_CreateSyncedDoctor(mainUser);
-        if(mainDoctorInfo == null) {
-            logger.error("创建注册专家失败，退出执行");
-            System.exit(10000);
-        }
-        userToken = mainDoctorInfo.get("token");
+//        String userToken = "";
+//        HashMap<String,String> mainDoctorInfo = s_CreateSyncedDoctor(mainUser);
+//        if(mainDoctorInfo == null) {
+//            logger.error("创建注册专家失败，退出执行");
+//            System.exit(10000);
+//        }
+//        userToken = mainDoctorInfo.get("token");
 
         String res = "";
         HashMap<String, String> pathValue = new HashMap<>();
-        String orderId = CreateOrder.s_CreateOrder(userToken);
+        String orderId = CreateOrder.s_CreateOrder(mainToken);
         Order_ReceiveTask.s_ReceiveTask(orderId);
         if (!Order_RecommendDoctor.s_RecommendDoctor(orderId, "555").equals("2020")) {
             Assert.fail("订单没有到达已推荐状态，无法进行三方通话");
@@ -340,17 +340,17 @@ public class Order_ThreewayCall extends BaseTest {
 
     @Test
     public void test_07_创建三方通话_结果为不合作无其他信息() {
-        String userToken = "";
-        HashMap<String,String> mainDoctorInfo = s_CreateSyncedDoctor(mainUser);
-        if(mainDoctorInfo == null) {
-            logger.error("创建注册专家失败，退出执行");
-            System.exit(10000);
-        }
-        userToken = mainDoctorInfo.get("token");
+//        String userToken = "";
+//        HashMap<String,String> mainDoctorInfo = s_CreateSyncedDoctor(mainUser);
+//        if(mainDoctorInfo == null) {
+//            logger.error("创建注册专家失败，退出执行");
+//            System.exit(10000);
+//        }
+//        userToken = mainDoctorInfo.get("token");
 
         String res = "";
         HashMap<String, String> pathValue = new HashMap<>();
-        String orderId = CreateOrder.s_CreateOrder(userToken);
+        String orderId = CreateOrder.s_CreateOrder(mainToken);
         Order_ReceiveTask.s_ReceiveTask(orderId);
         if (!Order_RecommendDoctor.s_RecommendDoctor(orderId, "555").equals("2020")) {
             Assert.fail("订单没有到达已推荐状态，无法进行三方通话");
@@ -378,17 +378,17 @@ public class Order_ThreewayCall extends BaseTest {
 
     @Test
     public void test_08_创建三方通话_不合作医生信息记录在案() {
-        String userToken = "";
-        HashMap<String,String> mainDoctorInfo = s_CreateSyncedDoctor(mainUser);
-        if(mainDoctorInfo == null) {
-            logger.error("创建注册专家失败，退出执行");
-            System.exit(10000);
-        }
-        userToken = mainDoctorInfo.get("token");
+//        String userToken = "";
+//        HashMap<String,String> mainDoctorInfo = s_CreateSyncedDoctor(mainUser);
+//        if(mainDoctorInfo == null) {
+//            logger.error("创建注册专家失败，退出执行");
+//            System.exit(10000);
+//        }
+//        userToken = mainDoctorInfo.get("token");
 
         String res = "";
         HashMap<String, String> pathValue = new HashMap<>();
-        String orderId = CreateOrder.s_CreateOrder(userToken);
+        String orderId = CreateOrder.s_CreateOrder(mainToken);
         Order_ReceiveTask.s_ReceiveTask(orderId);
         String expertId = Generator.randomExpertId();
         if (!Order_RecommendDoctor.s_RecommendDoctor(orderId, expertId).equals("2020")) {
