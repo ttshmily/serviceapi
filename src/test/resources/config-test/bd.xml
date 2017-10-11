@@ -1,0 +1,25 @@
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
+
+<suite name="crm" verbose="1" >
+
+    <test name="test1" >
+        <classes>
+            <class name="com.mingyizhudao.qa.functiontest.bdassistant.AssignDoctor"/>
+            <class name="com.mingyizhudao.qa.functiontest.bdassistant.DoctorListV2"/>
+            <class name="com.mingyizhudao.qa.functiontest.bdassistant.KBDoctor"/>
+            <class name="com.mingyizhudao.qa.functiontest.bdassistant.KBHospital"/>
+            <class name="com.mingyizhudao.qa.functiontest.bdassistant.UploadToken"/>
+            <class name="com.mingyizhudao.qa.functiontest.bdassistant.UserCenter"/>
+            <class name="com.mingyizhudao.qa.functiontest.bdassistant.Statistics"/>
+            <class name="com.mingyizhudao.qa.functiontest.bdassistant.VisitDate"/>
+            <class name="com.mingyizhudao.qa.functiontest.bdassistant.VisitRecord"/>
+            <class name="com.mingyizhudao.qa.functiontest.bdassistant.VisitRecordCreate"/>
+            <class name="com.mingyizhudao.qa.functiontest.bdassistant.VisitRecordList"/>
+            <class name="com.mingyizhudao.qa.functiontest.bdassistant.VerifyDoctor"/>
+            <class name="com.mingyizhudao.qa.functiontest.bdassistant.Statistics_doctor"/>
+            <class name="com.mingyizhudao.qa.functiontest.bdassistant.Statistics_order"/>
+            <class name="com.mingyizhudao.qa.functiontest.bdassistant.OrderDetail"/>
+            <class name="com.mingyizhudao.qa.functiontest.bdassistant.OrderList"/>
+        </classes>
+    </test>
+</suite> 
