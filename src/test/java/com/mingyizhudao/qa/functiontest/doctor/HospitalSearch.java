@@ -85,7 +85,9 @@ public class HospitalSearch extends BaseTest {
         map.put("searchname","中国changzhou");
         res = HttpRequest.s_SendGet(host_doc + uri, map, "");
         s_CheckResponse(res);
-        Assert.assertNotEquals(Helper.s_ParseJson(data, "hospital()"), "0");
+        //修改以下代码，由于搜索逻辑更改为不能中英混合，故修改检查点
+//        Assert.assertNotEquals(Helper.s_ParseJson(data, "hospital()"), "0");
+        Assert.assertNull(Helper.s_ParseJson(data, "hospital()"),"hospital字段不应返回结果");
     }
 
     @Test
@@ -109,7 +111,7 @@ public class HospitalSearch extends BaseTest {
         HashMap<String, String> query = new HashMap<>();
         String city_id = Generator.randomCityId();
         query.put("city_id", city_id);
-        query.put("searchname","安阳医院");
+        query.put("searchname","医院");
         res = HttpRequest.s_SendGet(host_doc + uri, query, "");
         s_CheckResponse(res);
         Assert.assertNotNull(Helper.s_ParseJson(data, "hospital()"), "hospital字段缺失");
