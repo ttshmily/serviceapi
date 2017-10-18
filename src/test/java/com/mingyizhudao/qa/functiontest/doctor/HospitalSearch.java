@@ -87,7 +87,7 @@ public class HospitalSearch extends BaseTest {
         s_CheckResponse(res);
         //修改以下代码，由于搜索逻辑更改为不能中英混合，故修改检查点
 //        Assert.assertNotEquals(Helper.s_ParseJson(data, "hospital()"), "0");
-        Assert.assertNull(Helper.s_ParseJson(data, "hospital()"),"hospital字段不应返回结果");
+        Assert.assertEquals(Helper.s_ParseJson(data, "hospital()"),"0", "hospital字段不应返回结果");
     }
 
     @Test
