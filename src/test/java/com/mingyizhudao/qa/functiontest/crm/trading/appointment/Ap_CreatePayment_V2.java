@@ -28,13 +28,15 @@ public class Ap_CreatePayment_V2 extends BaseTest{
     public static final String version = "/api/v2";
     public static String uri = version + "/appointments/createPayment";
 
-    public static boolean s_CreatePayment(String orderNumber, String type) {
+    public static String s_CreatePayment(String orderNumber, int fee) {
         HashMap<String, String> pathValue = new HashMap<>();
-        pathValue.put("orderNumber", orderNumber);
         JSONObject body = new JSONObject();
-        body.put("paymentCreateType", type);//APPOINTMENT-全款 DOCTOR-成本价 PLATFORM-尾款
+        body.put("paymentCreateType", "APPOINTMENT");//APPOINTMENT-全款 DOCTOR-成本价 PLATFORM-尾款
+        body.put("orderNumber", orderNumber);
+        body.put("fee", fee);
         String res = HttpRequest.s_SendPost(host_crm + uri, body.toString(), crm_token, pathValue);
-        return JSONObject.fromObject(res).getString("code").equals("1000000");
+        String payId = JSONObject.fromObject(res).getJSONObject("data").getString("payment_number");
+        return payId;
     }
 
     @Test
@@ -43,7 +45,6 @@ public class Ap_CreatePayment_V2 extends BaseTest{
         AppointmentOrder ap = new AppointmentOrder();
         String orderNumber = s_Create(ap);
         HashMap<String, String> pathValue = new HashMap<>();
-        pathValue.put("orderNumber", orderNumber);
         if (!s_Take(orderNumber) || !s_Confirm(orderNumber) || !s_AddPayAccount(orderNumber)) {
             Assert.fail("订单未添加医生收款账号信息");
         }
@@ -186,4 +187,5 @@ public class Ap_CreatePayment_V2 extends BaseTest{
         s_CheckResponse(res);
         Assert.assertEquals(data.getString("last_income_payment_id"), paymentId);
     }
+
 }
