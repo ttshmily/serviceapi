@@ -122,7 +122,7 @@ public class Ap_AddAccount extends BaseTest {
     }
 
     @Test
-    public void test_05_添加账号_非待支付状态() {
+    public void test_05_添加账号_非待支付状态_可以添加() {
         String res = "";
         AppointmentOrder ap = new AppointmentOrder();
         String orderNumber = Ap_Create.s_Create(ap);
@@ -141,7 +141,7 @@ public class Ap_AddAccount extends BaseTest {
         }
         res = s_SendPut(host_crm + uri, body.toString(), crm_token, pathValue);
         s_CheckResponse(res);
-        Assert.assertNotEquals(code, "1000000");
+        Assert.assertEquals(code, "1000000");
     }
 
     @Test
