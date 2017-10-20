@@ -4,6 +4,7 @@ import com.mingyizhudao.qa.common.BaseTest;
 import com.mingyizhudao.qa.common.TestLogger;
 import com.mingyizhudao.qa.dataprofile.AppointmentOrder;
 import com.mingyizhudao.qa.utilities.HttpRequest;
+import net.sf.json.JSONObject;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
@@ -25,6 +26,13 @@ public class Ap_DisablePayLink extends BaseTest {
     public static final String version = "/api/v1";
     public static String uri = version+"/appointments/{paymentNumber}/disable";
 
+    public static boolean s_DisablePayment(String paymentNumber) {
+        HashMap<String, String> pathValue = new HashMap<>();
+        pathValue.put("paymentNumber", paymentNumber);//APPOINTMENT-全款 DOCTOR-成本价 PLATFORM-尾款
+        String res = HttpRequest.s_SendPost(host_crm + uri, "", crm_token, pathValue);
+        return JSONObject.fromObject(res).getJSONObject("data").getString("enabled").equals("false");
+    }
+
     @Test
     public void test_01_禁用支付链接() {
         String res = "";
@@ -43,7 +51,4 @@ public class Ap_DisablePayLink extends BaseTest {
         Assert.assertEquals(data.getString("enabled"), "false");
     }
 
-    public void tset_02_dd() {
-
-    }
 }

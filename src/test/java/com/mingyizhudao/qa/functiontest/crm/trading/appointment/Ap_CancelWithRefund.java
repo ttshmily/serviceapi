@@ -3,18 +3,19 @@ package com.mingyizhudao.qa.functiontest.crm.trading.appointment;
 import com.mingyizhudao.qa.common.BaseTest;
 import com.mingyizhudao.qa.common.TestLogger;
 import com.mingyizhudao.qa.dataprofile.AppointmentOrder;
+import net.sf.json.JSONObject;
+import org.testng.Assert;
+import org.testng.annotations.Test;
+
+import java.util.HashMap;
 
 import static com.mingyizhudao.qa.functiontest.crm.trading.appointment.Ap_Confirm.s_Confirm;
 import static com.mingyizhudao.qa.functiontest.crm.trading.appointment.Ap_RiskControl.s_Take;
 import static com.mingyizhudao.qa.functiontest.crm.trading.appointment.Ap_Rollback.s_Rollback;
-import static com.mingyizhudao.qa.utilities.Helper.*;
-import static com.mingyizhudao.qa.utilities.HttpRequest.*;
-import net.sf.json.JSONObject;
-import org.testng.Assert;
-import org.testng.annotations.Test;
-import java.util.HashMap;
+import static com.mingyizhudao.qa.utilities.Helper.s_ParseJson;
+import static com.mingyizhudao.qa.utilities.HttpRequest.s_SendPost;
 
-public class Ap_Close extends BaseTest {
+public class Ap_CancelWithRefund extends BaseTest {
     public static String clazzName = new Object() {
         public String getClassName() {
             String clazzName = this.getClass().getName();
@@ -23,10 +24,9 @@ public class Ap_Close extends BaseTest {
     }.getClassName();
     public static TestLogger logger = new TestLogger(clazzName);
     public static final String version = "/api/v1";
-    public static String uri = version+"/appointments/{orderNumber}/cancelBeforePayment";
+    public static String uri = version+"/appointments/{orderNumber}/cancelAfterPayment";
 
-    // deprecated by CancelWithRefund
-/*    public static boolean s_Close(String orderNumber) {
+    public static boolean s_Close(String orderNumber) {
         HashMap<String, String> pathValue = new HashMap<>();
         pathValue.put("orderNumber", orderNumber);
         JSONObject body = new JSONObject();
@@ -35,7 +35,7 @@ public class Ap_Close extends BaseTest {
         String res = s_SendPost(host_crm + uri, body.toString(), crm_token, pathValue);
         String status = JSONObject.fromObject(res).getJSONObject("data").getString("status");
         return status.equals("9000");
-    }*/
+    }
 
     @Test
     public void test_01_关闭1000的订单() {
@@ -109,5 +109,6 @@ public class Ap_Close extends BaseTest {
         Assert.assertEquals(code, "1000000");
         Assert.assertEquals(s_ParseJson(data, "status"), "9000");
     }
+
 
 }
