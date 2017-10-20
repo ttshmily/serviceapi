@@ -26,7 +26,7 @@ public class Ap_List extends BaseTest {
         }
     }.getClassName();
     public TestLogger logger = new TestLogger(clazzName);
-    public static final String version = "/api/v1";
+    public static final String version = "/api/v2";
     public static String uri = version+"/appointments";
 
     @Test

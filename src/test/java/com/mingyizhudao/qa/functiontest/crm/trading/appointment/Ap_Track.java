@@ -10,7 +10,7 @@ import org.testng.annotations.Test;
 import java.util.HashMap;
 
 import static com.mingyizhudao.qa.functiontest.crm.trading.appointment.Ap_AddAccount.s_AddPayAccount;
-import static com.mingyizhudao.qa.functiontest.crm.trading.appointment.Ap_Close.s_Close;
+import static com.mingyizhudao.qa.functiontest.crm.trading.appointment.Ap_CancelWithRefund.s_Close;
 import static com.mingyizhudao.qa.functiontest.crm.trading.appointment.Ap_Confirm.s_Confirm;
 import static com.mingyizhudao.qa.functiontest.crm.trading.appointment.Ap_Create.s_Create;
 import static com.mingyizhudao.qa.functiontest.crm.trading.appointment.Ap_RiskControl.s_Take;

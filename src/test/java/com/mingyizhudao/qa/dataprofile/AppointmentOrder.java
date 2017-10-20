@@ -34,6 +34,7 @@ public class AppointmentOrder {
     private Integer patient_gender;
     private String patient_name;
     private String patient_phone;
+    private String patient_city_name;
     //add by tianjing 2017/09/01
     private String code;
 
