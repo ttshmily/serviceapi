@@ -52,7 +52,7 @@ public class GetDoctorProfile_V1 extends BaseTest {
         s_CheckResponse(res);
         Assert.assertNotNull(s_ParseJson(data,"doctor"),"doctor字段缺失");
         Assert.assertNotNull(s_ParseJson(data,"doctor:name"), "name字段缺失");
-        Assert.assertNotNull(s_ParseJson(data,"doctor:inviter_name"), "inviter_name字段缺失");
+//        Assert.assertNotNull(s_ParseJson(data,"doctor:inviter_name"), "inviter_name字段缺失");
         Assert.assertNotNull(s_ParseJson(data,"doctor:is_verified"),"is_verified字段缺失");
         Assert.assertNotNull(s_ParseJson(data,"doctor:mobile"), "mobile字段缺失");
         Assert.assertNotNull(s_ParseJson(data,"doctor:hospital_name"), "hospital_name字段缺失");
@@ -95,7 +95,7 @@ public class GetDoctorProfile_V1 extends BaseTest {
         s_CheckResponse(res);
         Assert.assertNotNull(s_ParseJson(data,"doctor"),"doctor字段缺失");
         Assert.assertNotNull(s_ParseJson(data,"doctor:name"), "name字段缺失");
-        Assert.assertNotNull(s_ParseJson(data,"doctor:inviter_name"), "inviter_name字段缺失");
+//        Assert.assertNotNull(s_ParseJson(data,"doctor:inviter_name"), "inviter_name字段缺失");
         Assert.assertNotNull(s_ParseJson(data,"doctor:is_verified"),"is_verified字段缺失");
         Assert.assertNotNull(s_ParseJson(data,"doctor:mobile"), "mobile字段缺失");
         Assert.assertNotNull(s_ParseJson(data,"doctor:hospital_name"), "hospital_name字段缺失");
@@ -133,7 +133,7 @@ public class GetDoctorProfile_V1 extends BaseTest {
         s_CheckResponse(res);
         Assert.assertNotNull(s_ParseJson(data,"doctor"),"doctor字段缺失");
         Assert.assertNotNull(s_ParseJson(data,"doctor:name"), "name字段缺失");
-        Assert.assertNotNull(s_ParseJson(data,"doctor:inviter_name"), "inviter_name字段缺失");
+//        Assert.assertNotNull(s_ParseJson(data,"doctor:inviter_name"), "inviter_name字段缺失");
         Assert.assertNotNull(s_ParseJson(data,"doctor:is_verified"),"is_verified字段缺失");
         Assert.assertNotNull(s_ParseJson(data,"doctor:mobile"), "mobile字段缺失");
         Assert.assertNotNull(s_ParseJson(data,"doctor:hospital_name"), "hospital_name字段缺失");
@@ -174,7 +174,7 @@ public class GetDoctorProfile_V1 extends BaseTest {
         s_CheckResponse(res);
         Assert.assertNotNull(s_ParseJson(data,"doctor"),"doctor字段缺失");
         Assert.assertNotNull(s_ParseJson(data,"doctor:name"), "name字段缺失");
-        Assert.assertNotNull(s_ParseJson(data,"doctor:inviter_name"), "inviter_name字段缺失");
+//        Assert.assertNotNull(s_ParseJson(data,"doctor:inviter_name"), "inviter_name字段缺失");
         Assert.assertNotNull(s_ParseJson(data,"doctor:is_verified"),"is_verified字段缺失");
         Assert.assertNotNull(s_ParseJson(data,"doctor:mobile"), "mobile字段缺失");
         Assert.assertNotNull(s_ParseJson(data,"doctor:hospital_name"), "hospital_name字段缺失");
@@ -214,7 +214,7 @@ public class GetDoctorProfile_V1 extends BaseTest {
         s_CheckResponse(res);
         Assert.assertNotNull(s_ParseJson(data,"doctor"),"doctor字段缺失");
         Assert.assertNotNull(s_ParseJson(data,"doctor:name"), "name字段缺失");
-        Assert.assertNotNull(s_ParseJson(data,"doctor:inviter_name"), "inviter_name字段缺失");
+//        Assert.assertNotNull(s_ParseJson(data,"doctor:inviter_name"), "inviter_name字段缺失");
         Assert.assertNotNull(s_ParseJson(data,"doctor:is_verified"),"is_verified字段缺失");
         Assert.assertNotNull(s_ParseJson(data,"doctor:mobile"), "mobile字段缺失");
         Assert.assertNotNull(s_ParseJson(data,"doctor:hospital_name"), "hospital_name字段缺失");
@@ -254,7 +254,7 @@ public class GetDoctorProfile_V1 extends BaseTest {
         s_CheckResponse(res);
         Assert.assertNotNull(s_ParseJson(data,"doctor"),"doctor字段缺失");
         Assert.assertNotNull(s_ParseJson(data,"doctor:name"), "name字段缺失");
-        Assert.assertNotNull(s_ParseJson(data,"doctor:inviter_name"), "inviter_name字段缺失");
+//        Assert.assertNotNull(s_ParseJson(data,"doctor:inviter_name"), "inviter_name字段缺失");
         Assert.assertNotNull(s_ParseJson(data,"doctor:is_verified"),"is_verified字段缺失");
         Assert.assertNotNull(s_ParseJson(data,"doctor:mobile"), "mobile字段缺失");
         Assert.assertNotNull(s_ParseJson(data,"doctor:hospital_name"), "hospital_name字段缺失");

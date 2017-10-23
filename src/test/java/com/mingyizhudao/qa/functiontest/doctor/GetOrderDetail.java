@@ -97,7 +97,9 @@ public class GetOrderDetail extends BaseTest {
         pathValue.put("orderId", "20000000000");
         res = HttpRequest.s_SendGet(host_doc + uri,"", mainToken, pathValue);
         s_CheckResponse(res);
-        Assert.assertEquals(code, "2210430");
+        Assert.assertEquals(code, "1000000");
+        Assert.assertEquals(data.toString(), "{}");
+
     }
 
     @Test

@@ -29,7 +29,7 @@ public class UploadToken extends BaseTest {
         query.put("fileName", "当朝.jpg");
         res = HttpRequest.s_SendGet(host_bda + uri, query, bda_session);
         s_CheckResponse(res);
-        Assert.assertNotNull(Helper.s_ParseJson(data, "token"));
+        Assert.assertNotNull(Helper.s_ParseJson(data, "uploadInfo:token"));
         Assert.assertEquals(code, "1000000");
     }
 

@@ -60,8 +60,7 @@ public class CreateSurgeryBriefs extends BaseTest {
         SendVerifyCode.s_Send(agentPhone);
         String token = CheckVerifyCode.s_Check(agentPhone);
         if (token == null) {
-            logger.error("没有获取到token");
-            Assert.fail();
+            Assert.fail("没有获取到token");
         }
         SurgeryOrder su = new SurgeryOrder("brief");
         HashMap<String, String> pathValue = new HashMap<>();

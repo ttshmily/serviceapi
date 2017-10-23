@@ -60,7 +60,7 @@ public class GetUploadToken extends BaseTest {
 
         HashMap<String, String> query = new HashMap<>();
         query.put("type", "2");
-        query.put("filename", "abcd!@#$%^&*().jpg");
+        query.put("filename", "当朝abc.jpg");
         res = HttpRequest.s_SendGet(host_doc + uri, query, mainToken, null);
         s_CheckResponse(res);
         Assert.assertNotNull(Helper.s_ParseJson(data, "token"));
@@ -82,7 +82,7 @@ public class GetUploadToken extends BaseTest {
 
         HashMap<String, String> query = new HashMap<>();
         query.put("type", "3");
-        query.put("filename", "abcd!@#$%^&*().jpg");
+        query.put("filename", "abcd().jpg");
         res = HttpRequest.s_SendGet(host_doc + uri, query, mainToken, null);
         s_CheckResponse(res);
         Assert.assertNotNull(Helper.s_ParseJson(data, "token"));
@@ -128,7 +128,7 @@ public class GetUploadToken extends BaseTest {
 
         HashMap<String, String> query = new HashMap<>();
         query.put("type", "1");
-        query.put("filename", "abcd.gif");
+        query.put("filename", "abcd!.gif");
         res = HttpRequest.s_SendGet(host_doc + uri, query, mainToken, null);
         s_CheckResponse(res);
         Assert.assertEquals(code, "1000000");
@@ -153,12 +153,12 @@ public class GetUploadToken extends BaseTest {
 
         HashMap<String, String> query = new HashMap<>();
         query.put("type", "1");
-        query.put("filename", "abcd!@#$%^&*(~.png");
+        query.put("filename", "abcd -+.png");
         res = HttpRequest.s_SendGet(host_doc + uri, query, mainToken, null);
         s_CheckResponse(res);
         Assert.assertEquals(code, "1000000");
 
-        query.replace("filename", "+_)(*&^%$#@!.PNG");
+        query.replace("filename", "中文English（）@ ——+=.PNG");
         res = HttpRequest.s_SendGet(host_doc + uri, query, mainToken, null);
         s_CheckResponse(res);
         Assert.assertEquals(code, "1000000");
@@ -178,7 +178,7 @@ public class GetUploadToken extends BaseTest {
 
         HashMap<String, String> query = new HashMap<>();
         query.put("type", "1");
-        query.put("filename", "abcd!@#$%^&*(~aa");
+        query.put("filename", "abcd @");
         res = HttpRequest.s_SendGet(host_doc + uri, query, mainToken);
         s_CheckResponse(res);
         Assert.assertNotEquals(code, "1000000");

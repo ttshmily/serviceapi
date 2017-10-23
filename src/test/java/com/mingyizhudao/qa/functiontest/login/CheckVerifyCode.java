@@ -62,7 +62,7 @@ public class CheckVerifyCode extends BaseTest{
             token = tmpToken;
             Refresh.token = tmpToken;
         } else {
-            logger.error("获取token失败");
+            logger.error(res);
         }
         return tmpToken;
     }

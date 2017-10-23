@@ -108,13 +108,13 @@ public class HttpRequest {
 //                logger.info("响应时间: <<<<<  " + Long.toString(end-start) + " ms");
             }
 		} catch (IOException e) {
-			logger.error("发送请求异常");
+			logger.error(e.getMessage());
 		} catch (NoSuchAlgorithmException e) {
             logger.error("发送HTTPS请求异常");
         } catch (KeyManagementException e) {
             logger.error("发送HTTPS请求异常");
         } catch (Exception e) {
-		    logger.error("发送请求异常");
+		    logger.error(e.getMessage());
         }
 		return result;
 	}
@@ -128,7 +128,8 @@ public class HttpRequest {
             }
             result = s_SendGet(url, param, authCode);
         } catch (Exception e) {
-            logger.error("发送请求异常");
+            logger.error(result);
+            logger.error(e.getMessage());
         }
         return result;
     }
@@ -145,7 +146,7 @@ public class HttpRequest {
             result = s_SendGet(urlNameString, param, authCode);
 
         } catch (Exception e) {
-            logger.error("发送请求异常");
+            logger.error(e.getMessage());
         }
         return result;
     }
@@ -167,7 +168,7 @@ public class HttpRequest {
             result = s_SendGet(urlNameString, param, authCode);
 
         } catch (Exception e) {
-            logger.error("发送请求异常");
+            logger.error(e.getMessage());
         }
         return result;
     }
@@ -235,7 +236,7 @@ public class HttpRequest {
             in.close();
             out.close();
         } catch (Exception e) {
-            logger.error("发送请求异常");
+            logger.error(e.getMessage());
         }
         return result;
 	}
@@ -247,7 +248,7 @@ public class HttpRequest {
             String urlString = restUrl(url, pathValue);
             result = s_SendPost(urlString, param, authCode);
         } catch (Exception e) {
-            logger.error("发送请求异常");
+            logger.error(e.getMessage());
         }
         return result;
     }
@@ -290,8 +291,7 @@ public class HttpRequest {
             in.close();
             out.close();
         } catch (IOException e) {
-            logger.error("发送请求异常");
-//            e.printStackTrace();
+            logger.error(e.getMessage());
             throw e;
         }
         return result;
@@ -338,7 +338,7 @@ public class HttpRequest {
             in.close();
             out.close();
         } catch (IOException e) {
-            logger.error("发送请求出现异常！");
+            logger.error(e.getMessage());
             throw e;
         }
         return result;
@@ -410,7 +410,7 @@ public class HttpRequest {
             in.close();
             out.close();
         } catch (Exception e) {
-            logger.error("发送请求异常" + e);
+            logger.error(e.getMessage());
         }
         return result;
 	}
@@ -427,7 +427,7 @@ public class HttpRequest {
             }
             result = s_SendPut(urlString, param, authCode);
         } catch (Exception e) {
-            logger.error("发送请求异常");
+            logger.error(e.getMessage());
         }
         return result;
     }
@@ -500,7 +500,7 @@ public class HttpRequest {
             in.close();
             out.close();
         } catch (Exception e) {
-            logger.error("发送请求异常");
+            logger.error(e.getMessage());
         }
         return result;
     }
