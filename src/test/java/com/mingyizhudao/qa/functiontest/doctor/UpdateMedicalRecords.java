@@ -70,8 +70,7 @@ public class UpdateMedicalRecords extends BaseTest {
         logger.info("创建一个新订单");
         String orderId = CreateOrder.s_CreateOrder(mainToken);
         if (orderId.isEmpty()) {
-            logger.error("创建订单失败");
-            fail();
+            Assert.fail("创建订单失败");
         }
         res = GetOrderDetail_V1.s_MyInitiateOrder(mainToken, orderId);
         s_CheckResponse(res);

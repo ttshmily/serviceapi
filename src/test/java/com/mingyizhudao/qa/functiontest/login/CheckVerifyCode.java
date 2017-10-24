@@ -52,6 +52,7 @@ public class CheckVerifyCode extends BaseTest{
         JSONObject check = new JSONObject();
         check.put("mobile", phone);
         check.put("code", "123456");
+        check.put("state", "test");
         logger.info("发送短信验证码到服务器进行验证...");
         String tmpToken = "";
         res = HttpRequest.s_SendPost(host_login +uri, check.toString(), "");
