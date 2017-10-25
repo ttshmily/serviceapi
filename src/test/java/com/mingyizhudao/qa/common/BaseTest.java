@@ -37,6 +37,7 @@ public class BaseTest {
     public static String protocol = "";
     public static String host_doc = "";
     public static String host_crm = "";
+    public static String host_ims = "";
     public static String host_login = "";
     public static String host_kb = "";
     public static String host_bda = "";
@@ -65,17 +66,11 @@ public class BaseTest {
     public static String mainOperatorId = "";
     public static String mainOperatorName = "";
 
-    public String code = "";
-    public String message = "";
-    public JSONObject data;
-
-    protected JsonConfig config = new JsonConfig();
+    public static String code = "";
+    public static String message = "";
+    public static JSONObject data;
 
     public static void main(String[] args) {
-//        String mobile = SendVerifyCode.s_Send();
-//        String token = CheckVerifyCode.s_Check();
-//        s_CreateRegistered();
-//        s_CreateRegisteredDoctor();
         String a = "a.b";
         System.out.println(a.split("\\.")[0]);
     }
@@ -98,6 +93,7 @@ public class BaseTest {
             protocol = prop.getProperty("protocol", "http");
             host_doc = prop.getProperty("host_doc", "services.dev.myzd.info/doctor");
             host_crm = prop.getProperty("host_crm", "services.dev.myzd.info/crm");
+            host_ims = prop.getProperty("host_ims", "services.dev.myzd.info/ims");
             host_bda = prop.getProperty("host_bda", "services.dev.myzd.info/bd-service");
             host_login = prop.getProperty("host_login", "services.dev.myzd.info/doctor");
             host_kb = prop.getProperty("host_kb", "192.168.33.1");
@@ -105,7 +101,6 @@ public class BaseTest {
             host_patient = prop.getProperty("host_patient","services.dev.myzd.info/appointment");
             mainOperatorId = prop.getProperty("mainOperatorId", "chao.fang@mingyizhudao.com");
             mainOperatorName = prop.getProperty("mainOperatorName", "方超（男）");
-
 
             crm_token = prop.getProperty("crm_token");
             bda_token = prop.getProperty("bda_token");
@@ -182,33 +177,6 @@ public class BaseTest {
         logger.info("//    TestAPI START:\t" + getClass().getSimpleName());
         logger.info("///////////////////////////////////////////////////////////////////////////////////////////////////////////// \n");
 
-//        mainUser = new User();
-//        mainUser.getDoctor().setHospital_id("57");//北京大学口腔医院, 北京，区域服务人员 - 方超
-//
-//        HashMap<String,String> mainDoctorInfo = s_CreateSyncedDoctor(mainUser);
-//        if(mainDoctorInfo == null) {
-//            logger.error("创建注册专家失败，退出执行");
-//            System.exit(10000);
-//        }
-//        mainMobile = mainDoctorInfo.get("mobile");
-//        mainToken = mainDoctorInfo.get("token");
-//        mainDoctorId = mainDoctorInfo.get("id");
-//        mainDoctorName = mainUser.getDoctor().getName();
-//        mainDoctorHospitalId = mainDoctorInfo.get("hospitalId");
-//        mainDoctorHospitalName = Generator.hospitalName(mainDoctorHospitalId);
-//        mainExpertId = mainDoctorInfo.get("expert_id");
-//
-//        logger.info("初始化信息完成，准备执行用例");
-//        logger.info("mainDoctorId为:\t"+mainDoctorId);
-//        logger.info("mainDoctorName为:\t"+mainDoctorName);
-//        logger.info("mainDoctorToken为:\t"+mainToken);
-//        logger.info("mainDoctorHospitalId为:\t"+mainDoctorHospitalId);
-//        logger.info("mainDoctorHospitalName为:\t"+mainDoctorHospitalName);
-//        logger.info("mainExpertId为:\t"+mainExpertId);
-//        logger.info("mainOperatorId为:\t"+mainOperatorId);
-//        logger.info("crm_token为:\t"+crm_token);
-//        logger.info("bda_session为:\t"+bda_session);
-//        logger.info("bda_session_staff为:\t"+bda_session_staff);
     }
 
     @AfterClass
@@ -224,12 +192,13 @@ public class BaseTest {
         TestLogger logger = new TestLogger(getClass().getName());
         logger.info(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> ");
         logger.info("||    TestCase START:\t" + method.getName());
+        logger.info(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> \n");
     }
 
     @AfterMethod
     public void TearDownTC(Method method) throws Exception {
         TestLogger logger = new TestLogger(getClass().getName());
-//        logger.info("<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< ");
+        logger.info("<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< ");
         logger.info("||\t TestCase END:\t" + method.getName());
         logger.info("<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< \n");
     }
@@ -241,32 +210,32 @@ public class BaseTest {
         logger.info(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> \n");
     }*/
 
-    public void s_CheckResponse(String res) {
+    public static void s_CheckResponse(String res) {
         TestLogger logger = new TestLogger(s_JobName());
         JSONObject json = null;
         try {
             json = JSONObject.fromObject(res);
         } catch (JSONException e) {
             logger.error("NOT a JSON: \t" + res);
-            this.code = null;
-            this.data = null;
-            this.message = null;
+            code = null;
+            data = null;
+            message = null;
             return;
         }
-        this.code = json.getString("code");
-        this.message = json.getString("message");
+        code = json.getString("code");
+        message = json.getString("message");
         if (json.containsKey("data")) {
             String tmp = json.getString("data");
             if (tmp.equals(""))
-                this.data = JSONObject.fromObject("{}");
+                data = JSONObject.fromObject("{}");
             else if (tmp.equals("[]"))
-                this.data = JSONObject.fromObject("{}");
-            else if (this.code.equals("1000000"))
-                this.data = json.getJSONObject("data");
+                data = JSONObject.fromObject("{}");
+            else if (code.equals("1000000"))
+                data = json.getJSONObject("data");
             else
-                this.data = null;
+                data = null;
         } else {
-            this.data = null;
+            data = null;
         }
         logger.info("[ code ]:\t" + code);
         logger.info("[ message ]:\t" + message);
@@ -297,28 +266,6 @@ public class BaseTest {
         return result;
     }
 
-//    创建一个医生，并且完善信息
-//    protected static HashMap<String, String> s_CreateRegisteredDoctor(DoctorProfile_Test dp) {
-//        TestLogger logger = new TestLogger(s_JobName());
-//        HashMap<String,String> info = s_CreateRegistered();
-//        if (info == null) return null;
-//        String token = info.get("token");
-//
-//        logger.info("更新医生信息...");
-//        UpdateDoctorProfile_V1.s_Update(token, dp);
-//        String res = GetDoctorProfile_V1.s_MyProfile(token);
-//        String doctorHospitalId = JSONObject.fromObject(res).getJSONObject("data").getJSONObject("doctor").getString("hospital_id");
-//        if (doctorHospitalId == null || doctorHospitalId.isEmpty()) {
-//            logger.error("更新失败，医生信息不完整");
-//            return null;
-//        }
-//        info.put("hospitalId", doctorHospitalId);
-//        logger.info("doctorName为:\t"+dp.body.getJSONObject("doctor").getString("name"));
-//        logger.info("doctorHospitalId为:\t"+doctorHospitalId);
-//        logger.info("doctorHospitalName为:\t"+ Generator.hospitalName(doctorHospitalId));
-//        return info;
-//    }
-
     //tianjingzhushi
     protected static HashMap<String, String> s_CreateRegisteredDoctor(User user) {
         TestLogger logger = new TestLogger(s_JobName());
@@ -342,26 +289,6 @@ public class BaseTest {
         return info;
     }
 
-//    创建一个医生并且认证
-//    protected static HashMap<String, String> s_CreateVerifiedDoctor(DoctorProfile_Test dp) {
-//        TestLogger logger = new TestLogger(s_JobName());
-//        HashMap<String,String> info = s_CreateRegisteredDoctor(dp);
-//        if (info == null) return null;
-//
-//        logger.info("认证医生...");
-//        String doctorId = info.get("id");
-//
-//        RegisteredDoctor_Certify_V2.s_CertifyOnly(doctorId, "1");
-//        String is_verified = RegisteredDoctor_Certify_V2.s_CertifyOnly(doctorId, "1");
-//        if (!is_verified.equals("1")) {
-//            logger.error("认证失败");
-//            return null;
-//        }
-//        info.put("is_verified", is_verified);
-//        logger.info("is_verified为:\t"+is_verified);
-//        return info;
-//    }
-
     //tianjignzhushi
     protected static HashMap<String, String> s_CreateVerifiedDoctor(User user) {
         TestLogger logger = new TestLogger(s_JobName());
@@ -381,25 +308,6 @@ public class BaseTest {
         logger.info("is_verified为:\t"+is_verified);
         return info;
     }
-
-//    创建一个医生并且认证和同步
-//    protected static HashMap<String, String> s_CreateSyncedDoctor(DoctorProfile_Test dp) {
-//        TestLogger logger = new TestLogger(s_JobName());
-//        HashMap<String,String> info = s_CreateRegisteredDoctor(dp);
-//        if (info == null) return null;
-//        logger.info("认证并同步医生...");
-//        String doctorId = info.get("id");
-//        HashMap<String,String> tmp = RegisteredDoctor_CertifySync_V2.s_CertifyAndSync(doctorId, "1");
-//        if (!tmp.get("is_verified").equals("1") || tmp.get("kb_id") == null) {
-//            logger.error("认证/同步医生失败");
-//            return null;
-//        }
-//        info.put("is_verified", tmp.get("is_verified"));
-//        info.put("expert_id", tmp.get("kb_id"));
-//        logger.info("is_verified为:\t"+tmp.get("is_verified"));
-//        logger.info("expert_id为:\t"+tmp.get("kb_id"));
-//        return info;
-//    }
 
     //tianjingzhushi
     protected static HashMap<String, String> s_CreateSyncedDoctor(User user) {

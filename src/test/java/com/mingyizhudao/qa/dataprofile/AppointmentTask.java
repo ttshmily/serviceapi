@@ -27,11 +27,11 @@ public class AppointmentTask {
 
     private String expected_appointment_hospital_id;
     private String expected_appointment_hospital_name;
-    private boolean expected_appointment_hospital_alternative;
+    private Boolean expected_appointment_hospital_alternative;
 
     private String expected_doctor_id;
     private String expected_doctor_name;
-    private boolean expected_doctor_alternative;
+    private Boolean expected_doctor_alternative;
 
     // 患者信息
     private Integer patient_age;
@@ -39,12 +39,12 @@ public class AppointmentTask {
     private String patient_name;
     private String patient_phone;
     private String patient_city_id;
-    private String patient_province_id;
+    private String patient_id_card;
 
     private String disease_id;
     private String disease_name;
     private String disease_description;
-    private boolean indications;
+    private Boolean indications;
 
     private String previous_doctor_suggest;
     private String previous_hospital_id;
@@ -56,7 +56,7 @@ public class AppointmentTask {
     private List<String> source_channel;  // 了解方式
 
 
-    private String doctor_id;
+/*    private String doctor_id;
     private String doctor_user_id;
     private String doctor_name;
     private String doctor_phone;
@@ -67,13 +67,14 @@ public class AppointmentTask {
     private String appointment_fee;
     private String doctor_fee;
     private String platform_fee;
-    private String appointment_date;
+    private String appointment_date;*/
 
     public AppointmentTask() {
         this.patient_name = "面诊病人"+randomString(4);
         this.patient_age = (int)randomInt(100);
         this.patient_gender = (int)randomInt(2);
         this.patient_phone = randomPhone();
+        this.patient_id_card = "340802198511300613";
 
         SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
         this.expected_appointment_start_date = randomDateFromNow(2,3, df);
@@ -83,6 +84,12 @@ public class AppointmentTask {
         this.disease_id = tmp;
         this.disease_name = diseaseName(tmp);
         this.disease_description = randomString(300);
+        this.indications = true;
+        this.previous_appointment_date = randomDateTillNow(df);
+        this.previous_doctor_suggest = randomString(20);
+        tmp = randomHospitalId();
+        this.previous_hospital_id = tmp;
+        this.previous_hospital_name = hospitalName(tmp);
 
         tmp = randomProvinceId();
         tmp = randomCityIdUnder(tmp);
@@ -91,14 +98,18 @@ public class AppointmentTask {
         tmp = randomExpertId();
         this.expected_doctor_id = tmp;
         this.expected_doctor_name = expertName(tmp);
+        this.expected_doctor_alternative = true;
 
         tmp = randomHospitalId();
         this.expected_appointment_hospital_id = tmp;
         this.expected_appointment_hospital_name = hospitalName(tmp);
+        this.expected_appointment_hospital_alternative = true;
 
-        String[] sources = new String[]{"BUSINESS", "HOT_LINE", "WEIBO", "BAIDU_BRIDGE", "SUSHU", "WECHAT", "PC_WEB", "MINGYIHUI", "RED_BIRD"};
         Random random = new Random();
+        String[] sources = new String[]{"BUSINESS", "HOT_LINE", "WEIBO", "BAIDU_BRIDGE", "SUSHU", "WECHAT", "PC_WEB", "MINGYIHUI", "RED_BIRD"};
+        String[] service_type = new String[]{"APPOINTMENT"};
         this.source_type = sources[random.nextInt(sources.length)];
+        this.service_type = service_type[random.nextInt(service_type.length)];
     }
 
     public AppointmentTask(String from) {
@@ -122,7 +133,7 @@ public class AppointmentTask {
                 break;
             }
             case "empty": {
-
+                break;
             }
             default: {
                 this.patient_name = "面诊病人"+randomString(4);
@@ -138,6 +149,12 @@ public class AppointmentTask {
                 this.disease_id = tmp;
                 this.disease_name = diseaseName(tmp);
                 this.disease_description = randomString(300);
+                this.indications = true;
+                this.previous_appointment_date = randomDateTillNow(df);
+                this.previous_doctor_suggest = randomString(20);
+                tmp = randomHospitalId();
+                this.previous_hospital_id = tmp;
+                this.previous_hospital_name = hospitalName(tmp);
 
                 tmp = randomProvinceId();
                 tmp = randomCityIdUnder(tmp);
@@ -146,14 +163,18 @@ public class AppointmentTask {
                 tmp = randomExpertId();
                 this.expected_doctor_id = tmp;
                 this.expected_doctor_name = expertName(tmp);
+                this.expected_doctor_alternative = true;
 
                 tmp = randomHospitalId();
                 this.expected_appointment_hospital_id = tmp;
                 this.expected_appointment_hospital_name = hospitalName(tmp);
+                this.expected_appointment_hospital_alternative = true;
 
-                String[] sources = new String[]{"BUSINESS", "HOT_LINE", "WEIBO", "BAIDU_BRIDGE", "SUSHU", "WECHAT", "PC_WEB", "MINGYIHUI", "RED_BIRD"};
                 Random random = new Random();
+                String[] sources = new String[]{"BUSINESS", "HOT_LINE", "WEIBO", "BAIDU_BRIDGE", "SUSHU", "WECHAT", "PC_WEB", "MINGYIHUI", "RED_BIRD"};
+                String[] service_type = new String[]{"APPOINTMENT"};
                 this.source_type = sources[random.nextInt(sources.length)];
+                this.service_type = service_type[random.nextInt(service_type.length)];
             }
         }
     }
