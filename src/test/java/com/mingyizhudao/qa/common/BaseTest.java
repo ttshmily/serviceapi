@@ -4,16 +4,14 @@ package com.mingyizhudao.qa.common;
 import com.mingyizhudao.qa.dataprofile.User;
 import com.mingyizhudao.qa.functiontest.crm.user.management.RegisteredDoctor_CertifySync_V3;
 import com.mingyizhudao.qa.functiontest.doctor.GetDoctorProfile_V1;
-import com.mingyizhudao.qa.functiontest.login.CheckVerifyCode;
-import com.mingyizhudao.qa.functiontest.login.SendVerifyCode;
-import com.mingyizhudao.qa.functiontest.crm.user.management.RegisteredDoctor_CertifySync_V2;
+import com.mingyizhudao.qa.functiontest.doctor.CheckVerifyCode;
+import com.mingyizhudao.qa.functiontest.doctor.SendVerifyCode;
 import com.mingyizhudao.qa.functiontest.crm.user.management.RegisteredDoctor_Certify_V2;
 import com.mingyizhudao.qa.functiontest.doctor.UpdateDoctorProfile_V1;
 import com.mingyizhudao.qa.utilities.Generator;
 import com.mingyizhudao.qa.utilities.HttpRequest;
 import net.sf.json.JSONException;
 import net.sf.json.JSONObject;
-import net.sf.json.JsonConfig;
 import org.apache.log4j.PropertyConfigurator;
 import org.testng.annotations.*;
 
