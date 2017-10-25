@@ -1,4 +1,6 @@
 package com.mingyizhudao.qa.functiontest.IMS.trading.appointment;
 
-public class Cancel {
+import com.mingyizhudao.qa.common.BaseTest;
+
+public class Cancel extends BaseTest {
 }
