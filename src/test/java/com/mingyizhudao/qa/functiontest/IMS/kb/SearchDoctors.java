@@ -1,4 +1,4 @@
-package com.mingyizhudao.qa.KbController;
+package com.mingyizhudao.qa.functiontest.IMS.kb;
 
 import com.mingyizhudao.qa.common.BaseTest;
 import com.mingyizhudao.qa.common.TestLogger;
