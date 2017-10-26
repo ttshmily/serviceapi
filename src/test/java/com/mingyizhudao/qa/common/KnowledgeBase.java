@@ -148,6 +148,8 @@ public class KnowledgeBase {
                 HashMap<String, String> query = new HashMap<>();
                 query.put("pageSize", String.valueOf(pageSize));
                 query.put("isRegistered", "true");
+                query.put("signedStatus", "SIGNED");
+
                 String res = "";
 
                 res = HttpRequest.s_SendGet(BaseTest.host_kb + doctor_uri, query, "");

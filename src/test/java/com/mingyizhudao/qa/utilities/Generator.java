@@ -86,12 +86,12 @@ public class Generator {
 
     public static String randomDateTillNow(SimpleDateFormat df) {
         try {
-            Date start = df.parse("2017/03/13");// 构造开始日期
+//            Date start = df.parse("2017/03/13");// 构造开始日期 1489334400
             Date end = df.parse(df.format(new Date()));// 构造结束日期
-            if (start.getTime() >= end.getTime()) {
-                return null;
-            }
-            long date = start.getTime() + (long) (Math.random() * (end.getTime() - start.getTime()));
+//            if (start.getTime() >= end.getTime()) {
+//                return null;
+//            }
+            long date = end.getTime() - (long) (Math.random() * (end.getTime() - 1489334400));
             return df.format(new Date(date));
         } catch (Exception e) {
             e.printStackTrace();

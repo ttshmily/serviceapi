@@ -1,6 +1,7 @@
 package com.mingyizhudao.qa.dataprofile;
 
 import com.mingyizhudao.qa.functiontest.patient.PatientSendVerifyCode;
+import com.mingyizhudao.qa.utilities.Generator;
 import lombok.Data;
 import net.sf.json.JSONObject;
 
@@ -52,6 +53,7 @@ public class AppointmentTask {
     private String previous_appointment_date;
 
     // 工单基础信息
+    private String  assignee_id;
     private String source_type; // 来源：400，PC
     private List<String> source_channel;  // 了解方式
 
@@ -75,6 +77,7 @@ public class AppointmentTask {
         this.patient_gender = (int)randomInt(2);
         this.patient_phone = randomPhone();
         this.patient_id_card = "340802198511300613";
+        this.patient_city_id = Generator.randomCityId();
 
         SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
         this.expected_appointment_start_date = randomDateFromNow(2,3, df);
@@ -110,6 +113,8 @@ public class AppointmentTask {
         String[] service_type = new String[]{"APPOINTMENT"};
         this.source_type = sources[random.nextInt(sources.length)];
         this.service_type = service_type[random.nextInt(service_type.length)];
+
+        this.assignee_id = randomEmployeeId();
     }
 
     public AppointmentTask(String from) {
@@ -140,6 +145,9 @@ public class AppointmentTask {
                 this.patient_age = (int)randomInt(100);
                 this.patient_gender = (int)randomInt(2);
                 this.patient_phone = randomPhone();
+                this.patient_id_card = "340802198511300613";
+                this.patient_city_id = Generator.randomCityId();
+
 
                 SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
                 this.expected_appointment_start_date = randomDateFromNow(2,3, df);
@@ -175,6 +183,9 @@ public class AppointmentTask {
                 String[] service_type = new String[]{"APPOINTMENT"};
                 this.source_type = sources[random.nextInt(sources.length)];
                 this.service_type = service_type[random.nextInt(service_type.length)];
+
+                this.assignee_id = randomEmployeeId();
+
             }
         }
     }

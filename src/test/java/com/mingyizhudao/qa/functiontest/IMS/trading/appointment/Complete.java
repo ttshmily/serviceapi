@@ -22,9 +22,10 @@ public class Complete extends BaseTest {
 
     public static boolean s_Complete(AppointmentTask at) {
         TestLogger logger = new TestLogger(s_JobName());
-        String res = HttpRequest.s_SendPost(host_ims+uri, at.transform(), crm_token);
+        String res = HttpRequest.s_SendPut(host_ims+uri, at.transform(), crm_token);
         JSONObject r = JSONObject.fromObject(res);
         if (!r.getString("code").equals("1000000")) logger.error(unicodeString(res));
+        //TODO
         return r.getJSONObject("data").getString("status").equals("COMPLETED") &&
                 r.getJSONObject("data").getString("status").equals("5000");
     }
