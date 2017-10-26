@@ -28,9 +28,10 @@ public class Create extends BaseTest {
     public static String s_Create(AppointmentTask at) {
         TestLogger logger = new TestLogger(s_JobName());
         String res = HttpRequest.s_SendPost(host_ims+uri, at.transform(), crm_token);
-        JSONObject r = JSONObject.fromObject(res);
-        if (!r.getString("code").equals("1000000")) logger.error(unicodeString(res));
-        return r.getJSONObject("data").getString("id");
+        s_CheckResponse(res);
+//        JSONObject r = JSONObject.fromObject(res);
+        if (!code.equals("1000000")) logger.error(unicodeString(res));
+        return data.getString("id");
     }
 
     @Test

@@ -34,6 +34,21 @@ public class HttpRequest {
         }*/
     }
 
+    private static String s_JobName() {
+        String jobName = "";
+        StackTraceElement stack[] = (new Throwable()).getStackTrace();
+        for (int i = 0; i < stack.length; i++) {
+            StackTraceElement s = stack[i];
+            if (s.getMethodName().startsWith("s_")) {
+                continue;
+            } else {
+                jobName = s.getClassName();
+                break;
+            }
+        }
+        return jobName;
+    }
+
     /**
      * 向指定URL发送GET方法的请求
      * 
@@ -45,18 +60,18 @@ public class HttpRequest {
      */
 	public static String s_SendGet(String url, String param, String authCode) {
 
-        String jobName = "";
-	    StackTraceElement stack[] = (new Throwable()).getStackTrace();
-        for (int i = 0; i < stack.length; i++) {
-            StackTraceElement s = stack[i];
-            if (s.getMethodName().startsWith("s_")) {
-                continue;
-            } else {
-                jobName = s.getClassName();
-                break;
-            }
-        }
-	    logger.setJobName(jobName);
+//        String jobName = "";
+//	    StackTraceElement stack[] = (new Throwable()).getStackTrace();
+//        for (int i = 0; i < stack.length; i++) {
+//            StackTraceElement s = stack[i];
+//            if (s.getMethodName().startsWith("s_")) {
+//                continue;
+//            } else {
+//                jobName = s.getClassName();
+//                break;
+//            }
+//        }
+	    logger.setJobName(s_JobName());
 	    String result = "";
 		BufferedReader in = null;
 		try {
@@ -67,35 +82,30 @@ public class HttpRequest {
 			URLConnection connection = realUrl.openConnection();
 			HttpURLConnection httpURLConnection = (HttpURLConnection)connection;
 			// 设置通用的请求属性
-			httpURLConnection.setRequestProperty("accept", "*/*");
+            HttpURLConnection.setFollowRedirects(true);
+            httpURLConnection.setRequestProperty("accept", "*/*");
 			httpURLConnection.setRequestProperty("connection", "close");
             httpURLConnection.setRequestProperty("Content-Type", "application/json");
             httpURLConnection.setRequestProperty("user-agent", "Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1;SV1)");
             httpURLConnection.setRequestProperty("Cookie", "myzd="+ authCode);
 			httpURLConnection.setInstanceFollowRedirects(true);
-			HttpURLConnection.setFollowRedirects(true);
             if (!authCode.isEmpty()) httpURLConnection.setRequestProperty("Authorization", "Bearer " + authCode);
 			// 建立实际的连接
-            long start,end;
             logger.info("发送请求: >>>>>  " + httpURLConnection.getRequestMethod() + " " + httpURLConnection.getURL());
             logger.info("请求数据: >>>>>  " + param);
-            start = System.currentTimeMillis();
-			httpURLConnection.connect();
+            long start = System.currentTimeMillis();
+//			httpURLConnection.connect();
             int status = httpURLConnection.getResponseCode();
-            in = new BufferedReader(new InputStreamReader(httpURLConnection.getInputStream())); //connection
-            end = System.currentTimeMillis();
-            logger.info("等待回应: <<<<<  " + httpURLConnection.getResponseCode() + " " + httpURLConnection.getResponseMessage());
+            if (status == HttpURLConnection.HTTP_OK)
+                in = new BufferedReader(new InputStreamReader(httpURLConnection.getInputStream())); //connection
+            else
+                in = new BufferedReader(new InputStreamReader(httpURLConnection.getErrorStream()));
+            long end = System.currentTimeMillis();
+            logger.info("等待回应: <<<<<  " + status);
 //            logger.info("响应时间: <<<<<  " + Long.toString(end-start) + " ms");
-            if (status == HttpURLConnection.HTTP_OK) {
-                String line;
-                while ((line = in.readLine()) != null) {
-                    result += line;
-                }
-            } else {
-                String line;
-                while ((line = in.readLine()) != null) {
-                    logger.info(line);
-                }
+            String line;
+            while ((line = in.readLine()) != null) {
+                result += line;
             }
             in.close();
             if (status == HttpURLConnection.HTTP_MOVED_TEMP || status == HttpURLConnection.HTTP_MOVED_PERM || status == HttpURLConnection.HTTP_SEE_OTHER) { // now only available for redirect on qiye wechat
@@ -103,16 +113,17 @@ public class HttpRequest {
                 String newUrl = httpURLConnection.getHeaderField("Location");
                 // open the new https connection
                 logger.info("Redirect to URL : " + newUrl);
-                result = HttpsRequest.s_DoGet(newUrl);
-//                logger.info("等待回应: <<<<<  " + httpsURLConnection.getResponseCode() + " " + httpURLConnection.getResponseMessage());
-//                logger.info("响应时间: <<<<<  " + Long.toString(end-start) + " ms");
+                if(newUrl.startsWith("https:"))
+                    result = HttpsRequest.s_DoGet(newUrl);
+                else
+                    result = s_SendGet(newUrl, "", authCode);
             }
-		} catch (IOException e) {
-			logger.error(e.getMessage());
-		} catch (NoSuchAlgorithmException e) {
-            logger.error("发送HTTPS请求异常");
-        } catch (KeyManagementException e) {
-            logger.error("发送HTTPS请求异常");
+//		} catch (IOException e) {
+//			logger.error(e.getMessage());
+//		} catch (NoSuchAlgorithmException e) {
+//            logger.error("发送HTTPS请求异常");
+//        } catch (KeyManagementException e) {
+//            logger.error("发送HTTPS请求异常");
         } catch (Exception e) {
 		    logger.error(e.getMessage());
         }
@@ -120,57 +131,71 @@ public class HttpRequest {
 	}
 
     public static String s_SendGet(String url, HashMap<String,String> query, String authCode) {
-        String result = "";
+//        String result = "";
         String param = "";
-        try {
-            if (query != null ) {
-                param = queryBuilder(query);
-            }
-            result = s_SendGet(url, param, authCode);
-        } catch (Exception e) {
-            logger.error(result);
-            logger.error(e.getMessage());
+        if (query != null ) {
+            param = queryBuilder(query);
         }
-        return result;
+        return s_SendGet(url, param, authCode);
+//        try {
+//            if (query != null ) {
+//                param = queryBuilder(query);
+//            }
+//            result = s_SendGet(url, param, authCode);
+//        } catch (Exception e) {
+//            logger.error(result);
+//            logger.error(e.getMessage());
+//        }
+//        return result;
     }
 
     public static String s_SendGet(String url, String param, String authCode, HashMap<String,String> pathValue) {
-        String result = "";
-        try {
-            String urlNameString;
-            if (pathValue != null ) {
-                urlNameString = restUrl(url, pathValue);
-            } else {
-                urlNameString = url;
-            }
-            result = s_SendGet(urlNameString, param, authCode);
-
-        } catch (Exception e) {
-            logger.error(e.getMessage());
+//        String result = "";
+        String urlNameString;
+        if (pathValue != null ) {
+            urlNameString = restUrl(url, pathValue);
+        } else {
+            urlNameString = url;
         }
-        return result;
+        return s_SendGet(urlNameString, param, authCode);
+//        try {
+//            String urlNameString;
+//            if (pathValue != null ) {
+//                urlNameString = restUrl(url, pathValue);
+//            } else {
+//                urlNameString = url;
+//            }
+//            result = s_SendGet(urlNameString, param, authCode);
+//
+//        } catch (Exception e) {
+//            logger.error(e.getMessage());
+//        }
+//        return result;
     }
 
     public static String s_SendGet(String url, HashMap<String,String> query, String authCode, HashMap<String,String> pathValue) {
-        String result = "";
+//        String result = "";
         String param = "";
-        BufferedReader in = null;
-        try {
-            String urlNameString;
-            if (pathValue != null ) {
-                urlNameString = restUrl(url, pathValue);
-            } else {
-                urlNameString = url;
-            }
-            if (query != null ) {
-                param = queryBuilder(query);
-            }
-            result = s_SendGet(urlNameString, param, authCode);
-
-        } catch (Exception e) {
-            logger.error(e.getMessage());
+        if (query != null ) {
+            param = queryBuilder(query);
         }
-        return result;
+        return s_SendGet(url, param, authCode, pathValue);
+//        try {
+//            String urlNameString;
+//            if (pathValue != null ) {
+//                urlNameString = restUrl(url, pathValue);
+//            } else {
+//                urlNameString = url;
+//            }
+//            if (query != null ) {
+//                param = queryBuilder(query);
+//            }
+//            result = s_SendGet(urlNameString, param, authCode);
+//
+//        } catch (Exception e) {
+//            logger.error(e.getMessage());
+//        }
+//        return result;
     }
 
     /**
