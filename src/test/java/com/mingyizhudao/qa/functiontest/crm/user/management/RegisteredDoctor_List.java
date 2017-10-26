@@ -55,8 +55,8 @@ public class RegisteredDoctor_List extends BaseTest {
         Assert.assertNotNull(Helper.s_ParseJson(data, "list(0):academic_title"), "医生学术职称不存在");
         Assert.assertNotNull(Helper.s_ParseJson(data, "list(0):medical_title"), "医生技术职称不存在");
         Assert.assertNotEquals(Helper.s_ParseJson(data, "list(0):is_verified"), "", "医生是否认证字段没有值");
-        Assert.assertNotNull(Helper.s_ParseJson(data, "list(0):inviter_name"), "医生的地推字段不存在");
-        Assert.assertNotNull(Helper.s_ParseJson(data, "list(0):is_famous"), "医生是否是专家字段不存在");
+//        Assert.assertNotNull(Helper.s_ParseJson(data, "list(0):inviter_name"), "医生的地推字段不存在");
+//        Assert.assertNotNull(Helper.s_ParseJson(data, "list(0):is_famous"), "医生是否是专家字段不存在");
         Assert.assertNotNull(Helper.s_ParseJson(data, "size"), "列表总量字段不存在");
         Assert.assertEquals(Helper.s_ParseJson(data, "page_size"), "10", "默认分页大小不为10");
         Assert.assertNotNull(Helper.s_ParseJson(data, "page"), "默认没有传回第1页");
@@ -381,7 +381,7 @@ public class RegisteredDoctor_List extends BaseTest {
         }
 
         query.replace("medical_title","ASSOCIATE_ARCHIATER");
-        res = HttpRequest.s_SendGet(host_crm + uri, query, crm_token, null);
+        res = HttpRequest.s_SendGet(host_crm + uri, query, crm_token);
         s_CheckResponse(res);
         Assert.assertEquals(code, "1000000");
         //TODO

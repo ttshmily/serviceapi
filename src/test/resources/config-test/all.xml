@@ -17,8 +17,8 @@
     </test>
     <test name="login" preserve-order="true">
         <classes>
-            <class name="com.mingyizhudao.qa.functiontest.login.SendVerifyCode" />
-            <class name="com.mingyizhudao.qa.functiontest.login.CheckVerifyCode" />
+            <class name="com.mingyizhudao.qa.functiontest.doctor.SendVerifyCode" />
+            <class name="com.mingyizhudao.qa.functiontest.doctor.CheckVerifyCode" />
             <class name="com.mingyizhudao.qa.functiontest.login.Refresh" />
         </classes>
     </test>

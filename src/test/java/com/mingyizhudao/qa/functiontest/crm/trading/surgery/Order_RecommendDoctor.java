@@ -40,10 +40,10 @@ public class Order_RecommendDoctor extends BaseTest {
         pathValue.put("orderNumber", orderId);
         res = Order_Detail.s_Detail(orderId);
 
-        if (!Helper.s_ParseJson(JSONObject.fromObject(res), "data:status").equals("2000")) {
+/*        if (!Helper.s_ParseJson(JSONObject.fromObject(res), "data:status").equals("2000")) {
             logger.error("订单处于不可推荐状态");
             return Helper.s_ParseJson(JSONObject.fromObject(res), "data:status");
-        }
+        }*/
         JSONObject body = new JSONObject();
         body.put("surgeon_id",doctorId);
         body.put("content","自动化推荐的医生");

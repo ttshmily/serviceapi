@@ -3,15 +3,11 @@ package com.mingyizhudao.qa.functiontest.doctor;
 import com.mingyizhudao.qa.common.BaseTest;
 import com.mingyizhudao.qa.dataprofile.SurgeryOrder;
 import com.mingyizhudao.qa.functiontest.crm.trading.surgery.Order_Detail;
-import com.mingyizhudao.qa.functiontest.login.CheckVerifyCode;
-import com.mingyizhudao.qa.functiontest.login.SendVerifyCode;
 import com.mingyizhudao.qa.common.TestLogger;
 import com.mingyizhudao.qa.functiontest.crm.trading.surgery.Order_List;
 import com.mingyizhudao.qa.utilities.Generator;
 import com.mingyizhudao.qa.utilities.HttpRequest;
 import net.sf.json.JSONObject;
-import net.sf.json.JSONSerializer;
-import net.sf.json.JsonConfig;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
@@ -60,8 +56,7 @@ public class CreateSurgeryBriefs extends BaseTest {
         SendVerifyCode.s_Send(agentPhone);
         String token = CheckVerifyCode.s_Check(agentPhone);
         if (token == null) {
-            logger.error("没有获取到token");
-            Assert.fail();
+            Assert.fail("没有获取到token");
         }
         SurgeryOrder su = new SurgeryOrder("brief");
         HashMap<String, String> pathValue = new HashMap<>();

@@ -121,8 +121,10 @@ public class AssignDoctor extends BaseTest {
             logger.error(unicodeString(res));
             return null;
         }
-        logger.error(unicodeString(res));
-        if(r.getJSONObject("data").isEmpty()) return null;
+        if(r.getJSONObject("data").isEmpty()) {
+            logger.error(unicodeString(res));
+            return null;
+        }
         return r.getJSONObject("data").getString("service_id");
     }
 }

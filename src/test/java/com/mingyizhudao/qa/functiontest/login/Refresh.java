@@ -1,9 +1,11 @@
 package com.mingyizhudao.qa.functiontest.login;
 
+import com.mingyizhudao.qa.functiontest.doctor.CheckVerifyCode;
 import com.mingyizhudao.qa.functiontest.doctor.GetDoctorProfile_V1;
 import com.mingyizhudao.qa.common.BaseTest;
 import com.mingyizhudao.qa.common.TestLogger;
 import com.mingyizhudao.qa.dataprofile.login.RefreshProfile;
+import com.mingyizhudao.qa.functiontest.doctor.SendVerifyCode;
 import com.mingyizhudao.qa.utilities.Helper;
 import com.mingyizhudao.qa.utilities.HttpRequest;
 import org.testng.Assert;
