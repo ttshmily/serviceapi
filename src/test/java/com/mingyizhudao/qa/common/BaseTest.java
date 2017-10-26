@@ -115,6 +115,7 @@ public class BaseTest {
             host_bda = protocol.concat("://").concat(host_bda);
             host_appointment = protocol.concat("://").concat(host_appointment);
             host_patient = protocol.concat("://").concat(host_patient);
+            host_ims = protocol.concat("://").concat(host_ims);
         }
     }
 
@@ -136,7 +137,7 @@ public class BaseTest {
     @BeforeSuite
     public void SetUpSuite() throws Exception {
         KnowledgeBase.s_Init();
-        crm_token = JSONObject.fromObject(HttpRequest.s_SendGet(host_crm+"/api/internal/devToken", "email="+mainOperatorId+"&name="+mainOperatorName, "")).getJSONObject("data").getString("token");
+       // crm_token = JSONObject.fromObject(HttpRequest.s_SendGet(host_crm+"/api/internal/devToken", "email="+mainOperatorId+"&name="+mainOperatorName, "")).getJSONObject("data").getString("token");
         bda_session = JSONObject.fromObject(HttpRequest.s_SendGet("http://services.dev.myzd.info/internal/api/session/create" , "number=SH0133", "")).getString("data");
         bda_session_staff = JSONObject.fromObject(HttpRequest.s_SendGet("http://services.dev.myzd.info/internal/api/session/create" , "number=Sh0143", "")).getString("data");
 

@@ -33,7 +33,7 @@ public class SearchDiseases extends BaseTest {
         logger.info("输入疾病名查询疾病");
         query.put("name", "疾病");
         query.put("page", "1");
-        query.put("pageSize", "10");
+        query.put("page_size", "10");
         res = HttpRequest.s_SendGet(host_ims + uri, query, crm_token);
         s_CheckResponse(res);
         Assert.assertEquals(code, "1000000", "输入疾病应返回相应的搜索结果");
@@ -45,9 +45,9 @@ public class SearchDiseases extends BaseTest {
         String res = "";
         HashMap<String, String> query = new HashMap<>();
         logger.info("不输入疾病名称查询疾病");
-        query.put("name", null);
+        query.put("name", "");
         query.put("page", "1");
-        query.put("pageSize", "10");
+        query.put("page_size", "10");
         res = HttpRequest.s_SendGet(host_ims + uri, query, crm_token);
         s_CheckResponse(res);
         Assert.assertEquals(code, "1000000", "不输入疾病时返回默认结果");
@@ -60,11 +60,11 @@ public class SearchDiseases extends BaseTest {
         logger.info("输入无效关键字查询疾病");
         query.put("name", "王");
         query.put("page", "1");
-        query.put("pageSize", "10");
+        query.put("page_size", "10");
         res = HttpRequest.s_SendGet(host_ims + uri, query, crm_token);
         s_CheckResponse(res);
         Assert.assertEquals(code, "1000000");
-        Assert.assertNull(s_ParseJson(data, "list"),"输入无效关键字时应返回空结果");
+        Assert.assertEquals(s_ParseJson(data,"list"),"[]","输入无效关键字时应返回空结果");
 
     }
 }

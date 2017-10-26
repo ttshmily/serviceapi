@@ -32,7 +32,7 @@ public class SearchHospitals extends BaseTest{
         HashMap<String, String> query = new HashMap<>();
         query.put("name", "上海");
         query.put("page", "1");
-        query.put("pageSize", "10");
+        query.put("page_size", "10");
         res = HttpRequest.s_SendGet(host_ims + uri, query, crm_token, null);
         s_CheckResponse(res);
         Assert.assertEquals(code, "1000000", "输入医院名应返回相应的结果");
@@ -44,7 +44,7 @@ public class SearchHospitals extends BaseTest{
         HashMap<String, String> query = new HashMap<>();
         query.put("name", null);
         query.put("page", "1");
-        query.put("pageSize", "10");
+        query.put("page_size", "10");
         res = HttpRequest.s_SendGet(host_ims + uri, query, crm_token, null);
         s_CheckResponse(res);
         Assert.assertEquals(code, "1000000", "输入医院名为空应返回所有结果");
@@ -56,10 +56,10 @@ public class SearchHospitals extends BaseTest{
         HashMap<String, String> query = new HashMap<>();
         query.put("name", "11111");
         query.put("page", "1");
-        query.put("pageSize", "10");
+        query.put("page_size", "10");
         res = HttpRequest.s_SendGet(host_ims + uri, query, crm_token, null);
         s_CheckResponse(res);
         Assert.assertEquals(code, "1000000");
-        Assert.assertNull(s_ParseJson(data,"list"),"输入无效医院名应返回空结果");
+        Assert.assertEquals(s_ParseJson(data,"list"),"[]","输入无效医院名应返回空结果");
     }
 }

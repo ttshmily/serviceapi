@@ -8,6 +8,8 @@ import org.testng.annotations.Test;
 
 import java.util.HashMap;
 
+import static com.mingyizhudao.qa.utilities.Helper.s_ParseJson;
+
 /**
  * Created by TianJing on 2017/10/23.
  */
@@ -30,7 +32,6 @@ public class SearchCities extends BaseTest{
         // city in province
         logger.info("在江苏省查询城市列表");
         query.put("province_id", "320000"); // 江苏
-        System.out.println(host_ims + uri);
         res = HttpRequest.s_SendGet(host_ims + uri, query, crm_token, null);
         s_CheckResponse(res);
         Assert.assertEquals(code, "1000000", "没有根据省份返回城市列表");
@@ -57,5 +58,6 @@ public class SearchCities extends BaseTest{
         res = HttpRequest.s_SendGet(host_ims + uri, query, crm_token, null);
         s_CheckResponse(res);
         Assert.assertNotEquals(code, "1000000", "省份为0时应不返回城市列表");
+        Assert.assertEquals(s_ParseJson(data,"list"),"[]","输入无效省份应返回空结果");
     }
 }
