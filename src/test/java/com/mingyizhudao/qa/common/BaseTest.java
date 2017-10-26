@@ -139,6 +139,7 @@ public class BaseTest {
         KnowledgeBase.s_Init();
 //        crm_token = JSONObject.fromObject(HttpRequest.s_SendGet(host_crm+"/api/internal/devToken", "email="+mainOperatorId+"&name="+mainOperatorName, "")).getJSONObject("data").getString("token");
         crm_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOjIxLCJ1aWQiOiJTSDAwMTciLCJzdGFmZl9pZCI6IlNIMDAxNyIsIm5hbWUiOiLlvKDlhYvljYciLCJtb2JpbGUiOiIxNzcxNzM5NDU2MCIsImF2YXRhciI6Imh0dHBzOi8vcC5xbG9nby5jbi9iaXptYWlsL0E0ckw0M1JhbDdjdzlsaWNCN0lsT3dWRG1FWGliMklCRjJpY2R5Vkt1QkY3VmZLV0ZSS0pqaWFzNkEvMCIsImV4cCI6MTUwOTU5NDI2NCwiZGVwYXJ0bWVudCI6MTQsImVtYWlsIjoiY2xhcmsuemhhbmdAbWluZ3lpemh1ZGFvLmNvbSJ9.XeIyH0fDetEbCh9bpbnS6tyJKiPk5XzZKr8Y3pA-MMM";
+
         bda_session = JSONObject.fromObject(HttpRequest.s_SendGet("http://services.dev.myzd.info/internal/api/session/create" , "number=SH0133", "")).getString("data");
         bda_session_staff = JSONObject.fromObject(HttpRequest.s_SendGet("http://services.dev.myzd.info/internal/api/session/create" , "number=Sh0143", "")).getString("data");
 
