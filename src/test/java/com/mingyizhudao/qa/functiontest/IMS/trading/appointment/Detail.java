@@ -28,7 +28,7 @@ public class Detail extends BaseTest {
     }
 
     @Test
-    public void test_01_获取详情_检查必要字段() {
+    public void test_01_内部自建工单详情_检查必要字段() {
         String res = "";
         HashMap<String, String> pathValue = new HashMap<>();
 
@@ -49,6 +49,7 @@ public class Detail extends BaseTest {
         Assert.assertNotNull(data.getString("source_channel"));
         Assert.assertNotNull(data.getString("status"));
         Assert.assertNotNull(data.getString("track_list"));
+        Assert.assertEquals(data.getString("creator_name"), mainOperatorName);
         Assert.assertEquals(data.getString("patient_name"), at.getPatient_name());
         Assert.assertEquals(data.getString("patient_phone"), at.getPatient_phone());
         Assert.assertEquals(data.getString("patient_gender"), String.valueOf(at.getPatient_gender()));
@@ -79,4 +80,9 @@ public class Detail extends BaseTest {
         Assert.assertEquals(data.getString("expected_appointment_start_date"), at.getExpected_appointment_start_date());
         Assert.assertEquals(data.getString("expected_appointment_due_date"), at.getExpected_appointment_due_date());
     }
+
+    //TODO
+     public void test_02_外部患者提交订单的详情() {
+
+     }
 }

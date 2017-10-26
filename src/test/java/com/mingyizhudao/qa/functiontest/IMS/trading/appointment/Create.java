@@ -3,10 +3,14 @@ package com.mingyizhudao.qa.functiontest.IMS.trading.appointment;
 import com.mingyizhudao.qa.common.BaseTest;
 import com.mingyizhudao.qa.common.TestLogger;
 import com.mingyizhudao.qa.dataprofile.AppointmentTask;
+import com.mingyizhudao.qa.utilities.Generator;
 import com.mingyizhudao.qa.utilities.HttpRequest;
+import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 import org.testng.Assert;
 import org.testng.annotations.Test;
+
+import java.text.SimpleDateFormat;
 
 import static com.mingyizhudao.qa.utilities.Helper.unicodeString;
 
@@ -106,15 +110,58 @@ public class Create extends BaseTest {
     }
 
     @Test
-    public void test_06_创建工单_只有患者姓名() {
+    public void test_06_创建工单_只有基本的必填信息() {
         String res = "";
         AppointmentTask at = new AppointmentTask("empty");
         at.setPatient_name("孤独患者");
-
+        at.setAssignee_id(Generator.randomEmployeeId());
+        at.setSource_type("PC_WEB");
+        at.setPatient_gender((int)Generator.randomInt(2));
+        at.setPatient_city_id(Generator.randomCityId());
+        at.setPatient_age((int)Generator.randomInt(100));
+        at.setDisease_name(Generator.diseaseName(Generator.randomDiseaseId()));
+        at.setDisease_description("");
+        at.setExpected_city_id(Generator.randomCityId());
+        at.setExpected_appointment_start_date(Generator.randomDateFromNow(1,3, new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'")));
+        at.setExpected_appointment_due_date(Generator.randomDateFromNow(1,3, new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'")));
         res = HttpRequest.s_SendPost(host_ims+uri, at.transform(), crm_token);
 
         s_CheckResponse(res);
         Assert.assertEquals(code, "1000000");
         Assert.assertNotNull(data.getString("id"));
+    }
+
+    @Test
+    public void test_07_创建工单_日期格式错误() {
+        String res = "";
+        AppointmentTask at = new AppointmentTask();
+
+        at.setExpected_appointment_start_date(Generator.randomDateFromNow(1,3));
+        at.setExpected_appointment_due_date(Generator.randomDateFromNow(1,3));
+        at.setPrevious_appointment_date(Generator.randomDateTillNow());
+        res = HttpRequest.s_SendPost(host_ims+uri, at.transform(), crm_token);
+
+        s_CheckResponse(res);
+        Assert.assertNotEquals(code, "1000000");
+    }
+
+    @Test
+    public void test_08_创建工单_新增一条工单记录() {
+        String res = "";
+        AppointmentTask at = new AppointmentTask();
+
+        res = HttpRequest.s_SendPost(host_ims+uri, at.transform(), crm_token);
+
+        s_CheckResponse(res);
+        Assert.assertEquals(code, "1000000");
+        String tid = data.getString("id");
+
+        res = Detail.s_Detail(tid);
+        s_CheckResponse(res);
+        JSONArray track_list = data.getJSONArray("track_list");
+        Assert.assertEquals(track_list.size(), 1);
+        JSONObject track = data.getJSONArray("track_list").getJSONObject(track_list.size()-1);
+        Assert.assertEquals(track.getString("track_type"), "CREATE_ORDER_V1");
+        Assert.assertEquals(track.getString("poster_name"), mainOperatorName);
     }
 }
