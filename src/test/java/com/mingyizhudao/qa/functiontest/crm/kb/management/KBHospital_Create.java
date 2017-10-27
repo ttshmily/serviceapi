@@ -30,7 +30,7 @@ public class KBHospital_Create extends BaseTest {
     public static String uri = version + "/medicallibrary/hospitals";
 
 
-//    public static HashMap<String, String> s_Create(HospitalProfile_test hp) {
+//    public static HashMap<String, String> s_CreateTid(HospitalProfile_test hp) {
 //        String res = "";
 //        TestLogger logger = new TestLogger(s_JobName());
 //        res = HttpRequest.s_SendPost(host_crm+uri, hp.body.toString(), crm_token);
@@ -61,7 +61,7 @@ public class KBHospital_Create extends BaseTest {
         return result;
     }
 
-//    public static String s_Create(Hospital hp) {
+//    public static String s_CreateTid(Hospital hp) {
 //        String res = "";
 //        TestLogger logger = new TestLogger(s_JobName());
 //        res = HttpRequest.s_SendPost(host_crm+uri, JSONObject.fromObject(hp).toString(), crm_token);

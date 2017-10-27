@@ -3,8 +3,9 @@ package com.mingyizhudao.qa.functiontest.IMS.trading.appointment;
 import com.mingyizhudao.qa.common.BaseTest;
 import com.mingyizhudao.qa.common.TestLogger;
 import com.mingyizhudao.qa.dataprofile.AppointmentTask;
+import com.mingyizhudao.qa.functiontest.crm.kb.management.KBExpert_Detail;
+import com.mingyizhudao.qa.functiontest.crm.kb.management.KBHospital_Detail;
 import com.mingyizhudao.qa.utilities.Generator;
-import com.mingyizhudao.qa.utilities.HttpRequest;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 import org.testng.Assert;
@@ -12,7 +13,7 @@ import org.testng.annotations.Test;
 
 import java.util.*;
 
-import static com.mingyizhudao.qa.functiontest.IMS.trading.appointment.Create.s_Create;
+import static com.mingyizhudao.qa.functiontest.IMS.trading.appointment.Create.s_CreateTid;
 import static com.mingyizhudao.qa.utilities.Helper.unicodeString;
 import static com.mingyizhudao.qa.utilities.HttpRequest.s_SendPut;
 
@@ -52,7 +53,7 @@ public class Recommend extends BaseTest {
     @Test
     public void test_01_推荐一名或多名医生() {
         String res = "";
-        String tid = s_Create(new AppointmentTask());
+        String tid = s_CreateTid(new AppointmentTask());
         String orderNumber = getOrderNumberByTid(tid);
         HashMap<String, String> pathValue = new HashMap<>();
         pathValue.put("orderNumber", orderNumber);
@@ -92,7 +93,7 @@ public class Recommend extends BaseTest {
     @Test
     public void test_02_推荐医生_检查工单记录() {
         String res = "";
-        String tid = s_Create(new AppointmentTask());
+        String tid = s_CreateTid(new AppointmentTask());
         String orderNumber = getOrderNumberByTid(tid);
         HashMap<String, String> pathValue = new HashMap<>();
         pathValue.put("orderNumber", orderNumber);
@@ -129,10 +130,10 @@ public class Recommend extends BaseTest {
     }
 
     private String getOrderNumberByTid(String tid) {
-        return "";
+        return JSONObject.fromObject(Detail.s_Detail(tid)).getJSONObject("data").getString("order_number");
     }
 
     private String getHospitalIdByExpertId(String expert_id) {
-        return "";
+        return JSONObject.fromObject(KBExpert_Detail.s_Detail(expert_id)).getJSONObject("data").getString("hospital_id");
     }
 }
