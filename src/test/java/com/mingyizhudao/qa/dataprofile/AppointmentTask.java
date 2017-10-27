@@ -57,6 +57,12 @@ public class AppointmentTask {
     private String source_type; // 来源：400，PC
     private List<String> source_channel;  // 了解方式
 
+    // payment相关信息
+    private String appointment_fee_remark;
+    private String doctor_account_identity;
+    private String doctor_account_info;
+    private String doctor_account_name;
+
 
 /*    private String doctor_id;
     private String doctor_user_id;
@@ -135,6 +141,13 @@ public class AppointmentTask {
                 String[] sources = new String[]{"BUSINESS", "HOT_LINE", "WEIBO", "BAIDU_BRIDGE", "SUSHU", "WECHAT", "PC_WEB", "MINGYIHUI", "RED_BIRD"};
                 Random random = new Random();
                 this.source_type = sources[random.nextInt(sources.length)];
+                break;
+            }
+            case "account": {
+                this.appointment_fee_remark = Generator.randomString(20);
+                this.doctor_account_name = "账号姓名" + Generator.randomString(5);
+                this.doctor_account_identity = "340802198511300613";
+                this.doctor_account_info = "支付宝";
                 break;
             }
             case "empty": {

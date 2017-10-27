@@ -12,7 +12,6 @@ import org.testng.annotations.Test;
 
 import java.util.HashMap;
 
-import static com.mingyizhudao.qa.utilities.Helper.simplify;
 import static com.mingyizhudao.qa.utilities.Helper.unicodeString;
 
 public class Assign extends BaseTest {
@@ -43,7 +42,7 @@ public class Assign extends BaseTest {
     public void test_01_创建后转交() {
         String res = "";
         AppointmentTask at = new AppointmentTask();
-        String tid = Create.s_Create(at);
+        String tid = Create.s_CreateTid(at);
 
         HashMap<String, String> pathValue = new HashMap<>();
         pathValue.put("id", tid);
@@ -65,18 +64,18 @@ public class Assign extends BaseTest {
         Assert.assertEquals(track_list.size(), 2);
         JSONObject track = track_list.getJSONObject(track_list.size() - 1);
         Assert.assertEquals(track.getString("track_type"), "CHANGE_ASSIGNEE_V1");
-        Assert.assertEquals(track.getString("poster_name"), mainOperatorName);
         Assert.assertEquals(track.getJSONObject("content").getString("assignee_id"), tmp);
         Assert.assertEquals(track.getJSONObject("content").getString("assignee_name"), Generator.employeeName(tmp));
         Assert.assertEquals(track.getJSONObject("content").getString("content"), body.getString("remark"));
         Assert.assertNotNull(track.getJSONObject("content").getString("assignee_department"));
+        Assert.assertEquals(track.getString("poster_name"), mainOperatorName);
     }
 
     @Test
     public void test_02_反复转交检查工单记录() {
         String res = "";
         AppointmentTask at = new AppointmentTask();
-        String tid = Create.s_Create(at);
+        String tid = Create.s_CreateTid(at);
 
         HashMap<String, String> pathValue = new HashMap<>();
         pathValue.put("id", tid);
@@ -102,10 +101,10 @@ public class Assign extends BaseTest {
         Assert.assertEquals(track_list.size(), times+1);
         JSONObject track = track_list.getJSONObject(track_list.size() - 1);
         Assert.assertEquals(track.getString("track_type"), "CHANGE_ASSIGNEE_V1");
-        Assert.assertEquals(track.getString("poster_name"), mainOperatorName);
         Assert.assertEquals(track.getJSONObject("content").getString("assignee_id"), tmp);
         Assert.assertEquals(track.getJSONObject("content").getString("assignee_name"), Generator.employeeName(tmp));
         Assert.assertEquals(track.getJSONObject("content").getString("content"), body.getString("remark"));
         Assert.assertNotNull(track.getJSONObject("content").getString("assignee_department"));
+        Assert.assertEquals(track.getString("poster_name"), mainOperatorName);
     }
 }

@@ -6,6 +6,8 @@ import com.mingyizhudao.qa.dataprofile.AppointmentTask;
 import com.mingyizhudao.qa.utilities.HttpRequest;
 import net.sf.json.JSONObject;
 
+import java.util.HashMap;
+
 import static com.mingyizhudao.qa.utilities.Helper.unicodeString;
 
 public class Update extends BaseTest {
@@ -21,21 +23,21 @@ public class Update extends BaseTest {
 
     public static boolean s_Update(String orderNumber, AppointmentTask at) {
         TestLogger logger = new TestLogger(s_JobName());
-        String res = HttpRequest.s_SendPut(host_ims+uri, at.transform(), crm_token);
+        HashMap<String, String> pathValue = new HashMap<>();
+        pathValue.put("orderNumber", orderNumber);
+        String res = HttpRequest.s_SendPut(host_ims+uri, at.transform(), crm_token, pathValue);
         JSONObject r = JSONObject.fromObject(res);
         if (!r.getString("code").equals("1000000")) logger.error(unicodeString(res));
-        //TODO
-        return r.getJSONObject("data").getString("status").equals("COMPLETED") &&
-                r.getJSONObject("data").getString("status").equals("9000");
+        return r.getJSONObject("code").equals("1000000");
     }
 
     public static boolean s_Update(String orderNumber, JSONObject body) {
         TestLogger logger = new TestLogger(s_JobName());
-        String res = HttpRequest.s_SendPut(host_ims+uri, body.toString(), crm_token);
+        HashMap<String, String> pathValue = new HashMap<>();
+        pathValue.put("orderNumber", orderNumber);
+        String res = HttpRequest.s_SendPut(host_ims+uri, body.toString(), crm_token, pathValue);
         JSONObject r = JSONObject.fromObject(res);
         if (!r.getString("code").equals("1000000")) logger.error(unicodeString(res));
-        //TODO
-        return r.getJSONObject("data").getString("status").equals("COMPLETED") &&
-                r.getJSONObject("data").getString("status").equals("9000");
+        return r.getJSONObject("code").equals("1000000");
     }
 }
