@@ -59,18 +59,6 @@ public class HttpRequest {
      * @return URL所代表远程资源的响应结果，类型为String
      */
 	public static String s_SendGet(String url, String param, String authCode) {
-
-//        String jobName = "";
-//	    StackTraceElement stack[] = (new Throwable()).getStackTrace();
-//        for (int i = 0; i < stack.length; i++) {
-//            StackTraceElement s = stack[i];
-//            if (s.getMethodName().startsWith("s_")) {
-//                continue;
-//            } else {
-//                jobName = s.getClassName();
-//                break;
-//            }
-//        }
 	    logger.setJobName(s_JobName());
 	    String result = "";
 		BufferedReader in = null;
@@ -91,17 +79,16 @@ public class HttpRequest {
 			httpURLConnection.setInstanceFollowRedirects(true);
             if (!authCode.isEmpty()) httpURLConnection.setRequestProperty("Authorization", "Bearer " + authCode);
 			// 建立实际的连接
-            logger.info("发送请求: >>>>>  " + httpURLConnection.getRequestMethod() + " " + httpURLConnection.getURL());
-            logger.info("请求数据: >>>>>  " + param);
+            logger.info("发送请求: ===>>  " + httpURLConnection.getRequestMethod() + " " + httpURLConnection.getURL());
+            logger.info("请求数据: ===>>  " + param);
             long start = System.currentTimeMillis();
-//			httpURLConnection.connect();
             int status = httpURLConnection.getResponseCode();
             if (status == HttpURLConnection.HTTP_OK)
                 in = new BufferedReader(new InputStreamReader(httpURLConnection.getInputStream())); //connection
             else
                 in = new BufferedReader(new InputStreamReader(httpURLConnection.getErrorStream()));
             long end = System.currentTimeMillis();
-            logger.info("等待回应: <<<<<  " + status);
+            logger.info("等待回应: <<===  " + httpURLConnection.getResponseCode() + " " + httpURLConnection.getResponseMessage());
 //            logger.info("响应时间: <<<<<  " + Long.toString(end-start) + " ms");
             String line;
             while ((line = in.readLine()) != null) {
@@ -118,12 +105,6 @@ public class HttpRequest {
                 else
                     result = s_SendGet(newUrl, "", authCode);
             }
-//		} catch (IOException e) {
-//			logger.error(e.getMessage());
-//		} catch (NoSuchAlgorithmException e) {
-//            logger.error("发送HTTPS请求异常");
-//        } catch (KeyManagementException e) {
-//            logger.error("发送HTTPS请求异常");
         } catch (Exception e) {
 		    logger.error(e.getMessage());
         }
@@ -131,26 +112,11 @@ public class HttpRequest {
 	}
 
     public static String s_SendGet(String url, HashMap<String,String> query, String authCode) {
-//        String result = "";
-        String param = "";
-        if (query != null ) {
-            param = queryBuilder(query);
-        }
+        String param = queryBuilder(query);
         return s_SendGet(url, param, authCode);
-//        try {
-//            if (query != null ) {
-//                param = queryBuilder(query);
-//            }
-//            result = s_SendGet(url, param, authCode);
-//        } catch (Exception e) {
-//            logger.error(result);
-//            logger.error(e.getMessage());
-//        }
-//        return result;
     }
 
     public static String s_SendGet(String url, String param, String authCode, HashMap<String,String> pathValue) {
-//        String result = "";
         String urlNameString;
         if (pathValue != null ) {
             urlNameString = restUrl(url, pathValue);
@@ -158,44 +124,11 @@ public class HttpRequest {
             urlNameString = url;
         }
         return s_SendGet(urlNameString, param, authCode);
-//        try {
-//            String urlNameString;
-//            if (pathValue != null ) {
-//                urlNameString = restUrl(url, pathValue);
-//            } else {
-//                urlNameString = url;
-//            }
-//            result = s_SendGet(urlNameString, param, authCode);
-//
-//        } catch (Exception e) {
-//            logger.error(e.getMessage());
-//        }
-//        return result;
     }
 
     public static String s_SendGet(String url, HashMap<String,String> query, String authCode, HashMap<String,String> pathValue) {
-//        String result = "";
-        String param = "";
-        if (query != null ) {
-            param = queryBuilder(query);
-        }
+        String param = queryBuilder(query);;
         return s_SendGet(url, param, authCode, pathValue);
-//        try {
-//            String urlNameString;
-//            if (pathValue != null ) {
-//                urlNameString = restUrl(url, pathValue);
-//            } else {
-//                urlNameString = url;
-//            }
-//            if (query != null ) {
-//                param = queryBuilder(query);
-//            }
-//            result = s_SendGet(urlNameString, param, authCode);
-//
-//        } catch (Exception e) {
-//            logger.error(e.getMessage());
-//        }
-//        return result;
     }
 
     /**
@@ -208,52 +141,40 @@ public class HttpRequest {
      * @return 所代表远程资源的响应结果，JSON转换的String
      */
     public static String s_SendPost(String url, String param, String authCode) {
-
-        String jobName = "";
-        StackTraceElement stack[] = (new Throwable()).getStackTrace();
-        for (int i = 0; i < stack.length; i++) {
-            StackTraceElement s = stack[i];
-            if (s.getMethodName().startsWith("s_")) {
-                continue;
-            } else {
-                jobName = s.getClassName();
-                break;
-            }
-        }
-        logger.setJobName(jobName);
+        logger.setJobName(s_JobName());
         PrintWriter out = null;
         BufferedReader in = null;
         String result = "";
-        HttpURLConnection httpURLConnection;
         try {
             URL realUrl = new URL(url);
             // 打开和URL之间的连接
             URLConnection conn = realUrl.openConnection();
-            httpURLConnection = (HttpURLConnection)conn;
+            HttpURLConnection httpURLConnection = (HttpURLConnection)conn;
             // 设置通用的请求属性
             httpURLConnection.setRequestMethod("POST");
             httpURLConnection.setRequestProperty("Content-Type", "application/json");
             httpURLConnection.setRequestProperty("connection", "close");
             httpURLConnection.setRequestProperty("Cookie", "myzd="+ authCode);
-            httpURLConnection.setRequestProperty("Referer", "http://www.mingyizhudao.com");
+            httpURLConnection.setRequestProperty("Referrer", "http://www.mingyizhudao.com");
             if (!authCode.isEmpty())
                 httpURLConnection.setRequestProperty("Authorization", "Bearer " +authCode);
             // 发送POST请求必须设置如下两行
-            long start,end;
             httpURLConnection.setDoOutput(true);
             httpURLConnection.setDoInput(true);
             out = new PrintWriter(conn.getOutputStream());
-            logger.info("发送请求: >>>>>  " + httpURLConnection.getRequestMethod() + " " + httpURLConnection.getURL());
-            logger.info("请求数据: >>>>>  " + param);
-            start = System.currentTimeMillis();
-            // 发送请求参数
-            out.print(param);
-            // flush输出流的缓冲
-            out.flush();
+            logger.info("发送请求: ===>>  " + httpURLConnection.getRequestMethod() + " " + httpURLConnection.getURL());
+            logger.info("请求数据: ===>>  " + param);
+            long start = System.currentTimeMillis();
+            out.print(param);// 发送请求参数
+            out.flush();// flush输出流的缓冲
             // 定义BufferedReader输入流来读取URL的响应
-            logger.info("等待回应: <<<<<  " + httpURLConnection.getResponseCode() + " " + httpURLConnection.getResponseMessage());
-            end = System.currentTimeMillis();
-            in = new BufferedReader(new InputStreamReader(httpURLConnection.getInputStream()));
+            long end = System.currentTimeMillis();
+            int status = httpURLConnection.getResponseCode();
+            if (status == HttpURLConnection.HTTP_OK)
+                in = new BufferedReader(new InputStreamReader(httpURLConnection.getInputStream()));
+            else
+                in = new BufferedReader(new InputStreamReader(httpURLConnection.getErrorStream()));
+            logger.info("等待回应: <<===  " + httpURLConnection.getResponseCode() + " " + httpURLConnection.getResponseMessage());
             String line;
             while ((line = in.readLine()) != null) {
                 result += line;
@@ -268,17 +189,11 @@ public class HttpRequest {
 
     public static String s_SendPost(String url, String param, String authCode, HashMap<String,String> pathValue) {
 
-        String result = "";
-        try {
-            String urlString = restUrl(url, pathValue);
-            result = s_SendPost(urlString, param, authCode);
-        } catch (Exception e) {
-            logger.error(e.getMessage());
-        }
-        return result;
+        String urlString = restUrl(url, pathValue);
+        return s_SendPost(urlString, param, authCode);
     }
 
-    public static String s_SendPostForm(String url, String param, String authCode) throws IOException {
+    public static String s_SendPostForm(String url, String param, String authCode) {
         PrintWriter out = null;
         BufferedReader in = null;
         String result = "";
@@ -289,25 +204,26 @@ public class HttpRequest {
             HttpURLConnection httpURLConnection = (HttpURLConnection)conn;
             // 设置通用的请求属性
             httpURLConnection.setRequestMethod("POST");
-            httpURLConnection.setRequestProperty("connection", "Keep-Alive");
+            httpURLConnection.setRequestProperty("connection", "close");
             if (!authCode.isEmpty())
                 httpURLConnection.setRequestProperty("authorization", authCode);
             // 发送POST请求必须设置如下两行
-            long start,end;
             httpURLConnection.setDoOutput(true);
             httpURLConnection.setDoInput(true);
             out = new PrintWriter(conn.getOutputStream());
             logger.info("发送请求: >>>>>  " + httpURLConnection.getRequestMethod() + " " + httpURLConnection.getURL());
             logger.info("请求数据: >>>>>  " + param);
-            start = System.currentTimeMillis();
-            // 发送请求参数
-            out.print(param);
-            // flush输出流的缓冲
-            out.flush();
+            long start = System.currentTimeMillis();
+            out.print(param);// 发送请求参数
+            out.flush();// flush输出流的缓冲
             // 定义BufferedReader输入流来读取URL的响应
-            in = new BufferedReader(new InputStreamReader(httpURLConnection.getInputStream()));
-            end = System.currentTimeMillis();
-            logger.info("等待回应: <<<<<  " + httpURLConnection.getResponseCode() + " " + httpURLConnection.getResponseMessage());
+            int status = httpURLConnection.getResponseCode();
+            if (status == HttpURLConnection.HTTP_OK)
+                in = new BufferedReader(new InputStreamReader(httpURLConnection.getInputStream()));
+            else
+                in = new BufferedReader(new InputStreamReader(httpURLConnection.getErrorStream()));
+            long end = System.currentTimeMillis();
+            logger.info("等待回应: <<<<<  " + status + " " + httpURLConnection.getResponseMessage());
             logger.info("响应时间: <<<<<  " + Long.toString(end-start) + " ms");
             String line;
             while ((line = in.readLine()) != null) {
@@ -317,12 +233,11 @@ public class HttpRequest {
             out.close();
         } catch (IOException e) {
             logger.error(e.getMessage());
-            throw e;
         }
         return result;
     }
 
-    public static String s_SendPostText(String url, String param, String authCode) throws IOException {
+    public static String s_SendPostText(String url, String param, String authCode) {
         PrintWriter out = null;
         BufferedReader in = null;
         String result = "";
@@ -336,35 +251,33 @@ public class HttpRequest {
             httpURLConnection.setRequestProperty("Content-Type", "text/plain");//文本形式
             httpURLConnection.setRequestProperty("connection", "close");
             if (!authCode.isEmpty())
-                httpURLConnection.setRequestProperty("authorization", authCode);
+                httpURLConnection.setRequestProperty("authorization", "Bearer " + authCode);
             // 发送POST请求必须设置如下两行
-            long start,end;
             httpURLConnection.setDoOutput(true);
             httpURLConnection.setDoInput(true);
             out = new PrintWriter(conn.getOutputStream());
             logger.info("发送请求: >>>>>  " + httpURLConnection.getRequestMethod() + " " + httpURLConnection.getURL());
             logger.info("请求数据: >>>>>  " + param);
-            start = System.currentTimeMillis();
-            // 发送请求参数
-            out.print(param);
-            // flush输出流的缓冲
-            out.flush();
+            long start = System.currentTimeMillis();
+            out.print(param);// 发送请求参数
+            out.flush();// flush输出流的缓冲
             // 定义BufferedReader输入流来读取URL的响应
-            in = new BufferedReader(new InputStreamReader(httpURLConnection.getInputStream()));
-            end = System.currentTimeMillis();
-            logger.info("等待回应: <<<<<  " + httpURLConnection.getResponseCode() + " " + httpURLConnection.getResponseMessage());
+            int status = httpURLConnection.getResponseCode();
+            if (status == HttpURLConnection.HTTP_OK)
+                in = new BufferedReader(new InputStreamReader(httpURLConnection.getInputStream()));
+            else
+                in = new BufferedReader(new InputStreamReader(httpURLConnection.getErrorStream()));
+            long end = System.currentTimeMillis();
+            logger.info("等待回应: <<<<<  " + status + " " + httpURLConnection.getResponseMessage());
             logger.info("响应时间: <<<<<  " + Long.toString(end-start) + " ms");
-
             String line;
             while ((line = in.readLine()) != null) {
                 result += line;
             }
-//            logger.info("等待回应: <<<<<  " + httpURLConnection.getResponseCode() + " " + httpURLConnection.getResponseMessage());
             in.close();
             out.close();
         } catch (IOException e) {
             logger.error(e.getMessage());
-            throw e;
         }
         return result;
     }
@@ -380,54 +293,40 @@ public class HttpRequest {
      */
 
     public static String s_SendPut(String url, String param, String authCode) {
-
-        String jobName = "";
-        StackTraceElement stack[] = (new Throwable()).getStackTrace();
-        for (int i = 0; i < stack.length; i++) {
-            StackTraceElement s = stack[i];
-            if (s.getMethodName().startsWith("s_")) {
-                continue;
-            } else {
-                jobName = s.getClassName();
-                break;
-            }
-        }
-        logger.setJobName(jobName);
+        logger.setJobName(s_JobName());
         PrintWriter out = null;
         BufferedReader in = null;
         String result = "";
-        HttpURLConnection httpURLConnection;
         try {
             URL realUrl = new URL(url);
             // 打开和URL之间的连接
             URLConnection conn = realUrl.openConnection();
-            httpURLConnection = (HttpURLConnection)conn;
+            HttpURLConnection httpURLConnection = (HttpURLConnection)conn;
             // 设置通用的请求属性
             httpURLConnection.setRequestMethod("PUT");
             httpURLConnection.setRequestProperty("Content-Type", "application/json");
             httpURLConnection.setRequestProperty("Cookie", "myzd="+ authCode);
-            httpURLConnection.setRequestProperty("connection", "Keep-Alive");
+            httpURLConnection.setRequestProperty("connection", "close");
             if (!authCode.isEmpty())
                 httpURLConnection.setRequestProperty("Authorization", "Bearer "+authCode);
             // 发送POST请求必须设置如下两行
-            long start,end;
             httpURLConnection.setDoOutput(true);
             httpURLConnection.setDoInput(true);
             out = new PrintWriter(conn.getOutputStream());
             logger.info("发送请求: >>>>>  " + httpURLConnection.getRequestMethod() + " " + httpURLConnection.getURL());
             logger.info("请求数据: >>>>>  " + param);
-            start = System.currentTimeMillis();
-            // 发送请求参数
-            out.print(param);
-            // flush输出流的缓冲
-            out.flush();
+            long start = System.currentTimeMillis();
+            out.print(param);// 发送请求参数
+            out.flush();// flush输出流的缓冲
             // 定义BufferedReader输入流来读取URL的响应
-            in = new BufferedReader(new InputStreamReader(httpURLConnection.getInputStream()));
-            end = System.currentTimeMillis();
-            logger.info("等待回应: <<<<<  " + httpURLConnection.getResponseCode() + " " + httpURLConnection.getResponseMessage());
+            int status = httpURLConnection.getResponseCode();
+            if (status == HttpURLConnection.HTTP_OK)
+                in = new BufferedReader(new InputStreamReader(httpURLConnection.getInputStream()));
+            else
+                in = new BufferedReader(new InputStreamReader(httpURLConnection.getErrorStream()));
+            long end = System.currentTimeMillis();
+            logger.info("等待回应: <<<<<  " + status + " " + httpURLConnection.getResponseMessage());
 //            logger.info("响应时间: <<<<<  " + Long.toString(end-start) + " ms");
-
-            in = new BufferedReader(new InputStreamReader(httpURLConnection.getInputStream()));
             String line;
             while ((line = in.readLine()) != null) {
                 result += line;
@@ -441,20 +340,8 @@ public class HttpRequest {
 	}
 
     public static String s_SendPut(String url, String param, String authCode, HashMap<String,String> pathValue) {
-
-        String result = "";
-        try {
-            String urlString;
-            if (pathValue != null ) {
-                urlString = restUrl(url, pathValue);
-            } else {
-                urlString = url;
-            }
-            result = s_SendPut(urlString, param, authCode);
-        } catch (Exception e) {
-            logger.error(e.getMessage());
-        }
-        return result;
+        String urlString = restUrl(url, pathValue);
+        return s_SendPut(urlString, param, authCode);
     }
 
     /**
@@ -468,18 +355,7 @@ public class HttpRequest {
      */
 
     public static String s_SendDelete(String url, String param, String authCode, HashMap<String,String> pathValue) {
-        String jobName = "";
-        StackTraceElement stack[] = (new Throwable()).getStackTrace();
-        for (int i = 0; i < stack.length; i++) {
-            StackTraceElement s = stack[i];
-            if (s.getMethodName().startsWith("s_")) {
-                continue;
-            } else {
-                jobName = s.getClassName();
-                break;
-            }
-        }
-        logger.setJobName(jobName);
+        logger.setJobName(s_JobName());
         PrintWriter out = null;
         BufferedReader in = null;
         String result = "";
@@ -497,27 +373,26 @@ public class HttpRequest {
             httpURLConnection.setRequestMethod("DELETE");
             httpURLConnection.setRequestProperty("Cookie", "myzd="+ authCode);
             httpURLConnection.setRequestProperty("Content-Type", "application/json");
-            httpURLConnection.setRequestProperty("connection", "Keep-Alive");
+            httpURLConnection.setRequestProperty("connection", "close");
             if (!authCode.isEmpty())
                 httpURLConnection.setRequestProperty("Authorization", "Bearer "+authCode);
-            long start,end;
             httpURLConnection.setDoOutput(true);
             httpURLConnection.setDoInput(true);
             out = new PrintWriter(conn.getOutputStream());
             logger.info("发送请求: >>>>>  " + httpURLConnection.getRequestMethod() + " " + httpURLConnection.getURL());
             logger.info("请求数据: >>>>>  " + param);
-            start = System.currentTimeMillis();
-            // 发送请求参数
-            out.print(param);
-            // flush输出流的缓冲
-            out.flush();
+            long start = System.currentTimeMillis();
+            out.print(param);// 发送请求参数
+            out.flush();// flush输出流的缓冲
             // 定义BufferedReader输入流来读取URL的响应
-            in = new BufferedReader(new InputStreamReader(httpURLConnection.getInputStream()));
-            end = System.currentTimeMillis();
-            logger.info("等待回应: <<<<<  " + httpURLConnection.getResponseCode() + " " + httpURLConnection.getResponseMessage());
+            int status = httpURLConnection.getResponseCode();
+            if (status == HttpURLConnection.HTTP_OK)
+                in = new BufferedReader(new InputStreamReader(httpURLConnection.getInputStream()));
+            else
+                in = new BufferedReader(new InputStreamReader(httpURLConnection.getErrorStream()));
+            long end = System.currentTimeMillis();
+            logger.info("等待回应: <<<<<  " + status + " " + httpURLConnection.getResponseMessage());
 //            logger.info("响应时间: <<<<<  " + Long.toString(end-start) + " ms");
-
-            in = new BufferedReader(new InputStreamReader(httpURLConnection.getInputStream()));
             String line;
             while ((line = in.readLine()) != null) {
                 result += line;
