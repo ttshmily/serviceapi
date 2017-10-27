@@ -1,15 +1,11 @@
 package com.mingyizhudao.qa.utilities;
 
-import com.mingyizhudao.qa.common.BaseTest;
 import com.mingyizhudao.qa.common.TestLogger;
-
 import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLConnection;
 import java.net.URLEncoder;
-import java.security.KeyManagementException;
-import java.security.NoSuchAlgorithmException;
 import java.util.HashMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -118,11 +114,10 @@ public class HttpRequest {
 
     public static String s_SendGet(String url, String param, String authCode, HashMap<String,String> pathValue) {
         String urlNameString;
-        if (pathValue != null ) {
+        if (pathValue != null )
             urlNameString = restUrl(url, pathValue);
-        } else {
+        else
             urlNameString = url;
-        }
         return s_SendGet(urlNameString, param, authCode);
     }
 
