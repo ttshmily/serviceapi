@@ -131,11 +131,8 @@ public class HttpRequest {
 	}
 
     public static String s_SendGet(String url, HashMap<String,String> query, String authCode) {
-//        String result = "";
         String param = "";
-        if (query != null ) {
-            param = queryBuilder(query);
-        }
+        if (query != null ) param = queryBuilder(query);
         return s_SendGet(url, param, authCode);
 //        try {
 //            if (query != null ) {
@@ -150,13 +147,11 @@ public class HttpRequest {
     }
 
     public static String s_SendGet(String url, String param, String authCode, HashMap<String,String> pathValue) {
-//        String result = "";
         String urlNameString;
-        if (pathValue != null ) {
+        if (pathValue != null )
             urlNameString = restUrl(url, pathValue);
-        } else {
+        else
             urlNameString = url;
-        }
         return s_SendGet(urlNameString, param, authCode);
 //        try {
 //            String urlNameString;
@@ -176,9 +171,7 @@ public class HttpRequest {
     public static String s_SendGet(String url, HashMap<String,String> query, String authCode, HashMap<String,String> pathValue) {
 //        String result = "";
         String param = "";
-        if (query != null ) {
-            param = queryBuilder(query);
-        }
+        if (query != null ) param = queryBuilder(query);
         return s_SendGet(url, param, authCode, pathValue);
 //        try {
 //            String urlNameString;
