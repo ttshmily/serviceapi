@@ -33,21 +33,21 @@ public class Recommend extends BaseTest {
         HashMap<String, String> pathValue = new HashMap<>();
         pathValue.put("orderNumber", orderNumber);
         JSONObject body = new JSONObject();
-        if (a == null) {
-            a.add(Generator.randomExpertId());
-            a.add(Generator.randomExpertId());
+        if (a == null || a.isEmpty()) {
+            return false;
         }
         body.put("list", a.toString());
         String res = s_SendPut(host_ims+uri, body.toString(), crm_token, pathValue);
         JSONObject r = JSONObject.fromObject(res);
         if (!r.getString("code").equals("1000000")) logger.error(unicodeString(res));
-        //TODO
-        return r.getJSONObject("data").getString("status").equals("COMPLETED") &&
-                r.getJSONObject("data").getString("status").equals("9000");
+        return r.getString("code").equals("1000000");
     }
 
     public static boolean s_Recommend(String orderNumber) {
-        return s_Recommend(orderNumber, null);
+        List<String> a = new ArrayList<>();
+        a.add(Generator.randomExpertId());
+        a.add(Generator.randomExpertId());
+        return s_Recommend(orderNumber, a);
     }
 
     @Test
@@ -118,8 +118,7 @@ public class Recommend extends BaseTest {
         JSONArray track_list = data.getJSONArray("track_list");
         int track_size = track_list.size();
         JSONObject track = track_list.getJSONObject(track_size-1);
-        //TODO 推荐医生的工单记录
-        Assert.assertEquals(track.getString("track_type"), "CHANGE_ASSIGNEE_V1");
+        Assert.assertEquals(track.getString("track_type"), "EDIT_MEDICAL_ADVICE_V1");
         Assert.assertEquals(track.getString("poster_name"), mainOperatorName);
 //        Assert.assertEquals(track.getJSONObject("content").getString("assignee_id"), tmp);
 //        Assert.assertEquals(track.getJSONObject("content").getString("assignee_name"), Generator.employeeName(tmp));

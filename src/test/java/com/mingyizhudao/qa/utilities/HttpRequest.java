@@ -308,8 +308,8 @@ public class HttpRequest {
             httpURLConnection.setDoOutput(true);
             httpURLConnection.setDoInput(true);
             out = new PrintWriter(conn.getOutputStream());
-            logger.info("发送请求: >>>>>  " + httpURLConnection.getRequestMethod() + " " + httpURLConnection.getURL());
-            logger.info("请求数据: >>>>>  " + param);
+            logger.info("发送请求: ===>>  " + httpURLConnection.getRequestMethod() + " " + httpURLConnection.getURL());
+            logger.info("请求数据: ===>>  " + param);
             long start = System.currentTimeMillis();
             out.print(param);// 发送请求参数
             out.flush();// flush输出流的缓冲
@@ -320,7 +320,7 @@ public class HttpRequest {
             else
                 in = new BufferedReader(new InputStreamReader(httpURLConnection.getErrorStream()));
             long end = System.currentTimeMillis();
-            logger.info("等待回应: <<<<<  " + status + " " + httpURLConnection.getResponseMessage());
+            logger.info("等待回应: <<===  " + status + " " + httpURLConnection.getResponseMessage());
 //            logger.info("响应时间: <<<<<  " + Long.toString(end-start) + " ms");
             String line;
             while ((line = in.readLine()) != null) {
@@ -445,8 +445,8 @@ public class HttpRequest {
      */
 
     private static String queryBuilder(HashMap<String,String> query) {
-        StringBuffer sb=new StringBuffer();
         if (query == null) return "";
+        StringBuffer sb=new StringBuffer();
         for (String key:query.keySet()) {
             try {
                 //if (!query.get(key).isEmpty())

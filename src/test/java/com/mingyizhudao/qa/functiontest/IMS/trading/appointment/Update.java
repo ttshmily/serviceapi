@@ -28,7 +28,7 @@ public class Update extends BaseTest {
         String res = HttpRequest.s_SendPut(host_ims+uri, at.transform(), crm_token, pathValue);
         JSONObject r = JSONObject.fromObject(res);
         if (!r.getString("code").equals("1000000")) logger.error(unicodeString(res));
-        return r.getJSONObject("code").equals("1000000");
+        return r.getString("code").equals("1000000");
     }
 
     public static boolean s_Update(String orderNumber, JSONObject body) {
@@ -38,6 +38,6 @@ public class Update extends BaseTest {
         String res = HttpRequest.s_SendPut(host_ims+uri, body.toString(), crm_token, pathValue);
         JSONObject r = JSONObject.fromObject(res);
         if (!r.getString("code").equals("1000000")) logger.error(unicodeString(res));
-        return r.getJSONObject("code").equals("1000000");
+        return r.getString("code").equals("1000000");
     }
 }

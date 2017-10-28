@@ -32,8 +32,7 @@ public class BankAccount extends BaseTest {
         String res = HttpRequest.s_SendPut(host_ims+uri, new AppointmentTask("account").transform(), crm_token, pathValue);
         JSONObject r = JSONObject.fromObject(res);
         if (!r.getString("code").equals("1000000")) logger.error(unicodeString(res));
-
-        return r.getJSONObject("code").equals("1000000");
+        return r.getString("code").equals("1000000");
     }
 
     @Test

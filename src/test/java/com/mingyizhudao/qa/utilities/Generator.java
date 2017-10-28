@@ -17,9 +17,8 @@ public class Generator {
 
 
     public static void main(String[] args) {
-        for (int i = 0; i < 10; i++) {
-            System.out.println(randomEmployeeId());
-        }
+        System.out.println(randomDateFromNow(0, 0, new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'")));
+        System.out.println(randomDateFromNow(0, 0, new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS")));
     }
 
     public static String randomString(int length) {
