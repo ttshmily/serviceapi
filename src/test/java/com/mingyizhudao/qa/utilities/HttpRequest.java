@@ -122,7 +122,7 @@ public class HttpRequest {
     }
 
     public static String s_SendGet(String url, HashMap<String,String> query, String authCode, HashMap<String,String> pathValue) {
-        String param = queryBuilder(query);;
+        String param = queryBuilder(query);
         return s_SendGet(url, param, authCode, pathValue);
     }
 
@@ -449,7 +449,7 @@ public class HttpRequest {
         StringBuffer sb=new StringBuffer();
         for (String key:query.keySet()) {
             try {
-                //if (!query.get(key).isEmpty())
+                if (!query.get(key).isEmpty() && query.get(key) != null)
                     sb.append(key).append("=").append(URLEncoder.encode(query.get(key), "utf-8")).append("&");
             } catch (UnsupportedEncodingException e) {
                 e.printStackTrace();

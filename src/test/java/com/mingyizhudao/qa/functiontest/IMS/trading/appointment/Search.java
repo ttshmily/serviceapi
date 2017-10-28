@@ -116,7 +116,7 @@ public class Search extends BaseTest {
         for (int i=0; i<result_list.size(); i++) {
             JSONObject r = result_list.getJSONObject(i);
             res = Detail.s_Detail(r.getString("id"));
-            Assert.assertEquals(JSONObject.fromObject(res).getJSONObject("data").getString("patient_phone"), at.getPatient_phone());
+            Assert.assertEquals(JSONObject.fromObject(res).getJSONObject("data").getJSONObject("appointment_order").getString("patient_phone"), at.getPatient_phone());
         }
 
     }
@@ -160,7 +160,7 @@ public class Search extends BaseTest {
 
         String id = Create.s_CreateTid(new AppointmentTask());
         String creator_id = getCreatorIdByTid(id);
-        query.put("created_at", Generator.randomDateFromNow(0, 0, new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS")));
+        query.put("created_at", Generator.randomDateFromNow(0, 0, new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'")));
 
         res = HttpRequest.s_SendGet(host_ims + uri, query, crm_token);
 

@@ -33,7 +33,7 @@ public class SearchHospitals extends BaseTest{
         query.put("name", "上海");
         query.put("page", "1");
         query.put("page_size", "10");
-        res = HttpRequest.s_SendGet(host_ims + uri, query, crm_token, null);
+        res = HttpRequest.s_SendGet(host_ims + uri, query, crm_token);
         s_CheckResponse(res);
         Assert.assertEquals(code, "1000000", "输入医院名应返回相应的结果");
     }
@@ -42,10 +42,10 @@ public class SearchHospitals extends BaseTest{
     public void test_02_查询医院列表_输入医院名称为空(){
         String res = "";
         HashMap<String, String> query = new HashMap<>();
-        query.put("name", null);
+        query.put("name", "");
         query.put("page", "1");
         query.put("page_size", "10");
-        res = HttpRequest.s_SendGet(host_ims + uri, query, crm_token, null);
+        res = HttpRequest.s_SendGet(host_ims + uri, query, crm_token);
         s_CheckResponse(res);
         Assert.assertEquals(code, "1000000", "输入医院名为空应返回所有结果");
     }
