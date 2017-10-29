@@ -39,7 +39,7 @@ public class Create extends BaseTest {
         String res = HttpRequest.s_SendPost(host_ims+uri, at.transform(), crm_token);
         JSONObject r = JSONObject.fromObject(res);
         if (!r.getString("code").equals("1000000")) logger.error(unicodeString(res));
-        return r.getJSONObject("data").getString("order_number");
+        return r.getJSONObject("data").getJSONObject("appointment_order").getString("order_number");
     }
 
     @Test

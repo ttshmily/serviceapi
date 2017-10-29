@@ -4,7 +4,6 @@ import com.mingyizhudao.qa.common.BaseTest;
 import com.mingyizhudao.qa.common.TestLogger;
 import com.mingyizhudao.qa.dataprofile.AppointmentTask;
 import com.mingyizhudao.qa.functiontest.crm.kb.management.KBExpert_Detail;
-import com.mingyizhudao.qa.functiontest.crm.kb.management.KBHospital_Detail;
 import com.mingyizhudao.qa.utilities.Generator;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
@@ -129,7 +128,7 @@ public class Recommend extends BaseTest {
     }
 
     private String getOrderNumberByTid(String tid) {
-        return JSONObject.fromObject(Detail.s_Detail(tid)).getJSONObject("data").getString("order_number");
+        return JSONObject.fromObject(Detail.s_Detail(tid)).getJSONObject("data").getJSONObject("appointment_order").getString("order_number");
     }
 
     private String getHospitalIdByExpertId(String expert_id) {

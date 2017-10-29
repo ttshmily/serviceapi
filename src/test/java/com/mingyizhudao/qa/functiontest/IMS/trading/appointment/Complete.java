@@ -5,7 +5,10 @@ import com.mingyizhudao.qa.common.TestLogger;
 import com.mingyizhudao.qa.dataprofile.AppointmentTask;
 import com.mingyizhudao.qa.utilities.HttpRequest;
 import net.sf.json.JSONObject;
+import org.testng.Assert;
 import org.testng.annotations.Test;
+
+import java.util.HashMap;
 
 import static com.mingyizhudao.qa.utilities.Helper.unicodeString;
 
@@ -32,11 +35,31 @@ public class Complete extends BaseTest {
 
     @Test
     public void test_01_完成订单_受理中() {
+        String res = "";
+        AppointmentTask at = new AppointmentTask();
+        HashMap<String, String> pathValue = new HashMap<>();
+        String tid  =Create.s_CreateOrderNumber(at);
+        String orderNumber = getOrderNumberByTid(tid);
+        pathValue.put("orderNumber", orderNumber);
 
+        res = HttpRequest.s_SendPut(host_ims+uri, "", crm_token, pathValue);
+
+        s_CheckResponse(res);
+        Assert.assertNotEquals(code, "1000000");
+
+        Detail.s_Detail(tid);
+        s_CheckResponse(res);
+
+        Assert.assertEquals(data.getString("status"), "COMPLETE");
+        Assert.assertEquals(data.getJSONObject("appointment_order").getString("appointment_status"), "COMPLETE");
     }
 
     @Test
     public void test_02_完成订单_服务中() {
 
+    }
+
+    private String getOrderNumberByTid(String tid) {
+        return JSONObject.fromObject(Detail.s_Detail(tid)).getJSONObject("data").getJSONObject("appointment_order").getString("order_number");
     }
 }

@@ -72,7 +72,7 @@ public class ConfirmExpert extends BaseTest {
         res = Detail.s_Detail(tid);
         s_CheckResponse(res);
         JSONObject appointment_info = data.getJSONObject("appointment_info");
-        Assert.assertEquals(appointment_info.getString("appointment_date"), body.getString("appointment_date"));
+//        Assert.assertEquals(appointment_info.getString("appointment_date"), body.getString("appointment_date"));
         Assert.assertEquals(appointment_info.getString("doctor_fee"), body.getString("doctor_fee"));
         Assert.assertEquals(appointment_info.getString("platform_fee"), body.getString("platform_fee"));
         Assert.assertEquals(Integer.parseInt(appointment_info.getString("appointment_fee")), (int)body.get("doctor_fee")+(int)body.get("platform_fee"));

@@ -44,7 +44,7 @@ public class Detail extends BaseTest {
         JSONObject appointment_order = data.getJSONObject("appointment_order");
         Assert.assertNotNull(appointment_order.getString("source_channel"));
         Assert.assertNotNull(data.getString("order_number"));
-        Assert.assertNotNull(appointment_order.getString("appointment_status"));
+        Assert.assertNotNull(data.getString("appointment_status"));
         Assert.assertEquals(appointment_order.getString("patient_name"), at.getPatient_name());
         Assert.assertEquals(appointment_order.getString("patient_phone"), at.getPatient_phone());
         Assert.assertEquals(appointment_order.getString("patient_gender"), String.valueOf(at.getPatient_gender()));

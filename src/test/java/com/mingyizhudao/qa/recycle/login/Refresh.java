@@ -1,4 +1,4 @@
-package com.mingyizhudao.qa.functiontest.login;
+package com.mingyizhudao.qa.recycle.login;
 
 import com.mingyizhudao.qa.functiontest.doctor.CheckVerifyCode;
 import com.mingyizhudao.qa.functiontest.doctor.GetDoctorProfile_V1;

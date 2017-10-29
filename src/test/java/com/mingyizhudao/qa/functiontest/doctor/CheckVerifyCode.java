@@ -3,7 +3,7 @@ package com.mingyizhudao.qa.functiontest.doctor;
 import com.mingyizhudao.qa.common.BaseTest;
 import com.mingyizhudao.qa.common.TestLogger;
 import com.mingyizhudao.qa.dataprofile.login.CheckMobileProfile;
-import com.mingyizhudao.qa.functiontest.login.Refresh;
+import com.mingyizhudao.qa.recycle.login.Refresh;
 import com.mingyizhudao.qa.utilities.HttpRequest;
 import com.mingyizhudao.qa.utilities.Helper;
 import net.sf.json.JSONObject;

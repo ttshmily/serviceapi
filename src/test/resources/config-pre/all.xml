@@ -19,7 +19,7 @@
         <classes>
             <class name="com.mingyizhudao.qa.functiontest.doctor.SendVerifyCode" />
             <class name="com.mingyizhudao.qa.functiontest.doctor.CheckVerifyCode" />
-            <class name="com.mingyizhudao.qa.functiontest.login.Refresh" />
+            <class name="com.mingyizhudao.qa.recycle.login.Refresh" />
         </classes>
     </test>
     <test name="trade" preserve-order="true">

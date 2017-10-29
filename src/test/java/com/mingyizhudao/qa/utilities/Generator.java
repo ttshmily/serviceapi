@@ -82,7 +82,6 @@ public class Generator {
         return randomDate(startDate, endDate, df);
     }
 
-
     public static String randomDateTillNow(SimpleDateFormat df) {
         try {
 //            Date start = df.parse("2017/03/13");// 构造开始日期 1489334400
@@ -207,7 +206,6 @@ public class Generator {
 
         return randomKey(KnowledgeBase.kb_disease_ext.get(majorId));
     }
-
 
     public static String diseaseName(String id) {
 

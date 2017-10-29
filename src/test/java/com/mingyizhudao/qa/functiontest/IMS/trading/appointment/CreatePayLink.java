@@ -26,6 +26,7 @@ public class CreatePayLink extends BaseTest {
         body.put("order_number", orderNumber);
         body.put("fee", fee);
         String res = HttpRequest.s_SendPost(host_ims + uri, body.toString(), crm_token);
+//        logger.info(res);
         String payId = JSONObject.fromObject(res).getJSONObject("data").getString("payment_number");
         return payId;
     }
@@ -118,7 +119,7 @@ public class CreatePayLink extends BaseTest {
             body.put("fee", 1);
             res = HttpRequest.s_SendPost(host_ims + uri, body.toString(), crm_token);
             s_CheckResponse(res);
-            Assert.assertNotEquals(code, "1000000");
+            Assert.assertEquals(code, "1000000");
         }
 
         res = Detail.s_Detail(tid);
@@ -128,6 +129,6 @@ public class CreatePayLink extends BaseTest {
     }
 
     private String getOrderNumberByTid(String tid) {
-        return JSONObject.fromObject(Detail.s_Detail(tid)).getJSONObject("data").getString("order_number");
+        return JSONObject.fromObject(Detail.s_Detail(tid)).getJSONObject("data").getJSONObject("appointment_order").getString("order_number");
     }
 }
