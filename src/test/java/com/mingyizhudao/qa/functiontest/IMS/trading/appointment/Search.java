@@ -145,22 +145,14 @@ public class Search extends BaseTest {
         }
     }
 
-    public void test_06_按工单当前受理人搜索() {
-
-    }
-
-    public void test_07_按工单历史受理人搜索() {
-
-    }
-
     @Test
-    public void test_08_按提交日期搜索() {
+    public void test_06_按工单当前受理人搜索() {
         String res = "";
         HashMap<String, String> query = new HashMap<>();
 
         String id = Create.s_CreateTid(new AppointmentTask());
-        String creator_id = getCreatorIdByTid(id);
-        query.put("created_at", Generator.randomDateFromNow(0, 0, new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'")));
+        String assigning_id = Generator.randomEmployeeId();
+        query.put("assigning_id", assigning_id);
 
         res = HttpRequest.s_SendGet(host_ims + uri, query, crm_token);
 
@@ -173,13 +165,89 @@ public class Search extends BaseTest {
         JSONArray result_list = data.getJSONArray("list");
         for (int i=0; i<result_list.size(); i++) {
             JSONObject r = result_list.getJSONObject(i);
-            Assert.assertEquals(r.getString("creator_name"), Generator.employeeName(creator_id));
+            String tid = r.getString("id");
+            Assert.assertEquals(getAssigneeIdByTid(tid), assigning_id);
+        }
+    }
+
+    public void test_07_按工单历史受理人搜索() {
+
+    }
+
+    @Test
+    public void test_08_按提交日期搜索() {
+        String res = "";
+        HashMap<String, String> query = new HashMap<>();
+
+        String id = Create.s_CreateTid(new AppointmentTask());
+        String date = Generator.randomDateFromNow(0, 0, new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'"));
+        String p = date.split("T")[0];
+        query.put("created_at", date);
+
+        res = HttpRequest.s_SendGet(host_ims + uri, query, crm_token);
+
+        s_CheckResponse(res);
+        Assert.assertEquals(code, "1000000");
+        Assert.assertEquals(s_ParseJson(data, "page_size"), "10");
+        Assert.assertEquals(s_ParseJson(data, "page"), "1");
+        Assert.assertNotEquals(s_ParseJson(data, "size"), "0");
+
+        JSONArray result_list = data.getJSONArray("list");
+        for (int i=0; i<result_list.size(); i++) {
+            JSONObject r = result_list.getJSONObject(i);
+            Assert.assertEquals(r.getString("created_at").split("T")[0], p);
         }
 
     }
 
-    public void test_08_按组搜索() {
+    @Test
+    public void test_09_按未受理搜索() {
+        String res = "";
+        HashMap<String, String> query = new HashMap<>();
 
+        String id = Create.s_CreateTid(new AppointmentTask());
+        query.put("is_assigned", "false");
+
+        res = HttpRequest.s_SendGet(host_ims + uri, query, crm_token);
+
+        s_CheckResponse(res);
+        Assert.assertEquals(code, "1000000");
+        Assert.assertEquals(s_ParseJson(data, "page_size"), "10");
+        Assert.assertEquals(s_ParseJson(data, "page"), "1");
+        Assert.assertNotEquals(s_ParseJson(data, "size"), "0");
+
+        JSONArray result_list = data.getJSONArray("list");
+        for (int i=0; i<result_list.size(); i++) {
+            JSONObject r = result_list.getJSONObject(i);
+            String tid = r.getString("id");
+            Assert.assertNull(getAssigneeIdByTid(tid));
+        }
+
+    }
+
+    @Test
+    public void test_10_按受理人组搜索() {
+        String res = "";
+        HashMap<String, String> query = new HashMap<>();
+
+        String id = Create.s_CreateTid(new AppointmentTask());
+        Assign.s_Assign(id, "SH0130"); //Group 14
+        query.put("assignee_department", "14");
+
+        res = HttpRequest.s_SendGet(host_ims + uri, query, crm_token);
+
+        s_CheckResponse(res);
+        Assert.assertEquals(code, "1000000");
+        Assert.assertEquals(s_ParseJson(data, "page_size"), "10");
+        Assert.assertEquals(s_ParseJson(data, "page"), "1");
+        Assert.assertNotEquals(s_ParseJson(data, "size"), "0");
+
+        JSONArray result_list = data.getJSONArray("list");
+        for (int i=0; i<result_list.size(); i++) {
+            JSONObject r = result_list.getJSONObject(i);
+            String tid = r.getString("id");
+            Assert.assertEquals(getAssigneeDepartmentByTid(tid), "14");
+        }
     }
 
     private String getOrderNumberByTid(String tid) {
@@ -188,5 +256,14 @@ public class Search extends BaseTest {
 
     private String getCreatorIdByTid(String tid) {
         return JSONObject.fromObject(Detail.s_Detail(tid)).getJSONObject("data").getString("creator_id");
+    }
+
+    private String getAssigneeDepartmentByTid(String tid) {
+        return JSONObject.fromObject(Detail.s_Detail(tid)).getJSONObject("data").getString("assignee_department");
+    }
+
+    private String getAssigneeIdByTid(String tid) {
+        String id = JSONObject.fromObject(Detail.s_Detail(tid)).getJSONObject("data").getString("assignee_id");
+        return id.equals("null")?null:id;
     }
 }

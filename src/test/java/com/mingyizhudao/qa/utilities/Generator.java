@@ -78,6 +78,32 @@ public class Generator {
         return null;
     }
 
+    public static Boolean sameDate(String startDate, String endDate, String accuracy) {
+        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
+        try {
+            long d1 = df.parse(startDate).getTime();// 构造开始日期
+            long d2 = df.parse(endDate).getTime();// 构造结束日期
+            long delta = Math.abs(d1 - d2);
+            switch (accuracy) {
+                case "ms": {
+                    return delta == 0;
+                }
+                case "s": {
+                    return delta <= 1000;
+                }
+                case "d": {
+                    return delta <= 86400000;
+                }
+                default: {
+                    return false;
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
     public static String randomDate(String startDate, String endDate) {
         return randomDate(startDate, endDate, df);
     }

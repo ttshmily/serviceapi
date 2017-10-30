@@ -36,7 +36,7 @@ public class AppointmentTask {
 
     // 患者信息
     private Integer patient_age;
-    private Integer patient_gender;
+    private String patient_gender;
     private String patient_name;
     private String patient_phone;
     private String patient_city_id;
@@ -80,7 +80,7 @@ public class AppointmentTask {
     public AppointmentTask() {
         this.patient_name = "面诊病人"+randomString(4);
         this.patient_age = (int)randomInt(100);
-        this.patient_gender = (int)randomInt(2);
+        this.patient_gender = (int)randomInt(2)==1 ? "MALE":"FEMALE";
         this.patient_phone = randomPhone();
         this.patient_id_card = "340802198511300613";
         this.patient_city_id = Generator.randomCityId();
@@ -128,7 +128,7 @@ public class AppointmentTask {
             case "patient": {
                 this.patient_name = "面诊病人"+randomString(4);
                 this.patient_age = (int)randomInt(100);
-                this.patient_gender = (int)randomInt(2);
+                this.patient_gender = (int)randomInt(2)==1 ? "MALE":"FEMALE";
                 this.patient_phone = randomPhone();
                 PatientSendVerifyCode.s_SendVerifyCode(patient_phone);
                 this.code = "123456";
@@ -156,7 +156,7 @@ public class AppointmentTask {
             default: {
                 this.patient_name = "面诊病人"+randomString(4);
                 this.patient_age = (int)randomInt(100);
-                this.patient_gender = (int)randomInt(2);
+                this.patient_gender = (int)randomInt(2)==1 ? "MALE":"FEMALE";
                 this.patient_phone = randomPhone();
                 this.patient_id_card = "340802198511300613";
                 this.patient_city_id = Generator.randomCityId();

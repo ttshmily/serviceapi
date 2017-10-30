@@ -22,6 +22,15 @@ public class OrderPayList extends BaseTest {
     public static final String version = "/api/v1";
     public static String uri = version + "/payments/{orderNumber}/list";
 
+    public static String s_PayList(String orderNumber) {
+        HashMap<String, String> pathValue = new HashMap<>();
+        pathValue.put("orderNumber", orderNumber);
+
+        String res = HttpRequest.s_SendGet(host_ims + uri, "", crm_token, pathValue);
+
+        return res;
+    }
+
     @Test
     public void test_01_根据订单号获取所有支付信息() {
         String res = "";
@@ -39,9 +48,9 @@ public class OrderPayList extends BaseTest {
         s_CheckResponse(res);
         Assert.assertEquals(code, "1000000");
 
-        Assert.assertNotNull(data.getJSONObject("pay_list"));
-        Assert.assertNotNull(data.getJSONObject("receive_list"));
-        Assert.assertNotNull(data.getJSONObject("refund_list"));
+        Assert.assertNotNull(data.getJSONArray("pay_list"));
+        Assert.assertNotNull(data.getJSONArray("receive_list"));
+        Assert.assertNotNull(data.getJSONArray("refund_list"));
 //        JSONObject order_info = data.getJSONObject("order_info");
 //        Assert.assertNotNull(order_info);
 //        Assert.assertNotNull(order_info.getString("assignee_name"));
@@ -75,7 +84,6 @@ public class OrderPayList extends BaseTest {
 //        Assert.assertNotNull(order_info.getString("status"));
 //        Assert.assertNotNull(order_info.getString("creator_name"));
 
-        Assert.assertNotNull(data.getJSONObject("receive_list"));
         JSONArray receive_list = data.getJSONArray("receive_list");
         Assert.assertEquals(receive_list.size(), 1);
         JSONObject receivable = receive_list.getJSONObject(receive_list.size()-1);
@@ -99,9 +107,8 @@ public class OrderPayList extends BaseTest {
 
         if (!ConfirmExpert.s_ConfirmExpert(orderNumber)) logger.error("确认专家失败");
         logger.info("创建一个支付链接");
-        if (CreatePayLink.s_CreatePayment(orderNumber, 0).equals(null)) {
-            logger.error("创建支付链接失败");
-        }
+        CreatePayLink.s_CreatePayment(orderNumber, 1);
+
         logger.info("再创建一个禁用的支付链接");
         String payment_number = CreatePayLink.s_CreatePayment(orderNumber, 1);
         if (!DisablePayLink.s_DisablePayment(payment_number)) logger.error("禁用支付链接失败");
@@ -117,10 +124,9 @@ public class OrderPayList extends BaseTest {
 //        Assert.assertNotNull(order_info.getString("status"));
 //        Assert.assertNotNull(order_info.getString("creator_name"));
 
-        Assert.assertNotNull(data.getJSONObject("receive_list"));
         JSONArray receive_list = data.getJSONArray("receive_list");
         Assert.assertEquals(receive_list.size(), 2);
-        JSONObject receivable = receive_list.getJSONObject(receive_list.size()-1);
+        JSONObject receivable = receive_list.getJSONObject(0); //按创建时间倒序
         Assert.assertEquals(receivable.getString("payment_number"), payment_number);
         Assert.assertEquals(receivable.getString("order_number"), orderNumber);
         Assert.assertEquals(receivable.getString("enabled"), "false");

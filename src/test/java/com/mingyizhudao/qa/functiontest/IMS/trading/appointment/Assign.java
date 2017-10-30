@@ -59,6 +59,7 @@ public class Assign extends BaseTest {
         s_CheckResponse(res);
         Assert.assertEquals(data.getString("assignee_id"), tmp);
         Assert.assertEquals(data.getString("assignee_name"), Generator.employeeName(tmp));
+        Assert.assertEquals(data.getString("status"), "ASSIGNED");
 
         JSONArray track_list = data.getJSONArray("track_list");
         Assert.assertEquals(track_list.size(), 2);
@@ -81,6 +82,8 @@ public class Assign extends BaseTest {
         pathValue.put("id", tid);
         JSONObject body = new JSONObject();
         String tmp = Generator.randomEmployeeId();
+        s_CheckResponse(Detail.s_Detail(tid));
+        int size_before = data.getJSONArray("track_list").size();
         int times = 10;
         for (int i = 0; i < times; i++) {
             tmp = Generator.randomEmployeeId();
@@ -92,13 +95,14 @@ public class Assign extends BaseTest {
             Assert.assertEquals(code, "1000000");
         }
 
-        res = Detail.s_Detail(tid);
-        s_CheckResponse(res);
+        s_CheckResponse(Detail.s_Detail(tid));
+        int size_after = data.getJSONArray("track_list").size();
+        Assert.assertEquals(size_after-size_before, times);
+
         Assert.assertEquals(data.getString("assignee_id"), tmp);
         Assert.assertEquals(data.getString("assignee_name"), Generator.employeeName(tmp));
 
         JSONArray track_list = data.getJSONArray("track_list");
-        Assert.assertEquals(track_list.size(), times+1);
         JSONObject track = track_list.getJSONObject(track_list.size() - 1);
         Assert.assertEquals(track.getString("track_type"), "CHANGE_ASSIGNEE_V1");
         Assert.assertEquals(track.getJSONObject("content").getString("assignee_id"), tmp);

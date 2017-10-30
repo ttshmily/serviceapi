@@ -11,6 +11,7 @@ import org.testng.Assert;
 import org.testng.annotations.Test;
 
 import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 
 import static com.mingyizhudao.qa.utilities.Helper.unicodeString;
@@ -81,7 +82,7 @@ public class ConfirmExpert extends BaseTest {
         Assert.assertEquals(appointment_doctor.getString("name"), Generator.expertName(expertId));
         Assert.assertEquals(appointment_doctor.getString("medical_title_list"), expertInfo.getString("medical_title_list"));
         Assert.assertEquals(appointment_doctor.getString("hospital_name"), expertInfo.getString("hospital_name"));
-        Assert.assertEquals(appointment_doctor.getString("department"), expertInfo.getString("department"));
+        Assert.assertEquals(appointment_doctor.getString("department"), expertInfo.getString("department_name"));
         Assert.assertEquals(appointment_doctor.getString("referrer_name"), expertInfo.getString("referrer_name"));
         Assert.assertEquals(appointment_doctor.getString("referrer_tel"), expertInfo.getString("referrer_tel"));
         Assert.assertEquals(appointment_doctor.getString("hospital_id"), expertInfo.getString("hospital_id"));
@@ -102,7 +103,7 @@ public class ConfirmExpert extends BaseTest {
         String expertId = Generator.randomExpertId();
         res = KBExpert_Detail.s_Detail(expertId);
         s_CheckResponse(res);
-        JSONObject expertInfo = data;
+        JSONObject expertInfo = JSONObject.fromObject(data);
         body.put("appointment_doctor_id", expertId);
 
         res = HttpRequest.s_SendPut(host_ims+uri, body.toString(), crm_token, pathValue);
@@ -113,19 +114,17 @@ public class ConfirmExpert extends BaseTest {
         res = Detail.s_Detail(tid);
         s_CheckResponse(res);
         JSONObject appointment_info = data.getJSONObject("appointment_info");
-        Assert.assertEquals(appointment_info.getString("appointment_date"), body.getString("appointment_date"));
+        JSONObject appointment_doctor = appointment_info.getJSONObject("appointment_doctor");
         Assert.assertEquals(appointment_info.getString("doctor_fee"), body.getString("doctor_fee"));
         Assert.assertEquals(appointment_info.getString("platform_fee"), body.getString("platform_fee"));
+        Assert.assertTrue(Generator.sameDate(appointment_info.getString("appointment_date"), body.getString("appointment_date"), "s"));
         Assert.assertEquals(Integer.parseInt(appointment_info.getString("appointment_fee")), (int)body.get("doctor_fee")+(int)body.get("platform_fee"));
-        JSONObject appointment_doctor = appointment_info.getJSONObject("appointment_doctor");
         Assert.assertEquals(appointment_doctor.getString("id"), expertId);
         Assert.assertEquals(appointment_doctor.getString("name"), Generator.expertName(expertId));
         Assert.assertEquals(appointment_doctor.getString("medical_title_list"), expertInfo.getString("medical_title_list"));
-        Assert.assertEquals(appointment_doctor.getString("hospital_name"), expertInfo.getString("hospital_name"));
-        Assert.assertEquals(appointment_doctor.getString("department"), expertInfo.getString("department"));
-        Assert.assertEquals(appointment_doctor.getString("referrer_name"), expertInfo.getString("referrer_name"));
-        Assert.assertEquals(appointment_doctor.getString("referrer_tel"), expertInfo.getString("referrer_tel"));
         Assert.assertEquals(appointment_doctor.getString("hospital_id"), expertInfo.getString("hospital_id"));
+        Assert.assertEquals(appointment_doctor.getString("hospital_name"), expertInfo.getString("hospital_name"));
+        Assert.assertEquals(appointment_doctor.getString("department"), expertInfo.getString("department_name"));
     }
 
     @Test
@@ -163,5 +162,36 @@ public class ConfirmExpert extends BaseTest {
         res = HttpRequest.s_SendPut(host_ims+uri, body.toString(), crm_token, pathValue);
         s_CheckResponse(res);
         Assert.assertNotEquals(code, "1000000");
+    }
+
+    @Test
+    public void test_5_确认医生_操作记录() {
+        String res = "";
+        String tid = Create.s_CreateTid(new AppointmentTask());
+        String orderNumber = getOrderNumberByTid(tid);
+        HashMap<String, String> pathValue = new HashMap<>();
+        pathValue.put("orderNumber", orderNumber);
+        if (!Recommend.s_Recommend(orderNumber)) logger.error("推荐专家失败");
+        JSONObject body = new JSONObject();
+        body.put("doctor_fee", 0);
+        body.put("platform_fee", 0);
+        body.put("appointment_date", Generator.randomDateFromNow(1,3, new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'")));
+        String expertId = Generator.randomExpertId();
+        body.put("appointment_doctor_id", expertId);
+
+        s_CheckResponse(Detail.s_Detail(tid));
+        int track_list_size_before = data.getJSONArray("track_list").size();
+
+        res = HttpRequest.s_SendPut(host_ims+uri, body.toString(), crm_token, pathValue);
+        s_CheckResponse(res);
+        Assert.assertEquals(code, "1000000");
+
+        s_CheckResponse(Detail.s_Detail(tid));
+        int track_list_size_after = data.getJSONArray("track_list").size();
+        Assert.assertEquals(track_list_size_after-track_list_size_before, 1);
+    }
+
+    private String getOrderNumberByTid(String tid) {
+        return JSONObject.fromObject(Detail.s_Detail(tid)).getJSONObject("data").getJSONObject("appointment_order").getString("order_number");
     }
 }

@@ -109,7 +109,7 @@ public class Create extends BaseTest {
     public void test_05_创建工单_患者性别错误值() {
         String res = "";
         AppointmentTask at = new AppointmentTask();
-        at.setPatient_gender(0);
+        at.setPatient_gender("0");
 
         res = HttpRequest.s_SendPost(host_ims+uri, at.transform(), crm_token);
 
@@ -125,7 +125,7 @@ public class Create extends BaseTest {
         at.setPatient_name("孤独患者");
         at.setAssignee_id(Generator.randomEmployeeId());
         at.setSource_type("PC_WEB");
-        at.setPatient_gender((int)Generator.randomInt(2));
+        at.setPatient_gender((int)Generator.randomInt(2)==1?"MALE":"FEMALE");
         at.setPatient_city_id(Generator.randomCityId());
         at.setPatient_age((int)Generator.randomInt(100));
         at.setDisease_name(Generator.diseaseName(Generator.randomDiseaseId()));
