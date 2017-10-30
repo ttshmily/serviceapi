@@ -39,25 +39,85 @@ public class Cancel extends BaseTest {
         String res = "";
         AppointmentTask at = new AppointmentTask();
         HashMap<String, String> pathValue = new HashMap<>();
-        String tid  =Create.s_CreateOrderNumber(at);
+        String tid  =Create.s_CreateTid(at);
         String orderNumber = getOrderNumberByTid(tid);
         pathValue.put("orderNumber", orderNumber);
-
-        res = HttpRequest.s_SendPut(host_ims+uri, "", crm_token, pathValue);
+        JSONObject body = new JSONObject();
+        body.put("cancel_reason", "自动化取消");
+        body.put("content", "自动化取消");
+        body.put("need_refunds", false);
+        body.put("refunds_fee", 1);
+        body.put("need_transfer", false);
+        body.put("transfer_fee", 1);
+        res = HttpRequest.s_SendPut(host_ims+uri, body.toString(), crm_token, pathValue);
 
         s_CheckResponse(res);
-        Assert.assertNotEquals(code, "1000000");
+        Assert.assertEquals(code, "1000000");
 
         Detail.s_Detail(tid);
         s_CheckResponse(res);
 
         Assert.assertEquals(data.getString("status"), "COMPLETE");
-        Assert.assertEquals(data.getJSONObject("appointment_order").getString("appointment_status"), "CANCELLED");
+        Assert.assertEquals(data.getJSONObject("appointment_order").getString("appointment_status"), "CANCEL");
     }
 
     @Test
-    public void test_02_取消订单_服务中() {
+    public void test_02_取消订单_服务中需要返款() {
+        String res = "";
+        AppointmentTask at = new AppointmentTask();
+        HashMap<String, String> pathValue = new HashMap<>();
+        String tid  =Create.s_CreateTid(at);
+        String orderNumber = getOrderNumberByTid(tid);
+        pathValue.put("orderNumber", orderNumber);
+        ConfirmExpert.s_ConfirmExpert(orderNumber);
+        JSONObject body = new JSONObject();
+        body.put("cancel_reason", "自动化取消");
+        body.put("content", "自动化取消");
+        body.put("need_refunds", true);
+        body.put("refunds_fee", 1);
+        body.put("need_transfer", false);
+        body.put("transfer_fee", 1);
+        res = HttpRequest.s_SendPut(host_ims+uri, body.toString(), crm_token, pathValue);
 
+        s_CheckResponse(res);
+        Assert.assertEquals(code, "1000000");
+
+        Detail.s_Detail(tid);
+        s_CheckResponse(res);
+
+        Assert.assertEquals(data.getString("status"), "COMPLETE");
+        Assert.assertEquals(data.getJSONObject("appointment_order").getString("appointment_status"), "CANCEL");
+    }
+
+    @Test
+    public void test_03_取消订单_支付链接后需要返款() {
+        String res = "";
+        AppointmentTask at = new AppointmentTask();
+        HashMap<String, String> pathValue = new HashMap<>();
+        String tid  =Create.s_CreateTid(at);
+        String orderNumber = getOrderNumberByTid(tid);
+        pathValue.put("orderNumber", orderNumber);
+        ConfirmExpert.s_ConfirmExpert(orderNumber);
+        CreatePayLink.s_CreatePayment(orderNumber, 1);
+        JSONObject body = new JSONObject();
+        body.put("cancel_reason", "自动化取消");
+        body.put("content", "自动化取消");
+        body.put("need_refunds", true);
+        body.put("refunds_fee", 1);
+        body.put("need_transfer", true);
+        body.put("transfer_fee", 1);
+        res = HttpRequest.s_SendPut(host_ims+uri, body.toString(), crm_token, pathValue);
+
+        s_CheckResponse(res);
+        Assert.assertEquals(code, "1000000");
+
+        Detail.s_Detail(tid);
+        s_CheckResponse(res);
+
+        Assert.assertEquals(data.getString("status"), "COMPLETE");
+        Assert.assertEquals(data.getJSONObject("appointment_order").getString("appointment_status"), "CANCEL");
+        //TODO
+//        Assert.assertEquals(data.getJSONObject("payment_list").getJSONArray("refund_list"));
     }
 
     private String getOrderNumberByTid(String tid) {

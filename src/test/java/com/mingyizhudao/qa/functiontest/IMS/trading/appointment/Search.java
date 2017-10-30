@@ -183,7 +183,7 @@ public class Search extends BaseTest {
     }
 
     private String getOrderNumberByTid(String tid) {
-        return JSONObject.fromObject(Detail.s_Detail(tid)).getJSONObject("data").getString("order_number");
+        return JSONObject.fromObject(Detail.s_Detail(tid)).getJSONObject("data").getJSONObject("appointment_order").getString("order_number");
     }
 
     private String getCreatorIdByTid(String tid) {

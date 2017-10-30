@@ -43,8 +43,8 @@ public class Detail extends BaseTest {
         Assert.assertEquals(code, "1000000");
         JSONObject appointment_order = data.getJSONObject("appointment_order");
         Assert.assertNotNull(appointment_order.getString("source_channel"));
-        Assert.assertNotNull(data.getString("order_number"));
-        Assert.assertNotNull(data.getString("appointment_status"));
+        Assert.assertNotNull(appointment_order.getString("order_number"));
+        Assert.assertNotNull(appointment_order.getString("appointment_status"));
         Assert.assertEquals(appointment_order.getString("patient_name"), at.getPatient_name());
         Assert.assertEquals(appointment_order.getString("patient_phone"), at.getPatient_phone());
         Assert.assertEquals(appointment_order.getString("patient_gender"), String.valueOf(at.getPatient_gender()));
@@ -75,7 +75,7 @@ public class Detail extends BaseTest {
         Assert.assertEquals(appointment_order.getString("expected_appointment_start_date"), at.getExpected_appointment_start_date());
         Assert.assertEquals(appointment_order.getString("expected_appointment_due_date"), at.getExpected_appointment_due_date());
         Assert.assertNotNull(data.getString("id"));
-        Assert.assertNotNull(data.getString("status"));
+        Assert.assertEquals(data.getString("status"), "ASSIGNING");
         Assert.assertNotNull(data.getString("track_list"));
         Assert.assertEquals(data.getString("source_type"), at.getSource_type());
         Assert.assertNotNull(data.getString("created_at"));
