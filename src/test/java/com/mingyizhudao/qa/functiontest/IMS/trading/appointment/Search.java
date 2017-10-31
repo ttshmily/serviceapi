@@ -181,8 +181,10 @@ public class Search extends BaseTest {
 
         String id = Create.s_CreateTid(new AppointmentTask());
         String date = Generator.randomDateFromNow(0, 0, new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'"));
-        String p = date.split("T")[0];
-        query.put("created_at", date);
+        String d = date.split("T")[0];
+        String t = "00:00:00.000Z";
+        String create_at = d.concat("T").concat(t);
+        query.put("created_at", create_at);
 
         res = HttpRequest.s_SendGet(host_ims + uri, query, crm_token);
 
@@ -195,7 +197,7 @@ public class Search extends BaseTest {
         JSONArray result_list = data.getJSONArray("list");
         for (int i=0; i<result_list.size(); i++) {
             JSONObject r = result_list.getJSONObject(i);
-            Assert.assertEquals(r.getString("created_at").split("T")[0], p);
+            Assert.assertEquals(r.getString("created_at").split("T")[0], d);
         }
 
     }
@@ -263,7 +265,7 @@ public class Search extends BaseTest {
     }
 
     private String getAssigneeIdByTid(String tid) {
-        String id = JSONObject.fromObject(Detail.s_Detail(tid)).getJSONObject("data").getString("assignee_id");
-        return id.equals("null")?null:id;
+        return JSONObject.fromObject(Detail.s_Detail(tid)).getJSONObject("data").containsKey("assignee_id") ?
+                JSONObject.fromObject(Detail.s_Detail(tid)).getJSONObject("data").getString("assignee_id") : null;
     }
 }

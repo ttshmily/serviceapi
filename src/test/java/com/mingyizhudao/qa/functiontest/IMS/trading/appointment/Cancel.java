@@ -5,6 +5,7 @@ import com.mingyizhudao.qa.common.TestLogger;
 import com.mingyizhudao.qa.dataprofile.AppointmentTask;
 import com.mingyizhudao.qa.utilities.Generator;
 import com.mingyizhudao.qa.utilities.HttpRequest;
+import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 import org.testng.Assert;
 import org.testng.annotations.Test;
@@ -79,7 +80,9 @@ public class Cancel extends BaseTest {
         String tid  =Create.s_CreateTid(at);
         String orderNumber = getOrderNumberByTid(tid);
         pathValue.put("orderNumber", orderNumber);
-        ConfirmExpert.s_ConfirmExpert(orderNumber);
+        ConfirmExpert.s_ConfirmExpert(orderNumber, 10, 10);
+        CreatePayLink.s_CreatePayment(orderNumber, 1);
+        BankAccount.s_Bank(orderNumber);
         JSONObject body = new JSONObject();
         body.put("cancel_reason", "自动化取消");
         body.put("content", "自动化取消");
@@ -90,9 +93,9 @@ public class Cancel extends BaseTest {
         res = HttpRequest.s_SendPut(host_ims+uri, body.toString(), crm_token, pathValue);
 
         s_CheckResponse(res);
-        Assert.assertEquals(code, "1000000");
+        Assert.assertNotEquals(code, "1000000", "未收款不能有退款和打款");
 
-        Detail.s_Detail(tid);
+        res = Detail.s_Detail(tid);
         s_CheckResponse(res);
 
         Assert.assertEquals(data.getString("status"), "COMPLETE");
@@ -100,7 +103,7 @@ public class Cancel extends BaseTest {
     }
 
     @Test
-    public void test_03_取消订单_支付链接后需要返款() {
+    public void test_03_取消订单_服务中不需要返款() {
         String res = "";
         AppointmentTask at = new AppointmentTask();
         HashMap<String, String> pathValue = new HashMap<>();
@@ -109,25 +112,29 @@ public class Cancel extends BaseTest {
         pathValue.put("orderNumber", orderNumber);
         ConfirmExpert.s_ConfirmExpert(orderNumber);
         CreatePayLink.s_CreatePayment(orderNumber, 1);
+        BankAccount.s_Bank(orderNumber);
         JSONObject body = new JSONObject();
         body.put("cancel_reason", "自动化取消");
         body.put("content", "自动化取消");
-        body.put("need_refunds", true);
+        body.put("need_refunds", false);
         body.put("refunds_fee", 1);
-        body.put("need_transfer", true);
+        body.put("need_transfer", false);
         body.put("transfer_fee", 1);
         res = HttpRequest.s_SendPut(host_ims+uri, body.toString(), crm_token, pathValue);
 
         s_CheckResponse(res);
         Assert.assertEquals(code, "1000000");
 
-        Detail.s_Detail(tid);
+        res = Detail.s_Detail(tid);
         s_CheckResponse(res);
 
         Assert.assertEquals(data.getString("status"), "COMPLETE");
         Assert.assertEquals(data.getJSONObject("appointment_order").getString("appointment_status"), "CANCEL");
-        //TODO
-//        Assert.assertEquals(data.getJSONObject("payment_list").getJSONArray("refund_list"));
+        JSONArray payment_list = data.getJSONArray("payment_list");
+        for (int i = 0; i < payment_list.size(); i++) {
+            JSONObject payment = payment_list.getJSONObject(i);
+            Assert.assertEquals(payment.getString("enabled"), "false");
+        }
     }
 
     @Test

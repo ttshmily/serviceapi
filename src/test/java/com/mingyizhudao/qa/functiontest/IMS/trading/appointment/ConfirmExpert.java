@@ -27,14 +27,14 @@ public class ConfirmExpert extends BaseTest {
     public static final String version = "/api/v1";
     public static String uri = version+"/orders/{orderNumber}/confirmSurgeon";
 
-    public static Boolean s_ConfirmExpert(String orderNumber, String expert_id) {
+    public static Boolean s_ConfirmExpert(String orderNumber, String expert_id, int doctor_fee, int platform_fee) {
         TestLogger logger = new TestLogger(s_JobName());
         HashMap<String, String> pathValue = new HashMap<>();
         pathValue.put("orderNumber", orderNumber);
 
         JSONObject body = new JSONObject();
-        body.put("doctor_fee", Generator.randomInt(10));
-        body.put("platform_fee", Generator.randomInt(10));
+        body.put("doctor_fee", doctor_fee);
+        body.put("platform_fee", platform_fee);
         body.put("appointment_date", Generator.randomDateFromNow(1,3, new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'")));
         body.put("appointment_doctor_id", expert_id);
 
@@ -45,7 +45,19 @@ public class ConfirmExpert extends BaseTest {
     }
 
     public static Boolean s_ConfirmExpert(String orderNumber) {
-        return s_ConfirmExpert(orderNumber, Generator.randomExpertId());
+        int doctor_fee = (int) Generator.randomInt(10);
+        int platform_fee = (int) Generator.randomInt(10);
+        return s_ConfirmExpert(orderNumber, Generator.randomExpertId(), doctor_fee, platform_fee);
+    }
+
+    public static Boolean s_ConfirmExpert(String orderNumber, int doctor_fee, int platform_fee) {
+        return s_ConfirmExpert(orderNumber, Generator.randomExpertId(), doctor_fee, platform_fee);
+    }
+
+    public static Boolean s_ConfirmExpert(String orderNumber, String expert_id) {
+        int doctor_fee = (int) Generator.randomInt(10);
+        int platform_fee = (int) Generator.randomInt(10);
+        return s_ConfirmExpert(orderNumber, expert_id, doctor_fee, platform_fee);
     }
 
     @Test
@@ -72,11 +84,15 @@ public class ConfirmExpert extends BaseTest {
 
         res = Detail.s_Detail(tid);
         s_CheckResponse(res);
+        Assert.assertEquals(data.getJSONObject("appointment_order").getString("appointment_status"), "WAIT_PAY");
+        Assert.assertEquals(data.getString("is_paid"), "false");
+
         JSONObject appointment_info = data.getJSONObject("appointment_info");
-//        Assert.assertEquals(appointment_info.getString("appointment_date"), body.getString("appointment_date"));
+        Assert.assertTrue(Generator.sameDate(appointment_info.getString("appointment_date"), body.getString("appointment_date"), "s"));
         Assert.assertEquals(appointment_info.getString("doctor_fee"), body.getString("doctor_fee"));
         Assert.assertEquals(appointment_info.getString("platform_fee"), body.getString("platform_fee"));
-        Assert.assertEquals(Integer.parseInt(appointment_info.getString("appointment_fee")), (int)body.get("doctor_fee")+(int)body.get("platform_fee"));
+        Assert.assertEquals(appointment_info.getInt("appointment_fee"), body.getInt("doctor_fee")+body.getInt("platform_fee"));
+
         JSONObject appointment_doctor = appointment_info.getJSONObject("appointment_doctor");
         Assert.assertEquals(appointment_doctor.getString("id"), expertId);
         Assert.assertEquals(appointment_doctor.getString("name"), Generator.expertName(expertId));
@@ -87,7 +103,6 @@ public class ConfirmExpert extends BaseTest {
         Assert.assertEquals(appointment_doctor.getString("referrer_tel"), expertInfo.getString("referrer_tel"));
         Assert.assertEquals(appointment_doctor.getString("hospital_id"), expertInfo.getString("hospital_id"));
     }
-
 
     @Test
     public void test_02_确认医生_金额为0() {
@@ -118,7 +133,7 @@ public class ConfirmExpert extends BaseTest {
         Assert.assertEquals(appointment_info.getString("doctor_fee"), body.getString("doctor_fee"));
         Assert.assertEquals(appointment_info.getString("platform_fee"), body.getString("platform_fee"));
         Assert.assertTrue(Generator.sameDate(appointment_info.getString("appointment_date"), body.getString("appointment_date"), "s"));
-        Assert.assertEquals(Integer.parseInt(appointment_info.getString("appointment_fee")), (int)body.get("doctor_fee")+(int)body.get("platform_fee"));
+        Assert.assertEquals(appointment_info.getInt("appointment_fee"), body.getInt("doctor_fee") + body.getInt("platform_fee"));
         Assert.assertEquals(appointment_doctor.getString("id"), expertId);
         Assert.assertEquals(appointment_doctor.getString("name"), Generator.expertName(expertId));
         Assert.assertEquals(appointment_doctor.getString("medical_title_list"), expertInfo.getString("medical_title_list"));
@@ -128,7 +143,7 @@ public class ConfirmExpert extends BaseTest {
     }
 
     @Test
-    public void test_03_确认医生_缺少日期() {
+    public void test_03_确认医生_金额为0时的支付状态() {
         String res = "";
         String orderNumber = Create.s_CreateOrderNumber(new AppointmentTask());
         HashMap<String, String> pathValue = new HashMap<>();
@@ -142,7 +157,10 @@ public class ConfirmExpert extends BaseTest {
 
         res = HttpRequest.s_SendPut(host_ims+uri, body.toString(), crm_token, pathValue);
         s_CheckResponse(res);
-        Assert.assertNotEquals(code, "1000000");
+        Assert.assertEquals(code, "1000000");
+
+        Assert.assertEquals(data.getJSONObject("appointment_order").getString("appointment_status"), "WORKING_ON");
+        Assert.assertEquals(data.getString("is_paid"), "true");
     }
 
     @Test
@@ -165,7 +183,7 @@ public class ConfirmExpert extends BaseTest {
     }
 
     @Test
-    public void test_5_确认医生_操作记录() {
+    public void test_05_确认医生_操作记录() {
         String res = "";
         String tid = Create.s_CreateTid(new AppointmentTask());
         String orderNumber = getOrderNumberByTid(tid);
@@ -189,6 +207,32 @@ public class ConfirmExpert extends BaseTest {
         s_CheckResponse(Detail.s_Detail(tid));
         int track_list_size_after = data.getJSONArray("track_list").size();
         Assert.assertEquals(track_list_size_after-track_list_size_before, 1);
+    }
+
+    @Test
+    public void test_06_确认医生_修改总金额金额大于实收金额() {
+        String res = "";
+        String orderNumber = Create.s_CreateOrderNumber(new AppointmentTask());
+        HashMap<String, String> pathValue = new HashMap<>();
+        pathValue.put("orderNumber", orderNumber);
+        if (!Recommend.s_Recommend(orderNumber)) logger.error("推荐专家失败");
+        JSONObject body = new JSONObject();
+        body.put("doctor_fee", 0);
+        body.put("platform_fee", 0);
+        String expertId = Generator.randomExpertId();
+        body.put("appointment_doctor_id", expertId);
+
+        res = HttpRequest.s_SendPut(host_ims+uri, body.toString(), crm_token, pathValue);
+        s_CheckResponse(res);
+        Assert.assertEquals(code, "1000000");
+        Assert.assertEquals(data.getJSONObject("appointment_order").getString("appointment_status"), "WORKING_ON");
+
+        body.put("doctor_fee", 1);
+        res = HttpRequest.s_SendPut(host_ims+uri, body.toString(), crm_token, pathValue);
+        s_CheckResponse(res);
+        Assert.assertEquals(code, "1000000");
+        Assert.assertEquals(data.getJSONObject("appointment_order").getString("appointment_status"), "WAIT_PAY");
+
     }
 
     private String getOrderNumberByTid(String tid) {

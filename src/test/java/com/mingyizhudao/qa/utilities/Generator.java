@@ -3,10 +3,7 @@ package com.mingyizhudao.qa.utilities;
 import com.mingyizhudao.qa.common.KnowledgeBase;
 
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Random;
+import java.util.*;
 
 /**
  * Created by ttshmily on 4/5/2017.
@@ -40,6 +37,7 @@ public class Generator {
     public static String randomDateFromNow(int i, int j, SimpleDateFormat df) {
         try {
             Date now = df.parse(df.format(new Date()));
+            df.setTimeZone(TimeZone.getTimeZone("GMT"));
             Calendar date = Calendar.getInstance();
             date.setTime(now);
 
@@ -65,6 +63,7 @@ public class Generator {
 
     public static String randomDate(String startDate, String endDate, SimpleDateFormat df) {
         try {
+            df.setTimeZone(TimeZone.getTimeZone("GMT"));
             Date start = df.parse(startDate);// 构造开始日期
             Date end = df.parse(endDate);// 构造结束日期
             if (start.getTime() >= end.getTime()) {
@@ -80,6 +79,7 @@ public class Generator {
 
     public static Boolean sameDate(String startDate, String endDate, String accuracy) {
         SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
+        df.setTimeZone(TimeZone.getTimeZone("GMT"));
         try {
             long d1 = df.parse(startDate).getTime();// 构造开始日期
             long d2 = df.parse(endDate).getTime();// 构造结束日期
@@ -110,11 +110,8 @@ public class Generator {
 
     public static String randomDateTillNow(SimpleDateFormat df) {
         try {
-//            Date start = df.parse("2017/03/13");// 构造开始日期 1489334400
+            df.setTimeZone(TimeZone.getTimeZone("GMT"));
             Date end = df.parse(df.format(new Date()));// 构造结束日期
-//            if (start.getTime() >= end.getTime()) {
-//                return null;
-//            }
             long date = end.getTime() - (long) (Math.random() * (end.getTime() - 1489334400));
             return df.format(new Date(date));
         } catch (Exception e) {

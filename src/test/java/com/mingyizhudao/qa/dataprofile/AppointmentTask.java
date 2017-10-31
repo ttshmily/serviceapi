@@ -33,6 +33,9 @@ public class AppointmentTask {
     private String expected_doctor_id;
     private String expected_doctor_name;
     private Boolean expected_doctor_alternative;
+    private ArrayList<String> treatment = new ArrayList<>(
+
+    );
 
     // 患者信息
     private Integer patient_age;
@@ -116,9 +119,11 @@ public class AppointmentTask {
 
         Random random = new Random();
         String[] sources = new String[]{"BUSINESS", "HOT_LINE", "WEIBO", "BAIDU_BRIDGE", "SUSHU", "WECHAT", "PC_WEB", "MINGYIHUI", "RED_BIRD"};
-        String[] service_type = new String[]{"APPOINTMENT"};
+        String[] service_type = new String[]{"REMOTE_CONSULT", "TEXT_CONSULT", "REFERENCE_ALL", "APPOINTMENT", "HIGH_QUALITY_APPOINTMENT", "CONSULTATION", "SURGERY", "VIP"};
+        String[] treatment_type = new String[]{"MEDICAL", "CHEMOTHERAPY", "SURGERY"};
         this.source_type = sources[random.nextInt(sources.length)];
         this.service_type = service_type[random.nextInt(service_type.length)];
+        this.treatment.add(treatment_type[random.nextInt(treatment_type.length)]);
 
         this.assignee_id = randomEmployeeId();
     }
@@ -193,9 +198,11 @@ public class AppointmentTask {
 
                 Random random = new Random();
                 String[] sources = new String[]{"BUSINESS", "HOT_LINE", "WEIBO", "BAIDU_BRIDGE", "SUSHU", "WECHAT", "PC_WEB", "MINGYIHUI", "RED_BIRD"};
-                String[] service_type = new String[]{"APPOINTMENT"};
+                String[] service_type = new String[]{"REMOTE_CONSULT", "TEXT_CONSULT", "REFERENCE_ALL", "APPOINTMENT", "HIGH_QUALITY_APPOINTMENT", "CONSULTATION", "SURGERY", "VIP"};
+                String[] treatment_type = new String[]{"MEDICAL", "CHEMOTHERAPY", "SURGERY"};
                 this.source_type = sources[random.nextInt(sources.length)];
                 this.service_type = service_type[random.nextInt(service_type.length)];
+                this.treatment.add(treatment_type[random.nextInt(treatment_type.length)]);
 
                 this.assignee_id = randomEmployeeId();
 

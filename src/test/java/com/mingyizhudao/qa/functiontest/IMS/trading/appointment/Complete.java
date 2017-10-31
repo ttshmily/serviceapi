@@ -69,17 +69,12 @@ public class Complete extends BaseTest {
         res = HttpRequest.s_SendPut(host_ims+uri, body.toString(), crm_token, pathValue);
 
         s_CheckResponse(res);
-        Assert.assertEquals(code, "1000000");
+        Assert.assertNotEquals(code, "1000000");
 
-        Detail.s_Detail(tid);
-        s_CheckResponse(res);
-
-        Assert.assertEquals(data.getString("status"), "COMPLETE");
-        Assert.assertEquals(data.getJSONObject("appointment_order").getString("appointment_status"), "COMPLETE");
     }
 
     @Test
-    public void test_02_完成订单_服务中() {
+    public void test_02_完成订单_服务中未完成支付() {
         String res = "";
         AppointmentTask at = new AppointmentTask();
         HashMap<String, String> pathValue = new HashMap<>();
@@ -100,7 +95,38 @@ public class Complete extends BaseTest {
         res = HttpRequest.s_SendPut(host_ims+uri, body.toString(), crm_token, pathValue);
 
         s_CheckResponse(res);
-        Assert.assertEquals(code, "1000000");
+        Assert.assertNotEquals(code, "1000000", "未完成支付的不能完结订单");
+
+        res = Detail.s_Detail(tid);
+        s_CheckResponse(res);
+
+        Assert.assertEquals(data.getString("status"), "ASSIGNED");
+        Assert.assertEquals(data.getJSONObject("appointment_order").getString("appointment_status"), "WAIT_PAY");
+    }
+
+    @Test
+    public void test_03_完成订单_服务中已完成支付() {
+        String res = "";
+        AppointmentTask at = new AppointmentTask();
+        HashMap<String, String> pathValue = new HashMap<>();
+        String tid = Create.s_CreateTid(at);
+        String orderNumber = getOrderNumberByTid(tid);
+        ConfirmExpert.s_ConfirmExpert(orderNumber, 0, 0);
+//        CreatePayLink.s_CreatePayment(orderNumber, 1);
+        pathValue.put("orderNumber", orderNumber);
+        JSONObject body = new JSONObject();
+        body.put("actual_appointment_date", Generator.randomDateTillNow(new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'")));
+        Random random = new Random();
+        body.put("date_change_reason", change_reasons[random.nextInt(change_reasons.length)]);
+        body.put("return_visit_date", Generator.randomDateFromNow(0, 0, new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'")));
+        body.put("return_visit_remark", "自动化");
+        body.put("return_visit_satisfaction", Generator.randomInt(4));
+        body.put("return_visit_type", visit_types[random.nextInt(visit_types.length)]);
+
+        res = HttpRequest.s_SendPut(host_ims+uri, body.toString(), crm_token, pathValue);
+
+        s_CheckResponse(res);
+        Assert.assertEquals(code, "1000000", "0金额订单可以完结订单");
 
         Detail.s_Detail(tid);
         s_CheckResponse(res);
@@ -110,12 +136,14 @@ public class Complete extends BaseTest {
     }
 
     @Test
-    public void test_03_完成订单_工单记录() {
+    public void test_04_完成订单_工单记录() {
         String res = "";
         AppointmentTask at = new AppointmentTask();
         HashMap<String, String> pathValue = new HashMap<>();
         String tid  =Create.s_CreateTid(at);
         String orderNumber = getOrderNumberByTid(tid);
+        ConfirmExpert.s_ConfirmExpert(orderNumber, 0, 0);
+//        CreatePayLink.s_CreatePayment(orderNumber, 1);
         pathValue.put("orderNumber", orderNumber);
         JSONObject body = new JSONObject();
         body.put("actual_appointment_date", Generator.randomDateTillNow(new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'")));

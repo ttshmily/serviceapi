@@ -47,7 +47,10 @@ public class Assign extends BaseTest {
         HashMap<String, String> pathValue = new HashMap<>();
         pathValue.put("id", tid);
         JSONObject body = new JSONObject();
-        String tmp = Generator.randomEmployeeId();
+        String tmp;
+        do {
+            tmp = Generator.randomEmployeeId();
+        } while (tmp.equals(at.getAssignee_id()));
         body.put("assignee_id", tmp);
         body.put("remark", "创建完就转交");
 
@@ -62,7 +65,6 @@ public class Assign extends BaseTest {
         Assert.assertEquals(data.getString("status"), "ASSIGNED");
 
         JSONArray track_list = data.getJSONArray("track_list");
-        Assert.assertEquals(track_list.size(), 2);
         JSONObject track = track_list.getJSONObject(track_list.size() - 1);
         Assert.assertEquals(track.getString("track_type"), "CHANGE_ASSIGNEE_V1");
         Assert.assertEquals(track.getJSONObject("content").getString("assignee_id"), tmp);
@@ -81,12 +83,17 @@ public class Assign extends BaseTest {
         HashMap<String, String> pathValue = new HashMap<>();
         pathValue.put("id", tid);
         JSONObject body = new JSONObject();
-        String tmp = Generator.randomEmployeeId();
+        String tmp = at.getAssignee_id();
         s_CheckResponse(Detail.s_Detail(tid));
         int size_before = data.getJSONArray("track_list").size();
         int times = 10;
         for (int i = 0; i < times; i++) {
-            tmp = Generator.randomEmployeeId();
+            String tmp1;
+            do {
+                tmp1 = Generator.randomEmployeeId();
+            }
+            while (tmp1.equals(tmp));
+            tmp = tmp1;
             logger.info("第"+i+"次转交:"+tmp);
             body.put("assignee_id", tmp);
             body.put("remark", "创建完就转交"+tmp);

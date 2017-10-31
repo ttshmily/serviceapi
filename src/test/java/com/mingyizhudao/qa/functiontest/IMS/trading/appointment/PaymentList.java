@@ -29,10 +29,10 @@ public class PaymentList extends BaseTest {
 
         s_CheckResponse(res);
         Assert.assertEquals(code, "1000000");
-        Assert.assertNotNull(data.getString("page"));
-        Assert.assertNotNull(data.getString("page_size"));
-        Assert.assertEquals(data.getInt("size"), 10);
-        Assert.assertNotEquals(data.getJSONArray("list").size(), 0);
+        Assert.assertEquals(data.getInt("page"), 1);
+        Assert.assertEquals(data.getInt("page_size"), 10);
+        Assert.assertNotNull(data.getInt("size"));
+//        Assert.assertNotEquals(data.getJSONArray("list").size(), 0);
     }
 
     @Test
