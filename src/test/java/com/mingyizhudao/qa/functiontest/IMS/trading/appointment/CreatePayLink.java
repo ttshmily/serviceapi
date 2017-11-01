@@ -58,7 +58,12 @@ public class CreatePayLink extends BaseTest {
         s_CheckResponse(res);
         JSONArray payment_list = data.getJSONArray("payment_list");
         Assert.assertEquals(payment_list.size(), 1);
-        Assert.assertEquals(payment_list.getJSONObject(payment_list.size()-1).getString("payment_number"), paymentId);
+        JSONObject payment = payment_list.getJSONObject(payment_list.size()-1);
+        Assert.assertEquals(payment.getString("payment_number"), paymentId);
+        Assert.assertEquals(payment.getInt("receivable_fee"), body.getInt("fee"));
+        Assert.assertEquals(payment.getString("status"), "1000");
+        Assert.assertEquals(payment.getString("type"), "RECEIVE");
+        Assert.assertEquals(payment.getString("enabled"), "true");
     }
 
     @Test

@@ -117,13 +117,20 @@ public class AppointmentTask {
 
         Random random = new Random();
         String[] sources = new String[]{"BUSINESS", "HOT_LINE", "WEIBO", "BAIDU_BRIDGE", "SUSHU", "WECHAT", "PC_WEB", "MINGYIHUI", "RED_BIRD"};
+        String[] channels = new String[]{"PC_WEB", "MOBILE_WEB", "WECHAT", "WEIBO", "NEWSPAPER_TV", "DOCTOR_RECOMMEND", "HOSPITAL_RECOMMEND", "RELATIVES_FRIENDS"};
         String[] service_type = new String[]{"REMOTE_CONSULT", "TEXT_CONSULT", "REFERENCE_ALL", "APPOINTMENT", "HIGH_QUALITY_APPOINTMENT", "CONSULTATION", "SURGERY", "VIP"};
         String[] treatment_type = new String[]{"MEDICAL", "CHEMOTHERAPY", "SURGERY"};
         this.source_type = sources[random.nextInt(sources.length)];
         this.service_type = service_type[random.nextInt(service_type.length)];
         this.treatment = new ArrayList<>();
-        treatment.add(treatment_type[random.nextInt(treatment_type.length)]);
+        for (int i = 0; i < random.nextInt(treatment_type.length); i++) {
+            treatment.add(treatment_type[i]);
+        }
         this.assignee_id = randomEmployeeId();
+        this.source_channel = new ArrayList<>();
+        for (int i = 0; i < random.nextInt(channels.length); i++) {
+            source_channel.add(channels[i]);
+        }
     }
 
     public AppointmentTask(String from) {
@@ -196,13 +203,20 @@ public class AppointmentTask {
 
                 Random random = new Random();
                 String[] sources = new String[]{"BUSINESS", "HOT_LINE", "WEIBO", "BAIDU_BRIDGE", "SUSHU", "WECHAT", "PC_WEB", "MINGYIHUI", "RED_BIRD"};
+                String[] channels = new String[]{"PC_WEB", "MOBILE_WEB", "WECHAT", "WEIBO", "NEWSPAPER_TV", "DOCTOR_RECOMMEND", "HOSPITAL_RECOMMEND", "RELATIVES_FRIENDS"};
                 String[] service_type = new String[]{"REMOTE_CONSULT", "TEXT_CONSULT", "REFERENCE_ALL", "APPOINTMENT", "HIGH_QUALITY_APPOINTMENT", "CONSULTATION", "SURGERY", "VIP"};
                 String[] treatment_type = new String[]{"MEDICAL", "CHEMOTHERAPY", "SURGERY"};
                 this.source_type = sources[random.nextInt(sources.length)];
                 this.service_type = service_type[random.nextInt(service_type.length)];
                 this.treatment = new ArrayList<>();
-                treatment.add(treatment_type[random.nextInt(treatment_type.length)]);
+                for (int i = 0; i < random.nextInt(treatment_type.length); i++) {
+                    treatment.add(treatment_type[i]);
+                }
                 this.assignee_id = randomEmployeeId();
+                this.source_channel = new ArrayList<>();
+                for (int i = 0; i < random.nextInt(channels.length); i++) {
+                    source_channel.add(channels[i]);
+                }
 
             }
         }

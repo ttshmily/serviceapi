@@ -25,6 +25,7 @@ public class AssignDoctor extends BaseTest {
     public static TestLogger logger = new TestLogger(clazzName);
     public static String uri = "/api/v1/assignmentDoctor";
 
+
     @Test
     public void test_01_分配一个医生到地推() {
         String res = "";

@@ -156,6 +156,7 @@ public class KnowledgeBase {
                 JSONArray doctor_list = JSONObject.fromObject(res).getJSONObject("data").getJSONArray("list");
                 for (int j = 0; j < doctor_list.size(); j++) {
                     JSONObject doctor = doctor_list.getJSONObject(j);
+                    //TODO 每个医生需要分配一个地推
                     kb_doctor.put(doctor.getString("id"), doctor.getString("name"));
                 }
                 stringToFile(kb_doctor, doctor_file);//created by tianjing on 2017/6/21

@@ -151,8 +151,8 @@ public class Search extends BaseTest {
         HashMap<String, String> query = new HashMap<>();
 
         String id = Create.s_CreateTid(new AppointmentTask());
-        String assigning_id = Generator.randomEmployeeId();
-        query.put("assigning_id", assigning_id);
+        String assignee_id = Generator.randomEmployeeId();
+        query.put("assignee_id", assignee_id);
 
         res = HttpRequest.s_SendGet(host_ims + uri, query, crm_token);
 
@@ -166,7 +166,7 @@ public class Search extends BaseTest {
         for (int i=0; i<result_list.size(); i++) {
             JSONObject r = result_list.getJSONObject(i);
             String tid = r.getString("id");
-            Assert.assertEquals(getAssigneeIdByTid(tid), assigning_id);
+            Assert.assertEquals(getAssigneeIdByTid(tid), assignee_id);
         }
     }
 
