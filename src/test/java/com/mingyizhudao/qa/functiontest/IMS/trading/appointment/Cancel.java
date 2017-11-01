@@ -98,8 +98,8 @@ public class Cancel extends BaseTest {
         res = Detail.s_Detail(tid);
         s_CheckResponse(res);
 
-        Assert.assertEquals(data.getString("status"), "COMPLETE");
-        Assert.assertEquals(data.getJSONObject("appointment_order").getString("appointment_status"), "CANCEL");
+        Assert.assertEquals(data.getString("status"), "ASSIGNED");
+        Assert.assertEquals(data.getJSONObject("appointment_order").getString("appointment_status"), "WAIT_PAY");
     }
 
     @Test
