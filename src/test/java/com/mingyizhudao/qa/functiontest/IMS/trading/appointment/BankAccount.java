@@ -126,4 +126,34 @@ public class BankAccount extends BaseTest {
         Assert.assertEquals(track.getString("track_type"), "CHANGE_TARGET_PAY_ACCOUNT_V1");
 
     }
+
+    @Test
+    public void test_06_修改支付宝账号() {
+        String res = "";
+        String orderNumber = Create.s_CreateOrderNumber(new AppointmentTask());
+
+        HashMap<String, String> pathValue = new HashMap<>();
+        pathValue.put("orderNumber", orderNumber);
+
+        AppointmentTask account_old = new AppointmentTask("account");
+        res = HttpRequest.s_SendPut(host_ims+uri, account_old.transform(), crm_token, pathValue);
+        s_CheckResponse(res);
+        Assert.assertEquals(code, "1000000");
+
+        AppointmentTask account = new AppointmentTask("account");
+        res = HttpRequest.s_SendPut(host_ims+uri, account.transform(), crm_token, pathValue);
+        s_CheckResponse(res);
+        Assert.assertEquals(code, "1000000");
+
+        String tid = data.getString("id");
+
+        res = Detail.s_Detail(tid);
+        s_CheckResponse(res);
+        JSONObject account_res = data.getJSONObject("doctor_account");
+        Assert.assertNotNull(account_res);
+        Assert.assertEquals(account_res.getString("doctor_account_identity"), account.getDoctor_account_identity());
+        Assert.assertEquals(account_res.getString("doctor_account_info"), account.getDoctor_account_info());
+        Assert.assertEquals(account_res.getString("doctor_account_name"), account.getDoctor_account_name());
+        Assert.assertEquals(account_res.getString("appointment_fee_remark"), account.getAppointment_fee_remark());
+    }
 }

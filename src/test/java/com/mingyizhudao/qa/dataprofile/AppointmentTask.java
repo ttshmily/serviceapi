@@ -33,9 +33,7 @@ public class AppointmentTask {
     private String expected_doctor_id;
     private String expected_doctor_name;
     private Boolean expected_doctor_alternative;
-    private ArrayList<String> treatment = new ArrayList<>(
-
-    );
+    private ArrayList<String> treatment;
 
     // 患者信息
     private Integer patient_age;
@@ -123,8 +121,8 @@ public class AppointmentTask {
         String[] treatment_type = new String[]{"MEDICAL", "CHEMOTHERAPY", "SURGERY"};
         this.source_type = sources[random.nextInt(sources.length)];
         this.service_type = service_type[random.nextInt(service_type.length)];
-        this.treatment.add(treatment_type[random.nextInt(treatment_type.length)]);
-
+        this.treatment = new ArrayList<>();
+        treatment.add(treatment_type[random.nextInt(treatment_type.length)]);
         this.assignee_id = randomEmployeeId();
     }
 
@@ -152,7 +150,7 @@ public class AppointmentTask {
                 this.appointment_fee_remark = Generator.randomString(20);
                 this.doctor_account_name = "账号姓名" + Generator.randomString(5);
                 this.doctor_account_identity = "340802198511300613";
-                this.doctor_account_info = "支付宝";
+                this.doctor_account_info = "ttshmilyfc@qq.com";
                 break;
             }
             case "empty": {
@@ -202,8 +200,8 @@ public class AppointmentTask {
                 String[] treatment_type = new String[]{"MEDICAL", "CHEMOTHERAPY", "SURGERY"};
                 this.source_type = sources[random.nextInt(sources.length)];
                 this.service_type = service_type[random.nextInt(service_type.length)];
-                this.treatment.add(treatment_type[random.nextInt(treatment_type.length)]);
-
+                this.treatment = new ArrayList<>();
+                treatment.add(treatment_type[random.nextInt(treatment_type.length)]);
                 this.assignee_id = randomEmployeeId();
 
             }
