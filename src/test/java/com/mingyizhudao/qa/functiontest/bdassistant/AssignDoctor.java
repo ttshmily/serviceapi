@@ -25,6 +25,15 @@ public class AssignDoctor extends BaseTest {
     public static TestLogger logger = new TestLogger(clazzName);
     public static String uri = "/api/v1/assignmentDoctor";
 
+    public static boolean s_Assign(List<Integer> doctor_list, String employee_id) {
+        JSONObject body = new JSONObject();
+        doctor_list.add(1);
+        body.put("doctor_list", doctor_list);
+        body.put("staff_id", employee_id);
+        String res = s_SendPost(host_bda+uri, body.toString(), bda_session);
+        if (!JSONObject.fromObject(res).getString("code").equals("1000000")) logger.error(unicodeString(res));
+        return JSONObject.fromObject(res).getString("code").equals("1000000");
+    }
 
     @Test
     public void test_01_分配一个医生到地推() {

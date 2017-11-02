@@ -2,6 +2,7 @@ package com.mingyizhudao.qa.common;
 
 
 import com.mingyizhudao.qa.dataprofile.User;
+import com.mingyizhudao.qa.functiontest.bdassistant.AssignDoctor;
 import com.mingyizhudao.qa.functiontest.crm.user.management.RegisteredDoctor_CertifySync_V3;
 import com.mingyizhudao.qa.functiontest.doctor.GetDoctorProfile_V1;
 import com.mingyizhudao.qa.functiontest.doctor.CheckVerifyCode;
@@ -144,6 +145,8 @@ public class BaseTest {
 
         bda_session = JSONObject.fromObject(HttpRequest.s_SendGet("http://services.dev.myzd.info/internal/api/session/create" , "number=SH0133", "")).getString("data");
         bda_session_staff = JSONObject.fromObject(HttpRequest.s_SendGet("http://services.dev.myzd.info/internal/api/session/create" , "number=Sh0143", "")).getString("data");
+
+        AssignDoctor.s_Assign(KnowledgeBase.doctor_reg_list, mainEmployeeId);
 
         mainUser = new User();
         mainUser.getDoctor().setHospital_id("57");//北京大学口腔医院, 北京，区域服务人员 - 方超
