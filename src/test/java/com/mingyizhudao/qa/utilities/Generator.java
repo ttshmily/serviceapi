@@ -140,7 +140,7 @@ public class Generator {
 
     public static String randomEmployeeId() {
         String[] prefix = {"SH"};
-        String[] ID = {"0133","0143","9999","9998"};
+        String[] ID = {"0133","0143","9999","9998","0025"};
         Random random = new Random();
         return prefix[random.nextInt(prefix.length)]+ID[random.nextInt(ID.length)];
     }
