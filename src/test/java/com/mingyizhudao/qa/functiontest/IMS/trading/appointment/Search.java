@@ -216,7 +216,7 @@ public class Search extends BaseTest {
         Assert.assertEquals(code, "1000000");
         Assert.assertEquals(s_ParseJson(data, "page_size"), "10");
         Assert.assertEquals(s_ParseJson(data, "page"), "1");
-        Assert.assertNotEquals(s_ParseJson(data, "size"), "0");
+//        Assert.assertNotEquals(s_ParseJson(data, "size"), "0");
 
         JSONArray result_list = data.getJSONArray("list");
         for (int i=0; i<result_list.size(); i++) {

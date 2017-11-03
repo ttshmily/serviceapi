@@ -157,6 +157,25 @@ public class CreatePayLink extends BaseTest {
 
     }
 
+    @Test
+    public void test_06_没有预约信息时创建支付链接() {
+        String res = "";
+        AppointmentTask at = new AppointmentTask();
+        String tid = Create.s_CreateTid(at);
+        String order_number = getOrderNumberByTid(tid);
+//        if (!ConfirmExpert.s_ConfirmExpert(order_number)) logger.error("确认预约信息失败");
+
+        JSONObject body = new JSONObject();
+        body.put("order_number", order_number);
+        body.put("fee", 1);
+
+        s_CheckResponse(Detail.s_Detail(tid));
+        res = HttpRequest.s_SendPost(host_ims + uri, body.toString(), crm_token);
+        s_CheckResponse(res);
+        Assert.assertEquals(code, "1000000");
+
+    }
+
     private String getOrderNumberByTid(String tid) {
         return JSONObject.fromObject(Detail.s_Detail(tid)).getJSONObject("data").getJSONObject("appointment_order").getString("order_number");
     }

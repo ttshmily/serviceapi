@@ -75,18 +75,23 @@ public class Recommend extends BaseTest {
         JSONArray recommend_doctors = data.getJSONArray("recommend_doctors");
 
         int real_size = new ArrayList(new HashSet(list)).size();
-
+        List<String> real_list = new ArrayList<>();
         Assert.assertEquals(recommend_doctors.size(), real_size);
         for (int i = 0; i < real_size; i++) {
             JSONObject doctor = recommend_doctors.getJSONObject(i);
-            Assert.assertEquals(doctor.getString("id"), list.get(i));
-            Assert.assertEquals(doctor.getString("name"), Generator.expertName(list.get(i)));
-
-            String tmp = getHospitalIdByExpertId(list.get(i));
-
-            Assert.assertEquals(doctor.getString("hospital_id"), tmp);
-            Assert.assertEquals(doctor.getString("hospital_name"), Generator.hospitalName(tmp));
+            String id = doctor.getString("id");
+            Assert.assertTrue(list.contains(id));
+            real_list.add(id);
+            Assert.assertEquals(doctor.getString("name"), Generator.expertName(id));
+            String hospital_id = getHospitalIdByExpertId(id);
+            Assert.assertEquals(doctor.getString("hospital_id"), hospital_id);
+            Assert.assertEquals(doctor.getString("hospital_name"), Generator.hospitalName(hospital_id));
         }
+
+        for (int i = 0; i < list.size(); i++) {
+            Assert.assertTrue(real_list.contains(list.get(i)));
+        }
+
     }
 
     @Test
@@ -119,12 +124,37 @@ public class Recommend extends BaseTest {
         JSONObject track = track_list.getJSONObject(track_size-1);
         Assert.assertEquals(track.getString("track_type"), "EDIT_MEDICAL_ADVICE_V1");
         Assert.assertEquals(track.getString("poster_name"), mainOperatorName);
-//        Assert.assertEquals(track.getJSONObject("content").getString("assignee_id"), tmp);
-//        Assert.assertEquals(track.getJSONObject("content").getString("assignee_name"), Generator.employeeName(tmp));
-//        Assert.assertEquals(track.getJSONObject("content").getString("content"), body.getString("remark"));
-//        Assert.assertNotNull(track.getJSONObject("content").getString("assignee_department"));
+    }
 
+    @Test
+    public void test_03_推荐列表中有错误的ID() {
+        String res = "";
+        String tid = s_CreateTid(new AppointmentTask());
+        String orderNumber = getOrderNumberByTid(tid);
+        HashMap<String, String> pathValue = new HashMap<>();
+        pathValue.put("orderNumber", orderNumber);
 
+        JSONObject body = new JSONObject();
+        List<String> list = new ArrayList<>();
+        int size = (int)Generator.randomInt(10);
+        for (int i = 0; i < size; i++) {
+            list.add(Generator.randomExpertId());
+        }
+        list.add("111111111");
+        body.put("list", list.toString());
+
+        res = s_SendPut(host_ims + uri, body.toString(), crm_token, pathValue);
+
+        s_CheckResponse(res);
+        Assert.assertEquals(code, "1000000");
+
+        res = Detail.s_Detail(tid);
+        s_CheckResponse(res);
+        JSONArray recommend_doctors = data.getJSONArray("recommend_doctors");
+
+        int real_size = new ArrayList(new HashSet(list)).size() - 1; //减去一个错误ID
+
+        Assert.assertEquals(recommend_doctors.size(), real_size);
     }
 
     private String getOrderNumberByTid(String tid) {

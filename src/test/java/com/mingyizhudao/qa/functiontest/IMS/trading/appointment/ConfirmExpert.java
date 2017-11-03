@@ -235,6 +235,33 @@ public class ConfirmExpert extends BaseTest {
 
     }
 
+    @Test
+    public void test_07_先创建链接再确认信息() {
+        String res = "";
+        String orderNumber = Create.s_CreateOrderNumber(new AppointmentTask());
+        HashMap<String, String> pathValue = new HashMap<>();
+        pathValue.put("orderNumber", orderNumber);
+        if (!Recommend.s_Recommend(orderNumber)) logger.error("推荐专家失败");
+        CreatePayLink.s_CreatePayment(orderNumber, 1000);
+        JSONObject body = new JSONObject();
+        body.put("doctor_fee", 0);
+        body.put("platform_fee", 0);
+        body.put("appointment_date", Generator.randomDateFromNow(1,3, new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'")));
+        String expertId = Generator.randomExpertId();
+        body.put("appointment_doctor_id", expertId);
+
+        res = HttpRequest.s_SendPut(host_ims+uri, body.toString(), crm_token, pathValue);
+        s_CheckResponse(res);
+        Assert.assertNotEquals(code, "1000000", "确认的金额不能低于已创建的金额");
+
+        body.put("doctor_fee", 500);
+        body.put("platform_fee", 500);
+        res = HttpRequest.s_SendPut(host_ims+uri, body.toString(), crm_token, pathValue);
+        s_CheckResponse(res);
+        Assert.assertEquals(code, "1000000");
+
+    }
+
     private String getOrderNumberByTid(String tid) {
         return JSONObject.fromObject(Detail.s_Detail(tid)).getJSONObject("data").getJSONObject("appointment_order").getString("order_number");
     }
