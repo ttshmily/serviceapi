@@ -238,11 +238,15 @@ public class ConfirmExpert extends BaseTest {
     @Test
     public void test_07_先创建链接再确认信息() {
         String res = "";
-        String orderNumber = Create.s_CreateOrderNumber(new AppointmentTask());
+        String tid = Create.s_CreateTid(new AppointmentTask());
+        String orderNumber = getOrderNumberByTid(tid);
         HashMap<String, String> pathValue = new HashMap<>();
         pathValue.put("orderNumber", orderNumber);
         if (!Recommend.s_Recommend(orderNumber)) logger.error("推荐专家失败");
         CreatePayLink.s_CreatePayment(orderNumber, 1000);
+        s_CheckResponse(Detail.s_Detail(tid));
+        Assert.assertTrue(data.getJSONObject("appointment_order").getString("appointment_status").equals("ASSIGNED"));
+
         JSONObject body = new JSONObject();
         body.put("doctor_fee", 0);
         body.put("platform_fee", 0);
@@ -260,6 +264,16 @@ public class ConfirmExpert extends BaseTest {
         s_CheckResponse(res);
         Assert.assertEquals(code, "1000000");
 
+        s_CheckResponse(Detail.s_Detail(tid));
+        Assert.assertEquals(data.getJSONObject("appointment_order").getString("appointment_status"), "WAIT_PAY");
+
+        body.put("platform_fee", 600);
+        res = HttpRequest.s_SendPut(host_ims+uri, body.toString(), crm_token, pathValue);
+        s_CheckResponse(res);
+        Assert.assertEquals(code, "1000000");
+
+        s_CheckResponse(Detail.s_Detail(tid));
+        Assert.assertEquals(data.getJSONObject("appointment_order").getString("appointment_status"), "WAIT_PAY");
     }
 
     private String getOrderNumberByTid(String tid) {
