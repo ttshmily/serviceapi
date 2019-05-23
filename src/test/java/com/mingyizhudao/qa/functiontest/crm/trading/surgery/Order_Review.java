@@ -1,7 +1,7 @@
 package com.mingyizhudao.qa.functiontest.crm.trading.surgery;
 
-import com.mingyizhudao.qa.functiontest.login.CheckVerifyCode;
-import com.mingyizhudao.qa.functiontest.login.SendVerifyCode;
+import com.mingyizhudao.qa.functiontest.doctor.CheckVerifyCode;
+import com.mingyizhudao.qa.functiontest.doctor.SendVerifyCode;
 import com.mingyizhudao.qa.common.BaseTest;
 import com.mingyizhudao.qa.common.TestLogger;
 import com.mingyizhudao.qa.functiontest.doctor.CreateSurgeryBriefs;

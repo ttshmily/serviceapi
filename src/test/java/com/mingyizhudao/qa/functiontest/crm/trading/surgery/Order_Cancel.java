@@ -1,10 +1,10 @@
 package com.mingyizhudao.qa.functiontest.crm.trading.surgery;
 
-import com.mingyizhudao.qa.functiontest.login.CheckVerifyCode;
+import com.mingyizhudao.qa.functiontest.doctor.CheckVerifyCode;
 import com.mingyizhudao.qa.common.BaseTest;
 import com.mingyizhudao.qa.common.TestLogger;
 import com.mingyizhudao.qa.functiontest.doctor.GetOrderDetail_V1;
-import com.mingyizhudao.qa.functiontest.login.SendVerifyCode;
+import com.mingyizhudao.qa.functiontest.doctor.SendVerifyCode;
 import com.mingyizhudao.qa.utilities.HttpRequest;
 import com.mingyizhudao.qa.utilities.Helper;
 import net.sf.json.JSONObject;

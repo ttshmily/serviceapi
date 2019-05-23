@@ -39,11 +39,11 @@ public class CityList extends BaseTest {
                 s_CheckResponse(res);
                 Assert.assertEquals(code, "1000000");
                 JSONArray city_list = data.getJSONArray("list");
-                for(int i=0; i<city_list.size(); i++) {
+/*                for(int i=0; i<city_list.size(); i++) {
                     JSONObject city = city_list.getJSONObject(i);
                     if(city.getString("id").equals("520300")) Assert.assertNotNull(city.getString("bdname"));
                     if(city.getString("id").equals("320200")) Assert.assertNotNull(city.getString("bdname"));
-                }
+                }*/
             }
         }
     }

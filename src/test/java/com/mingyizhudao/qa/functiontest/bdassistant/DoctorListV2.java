@@ -93,6 +93,7 @@ public class DoctorListV2 extends BaseTest {
             JSONObject doctor = doctor_list.getJSONObject(i);
             // TODO 判断条件需要重写
             Assert.assertEquals(doctor.getString("city_id"), cityId);
+//            Assert.assertEquals(doctor.getString("city_name"), cityId);
         }
     }
 

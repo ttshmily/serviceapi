@@ -131,7 +131,7 @@ public class KBDisease_Update extends BaseTest {
 
         String res = "";
         DiseaseProfile dp = new DiseaseProfile(true);
-        HashMap<String, String> info = s_Create(dp);
+        HashMap<String, String> info = s_CreateTid(dp);
         String diseaseId = info.get("id");
         if (info == null) Assert.fail("创建疾病失败，退出用例执行");
         HashMap<String, String> pathValue = new HashMap<>();
@@ -187,7 +187,7 @@ public class KBDisease_Update extends BaseTest {
 
         String res = "";
         DiseaseProfile dp = new DiseaseProfile(true);
-        HashMap<String, String> info = s_Create(dp);
+        HashMap<String, String> info = s_CreateTid(dp);
         String diseaseId = info.get("id");
         if (info == null) Assert.fail("创建疾病失败，退出用例执行");
         HashMap<String, String> pathValue = new HashMap<>();

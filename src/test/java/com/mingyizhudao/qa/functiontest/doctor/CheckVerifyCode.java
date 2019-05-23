@@ -1,8 +1,9 @@
-package com.mingyizhudao.qa.functiontest.login;
+package com.mingyizhudao.qa.functiontest.doctor;
 
 import com.mingyizhudao.qa.common.BaseTest;
 import com.mingyizhudao.qa.common.TestLogger;
 import com.mingyizhudao.qa.dataprofile.login.CheckMobileProfile;
+import com.mingyizhudao.qa.recycle.login.Refresh;
 import com.mingyizhudao.qa.utilities.HttpRequest;
 import com.mingyizhudao.qa.utilities.Helper;
 import net.sf.json.JSONObject;
@@ -52,6 +53,7 @@ public class CheckVerifyCode extends BaseTest{
         JSONObject check = new JSONObject();
         check.put("mobile", phone);
         check.put("code", "123456");
+        check.put("state", "test");
         logger.info("发送短信验证码到服务器进行验证...");
         String tmpToken = "";
         res = HttpRequest.s_SendPost(host_login +uri, check.toString(), "");
@@ -62,7 +64,7 @@ public class CheckVerifyCode extends BaseTest{
             token = tmpToken;
             Refresh.token = tmpToken;
         } else {
-            logger.error("获取token失败");
+            logger.error(res);
         }
         return tmpToken;
     }

@@ -3,10 +3,7 @@ package com.mingyizhudao.qa.utilities;
 import com.mingyizhudao.qa.common.KnowledgeBase;
 
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Random;
+import java.util.*;
 
 /**
  * Created by ttshmily on 4/5/2017.
@@ -17,9 +14,8 @@ public class Generator {
 
 
     public static void main(String[] args) {
-        for (int i = 0; i < 10; i++) {
-            System.out.println(randomEmployeeId());
-        }
+        System.out.println(randomDateFromNow(0, 0, new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'")));
+        System.out.println(randomDateFromNow(0, 0, new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS")));
     }
 
     public static String randomString(int length) {
@@ -41,6 +37,7 @@ public class Generator {
     public static String randomDateFromNow(int i, int j, SimpleDateFormat df) {
         try {
             Date now = df.parse(df.format(new Date()));
+            df.setTimeZone(TimeZone.getTimeZone("GMT"));
             Calendar date = Calendar.getInstance();
             date.setTime(now);
 
@@ -66,6 +63,7 @@ public class Generator {
 
     public static String randomDate(String startDate, String endDate, SimpleDateFormat df) {
         try {
+            df.setTimeZone(TimeZone.getTimeZone("GMT"));
             Date start = df.parse(startDate);// 构造开始日期
             Date end = df.parse(endDate);// 构造结束日期
             if (start.getTime() >= end.getTime()) {
@@ -79,19 +77,42 @@ public class Generator {
         return null;
     }
 
+    public static Boolean sameDate(String startDate, String endDate, String accuracy) {
+        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
+        df.setTimeZone(TimeZone.getTimeZone("GMT"));
+        try {
+            long d1 = df.parse(startDate).getTime();// 构造开始日期
+            long d2 = df.parse(endDate).getTime();// 构造结束日期
+            long delta = Math.abs(d1 - d2);
+            switch (accuracy) {
+                case "ms": {
+                    return delta == 0;
+                }
+                case "s": {
+                    return delta <= 1000;
+                }
+                case "d": {
+                    return delta <= 86400000;
+                }
+                default: {
+                    return false;
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
     public static String randomDate(String startDate, String endDate) {
         return randomDate(startDate, endDate, df);
     }
 
-
     public static String randomDateTillNow(SimpleDateFormat df) {
         try {
-            Date start = df.parse("2017/03/13");// 构造开始日期
+            df.setTimeZone(TimeZone.getTimeZone("GMT"));
             Date end = df.parse(df.format(new Date()));// 构造结束日期
-            if (start.getTime() >= end.getTime()) {
-                return null;
-            }
-            long date = start.getTime() + (long) (Math.random() * (end.getTime() - start.getTime()));
+            long date = end.getTime() - (long) (Math.random() * (end.getTime() - 1489334400));
             return df.format(new Date(date));
         } catch (Exception e) {
             e.printStackTrace();
@@ -119,7 +140,7 @@ public class Generator {
 
     public static String randomEmployeeId() {
         String[] prefix = {"SH"};
-        String[] ID = {"0133","0143","9999","9998","0025"};
+        String[] ID = {"0133","0143","9999","9998"};
         Random random = new Random();
         return prefix[random.nextInt(prefix.length)]+ID[random.nextInt(ID.length)];
     }
@@ -208,7 +229,6 @@ public class Generator {
 
         return randomKey(KnowledgeBase.kb_disease_ext.get(majorId));
     }
-
 
     public static String diseaseName(String id) {
 

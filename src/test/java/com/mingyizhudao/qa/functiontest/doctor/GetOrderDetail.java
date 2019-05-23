@@ -3,8 +3,6 @@ package com.mingyizhudao.qa.functiontest.doctor;
 import com.mingyizhudao.qa.common.BaseTest;
 import com.mingyizhudao.qa.dataprofile.User;
 import com.mingyizhudao.qa.functiontest.crm.user.management.RegisteredDoctor_Certify_V2;
-import com.mingyizhudao.qa.functiontest.login.CheckVerifyCode;
-import com.mingyizhudao.qa.functiontest.login.SendVerifyCode;
 import com.mingyizhudao.qa.common.TestLogger;
 import com.mingyizhudao.qa.utilities.HttpRequest;
 import com.mingyizhudao.qa.utilities.Helper;
@@ -13,8 +11,6 @@ import org.testng.Assert;
 import org.testng.annotations.Test;
 
 import java.util.HashMap;
-
-import static com.mingyizhudao.qa.functiontest.doctor.CreateOrder.mainToken;
 
 /**
  * Created by ttshmily on 7/4/2017.
@@ -97,7 +93,9 @@ public class GetOrderDetail extends BaseTest {
         pathValue.put("orderId", "20000000000");
         res = HttpRequest.s_SendGet(host_doc + uri,"", mainToken, pathValue);
         s_CheckResponse(res);
-        Assert.assertEquals(code, "2210430");
+        Assert.assertEquals(code, "1000000");
+        Assert.assertEquals(data.toString(), "{}");
+
     }
 
     @Test

@@ -1,16 +1,16 @@
 package com.mingyizhudao.qa.common;
 
+import com.mingyizhudao.qa.functiontest.bdassistant.AssignDoctor;
 import com.mingyizhudao.qa.utilities.Helper;
 import com.mingyizhudao.qa.utilities.HttpRequest;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 
 import java.io.*;
-import java.util.HashMap;
-import java.util.Set;
+import java.util.*;
 
 //created by tianjing on 2017/6/21
-import java.util.Map;
+
 
 /**
  * Created by ttshmily on 28/4/2017.
@@ -82,6 +82,8 @@ public class KnowledgeBase {
     public static String department_file = log_dir + "kb_department.txt";
     public static HashMap<String, HashMap<String, String>> kb_department_ext = new HashMap<>();
 
+    public static List<Integer> doctor_reg_list = new ArrayList<>();
+
     public static void s_Init() {
         TestLogger logger = new TestLogger(BaseTest.s_JobName());
 
@@ -135,7 +137,7 @@ public class KnowledgeBase {
             }
         } catch (Exception e) {
             logger.error("ENUM初始化失败，准备退出");
-            logger.error(e.toString());
+            logger.error(e);
             System.exit(1);
         }
 
@@ -148,13 +150,15 @@ public class KnowledgeBase {
                 HashMap<String, String> query = new HashMap<>();
                 query.put("pageSize", String.valueOf(pageSize));
                 query.put("isRegistered", "true");
-                String res = "";
+                query.put("signedStatus", "SIGNED");
 
+                String res = "";
                 res = HttpRequest.s_SendGet(BaseTest.host_kb + doctor_uri, query, "");
                 JSONArray doctor_list = JSONObject.fromObject(res).getJSONObject("data").getJSONArray("list");
                 for (int j = 0; j < doctor_list.size(); j++) {
                     JSONObject doctor = doctor_list.getJSONObject(j);
                     kb_doctor.put(doctor.getString("id"), doctor.getString("name"));
+                    if (!doctor.containsKey("referrer_id") || doctor.getString("referrer_id").isEmpty()) doctor_reg_list.add(doctor.getInt("register_id"));
                 }
                 stringToFile(kb_doctor, doctor_file);//created by tianjing on 2017/6/21
             }

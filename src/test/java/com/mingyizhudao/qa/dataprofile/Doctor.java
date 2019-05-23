@@ -25,7 +25,7 @@ public class Doctor {
     private String specialty;
     private String description;
     private List<Picture> avatar_url;
-//    private boolean is_internet_operation_doctor;
+    private Boolean is_internet_operation_doctor;
     private String[] cooperation_channel;
     private String signed_status;
     private Integer doctor_level;

@@ -108,7 +108,8 @@ public class GetOrderDetail_V1 extends BaseTest {
         query.put("flag", "1");
         res = HttpRequest.s_SendGet(host_doc + uri,query, mainToken, pathValue);
         s_CheckResponse(res);
-        Assert.assertEquals(code, "2210430");
+//        Assert.assertEquals(code, "2210430");
+        Assert.assertEquals(code, "2211001");
     }
 
     @Test
