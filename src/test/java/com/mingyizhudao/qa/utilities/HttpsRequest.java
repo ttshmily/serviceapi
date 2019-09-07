@@ -59,6 +59,38 @@ public class HttpsRequest {
         return result;
     }
 
+  public static String PostFile(String url, String fileName, String token) {
+        HttpClient httpClient;
+        HttpPost httpPost;
+        String result = "";
+        BufferedReader in;
+        try {
+            String boundary = "----AutomationBoundary";
+            httpClient = new SSLClient();
+            httpPost = new HttpPost(url);
+            httpPost.addHeader("Content-Type", "multipart/form-data; boundary="+boundary); // Header config
+            httpPost.addHeader("x-auth", token);
+            httpPost.addHeader("BUSI_APPKEY", "c8d4a4d6af9b11e9b091005056b53314");
+            httpPost.addHeader("BUSI_SIGNATURE", "2854978869701a4b7d86941ac97adce009bb01e590931b0eefc9d9c81da8c25d");
+
+            MultipartEntityBuilder me = MultipartEntityBuilder.create().setMode(HttpMultipartMode.RFC6532); // 去除乱码
+            me.addBinaryBody("file", new File(fileName), ContentType.APPLICATION_OCTET_STREAM, fileName); // 添加文件
+            me.setBoundary(boundary); // 添加分割字符串
+            httpPost.setEntity(me.build());
+
+            HttpResponse response = httpClient.execute(httpPost);
+            if (response != null && response.getEntity() != null) {
+                in = new BufferedReader(new InputStreamReader(response.getEntity().getContent()));
+                String line;
+                while ((line = in.readLine()) != null) {
+                    result += line;
+                }
+                in.close();
+            }
+        } catch(Exception ex){
+        }
+        return result;
+    }
     public static String s_DoGet(String url) throws Exception {
         SSLClient httpClient;
         HttpGet httpGet;
