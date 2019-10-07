@@ -16,8 +16,8 @@ import org.apache.log4j.Logger;
  */
 public class TestLogger {
     private static Map testLoggers = new ConcurrentHashMap<String,Logger>();
-    private static String dir = "logs"; // Root log directory
-    private static Layout layout;
+    public static String dir = "target/logs/"; // Root log directory
+    private static Layout layout = new PatternLayout(PatternLayout.DEFAULT_CONVERSION_PATTERN);
     private static Logger rootLogger = Logger.getRootLogger();
     private String jobName;
 
