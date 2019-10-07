@@ -1,6 +1,6 @@
 package com.qa.utilities;
 
-import com.qa.common.KnowledgeBase;
+import com.qa.framework.KnowledgeBase;
 
 import java.text.SimpleDateFormat;
 import java.util.*;

@@ -1,4 +1,4 @@
-package com.qa.common;
+package com.qa.framework;
 
 import io.qameta.allure.Step;
 

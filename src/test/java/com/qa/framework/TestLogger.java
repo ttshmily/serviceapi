@@ -1,4 +1,4 @@
-package com.qa.common;
+package com.qa.framework;
 
 import org.apache.log4j.*;
 import org.testng.Reporter;

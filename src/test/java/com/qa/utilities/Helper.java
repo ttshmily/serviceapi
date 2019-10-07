@@ -1,7 +1,7 @@
 package com.qa.utilities;
 
 import com.mingyizhudao.qa.common.BaseTest;
-import com.qa.common.TestLogger;
+import com.qa.framework.TestLogger;
 import net.sf.json.JSONObject;
 import net.sf.json.JsonConfig;
 

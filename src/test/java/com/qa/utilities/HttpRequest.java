@@ -1,6 +1,6 @@
 package com.qa.utilities;
 
-import com.qa.common.TestLogger;
+import com.qa.framework.TestLogger;
 import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.URL;
