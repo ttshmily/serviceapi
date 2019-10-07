@@ -31,35 +31,34 @@ public class HttpsRequest {
         }
     }
 
-    public static String s_DoPost(String url,String jsonstr,String charset) throws Exception {
+    public static String PostData(String url, String request, String token) {
         HttpClient httpClient;
         HttpPost httpPost;
-        String result = null;
+        String result = "";
         BufferedReader in;
         try {
             httpClient = new SSLClient();
             httpPost = new HttpPost(url);
-            httpPost.addHeader("Content-Type", "application/json");
-            StringEntity se = new StringEntity(jsonstr);
-            se.setContentType("application/json");
-            se.setContentEncoding(new BasicHeader("Content-Type", "application/json"));
+            httpPost.addHeader("Content-Type", "application/json;charset=UTF-8");
+            httpPost.addHeader("x-auth", token);
+            StringEntity se = new StringEntity(request, "UTF-8"); // UTF-8 很关键，否则json里的中文会乱码
             httpPost.setEntity(se);
             HttpResponse response = httpClient.execute(httpPost);
             if (response != null && response.getEntity() != null) {
                 in = new BufferedReader(new InputStreamReader(response.getEntity().getContent()));
                 String line;
                 while ((line = in.readLine()) != null) {
-                    result += line;
+                    result = result + line;
                 }
                 in.close();
             }
         } catch(Exception ex){
-            throw ex;
+            ex.printStackTrace();
         }
         return result;
     }
 
-  public static String PostFile(String url, String fileName, String token) {
+    public static String PostFile(String url, String fileName, String token) {
         HttpClient httpClient;
         HttpPost httpPost;
         String result = "";
@@ -91,6 +90,7 @@ public class HttpsRequest {
         }
         return result;
     }
+
     public static String s_DoGet(String url) throws Exception {
         SSLClient httpClient;
         HttpGet httpGet;
