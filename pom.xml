@@ -161,7 +161,7 @@
                 <version>2.10.0</version>
             </plugin>
 
-            <plugin>
+            <!--<plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-jar-plugin</artifactId>
                 <version>3.1.2</version>
@@ -176,7 +176,7 @@
                             </archive>
                         </configuration>
                     </execution>
-<!--                    <execution>
+                    <execution>
                         <goals>
                             <goal>test-jar</goal>
                         </goals>
@@ -185,9 +185,9 @@
                                 <manifestFile>${project.build.testOutputDirectory}/META-INF/MANIFEST.MF</manifestFile>
                             </archive>
                         </configuration>
-                    </execution>-->
+                    </execution>
                 </executions>
-            </plugin>
+            </plugin>-->
         </plugins>
 
 <!--        <testResources>
